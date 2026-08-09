@@ -1,4 +1,4 @@
-export type JamoType = 'Choseong' | 'Jungseong' | 'Jongseong';
+export type JamoType = 'choseong' | 'jungseong' | 'jongseong';
 
 export interface JamoMapping {
   key: string;
