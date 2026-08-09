@@ -4,7 +4,9 @@ A minimalist Progressive Web App (PWA) designed to help English speakers learn K
 
 ## Features
 
-- **Minimalist Design**: A distraction-free interface focused on the learning content.
+- **Distraction-Free Design (Critical Requirement)**:
+  - **Zero Animations**: No bouncing, flashing, pulsing, or motion effects. The interface remains static, clean, and focused on learning without cognitive overload.
+  - **Deliberate Progression**: The user must explicitly press <kbd>Enter</kbd> or <kbd>Space</kbd> to advance to the next word, allowing time to inspect and understand their typed input.
 - **Contextual Learning**:
   - **Beginner**: Displays English pronunciation alongside Korean characters.
   - **Intermediate/Advanced**: Displays English translations for words and sentences.
