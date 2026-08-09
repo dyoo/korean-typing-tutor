@@ -162,7 +162,7 @@
     <div class="w-full h-24 relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
         <span class="text-2xl text-gray-400 font-normal">
-          {isCompleted ? "Press Enter or Space for next word" : "Type in QWERTY..."}
+          {isCompleted ? "Press Enter or Space for next word" : "Start typing..."}
         </span>
       {:else}
         <div class="flex justify-center flex-nowrap whitespace-nowrap gap-x-1 text-4xl md:text-5xl font-bold">

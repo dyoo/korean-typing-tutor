@@ -158,6 +158,17 @@ describe('HangulEngine class', () => {
     expect(engine.handleKey('k')).toBe('타');
   });
 
+  it('should support direct native Korean OS keyboard input (Jamos and Syllables)', () => {
+    engine.handleKey('ㅅ');
+    expect(engine.handleKey('ㅏ')).toBe('사');
+    expect(engine.handleKey('ㄱ')).toBe('삭');
+    expect(engine.handleKey('ㅗ')).toBe('사고');
+    expect(engine.handleKey('ㅏ')).toBe('사과');
+
+    engine.reset();
+    expect(engine.handleKey('사과')).toBe('사과');
+  });
+
   it('should handle liaison syllable splitting when vowel follows Jongseong', () => {
     engine.handleKey('g');
     engine.handleKey('k');

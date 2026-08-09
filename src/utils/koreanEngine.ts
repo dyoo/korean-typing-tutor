@@ -78,6 +78,26 @@ const JONGSEONG_MAP: Record<string, number> = {
   'g': 27  // ㅎ
 };
 
+/** Direct Hangul Choseong Jamo Mapping (for native 2-set Korean OS input mode). */
+const DIRECT_CHOSEONG_MAP: Record<string, number> = {
+  'ㄱ': 0, 'ㄲ': 1, 'ㄴ': 2, 'ㄷ': 3, 'ㄸ': 4, 'ㄹ': 5, 'ㅁ': 6, 'ㅂ': 7, 'ㅃ': 8,
+  'ㅅ': 9, 'ㅆ': 10, 'ㅇ': 11, 'ㅈ': 12, 'ㅉ': 13, 'ㅊ': 14, 'ㅋ': 15, 'ㅌ': 16, 'ㅍ': 17, 'ㅎ': 18
+};
+
+/** Direct Hangul Jungseong Jamo Mapping (for native 2-set Korean OS input mode). */
+const DIRECT_JUNGSEONG_MAP: Record<string, number> = {
+  'ㅏ': 0, 'ㅐ': 1, 'ㅑ': 2, 'ㅒ': 3, 'ㅓ': 4, 'ㅔ': 5, 'ㅕ': 6, 'ㅖ': 7, 'ㅗ': 8,
+  'ㅘ': 9, 'ㅙ': 10, 'ㅚ': 11, 'ㅛ': 12, 'ㅜ': 13, 'ㅝ': 14, 'ㅞ': 15, 'ㅟ': 16, 'ㅠ': 17,
+  'ㅡ': 18, 'ㅢ': 19, 'ㅣ': 20
+};
+
+/** Direct Hangul Jongseong Jamo Mapping (for native 2-set Korean OS input mode). */
+const DIRECT_JONGSEONG_MAP: Record<string, number> = {
+  'ㄱ': 1, 'ㄲ': 2, 'ㄳ': 3, 'ㄴ': 4, 'ㄵ': 5, 'ㄶ': 6, 'ㄷ': 7, 'ㄹ': 8, 'ㄺ': 9,
+  'ㄻ': 10, 'ㄼ': 11, 'ㄽ': 12, 'ㄾ': 13, 'ㄿ': 14, 'ㅀ': 15, 'ㅁ': 16, 'ㅂ': 17, 'ㅄ': 18,
+  'ㅅ': 19, 'ㅆ': 20, 'ㅇ': 21, 'ㅈ': 22, 'ㅊ': 23, 'ㅋ': 24, 'ㅌ': 25, 'ㅍ': 26, 'ㅎ': 27
+};
+
 /**
  * Compound Vowel Combinations.
  * Maps pair of (first_vowel, second_vowel) to compound Jungseong index.
@@ -239,7 +259,7 @@ export function isPartialOrExactMatch(targetChar: string | undefined, inputChar:
 
 /**
  * Korean Hangul Composition Engine.
- * Implements a state machine that converts raw QWERTY keystrokes into composed Hangul syllables.
+ * Implements a state machine that converts raw QWERTY keystrokes OR native Korean 2-set Jamos into composed Hangul syllables.
  */
 export class HangulEngine {
   private currentChoseong: number | null = null;
@@ -287,7 +307,7 @@ export class HangulEngine {
   }
 
   /**
-   * Main entry point: processes a single keystroke ('a'-'z', 'A'-'Z', spaces, or 'Backspace').
+   * Main entry point: processes a single keystroke (QWERTY key, native Hangul Jamo, space, or Backspace).
    * Updates internal composition state and returns the complete composed text.
    */
   public handleKey(key: string): string {
@@ -317,10 +337,17 @@ export class HangulEngine {
       return this.getComposedText();
     }
 
-    // Lookup Jamo indices for input key
-    let cho = CHOSEONG_MAP[key];
-    let jung = JUNGSEONG_MAP[key];
-    let jong = JONGSEONG_MAP[key];
+    // Direct composed Hangul Syllable (from native OS IME)
+    if (key.length === 1 && key.charCodeAt(0) >= HANGUL_BASE && key.charCodeAt(0) <= 0xD7A3) {
+      this.flushCurrent();
+      this.composedString += key;
+      return this.getComposedText();
+    }
+
+    // Lookup Jamo indices from QWERTY maps or direct Hangul Jamo maps
+    let cho = CHOSEONG_MAP[key] ?? DIRECT_CHOSEONG_MAP[key];
+    let jung = JUNGSEONG_MAP[key] ?? DIRECT_JUNGSEONG_MAP[key];
+    let jong = JONGSEONG_MAP[key] ?? DIRECT_JONGSEONG_MAP[key];
 
     /**
      * Standard Dubeolsik (2-set) Shift Key Handling:
