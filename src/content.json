@@ -1,6 +1,7 @@
 {
   "modules": [
     { "id": "all", "title": "All Lessons", "description": "Comprehensive practice across all modules" },
+    { "id": "topik2_passages", "title": "TOPIK II — Reading Passages & Paragraphs", "description": "Longer-form Korean paragraphs and stories for advanced reading and typing practice" },
     { "id": "topik1_vocab", "title": "TOPIK I — Essential Nouns", "description": "Official TOPIK 1 vocabulary: Places, time, calendar, body, food, and transport" },
     { "id": "topik1_verbs", "title": "TOPIK I — Verbs & Adjectives", "description": "Official TOPIK 1 high-frequency action verbs and descriptive adjectives" },
     { "id": "topik2_vocab", "title": "TOPIK II — Intermediate Vocab", "description": "Official TOPIK 2 intermediate vocabulary: Work, technology, society, and emotions" },
@@ -14,6 +15,12 @@
     { "id": "l5", "title": "Level 5 — Sentences & Expressions", "description": "Conversational phrases and short expressions" }
   ],
   "items": [
+    { "id": "t2p-1", "moduleId": "topik2_passages", "type": "sentence", "target": "한국은 봄 여름 가을 겨울의 사계절이 있습니다 봄에는 예쁜 꽃이 피고 날씨가 따뜻합니다", "pronunciation": "hangugeun bom yeoreum gaeul gyeoureui sagaejeori isseumnida bomeneun yeppeun kkoti pigo nalssiga ttatteut-hamnida", "translation": "Korea has four seasons: spring, summer, autumn, and winter. In spring, pretty flowers bloom and the weather is warm." },
+    { "id": "t2p-2", "moduleId": "topik2_passages", "type": "sentence", "target": "한글은 세종대왕이 1443년에 만든 한국의 문자입니다 한글은 배우기 쉽고 과학적인 글자입니다", "pronunciation": "hangeureun sejongdaewangi 1443nyeone mandeun hangugui munjaimnida hangeureun baeugi swipgo gwahakjeogin geuljaimnida", "translation": "Hangeul is the Korean alphabet created by King Sejong in 1443. Hangeul is easy to learn and scientific." },
+    { "id": "t2p-3", "moduleId": "topik2_passages", "type": "sentence", "target": "지난 주말에 친구와 함께 제주도로 여행을 갔습니다 제주도의 푸른 바다가 참 아름다웠습니다", "pronunciation": "jinan jumare chinguwa hamkke jejudoro yeohaengeul gatseumnida jejudoe pureun badaga cham areumdawotseumnida", "translation": "Last weekend I went on a trip to Jeju Island with my friend. Jeju Island's blue sea was very beautiful." },
+    { "id": "t2p-4", "moduleId": "topik2_passages", "type": "sentence", "target": "저는 아침 일곱 시에 일어나서 운동을 합니다 아침을 먹고 지하철을 타고 회사에 갑니다", "pronunciation": "jeoneun achim ilgop sie ireonaseo eundongeul hamnida achimeul meokgo jihacheoreul tago hoesae gamnida", "translation": "I wake up at seven in the morning and exercise. After eating breakfast, I take the subway to work." },
+    { "id": "t2p-5", "moduleId": "topik2_passages", "type": "sentence", "target": "정직한 나무꾼이 산에서 나무를 하다가 실수로 쇠도끼를 호수에 빠뜨렸습니다", "pronunciation": "jeongjikan namukkuni saneseo namureul hadaga silsuro soedokkireul hosue ppattryeotseumnida", "translation": "An honest woodcutter accidentally dropped his iron axe into a lake while chopping wood in the mountains." },
+
     { "id": "t1v-1", "moduleId": "topik1_vocab", "type": "word", "target": "월요일", "pronunciation": "woryoil", "translation": "Monday" },
     { "id": "t1v-2", "moduleId": "topik1_vocab", "type": "word", "target": "화요일", "pronunciation": "hwayoil", "translation": "Tuesday" },
     { "id": "t1v-3", "moduleId": "topik1_vocab", "type": "word", "target": "수요일", "pronunciation": "suyoil", "translation": "Wednesday" },
