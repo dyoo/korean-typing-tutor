@@ -38,14 +38,21 @@
       return;
     }
 
-    const { isTutorialComplete, advanced } = session.processKey(e.key);
-    syncState();
-
-    if (advanced && isTutorialComplete) {
-      alert("Congratulations! You've completed the tutorial!");
-      session.resetSession();
+    if (e.key === 'Backspace' || e.key === 'Enter' || e.key.length === 1) {
+      e.preventDefault();
+      const { isTutorialComplete, advanced } = session.processKey(e.key);
       syncState();
+
+      if (advanced && isTutorialComplete) {
+        alert("Congratulations! You've completed the tutorial!");
+        session.resetSession();
+        syncState();
+      }
     }
+  }
+
+  function handleInputPrevent(e: Event) {
+    (e.target as HTMLInputElement).value = userInput;
   }
 
   function handleManualAdvance() {
@@ -114,6 +121,11 @@
       class="w-full bg-white border-b-8 border-gray-300 focus:border-blue-600 text-6xl md:text-7xl py-6 focus:outline-none transition-all text-center font-bold shadow-md rounded-t-xl"
       value={userInput}
       onkeydown={handleKeydown}
+      oninput={handleInputPrevent}
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
       placeholder={isCompleted ? "Press Enter or Space for next word" : "Type here..."}
     />
 
