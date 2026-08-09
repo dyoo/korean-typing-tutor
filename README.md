@@ -82,3 +82,9 @@ We use **Vitest** for automated unit testing to ensure the Korean composition en
   ```bash
   npm test -- --watch
   ```
+
+---
+
+## Attribution & Development
+
+This project was vibe coded in pair programming collaboration with **Antigravity**, an agentic AI coding assistant developed by the Google DeepMind team.

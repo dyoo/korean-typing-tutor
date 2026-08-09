@@ -96,7 +96,7 @@
 <svelte:window onclick={focusInput} />
 
 <main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 text-gray-900 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden">
-  <div class="w-full max-w-5xl flex items-center justify-between gap-4">
+  <div class="w-full max-w-5xl flex items-center justify-between gap-4 shrink-0">
     <div class="flex items-center gap-3">
       <label for="level-select" class="text-sm font-bold uppercase tracking-wider text-gray-500 font-mono">Module:</label>
       <select
@@ -137,11 +137,11 @@
       {/each}
     </div>
 
-    <div class="text-subgiant text-gray-500 font-semibold italic mt-4 text-center tracking-wide min-h-[2.5rem] select-text max-w-full px-2">
+    <div class="text-subgiant text-gray-500 font-semibold italic mt-4 text-center tracking-wide h-12 flex items-center justify-center select-text max-w-full px-2">
       {displayText}
     </div>
 
-    <div class="mt-4 min-h-[5rem] flex flex-col items-center justify-center">
+    <div class="mt-4 h-28 flex flex-col items-center justify-center shrink-0">
       <div class={isCompleted ? 'flex flex-col items-center gap-3' : 'invisible pointer-events-none'}>
         <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 font-bold px-5 py-2 rounded-full text-lg md:text-xl border border-emerald-300 shadow-sm text-center">
           ✓ Correct! Press <kbd class="bg-white px-2.5 py-0.5 rounded shadow text-gray-800 border text-base md:text-lg">Enter ↵</kbd> or <kbd class="bg-white px-2.5 py-0.5 rounded shadow text-gray-800 border text-base md:text-lg">Space</kbd>
@@ -159,7 +159,7 @@
   </div>
 
   <div class="w-full max-w-3xl flex flex-col items-center pb-4 shrink-0 px-2">
-    <div class="w-full min-h-[5rem] py-3 relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
+    <div class="w-full h-24 relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
         <span class="text-xl md:text-2xl text-gray-400 font-normal text-center">
           {isCompleted ? "Press Enter or Space for next word" : "Start typing..."}
