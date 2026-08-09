@@ -1,8 +1,11 @@
 import { HangulEngine, checkErrors } from '../utils/koreanEngine';
-import type { ErrorReport, LessonItem } from '../types/korean';
+import type { ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
 
-/** Supported level filter types for targeted practice. */
-export type LevelFilter = 'all' | 'l1' | 'l2' | 'l3' | 'l4';
+/** Structure of the imported content dataset containing modules and lesson items. */
+export interface CurriculumData {
+  modules: ModuleDefinition[];
+  items: LessonItem[];
+}
 
 /** Result object returned when a keystroke is processed by the TutorSession controller. */
 export interface KeyResult {
@@ -14,13 +17,14 @@ export interface KeyResult {
 
 /**
  * TutorSession Controller.
- * Decouples session state management, lesson tracking, level filtering,
+ * Decouples session state management, curriculum module tracking,
  * randomized item shuffling, and keystroke composition routing from the UI.
  */
 export class TutorSession {
   private allItems: LessonItem[];
+  private modules: ModuleDefinition[];
   private activeItems: LessonItem[] = [];
-  private selectedFilter: LevelFilter = 'all';
+  private selectedFilter = 'all';
   private shouldShuffle: boolean;
   private currentIndex = 0;
   private userInput = '';
@@ -29,18 +33,24 @@ export class TutorSession {
   private isItemCompleted = false;
   private engine: HangulEngine;
 
-  constructor(items: LessonItem[], defaultFilter: LevelFilter = 'all', shuffle = true) {
-    this.allItems = items;
+  constructor(data: CurriculumData | LessonItem[], defaultFilter = 'all', shuffle = true) {
+    if (Array.isArray(data)) {
+      this.allItems = data;
+      this.modules = [
+        { id: 'all', title: 'All Lessons', description: 'Comprehensive practice across all modules' }
+      ];
+    } else {
+      this.allItems = data.items ?? [];
+      this.modules = data.modules ?? [];
+    }
+
     this.selectedFilter = defaultFilter;
     this.shouldShuffle = shuffle;
     this.engine = new HangulEngine();
     this.applyFilterAndShuffle();
   }
 
-  /**
-   * Fisher-Yates array shuffling algorithm.
-   * Ensures practice items are presented in randomized order.
-   */
+  /** Fisher-Yates shuffle algorithm for randomized practice order. */
   private shuffle<T>(array: T[]): T[] {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
@@ -55,16 +65,14 @@ export class TutorSession {
     return arr;
   }
 
-  /**
-   * Filters all curriculum items by selected module level and shuffles order.
-   */
+  /** Filters items by active module ID and applies shuffling. */
   private applyFilterAndShuffle(): void {
     let filtered: LessonItem[];
 
     if (this.selectedFilter === 'all') {
       filtered = [...this.allItems];
     } else {
-      filtered = this.allItems.filter(item => item.id.startsWith(this.selectedFilter));
+      filtered = this.allItems.filter(item => item.moduleId === this.selectedFilter || item.id.startsWith(this.selectedFilter));
     }
 
     if (filtered.length === 0) {
@@ -75,15 +83,20 @@ export class TutorSession {
     this.resetSessionState();
   }
 
+  /** Returns list of available curriculum modules. */
+  public getModules(): ModuleDefinition[] {
+    return this.modules;
+  }
+
   /** Sets the active level filter module and reshuffles lessons. */
-  public setFilter(filter: LevelFilter, shuffle = true): void {
-    this.selectedFilter = filter;
+  public setFilter(filterId: string, shuffle = true): void {
+    this.selectedFilter = filterId;
     this.shouldShuffle = shuffle;
     this.applyFilterAndShuffle();
   }
 
   /** Returns current active filter mode. */
-  public getFilter(): LevelFilter {
+  public getFilter(): string {
     return this.selectedFilter;
   }
 
@@ -128,10 +141,7 @@ export class TutorSession {
     return Math.round(((this.currentIndex + 1) / this.activeItems.length) * 100);
   }
 
-  /**
-   * Formats combined Romanization and English translation text.
-   * Example: 'sagwa · apple' or 'ga'.
-   */
+  /** Formats combined Romanization and English translation text. */
   public getDisplayText(item = this.getCurrentItem()): string {
     if (!item) return '';
     const parts: string[] = [];
@@ -144,10 +154,7 @@ export class TutorSession {
     return parts.join(' · ');
   }
 
-  /**
-   * Processes single keyboard input.
-   * Handles Hangul composition, manual Enter/Space progression, and Backspace decomposition.
-   */
+  /** Processes single keyboard input. */
   public processKey(key: string): KeyResult {
     if (key === 'Tab' || key === 'Escape') {
       return { isMatch: false, isItemCompleted: this.isItemCompleted, isTutorialComplete: false, advanced: false };
@@ -187,10 +194,7 @@ export class TutorSession {
     return { isMatch: false, isItemCompleted: false, isTutorialComplete: false, advanced: false };
   }
 
-  /**
-   * Resets composition state and advances to next item.
-   * Reshuffles items when wrapping back to beginning upon completion.
-   */
+  /** Advances to next item in module and reshuffles when cycling back. */
   public advanceLevel(): boolean {
     this.engine.reset();
     this.userInput = '';

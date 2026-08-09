@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import contentData from './content.json';
-  import { TutorSession, type LevelFilter } from './lib/tutorSession';
-  import type { LessonItem } from './types/korean';
+  import { TutorSession } from './lib/tutorSession';
+  import type { CurriculumData } from './lib/tutorSession';
 
-  const session = new TutorSession(contentData as LessonItem[], 'all', true);
+  const session = new TutorSession(contentData as CurriculumData, 'all', true);
+  const modules = session.getModules();
 
-  let selectedFilter = $state<LevelFilter>('all');
+  let selectedFilter = $state<string>('all');
   let currentIndex = $state(session.getCurrentIndex());
   let userInput = $state(session.getUserInput());
   let errors = $state(session.getErrors());
@@ -51,7 +52,7 @@
   }
 
   function handleFilterChange(e: Event) {
-    const filter = (e.target as HTMLSelectElement).value as LevelFilter;
+    const filter = (e.target as HTMLSelectElement).value;
     selectedFilter = filter;
     session.setFilter(filter, true);
     syncState();
@@ -106,11 +107,9 @@
         onclick={(e) => e.stopPropagation()}
         onmousedown={(e) => e.stopPropagation()}
       >
-        <option value="all">All Lessons ({contentData.length})</option>
-        <option value="l1">Level 1 — Basic Syllables</option>
-        <option value="l2">Level 2 — Final Consonants (받침)</option>
-        <option value="l3">Level 3 — Everyday Vocabulary</option>
-        <option value="l4">Level 4 — Sentences & Expressions</option>
+        {#each modules as mod}
+          <option value={mod.id}>{mod.title}</option>
+        {/each}
       </select>
     </div>
 
