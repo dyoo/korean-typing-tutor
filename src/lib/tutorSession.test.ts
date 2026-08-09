@@ -19,6 +19,7 @@ describe('TutorSession controller', () => {
     expect(session.getCurrentItem().target).toBe('가');
     expect(session.getUserInput()).toBe('');
     expect(session.getAccuracy()).toBe(100);
+    expect(session.getIsItemCompleted()).toBe(false);
     expect(session.getProgressPercentage()).toBe(50);
   });
 
@@ -34,28 +35,37 @@ describe('TutorSession controller', () => {
     expect(session.getAccuracy()).toBe(0);
   });
 
-  it('should advance level upon correct input', () => {
+  it('should pause on item match and require Enter/Space to advance', () => {
     session.processKey('r');
     const result = session.processKey('k');
     expect(result.isMatch).toBe(true);
-    expect(result.isTutorialComplete).toBe(false);
+    expect(result.isItemCompleted).toBe(true);
+    expect(session.getIsItemCompleted()).toBe(true);
+    expect(session.getCurrentIndex()).toBe(0);
+
+    const advanceResult = session.processKey('Enter');
+    expect(advanceResult.advanced).toBe(true);
+    expect(session.getIsItemCompleted()).toBe(false);
     expect(session.getCurrentIndex()).toBe(1);
     expect(session.getCurrentItem().target).toBe('사과');
     expect(session.getUserInput()).toBe('');
   });
 
-  it('should flag tutorial completion on final item match', () => {
+  it('should flag tutorial completion on final item advance', () => {
     session.processKey('r');
     session.processKey('k');
+    session.processKey('Enter');
 
     session.processKey('t');
     session.processKey('k');
     session.processKey('r');
     session.processKey('h');
-    const result = session.processKey('k');
+    session.processKey('k');
 
-    expect(result.isMatch).toBe(true);
-    expect(result.isTutorialComplete).toBe(true);
+    expect(session.getIsItemCompleted()).toBe(true);
+
+    const advanceResult = session.processKey(' ');
+    expect(advanceResult.isTutorialComplete).toBe(true);
     expect(session.getCurrentIndex()).toBe(0);
   });
 
@@ -65,5 +75,6 @@ describe('TutorSession controller', () => {
     expect(session.getCurrentIndex()).toBe(0);
     expect(session.getUserInput()).toBe('');
     expect(session.getAccuracy()).toBe(100);
+    expect(session.getIsItemCompleted()).toBe(false);
   });
 });

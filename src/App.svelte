@@ -12,6 +12,7 @@
   let accuracy = $state(session.getAccuracy());
   let progress = $state(session.getProgressPercentage());
   let currentItem = $state(session.getCurrentItem());
+  let isCompleted = $state(session.getIsItemCompleted());
   let inputElement = $state<HTMLInputElement | null>(null);
 
   onMount(() => {
@@ -29,6 +30,7 @@
     accuracy = session.getAccuracy();
     progress = session.getProgressPercentage();
     currentItem = session.getCurrentItem();
+    isCompleted = session.getIsItemCompleted();
   }
 
   function handleKeydown(e: KeyboardEvent) {
@@ -36,17 +38,25 @@
       return;
     }
 
-    if (e.key === 'Backspace' || e.key.length === 1) {
-      e.preventDefault();
-      const { isTutorialComplete } = session.processKey(e.key);
-      syncState();
+    const { isTutorialComplete, advanced } = session.processKey(e.key);
+    syncState();
 
-      if (isTutorialComplete) {
-        alert("Congratulations! You've completed the tutorial!");
-        session.resetSession();
-        syncState();
-      }
+    if (advanced && isTutorialComplete) {
+      alert("Congratulations! You've completed the tutorial!");
+      session.resetSession();
+      syncState();
     }
+  }
+
+  function handleManualAdvance() {
+    const isTutorialComplete = session.advanceLevel();
+    syncState();
+    if (isTutorialComplete) {
+      alert("Congratulations! You've completed the tutorial!");
+      session.resetSession();
+      syncState();
+    }
+    inputElement?.focus();
   }
 </script>
 
@@ -70,7 +80,7 @@
         {@const isError = isTyped && typedChar !== char}
         
         <span class="relative px-3 py-2">
-          <span class={isTyped ? (isError ? 'text-red-500 border-b-[12px] border-red-500' : 'text-blue-600 border-b-[12px] border-blue-600') : 'text-gray-300 border-b-[12px] border-gray-200'}>
+          <span class={isTyped ? (isError ? 'text-red-500 border-b-[12px] border-red-500' : 'text-emerald-600 border-b-[12px] border-emerald-500') : 'text-gray-300 border-b-[12px] border-gray-200'}>
             {isTyped ? typedChar : char}
           </span>
         </span>
@@ -80,6 +90,21 @@
     <div class="text-subgiant text-gray-500 font-semibold italic mt-8 text-center tracking-wide min-h-[4rem]">
       {currentItem.pronunciation ? currentItem.pronunciation : currentItem.translation}
     </div>
+
+    {#if isCompleted}
+      <div class="mt-6 flex flex-col items-center gap-4 animate-bounce">
+        <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 font-bold px-6 py-3 rounded-full text-2xl border border-emerald-300 shadow-sm">
+          ✓ Correct! Press <kbd class="bg-white px-3 py-1 rounded shadow text-gray-800 border">Enter ↵</kbd> or <kbd class="bg-white px-3 py-1 rounded shadow text-gray-800 border">Space</kbd>
+        </span>
+        <button
+          type="button"
+          onclick={handleManualAdvance}
+          class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-2xl px-8 py-4 rounded-xl shadow-lg transition-transform transform hover:scale-105 cursor-pointer"
+        >
+          Next Word ➔
+        </button>
+      </div>
+    {/if}
   </div>
 
   <div class="w-full max-w-3xl flex flex-col items-center pb-8">
@@ -89,7 +114,7 @@
       class="w-full bg-white border-b-8 border-gray-300 focus:border-blue-600 text-6xl md:text-7xl py-6 focus:outline-none transition-all text-center font-bold shadow-md rounded-t-xl"
       value={userInput}
       onkeydown={handleKeydown}
-      placeholder="Type here..."
+      placeholder={isCompleted ? "Press Enter or Space for next word" : "Type here..."}
     />
 
     <div class="flex justify-between w-full mt-6 text-xl sm:text-2xl text-gray-400 font-mono font-bold uppercase tracking-wider">
