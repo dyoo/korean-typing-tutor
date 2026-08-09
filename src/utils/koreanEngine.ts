@@ -317,9 +317,24 @@ export class HangulEngine {
       return this.getComposedText();
     }
 
-    const cho = CHOSEONG_MAP[key];
-    const jung = JUNGSEONG_MAP[key];
-    const jong = JONGSEONG_MAP[key];
+    // Lookup Jamo indices for input key
+    let cho = CHOSEONG_MAP[key];
+    let jung = JUNGSEONG_MAP[key];
+    let jong = JONGSEONG_MAP[key];
+
+    /**
+     * Standard Dubeolsik (2-set) Shift Key Handling:
+     * In standard Dubeolsik, only 7 Shift keys have double consonant / compound vowel mappings:
+     *   R (ㄲ), E (ㄸ), Q (ㅃ), T (ㅆ), W (ㅉ), O (ㅒ), P (ㅖ).
+     * For all other uppercase letters (such as 'X', 'Z', 'C', 'V', 'G', etc.), standard Dubeolsik
+     * treats Shift + Key identically to its lower-case key (e.g. 'X' -> 'x' -> ㅌ).
+     */
+    if (cho === undefined && jung === undefined && jong === undefined && key.length === 1 && key >= 'A' && key <= 'Z') {
+      const lower = key.toLowerCase();
+      cho = CHOSEONG_MAP[lower];
+      jung = JUNGSEONG_MAP[lower];
+      jong = JONGSEONG_MAP[lower];
+    }
 
     // --- 2. Handle non-Korean keys (spaces, numbers, punctuation) ---
     if (cho === undefined && jung === undefined) {

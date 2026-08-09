@@ -142,6 +142,22 @@ describe('HangulEngine class', () => {
     expect(engine.handleKey('P')).toBe('ㅖ');
   });
 
+  it('should treat unmapped Shift keys as lower-case Dubeolsik keys', () => {
+    expect(engine.handleKey('X')).toBe('ㅌ');
+    engine.reset();
+    expect(engine.handleKey('Z')).toBe('ㅋ');
+    engine.reset();
+    expect(engine.handleKey('C')).toBe('ㅊ');
+    engine.reset();
+    expect(engine.handleKey('V')).toBe('ㅍ');
+    engine.reset();
+    expect(engine.handleKey('G')).toBe('ㅎ');
+    engine.reset();
+
+    engine.handleKey('X');
+    expect(engine.handleKey('k')).toBe('타');
+  });
+
   it('should handle liaison syllable splitting when vowel follows Jongseong', () => {
     engine.handleKey('g');
     engine.handleKey('k');
