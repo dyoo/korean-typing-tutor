@@ -3,15 +3,15 @@ import { TutorSession } from './tutorSession';
 import type { LessonItem } from '../types/korean';
 
 const mockLessons: LessonItem[] = [
-  { id: '1', type: 'syllable', target: '가', pronunciation: 'ga', translation: null },
-  { id: '2', type: 'word', target: '사과', pronunciation: 'sagwa', translation: 'apple' }
+  { id: 'l1-1', type: 'syllable', target: '가', pronunciation: 'ga', translation: null },
+  { id: 'l3-1', type: 'word', target: '사과', pronunciation: 'sagwa', translation: 'apple' }
 ];
 
 describe('TutorSession controller', () => {
   let session: TutorSession;
 
   beforeEach(() => {
-    session = new TutorSession(mockLessons);
+    session = new TutorSession(mockLessons, 'all', false);
   });
 
   it('should initialize with first lesson item', () => {
@@ -21,6 +21,17 @@ describe('TutorSession controller', () => {
     expect(session.getAccuracy()).toBe(100);
     expect(session.getIsItemCompleted()).toBe(false);
     expect(session.getProgressPercentage()).toBe(50);
+  });
+
+  it('should format combined Romanization and translation display text', () => {
+    expect(session.getDisplayText(mockLessons[0])).toBe('ga');
+    expect(session.getDisplayText(mockLessons[1])).toBe('sagwa · apple');
+  });
+
+  it('should filter items by selected level', () => {
+    session.setFilter('l3', false);
+    expect(session.getTotalItems()).toBe(1);
+    expect(session.getCurrentItem().target).toBe('사과');
   });
 
   it('should compose Hangul keystrokes during session', () => {

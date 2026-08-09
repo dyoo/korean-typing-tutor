@@ -1,16 +1,18 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import contentData from './content.json';
-  import { TutorSession } from './lib/tutorSession';
+  import { TutorSession, type LevelFilter } from './lib/tutorSession';
   import type { LessonItem } from './types/korean';
 
-  const session = new TutorSession(contentData as LessonItem[]);
+  const session = new TutorSession(contentData as LessonItem[], 'all', true);
 
+  let selectedFilter = $state<LevelFilter>('all');
   let currentIndex = $state(session.getCurrentIndex());
   let userInput = $state(session.getUserInput());
   let errors = $state(session.getErrors());
   let progress = $state(session.getProgressPercentage());
   let currentItem = $state(session.getCurrentItem());
+  let displayText = $state(session.getDisplayText());
   let isCompleted = $state(session.getIsItemCompleted());
   let inputElement = $state<HTMLInputElement | null>(null);
 
@@ -28,7 +30,16 @@
     errors = session.getErrors();
     progress = session.getProgressPercentage();
     currentItem = session.getCurrentItem();
+    displayText = session.getDisplayText();
     isCompleted = session.getIsItemCompleted();
+  }
+
+  function handleFilterChange(e: Event) {
+    const filter = (e.target as HTMLSelectElement).value as LevelFilter;
+    selectedFilter = filter;
+    session.setFilter(filter, true);
+    syncState();
+    inputElement?.focus();
   }
 
   function handleKeydown(e: KeyboardEvent) {
@@ -42,7 +53,7 @@
       syncState();
 
       if (advanced && isTutorialComplete) {
-        alert("Congratulations! You've completed the tutorial!");
+        alert("Module completed! Reshuffling items...");
         session.resetSession();
         syncState();
       }
@@ -57,7 +68,7 @@
     const isTutorialComplete = session.advanceLevel();
     syncState();
     if (isTutorialComplete) {
-      alert("Congratulations! You've completed the tutorial!");
+      alert("Module completed! Reshuffling items...");
       session.resetSession();
       syncState();
     }
@@ -68,8 +79,24 @@
 <svelte:window onclick={focusInput} />
 
 <main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 text-gray-900 px-6 py-6 select-none overflow-hidden">
-  <div class="w-full max-w-5xl">
-    <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden shadow-inner">
+  <div class="w-full max-w-5xl flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <label for="level-select" class="text-sm font-bold uppercase tracking-wider text-gray-500 font-mono">Module:</label>
+      <select
+        id="level-select"
+        class="bg-white border-2 border-gray-300 text-gray-800 font-semibold rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-600 shadow-sm text-sm cursor-pointer"
+        value={selectedFilter}
+        onchange={handleFilterChange}
+      >
+        <option value="all">All Lessons ({contentData.length})</option>
+        <option value="l1">Level 1 — Basic Syllables</option>
+        <option value="l2">Level 2 — Final Consonants (받침)</option>
+        <option value="l3">Level 3 — Everyday Vocabulary</option>
+        <option value="l4">Level 4 — Sentences & Expressions</option>
+      </select>
+    </div>
+
+    <div class="flex-1 max-w-md bg-gray-200 h-2.5 rounded-full overflow-hidden shadow-inner">
       <div 
         class="bg-blue-600 h-full transition-all duration-300 rounded-full" 
         style="width: {progress}%"
@@ -94,7 +121,7 @@
     </div>
 
     <div class="text-subgiant text-gray-500 font-semibold italic mt-4 text-center tracking-wide min-h-[3rem]">
-      {currentItem.pronunciation ? currentItem.pronunciation : currentItem.translation}
+      {displayText}
     </div>
 
     <div class="mt-4 h-28 flex flex-col items-center justify-center">
