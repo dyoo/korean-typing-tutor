@@ -1,15 +1,26 @@
 @import "tailwindcss";
 
+@layer base {
+  body {
+    font-family: 'Noto Sans KR', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
 @layer utilities {
   .text-giant {
     font-size: clamp(2.5rem, 6vw, 5.5rem);
-    line-height: 1.2;
-  }
-  .text-longsentence {
-    font-size: clamp(1.5rem, 3.5vw, 3rem);
     line-height: 1.3;
   }
+  .text-longsentence {
+    font-size: clamp(1.5rem, 3.5vw, 2.75rem);
+    line-height: 1.5;
+  }
+  .text-paragraph {
+    font-size: clamp(1.25rem, 2.5vw, 2rem);
+    line-height: 1.8;
+  }
   .text-subgiant {
-    font-size: clamp(1.125rem, 2.5vw, 2rem);
+    font-size: clamp(1.125rem, 2.25vw, 1.75rem);
+    line-height: 1.5;
   }
 }

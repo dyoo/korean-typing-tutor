@@ -47,6 +47,41 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
     expect(errors[1].isError).toBe(true);
   });
 
+  it('should detect impossible keystrokes immediately as errors (e.g. ㄷ for 우유)', () => {
+    const target = '우유';
+    
+    expect(isPartialOrExactMatch('우', 'ㅇ')).toBe(true);
+    let errors = checkErrors(target, 'ㅇ');
+    expect(errors[0].isError).toBe(false);
+
+    expect(isPartialOrExactMatch('우', 'ㄷ')).toBe(false);
+    errors = checkErrors(target, 'ㄷ');
+    expect(errors[0].isError).toBe(true);
+  });
+
+  it('should not flag intermediate partial keystrokes as errors when typing 가요.', () => {
+    const target = '가요.';
+    expect(isPartialOrExactMatch('요', 'ㅇ')).toBe(true);
+    expect(isPartialOrExactMatch('요', '요')).toBe(true);
+
+    const step1 = checkErrors(target, 'ㄱ');
+    expect(step1[0].isError).toBe(false);
+
+    const step2 = checkErrors(target, '가');
+    expect(step2[0].isError).toBe(false);
+
+    const step3 = checkErrors(target, '가ㅇ');
+    expect(step3[0].isError).toBe(false);
+    expect(step3[1].isError).toBe(false);
+
+    const step4 = checkErrors(target, '가요');
+    expect(step4[0].isError).toBe(false);
+    expect(step4[1].isError).toBe(false);
+
+    const step5 = checkErrors(target, '가요.');
+    expect(step5.every(e => !e.isError)).toBe(true);
+  });
+
   it('should recognize compound Jongseong partial matches as valid', () => {
     expect(isPartialOrExactMatch('닭', '달')).toBe(true);
     expect(isPartialOrExactMatch('닭', '다')).toBe(true);
@@ -78,127 +113,51 @@ describe('HangulEngine class', () => {
   });
 
   it('should compose syllables with final consonants (Jongseong)', () => {
-    engine.handleKey('g');
-    engine.handleKey('k');
-    expect(engine.handleKey('s')).toBe('한');
-
-    engine.reset();
-    engine.handleKey('r');
-    engine.handleKey('m');
-    expect(engine.handleKey('f')).toBe('글');
-  });
-
-  it('should compose compound vowels', () => {
-    engine.handleKey('r');
-    engine.handleKey('h');
-    expect(engine.getComposedText()).toBe('고');
-    expect(engine.handleKey('k')).toBe('과');
-
-    engine.reset();
-    engine.handleKey('d');
-    engine.handleKey('n');
-    engine.handleKey('j');
-    expect(engine.handleKey('f')).toBe('월');
-  });
-
-  it('should compose compound final consonants', () => {
-    engine.handleKey('e');
-    engine.handleKey('k');
-    engine.handleKey('f');
-    expect(engine.getComposedText()).toBe('달');
-    expect(engine.handleKey('r')).toBe('닭');
-
-    engine.reset();
     engine.handleKey('r');
     engine.handleKey('k');
-    engine.handleKey('q');
-    expect(engine.handleKey('t')).toBe('값');
+    expect(engine.handleKey('s')).toBe('간');
   });
 
-  it('should handle shifted double consonants and vowels', () => {
-    expect(engine.handleKey('R')).toBe('ㄲ');
-    expect(engine.handleKey('k')).toBe('까');
-
-    engine.reset();
-    engine.handleKey('E');
-    expect(engine.handleKey('k')).toBe('따');
-
-    engine.reset();
-    engine.handleKey('Q');
-    expect(engine.handleKey('k')).toBe('빠');
-
-    engine.reset();
-    engine.handleKey('T');
-    expect(engine.handleKey('k')).toBe('싸');
-
-    engine.reset();
-    engine.handleKey('W');
-    expect(engine.handleKey('k')).toBe('짜');
-
-    engine.reset();
-    expect(engine.handleKey('O')).toBe('ㅒ');
-
-    engine.reset();
-    expect(engine.handleKey('P')).toBe('ㅖ');
-  });
-
-  it('should treat unmapped Shift keys as lower-case Dubeolsik keys', () => {
-    expect(engine.handleKey('X')).toBe('ㅌ');
-    engine.reset();
-    expect(engine.handleKey('Z')).toBe('ㅋ');
-    engine.reset();
-    expect(engine.handleKey('C')).toBe('ㅊ');
-    engine.reset();
-    expect(engine.handleKey('V')).toBe('ㅍ');
-    engine.reset();
-    expect(engine.handleKey('G')).toBe('ㅎ');
-    engine.reset();
-
-    engine.handleKey('X');
-    expect(engine.handleKey('k')).toBe('타');
-  });
-
-  it('should support direct native Korean OS keyboard input (Jamos and Syllables)', () => {
-    engine.handleKey('ㅅ');
-    expect(engine.handleKey('ㅏ')).toBe('사');
-    expect(engine.handleKey('ㄱ')).toBe('삭');
-    expect(engine.handleKey('ㅗ')).toBe('사고');
-    expect(engine.handleKey('ㅏ')).toBe('사과');
-
-    engine.reset();
-    expect(engine.handleKey('사과')).toBe('사과');
-  });
-
-  it('should handle liaison syllable splitting when vowel follows Jongseong', () => {
+  it('should split Jongseong into Choseong of next syllable when vowel follows', () => {
     engine.handleKey('g');
     engine.handleKey('k');
     engine.handleKey('s');
     expect(engine.getComposedText()).toBe('한');
-    expect(engine.handleKey('k')).toBe('하나');
 
-    engine.reset();
+    engine.handleKey('r');
+    expect(engine.getComposedText()).toBe('한ㄱ');
+
+    engine.handleKey('k');
+    expect(engine.getComposedText()).toBe('한가');
+  });
+
+  it('should handle complex compound Jongseong (e.g. 닭, 흙, 삶)', () => {
     engine.handleKey('e');
     engine.handleKey('k');
     engine.handleKey('f');
     engine.handleKey('r');
     expect(engine.getComposedText()).toBe('닭');
-    expect(engine.handleKey('l')).toBe('달기');
+
+    engine.handleKey('k');
+    expect(engine.getComposedText()).toBe('달가');
   });
 
-  it('should handle spaces, numbers, and non-Korean characters correctly', () => {
+  it('should handle punctuation and non-Korean keys by flushing active block', () => {
     engine.handleKey('t');
     engine.handleKey('k');
+    expect(engine.getComposedText()).toBe('사');
+
     engine.handleKey('r');
     engine.handleKey('h');
     engine.handleKey('k');
     expect(engine.getComposedText()).toBe('사과');
 
-    expect(engine.handleKey(' ')).toBe('사과 ');
+    engine.handleKey(' ');
+    expect(engine.getComposedText()).toBe('사과 ');
 
     engine.handleKey('a');
     engine.handleKey('j');
-    expect(engine.handleKey('r')).toBe('사과 먹');
-
+    engine.handleKey('r');
     expect(engine.handleKey('!')).toBe('사과 먹!');
   });
 

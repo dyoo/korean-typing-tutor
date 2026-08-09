@@ -83,39 +83,51 @@ export class TutorSession {
     this.resetSessionState();
   }
 
-  /** Returns list of available curriculum modules. */
-  public getModules(): ModuleDefinition[] {
-    return this.modules;
-  }
-
-  /** Sets the active level filter module and reshuffles lessons. */
+  /** Updates active module filter and reshuffles items. */
   public setFilter(filterId: string, shuffle = true): void {
     this.selectedFilter = filterId;
     this.shouldShuffle = shuffle;
     this.applyFilterAndShuffle();
   }
 
-  /** Returns current active filter mode. */
+  /** Returns active filter module ID. */
   public getFilter(): string {
     return this.selectedFilter;
   }
 
-  /** Returns current target lesson item. */
-  public getCurrentItem(): LessonItem {
-    return this.activeItems[this.currentIndex] ?? this.allItems[0];
+  /** Returns active filter module ID. */
+  public getSelectedFilter(): string {
+    return this.selectedFilter;
   }
 
-  /** Returns 0-indexed position in active lesson module. */
-  public getCurrentIndex(): number {
-    return this.currentIndex;
+  /** Returns all available module definitions. */
+  public getModules(): ModuleDefinition[] {
+    return this.modules;
   }
 
-  /** Returns total items in current active module. */
+  /** Returns total items count in active module. */
   public getTotalItems(): number {
     return this.activeItems.length;
   }
 
-  /** Returns current composed Hangul input string. */
+  /** Returns current item index (0-indexed). */
+  public getCurrentIndex(): number {
+    return this.currentIndex;
+  }
+
+  /** Returns currently active lesson item. */
+  public getCurrentItem(): LessonItem {
+    return this.activeItems[this.currentIndex] ?? {
+      id: 'fallback',
+      moduleId: 'all',
+      type: 'syllable',
+      target: '가',
+      pronunciation: 'ga',
+      translation: null
+    };
+  }
+
+  /** Returns composed user input string. */
   public getUserInput(): string {
     return this.userInput;
   }
@@ -141,14 +153,16 @@ export class TutorSession {
     return Math.round(((this.currentIndex + 1) / this.activeItems.length) * 100);
   }
 
-  /** Formats combined Romanization and English translation text. */
-  public getDisplayText(item = this.getCurrentItem()): string {
+  /** Formats combined Romanization and English translation text based on active settings. */
+  public getDisplayText(item = this.getCurrentItem(), options?: { showPronunciation?: boolean; showTranslation?: boolean }): string {
     if (!item) return '';
+    const showPron = options?.showPronunciation ?? true;
+    const showTrans = options?.showTranslation ?? true;
     const parts: string[] = [];
-    if (item.pronunciation) {
+    if (showPron && item.pronunciation) {
       parts.push(item.pronunciation);
     }
-    if (item.translation) {
+    if (showTrans && item.translation) {
       parts.push(item.translation);
     }
     return parts.join(' · ');
