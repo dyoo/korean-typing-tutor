@@ -21,6 +21,9 @@
   });
 
   function focusInput(e?: MouseEvent) {
+    if (window.getSelection() && window.getSelection()?.toString().trim().length! > 0) {
+      return;
+    }
     if (e && e.target) {
       const target = e.target as HTMLElement;
       if (
@@ -91,7 +94,7 @@
 
 <svelte:window onclick={focusInput} />
 
-<main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 text-gray-900 px-6 py-6 select-none overflow-hidden">
+<main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 text-gray-900 px-6 py-6 overflow-hidden">
   <div class="w-full max-w-5xl flex items-center justify-between gap-4">
     <div class="flex items-center gap-3">
       <label for="level-select" class="text-sm font-bold uppercase tracking-wider text-gray-500 font-mono">Module:</label>
@@ -120,7 +123,7 @@
   </div>
 
   <div class="w-full max-w-6xl flex flex-col items-center justify-center my-auto py-2">
-    <div class="relative flex justify-center flex-nowrap whitespace-nowrap gap-x-3 text-giant font-extrabold tracking-wider leading-none text-center">
+    <div class="relative flex justify-center flex-nowrap whitespace-nowrap gap-x-3 text-giant font-extrabold tracking-wider leading-none text-center select-text">
       {#each currentItem.target.split('') as char, i}
         {@const typedChar = userInput[i]}
         {@const isTyped = typedChar !== undefined}
@@ -135,7 +138,7 @@
       {/each}
     </div>
 
-    <div class="text-subgiant text-gray-500 font-semibold italic mt-4 text-center tracking-wide min-h-[3rem]">
+    <div class="text-subgiant text-gray-500 font-semibold italic mt-4 text-center tracking-wide min-h-[3rem] select-text">
       {displayText}
     </div>
 
