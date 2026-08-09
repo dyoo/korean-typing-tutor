@@ -16,3 +16,11 @@ export interface ErrorReport {
   index: number;
   isError: boolean;
 }
+
+export interface LessonItem {
+  id: string;
+  type: string;
+  target: string;
+  pronunciation: string | null;
+  translation: string | null;
+}
