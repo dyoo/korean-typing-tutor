@@ -9,7 +9,6 @@
   let currentIndex = $state(session.getCurrentIndex());
   let userInput = $state(session.getUserInput());
   let errors = $state(session.getErrors());
-  let accuracy = $state(session.getAccuracy());
   let progress = $state(session.getProgressPercentage());
   let currentItem = $state(session.getCurrentItem());
   let isCompleted = $state(session.getIsItemCompleted());
@@ -27,7 +26,6 @@
     currentIndex = session.getCurrentIndex();
     userInput = session.getUserInput();
     errors = session.getErrors();
-    accuracy = session.getAccuracy();
     progress = session.getProgressPercentage();
     currentItem = session.getCurrentItem();
     isCompleted = session.getIsItemCompleted();
@@ -141,9 +139,8 @@
       />
     </div>
 
-    <div class="flex justify-between w-full mt-4 text-lg text-gray-400 font-mono font-bold uppercase tracking-wider">
+    <div class="flex justify-center w-full mt-4 text-lg text-gray-400 font-mono font-bold uppercase tracking-wider">
       <span>Level {currentIndex + 1} / {session.getTotalItems()}</span>
-      <span>Accuracy: {accuracy}%</span>
     </div>
   </div>
 </main>
