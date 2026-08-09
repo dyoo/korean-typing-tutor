@@ -81,15 +81,9 @@
 
   <div class="w-full max-w-6xl flex flex-col items-center justify-center my-auto py-8">
     <div class="relative flex justify-center flex-wrap gap-x-6 text-giant font-extrabold tracking-wider leading-none text-center">
-      {#each currentItem.target.split('') as char, i}
-        {@const typedChar = userInput[i]}
-        {@const isTyped = typedChar !== undefined}
-        {@const isError = isTyped && typedChar !== char}
-        
-        <span class="relative px-3 py-2">
-          <span class={isTyped ? (isError ? 'text-red-500 border-b-[12px] border-red-500' : 'text-emerald-600 border-b-[12px] border-emerald-500') : 'text-gray-300 border-b-[12px] border-gray-200'}>
-            {isTyped ? typedChar : char}
-          </span>
+      {#each currentItem.target.split('') as char}
+        <span class="relative px-3 py-2 text-gray-900 border-b-[12px] border-gray-300">
+          {char}
         </span>
       {/each}
     </div>
@@ -116,19 +110,36 @@
   </div>
 
   <div class="w-full max-w-3xl flex flex-col items-center pb-8">
-    <input
-      bind:this={inputElement}
-      type="text"
-      class="w-full bg-white border-b-8 border-gray-300 focus:border-blue-600 text-6xl md:text-7xl py-6 focus:outline-none transition-all text-center font-bold shadow-md rounded-t-xl"
-      value={userInput}
-      onkeydown={handleKeydown}
-      oninput={handleInputPrevent}
-      autocomplete="off"
-      autocorrect="off"
-      autocapitalize="off"
-      spellcheck="false"
-      placeholder={isCompleted ? "Press Enter or Space for next word" : "Type here..."}
-    />
+    <div class="w-full relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 py-6 font-bold shadow-md rounded-t-xl min-h-[100px]">
+      {#if userInput.length === 0}
+        <span class="text-3xl text-gray-400 font-normal">
+          {isCompleted ? "Press Enter or Space for next word" : "Type in QWERTY..."}
+        </span>
+      {:else}
+        <div class="flex justify-center flex-wrap gap-x-2 text-6xl md:text-7xl font-bold">
+          {#each userInput.split('') as char, i}
+            {@const isError = errors.find(e => e.index === i)?.isError ?? false}
+            
+            <span class={isError ? 'text-red-500 border-b-4 border-red-500' : 'text-blue-600 border-b-4 border-blue-500'}>
+              {char}
+            </span>
+          {/each}
+        </div>
+      {/if}
+
+      <input
+        bind:this={inputElement}
+        type="text"
+        class="absolute inset-0 w-full h-full opacity-0 cursor-text"
+        value={userInput}
+        onkeydown={handleKeydown}
+        oninput={handleInputPrevent}
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+    </div>
 
     <div class="flex justify-between w-full mt-6 text-xl sm:text-2xl text-gray-400 font-mono font-bold uppercase tracking-wider">
       <span>Level {currentIndex + 1} / {session.getTotalItems()}</span>
