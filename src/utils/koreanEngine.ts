@@ -165,6 +165,15 @@ const JONGSEONG_TO_CHOSEONG: Record<number, number> = {
   27: 18  // ㅎ -> ㅎ
 };
 
+/**
+ * Explicit helper to construct compound map keys from two numeric Jamo indices.
+ * Prevents reliance on implicit toString coercions and makes key generation explicit.
+ * Example: makeCompoundKey(8, 0) -> '8,0'
+ */
+function makeCompoundKey(firstIndex: number, secondIndex: number): string {
+  return `${firstIndex},${secondIndex}`;
+}
+
 /** Standalone Compatibility Choseong characters (used when rendering partial syllables). */
 const CHOSEONG_STANDALONE = [
   'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ',
@@ -294,7 +303,7 @@ export class HangulEngine {
     // --- 5. State 3: Block has standalone Jungseong only (e.g. 'ㅏ') ---
     if (this.currentChoseong === null && this.currentJungseong !== null) {
       if (jung !== undefined) {
-        const compoundKey = `${this.currentJungseong},${jung}`;
+        const compoundKey = makeCompoundKey(this.currentJungseong, jung);
         if (COMPOUND_JUNGSEONG[compoundKey] !== undefined) {
           this.currentJungseong = COMPOUND_JUNGSEONG[compoundKey];
         } else {
@@ -312,7 +321,7 @@ export class HangulEngine {
     if (this.currentChoseong !== null && this.currentJungseong !== null && (this.currentJongseong === null || this.currentJongseong === 0)) {
       if (jung !== undefined) {
         // Try combining into compound vowel (e.g. '고' + 'ㅏ' -> '과')
-        const compoundKey = `${this.currentJungseong},${jung}`;
+        const compoundKey = makeCompoundKey(this.currentJungseong, jung);
         if (COMPOUND_JUNGSEONG[compoundKey] !== undefined) {
           this.currentJungseong = COMPOUND_JUNGSEONG[compoundKey];
         } else {
@@ -362,7 +371,7 @@ export class HangulEngine {
         }
       } else if (jong !== undefined) {
         // Try combining into compound Jongseong (e.g. '달' + 'ㄱ' -> '닭')
-        const compoundKey = `${this.currentJongseong},${jong}`;
+        const compoundKey = makeCompoundKey(this.currentJongseong, jong);
         if (COMPOUND_JONGSEONG[compoundKey] !== undefined) {
           this.currentJongseong = COMPOUND_JONGSEONG[compoundKey];
         } else if (cho !== undefined) {
