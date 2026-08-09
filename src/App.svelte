@@ -20,7 +20,20 @@
     inputElement?.focus();
   });
 
-  function focusInput() {
+  function focusInput(e?: MouseEvent) {
+    if (e && e.target) {
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === 'SELECT' ||
+        target.tagName === 'OPTION' ||
+        target.tagName === 'BUTTON' ||
+        target.closest('select') ||
+        target.closest('button') ||
+        target.closest('label')
+      ) {
+        return;
+      }
+    }
     inputElement?.focus();
   }
 
@@ -87,6 +100,8 @@
         class="bg-white border-2 border-gray-300 text-gray-800 font-semibold rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-600 shadow-sm text-sm cursor-pointer"
         value={selectedFilter}
         onchange={handleFilterChange}
+        onclick={(e) => e.stopPropagation()}
+        onmousedown={(e) => e.stopPropagation()}
       >
         <option value="all">All Lessons ({contentData.length})</option>
         <option value="l1">Level 1 — Basic Syllables</option>
