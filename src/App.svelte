@@ -98,20 +98,21 @@
       {currentItem.pronunciation ? currentItem.pronunciation : currentItem.translation}
     </div>
 
-    {#if isCompleted}
-      <div class="mt-6 flex flex-col items-center gap-4">
+    <div class="mt-6 h-36 flex flex-col items-center justify-center">
+      <div class={isCompleted ? 'flex flex-col items-center gap-4' : 'invisible pointer-events-none'}>
         <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 font-bold px-6 py-3 rounded-full text-2xl border border-emerald-300 shadow-sm">
           ✓ Correct! Press <kbd class="bg-white px-3 py-1 rounded shadow text-gray-800 border">Enter ↵</kbd> or <kbd class="bg-white px-3 py-1 rounded shadow text-gray-800 border">Space</kbd>
         </span>
         <button
           type="button"
           onclick={handleManualAdvance}
+          tabindex={isCompleted ? 0 : -1}
           class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-2xl px-8 py-4 rounded-xl shadow-lg cursor-pointer"
         >
           Next Word ➔
         </button>
       </div>
-    {/if}
+    </div>
   </div>
 
   <div class="w-full max-w-3xl flex flex-col items-center pb-8">
