@@ -1,20 +1,29 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { TutorSession } from './tutorSession';
-import type { LessonItem } from '../types/korean';
+import type { CurriculumData } from './tutorSession';
 
-const mockLessons: LessonItem[] = [
-  { id: 'l1-1', type: 'syllable', target: '가', pronunciation: 'ga', translation: null },
-  { id: 'l3-1', type: 'word', target: '사과', pronunciation: 'sagwa', translation: 'apple' }
-];
+const mockCurriculum: CurriculumData = {
+  modules: [
+    { id: 'all', title: 'All Lessons', description: 'Comprehensive practice' },
+    { id: 'l1', title: 'Level 1 — Basic Syllables', description: 'Syllable exercises' },
+    { id: 'l3', title: 'Level 3 — Everyday Vocabulary', description: 'Vocabulary exercises' }
+  ],
+  items: [
+    { id: 'l1-1', moduleId: 'l1', type: 'syllable', target: '가', pronunciation: 'ga', translation: null },
+    { id: 'l3-1', moduleId: 'l3', type: 'word', target: '사과', pronunciation: 'sagwa', translation: 'apple' }
+  ]
+};
 
 describe('TutorSession controller', () => {
   let session: TutorSession;
 
   beforeEach(() => {
-    session = new TutorSession(mockLessons, 'all', false);
+    session = new TutorSession(mockCurriculum, 'all', false);
   });
 
-  it('should initialize with first lesson item', () => {
+  it('should initialize cleanly from CurriculumData JSON format', () => {
+    expect(session.getModules().length).toBe(3);
+    expect(session.getModules()[1].title).toBe('Level 1 — Basic Syllables');
     expect(session.getCurrentIndex()).toBe(0);
     expect(session.getCurrentItem().target).toBe('가');
     expect(session.getUserInput()).toBe('');
@@ -24,19 +33,35 @@ describe('TutorSession controller', () => {
   });
 
   it('should format combined Romanization and translation display text', () => {
-    expect(session.getDisplayText(mockLessons[0])).toBe('ga');
-    expect(session.getDisplayText(mockLessons[1])).toBe('sagwa · apple');
+    expect(session.getDisplayText(mockCurriculum.items[0])).toBe('ga');
+    expect(session.getDisplayText(mockCurriculum.items[1])).toBe('sagwa · apple');
   });
 
-  it('should filter items by selected level', () => {
+  it('should filter items by selected level module', () => {
     session.setFilter('l3', false);
+    expect(session.getFilter()).toBe('l3');
     expect(session.getTotalItems()).toBe(1);
     expect(session.getCurrentItem().target).toBe('사과');
+
+    session.setFilter('l1', false);
+    expect(session.getTotalItems()).toBe(1);
+    expect(session.getCurrentItem().target).toBe('가');
+
+    session.setFilter('all', false);
+    expect(session.getTotalItems()).toBe(2);
   });
 
   it('should compose Hangul keystrokes during session', () => {
     session.processKey('r');
     expect(session.getUserInput()).toBe('ㄱ');
+  });
+
+  it('should ignore modifier keys such as Tab and Escape', () => {
+    const resTab = session.processKey('Tab');
+    expect(resTab.isMatch).toBe(false);
+
+    const resEsc = session.processKey('Escape');
+    expect(resEsc.isMatch).toBe(false);
   });
 
   it('should calculate accuracy and identify errors', () => {

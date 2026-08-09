@@ -46,6 +46,14 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
     expect(errors[0].isError).toBe(false);
     expect(errors[1].isError).toBe(true);
   });
+
+  it('should recognize compound Jongseong partial matches as valid', () => {
+    expect(isPartialOrExactMatch('닭', '달')).toBe(true);
+    expect(isPartialOrExactMatch('닭', '다')).toBe(true);
+    expect(isPartialOrExactMatch('닭', 'ㄷ')).toBe(true);
+    expect(isPartialOrExactMatch('닭', '닭')).toBe(true);
+    expect(isPartialOrExactMatch('닭', '댟')).toBe(false);
+  });
 });
 
 describe('HangulEngine class', () => {
@@ -148,6 +156,23 @@ describe('HangulEngine class', () => {
     engine.handleKey('r');
     expect(engine.getComposedText()).toBe('닭');
     expect(engine.handleKey('l')).toBe('달기');
+  });
+
+  it('should handle spaces, numbers, and non-Korean characters correctly', () => {
+    engine.handleKey('t');
+    engine.handleKey('k');
+    engine.handleKey('r');
+    engine.handleKey('h');
+    engine.handleKey('k');
+    expect(engine.getComposedText()).toBe('사과');
+
+    expect(engine.handleKey(' ')).toBe('사과 ');
+
+    engine.handleKey('a');
+    engine.handleKey('j');
+    expect(engine.handleKey('r')).toBe('사과 먹');
+
+    expect(engine.handleKey('!')).toBe('사과 먹!');
   });
 
   it('should compose multi-syllable phrases accurately', () => {
