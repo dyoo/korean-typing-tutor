@@ -52,46 +52,48 @@
 
 <svelte:window onclick={focusInput} />
 
-<main class="flex flex-col items-center justify-center min-h-screen bg-gray-50 text-gray-900 px-6 py-12 select-none">
-  <div class="max-w-4xl w-full flex flex-col items-center">
-    <div class="w-full bg-gray-200 h-2.5 mb-16 rounded-full overflow-hidden shadow-inner">
+<main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 text-gray-900 px-6 py-8 select-none">
+  <div class="w-full max-w-5xl">
+    <div class="w-full bg-gray-200 h-3 rounded-full overflow-hidden shadow-inner">
       <div 
         class="bg-blue-600 h-full transition-all duration-300 rounded-full" 
         style="width: {progress}%"
       ></div>
     </div>
+  </div>
 
-    <div class="relative mb-12 min-h-[160px] flex items-center justify-center text-center">
-      <div class="flex justify-center flex-wrap gap-x-4 text-7xl sm:text-8xl md:text-9xl font-bold tracking-widest leading-none">
-        {#each currentItem.target.split('') as char, i}
-          {@const typedChar = userInput[i]}
-          {@const isTyped = typedChar !== undefined}
-          {@const isError = isTyped && typedChar !== char}
-          
-          <span class="relative px-2 py-1">
-            <span class={isTyped ? (isError ? 'text-red-500 border-b-8 border-red-500' : 'text-blue-600 border-b-8 border-blue-600') : 'text-gray-300 border-b-8 border-gray-200'}>
-              {isTyped ? typedChar : char}
-            </span>
+  <div class="w-full max-w-6xl flex flex-col items-center justify-center my-auto py-8">
+    <div class="relative flex justify-center flex-wrap gap-x-6 text-giant font-extrabold tracking-wider leading-none text-center">
+      {#each currentItem.target.split('') as char, i}
+        {@const typedChar = userInput[i]}
+        {@const isTyped = typedChar !== undefined}
+        {@const isError = isTyped && typedChar !== char}
+        
+        <span class="relative px-3 py-2">
+          <span class={isTyped ? (isError ? 'text-red-500 border-b-[12px] border-red-500' : 'text-blue-600 border-b-[12px] border-blue-600') : 'text-gray-300 border-b-[12px] border-gray-200'}>
+            {isTyped ? typedChar : char}
           </span>
-        {/each}
-      </div>
+        </span>
+      {/each}
     </div>
 
-    <div class="text-2xl sm:text-3xl text-gray-500 font-medium italic mb-16 h-10 text-center tracking-wide">
+    <div class="text-subgiant text-gray-500 font-semibold italic mt-8 text-center tracking-wide min-h-[4rem]">
       {currentItem.pronunciation ? currentItem.pronunciation : currentItem.translation}
     </div>
+  </div>
 
+  <div class="w-full max-w-3xl flex flex-col items-center pb-8">
     <input
       bind:this={inputElement}
       type="text"
-      class="w-full max-w-xl bg-white border-b-4 border-gray-300 focus:border-blue-600 text-5xl py-4 focus:outline-none transition-all text-center font-bold shadow-sm rounded-t-lg"
+      class="w-full bg-white border-b-8 border-gray-300 focus:border-blue-600 text-6xl md:text-7xl py-6 focus:outline-none transition-all text-center font-bold shadow-md rounded-t-xl"
       value={userInput}
       onkeydown={handleKeydown}
       placeholder="Type here..."
     />
 
-    <div class="flex justify-between w-full max-w-xl mt-12 text-base sm:text-lg text-gray-400 font-mono font-semibold uppercase tracking-wider">
-      <span>Level {currentIndex + 1} of {session.getTotalItems()}</span>
+    <div class="flex justify-between w-full mt-6 text-xl sm:text-2xl text-gray-400 font-mono font-bold uppercase tracking-wider">
+      <span>Level {currentIndex + 1} / {session.getTotalItems()}</span>
       <span>Accuracy: {accuracy}%</span>
     </div>
   </div>

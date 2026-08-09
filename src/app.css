@@ -1,3 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@layer utilities {
+  .text-giant {
+    font-size: clamp(6rem, 18vw, 16rem);
+    line-height: 1;
+  }
+  .text-subgiant {
+    font-size: clamp(2rem, 5vw, 4rem);
+  }
+}
