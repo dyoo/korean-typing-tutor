@@ -1,0 +1,28 @@
+# Agent Instructions: Korean Typing Tutor
+
+## Project Context
+You are assisting in the development of a Korean Typing Tutor PWA. The goal is to create a distraction-free, high-performance typing experience for English speakers learning Korean.
+
+## Technical Environment
+- **Framework**: Svelte (using `<script lang="ts">`)
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS (utility classes only)
+- **Language**: TypeScript (strict mode)
+- **Architecture**: Client-side only (LocalStorage for persistence)
+
+## Coding Conventions
+- **Style**: Minimalist and clean.
+- **No Comments**: DO NOT add comments to code unless explicitly requested.
+- **TypeScript**: Always use proper types/interfaces (see `src/types/korean.ts`).
+- **Component Structure**: Keep Svelte components focused. Logic for complex operations (like Hangul composition) should reside in `src/utils/`.
+- **CSS**: Use Tailwind utility classes directly in the markup.
+
+## Key Files & Modules
+- `src/App.svelte`: The primary UI component and interaction handler.
+- `src/utils/koreanEngine.ts`: The core logic for keystroke mapping and composition.
+- `src/types/korean.ts`: Type definitions for the domain model.
+- `src/content.json`: The curriculum data.
+- `vite.config.ts`: Configuration for Vite and PWA support.
+
+## Current Priority
+Implement the **Korean Composition Engine** in `src/utils/koreanEngine.ts`. This must convert standard QWERTY keyboard input into correct Hangul syllable blocks.

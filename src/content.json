@@ -1,0 +1,8 @@
+[
+  { "id": "l1-1", "type": "syllable", "target": "가", "pronunciation": "ga", "translation": null },
+  { "id": "l1-2", "type": "syllable", "target": "나", "pronunciation": "na", "translation": null },
+  { "id": "l1-3", "type": "syllable", "target": "다", "pronunciation": "da", "translation": null },
+  { "id": "l2-1", "type": "word", "target": "사과", "pronunciation": "sagwa", "translation": "apple" },
+  { "id": "l2-2", "type": "word", "target": "우유", "pronunciation": "uyu", "translation": "milk" },
+  { "id": "l3-1", "type": "sentence", "target": "사과를 먹어요", "pronunciation": "sagwareul meogeoyo", "translation": "I eat an apple" }
+]
