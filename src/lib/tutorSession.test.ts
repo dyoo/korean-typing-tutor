@@ -51,6 +51,22 @@ describe('TutorSession controller', () => {
     expect(session.getUserInput()).toBe('');
   });
 
+  it('should allow backspacing to edit and re-type after completing a word', () => {
+    session.processKey('r');
+    session.processKey('k');
+    expect(session.getIsItemCompleted()).toBe(true);
+    expect(session.getUserInput()).toBe('가');
+
+    session.processKey('Backspace');
+    expect(session.getIsItemCompleted()).toBe(false);
+    expect(session.getUserInput()).toBe('ㄱ');
+    expect(session.getCurrentIndex()).toBe(0);
+
+    session.processKey('k');
+    expect(session.getIsItemCompleted()).toBe(true);
+    expect(session.getUserInput()).toBe('가');
+  });
+
   it('should flag tutorial completion on final item advance', () => {
     session.processKey('r');
     session.processKey('k');

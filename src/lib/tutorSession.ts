@@ -65,6 +65,15 @@ export class TutorSession {
         const isTutorialComplete = this.advanceLevel();
         return { isMatch: true, isItemCompleted: false, isTutorialComplete, advanced: true };
       }
+      if (key === 'Backspace') {
+        this.userInput = this.engine.handleKey('Backspace');
+        const currentTarget = this.getCurrentItem().target;
+        this.errors = checkErrors(currentTarget, this.userInput);
+        this.isItemCompleted = (this.userInput === currentTarget);
+        const correctChars = this.errors.filter(err => !err.isError).length;
+        this.accuracy = this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
+        return { isMatch: this.isItemCompleted, isItemCompleted: this.isItemCompleted, isTutorialComplete: false, advanced: false };
+      }
       return { isMatch: false, isItemCompleted: true, isTutorialComplete: false, advanced: false };
     }
 
