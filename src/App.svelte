@@ -95,7 +95,7 @@
 
 <svelte:window onclick={focusInput} />
 
-<main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 text-gray-900 px-6 py-6 overflow-hidden">
+<main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 text-gray-900 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden">
   <div class="w-full max-w-5xl flex items-center justify-between gap-4">
     <div class="flex items-center gap-3">
       <label for="level-select" class="text-sm font-bold uppercase tracking-wider text-gray-500 font-mono">Module:</label>
@@ -121,15 +121,15 @@
     </div>
   </div>
 
-  <div class="w-full max-w-6xl flex flex-col items-center justify-center my-auto py-2">
-    <div class="relative flex justify-center flex-nowrap whitespace-nowrap gap-x-3 text-giant font-extrabold tracking-wider leading-none text-center select-text">
+  <div class="w-full max-w-5xl flex flex-col items-center justify-center my-auto py-4 px-2 overflow-hidden">
+    <div class="relative flex flex-wrap break-keep justify-center gap-x-2 gap-y-3 font-extrabold tracking-wider text-center select-text max-w-full {currentItem.target.length > 6 ? 'text-longsentence' : 'text-giant'}">
       {#each currentItem.target.split('') as char, i}
         {@const typedChar = userInput[i]}
         {@const isTyped = typedChar !== undefined}
         {@const isError = errors.find(e => e.index === i)?.isError ?? false}
         {@const isExact = typedChar === char}
         
-        <span class="relative px-2 py-1">
+        <span class="relative px-1 py-0.5 inline-block">
           <span class={!isTyped ? 'text-gray-900 border-b-8 border-gray-300' : (isExact ? 'text-gray-900 border-b-8 border-emerald-500' : (isError ? 'text-gray-900 border-b-8 border-red-500' : 'text-gray-900 border-b-8 border-blue-600'))}>
             {char === ' ' ? '\u00A0' : char}
           </span>
@@ -137,20 +137,20 @@
       {/each}
     </div>
 
-    <div class="text-subgiant text-gray-500 font-semibold italic mt-4 text-center tracking-wide min-h-[3rem] select-text">
+    <div class="text-subgiant text-gray-500 font-semibold italic mt-4 text-center tracking-wide min-h-[2.5rem] select-text max-w-full px-2">
       {displayText}
     </div>
 
-    <div class="mt-4 h-28 flex flex-col items-center justify-center">
+    <div class="mt-4 min-h-[5rem] flex flex-col items-center justify-center">
       <div class={isCompleted ? 'flex flex-col items-center gap-3' : 'invisible pointer-events-none'}>
-        <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 font-bold px-5 py-2 rounded-full text-xl border border-emerald-300 shadow-sm">
-          ✓ Correct! Press <kbd class="bg-white px-2.5 py-0.5 rounded shadow text-gray-800 border text-lg">Enter ↵</kbd> or <kbd class="bg-white px-2.5 py-0.5 rounded shadow text-gray-800 border text-lg">Space</kbd>
+        <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 font-bold px-5 py-2 rounded-full text-lg md:text-xl border border-emerald-300 shadow-sm text-center">
+          ✓ Correct! Press <kbd class="bg-white px-2.5 py-0.5 rounded shadow text-gray-800 border text-base md:text-lg">Enter ↵</kbd> or <kbd class="bg-white px-2.5 py-0.5 rounded shadow text-gray-800 border text-base md:text-lg">Space</kbd>
         </span>
         <button
           type="button"
           onclick={handleManualAdvance}
           tabindex={isCompleted ? 0 : -1}
-          class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xl px-7 py-3 rounded-xl shadow-md cursor-pointer"
+          class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-lg md:text-xl px-7 py-2.5 rounded-xl shadow-md cursor-pointer"
         >
           Next Word ➔
         </button>
@@ -158,14 +158,14 @@
     </div>
   </div>
 
-  <div class="w-full max-w-3xl flex flex-col items-center pb-4 shrink-0">
-    <div class="w-full h-24 relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
+  <div class="w-full max-w-3xl flex flex-col items-center pb-4 shrink-0 px-2">
+    <div class="w-full min-h-[5rem] py-3 relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
-        <span class="text-2xl text-gray-400 font-normal">
+        <span class="text-xl md:text-2xl text-gray-400 font-normal text-center">
           {isCompleted ? "Press Enter or Space for next word" : "Start typing..."}
         </span>
       {:else}
-        <div class="flex justify-center flex-nowrap whitespace-nowrap gap-x-1 text-4xl md:text-5xl font-bold">
+        <div class="flex flex-wrap break-keep justify-center gap-x-1 gap-y-2 text-2xl md:text-4xl font-bold max-w-full">
           {#each userInput.split('') as char, i}
             {@const isError = errors.find(e => e.index === i)?.isError ?? false}
             
