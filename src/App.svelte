@@ -79,7 +79,7 @@
     </div>
   </div>
 
-  <div class="w-full max-w-6xl flex flex-col items-center justify-center my-auto py-8">
+  <div class="w-full max-w-6xl flex flex-col items-center justify-center my-auto py-4">
     <div class="relative flex justify-center flex-wrap gap-x-6 text-giant font-extrabold tracking-wider leading-none text-center">
       {#each currentItem.target.split('') as char}
         <span class="relative px-3 py-2 text-gray-900 border-b-[12px] border-gray-300">
@@ -88,11 +88,11 @@
       {/each}
     </div>
 
-    <div class="text-subgiant text-gray-500 font-semibold italic mt-8 text-center tracking-wide min-h-[4rem]">
+    <div class="text-subgiant text-gray-500 font-semibold italic mt-6 text-center tracking-wide min-h-[4rem]">
       {currentItem.pronunciation ? currentItem.pronunciation : currentItem.translation}
     </div>
 
-    <div class="mt-6 h-36 flex flex-col items-center justify-center">
+    <div class="mt-4 h-32 flex flex-col items-center justify-center">
       <div class={isCompleted ? 'flex flex-col items-center gap-4' : 'invisible pointer-events-none'}>
         <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 font-bold px-6 py-3 rounded-full text-2xl border border-emerald-300 shadow-sm">
           ✓ Correct! Press <kbd class="bg-white px-3 py-1 rounded shadow text-gray-800 border">Enter ↵</kbd> or <kbd class="bg-white px-3 py-1 rounded shadow text-gray-800 border">Space</kbd>
@@ -109,10 +109,10 @@
     </div>
   </div>
 
-  <div class="w-full max-w-3xl flex flex-col items-center pb-8">
-    <div class="w-full relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 py-6 font-bold shadow-md rounded-t-xl min-h-[100px]">
+  <div class="w-full max-w-3xl flex flex-col items-center pb-6 shrink-0">
+    <div class="w-full h-32 relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
-        <span class="text-3xl text-gray-400 font-normal">
+        <span class="text-4xl text-gray-300 font-normal">
           {isCompleted ? "Press Enter or Space for next word" : "Type in QWERTY..."}
         </span>
       {:else}
@@ -141,7 +141,7 @@
       />
     </div>
 
-    <div class="flex justify-between w-full mt-6 text-xl sm:text-2xl text-gray-400 font-mono font-bold uppercase tracking-wider">
+    <div class="flex justify-between w-full mt-4 text-xl sm:text-2xl text-gray-400 font-mono font-bold uppercase tracking-wider">
       <span>Level {currentIndex + 1} / {session.getTotalItems()}</span>
       <span>Accuracy: {accuracy}%</span>
     </div>
