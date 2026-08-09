@@ -79,9 +79,16 @@
 
   <div class="w-full max-w-6xl flex flex-col items-center justify-center my-auto py-2">
     <div class="relative flex justify-center flex-nowrap whitespace-nowrap gap-x-3 text-giant font-extrabold tracking-wider leading-none text-center">
-      {#each currentItem.target.split('') as char}
-        <span class="relative px-2 py-1 text-gray-900 border-b-8 border-gray-300">
-          {char === ' ' ? '\u00A0' : char}
+      {#each currentItem.target.split('') as char, i}
+        {@const typedChar = userInput[i]}
+        {@const isTyped = typedChar !== undefined}
+        {@const isError = errors.find(e => e.index === i)?.isError ?? false}
+        {@const isExact = typedChar === char}
+        
+        <span class="relative px-2 py-1">
+          <span class={!isTyped ? 'text-gray-900 border-b-8 border-gray-300' : (isExact ? 'text-gray-900 border-b-8 border-emerald-500' : (isError ? 'text-gray-900 border-b-8 border-red-500' : 'text-gray-900 border-b-8 border-blue-600'))}>
+            {char === ' ' ? '\u00A0' : char}
+          </span>
         </span>
       {/each}
     </div>

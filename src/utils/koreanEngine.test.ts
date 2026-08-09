@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { HangulEngine, checkErrors, compose } from './koreanEngine';
+import { HangulEngine, checkErrors, compose, isPartialOrExactMatch } from './koreanEngine';
 
-describe('checkErrors function', () => {
+describe('checkErrors and isPartialOrExactMatch functions', () => {
   it('should return no errors for exact match', () => {
     const target = 'hello';
     const input = 'hello';
@@ -23,6 +23,28 @@ describe('checkErrors function', () => {
     const errors = checkErrors(target, input);
     expect(errors.length).toBe(4);
     expect(errors[3].isError).toBe(true);
+  });
+
+  it('should not flag valid partial Hangul composition as error', () => {
+    const target = '사과';
+
+    expect(isPartialOrExactMatch('사', 'ㅅ')).toBe(true);
+    expect(isPartialOrExactMatch('사', '사')).toBe(true);
+    expect(isPartialOrExactMatch('과', 'ㄱ')).toBe(true);
+    expect(isPartialOrExactMatch('과', '고')).toBe(true);
+    expect(isPartialOrExactMatch('과', '과')).toBe(true);
+    expect(isPartialOrExactMatch('과', 'ㅋ')).toBe(false);
+
+    let errors = checkErrors(target, 'ㅅ');
+    expect(errors[0].isError).toBe(false);
+
+    errors = checkErrors(target, '사고');
+    expect(errors[0].isError).toBe(false);
+    expect(errors[1].isError).toBe(false);
+
+    errors = checkErrors(target, '사ㅋ');
+    expect(errors[0].isError).toBe(false);
+    expect(errors[1].isError).toBe(true);
   });
 });
 

@@ -12,7 +12,7 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 
 ## Coding Conventions
 - **Style**: Minimalist and clean.
-- **No Comments**: DO NOT add comments to code unless explicitly requested.
+- **Educational Comments**: Include clear, informative JSDoc and inline comments explaining complex logic (such as Hangul composition arithmetic, state transitions, and error evaluation) for educational clarity.
 - **Distraction-Free UI**: Absolutely NO animations, bouncing elements, pulsing effects, or automatic word transitions. The UI must remain static, high-contrast, clean, and deliberate.
 - **Quoted Map Keys**: Always use quoted string literals for string keys in maps/objects (e.g., `'r': 0` instead of `r: 0`).
 - **TypeScript**: Always use proper types/interfaces (see `src/types/korean.ts`).

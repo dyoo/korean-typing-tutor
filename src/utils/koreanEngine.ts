@@ -187,6 +187,57 @@ const JUNGSEONG_STANDALONE = [
 ];
 
 /**
+ * Checks if inputChar is an exact match or a valid partial composition prefix of targetChar.
+ * Prevents flagging valid in-progress Hangul syllables (e.g. typing 'ㅅ' while composing '사') as errors.
+ */
+export function isPartialOrExactMatch(targetChar: string | undefined, inputChar: string | undefined): boolean {
+  if (!inputChar) return false;
+  if (!targetChar) return false;
+  if (targetChar === inputChar) return true;
+
+  const targetCode = targetChar.charCodeAt(0);
+  if (targetCode < HANGUL_BASE || targetCode > 0xD7A3) {
+    return false;
+  }
+
+  const offset = targetCode - HANGUL_BASE;
+  const targetJong = offset % 28;
+  const targetJung = Math.floor(offset / 28) % 21;
+  const targetCho = Math.floor(offset / (21 * 28));
+
+  // Case 1: Input is standalone Choseong matching target's Choseong (e.g. 'ㅅ' for '사')
+  if (CHOSEONG_STANDALONE[targetCho] === inputChar) {
+    return true;
+  }
+
+  // Case 2: Input is base syllable without Jongseong (e.g. '사' for '산')
+  const baseSyllable = String.fromCharCode((targetCho * 21 + targetJung) * 28 + HANGUL_BASE);
+  if (baseSyllable === inputChar) {
+    return true;
+  }
+
+  // Case 3: Target has compound Jungseong (e.g. ㅘ = [ㅗ, ㅏ]), input matches first vowel part (e.g. '고' for '과')
+  if (COMPOUND_JUNGSEONG_DECOMP[targetJung]) {
+    const [firstVowel] = COMPOUND_JUNGSEONG_DECOMP[targetJung];
+    const partialVowelSyllable = String.fromCharCode((targetCho * 21 + firstVowel) * 28 + HANGUL_BASE);
+    if (partialVowelSyllable === inputChar) {
+      return true;
+    }
+  }
+
+  // Case 4: Target has compound Jongseong (e.g. ㄺ = [ㄹ, ㄱ]), input matches first consonant part (e.g. '달' for '닭')
+  if (COMPOUND_JONGSEONG_DECOMP[targetJong]) {
+    const [firstJong] = COMPOUND_JONGSEONG_DECOMP[targetJong];
+    const partialJongSyllable = String.fromCharCode((targetCho * 21 + targetJung) * 28 + firstJong + HANGUL_BASE);
+    if (partialJongSyllable === inputChar) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+/**
  * Korean Hangul Composition Engine.
  * Implements a state machine that converts raw QWERTY keystrokes into composed Hangul syllables.
  */
@@ -407,18 +458,10 @@ export class HangulEngine {
 
   /**
    * Compares target string vs user composed input and returns error flags per character position.
+   * Utilizes isPartialOrExactMatch to ensure valid in-progress Hangul syllables are not marked as errors.
    */
   public checkErrors(target: string, input: string): ErrorReport[] {
-    const errors: ErrorReport[] = [];
-    const maxLength = Math.max(target.length, input.length);
-
-    for (let i = 0; i < maxLength; i++) {
-      errors.push({
-        index: i,
-        isError: target[i] !== input[i]
-      });
-    }
-    return errors;
+    return checkErrors(target, input);
   }
 }
 
@@ -428,8 +471,20 @@ export class HangulEngine {
 export function checkErrors(target: string, input: string): ErrorReport[] {
   const errors: ErrorReport[] = [];
   const maxLength = Math.max(target.length, input.length);
+
   for (let i = 0; i < maxLength; i++) {
-    errors.push({ index: i, isError: target[i] !== input[i] });
+    const t = target[i];
+    const inp = input[i];
+
+    let isError = false;
+    if (inp !== undefined) {
+      isError = !isPartialOrExactMatch(t, inp);
+    }
+
+    errors.push({
+      index: i,
+      isError
+    });
   }
   return errors;
 }
