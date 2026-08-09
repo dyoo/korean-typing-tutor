@@ -13,6 +13,7 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 ## Coding Conventions
 - **Style**: Minimalist and clean.
 - **No Comments**: DO NOT add comments to code unless explicitly requested.
+- **Quoted Map Keys**: Always use quoted string literals for string keys in maps/objects (e.g., `'r': 0` instead of `r: 0`).
 - **TypeScript**: Always use proper types/interfaces (see `src/types/korean.ts`).
 - **Component Structure**: Keep Svelte components focused. Logic for complex operations (like Hangul composition) should reside in `src/utils/`.
 - **CSS**: Use Tailwind utility classes directly in the markup.
