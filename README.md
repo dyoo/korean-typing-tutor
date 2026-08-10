@@ -2,6 +2,9 @@
 
 A minimalist, high-performance Progressive Web App (PWA) designed to help English speakers learn Korean through focused typing practice.
 
+[View the application at https://dyoo.github.io/korean-typing-tutor/](https://dyoo.github.io/korean-typing-tutor/)
+
+
 ## Core Features
 
 - **Distraction-Free Design (Strict Requirement)**:
