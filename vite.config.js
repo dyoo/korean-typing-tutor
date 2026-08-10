@@ -2,6 +2,8 @@ import { defineConfig } from 'vite'
 import { svelte } from '@sveltejs/vite-plugin-svelte'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const commitId = process.env.COMMIT_ID || 'dev';
+
 export default defineConfig({
   base: './',
   plugins: [
@@ -13,6 +15,7 @@ export default defineConfig({
         short_name: 'KoreanTyping',
         description: 'Learn Korean through typing practice',
         theme_color: '#ffffff',
+        version: commitId,
         icons: [
           {
             src: 'pwa-192x192.png',
