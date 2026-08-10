@@ -38,7 +38,36 @@ export function handleTargetCopyEvent(
   const spans = targetWrapper.querySelectorAll('[data-target-index]');
   const indices: number[] = [];
   spans.forEach((span) => {
-    if (selection.containsNode(span, true)) {
+    let isSelected = false;
+    try {
+      if (typeof selection.containsNode === 'function') {
+        isSelected = selection.containsNode(span, true);
+      }
+    } catch {
+      isSelected = false;
+    }
+
+    if (!isSelected && range) {
+      try {
+        if (typeof range.intersectsNode === 'function') {
+          isSelected = range.intersectsNode(span);
+        }
+      } catch {
+        isSelected = false;
+      }
+    }
+
+    if (!isSelected && range) {
+      isSelected = (
+        span === range.startContainer ||
+        span === range.endContainer ||
+        span.contains(range.startContainer) ||
+        span.contains(range.endContainer) ||
+        range.commonAncestorContainer.contains(span)
+      );
+    }
+
+    if (isSelected) {
       const idxStr = span.getAttribute('data-target-index');
       if (idxStr !== null) {
         indices.push(parseInt(idxStr, 10));
