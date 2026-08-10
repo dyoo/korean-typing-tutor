@@ -57,17 +57,8 @@ export function handleTargetCopyEvent(
       }
     }
 
-    if (!isSelected && range) {
-      try {
-        const spanRange = document.createRange();
-        spanRange.selectNodeContents(span);
-        isSelected = (
-          range.compareBoundaryPoints(Range.START_TO_END, spanRange) > 0 &&
-          range.compareBoundaryPoints(Range.END_TO_START, spanRange) < 0
-        );
-      } catch {
-        isSelected = false;
-      }
+    if (!isSelected && targetWrapper) {
+      isSelected = true;
     }
 
     if (isSelected) {
