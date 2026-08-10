@@ -25,7 +25,6 @@
   let currentIndex = $state(session.getCurrentIndex());
   let userInput = $state(session.getUserInput());
   let errors = $state(session.getErrors());
-  let progress = $state(session.getProgressPercentage());
   let currentItem = $state(session.getCurrentItem());
   let isCompleted = $state(session.getIsItemCompleted());
   let inputElement = $state<HTMLInputElement | null>(null);
@@ -98,7 +97,6 @@
     currentIndex = session.getCurrentIndex();
     userInput = session.getUserInput();
     errors = session.getErrors();
-    progress = session.getProgressPercentage();
     currentItem = session.getCurrentItem();
     isCompleted = session.getIsItemCompleted();
   }
@@ -141,14 +139,8 @@
 
     if (e.key === 'Backspace' || e.key === 'Enter' || e.key.length === 1) {
       e.preventDefault();
-      const { isTutorialComplete, advanced } = session.processKey(e.key);
+      session.processKey(e.key);
       syncState();
-
-      if (advanced && isTutorialComplete) {
-        alert("Module completed! Reshuffling items...");
-        session.resetSession();
-        syncState();
-      }
     }
   }
 
@@ -158,13 +150,8 @@
 
   function handleSkip(e: MouseEvent) {
     e.stopPropagation();
-    const isTutorialComplete = session.advanceLevel();
+    session.advanceLevel();
     syncState();
-    if (isTutorialComplete) {
-      alert("Module completed! Reshuffling items...");
-      session.resetSession();
-      syncState();
-    }
     inputElement?.focus();
   }
 
@@ -278,13 +265,6 @@
           </div>
         </div>
       {/if}
-    </div>
-
-    <div class="flex-1 max-w-md bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden shadow-inner hidden sm:block">
-      <div 
-        class="bg-blue-600 dark:bg-blue-500 h-full transition-all duration-300 rounded-full" 
-        style="width: {progress}%"
-      ></div>
     </div>
 
     <div class="relative flex items-center gap-2">
