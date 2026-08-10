@@ -194,8 +194,8 @@
 
 <svelte:window onclick={handleWindowClick} />
 
-<main oncopy={handleCopy} class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden transition-colors">
-  <div class="w-full max-w-5xl flex items-center justify-between gap-4 shrink-0">
+<main oncopy={handleCopy} class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-8 md:py-6 overflow-x-hidden transition-colors">
+  <div class="w-full max-w-7xl flex items-center justify-between gap-4 shrink-0">
     <div class="relative flex items-center gap-3">
       <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono hidden sm:inline">Curriculum:</span>
       <button
@@ -333,8 +333,8 @@
     </div>
   </div>
 
-  <div class="w-full max-w-5xl flex flex-col items-center justify-center my-auto py-4 px-2 overflow-hidden">
-    <div class="target-display relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text max-w-full text-giant">
+  <div class="w-full max-w-full flex flex-col items-center justify-center my-auto py-4 px-2 md:px-8 overflow-hidden">
+    <div class="target-display relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text w-full max-w-full text-giant">
       {#each wordTokens as token}
         {#if token.type === 'space'}
           {@const i = token.indices[0]}
@@ -399,7 +399,7 @@
     </div>
   </div>
 
-  <div class="w-full max-w-3xl flex flex-col items-center pb-4 shrink-0 px-2">
+  <div class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-4 shrink-0 px-2 md:px-8">
     <div class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
         <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap select-none">
