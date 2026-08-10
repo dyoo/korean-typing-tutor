@@ -6,7 +6,9 @@ import {
   isPartialOrExactMatch,
   isSyllableComplete,
   decomposeCharToJamos,
-  getChoseongJamo
+  getChoseongJamo,
+  calculateTargetCursorIndex,
+  calculateInputCursorIndex
 } from './koreanEngine';
 
 describe('Jamo decomposition helpers', () => {
@@ -258,3 +260,43 @@ describe('HangulEngine class', () => {
     expect(engine.handleKey('Backspace')).toBe('다');
   });
 });
+
+describe('Cursor index calculation helpers', () => {
+  it('should calculate active target cursor index correctly', () => {
+    // Initial state: target cursor on 1st character (0)
+    expect(calculateTargetCursorIndex('가나다', '', false)).toBe(0);
+
+    // In-progress jamo for 1st char: target cursor stays on 1st character (0)
+    expect(calculateTargetCursorIndex('가나다', 'ㄱ', false)).toBe(0);
+
+    // 1st char complete: target cursor moves to 2nd character (1)
+    expect(calculateTargetCursorIndex('가나다', '가', false)).toBe(1);
+
+    // In-progress 2nd char: target cursor stays on 2nd character (1)
+    expect(calculateTargetCursorIndex('가나다', '가ㄴ', false)).toBe(1);
+
+    // Clamps to last target character index when typing at end of target text
+    expect(calculateTargetCursorIndex('가', '나', false)).toBe(0);
+
+    // Returns -1 when item is completed
+    expect(calculateTargetCursorIndex('가나다', '가나다', true)).toBe(-1);
+  });
+
+  it('should calculate active input cursor index correctly', () => {
+    // Initial state: input cursor at position 0
+    expect(calculateInputCursorIndex('', '가나다', false)).toBe(0);
+
+    // In-progress jamo: input cursor stays under 1st typed char (0)
+    expect(calculateInputCursorIndex('ㄱ', '가나다', false)).toBe(0);
+
+    // 1st char complete: input cursor moves to new position after 1st char (1)
+    expect(calculateInputCursorIndex('가', '가나다', false)).toBe(1);
+
+    // In-progress 2nd char: input cursor is under 2nd char (1)
+    expect(calculateInputCursorIndex('가ㄴ', '가나다', false)).toBe(1);
+
+    // Returns -1 when item is completed
+    expect(calculateInputCursorIndex('가나다', '가나다', true)).toBe(-1);
+  });
+});
+

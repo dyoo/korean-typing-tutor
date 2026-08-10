@@ -5,7 +5,7 @@
   import type { CurriculumData } from './lib/tutorSession';
   import { loadSettings, saveSettings } from './lib/settings';
   import type { TutorSettings } from './lib/settings';
-  import { isSyllableComplete } from './utils/koreanEngine';
+  import { calculateTargetCursorIndex, calculateInputCursorIndex } from './utils/koreanEngine';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   const modules = session.getModules();
@@ -24,21 +24,13 @@
 
   let displayText = $derived(session.getDisplayText(currentItem, settings));
 
-  let activeCursorIndex = $derived.by(() => {
-    if (isCompleted) {
-      return -1;
-    }
-    if (userInput.length === 0) {
-      return 0;
-    }
-    const lastIndex = userInput.length - 1;
-    const isLastComplete = isSyllableComplete(
-      currentItem.target[lastIndex],
-      userInput[lastIndex],
-      currentItem.target[lastIndex + 1]
-    );
-    return isLastComplete ? userInput.length : lastIndex;
-  });
+  let activeTargetCursorIndex = $derived(
+    calculateTargetCursorIndex(currentItem.target, userInput, isCompleted)
+  );
+
+  let activeInputCursorIndex = $derived(
+    calculateInputCursorIndex(userInput, currentItem.target, isCompleted)
+  );
 
   onMount(() => {
     inputElement?.focus();
@@ -223,12 +215,17 @@
     <div class="relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text max-w-full {currentItem.target.length > 30 ? 'text-paragraph' : (currentItem.target.length > 6 ? 'text-longsentence' : 'text-giant')}">
       {#each currentItem.target.split('') as char, i}
         {@const isError = errors.find(e => e.index === i)?.isError ?? false}
-        {@const isCurrent = (i === activeCursorIndex && !isCompleted && !isError)}
+        {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
         
-        <span class="relative py-1 inline-block my-1">
-          <span class={isError ? 'text-gray-900 border-b-8 border-red-500' : (isCurrent ? 'text-gray-900 border-b-8 border-blue-600' : 'text-gray-900 border-b-8 border-transparent')}>
+        <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
+          <span class={isError ? 'text-red-600 font-bold' : 'text-gray-900 font-bold'}>
             {char === ' ' ? '\u00A0' : char}
           </span>
+          {#if isError}
+            <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 rounded-full"></span>
+          {:else if isCurrent}
+            <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 rounded-full"></span>
+          {/if}
         </span>
       {/each}
     </div>
@@ -261,19 +258,45 @@
   <div class="w-full max-w-3xl flex flex-col items-center pb-4 shrink-0 px-2">
     <div class="w-full min-h-[5rem] py-3 relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
-        <span class="text-xl md:text-2xl text-gray-400 font-normal text-center">
-          {isCompleted ? "Press Enter or Space for next word" : "Start typing..."}
-        </span>
+        <div class="flex items-center justify-center gap-2 text-2xl md:text-4xl font-bold">
+          {#if isCompleted}
+            <span class="text-xl md:text-2xl text-gray-400 font-normal text-center">
+              Press Enter or Space for next word
+            </span>
+          {:else}
+            <span class="relative inline-flex flex-col items-center pb-2 pt-1 min-w-[0.7em]">
+              <span class="opacity-0 select-none">&nbsp;</span>
+              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 rounded-full"></span>
+            </span>
+            <span class="text-xl md:text-2xl text-gray-400 font-normal ml-2 select-none">
+              Start typing...
+            </span>
+          {/if}
+        </div>
       {:else}
-        <div class="flex flex-wrap break-keep justify-center gap-y-2 text-2xl md:text-4xl font-bold max-w-full">
+        <div class="flex flex-wrap break-keep justify-center items-center gap-y-2 text-2xl md:text-4xl font-bold max-w-full">
           {#each userInput.split('') as char, i}
             {@const isError = errors.find(e => e.index === i)?.isError ?? false}
-            {@const isCurrent = (i === activeCursorIndex && !isCompleted && !isError)}
+            {@const isCurrent = (i === activeInputCursorIndex && !isCompleted)}
             
-            <span class={isError ? 'text-red-500 border-b-4 border-red-500' : (isCurrent ? 'text-blue-600 border-b-4 border-blue-500' : 'text-blue-600 border-b-4 border-transparent')}>
-              {char === ' ' ? '\u00A0' : char}
+            <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
+              <span class={isError ? 'text-red-500' : 'text-blue-600'}>
+                {char === ' ' ? '\u00A0' : char}
+              </span>
+              {#if isError}
+                <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 rounded-full"></span>
+              {:else if isCurrent}
+                <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 rounded-full"></span>
+              {/if}
             </span>
           {/each}
+
+          {#if activeInputCursorIndex === userInput.length && !isCompleted}
+            <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5 min-w-[0.7em]">
+              <span class="opacity-0 select-none">&nbsp;</span>
+              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 rounded-full"></span>
+            </span>
+          {/if}
         </div>
       {/if}
 

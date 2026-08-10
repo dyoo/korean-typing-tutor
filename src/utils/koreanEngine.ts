@@ -640,3 +640,53 @@ export function compose(input: string): string {
   }
   return engine.getComposedText();
 }
+
+/**
+ * Calculates the active target character index for cursor display on the main target text.
+ * Clamps result to target.length - 1 when not completed so the target cursor never disappears.
+ */
+export function calculateTargetCursorIndex(
+  target: string,
+  userInput: string,
+  isCompleted: boolean
+): number {
+  if (isCompleted || !target) {
+    return -1;
+  }
+  if (userInput.length === 0) {
+    return 0;
+  }
+  const lastIndex = userInput.length - 1;
+  const isLastComplete = isSyllableComplete(
+    target[lastIndex],
+    userInput[lastIndex],
+    target[lastIndex + 1]
+  );
+  const rawIndex = isLastComplete ? userInput.length : lastIndex;
+  return Math.min(rawIndex, target.length - 1);
+}
+
+/**
+ * Calculates the active input position index for cursor display on the user input display.
+ * Returns -1 if completed, or an index from 0 to userInput.length.
+ */
+export function calculateInputCursorIndex(
+  userInput: string,
+  target: string,
+  isCompleted: boolean
+): number {
+  if (isCompleted) {
+    return -1;
+  }
+  if (userInput.length === 0) {
+    return 0;
+  }
+  const lastIndex = userInput.length - 1;
+  const isLastComplete = isSyllableComplete(
+    target[lastIndex],
+    userInput[lastIndex],
+    target[lastIndex + 1]
+  );
+  return isLastComplete ? userInput.length : lastIndex;
+}
+
