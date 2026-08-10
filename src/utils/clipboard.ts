@@ -58,13 +58,16 @@ export function handleTargetCopyEvent(
     }
 
     if (!isSelected && range) {
-      isSelected = (
-        span === range.startContainer ||
-        span === range.endContainer ||
-        span.contains(range.startContainer) ||
-        span.contains(range.endContainer) ||
-        range.commonAncestorContainer.contains(span)
-      );
+      try {
+        const spanRange = document.createRange();
+        spanRange.selectNodeContents(span);
+        isSelected = (
+          range.compareBoundaryPoints(Range.START_TO_END, spanRange) > 0 &&
+          range.compareBoundaryPoints(Range.END_TO_START, spanRange) < 0
+        );
+      } catch {
+        isSelected = false;
+      }
     }
 
     if (isSelected) {
