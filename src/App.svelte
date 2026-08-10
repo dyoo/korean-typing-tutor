@@ -55,6 +55,20 @@
     inputElement?.focus();
   });
 
+  function handleWindowClick(e: MouseEvent) {
+    const target = e.target as HTMLElement | null;
+
+    if (showSettingsModal && target && !target.closest('.settings-modal') && !target.closest('.settings-btn')) {
+      showSettingsModal = false;
+    }
+
+    if (showModuleModal && target && !target.closest('.module-modal') && !target.closest('.module-btn')) {
+      showModuleModal = false;
+    }
+
+    focusInput(e);
+  }
+
   function focusInput(e?: MouseEvent) {
     if (window.getSelection() && window.getSelection()?.toString().trim().length! > 0) {
       return;
@@ -113,7 +127,9 @@
   function toggleModuleModal(e: MouseEvent) {
     e.stopPropagation();
     showModuleModal = !showModuleModal;
-    if (!showModuleModal) {
+    if (showModuleModal) {
+      showSettingsModal = false;
+    } else {
       inputElement?.focus();
     }
   }
@@ -175,7 +191,9 @@
   function toggleSettingsModal(e: MouseEvent) {
     e.stopPropagation();
     showSettingsModal = !showSettingsModal;
-    if (!showSettingsModal) {
+    if (showSettingsModal) {
+      showModuleModal = false;
+    } else {
       inputElement?.focus();
     }
   }
@@ -186,7 +204,7 @@
   }
 </script>
 
-<svelte:window onclick={focusInput} />
+<svelte:window onclick={handleWindowClick} />
 
 <main oncopy={handleCopy} class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden transition-colors">
   <div class="w-full max-w-5xl flex items-center justify-between gap-4 shrink-0">
@@ -196,7 +214,7 @@
         type="button"
         onclick={toggleModuleModal}
         onmousedown={(e) => e.stopPropagation()}
-        class="flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
+        class="module-btn flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
         aria-label="Select Modules"
       >
         <span class="truncate max-w-[160px] sm:max-w-[240px]">
@@ -274,7 +292,7 @@
         type="button"
         onclick={toggleSettingsModal}
         onmousedown={(e) => e.stopPropagation()}
-        class="flex items-center gap-1.5 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
+        class="settings-btn flex items-center gap-1.5 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
         aria-label="Settings"
       >
         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
