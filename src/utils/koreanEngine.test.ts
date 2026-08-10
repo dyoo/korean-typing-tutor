@@ -1,5 +1,46 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { HangulEngine, checkErrors, compose, isPartialOrExactMatch } from './koreanEngine';
+import {
+  HangulEngine,
+  checkErrors,
+  compose,
+  isPartialOrExactMatch,
+  isSyllableComplete,
+  decomposeCharToJamos,
+  getChoseongJamo
+} from './koreanEngine';
+
+describe('Jamo decomposition helpers', () => {
+  it('should decompose Hangul syllables and Jamos into individual Jamo sequences', () => {
+    expect(decomposeCharToJamos('화')).toBe('ㅎㅗㅏ');
+    expect(decomposeCharToJamos(compose('ghkw'))).toBe('ㅎㅗㅏㅈ');
+    expect(decomposeCharToJamos('닭')).toBe('ㄷㅏㄹㄱ');
+    expect(decomposeCharToJamos('ㅘ')).toBe('ㅗㅏ');
+    expect(decomposeCharToJamos('ㄳ')).toBe('ㄱㅅ');
+  });
+
+  it('should extract Choseong Jamo correctly', () => {
+    expect(getChoseongJamo('장')).toBe('ㅈ');
+    expect(getChoseongJamo('요')).toBe('ㅇ');
+    expect(getChoseongJamo('ㄱ')).toBe('ㄱ');
+    expect(getChoseongJamo(' ')).toBe(null);
+  });
+
+  it('should evaluate isSyllableComplete correctly to prevent cursor backtracking', () => {
+    // Exact match
+    expect(isSyllableComplete('화', '화', '장')).toBe(true);
+
+    // Typing 'w' (ㅈ) after '화' when target is '화장실'
+    const inputAfterW = compose('ghkw');
+    expect(isSyllableComplete('화', inputAfterW, '장')).toBe(true);
+
+    // Typing wrong consonant 'd' (ㅇ) after '화' when target is '화장실'
+    const inputAfterWrongD = compose('ghkd');
+    expect(isSyllableComplete('화', inputAfterWrongD, '장')).toBe(false);
+
+    // Partial input '자' for target '장' is not complete
+    expect(isSyllableComplete('장', '자', '실')).toBe(false);
+  });
+});
 
 describe('checkErrors and isPartialOrExactMatch functions', () => {
   it('should return no errors for exact match', () => {
@@ -45,6 +86,38 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
     errors = checkErrors(target, '사ㅋ');
     expect(errors[0].isError).toBe(false);
     expect(errors[1].isError).toBe(true);
+  });
+
+  it('should handle ambiguous next-syllable choseong during typing (e.g. 화장실)', () => {
+    const target = '화장실';
+    const inputAfterW = compose('ghkw'); // '화' + 'ㅈ'
+
+    // inputAfterW vs target[0] '화' with nextTarget '장'
+    expect(isPartialOrExactMatch('화', inputAfterW, '장')).toBe(true);
+
+    // Typing 'w' (ㅈ) after '화' produces inputAfterW before vowel 'ㅏ' is typed
+    const errorsWhenAmbiguous = checkErrors(target, inputAfterW);
+    expect(errorsWhenAmbiguous[0].isError).toBe(false);
+
+    // Incorrect trailing consonant (e.g. 'd' / 'ㅇ' instead of 'w' / 'ㅈ') should still be flagged as error
+    const inputAfterWrongD = compose('ghkd'); // '화' + 'ㅇ'
+    expect(isPartialOrExactMatch('화', inputAfterWrongD, '장')).toBe(false);
+    const errorsWhenWrongConsonant = checkErrors(target, inputAfterWrongD);
+    expect(errorsWhenWrongConsonant[0].isError).toBe(true);
+  });
+
+  it('should handle step-by-step typing of multi-syllable word 화장실 without false errors', () => {
+    const target = '화장실';
+    const engine = new HangulEngine();
+    const keystrokes = ['g', 'h', 'k', 'w', 'k', 'd', 't', 'l', 'f'];
+
+    let currentInput = '';
+    for (const key of keystrokes) {
+      currentInput = engine.handleKey(key);
+      const errors = checkErrors(target, currentInput);
+      expect(errors.every(e => !e.isError)).toBe(true);
+    }
+    expect(currentInput).toBe('화장실');
   });
 
   it('should detect impossible keystrokes immediately as errors (e.g. ㄷ for 우유)', () => {

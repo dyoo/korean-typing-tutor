@@ -207,50 +207,148 @@ const JUNGSEONG_STANDALONE = [
 ];
 
 /**
- * Checks if inputChar is an exact match or a valid partial composition prefix of targetChar.
- * Prevents flagging valid in-progress Hangul syllables (e.g. typing 'ㅅ' while composing '사') as errors.
+ * Map of single Jongseong index to standalone Choseong/Jamo consonant.
+ * Index 1..27 corresponding to Unicode Hangul Jongseong definitions.
  */
-export function isPartialOrExactMatch(targetChar: string | undefined, inputChar: string | undefined): boolean {
-  if (!inputChar) return false;
-  if (!targetChar) return false;
+const JONGSEONG_SINGLE_JAMO: Record<number, string> = {
+  1: 'ㄱ', 2: 'ㄲ', 4: 'ㄴ', 7: 'ㄷ', 8: 'ㄹ',
+  16: 'ㅁ', 17: 'ㅂ', 19: 'ㅅ', 20: 'ㅆ', 21: 'ㅇ',
+  22: 'ㅈ', 23: 'ㅊ', 24: 'ㅋ', 25: 'ㅌ', 26: 'ㅍ', 27: 'ㅎ'
+};
+
+/**
+ * Map of standalone compound Jamo characters to their decomposed individual Jamo sequence.
+ */
+const STANDALONE_COMPOUND_MAP: Record<string, string> = {
+  'ㅘ': 'ㅗㅏ', 'ㅙ': 'ㅗㅐ', 'ㅚ': 'ㅗㅣ',
+  'ㅝ': 'ㅜㅓ', 'ㅞ': 'ㅜㅔ', 'ㅟ': 'ㅜㅣ', 'ㅢ': 'ㅡㅣ',
+  'ㄳ': 'ㄱㅅ', 'ㄵ': 'ㄴㅈ', 'ㄶ': 'ㄴㅎ',
+  'ㄺ': 'ㄹㄱ', 'ㄻ': 'ㄹㅁ', 'ㄼ': 'ㄹㅂ', 'ㄽ': 'ㄹㅅ',
+  'ㄾ': 'ㄹㅌ', 'ㄿ': 'ㄹㅍ', 'ㅀ': 'ㄹㅎ', 'ㅄ': 'ㅂㅅ'
+};
+
+/**
+ * Decomposes a single character (Hangul Syllable block or Jamo) into its constituent Jamo sequence string.
+ * Example: '화' -> "ㅎㅗㅏ", '홧' -> "ㅎㅗㅏㅈ", '닭' -> "ㄷㅏㄹㄱ".
+ */
+export function decomposeCharToJamos(char: string | undefined): string {
+  if (!char) return '';
+
+  const code = char.charCodeAt(0);
+  if (code >= HANGUL_BASE && code <= 0xD7A3) {
+    const offset = code - HANGUL_BASE;
+    const jongIndex = offset % 28;
+    const jungIndex = Math.floor(offset / 28) % 21;
+    const choIndex = Math.floor(offset / (21 * 28));
+
+    let result = CHOSEONG_STANDALONE[choIndex] ?? '';
+
+    // Decompose Jungseong (vowel)
+    if (COMPOUND_JUNGSEONG_DECOMP[jungIndex]) {
+      const [v1, v2] = COMPOUND_JUNGSEONG_DECOMP[jungIndex];
+      result += (JUNGSEONG_STANDALONE[v1] ?? '') + (JUNGSEONG_STANDALONE[v2] ?? '');
+    } else {
+      result += JUNGSEONG_STANDALONE[jungIndex] ?? '';
+    }
+
+    // Decompose Jongseong (final consonant)
+    if (jongIndex > 0) {
+      if (COMPOUND_JONGSEONG_DECOMP[jongIndex]) {
+        const [j1, j2] = COMPOUND_JONGSEONG_DECOMP[jongIndex];
+        result += (JONGSEONG_SINGLE_JAMO[j1] ?? '') + (JONGSEONG_SINGLE_JAMO[j2] ?? '');
+      } else {
+        result += JONGSEONG_SINGLE_JAMO[jongIndex] ?? '';
+      }
+    }
+
+    return result;
+  }
+
+  // Handle standalone compound Jamos
+  if (STANDALONE_COMPOUND_MAP[char]) {
+    return STANDALONE_COMPOUND_MAP[char];
+  }
+
+  return char;
+}
+
+/**
+ * Extracts the Choseong (initial consonant) Jamo character from a given character.
+ * Example: '장' -> 'ㅈ', 'ㅈ' -> 'ㅈ'.
+ */
+export function getChoseongJamo(char: string | undefined): string | null {
+  if (!char) return null;
+
+  const code = char.charCodeAt(0);
+  if (code >= HANGUL_BASE && code <= 0xD7A3) {
+    const offset = code - HANGUL_BASE;
+    const choIndex = Math.floor(offset / (21 * 28));
+    return CHOSEONG_STANDALONE[choIndex] ?? null;
+  }
+
+  if (CHOSEONG_STANDALONE.includes(char)) {
+    return char;
+  }
+
+  return null;
+}
+
+/**
+ * Checks if inputChar is an exact match or a valid partial composition prefix of targetChar.
+ * Takes into account an optional nextTargetChar (e.g. the initial consonant of the next syllable)
+ * to avoid flagging temporary trailing consonants created during Hangul IME composition as errors.
+ */
+export function isPartialOrExactMatch(
+  targetChar: string | undefined,
+  inputChar: string | undefined,
+  nextTargetChar?: string
+): boolean {
+  if (!inputChar || !targetChar) return false;
   if (targetChar === inputChar) return true;
 
-  const targetCode = targetChar.charCodeAt(0);
-  if (targetCode < HANGUL_BASE || targetCode > 0xD7A3) {
-    return false;
-  }
+  let targetJamos = decomposeCharToJamos(targetChar);
 
-  const offset = targetCode - HANGUL_BASE;
-  const targetJong = offset % 28;
-  const targetJung = Math.floor(offset / 28) % 21;
-  const targetCho = Math.floor(offset / (21 * 28));
-
-  // Case 1: Input is standalone Choseong matching target's Choseong (e.g. 'ㅅ' for '사')
-  if (CHOSEONG_STANDALONE[targetCho] === inputChar) {
-    return true;
-  }
-
-  // Case 2: Input is base syllable without Jongseong (e.g. '사' for '산')
-  const baseSyllable = String.fromCharCode((targetCho * 21 + targetJung) * 28 + HANGUL_BASE);
-  if (baseSyllable === inputChar) {
-    return true;
-  }
-
-  // Case 3: Target has compound Jungseong (e.g. ㅘ = [ㅗ, ㅏ]), input matches first vowel part (e.g. '고' for '과')
-  if (COMPOUND_JUNGSEONG_DECOMP[targetJung]) {
-    const [firstVowel] = COMPOUND_JUNGSEONG_DECOMP[targetJung];
-    const partialVowelSyllable = String.fromCharCode((targetCho * 21 + firstVowel) * 28 + HANGUL_BASE);
-    if (partialVowelSyllable === inputChar) {
-      return true;
+  if (nextTargetChar) {
+    const nextCho = getChoseongJamo(nextTargetChar);
+    if (nextCho) {
+      targetJamos += nextCho;
     }
   }
 
-  // Case 4: Target has compound Jongseong (e.g. ㄺ = [ㄹ, ㄱ]), input matches first consonant part (e.g. '달' for '닭')
-  if (COMPOUND_JONGSEONG_DECOMP[targetJong]) {
-    const [firstJong] = COMPOUND_JONGSEONG_DECOMP[targetJong];
-    const partialJongSyllable = String.fromCharCode((targetCho * 21 + targetJung) * 28 + firstJong + HANGUL_BASE);
-    if (partialJongSyllable === inputChar) {
-      return true;
+  const inputJamos = decomposeCharToJamos(inputChar);
+
+  return targetJamos.startsWith(inputJamos);
+}
+
+/**
+ * Checks if inputChar fully completes targetChar.
+ * Returns true if inputChar is an exact match for targetChar, OR if inputChar contains
+ * the complete targetChar Jamo sequence plus the initial consonant (Choseong) of nextTargetChar.
+ *
+ * Example:
+ * - isSyllableComplete('화', '화', '장') -> true (exact match)
+ * - isSyllableComplete('화', compose('ghkw'), '장') -> true ('화' + '장''s Choseong 'ㅈ')
+ * - isSyllableComplete('화', compose('ghkd'), '장') -> false ('화' + 'ㅇ' trailing consonant)
+ * - isSyllableComplete('장', '자', '실') -> false ('자' is incomplete for '장')
+ */
+export function isSyllableComplete(
+  targetChar: string | undefined,
+  inputChar: string | undefined,
+  nextTargetChar?: string
+): boolean {
+  if (!targetChar || !inputChar) return false;
+  if (targetChar === inputChar) return true;
+
+  const targetJamos = decomposeCharToJamos(targetChar);
+  const inputJamos = decomposeCharToJamos(inputChar);
+
+  if (inputJamos.startsWith(targetJamos)) {
+    const remaining = inputJamos.slice(targetJamos.length);
+    if (remaining.length > 0 && nextTargetChar) {
+      const nextCho = getChoseongJamo(nextTargetChar);
+      if (nextCho === remaining) {
+        return true;
+      }
     }
   }
 
@@ -517,10 +615,11 @@ export function checkErrors(target: string, input: string): ErrorReport[] {
   for (let i = 0; i < maxLength; i++) {
     const t = target[i];
     const inp = input[i];
+    const nextT = target[i + 1];
 
     let isError = false;
     if (inp !== undefined) {
-      isError = !isPartialOrExactMatch(t, inp);
+      isError = !isPartialOrExactMatch(t, inp, nextT);
     }
 
     errors.push({

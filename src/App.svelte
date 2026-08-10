@@ -5,6 +5,7 @@
   import type { CurriculumData } from './lib/tutorSession';
   import { loadSettings, saveSettings } from './lib/settings';
   import type { TutorSettings } from './lib/settings';
+  import { isSyllableComplete } from './utils/koreanEngine';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   const modules = session.getModules();
@@ -31,7 +32,11 @@
       return 0;
     }
     const lastIndex = userInput.length - 1;
-    const isLastComplete = userInput[lastIndex] === currentItem.target[lastIndex];
+    const isLastComplete = isSyllableComplete(
+      currentItem.target[lastIndex],
+      userInput[lastIndex],
+      currentItem.target[lastIndex + 1]
+    );
     return isLastComplete ? userInput.length : lastIndex;
   });
 

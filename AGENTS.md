@@ -18,6 +18,7 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - **TypeScript**: Always use proper types/interfaces (see `src/types/korean.ts`).
 - **Component Structure**: Keep Svelte components focused. Logic for complex operations (like Hangul composition) should reside in `src/utils/`.
 - **Explain Before Significant Changes**: Always explain the rationale and technical design to the user before applying significant code changes.
+- **Git Workflow**: Never combine creating commits with pushing. Always create commits without pushing unless explicitly requested.
 - **CSS**: Use Tailwind utility classes directly in the markup.
 
 ## Key Files & Modules
