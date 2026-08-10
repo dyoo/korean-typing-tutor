@@ -3,8 +3,8 @@
   import contentData from './content.json';
   import { TutorSession } from './lib/tutorSession';
   import type { CurriculumData } from './lib/tutorSession';
-  import { loadSettings, saveSettings } from './lib/settings';
-  import type { TutorSettings } from './lib/settings';
+  import { loadSettings, saveSettings, applyTheme } from './lib/settings';
+  import type { TutorSettings, ThemeMode } from './lib/settings';
   import { calculateTargetCursorIndex, calculateInputCursorIndex } from './utils/koreanEngine';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
@@ -33,6 +33,7 @@
   );
 
   onMount(() => {
+    applyTheme(settings.theme);
     inputElement?.focus();
   });
 
@@ -123,6 +124,14 @@
     syncState();
   }
 
+  function handleThemeChange(e: Event) {
+    const theme = (e.target as HTMLSelectElement).value as ThemeMode;
+    settings = { ...settings, theme };
+    saveSettings(settings);
+    applyTheme(settings.theme);
+    syncState();
+  }
+
   function toggleSettingsModal(e: MouseEvent) {
     e.stopPropagation();
     showSettingsModal = !showSettingsModal;
@@ -134,13 +143,13 @@
 
 <svelte:window onclick={focusInput} />
 
-<main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 text-gray-900 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden">
+<main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden transition-colors">
   <div class="w-full max-w-5xl flex items-center justify-between gap-4 shrink-0">
     <div class="flex items-center gap-3">
-      <label for="level-select" class="text-sm font-bold uppercase tracking-wider text-gray-500 font-mono">Module:</label>
+      <label for="level-select" class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono">Module:</label>
       <select
         id="level-select"
-        class="bg-white border-2 border-gray-300 text-gray-800 font-semibold rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-600 shadow-sm text-sm cursor-pointer"
+        class="bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 shadow-sm text-sm cursor-pointer"
         value={selectedFilter}
         onchange={handleFilterChange}
         onclick={(e) => e.stopPropagation()}
@@ -152,9 +161,9 @@
       </select>
     </div>
 
-    <div class="flex-1 max-w-md bg-gray-200 h-2.5 rounded-full overflow-hidden shadow-inner hidden sm:block">
+    <div class="flex-1 max-w-md bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden shadow-inner hidden sm:block">
       <div 
-        class="bg-blue-600 h-full transition-all duration-300 rounded-full" 
+        class="bg-blue-600 dark:bg-blue-500 h-full transition-all duration-300 rounded-full" 
         style="width: {progress}%"
       ></div>
     </div>
@@ -164,10 +173,10 @@
         type="button"
         onclick={toggleSettingsModal}
         onmousedown={(e) => e.stopPropagation()}
-        class="flex items-center gap-1.5 bg-white border-2 border-gray-300 text-gray-700 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 focus:outline-none shadow-sm text-sm cursor-pointer"
+        class="flex items-center gap-1.5 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
         aria-label="Settings"
       >
-        <svg class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
           <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
@@ -178,16 +187,29 @@
         <div
           role="region"
           aria-label="Display Settings Panel"
-          class="settings-modal absolute right-0 top-11 z-50 w-64 bg-white border-2 border-gray-200 rounded-xl shadow-xl p-4 flex flex-col gap-3"
+          class="settings-modal absolute right-0 top-11 z-50 w-64 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3"
           onclick={(e) => e.stopPropagation()}
           onkeydown={(e) => e.stopPropagation()}
           onmousedown={(e) => e.stopPropagation()}
         >
-          <div class="text-xs font-bold uppercase tracking-wider text-gray-500 font-mono pb-1 border-b border-gray-100">
+          <div class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono pb-1 border-b border-gray-100 dark:border-gray-700">
             Display Settings
           </div>
           
-          <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700">
+          <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200">
+            <span>Theme</span>
+            <select
+              value={settings.theme}
+              onchange={handleThemeChange}
+              class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 font-medium rounded px-2 py-1 text-xs focus:outline-none focus:border-blue-600 cursor-pointer"
+            >
+              <option value="system">System</option>
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </label>
+
+          <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200">
             <span>Show Pronunciation</span>
             <input
               type="checkbox"
@@ -197,7 +219,7 @@
             />
           </label>
 
-          <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700">
+          <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200">
             <span>Show Translation</span>
             <input
               type="checkbox"
@@ -218,35 +240,35 @@
         {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
         
         <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-          <span class={isError ? 'text-red-600 font-bold' : 'text-gray-900 font-bold'}>
+          <span class={isError ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-900 dark:text-gray-100 font-bold'}>
             {char === ' ' ? '\u00A0' : char}
           </span>
           {#if isError}
-            <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 rounded-full"></span>
+            <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
           {:else if isCurrent}
-            <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 rounded-full"></span>
+            <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
           {/if}
         </span>
       {/each}
     </div>
 
     {#if displayText.trim().length > 0}
-      <div class="text-subgiant text-gray-500 font-medium italic mt-6 text-center tracking-wide min-h-[3rem] h-auto flex flex-col items-center justify-center select-text max-w-full px-4 py-2">
+      <div class="text-subgiant text-gray-500 dark:text-gray-400 font-medium italic mt-6 text-center tracking-wide min-h-[3rem] h-auto flex flex-col items-center justify-center select-text max-w-full px-4 py-2">
         {displayText}
       </div>
     {/if}
 
     <div class="mt-4 h-14 flex items-center justify-center shrink-0">
       {#if isCompleted}
-        <span class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 font-bold px-5 py-2 rounded-full text-base md:text-lg border border-emerald-300 shadow-sm text-center">
-          ✓ Correct! Press <kbd class="bg-white px-2 py-0.5 rounded shadow text-gray-800 border text-sm md:text-base">Enter ↵</kbd> or <kbd class="bg-white px-2 py-0.5 rounded shadow text-gray-800 border text-sm md:text-base">Space</kbd>
+        <span class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold px-5 py-2 rounded-full text-base md:text-lg border border-emerald-300 dark:border-emerald-800 shadow-sm text-center">
+          ✓ Correct! Press <kbd class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border dark:border-gray-700 px-2 py-0.5 rounded shadow text-sm md:text-base">Enter ↵</kbd> or <kbd class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border dark:border-gray-700 px-2 py-0.5 rounded shadow text-sm md:text-base">Space</kbd>
         </span>
       {:else}
         <button
           type="button"
           onclick={handleSkip}
           onmousedown={(e) => e.stopPropagation()}
-          class="inline-flex items-center gap-1.5 bg-gray-100 hover:bg-gray-200 text-gray-600 font-medium px-4 py-1.5 rounded-full text-xs md:text-sm border border-gray-300 shadow-2xs transition-colors cursor-pointer"
+          class="inline-flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 font-medium px-4 py-1.5 rounded-full text-xs md:text-sm border border-gray-300 dark:border-gray-700 shadow-2xs transition-colors cursor-pointer"
         >
           <span>Skip exercise</span>
           <span>➔</span>
@@ -256,19 +278,19 @@
   </div>
 
   <div class="w-full max-w-3xl flex flex-col items-center pb-4 shrink-0 px-2">
-    <div class="w-full min-h-[5rem] py-3 relative flex justify-center items-center bg-white border-b-8 border-gray-300 focus-within:border-blue-600 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
+    <div class="w-full min-h-[5rem] py-3 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
         <div class="flex items-center justify-center gap-2 text-2xl md:text-4xl font-bold">
           {#if isCompleted}
-            <span class="text-xl md:text-2xl text-gray-400 font-normal text-center">
+            <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center">
               Press Enter or Space for next word
             </span>
           {:else}
             <span class="relative inline-flex flex-col items-center pb-2 pt-1 min-w-[0.7em]">
               <span class="opacity-0 select-none">&nbsp;</span>
-              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 rounded-full"></span>
+              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
             </span>
-            <span class="text-xl md:text-2xl text-gray-400 font-normal ml-2 select-none">
+            <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal ml-2 select-none">
               Start typing...
             </span>
           {/if}
@@ -280,13 +302,13 @@
             {@const isCurrent = (i === activeInputCursorIndex && !isCompleted)}
             
             <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-              <span class={isError ? 'text-red-500' : 'text-blue-600'}>
+              <span class={isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}>
                 {char === ' ' ? '\u00A0' : char}
               </span>
               {#if isError}
-                <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 rounded-full"></span>
+                <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
               {:else if isCurrent}
-                <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 rounded-full"></span>
+                <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
               {/if}
             </span>
           {/each}
@@ -294,7 +316,7 @@
           {#if activeInputCursorIndex === userInput.length && !isCompleted}
             <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5 min-w-[0.7em]">
               <span class="opacity-0 select-none">&nbsp;</span>
-              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 rounded-full"></span>
+              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
             </span>
           {/if}
         </div>
@@ -314,13 +336,13 @@
       />
     </div>
 
-    <div class="flex justify-between items-center w-full mt-4 text-xs md:text-sm text-gray-400 font-mono font-bold uppercase tracking-wider">
+    <div class="flex justify-between items-center w-full mt-4 text-xs md:text-sm text-gray-400 dark:text-gray-500 font-mono font-bold uppercase tracking-wider">
       <span>Level {currentIndex + 1} / {session.getTotalItems()}</span>
       <a
         href="https://github.com/dyoo/korean-typing-tutor"
         target="_blank"
         rel="noopener noreferrer"
-        class="flex items-center gap-1.5 text-gray-400 hover:text-gray-600 transition-colors normal-case font-sans font-medium text-xs border border-gray-200 hover:border-gray-400 rounded-full px-3 py-1 bg-white shadow-2xs"
+        class="flex items-center gap-1.5 text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors normal-case font-sans font-medium text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 rounded-full px-3 py-1 bg-white dark:bg-gray-800 shadow-2xs"
         onclick={(e) => e.stopPropagation()}
         onmousedown={(e) => e.stopPropagation()}
       >
@@ -338,5 +360,8 @@
     margin: 0;
     font-family: 'Noto Sans KR', 'Inter', system-ui, -apple-system, sans-serif;
     background-color: #f9fafb;
+  }
+  :global(html.dark body) {
+    background-color: #111827;
   }
 </style>
