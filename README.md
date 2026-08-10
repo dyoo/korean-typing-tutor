@@ -35,10 +35,14 @@ Our curriculum dataset ([`src/content.json`](file:///Users/dyoo/work/korean/src/
    - **TOPIK II (Intermediate Level 3 & 4):** Official vocabulary covering work, technology, society, economics, emotions, academic topics, and multi-sentence reading passages.
 2. **[National Institute of Korean Language (국립국어원 - NIKL)](https://www.korean.go.kr/) — [Basic Korean Dictionary for Learners (한국어기초사전)](https://krdict.korean.go.kr/)**:
    - Standardized vocabulary and official English translations from the open-access *한국어기초사전* (Basic Korean Dictionary for Learners, licensed under CC BY-SA 2.0 KR).
-3. **[King Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) — [Sejonghakdang Online Learning Portal](https://www.sejonghakdang.org/)**:
+3. **[Kming Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) — [Sejonghakdang Online Learning Portal](https://www.sejonghakdang.org/)**:
    - Practical situational conversation modules (ordering food at cafes/restaurants, taking the subway, asking for directions, shopping, hospital/pharmacy symptoms) and intermediate reading passages.
 4. **Korean Proverbs & Sayings (속담 / 사자성어)**:
    - Classic Korean proverbs with literal and figurative English translations (`식은 죽 먹기`, `티끌 모아 태산`).
+5. **[Humanities LibreTexts](https://human.libretexts.org/) — [Korean Through Folktales](https://human.libretexts.org/Bookshelves/Languages/Korean/Korean_Through_Folktales_(Yoon))**:
+   - Folk stories used for reading practice and vocabulary building.
+6. **Public Domain Korean Folktales**:
+   - Additional classic stories like [*The Sun and the Moon* (해와 달)](https://folkency.nfm.go.kr/en/topic/detail/5390), [*Shim Cheong* (심청전)](https://folkency.nfm.go.kr/en/topic/detail/5400), and [*The Rabbit and the Turtle* (토끼와 거북이)](https://folkency.nfm.go.kr/en/topic/detail/5401), sourced from public domain Korean folklore collections and adapted for intermediate learners.
 
 ---
 
