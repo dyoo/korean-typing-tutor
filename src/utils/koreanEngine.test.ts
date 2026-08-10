@@ -8,7 +8,8 @@ import {
   decomposeCharToJamos,
   getChoseongJamo,
   calculateTargetCursorIndex,
-  calculateInputCursorIndex
+  calculateInputCursorIndex,
+  getWordTokens
 } from './koreanEngine';
 
 describe('Jamo decomposition helpers', () => {
@@ -297,6 +298,26 @@ describe('Cursor index calculation helpers', () => {
 
     // Returns -1 when item is completed
     expect(calculateInputCursorIndex('가나다', '가나다', true)).toBe(-1);
+  });
+});
+
+describe('getWordTokens helper', () => {
+  it('should group target sentence into words and trailing punctuation tokens', () => {
+    const text = '안녕하세요. 반갑습니다!';
+    const tokens = getWordTokens(text);
+    expect(tokens.length).toBe(3);
+
+    expect(tokens[0].type).toBe('word');
+    expect(tokens[0].indices).toEqual([0, 1, 2, 3, 4, 5]);
+    expect(tokens[0].indices.map(i => text[i]).join('')).toBe('안녕하세요.');
+
+    expect(tokens[1].type).toBe('space');
+    expect(tokens[1].indices).toEqual([6]);
+    expect(tokens[1].indices.map(i => text[i]).join('')).toBe(' ');
+
+    expect(tokens[2].type).toBe('word');
+    expect(tokens[2].indices).toEqual([7, 8, 9, 10, 11, 12]);
+    expect(tokens[2].indices.map(i => text[i]).join('')).toBe('반갑습니다!');
   });
 });
 

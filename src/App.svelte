@@ -5,7 +5,7 @@
   import type { CurriculumData } from './lib/tutorSession';
   import { loadSettings, saveSettings, applyTheme } from './lib/settings';
   import type { TutorSettings, ThemeMode } from './lib/settings';
-  import { calculateTargetCursorIndex, calculateInputCursorIndex } from './utils/koreanEngine';
+  import { calculateTargetCursorIndex, calculateInputCursorIndex, getWordTokens } from './utils/koreanEngine';
   import { handleTargetCopyEvent } from './utils/clipboard';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
@@ -32,6 +32,7 @@
   let activeCursorElement = $state<HTMLElement | null>(null);
 
   let displayText = $derived(session.getDisplayText(currentItem, settings));
+  let wordTokens = $derived(getWordTokens(currentItem.target));
 
   let activeTargetCursorIndex = $derived(
     calculateTargetCursorIndex(currentItem.target, userInput, isCompleted)
@@ -334,20 +335,42 @@
 
   <div class="w-full max-w-5xl flex flex-col items-center justify-center my-auto py-4 px-2 overflow-hidden">
     <div class="target-display relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text max-w-full text-giant">
-      {#each currentItem.target.split('') as char, i}
-        {@const isError = errors.find(e => e.index === i)?.isError ?? false}
-        {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
-        
-        <span data-target-index={i} class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-          <span class="whitespace-pre {isError ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-900 dark:text-gray-100 font-bold'}">
-            {char === ' ' ? ' ' : char}
+      {#each wordTokens as token}
+        {#if token.type === 'space'}
+          {@const i = token.indices[0]}
+          {@const isError = errors.find(e => e.index === i)?.isError ?? false}
+          {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
+          
+          <span data-target-index={i} class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
+            <span class="whitespace-pre {isError ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-900 dark:text-gray-100 font-bold'}">
+              {' '}
+            </span>
+            {#if isError}
+              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
+            {:else if isCurrent}
+              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
+            {/if}
           </span>
-          {#if isError}
-            <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
-          {:else if isCurrent}
-            <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
-          {/if}
-        </span>
+        {:else}
+          <span class="inline-flex whitespace-nowrap">
+            {#each token.indices as i}
+              {@const char = currentItem.target[i]}
+              {@const isError = errors.find(e => e.index === i)?.isError ?? false}
+              {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
+              
+              <span data-target-index={i} class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
+                <span class="whitespace-pre {isError ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-900 dark:text-gray-100 font-bold'}">
+                  {char}
+                </span>
+                {#if isError}
+                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
+                {:else if isCurrent}
+                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
+                {/if}
+              </span>
+            {/each}
+          </span>
+        {/if}
       {/each}
     </div>
 

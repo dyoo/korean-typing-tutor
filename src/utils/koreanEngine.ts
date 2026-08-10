@@ -690,3 +690,36 @@ export function calculateInputCursorIndex(
   return isLastComplete ? userInput.length : lastIndex;
 }
 
+export interface WordTokenGroup {
+  type: 'word' | 'space';
+  indices: number[];
+}
+
+/**
+ * Groups character indices of a target string into word tokens and space tokens.
+ * Ensures words and their trailing punctuation (e.g. "입니다.") remain bound together
+ * inside single inline-flex containers to prevent lone punctuation line wrapping.
+ */
+export function getWordTokens(target: string): WordTokenGroup[] {
+  const tokens: WordTokenGroup[] = [];
+  let currentWordIndices: number[] = [];
+
+  for (let i = 0; i < target.length; i++) {
+    if (target[i] === ' ') {
+      if (currentWordIndices.length > 0) {
+        tokens.push({ type: 'word', indices: currentWordIndices });
+        currentWordIndices = [];
+      }
+      tokens.push({ type: 'space', indices: [i] });
+    } else {
+      currentWordIndices.push(i);
+    }
+  }
+
+  if (currentWordIndices.length > 0) {
+    tokens.push({ type: 'word', indices: currentWordIndices });
+  }
+
+  return tokens;
+}
+
