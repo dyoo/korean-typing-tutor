@@ -21,6 +21,16 @@ describe('Settings module persistence', () => {
     expect(loaded.theme).toBe('dark');
   });
 
+  it('should save and load selected curriculum module preferences', () => {
+    saveSettings({ showPronunciation: true, showTranslation: true, theme: 'light', enabledModuleIds: ['b1_vowels', 'l3'] });
+    const loaded = loadSettings();
+    expect(loaded.enabledModuleIds).toEqual(['b1_vowels', 'l3']);
+
+    saveSettings({ showPronunciation: true, showTranslation: true, theme: 'light', enabledModuleIds: [] });
+    const loadedEmpty = loadSettings();
+    expect(loadedEmpty.enabledModuleIds).toEqual([]);
+  });
+
   it('should handle invalid JSON or invalid theme string gracefully', () => {
     localStorage.setItem('korean_tutor_settings', 'invalid-json-{');
     expect(loadSettings()).toEqual(DEFAULT_SETTINGS);

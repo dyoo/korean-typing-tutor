@@ -17,7 +17,7 @@
   let showModuleModal = $state(false);
 
   let enabledModuleIds = $state<string[]>(
-    initialSettings.enabledModuleIds && initialSettings.enabledModuleIds.length > 0
+    Array.isArray(initialSettings.enabledModuleIds)
       ? initialSettings.enabledModuleIds
       : modules.map(m => m.id)
   );
