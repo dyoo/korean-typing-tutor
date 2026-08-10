@@ -6,6 +6,7 @@
   import { loadSettings, saveSettings, applyTheme } from './lib/settings';
   import type { TutorSettings, ThemeMode } from './lib/settings';
   import { calculateTargetCursorIndex, calculateInputCursorIndex } from './utils/koreanEngine';
+  import { handleTargetCopyEvent } from './utils/clipboard';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   const modules = session.getModules();
@@ -147,11 +148,16 @@
       inputElement?.focus();
     }
   }
+
+  function handleCopy(e: ClipboardEvent) {
+    const sel = window.getSelection();
+    handleTargetCopyEvent(e, currentItem.target, sel);
+  }
 </script>
 
 <svelte:window onclick={focusInput} />
 
-<main class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden transition-colors">
+<main oncopy={handleCopy} class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden transition-colors">
   <div class="w-full max-w-5xl flex items-center justify-between gap-4 shrink-0">
     <div class="flex items-center gap-3">
       <label for="level-select" class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono">Module:</label>
@@ -242,14 +248,14 @@
   </div>
 
   <div class="w-full max-w-5xl flex flex-col items-center justify-center my-auto py-4 px-2 overflow-hidden">
-    <div class="relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text max-w-full text-giant">
+    <div class="target-display relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text max-w-full text-giant">
       {#each currentItem.target.split('') as char, i}
         {@const isError = errors.find(e => e.index === i)?.isError ?? false}
         {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
         
-        <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-          <span class={isError ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-900 dark:text-gray-100 font-bold'}>
-            {char === ' ' ? '\u00A0' : char}
+        <span data-target-index={i} class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
+          <span class="whitespace-pre {isError ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-900 dark:text-gray-100 font-bold'}">
+            {char === ' ' ? ' ' : char}
           </span>
           {#if isError}
             <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
@@ -305,8 +311,8 @@
                 bind:this={activeCursorElement}
                 class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5"
               >
-                <span class={isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}>
-                  {char === ' ' ? '\u00A0' : char}
+                <span class="whitespace-pre {isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}">
+                  {char === ' ' ? ' ' : char}
                 </span>
                 {#if isError}
                   <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
@@ -316,8 +322,8 @@
               </span>
             {:else}
               <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-                <span class={isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}>
-                  {char === ' ' ? '\u00A0' : char}
+                <span class="whitespace-pre {isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}">
+                  {char === ' ' ? ' ' : char}
                 </span>
                 {#if isError}
                   <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
