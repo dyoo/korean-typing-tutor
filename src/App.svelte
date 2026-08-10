@@ -328,8 +328,8 @@
               {@const count = category.moduleIds.filter(id => enabledModuleIds.includes(id)).length}
 
               <div class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-lg p-2.5 bg-gray-50/60 dark:bg-gray-800/40 gap-1.5">
-                <div class="flex items-center justify-between font-bold text-xs text-gray-800 dark:text-gray-200 pb-1 border-b border-gray-200/60 dark:border-gray-700/50">
-                  <label class="flex items-center gap-2 cursor-pointer select-none">
+                <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 cursor-pointer transition-colors select-none font-bold text-xs text-gray-800 dark:text-gray-200">
+                  <div class="flex items-center gap-2">
                     <input
                       type="checkbox"
                       checked={allChecked}
@@ -340,11 +340,11 @@
                     <span class="font-bold text-xs uppercase tracking-wide text-gray-800 dark:text-gray-200">
                       {category.name}
                     </span>
-                  </label>
-                  <span class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600">
+                  </div>
+                  <span class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0">
                     {count}/{category.moduleIds.length}
                   </span>
-                </div>
+                </label>
 
                 <div class="flex flex-col gap-1 pl-3 border-l-2 border-blue-500/30 dark:border-blue-400/30 ml-1.5 mt-0.5">
                   {#each category.moduleIds as modId}
