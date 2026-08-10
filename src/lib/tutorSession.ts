@@ -70,8 +70,10 @@ export class TutorSession {
     let filtered: LessonItem[];
 
     if (Array.isArray(this.selectedFilter)) {
-      if (this.selectedFilter.length === 0 || this.selectedFilter.includes('all')) {
+      if (this.selectedFilter.includes('all')) {
         filtered = [...this.allItems];
+      } else if (this.selectedFilter.length === 0) {
+        filtered = [];
       } else {
         const allowedSet = new Set(this.selectedFilter);
         filtered = this.allItems.filter(item => allowedSet.has(item.moduleId));
@@ -80,10 +82,6 @@ export class TutorSession {
       filtered = [...this.allItems];
     } else {
       filtered = this.allItems.filter(item => item.moduleId === this.selectedFilter || item.id.startsWith(this.selectedFilter as string));
-    }
-
-    if (filtered.length === 0) {
-      filtered = [...this.allItems];
     }
 
     this.activeItems = this.shouldShuffle ? this.shuffle(filtered) : filtered;
@@ -124,6 +122,16 @@ export class TutorSession {
 
   /** Returns currently active lesson item. */
   public getCurrentItem(): LessonItem {
+    if (this.activeItems.length === 0) {
+      return {
+        id: 'empty',
+        moduleId: '',
+        type: 'word',
+        target: '',
+        pronunciation: '',
+        translation: 'No modules selected. Please select at least one module in the menu.'
+      };
+    }
     return this.activeItems[this.currentIndex] ?? {
       id: 'fallback',
       moduleId: 'all',

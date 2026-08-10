@@ -115,11 +115,81 @@
     syncState();
   }
 
+  interface CurriculumCategory {
+    id: string;
+    name: string;
+    moduleIds: string[];
+  }
+
+  const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
+    {
+      id: 'beginner',
+      name: 'Beginner Fundamentals',
+      moduleIds: ['b1_vowels', 'b2_syllables_simple', 'b3_complex_vowels', 'b4_no_batchim_words']
+    },
+    {
+      id: 'batchim',
+      name: 'Final Consonants (받침)',
+      moduleIds: ['l2a_simple_batchim', 'l2b_complex_batchim']
+    },
+    {
+      id: 'core',
+      name: 'Core Vocabulary & Verbs',
+      moduleIds: ['l3', 'l4', 'l5']
+    },
+    {
+      id: 'topik1',
+      name: 'TOPIK I (Elementary)',
+      moduleIds: ['topik1_vocab', 'topik1_verbs', 'topik_grammar']
+    },
+    {
+      id: 'practical',
+      name: 'Practical & Culture',
+      moduleIds: ['sejong_phrases', 'kpop_slang', 'korean_culture']
+    },
+    {
+      id: 'topik2',
+      name: 'TOPIK II & Advanced',
+      moduleIds: ['topik2_vocab', 'korean_proverbs', 'topik2_passages']
+    }
+  ];
+
+  function isGroupAllChecked(category: CurriculumCategory): boolean {
+    return category.moduleIds.every(id => enabledModuleIds.includes(id));
+  }
+
+  function isGroupSomeChecked(category: CurriculumCategory): boolean {
+    const checkedCount = category.moduleIds.filter(id => enabledModuleIds.includes(id)).length;
+    return checkedCount > 0 && checkedCount < category.moduleIds.length;
+  }
+
+  function toggleCategoryGroup(category: CurriculumCategory) {
+    const allChecked = isGroupAllChecked(category);
+    if (allChecked) {
+      enabledModuleIds = enabledModuleIds.filter(id => !category.moduleIds.includes(id));
+    } else {
+      const newSet = new Set([...enabledModuleIds, ...category.moduleIds]);
+      enabledModuleIds = Array.from(newSet);
+    }
+    settings = { ...settings, enabledModuleIds };
+    saveSettings(settings);
+    session.setFilter(enabledModuleIds, true);
+    syncState();
+  }
+
   function selectAllModules() {
     enabledModuleIds = modules.map(m => m.id);
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
     session.setFilter('all', true);
+    syncState();
+  }
+
+  function deselectAllModules() {
+    enabledModuleIds = [];
+    settings = { ...settings, enabledModuleIds };
+    saveSettings(settings);
+    session.setFilter(enabledModuleIds, true);
     syncState();
   }
 
@@ -208,9 +278,11 @@
         <span class="truncate max-w-[160px] sm:max-w-[240px]">
           {enabledModuleIds.length === modules.length
             ? 'All Modules Enabled'
-            : (enabledModuleIds.length === 1
-                ? (modules.find(m => m.id === enabledModuleIds[0])?.title ?? '1 Module Selected')
-                : `${enabledModuleIds.length} Modules Enabled`)}
+            : (enabledModuleIds.length === 0
+                ? 'No Modules Selected'
+                : (enabledModuleIds.length === 1
+                    ? (modules.find(m => m.id === enabledModuleIds[0])?.title ?? '1 Module Selected')
+                    : `${enabledModuleIds.length} Modules Enabled`))}
         </span>
         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
@@ -228,40 +300,79 @@
         >
           <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2">
             <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono">
-              Enabled Modules ({enabledModuleIds.length}/{modules.length})
+              Enabled ({enabledModuleIds.length}/{modules.length})
             </span>
-            <button
-              type="button"
-              onclick={selectAllModules}
-              class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
-            >
-              Select All
-            </button>
+            <div class="flex items-center gap-2">
+              <button
+                type="button"
+                onclick={selectAllModules}
+                class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
+              >
+                Select All
+              </button>
+              <span class="text-xs text-gray-300 dark:text-gray-600">•</span>
+              <button
+                type="button"
+                onclick={deselectAllModules}
+                class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
+              >
+                Select None
+              </button>
+            </div>
           </div>
 
-          <div class="overflow-y-auto flex flex-col gap-1 pr-1 max-h-[55vh] [scrollbar-width:thin]">
-            {#each modules as mod}
-              {@const isEnabled = enabledModuleIds.includes(mod.id)}
-              <label
-                class="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none"
-              >
-                <input
-                  type="checkbox"
-                  checked={isEnabled}
-                  onchange={() => toggleModule(mod.id)}
-                  class="mt-1 w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
-                />
-                <div class="flex flex-col">
-                  <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">
-                    {mod.title}
-                  </span>
-                  {#if mod.description}
-                    <span class="text-xs text-gray-500 dark:text-gray-400">
-                      {mod.description}
+          <div class="overflow-y-auto flex flex-col gap-3 pr-1 max-h-[55vh] [scrollbar-width:thin]">
+            {#each CURRICULUM_CATEGORIES as category}
+              {@const allChecked = isGroupAllChecked(category)}
+              {@const someChecked = isGroupSomeChecked(category)}
+              {@const count = category.moduleIds.filter(id => enabledModuleIds.includes(id)).length}
+
+              <div class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-lg p-2.5 bg-gray-50/60 dark:bg-gray-800/40 gap-1.5">
+                <div class="flex items-center justify-between font-bold text-xs text-gray-800 dark:text-gray-200 pb-1 border-b border-gray-200/60 dark:border-gray-700/50">
+                  <label class="flex items-center gap-2 cursor-pointer select-none">
+                    <input
+                      type="checkbox"
+                      checked={allChecked}
+                      indeterminate={someChecked}
+                      onchange={() => toggleCategoryGroup(category)}
+                      class="w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
+                    />
+                    <span class="font-bold text-xs uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                      {category.name}
                     </span>
-                  {/if}
+                  </label>
+                  <span class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600">
+                    {count}/{category.moduleIds.length}
+                  </span>
                 </div>
-              </label>
+
+                <div class="flex flex-col gap-1 pl-3 border-l-2 border-blue-500/30 dark:border-blue-400/30 ml-1.5 mt-0.5">
+                  {#each category.moduleIds as modId}
+                    {@const mod = modules.find(m => m.id === modId)}
+                    {#if mod}
+                      {@const isEnabled = enabledModuleIds.includes(mod.id)}
+                      <label class="flex items-start gap-2.5 p-1 rounded hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none">
+                        <input
+                          type="checkbox"
+                          checked={isEnabled}
+                          onchange={() => toggleModule(mod.id)}
+                          class="mt-0.5 w-3.5 h-3.5 text-blue-600 rounded cursor-pointer shrink-0"
+                        />
+                        <div class="flex flex-col">
+                          <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                            {mod.title}
+                          </span>
+                          {#if mod.description}
+                            <span class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight mt-0.5">
+                              {mod.description}
+                            </span>
+                          {/if}
+                        </div>
+                      </label>
+                    {/if}
+                  {/each}
+                </div>
+              </div>
             {/each}
           </div>
         </div>
@@ -405,7 +516,7 @@
     <div class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
         <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap select-none">
-          {isCompleted ? "Press Enter or Space for next word" : "Start typing..."}
+          {enabledModuleIds.length === 0 ? "Select a module above to begin..." : (isCompleted ? "Press Enter or Space for next word" : "Start typing...")}
         </span>
       {:else}
         <div

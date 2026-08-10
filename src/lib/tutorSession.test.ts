@@ -51,6 +51,13 @@ describe('TutorSession controller', () => {
     expect(session.getTotalItems()).toBe(2);
   });
 
+  it('should handle empty module filter array gracefully with empty item placeholder', () => {
+    session.setFilter([], false);
+    expect(session.getTotalItems()).toBe(0);
+    expect(session.getCurrentItem().target).toBe('');
+    expect(session.getCurrentItem().id).toBe('empty');
+  });
+
   it('should compose Hangul keystrokes during session', () => {
     session.processKey('r');
     expect(session.getUserInput()).toBe('ㄱ');
