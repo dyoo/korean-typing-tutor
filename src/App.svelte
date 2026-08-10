@@ -21,6 +21,8 @@
   let currentItem = $state(session.getCurrentItem());
   let isCompleted = $state(session.getIsItemCompleted());
   let inputElement = $state<HTMLInputElement | null>(null);
+  let inputContainerElement = $state<HTMLDivElement | null>(null);
+  let activeCursorElement = $state<HTMLElement | null>(null);
 
   let displayText = $derived(session.getDisplayText(currentItem, settings));
 
@@ -31,6 +33,12 @@
   let activeInputCursorIndex = $derived(
     calculateInputCursorIndex(userInput, currentItem.target, isCompleted)
   );
+
+  $effect(() => {
+    if (userInput !== undefined && activeInputCursorIndex !== undefined && activeCursorElement && inputContainerElement) {
+      activeCursorElement.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'nearest' });
+    }
+  });
 
   onMount(() => {
     applyTheme(settings.theme);
@@ -278,11 +286,11 @@
   </div>
 
   <div class="w-full max-w-3xl flex flex-col items-center pb-4 shrink-0 px-2">
-    <div class="w-full min-h-[5rem] py-3 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
+    <div class="w-full h-20 md:h-24 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
-        <div class="flex items-center justify-center gap-2 text-2xl md:text-4xl font-bold">
+        <div class="flex flex-nowrap items-center justify-center whitespace-nowrap overflow-hidden max-w-full gap-2 {currentItem.target.length > 30 ? 'text-lg md:text-xl' : (currentItem.target.length > 12 ? 'text-xl md:text-2xl' : 'text-2xl md:text-4xl')} font-bold">
           {#if isCompleted}
-            <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center">
+            <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap">
               Press Enter or Space for next word
             </span>
           {:else}
@@ -290,31 +298,51 @@
               <span class="opacity-0 select-none">&nbsp;</span>
               <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
             </span>
-            <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal ml-2 select-none">
+            <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal ml-2 select-none whitespace-nowrap">
               Start typing...
             </span>
           {/if}
         </div>
       {:else}
-        <div class="flex flex-wrap break-keep justify-center items-center gap-y-2 text-2xl md:text-4xl font-bold max-w-full">
+        <div
+          bind:this={inputContainerElement}
+          class="flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden {currentItem.target.length > 35 ? 'text-sm md:text-base' : (currentItem.target.length > 20 ? 'text-base md:text-xl' : (currentItem.target.length > 10 ? 'text-xl md:text-2xl' : 'text-2xl md:text-4xl'))} font-bold"
+        >
           {#each userInput.split('') as char, i}
             {@const isError = errors.find(e => e.index === i)?.isError ?? false}
             {@const isCurrent = (i === activeInputCursorIndex && !isCompleted)}
             
-            <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-              <span class={isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}>
-                {char === ' ' ? '\u00A0' : char}
+            {#if isCurrent}
+              <span
+                bind:this={activeCursorElement}
+                class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5"
+              >
+                <span class={isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}>
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+                {#if isError}
+                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
+                {:else}
+                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
+                {/if}
               </span>
-              {#if isError}
-                <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
-              {:else if isCurrent}
-                <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
-              {/if}
-            </span>
+            {:else}
+              <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
+                <span class={isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}>
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+                {#if isError}
+                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
+                {/if}
+              </span>
+            {/if}
           {/each}
 
           {#if activeInputCursorIndex === userInput.length && !isCompleted}
-            <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5 min-w-[0.7em]">
+            <span
+              bind:this={activeCursorElement}
+              class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5 min-w-[0.7em]"
+            >
               <span class="opacity-0 select-none">&nbsp;</span>
               <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
             </span>
@@ -336,8 +364,7 @@
       />
     </div>
 
-    <div class="flex justify-between items-center w-full mt-4 text-xs md:text-sm text-gray-400 dark:text-gray-500 font-mono font-bold uppercase tracking-wider">
-      <span>Level {currentIndex + 1} / {session.getTotalItems()}</span>
+    <div class="flex justify-end items-center w-full mt-4">
       <a
         href="https://github.com/dyoo/korean-typing-tutor"
         target="_blank"
