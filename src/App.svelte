@@ -242,7 +242,7 @@
   </div>
 
   <div class="w-full max-w-5xl flex flex-col items-center justify-center my-auto py-4 px-2 overflow-hidden">
-    <div class="relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text max-w-full {currentItem.target.length > 30 ? 'text-paragraph' : (currentItem.target.length > 6 ? 'text-longsentence' : 'text-giant')}">
+    <div class="relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text max-w-full text-giant">
       {#each currentItem.target.split('') as char, i}
         {@const isError = errors.find(e => e.index === i)?.isError ?? false}
         {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
@@ -286,27 +286,15 @@
   </div>
 
   <div class="w-full max-w-3xl flex flex-col items-center pb-4 shrink-0 px-2">
-    <div class="w-full h-20 md:h-24 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
+    <div class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
       {#if userInput.length === 0}
-        <div class="flex flex-nowrap items-center justify-center whitespace-nowrap overflow-hidden max-w-full gap-2 {currentItem.target.length > 30 ? 'text-lg md:text-xl' : (currentItem.target.length > 12 ? 'text-xl md:text-2xl' : 'text-2xl md:text-4xl')} font-bold">
-          {#if isCompleted}
-            <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap">
-              Press Enter or Space for next word
-            </span>
-          {:else}
-            <span class="relative inline-flex flex-col items-center pb-2 pt-1 min-w-[0.7em]">
-              <span class="opacity-0 select-none">&nbsp;</span>
-              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
-            </span>
-            <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal ml-2 select-none whitespace-nowrap">
-              Start typing...
-            </span>
-          {/if}
-        </div>
+        <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap select-none">
+          {isCompleted ? "Press Enter or Space for next word" : "Start typing..."}
+        </span>
       {:else}
         <div
           bind:this={inputContainerElement}
-          class="flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden {currentItem.target.length > 35 ? 'text-sm md:text-base' : (currentItem.target.length > 20 ? 'text-base md:text-xl' : (currentItem.target.length > 10 ? 'text-xl md:text-2xl' : 'text-2xl md:text-4xl'))} font-bold"
+          class="flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold"
         >
           {#each userInput.split('') as char, i}
             {@const isError = errors.find(e => e.index === i)?.isError ?? false}
