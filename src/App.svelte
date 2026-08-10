@@ -220,12 +220,12 @@
   </div>
 
   <div class="w-full max-w-5xl flex flex-col items-center justify-center my-auto py-4 px-2 overflow-hidden">
-    <div class="relative flex flex-wrap break-keep justify-center gap-x-2 gap-y-4 font-bold tracking-normal text-center select-text max-w-full {currentItem.target.length > 30 ? 'text-paragraph' : (currentItem.target.length > 6 ? 'text-longsentence' : 'text-giant')}">
+    <div class="relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text max-w-full {currentItem.target.length > 30 ? 'text-paragraph' : (currentItem.target.length > 6 ? 'text-longsentence' : 'text-giant')}">
       {#each currentItem.target.split('') as char, i}
         {@const isError = errors.find(e => e.index === i)?.isError ?? false}
         {@const isCurrent = (i === activeCursorIndex && !isCompleted && !isError)}
         
-        <span class="relative px-1 py-1 inline-block my-1">
+        <span class="relative py-1 inline-block my-1">
           <span class={isError ? 'text-gray-900 border-b-8 border-red-500' : (isCurrent ? 'text-gray-900 border-b-8 border-blue-600' : 'text-gray-900 border-b-8 border-transparent')}>
             {char === ' ' ? '\u00A0' : char}
           </span>
@@ -265,7 +265,7 @@
           {isCompleted ? "Press Enter or Space for next word" : "Start typing..."}
         </span>
       {:else}
-        <div class="flex flex-wrap break-keep justify-center gap-x-1 gap-y-2 text-2xl md:text-4xl font-bold max-w-full">
+        <div class="flex flex-wrap break-keep justify-center gap-y-2 text-2xl md:text-4xl font-bold max-w-full">
           {#each userInput.split('') as char, i}
             {@const isError = errors.find(e => e.index === i)?.isError ?? false}
             {@const isCurrent = (i === activeCursorIndex && !isCompleted && !isError)}
