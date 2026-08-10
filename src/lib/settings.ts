@@ -10,6 +10,7 @@ export interface TutorSettings {
   showPronunciation: boolean;
   showTranslation: boolean;
   theme: ThemeMode;
+  enabledModuleIds: string[];
 }
 
 /** LocalStorage key for persisting user settings across browser sessions. */
@@ -19,7 +20,8 @@ const SETTINGS_STORAGE_KEY = 'korean_tutor_settings';
 export const DEFAULT_SETTINGS: TutorSettings = {
   showPronunciation: true,
   showTranslation: true,
-  theme: 'system'
+  theme: 'system',
+  enabledModuleIds: []
 };
 
 /**
@@ -35,7 +37,8 @@ export function loadSettings(): TutorSettings {
     return {
       showPronunciation: typeof parsed.showPronunciation === 'boolean' ? parsed.showPronunciation : true,
       showTranslation: typeof parsed.showTranslation === 'boolean' ? parsed.showTranslation : true,
-      theme: validThemes.includes(parsed.theme) ? parsed.theme : 'system'
+      theme: validThemes.includes(parsed.theme) ? parsed.theme : 'system',
+      enabledModuleIds: Array.isArray(parsed.enabledModuleIds) ? parsed.enabledModuleIds : []
     };
   } catch {
     return DEFAULT_SETTINGS;

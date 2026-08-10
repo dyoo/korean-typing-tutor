@@ -11,10 +11,17 @@
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   const modules = session.getModules();
 
-  let settings = $state<TutorSettings>(loadSettings());
+  const initialSettings = loadSettings();
+  let settings = $state<TutorSettings>(initialSettings);
   let showSettingsModal = $state(false);
+  let showModuleModal = $state(false);
 
-  let selectedFilter = $state<string>('all');
+  let enabledModuleIds = $state<string[]>(
+    initialSettings.enabledModuleIds && initialSettings.enabledModuleIds.length > 0
+      ? initialSettings.enabledModuleIds
+      : modules.map(m => m.id)
+  );
+
   let currentIndex = $state(session.getCurrentIndex());
   let userInput = $state(session.getUserInput());
   let errors = $state(session.getErrors());
@@ -42,6 +49,8 @@
   });
 
   onMount(() => {
+    session.setFilter(enabledModuleIds, true);
+    syncState();
     applyTheme(settings.theme);
     inputElement?.focus();
   });
@@ -62,7 +71,8 @@
         target.closest('button') ||
         target.closest('a') ||
         target.closest('label') ||
-        target.closest('.settings-modal')
+        target.closest('.settings-modal') ||
+        target.closest('.module-modal')
       ) {
         return;
       }
@@ -79,12 +89,33 @@
     isCompleted = session.getIsItemCompleted();
   }
 
-  function handleFilterChange(e: Event) {
-    const filter = (e.target as HTMLSelectElement).value;
-    selectedFilter = filter;
-    session.setFilter(filter, true);
+  function toggleModule(modId: string) {
+    if (enabledModuleIds.includes(modId)) {
+      if (enabledModuleIds.length === 1) return;
+      enabledModuleIds = enabledModuleIds.filter(id => id !== modId);
+    } else {
+      enabledModuleIds = [...enabledModuleIds, modId];
+    }
+    settings = { ...settings, enabledModuleIds };
+    saveSettings(settings);
+    session.setFilter(enabledModuleIds, true);
     syncState();
-    inputElement?.focus();
+  }
+
+  function selectAllModules() {
+    enabledModuleIds = modules.map(m => m.id);
+    settings = { ...settings, enabledModuleIds };
+    saveSettings(settings);
+    session.setFilter('all', true);
+    syncState();
+  }
+
+  function toggleModuleModal(e: MouseEvent) {
+    e.stopPropagation();
+    showModuleModal = !showModuleModal;
+    if (!showModuleModal) {
+      inputElement?.focus();
+    }
   }
 
   function handleKeydown(e: KeyboardEvent) {
@@ -159,20 +190,76 @@
 
 <main oncopy={handleCopy} class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-6 md:py-6 overflow-x-hidden transition-colors">
   <div class="w-full max-w-5xl flex items-center justify-between gap-4 shrink-0">
-    <div class="flex items-center gap-3">
-      <label for="level-select" class="text-sm font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono">Module:</label>
-      <select
-        id="level-select"
-        class="bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 focus:outline-none focus:border-blue-600 dark:focus:border-blue-500 shadow-sm text-sm cursor-pointer"
-        value={selectedFilter}
-        onchange={handleFilterChange}
-        onclick={(e) => e.stopPropagation()}
+    <div class="relative flex items-center gap-3">
+      <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono hidden sm:inline">Curriculum:</span>
+      <button
+        type="button"
+        onclick={toggleModuleModal}
         onmousedown={(e) => e.stopPropagation()}
+        class="flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
+        aria-label="Select Modules"
       >
-        {#each modules as mod}
-          <option value={mod.id}>{mod.title}</option>
-        {/each}
-      </select>
+        <span class="truncate max-w-[160px] sm:max-w-[240px]">
+          {enabledModuleIds.length === modules.length
+            ? 'All Modules Enabled'
+            : (enabledModuleIds.length === 1
+                ? (modules.find(m => m.id === enabledModuleIds[0])?.title ?? '1 Module Selected')
+                : `${enabledModuleIds.length} Modules Enabled`)}
+        </span>
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {#if showModuleModal}
+        <div
+          role="region"
+          aria-label="Module Selector Panel"
+          class="module-modal absolute left-0 top-11 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3 max-h-[75vh]"
+          onclick={(e) => e.stopPropagation()}
+          onkeydown={(e) => e.stopPropagation()}
+          onmousedown={(e) => e.stopPropagation()}
+        >
+          <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono">
+              Enabled Modules ({enabledModuleIds.length}/{modules.length})
+            </span>
+            <button
+              type="button"
+              onclick={selectAllModules}
+              class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
+            >
+              Select All
+            </button>
+          </div>
+
+          <div class="overflow-y-auto flex flex-col gap-1 pr-1 max-h-[55vh] [scrollbar-width:thin]">
+            {#each modules as mod}
+              {@const isEnabled = enabledModuleIds.includes(mod.id)}
+              <label
+                class="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none"
+              >
+                <input
+                  type="checkbox"
+                  checked={isEnabled}
+                  onchange={() => toggleModule(mod.id)}
+                  class="mt-1 w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
+                />
+                <div class="flex flex-col">
+                  <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">
+                    {mod.title}
+                  </span>
+                  {#if mod.description}
+                    <span class="text-xs text-gray-500 dark:text-gray-400">
+                      {mod.description}
+                    </span>
+                  {/if}
+                </div>
+              </label>
+            {/each}
+          </div>
+        </div>
+      {/if}
     </div>
 
     <div class="flex-1 max-w-md bg-gray-200 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden shadow-inner hidden sm:block">

@@ -24,7 +24,7 @@ export class TutorSession {
   private allItems: LessonItem[];
   private modules: ModuleDefinition[];
   private activeItems: LessonItem[] = [];
-  private selectedFilter = 'all';
+  private selectedFilter: string | string[] = 'all';
   private shouldShuffle: boolean;
   private currentIndex = 0;
   private userInput = '';
@@ -33,7 +33,7 @@ export class TutorSession {
   private isItemCompleted = false;
   private engine: HangulEngine;
 
-  constructor(data: CurriculumData | LessonItem[], defaultFilter = 'all', shuffle = true) {
+  constructor(data: CurriculumData | LessonItem[], defaultFilter: string | string[] = 'all', shuffle = true) {
     if (Array.isArray(data)) {
       this.allItems = data;
       this.modules = [
@@ -65,14 +65,21 @@ export class TutorSession {
     return arr;
   }
 
-  /** Filters items by active module ID and applies shuffling. */
+  /** Filters items by active module ID(s) and applies shuffling. */
   private applyFilterAndShuffle(): void {
     let filtered: LessonItem[];
 
-    if (this.selectedFilter === 'all') {
+    if (Array.isArray(this.selectedFilter)) {
+      if (this.selectedFilter.length === 0 || this.selectedFilter.includes('all')) {
+        filtered = [...this.allItems];
+      } else {
+        const allowedSet = new Set(this.selectedFilter);
+        filtered = this.allItems.filter(item => allowedSet.has(item.moduleId));
+      }
+    } else if (this.selectedFilter === 'all') {
       filtered = [...this.allItems];
     } else {
-      filtered = this.allItems.filter(item => item.moduleId === this.selectedFilter || item.id.startsWith(this.selectedFilter));
+      filtered = this.allItems.filter(item => item.moduleId === this.selectedFilter || item.id.startsWith(this.selectedFilter as string));
     }
 
     if (filtered.length === 0) {
@@ -84,19 +91,19 @@ export class TutorSession {
   }
 
   /** Updates active module filter and reshuffles items. */
-  public setFilter(filterId: string, shuffle = true): void {
+  public setFilter(filterId: string | string[], shuffle = true): void {
     this.selectedFilter = filterId;
     this.shouldShuffle = shuffle;
     this.applyFilterAndShuffle();
   }
 
-  /** Returns active filter module ID. */
-  public getFilter(): string {
+  /** Returns active filter module ID or array of IDs. */
+  public getFilter(): string | string[] {
     return this.selectedFilter;
   }
 
-  /** Returns active filter module ID. */
-  public getSelectedFilter(): string {
+  /** Returns active filter module ID or array of IDs. */
+  public getSelectedFilter(): string | string[] {
     return this.selectedFilter;
   }
 
