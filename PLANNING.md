@@ -53,6 +53,14 @@ Phases 1, 2, and 3 are **COMPLETED**. The application features an authentic Hang
 - [ ] **LocalStorage Module Persistence (Next Step):** Persisting selected module filter and completed level index in browser `LocalStorage`.
 - [ ] **Analytics Stats Panel (Optional Next Step):** Collapsible WPM/SPM (Syllables Per Minute) speed panel for analytical feedback.
 
+### Phase 5: Jamo Spaced Repetition (SRS) Engine (Adaptive Learning) — PLANNED
+- [ ] **Jamo Telemetry Engine**: Keystroke-level outcome tracking (first-try accuracy, reaction time latency in ms, Shift modifier correctness) for each individual Jamo (`ㄱ`, `ㄲ`, `ㅖ`, etc.) during typing practice.
+- [ ] **Jamo SRS Memory Model & Persistence**: Maintain stability ($S$), difficulty ($D$), and review history per Jamo using an adapted SM-2 / FSRS algorithm persisted in `LocalStorage`.
+- [ ] **Automated Quality Rating**: Derive standard SRS recall quality scores (0–5) automatically from typing performance (e.g. fast first-try = 5, hesitant = 3, error/corrected = 1–2).
+- [ ] **Adaptive Practice Queue Scheduler**: Compute memory retrievability ($R = e^{-\Delta t / S}$) to dynamically calculate priority scores and build custom practice queues targeting weak Jamos.
+- [ ] **Smart Content Selector**: Filter curriculum items from `content.json` that feature weak/due Jamos or dynamically construct targeted Jamo drill sets.
+- [ ] **Distraction-Free Keyboard Heatmap**: Optional static color coding on virtual keyboard keycaps to visualize Jamo stability and retention levels without cluttering the main typing UI.
+
 ---
 
 ## What's Left to Do?
@@ -61,3 +69,5 @@ Phases 1, 2, and 3 are **COMPLETED**. The application features an authentic Hang
    * Automatically save and restore the user's selected module filter (`topik1_vocab`, `l3`, etc.) across browser reloads.
 2. **Speed Analytics Panel (Optional):**
    * An optional toggleable panel calculating Syllables Per Minute (SPM) or Words Per Minute (WPM) without cluttering the main distraction-free typing area.
+3. **Jamo Spaced Repetition Engine (Phase 5):**
+   * Implement automated Jamo telemetry, SM-2/FSRS retention scheduler, adaptive practice queues, and virtual keyboard heatmap visualization.

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { DUBEOLSIK_ROWS } from '../utils/keyboardData';
   import type { KeyCapDefinition } from '../utils/keyboardData';
+  import ShiftKey from './ShiftKey.svelte';
 
   interface Props {
     activeKeys?: string[];
@@ -36,19 +37,11 @@
         <!-- Row 2 left indentation offset -->
         <div class="w-2 sm:w-3 shrink-0"></div>
       {:else if rowIndex === 2}
-        <!-- Left Shift Key -->
-        <button
-          type="button"
-          tabindex="-1"
-          onmousedown={(e) => handleKeyClick('Shift', e)}
-          class="relative flex items-center justify-center w-10 sm:w-14 md:w-16 h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer shrink-0 text-xs sm:text-sm font-semibold uppercase tracking-wide
-            {isLeftShiftTarget
-              ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm font-bold'
-              : 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'}"
-          aria-label="Left Shift Key"
-        >
-          <span>Shift ⇧</span>
-        </button>
+        <ShiftKey
+          side="Left"
+          isTarget={isLeftShiftTarget}
+          onselect={(e) => handleKeyClick('Shift', e)}
+        />
       {/if}
 
       {#each row as cap}
@@ -90,19 +83,11 @@
         <!-- Row 2 right indentation offset -->
         <div class="w-2 sm:w-3 shrink-0"></div>
       {:else if rowIndex === 2}
-        <!-- Right Shift Key -->
-        <button
-          type="button"
-          tabindex="-1"
-          onmousedown={(e) => handleKeyClick('Shift', e)}
-          class="relative flex items-center justify-center w-10 sm:w-14 md:w-16 h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer shrink-0 text-xs sm:text-sm font-semibold uppercase tracking-wide
-            {isRightShiftTarget
-              ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm font-bold'
-              : 'bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'}"
-          aria-label="Right Shift Key"
-        >
-          <span>Shift ⇧</span>
-        </button>
+        <ShiftKey
+          side="Right"
+          isTarget={isRightShiftTarget}
+          onselect={(e) => handleKeyClick('Shift', e)}
+        />
       {/if}
     </div>
   {/each}

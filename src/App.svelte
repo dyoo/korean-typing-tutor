@@ -9,6 +9,16 @@
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleTargetCopyEvent } from './utils/clipboard';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
+  import CharDisplay from './lib/CharDisplay.svelte';
+  import {
+    CURRICULUM_CATEGORIES,
+    ALL_CATEGORY_IDS,
+    isGroupAllChecked,
+    isGroupSomeChecked,
+    getGroupCheckedCount,
+    toggleCategoryGroupIds
+  } from './utils/curriculumCategories';
+  import type { CurriculumCategory } from './utils/curriculumCategories';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   const modules = session.getModules();
@@ -121,56 +131,6 @@
     syncState();
   }
 
-  interface CurriculumCategory {
-    id: string;
-    name: string;
-    moduleIds: string[];
-  }
-
-  const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
-    {
-      id: 'beginner',
-      name: 'Beginner Fundamentals',
-      moduleIds: ['b1_home_row_vowels', 'b2_home_row_consonants', 'b3_home_row_words', 'b4_top_row', 'b5_bottom_row', 'b6_shift_keys']
-    },
-    {
-      id: 'batchim',
-      name: 'Final Consonants (받침)',
-      moduleIds: ['l2a_simple_batchim', 'l2b_complex_batchim']
-    },
-    {
-      id: 'core',
-      name: 'Core Vocabulary & Verbs',
-      moduleIds: ['l3', 'l4', 'l5']
-    },
-    {
-      id: 'topik1',
-      name: 'TOPIK I (Elementary)',
-      moduleIds: ['topik1_vocab', 'topik1_verbs', 'topik_grammar']
-    },
-    {
-      id: 'practical',
-      name: 'Practical & Culture',
-      moduleIds: ['sejong_phrases', 'kpop_slang', 'korean_culture']
-    },
-    {
-      id: 'topik2',
-      name: 'TOPIK II & Advanced',
-      moduleIds: ['topik2_vocab', 'korean_proverbs', 'topik2_passages']
-    }
-  ];
-
-  function isGroupAllChecked(category: CurriculumCategory): boolean {
-    return category.moduleIds.every(id => enabledModuleIds.includes(id));
-  }
-
-  function isGroupSomeChecked(category: CurriculumCategory): boolean {
-    const checkedCount = category.moduleIds.filter(id => enabledModuleIds.includes(id)).length;
-    return checkedCount > 0 && checkedCount < category.moduleIds.length;
-  }
-
-  const ALL_CATEGORY_IDS = CURRICULUM_CATEGORIES.map(c => c.id);
-
   let collapsedCategoryIds = $state<string[]>(
     loadSettings().collapsedCategoryIds ?? ALL_CATEGORY_IDS
   );
@@ -186,13 +146,7 @@
   }
 
   function toggleCategoryGroup(category: CurriculumCategory) {
-    const allChecked = isGroupAllChecked(category);
-    if (allChecked) {
-      enabledModuleIds = enabledModuleIds.filter(id => !category.moduleIds.includes(id));
-    } else {
-      const newSet = new Set([...enabledModuleIds, ...category.moduleIds]);
-      enabledModuleIds = Array.from(newSet);
-    }
+    enabledModuleIds = toggleCategoryGroupIds(category, enabledModuleIds);
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
     session.setFilter(enabledModuleIds, true);
@@ -357,9 +311,9 @@
 
           <div class="overflow-y-auto flex flex-col gap-3 pr-1 max-h-[55vh] [scrollbar-width:thin]">
             {#each CURRICULUM_CATEGORIES as category}
-              {@const allChecked = isGroupAllChecked(category)}
-              {@const someChecked = isGroupSomeChecked(category)}
-              {@const count = category.moduleIds.filter(id => enabledModuleIds.includes(id)).length}
+              {@const allChecked = isGroupAllChecked(category, enabledModuleIds)}
+              {@const someChecked = isGroupSomeChecked(category, enabledModuleIds)}
+              {@const count = getGroupCheckedCount(category, enabledModuleIds)}
               {@const isCollapsed = collapsedCategoryIds.includes(category.id)}
 
               <div class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-lg p-2 bg-gray-50/60 dark:bg-gray-800/40 gap-1.5">
@@ -512,16 +466,13 @@
           {@const isError = errors.find(e => e.index === i)?.isError ?? false}
           {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
           
-          <span data-target-index={i} class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-            <span class="whitespace-pre {isError ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-900 dark:text-gray-100 font-bold'}">
-              {' '}
-            </span>
-            {#if isError}
-              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
-            {:else if isCurrent}
-              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
-            {/if}
-          </span>
+          <CharDisplay
+            char=" "
+            {isError}
+            {isCurrent}
+            variant="target"
+            dataIndex={i}
+          />
         {:else}
           <span class="inline-flex whitespace-nowrap">
             {#each token.indices as i}
@@ -529,16 +480,13 @@
               {@const isError = errors.find(e => e.index === i)?.isError ?? false}
               {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
               
-              <span data-target-index={i} class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-                <span class="whitespace-pre {isError ? 'text-red-600 dark:text-red-400 font-bold' : 'text-gray-900 dark:text-gray-100 font-bold'}">
-                  {char}
-                </span>
-                {#if isError}
-                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
-                {:else if isCurrent}
-                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
-                {/if}
-              </span>
+              <CharDisplay
+                {char}
+                {isError}
+                {isCurrent}
+                variant="target"
+                dataIndex={i}
+              />
             {/each}
           </span>
         {/if}
@@ -588,28 +536,20 @@
             {@const isCurrent = (i === activeInputCursorIndex && !isCompleted)}
             
             {#if isCurrent}
-              <span
-                bind:this={activeCursorElement}
-                class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5"
-              >
-                <span class="whitespace-pre {isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}">
-                  {char === ' ' ? ' ' : char}
-                </span>
-                {#if isError}
-                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
-                {:else}
-                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
-                {/if}
-              </span>
+              <CharDisplay
+                bind:elementRef={activeCursorElement}
+                {char}
+                {isError}
+                {isCurrent}
+                variant="input"
+              />
             {:else}
-              <span class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5">
-                <span class="whitespace-pre {isError ? 'text-red-500 dark:text-red-400' : 'text-blue-600 dark:text-blue-400'}">
-                  {char === ' ' ? ' ' : char}
-                </span>
-                {#if isError}
-                  <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
-                {/if}
-              </span>
+              <CharDisplay
+                {char}
+                {isError}
+                {isCurrent}
+                variant="input"
+              />
             {/if}
           {/each}
 
