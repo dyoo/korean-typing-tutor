@@ -47,6 +47,15 @@ Our curriculum dataset ([`src/content.json`](file:///Users/dyoo/work/korean-typi
 
 ---
 
+## Related Korean Typing Resources
+
+For additional practice and alternative tools, here are other great web applications for learning how to type Korean:
+
+- **[Sam's Korean Typing Practice](https://type.sam.today/)** – A clean, web-based Korean typing practice tool.
+- **[Hancom Taja (한컴타자)](https://www.hancomtaja.com/en/)** – The online web edition of Korea's classic Hancom typing practice app.
+
+---
+
 ## Tech Stack
 
 - **Framework**: [Svelte 5](https://svelte.dev/)
