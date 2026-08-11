@@ -29,7 +29,7 @@ export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
   {
     id: 'practical',
     name: 'Practical & Culture',
-    moduleIds: ['sejong_phrases', 'kpop_slang', 'korean_culture']
+    moduleIds: ['sejong_phrases', 'kpop_slang', 'korean_culture', 'korean_tongue_twisters']
   },
   {
     id: 'topik2',

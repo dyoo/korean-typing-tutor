@@ -99,6 +99,11 @@
       "id": "topik2_passages",
       "title": "TOPIK II — Reading Passages & Folktales",
       "description": "Longer-form Korean paragraphs, stories, and folktales"
+    },
+    {
+      "id": "korean_tongue_twisters",
+      "title": "Tongue Twisters (쌘문장)",
+      "description": "High-difficulty Korean typing challenge sentences and classic tongue twisters"
     }
   ],
   "items": [
@@ -8341,6 +8346,111 @@
       "type": "sentence",
       "target": "원격 근무와 화상 회의의 보급으로 일하는 장소와 방식이 더욱 유연해졌습니다.",
       "translation": "With the spread of remote work and video conferencing, work locations and methods have become more flexible."
+    },
+    {
+      "id": "korean_tongue_twisters-1",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "경찰청 창살은 외창살인가 쌍창살인가.",
+      "translation": "Is the police station window bar a single bar or a double bar?"
+    },
+    {
+      "id": "korean_tongue_twisters-2",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "내가 그린 기린 그림은 목이 긴 기린 그림이고, 네가 그린 기린 그림은 목 안 긴 기린 그림이다.",
+      "translation": "The giraffe picture I drew is a long-necked giraffe picture, and the giraffe picture you drew is a short-necked giraffe picture."
+    },
+    {
+      "id": "korean_tongue_twisters-3",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "간장 공장 공장장은 강 공장장이고, 된장 공장 공장장은 공 공장장이다.",
+      "translation": "The manager of the soy sauce factory is Manager Kang, and the manager of the bean paste factory is Manager Kong."
+    },
+    {
+      "id": "korean_tongue_twisters-4",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "들콩깍지는 깐 콩깍지인가 안 깐 콩깍지인가.",
+      "translation": "Is the wild bean pod a peeled bean pod or an unpeeled bean pod?"
+    },
+    {
+      "id": "korean_tongue_twisters-5",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "안흥 찐빵집 찐빵은 뜨거운 찐빵이고, 양평 찐빵집 찐빵은 차가운 찐빵이다.",
+      "translation": "The steamed bun at Anheung shop is a hot bun, and the bun at Yangpyeong shop is a cold bun."
+    },
+    {
+      "id": "korean_tongue_twisters-6",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "서울특별시 특허허가과 허가과장 허과장.",
+      "translation": "Section Manager Heo of the Patent Authorization Section of Seoul Metropolitan City."
+    },
+    {
+      "id": "korean_tongue_twisters-7",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "중앙청 창살은 쌍창살이고 구청 창살은 외창살이다.",
+      "translation": "The Central Government window bar is a double bar and the District Office window bar is a single bar."
+    },
+    {
+      "id": "korean_tongue_twisters-8",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "저기 있는 저 분은 상표 붙인 통조림을 산 분인가, 상표 안 붙인 통조림을 산 분인가.",
+      "translation": "Is that person over there someone who bought a labeled can or an unlabeled can?"
+    },
+    {
+      "id": "korean_tongue_twisters-9",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "칠월 칠일은 평창군 평창읍 찰옥수수 수확날이다.",
+      "translation": "July 7th is the waxy corn harvest day in Pyeongchang-eup, Pyeongchang-gun."
+    },
+    {
+      "id": "korean_tongue_twisters-10",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "저기 계신 저 분이 바로 우리 구의 새 대건축가이시다.",
+      "translation": "That person standing over there is our district new great architect."
+    },
+    {
+      "id": "korean_tongue_twisters-11",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "한양 양장점 옆 한영 양장점, 한영 양장점 옆 한양 양장점.",
+      "translation": "Hanyoung tailor shop next to Hanyang tailor shop, Hanyang tailor shop next to Hanyoung tailor shop."
+    },
+    {
+      "id": "korean_tongue_twisters-12",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "뼛조각이 굵은 닭은 닭장에 있고, 뼛조각이 가는 닭은 흙 속에 있다.",
+      "translation": "The chicken with thick bones is in the coop, and the chicken with thin bones is in the soil."
+    },
+    {
+      "id": "korean_tongue_twisters-13",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "제주도 서귀포시 감귤 농장의 붉은 감귤은 단 감귤이다.",
+      "translation": "The red tangerines at the citrus farm in Seogwipo, Jeju Island are sweet tangerines."
+    },
+    {
+      "id": "korean_tongue_twisters-14",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "멍멍이네 꿀돈은 꿀 꿀돈이고 꿀돈이네 멍멍이는 멍 멍멍이다.",
+      "translation": "Meong-meong piggy is a honey pig, and Ggul-don puppy is a barking puppy."
+    },
+    {
+      "id": "korean_tongue_twisters-15",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "신진 샴푸의 샴푸 용기는 핑크색 샴푸 용기이다.",
+      "translation": "The shampoo bottle of Shinjin Shampoo is a pink shampoo bottle."
     }
   ]
 }
