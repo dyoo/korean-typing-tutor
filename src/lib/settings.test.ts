@@ -22,14 +22,16 @@ describe('Settings module persistence', () => {
     expect(loaded.theme).toBe('dark');
   });
 
-  it('should save and load selected curriculum module preferences', () => {
-    saveSettings({ showPronunciation: true, showTranslation: true, showVirtualKeyboard: true, theme: 'light', enabledModuleIds: ['b1_home_row_vowels', 'l3'] });
+  it('should save and load selected curriculum module preferences and collapsed categories', () => {
+    saveSettings({ showPronunciation: true, showTranslation: true, showVirtualKeyboard: true, theme: 'light', enabledModuleIds: ['b1_home_row_vowels', 'l3'], collapsedCategoryIds: ['topik2', 'practical'] });
     const loaded = loadSettings();
     expect(loaded.enabledModuleIds).toEqual(['b1_home_row_vowels', 'l3']);
+    expect(loaded.collapsedCategoryIds).toEqual(['topik2', 'practical']);
 
-    saveSettings({ showPronunciation: true, showTranslation: true, showVirtualKeyboard: true, theme: 'light', enabledModuleIds: [] });
+    saveSettings({ showPronunciation: true, showTranslation: true, showVirtualKeyboard: true, theme: 'light', enabledModuleIds: [], collapsedCategoryIds: [] });
     const loadedEmpty = loadSettings();
     expect(loadedEmpty.enabledModuleIds).toEqual([]);
+    expect(loadedEmpty.collapsedCategoryIds).toEqual([]);
   });
 
   it('should handle invalid JSON or invalid theme string gracefully', () => {

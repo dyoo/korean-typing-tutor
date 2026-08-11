@@ -169,6 +169,22 @@
     return checkedCount > 0 && checkedCount < category.moduleIds.length;
   }
 
+  const ALL_CATEGORY_IDS = CURRICULUM_CATEGORIES.map(c => c.id);
+
+  let collapsedCategoryIds = $state<string[]>(
+    loadSettings().collapsedCategoryIds ?? ALL_CATEGORY_IDS
+  );
+
+  function toggleCategoryCollapse(categoryId: string) {
+    if (collapsedCategoryIds.includes(categoryId)) {
+      collapsedCategoryIds = collapsedCategoryIds.filter(id => id !== categoryId);
+    } else {
+      collapsedCategoryIds = [...collapsedCategoryIds, categoryId];
+    }
+    settings = { ...settings, collapsedCategoryIds };
+    saveSettings(settings);
+  }
+
   function toggleCategoryGroup(category: CurriculumCategory) {
     const allChecked = isGroupAllChecked(category);
     if (allChecked) {
@@ -344,9 +360,10 @@
               {@const allChecked = isGroupAllChecked(category)}
               {@const someChecked = isGroupSomeChecked(category)}
               {@const count = category.moduleIds.filter(id => enabledModuleIds.includes(id)).length}
+              {@const isCollapsed = collapsedCategoryIds.includes(category.id)}
 
-              <div class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-lg p-2.5 bg-gray-50/60 dark:bg-gray-800/40 gap-1.5">
-                <label class="flex items-center justify-between p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 cursor-pointer transition-colors select-none font-bold text-xs text-gray-800 dark:text-gray-200">
+              <div class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-lg p-2 bg-gray-50/60 dark:bg-gray-800/40 gap-1.5">
+                <div class="flex items-center justify-between p-1 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 transition-colors select-none">
                   <div class="flex items-center gap-2">
                     <input
                       type="checkbox"
@@ -355,41 +372,56 @@
                       onchange={() => toggleCategoryGroup(category)}
                       class="w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
                     />
-                    <span class="font-bold text-xs uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                      {category.name}
-                    </span>
+                    <button
+                      type="button"
+                      onclick={() => toggleCategoryCollapse(category.id)}
+                      class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+                    >
+                      <svg
+                        class="w-3.5 h-3.5 text-gray-400 transition-transform {isCollapsed ? '-rotate-90' : ''}"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.5"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                      <span>{category.name}</span>
+                    </button>
                   </div>
                   <span class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0">
                     {count}/{category.moduleIds.length}
                   </span>
-                </label>
-
-                <div class="flex flex-col gap-1 pl-3 border-l-2 border-blue-500/30 dark:border-blue-400/30 ml-1.5 mt-0.5">
-                  {#each category.moduleIds as modId}
-                    {@const mod = modules.find(m => m.id === modId)}
-                    {#if mod}
-                      {@const isEnabled = enabledModuleIds.includes(mod.id)}
-                      <label class="flex items-start gap-2.5 p-1 rounded hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none">
-                        <input
-                          type="checkbox"
-                          checked={isEnabled}
-                          onchange={() => toggleModule(mod.id)}
-                          class="mt-0.5 w-3.5 h-3.5 text-blue-600 rounded cursor-pointer shrink-0"
-                        />
-                        <div class="flex flex-col">
-                          <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                            {mod.title}
-                          </span>
-                          {#if mod.description}
-                            <span class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight mt-0.5">
-                              {mod.description}
-                            </span>
-                          {/if}
-                        </div>
-                      </label>
-                    {/if}
-                  {/each}
                 </div>
+
+                {#if !isCollapsed}
+                  <div class="flex flex-col gap-1 pl-3 border-l-2 border-blue-500/30 dark:border-blue-400/30 ml-3.5 mb-1.5 mr-1">
+                    {#each category.moduleIds as modId}
+                      {@const mod = modules.find(m => m.id === modId)}
+                      {#if mod}
+                        {@const isEnabled = enabledModuleIds.includes(mod.id)}
+                        <label class="flex items-start gap-2.5 p-1 rounded hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none">
+                          <input
+                            type="checkbox"
+                            checked={isEnabled}
+                            onchange={() => toggleModule(mod.id)}
+                            class="mt-0.5 w-3.5 h-3.5 text-blue-600 rounded cursor-pointer shrink-0"
+                          />
+                          <div class="flex flex-col">
+                            <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                              {mod.title}
+                            </span>
+                            {#if mod.description}
+                              <span class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight mt-0.5">
+                                {mod.description}
+                              </span>
+                            {/if}
+                          </div>
+                        </label>
+                      {/if}
+                    {/each}
+                  </div>
+                {/if}
               </div>
             {/each}
           </div>

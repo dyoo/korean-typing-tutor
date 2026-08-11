@@ -12,6 +12,7 @@ export interface TutorSettings {
   showVirtualKeyboard: boolean;
   theme: ThemeMode;
   enabledModuleIds?: string[];
+  collapsedCategoryIds?: string[];
 }
 
 /** LocalStorage key for persisting user settings across browser sessions. */
@@ -40,7 +41,8 @@ export function loadSettings(): TutorSettings {
       showTranslation: typeof parsed.showTranslation === 'boolean' ? parsed.showTranslation : true,
       showVirtualKeyboard: typeof parsed.showVirtualKeyboard === 'boolean' ? parsed.showVirtualKeyboard : true,
       theme: validThemes.includes(parsed.theme) ? parsed.theme : 'system',
-      enabledModuleIds: Array.isArray(parsed.enabledModuleIds) ? parsed.enabledModuleIds : undefined
+      enabledModuleIds: Array.isArray(parsed.enabledModuleIds) ? parsed.enabledModuleIds : undefined,
+      collapsedCategoryIds: Array.isArray(parsed.collapsedCategoryIds) ? parsed.collapsedCategoryIds : undefined
     };
   } catch {
     return DEFAULT_SETTINGS;
