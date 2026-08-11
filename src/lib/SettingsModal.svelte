@@ -80,7 +80,6 @@
       role="region"
       aria-label="Display Settings Panel"
       class="settings-modal absolute right-0 top-11 z-50 w-64 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3"
-      onmousedown={(e) => e.stopPropagation()}
     >
       <div
         class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono pb-1 border-b border-gray-100 dark:border-gray-700"
