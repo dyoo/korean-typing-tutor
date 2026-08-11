@@ -10,6 +10,7 @@
   import { handleTargetCopyEvent } from './utils/clipboard';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CharDisplay from './lib/CharDisplay.svelte';
+  import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import {
     CURRICULUM_CATEGORIES,
     ALL_CATEGORY_IDS,
@@ -26,7 +27,7 @@
   const initialSettings = loadSettings();
   let settings = $state<TutorSettings>(initialSettings);
   let showSettingsModal = $state(false);
-  let showModuleModal = $state(false);
+  let showCurriculumSidebar = $state(false);
 
   let enabledModuleIds = $state<string[]>(
     Array.isArray(initialSettings.enabledModuleIds)
@@ -78,10 +79,6 @@
       showSettingsModal = false;
     }
 
-    if (showModuleModal && target && !target.closest('.module-modal') && !target.closest('.module-btn')) {
-      showModuleModal = false;
-    }
-
     focusInput(e);
   }
 
@@ -102,7 +99,7 @@
         target.closest('a') ||
         target.closest('label') ||
         target.closest('.settings-modal') ||
-        target.closest('.module-modal')
+        target.closest('[role="dialog"]')
       ) {
         return;
       }
@@ -238,10 +235,25 @@
     e.stopPropagation();
     showSettingsModal = !showSettingsModal;
     if (showSettingsModal) {
-      showModuleModal = false;
+      showCurriculumSidebar = false;
     } else {
       inputElement?.focus();
     }
+  }
+
+  function toggleCurriculumSidebar(e?: MouseEvent) {
+    e?.stopPropagation();
+    showCurriculumSidebar = !showCurriculumSidebar;
+    if (showCurriculumSidebar) {
+      showSettingsModal = false;
+    } else {
+      inputElement?.focus();
+    }
+  }
+
+  function closeCurriculumSidebar() {
+    showCurriculumSidebar = false;
+    inputElement?.focus();
   }
 
   function handleCopy(e: ClipboardEvent) {
@@ -255,132 +267,23 @@
 <main oncopy={handleCopy} class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-8 md:py-6 overflow-x-hidden transition-colors">
   <div class="w-full max-w-7xl flex items-center justify-between gap-4 shrink-0">
     <div class="relative flex items-center gap-3">
-      <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono hidden sm:inline">Curriculum:</span>
       <button
         type="button"
-        onclick={toggleModuleModal}
+        onclick={toggleCurriculumSidebar}
         onmousedown={(e) => e.stopPropagation()}
-        class="module-btn flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
-        aria-label="Select Modules"
+        class="flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
+        aria-label="Open Curriculum Sidebar"
       >
-        <span class="truncate max-w-[160px] sm:max-w-[240px]">
-          {enabledModuleIds.length === modules.length
-            ? 'All Modules Enabled'
-            : (enabledModuleIds.length === 0
-                ? 'No Modules Selected'
-                : (enabledModuleIds.length === 1
-                    ? (modules.find(m => m.id === enabledModuleIds[0])?.title ?? '1 Module Selected')
-                    : `${enabledModuleIds.length} Modules Enabled`))}
-        </span>
-        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
+        <span class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline">
+          Curriculum
+        </span>
+        <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">
+          {enabledModuleIds.length}/{modules.length}
+        </span>
       </button>
-
-      {#if showModuleModal}
-        <div
-          role="region"
-          aria-label="Module Selector Panel"
-          class="module-modal absolute left-0 top-11 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3 max-h-[75vh]"
-          onclick={(e) => e.stopPropagation()}
-          onkeydown={(e) => e.stopPropagation()}
-          onmousedown={(e) => e.stopPropagation()}
-        >
-          <div class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2">
-            <span class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono">
-              Enabled ({enabledModuleIds.length}/{modules.length})
-            </span>
-            <div class="flex items-center gap-2">
-              <button
-                type="button"
-                onclick={selectAllModules}
-                class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
-              >
-                Select All
-              </button>
-              <span class="text-xs text-gray-300 dark:text-gray-600">•</span>
-              <button
-                type="button"
-                onclick={deselectAllModules}
-                class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
-              >
-                Select None
-              </button>
-            </div>
-          </div>
-
-          <div class="overflow-y-auto flex flex-col gap-3 pr-1 max-h-[55vh] [scrollbar-width:thin]">
-            {#each CURRICULUM_CATEGORIES as category}
-              {@const allChecked = isGroupAllChecked(category, enabledModuleIds)}
-              {@const someChecked = isGroupSomeChecked(category, enabledModuleIds)}
-              {@const count = getGroupCheckedCount(category, enabledModuleIds)}
-              {@const isCollapsed = collapsedCategoryIds.includes(category.id)}
-
-              <div class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-lg p-2 bg-gray-50/60 dark:bg-gray-800/40 gap-1.5">
-                <div class="flex items-center justify-between p-1 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 transition-colors select-none">
-                  <div class="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={allChecked}
-                      indeterminate={someChecked}
-                      onchange={() => toggleCategoryGroup(category)}
-                      class="w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
-                    />
-                    <button
-                      type="button"
-                      onclick={() => toggleCategoryCollapse(category.id)}
-                      class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
-                    >
-                      <svg
-                        class="w-3.5 h-3.5 text-gray-400 transition-transform {isCollapsed ? '-rotate-90' : ''}"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2.5"
-                      >
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                      </svg>
-                      <span>{category.name}</span>
-                    </button>
-                  </div>
-                  <span class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0">
-                    {count}/{category.moduleIds.length}
-                  </span>
-                </div>
-
-                {#if !isCollapsed}
-                  <div class="flex flex-col gap-1 pl-3 border-l-2 border-blue-500/30 dark:border-blue-400/30 ml-3.5 mb-1.5 mr-1">
-                    {#each category.moduleIds as modId}
-                      {@const mod = modules.find(m => m.id === modId)}
-                      {#if mod}
-                        {@const isEnabled = enabledModuleIds.includes(mod.id)}
-                        <label class="flex items-start gap-2.5 p-1 rounded hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none">
-                          <input
-                            type="checkbox"
-                            checked={isEnabled}
-                            onchange={() => toggleModule(mod.id)}
-                            class="mt-0.5 w-3.5 h-3.5 text-blue-600 rounded cursor-pointer shrink-0"
-                          />
-                          <div class="flex flex-col">
-                            <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 leading-tight">
-                              {mod.title}
-                            </span>
-                            {#if mod.description}
-                              <span class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight mt-0.5">
-                                {mod.description}
-                              </span>
-                            {/if}
-                          </div>
-                        </label>
-                      {/if}
-                    {/each}
-                  </div>
-                {/if}
-              </div>
-            {/each}
-          </div>
-        </div>
-      {/if}
     </div>
 
     <div class="relative flex items-center gap-2">
@@ -602,6 +505,19 @@
     </div>
   </div>
 </main>
+
+<CurriculumSidebar
+  isOpen={showCurriculumSidebar}
+  {enabledModuleIds}
+  {collapsedCategoryIds}
+  {modules}
+  onclose={closeCurriculumSidebar}
+  ontogglemodule={toggleModule}
+  ontogglecategorycollapse={toggleCategoryCollapse}
+  ontogglecategorygroup={toggleCategoryGroup}
+  onselectall={selectAllModules}
+  ondeselectall={deselectAllModules}
+/>
 
 <style>
   :global(body) {
