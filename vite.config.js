@@ -6,6 +6,9 @@ const commitId = process.env.COMMIT_ID || 'dev';
 
 export default defineConfig({
   base: './',
+  server: {
+    port: 8080,
+  },
   plugins: [
     svelte(),
     VitePWA({
