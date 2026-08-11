@@ -344,7 +344,7 @@
     class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-4 shrink-0 px-2 md:px-8"
   >
     <div
-      class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden"
+      class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-xl px-4 overflow-hidden"
     >
       {#if userInput.length === 0}
         <span
