@@ -41,7 +41,9 @@ Our curriculum dataset ([`src/content.json`](file:///Users/dyoo/work/korean-typi
    - Practical situational conversation modules (ordering food at cafes/restaurants, taking the subway, asking for directions, shopping, hospital/pharmacy symptoms) and intermediate reading passages.
 4. **Korean Proverbs & Sayings (속담 / 사자성어)**:
    - Classic Korean proverbs with literal and figurative English translations (`식은 죽 먹기`, `티끌 모아 태산`).
-5. **AI-Generated & Curated Curriculum Expansion**:
+5. **Traditional Korean Tongue Twisters (잰말놀이 / 타자 쌘문장)**:
+   - Public domain Korean tongue twisters and speed-typing challenge sentences curated from traditional folklore, speech therapy exercises, and classic typing practice materials (`한컴타자연습`, `타닥타닥`).
+6. **AI-Generated & Curated Curriculum Expansion**:
    - Comprehensive beginner row progression levels (`b1` through `b6`), 100+ K-Pop slang items, 150+ TOPIK II reading passages, and dynamic Revised Romanization phonetics generated and verified by **Antigravity**.
 
 ---

@@ -8451,6 +8451,76 @@
       "type": "sentence",
       "target": "신진 샴푸의 샴푸 용기는 핑크색 샴푸 용기이다.",
       "translation": "The shampoo bottle of Shinjin Shampoo is a pink shampoo bottle."
+    },
+    {
+      "id": "korean_tongue_twisters-16",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "경찰청 쇠창살은 외철창살이고 검찰청 쇠창살은 쌍철창살이다.",
+      "translation": "The police station iron bars are single iron bars, and the prosecution office iron bars are double iron bars."
+    },
+    {
+      "id": "korean_tongue_twisters-17",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "저기 저 뜀틀이 내가 뛸 뜀틀인가 내가 안 뛸 뜀틀인가.",
+      "translation": "Is that vaulting horse over there one I will jump or one I won’t jump?"
+    },
+    {
+      "id": "korean_tongue_twisters-18",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "신진 샹송가수의 신춘 샹송쇼.",
+      "translation": "New chanson singer’s spring chanson show."
+    },
+    {
+      "id": "korean_tongue_twisters-19",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "상표 붙인 큰 깡통은 깐 깡통인가 안 깐 깡통인가.",
+      "translation": "Is the large labeled tin can an opened can or an unopened can?"
+    },
+    {
+      "id": "korean_tongue_twisters-25",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "고려고 교복은 고급 교복이고 고려고 교복은 고급 원단을 사용했다.",
+      "translation": "Goryeo High School uniforms are luxury uniforms made with premium fabric."
+    },
+    {
+      "id": "korean_tongue_twisters-21",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "작년에 온 솥장수는 새 솥장수이고, 금년에 온 솥장수는 헌 솥장수이다.",
+      "translation": "The cauldron seller who came last year is a new seller, and the one who came this year is an old seller."
+    },
+    {
+      "id": "korean_tongue_twisters-22",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "도토리가 문을 도로록, 드르륵, 두루룩 열었는가.",
+      "translation": "Did the acorn open the door with a rolling, clattering, sliding sound?"
+    },
+    {
+      "id": "korean_tongue_twisters-23",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "앞집 팥죽은 붉은 팥 풋팥죽이고, 뒷집 콩죽은 햇콩 단콩 콩죽이다.",
+      "translation": "The front house red bean porridge is fresh red bean porridge, and the back house bean porridge is sweet new bean porridge."
+    },
+    {
+      "id": "korean_tongue_twisters-24",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "박 법학 박사님은 백 법학 박사님보다 법학을 더 잘 아신다.",
+      "translation": "Dr. Park, Doctor of Law, knows law better than Dr. Baek, Doctor of Law."
+    },
+    {
+      "id": "korean_tongue_twisters-20",
+      "moduleId": "korean_tongue_twisters",
+      "type": "sentence",
+      "target": "시골 찹쌀 햇찹쌀, 도시 햇찹쌀 시골 찹쌀, 햇찹쌀 찰찹쌀.",
+      "translation": "Countryside sticky rice, newly harvested sticky rice, city sticky rice, glutinous sticky rice."
     }
   ]
 }
