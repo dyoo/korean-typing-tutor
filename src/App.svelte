@@ -131,7 +131,7 @@
     {
       id: 'beginner',
       name: 'Beginner Fundamentals',
-      moduleIds: ['b1_vowels', 'b2_syllables_simple', 'b3_complex_vowels', 'b4_no_batchim_words']
+      moduleIds: ['b1_home_row_vowels', 'b2_home_row_consonants', 'b3_home_row_words', 'b4_top_row', 'b5_bottom_row', 'b6_shift_keys']
     },
     {
       id: 'batchim',
