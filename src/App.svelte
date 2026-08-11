@@ -6,7 +6,9 @@
   import { loadSettings, saveSettings, applyTheme } from './lib/settings';
   import type { TutorSettings, ThemeMode } from './lib/settings';
   import { calculateTargetCursorIndex, calculateInputCursorIndex, getWordTokens } from './utils/koreanEngine';
+  import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleTargetCopyEvent } from './utils/clipboard';
+  import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   const modules = session.getModules();
@@ -40,6 +42,10 @@
 
   let activeInputCursorIndex = $derived(
     calculateInputCursorIndex(userInput, currentItem.target, isCompleted)
+  );
+
+  let activeRequiredKeys = $derived(
+    getNextRequiredKeys(currentItem.target, userInput, isCompleted)
   );
 
   $effect(() => {
@@ -236,6 +242,18 @@
     settings = { ...settings, showTranslation: !settings.showTranslation };
     saveSettings(settings);
     syncState();
+  }
+
+  function toggleVirtualKeyboard() {
+    settings = { ...settings, showVirtualKeyboard: !settings.showVirtualKeyboard };
+    saveSettings(settings);
+    syncState();
+  }
+
+  function handleVirtualKeySelect(key: string) {
+    session.processKey(key);
+    syncState();
+    inputElement?.focus();
   }
 
   function handleThemeChange(e: Event) {
@@ -439,6 +457,16 @@
               class="w-4 h-4 text-blue-600 rounded cursor-pointer"
             />
           </label>
+
+          <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200">
+            <span>Show Virtual Keyboard</span>
+            <input
+              type="checkbox"
+              checked={settings.showVirtualKeyboard}
+              onchange={toggleVirtualKeyboard}
+              class="w-4 h-4 text-blue-600 rounded cursor-pointer"
+            />
+          </label>
         </div>
       {/if}
     </div>
@@ -578,6 +606,12 @@
         spellcheck="false"
       />
     </div>
+
+    {#if settings.showVirtualKeyboard}
+      <div class="w-full flex justify-center mt-3">
+        <VirtualKeyboard activeKeys={activeRequiredKeys} onkeyselect={handleVirtualKeySelect} />
+      </div>
+    {/if}
 
     <div class="flex justify-end items-center w-full mt-4">
       <a

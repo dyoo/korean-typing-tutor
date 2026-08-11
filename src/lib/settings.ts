@@ -9,6 +9,7 @@ export type ThemeMode = 'system' | 'light' | 'dark';
 export interface TutorSettings {
   showPronunciation: boolean;
   showTranslation: boolean;
+  showVirtualKeyboard: boolean;
   theme: ThemeMode;
   enabledModuleIds?: string[];
 }
@@ -20,6 +21,7 @@ const SETTINGS_STORAGE_KEY = 'korean_tutor_settings';
 export const DEFAULT_SETTINGS: TutorSettings = {
   showPronunciation: true,
   showTranslation: true,
+  showVirtualKeyboard: true,
   theme: 'system'
 };
 
@@ -36,6 +38,7 @@ export function loadSettings(): TutorSettings {
     return {
       showPronunciation: typeof parsed.showPronunciation === 'boolean' ? parsed.showPronunciation : true,
       showTranslation: typeof parsed.showTranslation === 'boolean' ? parsed.showTranslation : true,
+      showVirtualKeyboard: typeof parsed.showVirtualKeyboard === 'boolean' ? parsed.showVirtualKeyboard : true,
       theme: validThemes.includes(parsed.theme) ? parsed.theme : 'system',
       enabledModuleIds: Array.isArray(parsed.enabledModuleIds) ? parsed.enabledModuleIds : undefined
     };

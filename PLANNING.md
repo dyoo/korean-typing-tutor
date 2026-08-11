@@ -33,7 +33,7 @@ Phases 1, 2, and 3 are **COMPLETED**. The application features an authentic Hang
 - [x] **Real-Time Visual Feedback:** Main target display character underlines (neutral gray for untyped, blue for valid partial block, emerald for correct, red for incorrect).
 - [x] **Mouse Text Selection & Copying:** Full support for highlighting and copying Korean words without focus stealing.
 - [x] **Deliberate Progression & Practice Backspacing:** Requires Enter/Space to advance, while allowing Backspace to edit/re-type completed words.
-- [ ] **On-Screen Virtual Keyboard Helper (Next Step):** Optional interactive Dubeolsik virtual keyboard layout highlighting active target keys for beginners.
+- [x] **On-Screen Virtual Keyboard Helper:** Interactive Dubeolsik virtual keyboard layout highlighting active target keys for beginners with touch/click support.
 
 ### Phase 3: Curriculum & Content (The Lessons) — COMPLETED
 - [x] **Data-Driven Content Schema (`src/content.json`):** Dynamic modules array and items array.
@@ -59,7 +59,5 @@ Phases 1, 2, and 3 are **COMPLETED**. The application features an authentic Hang
 
 1. **LocalStorage Module Persistence:**
    * Automatically save and restore the user's selected module filter (`topik1_vocab`, `l3`, etc.) across browser reloads.
-2. **On-Screen Dubeolsik Virtual Keyboard Helper (Optional):**
-   * A collapsible virtual keyboard visualizer showing key locations for English speakers learning the Korean 2-set layout.
-3. **Speed Analytics Panel (Optional):**
+2. **Speed Analytics Panel (Optional):**
    * An optional toggleable panel calculating Syllables Per Minute (SPM) or Words Per Minute (WPM) without cluttering the main distraction-free typing area.

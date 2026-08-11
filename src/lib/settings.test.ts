@@ -14,19 +14,20 @@ describe('Settings module persistence', () => {
   });
 
   it('should save and load custom user settings including theme', () => {
-    saveSettings({ showPronunciation: false, showTranslation: true, theme: 'dark' });
+    saveSettings({ showPronunciation: false, showTranslation: true, showVirtualKeyboard: true, theme: 'dark' });
     const loaded = loadSettings();
     expect(loaded.showPronunciation).toBe(false);
     expect(loaded.showTranslation).toBe(true);
+    expect(loaded.showVirtualKeyboard).toBe(true);
     expect(loaded.theme).toBe('dark');
   });
 
   it('should save and load selected curriculum module preferences', () => {
-    saveSettings({ showPronunciation: true, showTranslation: true, theme: 'light', enabledModuleIds: ['b1_vowels', 'l3'] });
+    saveSettings({ showPronunciation: true, showTranslation: true, showVirtualKeyboard: true, theme: 'light', enabledModuleIds: ['b1_vowels', 'l3'] });
     const loaded = loadSettings();
     expect(loaded.enabledModuleIds).toEqual(['b1_vowels', 'l3']);
 
-    saveSettings({ showPronunciation: true, showTranslation: true, theme: 'light', enabledModuleIds: [] });
+    saveSettings({ showPronunciation: true, showTranslation: true, showVirtualKeyboard: true, theme: 'light', enabledModuleIds: [] });
     const loadedEmpty = loadSettings();
     expect(loadedEmpty.enabledModuleIds).toEqual([]);
   });
