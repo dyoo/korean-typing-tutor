@@ -21,7 +21,7 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - **TypeScript**: Always use proper types/interfaces (see `src/types/korean.ts`).
 - **Component Structure**: Keep Svelte components focused. Logic for complex operations (like Hangul composition) should reside in `src/utils/`.
 - **Explain Before Significant Changes**: Always explain the rationale and technical design to the user before applying significant code changes.
-- **VCS Workflow**: Use `jj` (Jujutsu) for version control operations. Never combine creating commits/revisions with pushing. Always create commits without pushing unless explicitly requested.
+- **VCS Workflow**: Use `jj` (Jujutsu) for version control operations. Never combine creating commits/revisions with pushing. Always create commits without pushing unless explicitly requested. Do not prefix commit/CL descriptions with conventional commit categories (e.g. avoid `feat:`, `fix:`, `chore:`, `style:` prefixes); write direct, plain descriptive summary messages instead.
 - **Testing**: Always use one-time non-interactive test execution (e.g., `npx vitest run` or `npm test` configured with `vitest run`) rather than interactive watch mode.
 - **Opposite-Hand Shift Chording**: When guiding Shift key targets (e.g. `ㄲ`, `ㅖ`), always recommend the opposite-hand Shift key (`right-shift` for left-hand keys `Q`/`W`/`E`/`R`/`T`, `left-shift` for right-hand keys `O`/`P`) to reinforce proper touch-typing ergonomics.
 - **CSS**: Use Tailwind utility classes directly in the markup.
