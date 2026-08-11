@@ -105,3 +105,14 @@ We use **Prettier** for automatic formatting.
 ## Attribution & Development
 
 This project was built and vibe coded in pair programming collaboration with **Antigravity**, an agentic AI coding assistant developed by the Google DeepMind team. Antigravity designed core components, implemented the Dubeolsik composition engine and dynamic Romanization system, and generated & curated much of the curriculum content dataset.
+
+---
+
+## License
+
+This project uses a dual-license model:
+
+- **Software Code**: [MIT License](file:///Users/dyoo/work/korean-typing-tutor/LICENSE#1-software-code-mit-license)
+- **Curriculum Dataset & Content**: [Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](file:///Users/dyoo/work/korean-typing-tutor/LICENSE#2-curriculum-dataset--content-cc-by-sa-40)
+
+See [`LICENSE`](file:///Users/dyoo/work/korean-typing-tutor/LICENSE) for full legal text and attribution requirements.
