@@ -34,6 +34,6 @@ export interface LessonItem {
   moduleId: string;
   type: 'syllable' | 'word' | 'sentence';
   target: string;
-  pronunciation: string | null;
-  translation: string | null;
+  pronunciation?: string | null;
+  translation?: string | null;
 }

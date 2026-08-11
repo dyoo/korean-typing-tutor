@@ -1,4 +1,5 @@
 import { HangulEngine, checkErrors } from '../utils/koreanEngine';
+import { getPronunciation } from '../utils/romanizer';
 import type { ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
 
 /** Structure of the imported content dataset containing modules and lesson items. */
@@ -174,8 +175,9 @@ export class TutorSession {
     const showPron = options?.showPronunciation ?? true;
     const showTrans = options?.showTranslation ?? true;
     const parts: string[] = [];
-    if (showPron && item.pronunciation) {
-      parts.push(item.pronunciation);
+    const pron = getPronunciation(item);
+    if (showPron && pron) {
+      parts.push(pron);
     }
     if (showTrans && item.translation) {
       parts.push(item.translation);
