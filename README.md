@@ -38,10 +38,10 @@ Our curriculum dataset ([`src/content.json`](file:///Users/dyoo/work/korean-typi
    - Standardized vocabulary and official English translations from the open-access _한국어기초사전_ (Basic Korean Dictionary for Learners, licensed under CC BY-SA 2.0 KR).
 3. **[King Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) — [Sejonghakdang Online Learning Portal](https://www.sejonghakdang.org/)**:
    - Practical situational conversation modules (ordering food at cafes/restaurants, taking the subway, asking for directions, shopping, hospital/pharmacy symptoms) and intermediate reading passages.
-4. **Korean Proverbs & Sayings (속담 / 사자성어)**:
-   - Classic Korean proverbs with literal and figurative English translations (`식은 죽 먹기`, `티끌 모아 태산`).
-5. **Traditional Korean Tongue Twisters (잰말놀이 / 타자 쌘문장)**:
-   - Public domain Korean tongue twisters and speed-typing challenge sentences curated from traditional folklore, speech therapy exercises, and classic typing practice materials (`한컴타자연습`, `타닥타닥`).
+4. **[Korean Proverbs & Sayings (속담 / 사자성어)](https://krdict.korean.go.kr/)**:
+   - Classic Korean proverbs and idioms with literal and figurative English translations (`식은 죽 먹기`, `티끌 모아 태산`), cross-referenced with the **[National Institute of Korean Language (국립국어원)](https://krdict.korean.go.kr/)** and the **[Academy of Korean Studies Encyclopedia of Korean Culture (한국민족문화대백과사전)](https://encykorea.aks.ac.kr/Article/E0030198)**.
+5. **[Traditional Korean Tongue Twisters (잰말놀이 / 타자 쌘문장)](https://folkency.nfm.go.kr/)**:
+   - Traditional Korean tongue twisters and speed-typing challenge sentences curated from the **[National Folk Museum of Korea — Encyclopedia of Korean Folk Culture (국립민속박물관 - 한국민속대백과사전)](https://folkency.nfm.go.kr/)** folklore archives, speech therapy exercises, and classic typing practice materials (`한컴타자연습`, `타닥타닥`).
 6. **AI-Generated & Curated Curriculum Expansion**:
    - Comprehensive beginner row progression levels (`b1` through `b6`), 100+ K-Pop slang items, 150+ TOPIK II reading passages, and dynamic Revised Romanization phonetics generated and verified by **Antigravity**.
 
