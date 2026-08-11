@@ -76,7 +76,7 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
    npm run dev
    ```
 4. **Open in your browser**:
-   Navigate to `http://localhost:5173`
+   Navigate to `http://localhost:8080`
 
 ### Running Tests
 
