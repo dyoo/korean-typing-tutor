@@ -53,13 +53,21 @@
   </button>
 
   {#if isOpen}
+    <!-- Transparent backdrop overlay for reliable click-outside closing -->
+    <div
+      role="button"
+      tabindex="-1"
+      aria-label="Close settings modal backdrop"
+      onclick={onclose}
+      onkeydown={(e) => { if (e.key === 'Escape') onclose(); }}
+      class="fixed inset-0 z-40 bg-transparent select-none"
+    ></div>
+
     <div
       tabindex="-1"
       role="region"
       aria-label="Display Settings Panel"
       class="settings-modal absolute right-0 top-11 z-50 w-64 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3"
-      onclick={(e) => e.stopPropagation()}
-      onkeydown={(e) => e.stopPropagation()}
       onmousedown={(e) => e.stopPropagation()}
     >
       <div class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono pb-1 border-b border-gray-100 dark:border-gray-700">

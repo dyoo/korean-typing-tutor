@@ -74,12 +74,6 @@
   });
 
   function handleWindowClick(e: MouseEvent) {
-    const target = e.target as HTMLElement | null;
-
-    if (showSettingsModal && target && !target.closest('.settings-modal') && !target.closest('.settings-btn')) {
-      showSettingsModal = false;
-    }
-
     focusInput(e);
   }
 
