@@ -14,7 +14,7 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}']
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
       },
       manifest: {
         name: 'Korean Typing Tutor',
@@ -26,15 +26,15 @@ export default defineConfig({
           {
             src: 'pwa-192x192.png',
             sizes: '192x192',
-            type: 'image/png'
+            type: 'image/png',
           },
           {
             src: 'pwa-512x512.png',
             sizes: '512x512',
-            type: 'image/png'
-          }
-        ]
-      }
-    })
-  ]
+            type: 'image/png',
+          },
+        ],
+      },
+    }),
+  ],
 });

@@ -14,7 +14,7 @@
     isCurrent = false,
     variant = 'target',
     dataIndex = undefined,
-    elementRef = $bindable(null)
+    elementRef = $bindable(null),
   }: Props = $props();
 
   let textColor = $derived(
@@ -24,7 +24,7 @@
         : 'text-red-500 dark:text-red-400'
       : variant === 'target'
         ? 'text-gray-900 dark:text-gray-100 font-bold'
-        : 'text-blue-600 dark:text-blue-400'
+        : 'text-blue-600 dark:text-blue-400',
   );
 </script>
 

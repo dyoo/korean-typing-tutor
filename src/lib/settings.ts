@@ -23,7 +23,7 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   showPronunciation: true,
   showTranslation: true,
   showVirtualKeyboard: true,
-  theme: 'system'
+  theme: 'system',
 };
 
 /**
@@ -48,7 +48,7 @@ export function loadSettings(): TutorSettings {
         : undefined,
       collapsedCategoryIds: Array.isArray(parsed.collapsedCategoryIds)
         ? parsed.collapsedCategoryIds
-        : undefined
+        : undefined,
     };
   } catch {
     return DEFAULT_SETTINGS;

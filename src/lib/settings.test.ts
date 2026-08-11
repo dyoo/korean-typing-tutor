@@ -18,7 +18,7 @@ describe('Settings module persistence', () => {
       showPronunciation: false,
       showTranslation: true,
       showVirtualKeyboard: true,
-      theme: 'dark'
+      theme: 'dark',
     });
     const loaded = loadSettings();
     expect(loaded.showPronunciation).toBe(false);
@@ -34,7 +34,7 @@ describe('Settings module persistence', () => {
       showVirtualKeyboard: true,
       theme: 'light',
       enabledModuleIds: ['b1_home_row_vowels', 'l3'],
-      collapsedCategoryIds: ['topik2', 'practical']
+      collapsedCategoryIds: ['topik2', 'practical'],
     });
     const loaded = loadSettings();
     expect(loaded.enabledModuleIds).toEqual(['b1_home_row_vowels', 'l3']);
@@ -46,7 +46,7 @@ describe('Settings module persistence', () => {
       showVirtualKeyboard: true,
       theme: 'light',
       enabledModuleIds: [],
-      collapsedCategoryIds: []
+      collapsedCategoryIds: [],
     });
     const loadedEmpty = loadSettings();
     expect(loadedEmpty.enabledModuleIds).toEqual([]);

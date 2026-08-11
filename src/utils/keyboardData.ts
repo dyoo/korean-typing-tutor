@@ -23,7 +23,7 @@ export const DUBEOLSIK_ROWS: KeyCapDefinition[][] = [
     { key: 'u', jamo: 'ㅕ', type: 'vowel' },
     { key: 'i', jamo: 'ㅑ', type: 'vowel' },
     { key: 'o', jamo: 'ㅐ', shiftJamo: 'ㅒ', type: 'vowel' },
-    { key: 'p', jamo: 'ㅔ', shiftJamo: 'ㅖ', type: 'vowel' }
+    { key: 'p', jamo: 'ㅔ', shiftJamo: 'ㅖ', type: 'vowel' },
   ],
   // Row 2: A S D F G H J K L
   [
@@ -35,7 +35,7 @@ export const DUBEOLSIK_ROWS: KeyCapDefinition[][] = [
     { key: 'h', jamo: 'ㅗ', type: 'vowel' },
     { key: 'j', jamo: 'ㅓ', type: 'vowel' },
     { key: 'k', jamo: 'ㅏ', type: 'vowel' },
-    { key: 'l', jamo: 'ㅣ', type: 'vowel' }
+    { key: 'l', jamo: 'ㅣ', type: 'vowel' },
   ],
   // Row 3: Z X C V B N M
   [
@@ -45,8 +45,8 @@ export const DUBEOLSIK_ROWS: KeyCapDefinition[][] = [
     { key: 'v', jamo: 'ㅍ', type: 'consonant' },
     { key: 'b', jamo: 'ㅠ', type: 'vowel' },
     { key: 'n', jamo: 'ㅜ', type: 'vowel' },
-    { key: 'm', jamo: 'ㅡ', type: 'vowel' }
-  ]
+    { key: 'm', jamo: 'ㅡ', type: 'vowel' },
+  ],
 ];
 
 /** Map of individual Hangul Jamos to their standard QWERTY keystroke representation and hand assignment. */
@@ -84,5 +84,5 @@ export const JAMO_TO_KEY: Record<string, { key: string; shift?: boolean; hand: '
     ㅍ: { key: 'v', hand: 'left' },
     ㅠ: { key: 'b', hand: 'right' },
     ㅜ: { key: 'n', hand: 'right' },
-    ㅡ: { key: 'm', hand: 'right' }
+    ㅡ: { key: 'm', hand: 'right' },
   };

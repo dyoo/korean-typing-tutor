@@ -21,7 +21,7 @@ describe('Curriculum Content Dataset Integrity', () => {
           nonTypeableItems.push({
             id: item.id,
             target: item.target,
-            invalidChar: char
+            invalidChar: char,
           });
         }
       }

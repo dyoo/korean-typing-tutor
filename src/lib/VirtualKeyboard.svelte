@@ -12,10 +12,10 @@
 
   let isSpaceTarget = $derived(activeKeys.includes(' '));
   let isLeftShiftTarget = $derived(
-    activeKeys.includes('left-shift') || activeKeys.includes('shift')
+    activeKeys.includes('left-shift') || activeKeys.includes('shift'),
   );
   let isRightShiftTarget = $derived(
-    activeKeys.includes('right-shift') || activeKeys.includes('shift')
+    activeKeys.includes('right-shift') || activeKeys.includes('shift'),
   );
 
   function handleKeyClick(key: string, e: MouseEvent) {

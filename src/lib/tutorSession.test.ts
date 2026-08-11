@@ -6,7 +6,7 @@ const mockCurriculum: CurriculumData = {
   modules: [
     { id: 'all', title: 'All Lessons', description: 'Comprehensive practice' },
     { id: 'l1', title: 'Level 1 — Basic Syllables', description: 'Syllable exercises' },
-    { id: 'l3', title: 'Level 3 — Everyday Vocabulary', description: 'Vocabulary exercises' }
+    { id: 'l3', title: 'Level 3 — Everyday Vocabulary', description: 'Vocabulary exercises' },
   ],
   items: [
     {
@@ -15,7 +15,7 @@ const mockCurriculum: CurriculumData = {
       type: 'syllable',
       target: '가',
       pronunciation: 'ga',
-      translation: null
+      translation: null,
     },
     {
       id: 'l3-1',
@@ -23,9 +23,9 @@ const mockCurriculum: CurriculumData = {
       type: 'word',
       target: '사과',
       pronunciation: 'sagwa',
-      translation: 'apple'
-    }
-  ]
+      translation: 'apple',
+    },
+  ],
 };
 
 describe('TutorSession controller', () => {

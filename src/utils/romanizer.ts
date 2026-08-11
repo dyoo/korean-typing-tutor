@@ -20,7 +20,7 @@ const CHOSEONG = [
   'ㅋ',
   'ㅌ',
   'ㅍ',
-  'ㅎ'
+  'ㅎ',
 ];
 
 /** Medial Hangul vowels (중성). */
@@ -45,7 +45,7 @@ const JUNGSEONG = [
   '유',
   'ㅡ',
   'ㅢ',
-  'ㅣ'
+  'ㅣ',
 ];
 
 /** Final Hangul consonants (종성). */
@@ -77,7 +77,7 @@ const JONGSEONG = [
   'ㅋ',
   'ㅌ',
   'ㅍ',
-  'ㅎ'
+  'ㅎ',
 ];
 
 /** Revised Romanization map for initial consonants (초성). */
@@ -100,7 +100,7 @@ const CHO_MAP: Record<string, string> = {
   ㅋ: 'k',
   ㅌ: 't',
   ㅍ: 'p',
-  ㅎ: 'h'
+  ㅎ: 'h',
 };
 
 /** Revised Romanization map for vowels (중성). */
@@ -125,7 +125,7 @@ const JUNG_MAP: Record<string, string> = {
   유: 'yu',
   ㅡ: 'eu',
   ㅢ: 'ui',
-  ㅣ: 'i'
+  ㅣ: 'i',
 };
 
 /** Romanization map for isolated Jamo characters. */
@@ -169,7 +169,7 @@ const SINGLE_JAMO_PRONUNCIATION: Record<string, string> = {
   ㄸ: 'tt',
   ㅃ: 'pp',
   ㅆ: 'ss',
-  ㅉ: 'jj'
+  ㅉ: 'jj',
 };
 
 interface SyllableDecomposition {
@@ -193,7 +193,7 @@ export function decomposeSyllable(char: string): SyllableDecomposition | null {
   return {
     cho: CHOSEONG[choIdx],
     jung: JUNGSEONG[jungIdx],
-    jong: JONGSEONG[jongIdx]
+    jong: JONGSEONG[jongIdx],
   };
 }
 

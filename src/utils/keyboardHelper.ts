@@ -30,7 +30,7 @@ function getKeyInfoResult(keyInfo?: {
 export function getNextRequiredKeys(
   target: string | undefined,
   input: string | undefined,
-  isCompleted: boolean
+  isCompleted: boolean,
 ): string[] {
   if (isCompleted || !target) {
     return [];
@@ -50,7 +50,7 @@ export function getNextRequiredKeys(
   const isLastComplete = isSyllableComplete(
     target[lastInputIndex],
     userInput[lastInputIndex],
-    target[lastInputIndex + 1]
+    target[lastInputIndex + 1],
   );
 
   const activeIndex = isLastComplete ? userInput.length : lastInputIndex;

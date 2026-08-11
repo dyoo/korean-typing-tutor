@@ -5,6 +5,6 @@ export default defineConfig({
   plugins: [svelte()],
   test: {
     environment: 'jsdom',
-    globals: true
-  }
+    globals: true,
+  },
 });

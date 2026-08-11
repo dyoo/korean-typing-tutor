@@ -20,7 +20,7 @@
     onthemechange,
     ontogglepronunciation,
     ontoggletranslation,
-    ontogglevirtualkeyboard
+    ontogglevirtualkeyboard,
   }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {

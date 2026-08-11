@@ -30,7 +30,7 @@ const CHOSEONG_MAP: Record<string, number> = {
   z: 15, // ㅋ
   x: 16, // ㅌ
   v: 17, // ㅍ
-  g: 18 // ㅎ
+  g: 18, // ㅎ
 };
 
 /**
@@ -51,7 +51,7 @@ const JUNGSEONG_MAP: Record<string, number> = {
   n: 13, // ㅜ
   b: 17, // ㅠ
   m: 18, // ㅡ
-  l: 20 // ㅣ
+  l: 20, // ㅣ
 };
 
 /**
@@ -75,7 +75,7 @@ const JONGSEONG_MAP: Record<string, number> = {
   z: 24, // ㅋ
   x: 25, // ㅌ
   v: 26, // ㅍ
-  g: 27 // ㅎ
+  g: 27, // ㅎ
 };
 
 /** Direct Hangul Choseong Jamo Mapping (for native 2-set Korean OS input mode). */
@@ -98,7 +98,7 @@ const DIRECT_CHOSEONG_MAP: Record<string, number> = {
   ㅋ: 15,
   ㅌ: 16,
   ㅍ: 17,
-  ㅎ: 18
+  ㅎ: 18,
 };
 
 /** Direct Hangul Jungseong Jamo Mapping (for native 2-set Korean OS input mode). */
@@ -123,7 +123,7 @@ const DIRECT_JUNGSEONG_MAP: Record<string, number> = {
   ㅠ: 17,
   ㅡ: 18,
   ㅢ: 19,
-  ㅣ: 20
+  ㅣ: 20,
 };
 
 /** Direct Hangul Jongseong Jamo Mapping (for native 2-set Korean OS input mode). */
@@ -154,7 +154,7 @@ const DIRECT_JONGSEONG_MAP: Record<string, number> = {
   ㅋ: 24,
   ㅌ: 25,
   ㅍ: 26,
-  ㅎ: 27
+  ㅎ: 27,
 };
 
 /**
@@ -169,7 +169,7 @@ const COMPOUND_JUNGSEONG: Record<string, number> = {
   '13,4': 14, // ㅜ + ㅓ = ㅝ
   '13,5': 15, // ㅜ + ㅔ = ㅞ
   '13,20': 16, // ㅜ + ㅣ = ㅟ
-  '18,20': 19 // ㅡ + ㅣ = ㅢ
+  '18,20': 19, // ㅡ + ㅣ = ㅢ
 };
 
 /**
@@ -182,7 +182,7 @@ const COMPOUND_JUNGSEONG_DECOMP: Record<number, [number, number]> = {
   14: [13, 4], // ㅝ -> ㅜ, ㅓ
   15: [13, 5], // ㅞ -> ㅜ, ㅔ
   16: [13, 20], // ㅟ -> ㅜ, ㅣ
-  19: [18, 20] // ㅢ -> ㅡ, ㅣ
+  19: [18, 20], // ㅢ -> ㅡ, ㅣ
 };
 
 /**
@@ -201,7 +201,7 @@ const COMPOUND_JONGSEONG: Record<string, number> = {
   '8,25': 13, // ㄹ + ㅌ = ㄾ
   '8,26': 14, // ㄹ + ㅍ = ㄿ
   '8,27': 15, // ㄹ + ㅎ = ㅀ
-  '17,19': 18 // ㅂ + ㅅ = ㅄ
+  '17,19': 18, // ㅂ + ㅅ = ㅄ
 };
 
 /**
@@ -218,7 +218,7 @@ const COMPOUND_JONGSEONG_DECOMP: Record<number, [number, number]> = {
   13: [8, 25], // ㄾ -> ㄹ, ㅌ
   14: [8, 26], // ㄿ -> ㄹ, ㅍ
   15: [8, 27], // ㅀ -> ㄹ, ㅎ
-  18: [17, 19] // ㅄ -> ㅂ, ㅅ
+  18: [17, 19], // ㅄ -> ㅂ, ㅅ
 };
 
 /**
@@ -241,7 +241,7 @@ const JONGSEONG_TO_CHOSEONG: Record<number, number> = {
   24: 15, // ㅋ -> ㅋ
   25: 16, // ㅌ -> ㅌ
   26: 17, // ㅍ -> ㅍ
-  27: 18 // ㅎ -> ㅎ
+  27: 18, // ㅎ -> ㅎ
 };
 
 /**
@@ -273,7 +273,7 @@ const CHOSEONG_STANDALONE = [
   'ㅋ',
   'ㅌ',
   'ㅍ',
-  'ㅎ'
+  'ㅎ',
 ];
 
 /** Standalone Compatibility Jungseong characters. */
@@ -298,7 +298,7 @@ const JUNGSEONG_STANDALONE = [
   'ㅠ',
   'ㅡ',
   'ㅢ',
-  'ㅣ'
+  'ㅣ',
 ];
 
 /**
@@ -321,7 +321,7 @@ const JONGSEONG_SINGLE_JAMO: Record<number, string> = {
   24: 'ㅋ',
   25: 'ㅌ',
   26: 'ㅍ',
-  27: 'ㅎ'
+  27: 'ㅎ',
 };
 
 /**
@@ -345,7 +345,7 @@ const STANDALONE_COMPOUND_MAP: Record<string, string> = {
   ㄾ: 'ㄹㅌ',
   ㄿ: 'ㄹㅍ',
   ㅀ: 'ㄹㅎ',
-  ㅄ: 'ㅂㅅ'
+  ㅄ: 'ㅂㅅ',
 };
 
 /**
@@ -422,7 +422,7 @@ export function getChoseongJamo(char: string | undefined): string | null {
 export function isPartialOrExactMatch(
   targetChar: string | undefined,
   inputChar: string | undefined,
-  nextTargetChar?: string
+  nextTargetChar?: string,
 ): boolean {
   if (!inputChar || !targetChar) return false;
   if (targetChar === inputChar) return true;
@@ -455,7 +455,7 @@ export function isPartialOrExactMatch(
 export function isSyllableComplete(
   targetChar: string | undefined,
   inputChar: string | undefined,
-  nextTargetChar?: string
+  nextTargetChar?: string,
 ): boolean {
   if (!targetChar || !inputChar) return false;
   if (targetChar === inputChar) return true;
@@ -767,7 +767,7 @@ export function checkErrors(target: string, input: string): ErrorReport[] {
 
     errors.push({
       index: i,
-      isError
+      isError,
     });
   }
   return errors;
@@ -791,7 +791,7 @@ export function compose(input: string): string {
 export function calculateTargetCursorIndex(
   target: string,
   userInput: string,
-  isCompleted: boolean
+  isCompleted: boolean,
 ): number {
   if (isCompleted || !target) {
     return -1;
@@ -803,7 +803,7 @@ export function calculateTargetCursorIndex(
   const isLastComplete = isSyllableComplete(
     target[lastIndex],
     userInput[lastIndex],
-    target[lastIndex + 1]
+    target[lastIndex + 1],
   );
   const rawIndex = isLastComplete ? userInput.length : lastIndex;
   return Math.min(rawIndex, target.length - 1);
@@ -816,7 +816,7 @@ export function calculateTargetCursorIndex(
 export function calculateInputCursorIndex(
   userInput: string,
   target: string,
-  isCompleted: boolean
+  isCompleted: boolean,
 ): number {
   if (isCompleted) {
     return -1;
@@ -828,7 +828,7 @@ export function calculateInputCursorIndex(
   const isLastComplete = isSyllableComplete(
     target[lastIndex],
     userInput[lastIndex],
-    target[lastIndex + 1]
+    target[lastIndex + 1],
   );
   return isLastComplete ? userInput.length : lastIndex;
 }

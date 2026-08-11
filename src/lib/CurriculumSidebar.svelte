@@ -3,7 +3,7 @@
     CURRICULUM_CATEGORIES,
     isGroupAllChecked,
     isGroupSomeChecked,
-    getGroupCheckedCount
+    getGroupCheckedCount,
   } from '../utils/curriculumCategories';
   import type { CurriculumCategory } from '../utils/curriculumCategories';
   import type { ModuleDefinition } from '../types/korean';
@@ -31,7 +31,7 @@
     ontogglecategorycollapse,
     ontogglecategorygroup,
     onselectall,
-    ondeselectall
+    ondeselectall,
   }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {

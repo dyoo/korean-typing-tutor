@@ -9,7 +9,7 @@ import {
   getChoseongJamo,
   calculateTargetCursorIndex,
   calculateInputCursorIndex,
-  getWordTokens
+  getWordTokens,
 } from './koreanEngine';
 
 describe('Jamo decomposition helpers', () => {

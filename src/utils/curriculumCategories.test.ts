@@ -5,7 +5,7 @@ import {
   isGroupAllChecked,
   isGroupSomeChecked,
   getGroupCheckedCount,
-  toggleCategoryGroupIds
+  toggleCategoryGroupIds,
 } from './curriculumCategories';
 
 describe('curriculumCategories helper module', () => {

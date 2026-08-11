@@ -17,7 +17,7 @@
     activeTargetCursorIndex,
     isCompleted,
     currentItem,
-    displayText
+    displayText,
   }: Props = $props();
 </script>
 

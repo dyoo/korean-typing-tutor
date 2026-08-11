@@ -37,7 +37,7 @@ export class TutorSession {
   constructor(
     data: CurriculumData | LessonItem[],
     defaultFilter: string | string[] = 'all',
-    shuffle = true
+    shuffle = true,
   ) {
     if (Array.isArray(data)) {
       this.allItems = data;
@@ -45,8 +45,8 @@ export class TutorSession {
         {
           id: 'all',
           title: 'All Lessons',
-          description: 'Comprehensive practice across all modules'
-        }
+          description: 'Comprehensive practice across all modules',
+        },
       ];
     } else {
       this.allItems = data.items ?? [];
@@ -92,7 +92,8 @@ export class TutorSession {
     } else {
       filtered = this.allItems.filter(
         (item) =>
-          item.moduleId === this.selectedFilter || item.id.startsWith(this.selectedFilter as string)
+          item.moduleId === this.selectedFilter ||
+          item.id.startsWith(this.selectedFilter as string),
       );
     }
 
@@ -141,7 +142,7 @@ export class TutorSession {
         type: 'word',
         target: '',
         pronunciation: '',
-        translation: 'No modules selected. Please select at least one module in the menu.'
+        translation: 'No modules selected. Please select at least one module in the menu.',
       };
     }
     return (
@@ -151,7 +152,7 @@ export class TutorSession {
         type: 'syllable',
         target: '가',
         pronunciation: 'ga',
-        translation: null
+        translation: null,
       }
     );
   }
@@ -185,7 +186,7 @@ export class TutorSession {
   /** Formats combined Romanization and English translation text based on active settings. */
   public getDisplayText(
     item = this.getCurrentItem(),
-    options?: { showPronunciation?: boolean; showTranslation?: boolean }
+    options?: { showPronunciation?: boolean; showTranslation?: boolean },
   ): string {
     if (!item) return '';
     const showPron = options?.showPronunciation ?? true;
@@ -227,7 +228,7 @@ export class TutorSession {
           isMatch: this.isItemCompleted,
           isItemCompleted: this.isItemCompleted,
           isTutorialComplete: false,
-          advanced: false
+          advanced: false,
         };
       }
       return { isMatch: false, isItemCompleted: true, isTutorialComplete: false, advanced: false };

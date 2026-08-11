@@ -8,7 +8,7 @@
   import {
     calculateTargetCursorIndex,
     calculateInputCursorIndex,
-    getWordTokens
+    getWordTokens,
   } from './utils/koreanEngine';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleTargetCopyEvent } from './utils/clipboard';
@@ -24,7 +24,7 @@
     isGroupAllChecked,
     isGroupSomeChecked,
     getGroupCheckedCount,
-    toggleCategoryGroupIds
+    toggleCategoryGroupIds,
   } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
 
@@ -39,7 +39,7 @@
   let enabledModuleIds = $state<string[]>(
     Array.isArray(initialSettings.enabledModuleIds)
       ? initialSettings.enabledModuleIds
-      : modules.map((m) => m.id)
+      : modules.map((m) => m.id),
   );
 
   let currentIndex = $state(session.getCurrentIndex());
@@ -55,15 +55,15 @@
   let wordTokens = $derived(getWordTokens(currentItem.target));
 
   let activeTargetCursorIndex = $derived(
-    calculateTargetCursorIndex(currentItem.target, userInput, isCompleted)
+    calculateTargetCursorIndex(currentItem.target, userInput, isCompleted),
   );
 
   let activeInputCursorIndex = $derived(
-    calculateInputCursorIndex(userInput, currentItem.target, isCompleted)
+    calculateInputCursorIndex(userInput, currentItem.target, isCompleted),
   );
 
   let activeRequiredKeys = $derived(
-    getNextRequiredKeys(currentItem.target, userInput, isCompleted)
+    getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
 
   $effect(() => {
@@ -76,7 +76,7 @@
       activeCursorElement.scrollIntoView({
         behavior: 'instant',
         block: 'nearest',
-        inline: 'nearest'
+        inline: 'nearest',
       });
     }
   });
@@ -139,7 +139,7 @@
   }
 
   let collapsedCategoryIds = $state<string[]>(
-    loadSettings().collapsedCategoryIds ?? ALL_CATEGORY_IDS
+    loadSettings().collapsedCategoryIds ?? ALL_CATEGORY_IDS,
   );
 
   function toggleCategoryCollapse(categoryId: string) {

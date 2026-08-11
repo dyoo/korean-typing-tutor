@@ -60,11 +60,11 @@ describe('Clipboard Space Preservation DOM Tests', () => {
         clipboardData: {
           setData: (_type: string, val: string) => {
             copiedText = val;
-          }
+          },
         },
         preventDefault: () => {
           defaultPrevented = true;
-        }
+        },
       } as unknown as ClipboardEvent;
 
       const handled = handleTargetCopyEvent(fakeCopyEvent, sampleSentence, selection);

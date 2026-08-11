@@ -44,7 +44,7 @@ describe('Dynamic Romanizer Engine', () => {
       type: 'syllable',
       target: 'ㅏ',
       pronunciation: 'a (Key K)',
-      translation: 'A'
+      translation: 'A',
     };
     expect(getPronunciation(itemWithOverride)).toBe('a (Key K)');
 
@@ -53,7 +53,7 @@ describe('Dynamic Romanizer Engine', () => {
       moduleId: 'test',
       type: 'word',
       target: '호랑이',
-      translation: 'Tiger'
+      translation: 'Tiger',
     };
     expect(getPronunciation(itemWithoutOverride)).toBe('horangi');
   });

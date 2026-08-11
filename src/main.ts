@@ -8,7 +8,7 @@ if (!target) {
 }
 
 const app = mount(App, {
-  target
+  target,
 });
 
 export default app;
