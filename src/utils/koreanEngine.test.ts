@@ -165,6 +165,25 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
     expect(isPartialOrExactMatch('닭', '닭')).toBe(true);
     expect(isPartialOrExactMatch('닭', '댟')).toBe(false);
   });
+
+  it('should flag flushed incomplete Jamo blocks as errors when typing only consonants (Issue #1)', () => {
+    const target = '어머니';
+
+    // Single active consonant 'ㅇ' is in-progress for position 0
+    let errors = checkErrors(target, 'ㅇ');
+    expect(errors[0].isError).toBe(false);
+
+    // Typing second consonant 'ㅁ' flushes 'ㅇ' as incomplete syllable for '어'
+    errors = checkErrors(target, 'ㅇㅁ');
+    expect(errors[0].isError).toBe(true);  // 'ㅇ' is flushed, incomplete for '어'
+    expect(errors[1].isError).toBe(false); // 'ㅁ' is active, in-progress for '머'
+
+    // Typing third consonant 'ㄴ' flushes 'ㅁ' as incomplete syllable for '머'
+    errors = checkErrors(target, 'ㅇㅁㄴ');
+    expect(errors[0].isError).toBe(true);  // 'ㅇ' is flushed, incomplete for '어'
+    expect(errors[1].isError).toBe(true);  // 'ㅁ' is flushed, incomplete for '머'
+    expect(errors[2].isError).toBe(false); // 'ㄴ' is active, in-progress for '니'
+  });
 });
 
 describe('HangulEngine class', () => {

@@ -619,7 +619,13 @@ export function checkErrors(target: string, input: string): ErrorReport[] {
 
     let isError = false;
     if (inp !== undefined) {
-      isError = !isPartialOrExactMatch(t, inp, nextT);
+      if (t === undefined) {
+        isError = true;
+      } else if (i < input.length - 1) {
+        isError = !isSyllableComplete(t, inp, nextT);
+      } else {
+        isError = !isPartialOrExactMatch(t, inp, nextT);
+      }
     }
 
     errors.push({
