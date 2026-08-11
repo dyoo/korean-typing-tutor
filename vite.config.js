@@ -9,7 +9,13 @@ export default defineConfig({
   plugins: [
     svelte(),
     VitePWA({
-      registerType: 'auto',
+      registerType: 'autoUpdate',
+      workbox: {
+        cleanupOutdatedCaches: true,
+        skipWaiting: true,
+        clientsClaim: true,
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}']
+      },
       manifest: {
         name: 'Korean Typing Tutor',
         short_name: 'KoreanTyping',
@@ -29,16 +35,6 @@ export default defineConfig({
           }
         ]
       }
-    }),
-    {
-      name: 'cache-buster',
-      transformIndexHtml(html) {
-        // Appends the commit ID as a query parameter to URLs that start with ./assets/index
-        return html.replace(
-          /(src|href)="(\.?\/?assets\/index[^"|?]*?\.(js|css|png|svg|jpg|jpeg|webp|avif|ico))"/g,
-          `$1="$2?v=${commitId}"`
-        );
-      }
-    }
-  ],
+    })
+  ]
 })
