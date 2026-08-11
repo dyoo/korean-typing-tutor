@@ -78,6 +78,20 @@ Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 4. **Open in your browser**:
    Navigate to `http://localhost:8080`
 
+### Building for Production
+
+To compile the app and generate static build assets in the `dist/` directory:
+
+```bash
+npm run build
+```
+
+To locally preview the compiled production build from `dist/`:
+
+```bash
+npm run preview
+```
+
 ### Running Tests
 
 We use **Vitest** for automated unit testing to ensure the Korean composition engine is accurate.
