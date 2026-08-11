@@ -91,6 +91,15 @@ We use **Vitest** for automated unit testing to ensure the Korean composition en
   npm test -- --watch
   ```
 
+## Formatting code
+
+We use **Prettier** for automatic formatting.
+
+- **Run formatter**:
+  ```bash
+  npm run format
+  ```
+
 ---
 
 ## Attribution & Development
