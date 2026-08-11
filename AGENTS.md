@@ -20,14 +20,19 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - **Explain Before Significant Changes**: Always explain the rationale and technical design to the user before applying significant code changes.
 - **VCS Workflow**: Use `jj` (Jujutsu) for version control operations. Never combine creating commits/revisions with pushing. Always create commits without pushing unless explicitly requested.
 - **Testing**: Always use one-time non-interactive test execution (e.g., `npx vitest run` or `npm test` configured with `vitest run`) rather than interactive watch mode.
+- **Opposite-Hand Shift Chording**: When guiding Shift key targets (e.g. `ㄲ`, `ㅖ`), always recommend the opposite-hand Shift key (`right-shift` for left-hand keys `Q`/`W`/`E`/`R`/`T`, `left-shift` for right-hand keys `O`/`P`) to reinforce proper touch-typing ergonomics.
 - **CSS**: Use Tailwind utility classes directly in the markup.
 
 ## Key Files & Modules
 - `src/App.svelte`: The primary UI component and interaction handler.
-- `src/utils/koreanEngine.ts`: The core logic for keystroke mapping and composition.
+- `src/lib/tutorSession.ts`: Session controller managing curriculum filtering, item shuffling, accuracy stats, and keystroke routing.
+- `src/lib/VirtualKeyboard.svelte`: Interactive Dubeolsik virtual keyboard layout helper component.
+- `src/utils/koreanEngine.ts`: The core logic for keystroke mapping, Hangul composition arithmetic, and error evaluation.
+- `src/utils/keyboardHelper.ts`: Logic for computing next required target keys and opposite-hand Shift chording hints.
+- `src/utils/keyboardData.ts`: Dubeolsik keycap metadata and Jamo-to-key dictionary.
 - `src/types/korean.ts`: Type definitions for the domain model.
 - `src/content.json`: The curriculum data.
-- `vite.config.ts`: Configuration for Vite and PWA support.
+- `vite.config.js`: Configuration for Vite, PWA, and Workbox precaching support.
 
 ## Current Priority
-Implement the **Korean Composition Engine** in `src/utils/koreanEngine.ts`. This must convert standard QWERTY keyboard input into correct Hangul syllable blocks.
+Implement **LocalStorage Module Persistence** (saving/restoring selected curriculum modules across browser reloads) and **Speed & Accuracy Analytics Panel** (optional WPM/SPM performance feedback).
