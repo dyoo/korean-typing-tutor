@@ -26,23 +26,23 @@ A minimalist, high-performance Progressive Web App (PWA) designed to help Englis
 
 ---
 
-## Curriculum & Official Educational Sources
+## Curriculum & Educational Sources
 
-Our curriculum dataset ([`src/content.json`](file:///Users/dyoo/work/korean/src/content.json)) is curated from official, open-access Korean language standards:
+Our curriculum dataset ([`src/content.json`](file:///Users/dyoo/work/korean-typing-tutor/src/content.json)) contains over **1,170+ practice items** across 20 structured modules. Much of the curriculum—including beginner row-by-row progression drills, expanded vocabulary, K-Pop slang, single-sentence reading passage splits, and Revised Romanization—was generated, structured, and curated in collaboration with **Antigravity** (Google DeepMind's agentic AI coding assistant).
+
+### Educational Sources & Standards:
 
 1. **[NIIED (National Institute for International Education)](https://www.niied.go.kr/) — [Official TOPIK Portal](https://www.topik.go.kr/)**:
    - **TOPIK I (Beginner Level 1 & 2):** Official vocabulary covering numbers, time, calendar, places, transport, body parts, food, and daily routines.
-   - **TOPIK II (Intermediate Level 3 & 4):** Official vocabulary covering work, technology, society, economics, emotions, academic topics, and multi-sentence reading passages.
+   - **TOPIK II (Intermediate Level 3 & 4):** Official vocabulary covering work, technology, society, economics, emotions, academic topics, and single-sentence reading passages.
 2. **[National Institute of Korean Language (국립국어원 - NIKL)](https://www.korean.go.kr/) — [Basic Korean Dictionary for Learners (한국어기초사전)](https://krdict.korean.go.kr/)**:
    - Standardized vocabulary and official English translations from the open-access *한국어기초사전* (Basic Korean Dictionary for Learners, licensed under CC BY-SA 2.0 KR).
-3. **[Kming Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) — [Sejonghakdang Online Learning Portal](https://www.sejonghakdang.org/)**:
+3. **[King Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) — [Sejonghakdang Online Learning Portal](https://www.sejonghakdang.org/)**:
    - Practical situational conversation modules (ordering food at cafes/restaurants, taking the subway, asking for directions, shopping, hospital/pharmacy symptoms) and intermediate reading passages.
 4. **Korean Proverbs & Sayings (속담 / 사자성어)**:
    - Classic Korean proverbs with literal and figurative English translations (`식은 죽 먹기`, `티끌 모아 태산`).
-5. **[Humanities LibreTexts](https://human.libretexts.org/) — [Korean Through Folktales](https://human.libretexts.org/Bookshelves/Languages/Korean/Korean_Through_Folktales_(Yoon))**:
-   - Folk stories used for reading practice and vocabulary building.
-6. **Public Domain Korean Folktales**:
-   - Additional classic stories like [*The Sun and the Moon* (해와 달)](https://folkency.nfm.go.kr/en/topic/detail/5390), [*Shim Cheong* (심청전)](https://folkency.nfm.go.kr/en/topic/detail/5400), and [*The Rabbit and the Turtle* (토끼와 거북이)](https://folkency.nfm.go.kr/en/topic/detail/5401), sourced from public domain Korean folklore collections and adapted for intermediate learners.
+5. **AI-Generated & Curated Curriculum Expansion**:
+   - Comprehensive beginner row progression levels (`b1` through `b6`), 100+ K-Pop slang items, 150+ TOPIK II reading passages, and dynamic Revised Romanization phonetics generated and verified by **Antigravity**.
 
 ---
 
@@ -94,4 +94,4 @@ We use **Vitest** for automated unit testing to ensure the Korean composition en
 
 ## Attribution & Development
 
-This project was vibe coded in pair programming collaboration with **Antigravity**, an agentic AI coding assistant developed by the Google DeepMind team.
+This project was built and vibe coded in pair programming collaboration with **Antigravity**, an agentic AI coding assistant developed by the Google DeepMind team. Antigravity designed core components, implemented the Dubeolsik composition engine and dynamic Romanization system, and generated & curated much of the curriculum content dataset.
