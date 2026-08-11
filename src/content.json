@@ -38,7 +38,7 @@
   {
     "id": "l2b_complex_batchim",
     "title": "Level 2b — Complex & Double 받침 (겹받침)",
-    "description": "Syallables with double and compound final consonants (밖, 있, 없, 닭, 흙, 삶)"
+    "description": "Syllables with double and compound final consonants (밖, 있, 없, 닭, 흙, 삶)"
   },
   {
     "id": "l3",
@@ -970,7 +970,7 @@
     {"id":"sejong_phrases-ext-10","moduleId":"sejong_phrases","type":"sentence","target":"가족이 몇 명입니까?","translation":"How many people are in your family?"},
     {"id":"sejong_phrases-ext-11","moduleId":"sejong_phrases","type":"sentence","target":"한국에 언제 왔어요?","translation":"When did you come to Korea?"},
     {"id":"sejong_phrases-ext-12","moduleId":"sejong_phrases","type":"sentence","target":"한국 날씨가 어때요?","translation":"How is the weather in Korea?"},
-    {"id":"sejong_phrases-ext-13","moduleId":"sejong_phrases","type":"sentence","target":"한국 음식이 입에 맞아요?","translation":"Do you suit Korean food?"},
+    {"id":"sejong_phrases-ext-13","moduleId":"sejong_phrases","type":"sentence","target":"한국 음식이 입에 맞아요?","translation":"Does Korean food suit your taste?"},
     {"id":"sejong_phrases-ext-14","moduleId":"sejong_phrases","type":"sentence","target":"취직을 준비하고 있어요.","translation":"I am preparing for job employment."},
     {"id":"sejong_phrases-ext-15","moduleId":"sejong_phrases","type":"sentence","target":"한국 대학에 진학하고 싶어요.","translation":"I want to enter a Korean university."},
     {"id":"sejong_phrases-ext-16","moduleId":"sejong_phrases","type":"sentence","target":"친구를 많이 사귀고 싶어요.","translation":"I want to make many friends."},
@@ -986,7 +986,7 @@
     {"id":"sejong_phrases-ext-26","moduleId":"sejong_phrases","type":"sentence","target":"집에서 쉬고 있어요.","translation":"I am resting at home."},
     {"id":"sejong_phrases-ext-27","moduleId":"sejong_phrases","type":"sentence","target":"영화관에서 영화를 봐요.","translation":"I watch a movie at the cinema."},
     {"id":"sejong_phrases-ext-28","moduleId":"sejong_phrases","type":"sentence","target":"백화점에서 옷을 사요.","translation":"I buy clothes at the department store."},
-    {"id":"sejong_phrases-ext-29","moduleId":"sejong_phrases","type":"sentence","target":"버스를 타고 가요.","translation":"I go by riding the bus."},
+    {"id":"sejong_phrases-ext-29","moduleId":"sejong_phrases","type":"sentence","target":"버스를 타고 가요.","translation":"I go by bus."},
     {"id":"sejong_phrases-ext-30","moduleId":"sejong_phrases","type":"sentence","target":"지하철을 이용해요.","translation":"I use the subway."},
     {"id":"sejong_phrases-ext-31","moduleId":"sejong_phrases","type":"sentence","target":"택시를 불렀어요.","translation":"I called a taxi."},
     {"id":"sejong_phrases-ext-32","moduleId":"sejong_phrases","type":"sentence","target":"비행기 표를 예매했어요.","translation":"I booked a plane ticket."},
@@ -995,7 +995,7 @@
     {"id":"sejong_phrases-ext-35","moduleId":"sejong_phrases","type":"sentence","target":"도움이 필요해요.","translation":"I need help."},
     {"id":"sejong_phrases-ext-36","moduleId":"sejong_phrases","type":"sentence","target":"영어 할 줄 아세요?","translation":"Do you know how to speak English?"},
     {"id":"sejong_phrases-ext-37","moduleId":"sejong_phrases","type":"sentence","target":"천천히 다시 말씀해 주세요.","translation":"Please say it again slowly."},
-    {"id":"sejong_phrases-ext-38","moduleId":"sejong_phrases","type":"sentence","target":"다음에 또 만나서 이야기해요.","translation":"Let us meet and talk again next time."},
+    {"id":"sejong_phrases-ext-38","moduleId":"sejong_phrases","type":"sentence","target":"다음에 또 만나서 이야기해요.","translation":"Let's meet and talk again next time."},
     {"id":"sejong_phrases-ext-39","moduleId":"sejong_phrases","type":"sentence","target":"감사합니다. 안녕히 계세요.","translation":"Thank you. Goodbye."},
     {"id":"sejong_phrases-ext-40","moduleId":"sejong_phrases","type":"sentence","target":"네, 안녕히 가세요.","translation":"Yes, goodbye."},
     {"id":"topik_grammar-ext-1","moduleId":"topik_grammar","type":"sentence","target":"-은/는 -입니다","translation":"Subject Marker & Is/Are (Standard Form)"},
@@ -1067,7 +1067,7 @@
     {"id":"korean_culture-ext-27","moduleId":"korean_culture","type":"sentence","target":"소주는 한국에서 가장 인기 있는 음료입니다.","translation":"Soju is the most popular distilled beverage in Korea."},
     {"id":"korean_culture-ext-28","moduleId":"korean_culture","type":"sentence","target":"치맥은 치킨과 맥주의 조합입니다.","translation":"Chimaek is the pairing of fried chicken and beer."},
     {"id":"korean_culture-ext-29","moduleId":"korean_culture","type":"sentence","target":"길거리 음식으로는 떡볶이와 어묵이 있습니다.","translation":"Street foods include tteokbokki and fish cakes."},
-    {"id":"korean_culture-ext-30","moduleId":"korean_culture","type":"sentence","target":"붕어빵은 겨울철 대표 길거리 간식입니다.","translation":"Bungeoppang is a iconic winter street snack."},
+    {"id":"korean_culture-ext-30","moduleId":"korean_culture","type":"sentence","target":"붕어빵은 겨울철 대표 길거리 간식입니다.","translation":"Bungeoppang is an iconic winter street snack."},
     {"id":"korean_culture-ext-31","moduleId":"korean_culture","type":"sentence","target":"호떡은 달콤한 쫄깃한 팬케이크입니다.","translation":"Hotteok is a sweet, chewy filled pancake."},
     {"id":"korean_culture-ext-32","moduleId":"korean_culture","type":"sentence","target":"포장마차에서 맛있는 밤참을 먹습니다.","translation":"People eat delicious late-night snacks at street carts (pojangmacha)."},
     {"id":"korean_culture-ext-33","moduleId":"korean_culture","type":"sentence","target":"찜질방에서 따뜻하게 휴식을 취합니다.","translation":"People relax warmly in a Korean bathhouse (jjimjilbang)."},
@@ -1077,7 +1077,7 @@
     {"id":"korean_culture-ext-37","moduleId":"korean_culture","type":"sentence","target":"새해 복 많이 받으세요!","translation":"Happy New Year! (Lit: May you receive much luck in the New Year!)"},
     {"id":"korean_culture-ext-38","moduleId":"korean_culture","type":"sentence","target":"즐거운 추석 보내세요!","translation":"Have a joyful Chuseok holiday!"},
     {"id":"korean_culture-ext-39","moduleId":"korean_culture","type":"sentence","target":"한국에 오신 것을 환영합니다!","translation":"Welcome to Korea!"},
-    {"id":"korean_culture-ext-40","moduleId":"korean_culture","type":"sentence","target":"한국 문화를 함께 체험해 봐요.","translation":"Let us experience Korean culture together."},
+    {"id":"korean_culture-ext-40","moduleId":"korean_culture","type":"sentence","target":"한국 문화를 함께 체험해 봐요.","translation":"Let's experience Korean culture together."},
     {"id":"korean_culture-ext-41","moduleId":"korean_culture","type":"sentence","target":"한국은 전통과 현대가 조화를 이루는 곳입니다.","translation":"Korea is a place where tradition and modernity harmonize."},
     {"id":"korean_culture-ext-42","moduleId":"korean_culture","type":"sentence","target":"다양한 한국 문화를 즐겨 보세요!","translation":"Please enjoy the diverse aspects of Korean culture!"},
     {"id":"topik2_vocab-ext-1","moduleId":"topik2_vocab","type":"word","target":"경제","translation":"Economy / Economics"},
