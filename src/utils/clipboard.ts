@@ -6,10 +6,7 @@
  * Given the target string and selected character indices,
  * returns the exact substring slice preserving all U+0020 spaces and character fidelity.
  */
-export function getSelectedTargetText(
-  targetString: string,
-  indices: number[]
-): string | null {
+export function getSelectedTargetText(targetString: string, indices: number[]): string | null {
   if (indices.length === 0) return null;
   const minIdx = Math.min(...indices);
   const maxIdx = Math.max(...indices);
@@ -29,7 +26,8 @@ export function handleTargetCopyEvent(
 
   const range = selection.getRangeAt(0);
   const container = range.commonAncestorContainer;
-  const element = container.nodeType === Node.ELEMENT_NODE ? (container as HTMLElement) : container.parentElement;
+  const element =
+    container.nodeType === Node.ELEMENT_NODE ? (container as HTMLElement) : container.parentElement;
   if (!element) return false;
 
   const targetWrapper = element.closest('.target-display');

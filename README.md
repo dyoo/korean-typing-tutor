@@ -4,7 +4,6 @@ A minimalist, high-performance Progressive Web App (PWA) designed to help Englis
 
 [View the application at https://dyoo.github.io/korean-typing-tutor/](https://dyoo.github.io/korean-typing-tutor/)
 
-
 ## Core Features
 
 - **Distraction-Free Design (Strict Requirement)**:
@@ -36,7 +35,7 @@ Our curriculum dataset ([`src/content.json`](file:///Users/dyoo/work/korean-typi
    - **TOPIK I (Beginner Level 1 & 2):** Official vocabulary covering numbers, time, calendar, places, transport, body parts, food, and daily routines.
    - **TOPIK II (Intermediate Level 3 & 4):** Official vocabulary covering work, technology, society, economics, emotions, academic topics, and single-sentence reading passages.
 2. **[National Institute of Korean Language (국립국어원 - NIKL)](https://www.korean.go.kr/) — [Basic Korean Dictionary for Learners (한국어기초사전)](https://krdict.korean.go.kr/)**:
-   - Standardized vocabulary and official English translations from the open-access *한국어기초사전* (Basic Korean Dictionary for Learners, licensed under CC BY-SA 2.0 KR).
+   - Standardized vocabulary and official English translations from the open-access _한국어기초사전_ (Basic Korean Dictionary for Learners, licensed under CC BY-SA 2.0 KR).
 3. **[King Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) — [Sejonghakdang Online Learning Portal](https://www.sejonghakdang.org/)**:
    - Practical situational conversation modules (ordering food at cafes/restaurants, taking the subway, asking for directions, shopping, hospital/pharmacy symptoms) and intermediate reading passages.
 4. **Korean Proverbs & Sayings (속담 / 사자성어)**:

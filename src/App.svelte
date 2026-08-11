@@ -5,7 +5,11 @@
   import type { CurriculumData } from './lib/tutorSession';
   import { loadSettings, saveSettings, applyTheme } from './lib/settings';
   import type { TutorSettings, ThemeMode } from './lib/settings';
-  import { calculateTargetCursorIndex, calculateInputCursorIndex, getWordTokens } from './utils/koreanEngine';
+  import {
+    calculateTargetCursorIndex,
+    calculateInputCursorIndex,
+    getWordTokens
+  } from './utils/koreanEngine';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleTargetCopyEvent } from './utils/clipboard';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
@@ -35,7 +39,7 @@
   let enabledModuleIds = $state<string[]>(
     Array.isArray(initialSettings.enabledModuleIds)
       ? initialSettings.enabledModuleIds
-      : modules.map(m => m.id)
+      : modules.map((m) => m.id)
   );
 
   let currentIndex = $state(session.getCurrentIndex());
@@ -63,8 +67,17 @@
   );
 
   $effect(() => {
-    if (userInput !== undefined && activeInputCursorIndex !== undefined && activeCursorElement && inputContainerElement) {
-      activeCursorElement.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'nearest' });
+    if (
+      userInput !== undefined &&
+      activeInputCursorIndex !== undefined &&
+      activeCursorElement &&
+      inputContainerElement
+    ) {
+      activeCursorElement.scrollIntoView({
+        behavior: 'instant',
+        block: 'nearest',
+        inline: 'nearest'
+      });
     }
   });
 
@@ -115,7 +128,7 @@
   function toggleModule(modId: string) {
     if (enabledModuleIds.includes(modId)) {
       if (enabledModuleIds.length === 1) return;
-      enabledModuleIds = enabledModuleIds.filter(id => id !== modId);
+      enabledModuleIds = enabledModuleIds.filter((id) => id !== modId);
     } else {
       enabledModuleIds = [...enabledModuleIds, modId];
     }
@@ -131,7 +144,7 @@
 
   function toggleCategoryCollapse(categoryId: string) {
     if (collapsedCategoryIds.includes(categoryId)) {
-      collapsedCategoryIds = collapsedCategoryIds.filter(id => id !== categoryId);
+      collapsedCategoryIds = collapsedCategoryIds.filter((id) => id !== categoryId);
     } else {
       collapsedCategoryIds = [...collapsedCategoryIds, categoryId];
     }
@@ -148,7 +161,7 @@
   }
 
   function selectAllModules() {
-    enabledModuleIds = modules.map(m => m.id);
+    enabledModuleIds = modules.map((m) => m.id);
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
     session.setFilter('all', true);
@@ -260,7 +273,10 @@
 
 <svelte:window onclick={handleWindowClick} />
 
-<main oncopy={handleCopy} class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-8 md:py-6 overflow-x-hidden transition-colors">
+<main
+  oncopy={handleCopy}
+  class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-8 md:py-6 overflow-x-hidden transition-colors"
+>
   <div class="w-full max-w-7xl flex items-center justify-between gap-4 shrink-0">
     <div class="relative flex items-center gap-3">
       <button
@@ -270,13 +286,23 @@
         class="flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
         aria-label="Open Curriculum Sidebar"
       >
-        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <svg
+          class="w-5 h-5 text-gray-600 dark:text-gray-300 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-        <span class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline">
+        <span
+          class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline"
+        >
           Curriculum
         </span>
-        <span class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">
+        <span
+          class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+        >
           {enabledModuleIds.length}/{modules.length}
         </span>
       </button>
@@ -286,7 +312,10 @@
       isOpen={showSettingsModal}
       {settings}
       ontogglesettings={toggleSettingsModal}
-      onclose={() => { showSettingsModal = false; inputElement?.focus(); }}
+      onclose={() => {
+        showSettingsModal = false;
+        inputElement?.focus();
+      }}
       onthemechange={handleThemeChange}
       ontogglepronunciation={togglePronunciation}
       ontoggletranslation={toggleTranslation}
@@ -294,7 +323,9 @@
     />
   </div>
 
-  <div class="w-full max-w-full flex-1 flex flex-col items-center justify-start py-4 px-2 md:px-8 overflow-hidden">
+  <div
+    class="w-full max-w-full flex-1 flex flex-col items-center justify-start py-4 px-2 md:px-8 overflow-hidden"
+  >
     <TargetDisplay
       {wordTokens}
       {errors}
@@ -306,17 +337,24 @@
 
     <div class="flex-1 min-h-[1rem]"></div>
 
-    <ExercisePrompt
-      {isCompleted}
-      onskip={handleSkip}
-    />
+    <ExercisePrompt {isCompleted} onskip={handleSkip} />
   </div>
 
-  <div class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-4 shrink-0 px-2 md:px-8">
-    <div class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden">
+  <div
+    class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-4 shrink-0 px-2 md:px-8"
+  >
+    <div
+      class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 border-b-8 border-gray-300 dark:border-gray-700 focus-within:border-blue-600 dark:focus-within:border-blue-500 font-bold shadow-md rounded-t-xl px-4 overflow-hidden"
+    >
       {#if userInput.length === 0}
-        <span class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap select-none">
-          {enabledModuleIds.length === 0 ? "Select a module above to begin..." : (isCompleted ? "Press Enter or Space for next word" : "Start typing...")}
+        <span
+          class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap select-none"
+        >
+          {enabledModuleIds.length === 0
+            ? 'Select a module above to begin...'
+            : isCompleted
+              ? 'Press Enter or Space for next word'
+              : 'Start typing...'}
         </span>
       {:else}
         <div
@@ -324,9 +362,9 @@
           class="flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold"
         >
           {#each userInput.split('') as char, i}
-            {@const isError = errors.find(e => e.index === i)?.isError ?? false}
-            {@const isCurrent = (i === activeInputCursorIndex && !isCompleted)}
-            
+            {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
+            {@const isCurrent = i === activeInputCursorIndex && !isCompleted}
+
             {#if isCurrent}
               <CharDisplay
                 bind:elementRef={activeCursorElement}
@@ -336,12 +374,7 @@
                 variant="input"
               />
             {:else}
-              <CharDisplay
-                {char}
-                {isError}
-                {isCurrent}
-                variant="input"
-              />
+              <CharDisplay {char} {isError} {isCurrent} variant="input" />
             {/if}
           {/each}
 
@@ -351,7 +384,9 @@
               class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5 min-w-[0.7em]"
             >
               <span class="opacity-0 select-none">&nbsp;</span>
-              <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
+              <span
+                class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"
+              ></span>
             </span>
           {/if}
         </div>
@@ -387,7 +422,11 @@
         onmousedown={(e) => e.stopPropagation()}
       >
         <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"
+          />
         </svg>
         <span>GitHub</span>
       </a>
@@ -411,7 +450,12 @@
 <style>
   :global(body) {
     margin: 0;
-    font-family: 'Noto Sans KR', 'Inter', system-ui, -apple-system, sans-serif;
+    font-family:
+      'Noto Sans KR',
+      'Inter',
+      system-ui,
+      -apple-system,
+      sans-serif;
     background-color: #f9fafb;
   }
   :global(html.dark body) {

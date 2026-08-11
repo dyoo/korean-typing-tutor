@@ -51,7 +51,7 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
     const input = 'hello';
     const errors = checkErrors(target, input);
     expect(errors.length).toBe(5);
-    expect(errors.every(e => !e.isError)).toBe(true);
+    expect(errors.every((e) => !e.isError)).toBe(true);
   });
 
   it('should identify mismatches', () => {
@@ -118,14 +118,14 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
     for (const key of keystrokes) {
       currentInput = engine.handleKey(key);
       const errors = checkErrors(target, currentInput);
-      expect(errors.every(e => !e.isError)).toBe(true);
+      expect(errors.every((e) => !e.isError)).toBe(true);
     }
     expect(currentInput).toBe('화장실');
   });
 
   it('should detect impossible keystrokes immediately as errors (e.g. ㄷ for 우유)', () => {
     const target = '우유';
-    
+
     expect(isPartialOrExactMatch('우', 'ㅇ')).toBe(true);
     let errors = checkErrors(target, 'ㅇ');
     expect(errors[0].isError).toBe(false);
@@ -155,7 +155,7 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
     expect(step4[1].isError).toBe(false);
 
     const step5 = checkErrors(target, '가요.');
-    expect(step5.every(e => !e.isError)).toBe(true);
+    expect(step5.every((e) => !e.isError)).toBe(true);
   });
 
   it('should recognize compound Jongseong partial matches as valid', () => {
@@ -175,13 +175,13 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
 
     // Typing second consonant 'ㅁ' flushes 'ㅇ' as incomplete syllable for '어'
     errors = checkErrors(target, 'ㅇㅁ');
-    expect(errors[0].isError).toBe(true);  // 'ㅇ' is flushed, incomplete for '어'
+    expect(errors[0].isError).toBe(true); // 'ㅇ' is flushed, incomplete for '어'
     expect(errors[1].isError).toBe(false); // 'ㅁ' is active, in-progress for '머'
 
     // Typing third consonant 'ㄴ' flushes 'ㅁ' as incomplete syllable for '머'
     errors = checkErrors(target, 'ㅇㅁㄴ');
-    expect(errors[0].isError).toBe(true);  // 'ㅇ' is flushed, incomplete for '어'
-    expect(errors[1].isError).toBe(true);  // 'ㅁ' is flushed, incomplete for '머'
+    expect(errors[0].isError).toBe(true); // 'ㅇ' is flushed, incomplete for '어'
+    expect(errors[1].isError).toBe(true); // 'ㅁ' is flushed, incomplete for '머'
     expect(errors[2].isError).toBe(false); // 'ㄴ' is active, in-progress for '니'
   });
 });
@@ -328,15 +328,14 @@ describe('getWordTokens helper', () => {
 
     expect(tokens[0].type).toBe('word');
     expect(tokens[0].indices).toEqual([0, 1, 2, 3, 4, 5]);
-    expect(tokens[0].indices.map(i => text[i]).join('')).toBe('안녕하세요.');
+    expect(tokens[0].indices.map((i) => text[i]).join('')).toBe('안녕하세요.');
 
     expect(tokens[1].type).toBe('space');
     expect(tokens[1].indices).toEqual([6]);
-    expect(tokens[1].indices.map(i => text[i]).join('')).toBe(' ');
+    expect(tokens[1].indices.map((i) => text[i]).join('')).toBe(' ');
 
     expect(tokens[2].type).toBe('word');
     expect(tokens[2].indices).toEqual([7, 8, 9, 10, 11, 12]);
-    expect(tokens[2].indices.map(i => text[i]).join('')).toBe('반갑습니다!');
+    expect(tokens[2].indices.map((i) => text[i]).join('')).toBe('반갑습니다!');
   });
 });
-

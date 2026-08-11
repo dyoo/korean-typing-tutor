@@ -50,7 +50,9 @@
     tabindex="-1"
     aria-label="Close sidebar backdrop"
     onclick={onclose}
-    onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') onclose(); }}
+    onkeydown={(e) => {
+      if (e.key === 'Enter' || e.key === ' ') onclose();
+    }}
     class="fixed inset-0 z-40 bg-black/40 dark:bg-black/60 transition-opacity select-none"
   ></div>
 
@@ -62,9 +64,13 @@
     class="fixed inset-y-0 left-0 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 border-r-2 border-gray-200 dark:border-gray-700 shadow-2xl flex flex-col"
   >
     <!-- Header -->
-    <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-gray-800/80">
+    <div
+      class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-gray-800/80"
+    >
       <div class="flex flex-col">
-        <h2 class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-gray-100 font-mono">
+        <h2
+          class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-gray-100 font-mono"
+        >
           Curriculum Modules
         </h2>
         <span class="text-xs text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
@@ -85,7 +91,9 @@
     </div>
 
     <!-- Quick Actions -->
-    <div class="flex items-center justify-between px-4 py-2 bg-gray-100/60 dark:bg-gray-900/40 border-b border-gray-200 dark:border-gray-700/60">
+    <div
+      class="flex items-center justify-between px-4 py-2 bg-gray-100/60 dark:bg-gray-900/40 border-b border-gray-200 dark:border-gray-700/60"
+    >
       <button
         type="button"
         onclick={onselectall}
@@ -111,8 +119,12 @@
         {@const count = getGroupCheckedCount(category, enabledModuleIds)}
         {@const isCollapsed = collapsedCategoryIds.includes(category.id)}
 
-        <div class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-xl p-2.5 bg-gray-50/60 dark:bg-gray-800/40 gap-2">
-          <div class="flex items-center justify-between p-1 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 transition-colors select-none">
+        <div
+          class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-xl p-2.5 bg-gray-50/60 dark:bg-gray-800/40 gap-2"
+        >
+          <div
+            class="flex items-center justify-between p-1 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 transition-colors select-none"
+          >
             <div class="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -127,7 +139,9 @@
                 class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
               >
                 <svg
-                  class="w-3.5 h-3.5 text-gray-400 transition-transform {isCollapsed ? '-rotate-90' : ''}"
+                  class="w-3.5 h-3.5 text-gray-400 transition-transform {isCollapsed
+                    ? '-rotate-90'
+                    : ''}"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -138,18 +152,24 @@
                 <span>{category.name}</span>
               </button>
             </div>
-            <span class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0">
+            <span
+              class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0"
+            >
               {count}/{category.moduleIds.length}
             </span>
           </div>
 
           {#if !isCollapsed}
-            <div class="flex flex-col gap-1.5 pl-3 border-l-2 border-blue-500/30 dark:border-blue-400/30 ml-3 mb-1 mr-1">
+            <div
+              class="flex flex-col gap-1.5 pl-3 border-l-2 border-blue-500/30 dark:border-blue-400/30 ml-3 mb-1 mr-1"
+            >
               {#each category.moduleIds as modId}
-                {@const mod = modules.find(m => m.id === modId)}
+                {@const mod = modules.find((m) => m.id === modId)}
                 {#if mod}
                   {@const isEnabled = enabledModuleIds.includes(mod.id)}
-                  <label class="flex items-start gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none">
+                  <label
+                    class="flex items-start gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none"
+                  >
                     <input
                       type="checkbox"
                       checked={isEnabled}
@@ -157,11 +177,15 @@
                       class="mt-0.5 w-3.5 h-3.5 text-blue-600 rounded cursor-pointer shrink-0"
                     />
                     <div class="flex flex-col">
-                      <span class="text-xs font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                      <span
+                        class="text-xs font-semibold text-gray-800 dark:text-gray-200 leading-tight"
+                      >
                         {mod.title}
                       </span>
                       {#if mod.description}
-                        <span class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight mt-0.5">
+                        <span
+                          class="text-[10px] text-gray-500 dark:text-gray-400 leading-tight mt-0.5"
+                        >
                           {mod.description}
                         </span>
                       {/if}

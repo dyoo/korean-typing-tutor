@@ -4,7 +4,7 @@ import type { ErrorReport } from '../types/korean';
  * Unicode Base Offset for Hangul Syllables.
  * Hangul Syllables in Unicode span from U+AC00 ('가') to U+D7A3 ('힣').
  */
-const HANGUL_BASE = 0xAC00;
+const HANGUL_BASE = 0xac00;
 
 /**
  * QWERTY to Choseong (Initial Consonant) Index Mapping (0..18).
@@ -12,25 +12,25 @@ const HANGUL_BASE = 0xAC00;
  * Left-hand keys correspond to consonants.
  */
 const CHOSEONG_MAP: Record<string, number> = {
-  'r': 0,  // ㄱ
-  'R': 1,  // ㄲ
-  's': 2,  // ㄴ
-  'e': 3,  // ㄷ
-  'E': 4,  // ㄸ
-  'f': 5,  // ㄹ
-  'a': 6,  // ㅁ
-  'q': 7,  // ㅂ
-  'Q': 8,  // ㅃ
-  't': 9,  // ㅅ
-  'T': 10, // ㅆ
-  'd': 11, // ㅇ
-  'w': 12, // ㅈ
-  'W': 13, // ㅉ
-  'c': 14, // ㅊ
-  'z': 15, // ㅋ
-  'x': 16, // ㅌ
-  'v': 17, // ㅍ
-  'g': 18  // ㅎ
+  r: 0, // ㄱ
+  R: 1, // ㄲ
+  s: 2, // ㄴ
+  e: 3, // ㄷ
+  E: 4, // ㄸ
+  f: 5, // ㄹ
+  a: 6, // ㅁ
+  q: 7, // ㅂ
+  Q: 8, // ㅃ
+  t: 9, // ㅅ
+  T: 10, // ㅆ
+  d: 11, // ㅇ
+  w: 12, // ㅈ
+  W: 13, // ㅉ
+  c: 14, // ㅊ
+  z: 15, // ㅋ
+  x: 16, // ㅌ
+  v: 17, // ㅍ
+  g: 18 // ㅎ
 };
 
 /**
@@ -38,20 +38,20 @@ const CHOSEONG_MAP: Record<string, number> = {
  * Right-hand keys correspond to vowels.
  */
 const JUNGSEONG_MAP: Record<string, number> = {
-  'k': 0,  // ㅏ
-  'o': 1,  // ㅐ
-  'i': 2,  // ㅑ
-  'O': 3,  // ㅒ
-  'j': 4,  // ㅓ
-  'p': 5,  // ㅔ
-  'u': 6,  // ㅕ
-  'P': 7,  // ㅖ
-  'h': 8,  // ㅗ
-  'y': 12, // ㅛ
-  'n': 13, // ㅜ
-  'b': 17, // ㅠ
-  'm': 18, // ㅡ
-  'l': 20  // ㅣ
+  k: 0, // ㅏ
+  o: 1, // ㅐ
+  i: 2, // ㅑ
+  O: 3, // ㅒ
+  j: 4, // ㅓ
+  p: 5, // ㅔ
+  u: 6, // ㅕ
+  P: 7, // ㅖ
+  h: 8, // ㅗ
+  y: 12, // ㅛ
+  n: 13, // ㅜ
+  b: 17, // ㅠ
+  m: 18, // ㅡ
+  l: 20 // ㅣ
 };
 
 /**
@@ -60,42 +60,101 @@ const JUNGSEONG_MAP: Record<string, number> = {
  * Double consonants ㄸ (E), ㅃ (Q), ㅉ (W) cannot be used as Jongseong.
  */
 const JONGSEONG_MAP: Record<string, number> = {
-  'r': 1,  // ㄱ
-  'R': 2,  // ㄲ
-  's': 4,  // ㄴ
-  'e': 7,  // ㄷ
-  'f': 8,  // ㄹ
-  'a': 16, // ㅁ
-  'q': 17, // ㅂ
-  't': 19, // ㅅ
-  'T': 20, // ㅆ
-  'd': 21, // ㅇ
-  'w': 22, // ㅈ
-  'c': 23, // ㅊ
-  'z': 24, // ㅋ
-  'x': 25, // ㅌ
-  'v': 26, // ㅍ
-  'g': 27  // ㅎ
+  r: 1, // ㄱ
+  R: 2, // ㄲ
+  s: 4, // ㄴ
+  e: 7, // ㄷ
+  f: 8, // ㄹ
+  a: 16, // ㅁ
+  q: 17, // ㅂ
+  t: 19, // ㅅ
+  T: 20, // ㅆ
+  d: 21, // ㅇ
+  w: 22, // ㅈ
+  c: 23, // ㅊ
+  z: 24, // ㅋ
+  x: 25, // ㅌ
+  v: 26, // ㅍ
+  g: 27 // ㅎ
 };
 
 /** Direct Hangul Choseong Jamo Mapping (for native 2-set Korean OS input mode). */
 const DIRECT_CHOSEONG_MAP: Record<string, number> = {
-  'ㄱ': 0, 'ㄲ': 1, 'ㄴ': 2, 'ㄷ': 3, 'ㄸ': 4, 'ㄹ': 5, 'ㅁ': 6, 'ㅂ': 7, 'ㅃ': 8,
-  'ㅅ': 9, 'ㅆ': 10, 'ㅇ': 11, 'ㅈ': 12, 'ㅉ': 13, 'ㅊ': 14, 'ㅋ': 15, 'ㅌ': 16, 'ㅍ': 17, 'ㅎ': 18
+  ㄱ: 0,
+  ㄲ: 1,
+  ㄴ: 2,
+  ㄷ: 3,
+  ㄸ: 4,
+  ㄹ: 5,
+  ㅁ: 6,
+  ㅂ: 7,
+  ㅃ: 8,
+  ㅅ: 9,
+  ㅆ: 10,
+  ㅇ: 11,
+  ㅈ: 12,
+  ㅉ: 13,
+  ㅊ: 14,
+  ㅋ: 15,
+  ㅌ: 16,
+  ㅍ: 17,
+  ㅎ: 18
 };
 
 /** Direct Hangul Jungseong Jamo Mapping (for native 2-set Korean OS input mode). */
 const DIRECT_JUNGSEONG_MAP: Record<string, number> = {
-  'ㅏ': 0, 'ㅐ': 1, 'ㅑ': 2, 'ㅒ': 3, 'ㅓ': 4, 'ㅔ': 5, 'ㅕ': 6, 'ㅖ': 7, 'ㅗ': 8,
-  'ㅘ': 9, 'ㅙ': 10, 'ㅚ': 11, 'ㅛ': 12, 'ㅜ': 13, 'ㅝ': 14, 'ㅞ': 15, 'ㅟ': 16, 'ㅠ': 17,
-  'ㅡ': 18, 'ㅢ': 19, 'ㅣ': 20
+  ㅏ: 0,
+  ㅐ: 1,
+  ㅑ: 2,
+  ㅒ: 3,
+  ㅓ: 4,
+  ㅔ: 5,
+  ㅕ: 6,
+  ㅖ: 7,
+  ㅗ: 8,
+  ㅘ: 9,
+  ㅙ: 10,
+  ㅚ: 11,
+  ㅛ: 12,
+  ㅜ: 13,
+  ㅝ: 14,
+  ㅞ: 15,
+  ㅟ: 16,
+  ㅠ: 17,
+  ㅡ: 18,
+  ㅢ: 19,
+  ㅣ: 20
 };
 
 /** Direct Hangul Jongseong Jamo Mapping (for native 2-set Korean OS input mode). */
 const DIRECT_JONGSEONG_MAP: Record<string, number> = {
-  'ㄱ': 1, 'ㄲ': 2, 'ㄳ': 3, 'ㄴ': 4, 'ㄵ': 5, 'ㄶ': 6, 'ㄷ': 7, 'ㄹ': 8, 'ㄺ': 9,
-  'ㄻ': 10, 'ㄼ': 11, 'ㄽ': 12, 'ㄾ': 13, 'ㄿ': 14, 'ㅀ': 15, 'ㅁ': 16, 'ㅂ': 17, 'ㅄ': 18,
-  'ㅅ': 19, 'ㅆ': 20, 'ㅇ': 21, 'ㅈ': 22, 'ㅊ': 23, 'ㅋ': 24, 'ㅌ': 25, 'ㅍ': 26, 'ㅎ': 27
+  ㄱ: 1,
+  ㄲ: 2,
+  ㄳ: 3,
+  ㄴ: 4,
+  ㄵ: 5,
+  ㄶ: 6,
+  ㄷ: 7,
+  ㄹ: 8,
+  ㄺ: 9,
+  ㄻ: 10,
+  ㄼ: 11,
+  ㄽ: 12,
+  ㄾ: 13,
+  ㄿ: 14,
+  ㅀ: 15,
+  ㅁ: 16,
+  ㅂ: 17,
+  ㅄ: 18,
+  ㅅ: 19,
+  ㅆ: 20,
+  ㅇ: 21,
+  ㅈ: 22,
+  ㅊ: 23,
+  ㅋ: 24,
+  ㅌ: 25,
+  ㅍ: 26,
+  ㅎ: 27
 };
 
 /**
@@ -104,12 +163,12 @@ const DIRECT_JONGSEONG_MAP: Record<string, number> = {
  * Example: ㅗ (8) + ㅏ (0) = ㅘ (9).
  */
 const COMPOUND_JUNGSEONG: Record<string, number> = {
-  '8,0': 9,   // ㅗ + ㅏ = ㅘ
-  '8,1': 10,  // ㅗ + ㅐ = ㅙ
+  '8,0': 9, // ㅗ + ㅏ = ㅘ
+  '8,1': 10, // ㅗ + ㅐ = ㅙ
   '8,20': 11, // ㅗ + ㅣ = ㅚ
   '13,4': 14, // ㅜ + ㅓ = ㅝ
   '13,5': 15, // ㅜ + ㅔ = ㅞ
-  '13,20': 16,// ㅜ + ㅣ = ㅟ
+  '13,20': 16, // ㅜ + ㅣ = ㅟ
   '18,20': 19 // ㅡ + ㅣ = ㅢ
 };
 
@@ -117,12 +176,12 @@ const COMPOUND_JUNGSEONG: Record<string, number> = {
  * Decomposition map for compound vowels (used when Backspace is pressed).
  */
 const COMPOUND_JUNGSEONG_DECOMP: Record<number, [number, number]> = {
-  9: [8, 0],   // ㅘ -> ㅗ, ㅏ
-  10: [8, 1],  // ㅙ -> ㅗ, ㅐ
+  9: [8, 0], // ㅘ -> ㅗ, ㅏ
+  10: [8, 1], // ㅙ -> ㅗ, ㅐ
   11: [8, 20], // ㅚ -> ㅗ, ㅣ
   14: [13, 4], // ㅝ -> ㅜ, ㅓ
   15: [13, 5], // ㅞ -> ㅜ, ㅔ
-  16: [13, 20],// ㅟ -> ㅜ, ㅣ
+  16: [13, 20], // ㅟ -> ㅜ, ㅣ
   19: [18, 20] // ㅢ -> ㅡ, ㅣ
 };
 
@@ -132,10 +191,10 @@ const COMPOUND_JUNGSEONG_DECOMP: Record<number, [number, number]> = {
  * Example: ㄹ (8) + ㄱ (1) = ㄺ (9).
  */
 const COMPOUND_JONGSEONG: Record<string, number> = {
-  '1,19': 3,  // ㄱ + ㅅ = ㄳ
-  '4,22': 5,  // ㄴ + ㅈ = ㄵ
-  '4,27': 6,  // ㄴ + ㅎ = ㄶ
-  '8,1': 9,   // ㄹ + ㄱ = ㄺ
+  '1,19': 3, // ㄱ + ㅅ = ㄳ
+  '4,22': 5, // ㄴ + ㅈ = ㄵ
+  '4,27': 6, // ㄴ + ㅎ = ㄶ
+  '8,1': 9, // ㄹ + ㄱ = ㄺ
   '8,16': 10, // ㄹ + ㅁ = ㄻ
   '8,17': 11, // ㄹ + ㅂ = ㄼ
   '8,19': 12, // ㄹ + ㅅ = ㄽ
@@ -149,10 +208,10 @@ const COMPOUND_JONGSEONG: Record<string, number> = {
  * Decomposition map for compound final consonants (used for Backspace and Liaison splitting).
  */
 const COMPOUND_JONGSEONG_DECOMP: Record<number, [number, number]> = {
-  3: [1, 19],  // ㄳ -> ㄱ, ㅅ
-  5: [4, 22],  // ㄵ -> ㄴ, ㅈ
-  6: [4, 27],  // ㄶ -> ㄴ, ㅎ
-  9: [8, 1],   // ㄺ -> ㄹ, ㄱ
+  3: [1, 19], // ㄳ -> ㄱ, ㅅ
+  5: [4, 22], // ㄵ -> ㄴ, ㅈ
+  6: [4, 27], // ㄶ -> ㄴ, ㅎ
+  9: [8, 1], // ㄺ -> ㄹ, ㄱ
   10: [8, 16], // ㄻ -> ㄹ, ㅁ
   11: [8, 17], // ㄼ -> ㄹ, ㅂ
   12: [8, 19], // ㄽ -> ㄹ, ㅅ
@@ -167,14 +226,14 @@ const COMPOUND_JONGSEONG_DECOMP: Record<number, [number, number]> = {
  * Used when a final consonant carries over to become the initial consonant of the next syllable.
  */
 const JONGSEONG_TO_CHOSEONG: Record<number, number> = {
-  1: 0,   // ㄱ -> ㄱ
-  2: 1,   // ㄲ -> ㄲ
-  4: 2,   // ㄴ -> ㄴ
-  7: 3,   // ㄷ -> ㄷ
-  8: 5,   // ㄹ -> ㄹ
-  16: 6,  // ㅁ -> ㅁ
-  17: 7,  // ㅂ -> ㅂ
-  19: 9,  // ㅅ -> ㅅ
+  1: 0, // ㄱ -> ㄱ
+  2: 1, // ㄲ -> ㄲ
+  4: 2, // ㄴ -> ㄴ
+  7: 3, // ㄷ -> ㄷ
+  8: 5, // ㄹ -> ㄹ
+  16: 6, // ㅁ -> ㅁ
+  17: 7, // ㅂ -> ㅂ
+  19: 9, // ㅅ -> ㅅ
   20: 10, // ㅆ -> ㅆ
   21: 11, // ㅇ -> ㅇ
   22: 12, // ㅈ -> ㅈ
@@ -182,7 +241,7 @@ const JONGSEONG_TO_CHOSEONG: Record<number, number> = {
   24: 15, // ㅋ -> ㅋ
   25: 16, // ㅌ -> ㅌ
   26: 17, // ㅍ -> ㅍ
-  27: 18  // ㅎ -> ㅎ
+  27: 18 // ㅎ -> ㅎ
 };
 
 /**
@@ -196,14 +255,50 @@ function makeCompoundKey(firstIndex: number, secondIndex: number): string {
 
 /** Standalone Compatibility Choseong characters (used when rendering partial syllables). */
 const CHOSEONG_STANDALONE = [
-  'ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ',
-  'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+  'ㄱ',
+  'ㄲ',
+  'ㄴ',
+  'ㄷ',
+  'ㄸ',
+  'ㄹ',
+  'ㅁ',
+  'ㅂ',
+  'ㅃ',
+  'ㅅ',
+  'ㅆ',
+  'ㅇ',
+  'ㅈ',
+  'ㅉ',
+  'ㅊ',
+  'ㅋ',
+  'ㅌ',
+  'ㅍ',
+  'ㅎ'
 ];
 
 /** Standalone Compatibility Jungseong characters. */
 const JUNGSEONG_STANDALONE = [
-  'ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ', 'ㅖ', 'ㅗ', 'ㅘ',
-  'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'
+  'ㅏ',
+  'ㅐ',
+  'ㅑ',
+  'ㅒ',
+  'ㅓ',
+  'ㅔ',
+  'ㅕ',
+  'ㅖ',
+  'ㅗ',
+  'ㅘ',
+  'ㅙ',
+  'ㅚ',
+  'ㅛ',
+  'ㅜ',
+  'ㅝ',
+  'ㅞ',
+  'ㅟ',
+  'ㅠ',
+  'ㅡ',
+  'ㅢ',
+  'ㅣ'
 ];
 
 /**
@@ -211,20 +306,46 @@ const JUNGSEONG_STANDALONE = [
  * Index 1..27 corresponding to Unicode Hangul Jongseong definitions.
  */
 const JONGSEONG_SINGLE_JAMO: Record<number, string> = {
-  1: 'ㄱ', 2: 'ㄲ', 4: 'ㄴ', 7: 'ㄷ', 8: 'ㄹ',
-  16: 'ㅁ', 17: 'ㅂ', 19: 'ㅅ', 20: 'ㅆ', 21: 'ㅇ',
-  22: 'ㅈ', 23: 'ㅊ', 24: 'ㅋ', 25: 'ㅌ', 26: 'ㅍ', 27: 'ㅎ'
+  1: 'ㄱ',
+  2: 'ㄲ',
+  4: 'ㄴ',
+  7: 'ㄷ',
+  8: 'ㄹ',
+  16: 'ㅁ',
+  17: 'ㅂ',
+  19: 'ㅅ',
+  20: 'ㅆ',
+  21: 'ㅇ',
+  22: 'ㅈ',
+  23: 'ㅊ',
+  24: 'ㅋ',
+  25: 'ㅌ',
+  26: 'ㅍ',
+  27: 'ㅎ'
 };
 
 /**
  * Map of standalone compound Jamo characters to their decomposed individual Jamo sequence.
  */
 const STANDALONE_COMPOUND_MAP: Record<string, string> = {
-  'ㅘ': 'ㅗㅏ', 'ㅙ': 'ㅗㅐ', 'ㅚ': 'ㅗㅣ',
-  'ㅝ': 'ㅜㅓ', 'ㅞ': 'ㅜㅔ', 'ㅟ': 'ㅜㅣ', 'ㅢ': 'ㅡㅣ',
-  'ㄳ': 'ㄱㅅ', 'ㄵ': 'ㄴㅈ', 'ㄶ': 'ㄴㅎ',
-  'ㄺ': 'ㄹㄱ', 'ㄻ': 'ㄹㅁ', 'ㄼ': 'ㄹㅂ', 'ㄽ': 'ㄹㅅ',
-  'ㄾ': 'ㄹㅌ', 'ㄿ': 'ㄹㅍ', 'ㅀ': 'ㄹㅎ', 'ㅄ': 'ㅂㅅ'
+  ㅘ: 'ㅗㅏ',
+  ㅙ: 'ㅗㅐ',
+  ㅚ: 'ㅗㅣ',
+  ㅝ: 'ㅜㅓ',
+  ㅞ: 'ㅜㅔ',
+  ㅟ: 'ㅜㅣ',
+  ㅢ: 'ㅡㅣ',
+  ㄳ: 'ㄱㅅ',
+  ㄵ: 'ㄴㅈ',
+  ㄶ: 'ㄴㅎ',
+  ㄺ: 'ㄹㄱ',
+  ㄻ: 'ㄹㅁ',
+  ㄼ: 'ㄹㅂ',
+  ㄽ: 'ㄹㅅ',
+  ㄾ: 'ㄹㅌ',
+  ㄿ: 'ㄹㅍ',
+  ㅀ: 'ㄹㅎ',
+  ㅄ: 'ㅂㅅ'
 };
 
 /**
@@ -235,7 +356,7 @@ export function decomposeCharToJamos(char: string | undefined): string {
   if (!char) return '';
 
   const code = char.charCodeAt(0);
-  if (code >= HANGUL_BASE && code <= 0xD7A3) {
+  if (code >= HANGUL_BASE && code <= 0xd7a3) {
     const offset = code - HANGUL_BASE;
     const jongIndex = offset % 28;
     const jungIndex = Math.floor(offset / 28) % 21;
@@ -280,7 +401,7 @@ export function getChoseongJamo(char: string | undefined): string | null {
   if (!char) return null;
 
   const code = char.charCodeAt(0);
-  if (code >= HANGUL_BASE && code <= 0xD7A3) {
+  if (code >= HANGUL_BASE && code <= 0xd7a3) {
     const offset = code - HANGUL_BASE;
     const choIndex = Math.floor(offset / (21 * 28));
     return CHOSEONG_STANDALONE[choIndex] ?? null;
@@ -436,7 +557,7 @@ export class HangulEngine {
     }
 
     // Direct composed Hangul Syllable (from native OS IME)
-    if (key.length === 1 && key.charCodeAt(0) >= HANGUL_BASE && key.charCodeAt(0) <= 0xD7A3) {
+    if (key.length === 1 && key.charCodeAt(0) >= HANGUL_BASE && key.charCodeAt(0) <= 0xd7a3) {
       this.flushCurrent();
       this.composedString += key;
       return this.getComposedText();
@@ -454,7 +575,14 @@ export class HangulEngine {
      * For all other uppercase letters (such as 'X', 'Z', 'C', 'V', 'G', etc.), standard Dubeolsik
      * treats Shift + Key identically to its lower-case key (e.g. 'X' -> 'x' -> ㅌ).
      */
-    if (cho === undefined && jung === undefined && jong === undefined && key.length === 1 && key >= 'A' && key <= 'Z') {
+    if (
+      cho === undefined &&
+      jung === undefined &&
+      jong === undefined &&
+      key.length === 1 &&
+      key >= 'A' &&
+      key <= 'Z'
+    ) {
       const lower = key.toLowerCase();
       cho = CHOSEONG_MAP[lower];
       jung = JUNGSEONG_MAP[lower];
@@ -509,7 +637,11 @@ export class HangulEngine {
     }
 
     // --- 6. State 4: Block has Choseong + Jungseong (e.g. '가') ---
-    if (this.currentChoseong !== null && this.currentJungseong !== null && (this.currentJongseong === null || this.currentJongseong === 0)) {
+    if (
+      this.currentChoseong !== null &&
+      this.currentJungseong !== null &&
+      (this.currentJongseong === null || this.currentJongseong === 0)
+    ) {
       if (jung !== undefined) {
         // Try combining into compound vowel (e.g. '고' + 'ㅏ' -> '과')
         const compoundKey = makeCompoundKey(this.currentJungseong, jung);
@@ -530,7 +662,12 @@ export class HangulEngine {
     }
 
     // --- 7. State 5: Block has Choseong + Jungseong + Jongseong (e.g. '한' or '닭') ---
-    if (this.currentChoseong !== null && this.currentJungseong !== null && this.currentJongseong !== null && this.currentJongseong > 0) {
+    if (
+      this.currentChoseong !== null &&
+      this.currentJungseong !== null &&
+      this.currentJongseong !== null &&
+      this.currentJongseong > 0
+    ) {
       if (jung !== undefined) {
         /**
          * Liaison Rule / Syllable Splitting:
@@ -728,4 +865,3 @@ export function getWordTokens(target: string): WordTokenGroup[] {
 
   return tokens;
 }
-

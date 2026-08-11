@@ -45,8 +45,18 @@
     class="settings-btn flex items-center gap-1.5 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
     aria-label="Settings"
   >
-    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+    <svg
+      class="w-4 h-4 text-gray-500 dark:text-gray-400"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+      />
       <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
     <span class="hidden sm:inline">Settings</span>
@@ -59,7 +69,9 @@
       tabindex="-1"
       aria-label="Close settings modal backdrop"
       onclick={onclose}
-      onkeydown={(e) => { if (e.key === 'Escape') onclose(); }}
+      onkeydown={(e) => {
+        if (e.key === 'Escape') onclose();
+      }}
       class="fixed inset-0 z-40 bg-transparent select-none"
     ></div>
 
@@ -70,11 +82,15 @@
       class="settings-modal absolute right-0 top-11 z-50 w-64 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3"
       onmousedown={(e) => e.stopPropagation()}
     >
-      <div class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono pb-1 border-b border-gray-100 dark:border-gray-700">
+      <div
+        class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono pb-1 border-b border-gray-100 dark:border-gray-700"
+      >
         Display Settings
       </div>
-      
-      <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200">
+
+      <label
+        class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
+      >
         <span>Theme</span>
         <select
           value={settings.theme}
@@ -87,7 +103,9 @@
         </select>
       </label>
 
-      <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200">
+      <label
+        class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
+      >
         <span>Show Pronunciation</span>
         <input
           type="checkbox"
@@ -97,7 +115,9 @@
         />
       </label>
 
-      <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200">
+      <label
+        class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
+      >
         <span>Show Translation</span>
         <input
           type="checkbox"
@@ -107,7 +127,9 @@
         />
       </label>
 
-      <label class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200">
+      <label
+        class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
+      >
         <span>Show Virtual Keyboard</span>
         <input
           type="checkbox"

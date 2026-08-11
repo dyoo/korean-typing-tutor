@@ -1,7 +1,11 @@
 import { decomposeCharToJamos, isSyllableComplete } from './koreanEngine';
 import { JAMO_TO_KEY } from './keyboardData';
 
-function getKeyInfoResult(keyInfo?: { key: string; shift?: boolean; hand?: 'left' | 'right' }): string[] {
+function getKeyInfoResult(keyInfo?: {
+  key: string;
+  shift?: boolean;
+  hand?: 'left' | 'right';
+}): string[] {
   if (!keyInfo) return [];
   const lowerKey = keyInfo.key.toLowerCase();
   if (keyInfo.shift) {

@@ -9,8 +9,22 @@ const mockCurriculum: CurriculumData = {
     { id: 'l3', title: 'Level 3 — Everyday Vocabulary', description: 'Vocabulary exercises' }
   ],
   items: [
-    { id: 'l1-1', moduleId: 'l1', type: 'syllable', target: '가', pronunciation: 'ga', translation: null },
-    { id: 'l3-1', moduleId: 'l3', type: 'word', target: '사과', pronunciation: 'sagwa', translation: 'apple' }
+    {
+      id: 'l1-1',
+      moduleId: 'l1',
+      type: 'syllable',
+      target: '가',
+      pronunciation: 'ga',
+      translation: null
+    },
+    {
+      id: 'l3-1',
+      moduleId: 'l3',
+      type: 'word',
+      target: '사과',
+      pronunciation: 'sagwa',
+      translation: 'apple'
+    }
   ]
 };
 

@@ -14,7 +14,12 @@ describe('Settings module persistence', () => {
   });
 
   it('should save and load custom user settings including theme', () => {
-    saveSettings({ showPronunciation: false, showTranslation: true, showVirtualKeyboard: true, theme: 'dark' });
+    saveSettings({
+      showPronunciation: false,
+      showTranslation: true,
+      showVirtualKeyboard: true,
+      theme: 'dark'
+    });
     const loaded = loadSettings();
     expect(loaded.showPronunciation).toBe(false);
     expect(loaded.showTranslation).toBe(true);
@@ -23,12 +28,26 @@ describe('Settings module persistence', () => {
   });
 
   it('should save and load selected curriculum module preferences and collapsed categories', () => {
-    saveSettings({ showPronunciation: true, showTranslation: true, showVirtualKeyboard: true, theme: 'light', enabledModuleIds: ['b1_home_row_vowels', 'l3'], collapsedCategoryIds: ['topik2', 'practical'] });
+    saveSettings({
+      showPronunciation: true,
+      showTranslation: true,
+      showVirtualKeyboard: true,
+      theme: 'light',
+      enabledModuleIds: ['b1_home_row_vowels', 'l3'],
+      collapsedCategoryIds: ['topik2', 'practical']
+    });
     const loaded = loadSettings();
     expect(loaded.enabledModuleIds).toEqual(['b1_home_row_vowels', 'l3']);
     expect(loaded.collapsedCategoryIds).toEqual(['topik2', 'practical']);
 
-    saveSettings({ showPronunciation: true, showTranslation: true, showVirtualKeyboard: true, theme: 'light', enabledModuleIds: [], collapsedCategoryIds: [] });
+    saveSettings({
+      showPronunciation: true,
+      showTranslation: true,
+      showVirtualKeyboard: true,
+      theme: 'light',
+      enabledModuleIds: [],
+      collapsedCategoryIds: []
+    });
     const loadedEmpty = loadSettings();
     expect(loadedEmpty.enabledModuleIds).toEqual([]);
     expect(loadedEmpty.collapsedCategoryIds).toEqual([]);

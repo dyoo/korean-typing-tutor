@@ -9,7 +9,14 @@ export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
   {
     id: 'beginner',
     name: 'Beginner Fundamentals',
-    moduleIds: ['b1_home_row_vowels', 'b2_home_row_consonants', 'b3_home_row_words', 'b4_top_row', 'b5_bottom_row', 'b6_shift_keys']
+    moduleIds: [
+      'b1_home_row_vowels',
+      'b2_home_row_consonants',
+      'b3_home_row_words',
+      'b4_top_row',
+      'b5_bottom_row',
+      'b6_shift_keys'
+    ]
   },
   {
     id: 'batchim',
@@ -38,29 +45,41 @@ export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
   }
 ];
 
-export const ALL_CATEGORY_IDS: string[] = CURRICULUM_CATEGORIES.map(c => c.id);
+export const ALL_CATEGORY_IDS: string[] = CURRICULUM_CATEGORIES.map((c) => c.id);
 
 /** Returns true if all modules in a category are currently enabled. */
-export function isGroupAllChecked(category: CurriculumCategory, enabledModuleIds: string[]): boolean {
-  return category.moduleIds.every(id => enabledModuleIds.includes(id));
+export function isGroupAllChecked(
+  category: CurriculumCategory,
+  enabledModuleIds: string[]
+): boolean {
+  return category.moduleIds.every((id) => enabledModuleIds.includes(id));
 }
 
 /** Returns true if some (but not all) modules in a category are currently enabled. */
-export function isGroupSomeChecked(category: CurriculumCategory, enabledModuleIds: string[]): boolean {
-  const count = category.moduleIds.filter(id => enabledModuleIds.includes(id)).length;
+export function isGroupSomeChecked(
+  category: CurriculumCategory,
+  enabledModuleIds: string[]
+): boolean {
+  const count = category.moduleIds.filter((id) => enabledModuleIds.includes(id)).length;
   return count > 0 && count < category.moduleIds.length;
 }
 
 /** Returns the count of enabled modules in a given category. */
-export function getGroupCheckedCount(category: CurriculumCategory, enabledModuleIds: string[]): number {
-  return category.moduleIds.filter(id => enabledModuleIds.includes(id)).length;
+export function getGroupCheckedCount(
+  category: CurriculumCategory,
+  enabledModuleIds: string[]
+): number {
+  return category.moduleIds.filter((id) => enabledModuleIds.includes(id)).length;
 }
 
 /** Toggles all modules in a category on or off based on current state. */
-export function toggleCategoryGroupIds(category: CurriculumCategory, enabledModuleIds: string[]): string[] {
+export function toggleCategoryGroupIds(
+  category: CurriculumCategory,
+  enabledModuleIds: string[]
+): string[] {
   const allChecked = isGroupAllChecked(category, enabledModuleIds);
   if (allChecked) {
-    return enabledModuleIds.filter(id => !category.moduleIds.includes(id));
+    return enabledModuleIds.filter((id) => !category.moduleIds.includes(id));
   } else {
     const newSet = new Set([...enabledModuleIds, ...category.moduleIds]);
     return Array.from(newSet);

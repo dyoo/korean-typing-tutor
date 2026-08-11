@@ -19,8 +19,12 @@
 
   let textColor = $derived(
     isError
-      ? (variant === 'target' ? 'text-red-600 dark:text-red-400 font-bold' : 'text-red-500 dark:text-red-400')
-      : (variant === 'target' ? 'text-gray-900 dark:text-gray-100 font-bold' : 'text-blue-600 dark:text-blue-400')
+      ? variant === 'target'
+        ? 'text-red-600 dark:text-red-400 font-bold'
+        : 'text-red-500 dark:text-red-400'
+      : variant === 'target'
+        ? 'text-gray-900 dark:text-gray-100 font-bold'
+        : 'text-blue-600 dark:text-blue-400'
   );
 </script>
 
@@ -33,8 +37,10 @@
     {char === ' ' ? ' ' : char}
   </span>
   {#if isError}
-    <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"></span>
+    <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"
+    ></span>
   {:else if isCurrent}
-    <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"></span>
+    <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"
+    ></span>
   {/if}
 </span>

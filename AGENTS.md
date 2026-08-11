@@ -1,9 +1,11 @@
 # Agent Instructions: Korean Typing Tutor
 
 ## Project Context
+
 You are assisting in the development of a Korean Typing Tutor PWA. The goal is to create a distraction-free, high-performance typing experience for English speakers learning Korean.
 
 ## Technical Environment
+
 - **Framework**: Svelte (using `<script lang="ts">`)
 - **Build Tool**: Vite
 - **Styling**: Tailwind CSS (utility classes only)
@@ -11,6 +13,7 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - **Architecture**: Client-side only (LocalStorage for persistence)
 
 ## Coding Conventions
+
 - **Style**: Minimalist and clean.
 - **Educational Comments**: Include clear, informative JSDoc and inline comments explaining complex logic (such as Hangul composition arithmetic, state transitions, and error evaluation) for educational clarity.
 - **Distraction-Free UI**: Absolutely NO animations, bouncing elements, pulsing effects, or automatic word transitions. The UI must remain static, high-contrast, clean, and deliberate.
@@ -24,6 +27,7 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - **CSS**: Use Tailwind utility classes directly in the markup.
 
 ## Key Files & Modules
+
 - `src/App.svelte`: The primary UI component and interaction handler.
 - `src/lib/tutorSession.ts`: Session controller managing curriculum filtering, item shuffling, accuracy stats, and keystroke routing.
 - `src/lib/VirtualKeyboard.svelte`: Interactive Dubeolsik virtual keyboard layout helper component.
@@ -35,4 +39,5 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - `vite.config.js`: Configuration for Vite, PWA, and Workbox precaching support.
 
 ## Current Priority
+
 Implement **LocalStorage Module Persistence** (saving/restoring selected curriculum modules across browser reloads) and **Speed & Accuracy Analytics Panel** (optional WPM/SPM performance feedback).

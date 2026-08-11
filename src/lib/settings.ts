@@ -37,12 +37,18 @@ export function loadSettings(): TutorSettings {
     const parsed = JSON.parse(raw);
     const validThemes: ThemeMode[] = ['system', 'light', 'dark'];
     return {
-      showPronunciation: typeof parsed.showPronunciation === 'boolean' ? parsed.showPronunciation : true,
+      showPronunciation:
+        typeof parsed.showPronunciation === 'boolean' ? parsed.showPronunciation : true,
       showTranslation: typeof parsed.showTranslation === 'boolean' ? parsed.showTranslation : true,
-      showVirtualKeyboard: typeof parsed.showVirtualKeyboard === 'boolean' ? parsed.showVirtualKeyboard : true,
+      showVirtualKeyboard:
+        typeof parsed.showVirtualKeyboard === 'boolean' ? parsed.showVirtualKeyboard : true,
       theme: validThemes.includes(parsed.theme) ? parsed.theme : 'system',
-      enabledModuleIds: Array.isArray(parsed.enabledModuleIds) ? parsed.enabledModuleIds : undefined,
-      collapsedCategoryIds: Array.isArray(parsed.collapsedCategoryIds) ? parsed.collapsedCategoryIds : undefined
+      enabledModuleIds: Array.isArray(parsed.enabledModuleIds)
+        ? parsed.enabledModuleIds
+        : undefined,
+      collapsedCategoryIds: Array.isArray(parsed.collapsedCategoryIds)
+        ? parsed.collapsedCategoryIds
+        : undefined
     };
   } catch {
     return DEFAULT_SETTINGS;

@@ -1,38 +1,175 @@
 import type { LessonItem } from '../types/korean';
 
 /** Initial Hangul consonants (초성). */
-const CHOSEONG = ['ㄱ','ㄲ','ㄴ','ㄷ','ㄸ','ㄹ','ㅁ','ㅂ','ㅃ','ㅅ','ㅆ','ㅇ','ㅈ','ㅉ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const CHOSEONG = [
+  'ㄱ',
+  'ㄲ',
+  'ㄴ',
+  'ㄷ',
+  'ㄸ',
+  'ㄹ',
+  'ㅁ',
+  'ㅂ',
+  'ㅃ',
+  'ㅅ',
+  'ㅆ',
+  'ㅇ',
+  'ㅈ',
+  'ㅉ',
+  'ㅊ',
+  'ㅋ',
+  'ㅌ',
+  'ㅍ',
+  'ㅎ'
+];
 
 /** Medial Hangul vowels (중성). */
-const JUNGSEONG = ['ㅏ','ㅐ','ㅑ','ㅒ','ㅓ','ㅔ','ㅕ','ㅖ','ㅗ','ㅘ','ㅙ','외','요','ㅜ','ㅝ','ㅞ','위','유','ㅡ','ㅢ','ㅣ'];
+const JUNGSEONG = [
+  'ㅏ',
+  'ㅐ',
+  'ㅑ',
+  'ㅒ',
+  'ㅓ',
+  'ㅔ',
+  'ㅕ',
+  'ㅖ',
+  'ㅗ',
+  'ㅘ',
+  'ㅙ',
+  '외',
+  '요',
+  'ㅜ',
+  'ㅝ',
+  'ㅞ',
+  '위',
+  '유',
+  'ㅡ',
+  'ㅢ',
+  'ㅣ'
+];
 
 /** Final Hangul consonants (종성). */
-const JONGSEONG = ['', 'ㄱ','ㄲ','ㄳ','ㄴ','ㄵ','ㄶ','ㄷ','ㄹ','ㄺ','ㄻ','ㄼ','ㄽ','ㄾ','ㄿ','ㅀ','ㅁ','ㅂ','ㅄ','ㅅ','ㅆ','ㅇ','ㅈ','ㅊ','ㅋ','ㅌ','ㅍ','ㅎ'];
+const JONGSEONG = [
+  '',
+  'ㄱ',
+  'ㄲ',
+  'ㄳ',
+  'ㄴ',
+  'ㄵ',
+  'ㄶ',
+  'ㄷ',
+  'ㄹ',
+  'ㄺ',
+  'ㄻ',
+  'ㄼ',
+  'ㄽ',
+  'ㄾ',
+  'ㄿ',
+  'ㅀ',
+  'ㅁ',
+  'ㅂ',
+  'ㅄ',
+  'ㅅ',
+  'ㅆ',
+  'ㅇ',
+  'ㅈ',
+  'ㅊ',
+  'ㅋ',
+  'ㅌ',
+  'ㅍ',
+  'ㅎ'
+];
 
 /** Revised Romanization map for initial consonants (초성). */
 const CHO_MAP: Record<string, string> = {
-  'ㄱ': 'g', 'ㄲ': 'kk', 'ㄴ': 'n', 'ㄷ': 'd', 'ㄸ': 'tt', 'ㄹ': 'r', 'ㅁ': 'm',
-  'ㅂ': 'b', 'ㅃ': 'pp', 'ㅅ': 's', 'ㅆ': 'ss', 'ㅇ': '', 'ㅈ': 'j', 'ㅉ': 'jj',
-  'ㅊ': 'ch', 'ㅋ': 'k', 'ㅌ': 't', 'ㅍ': 'p', 'ㅎ': 'h'
+  ㄱ: 'g',
+  ㄲ: 'kk',
+  ㄴ: 'n',
+  ㄷ: 'd',
+  ㄸ: 'tt',
+  ㄹ: 'r',
+  ㅁ: 'm',
+  ㅂ: 'b',
+  ㅃ: 'pp',
+  ㅅ: 's',
+  ㅆ: 'ss',
+  ㅇ: '',
+  ㅈ: 'j',
+  ㅉ: 'jj',
+  ㅊ: 'ch',
+  ㅋ: 'k',
+  ㅌ: 't',
+  ㅍ: 'p',
+  ㅎ: 'h'
 };
 
 /** Revised Romanization map for vowels (중성). */
 const JUNG_MAP: Record<string, string> = {
-  'ㅏ': 'a', 'ㅐ': 'ae', 'ㅑ': 'ya', 'ㅒ': 'yae', 'ㅓ': 'eo', 'ㅔ': 'e',
-  'ㅕ': 'yeo', 'ㅖ': 'ye', 'ㅗ': 'o', 'ㅘ': 'wa', 'ㅙ': 'wae', '외': 'oe',
-  '요': 'yo', 'ㅜ': 'u', 'ㅝ': 'wo', 'ㅞ': 'we', '위': 'wi', '유': 'yu',
-  'ㅡ': 'eu', 'ㅢ': 'ui', 'ㅣ': 'i'
+  ㅏ: 'a',
+  ㅐ: 'ae',
+  ㅑ: 'ya',
+  ㅒ: 'yae',
+  ㅓ: 'eo',
+  ㅔ: 'e',
+  ㅕ: 'yeo',
+  ㅖ: 'ye',
+  ㅗ: 'o',
+  ㅘ: 'wa',
+  ㅙ: 'wae',
+  외: 'oe',
+  요: 'yo',
+  ㅜ: 'u',
+  ㅝ: 'wo',
+  ㅞ: 'we',
+  위: 'wi',
+  유: 'yu',
+  ㅡ: 'eu',
+  ㅢ: 'ui',
+  ㅣ: 'i'
 };
 
 /** Romanization map for isolated Jamo characters. */
 const SINGLE_JAMO_PRONUNCIATION: Record<string, string> = {
-  'ㅏ': 'a', 'ㅓ': 'eo', 'ㅗ': 'o', 'ㅜ': 'u', 'ㅡ': 'eu', 'ㅣ': 'i',
-  'ㅐ': 'ae', 'ㅔ': 'e', 'ㅑ': 'ya', 'ㅕ': 'yeo', 'ㅛ': 'yo', 'ㅠ': 'yu',
-  'ㅒ': 'yae', 'ㅖ': 'ye', 'ㅘ': 'wa', 'ㅙ': 'wae', '외': 'oe', 'ㅝ': 'wo',
-  'ㅞ': 'we', '위': 'wi', 'ㅢ': 'ui',
-  'ㄱ': 'g', 'ㄴ': 'n', 'ㄷ': 'd', 'ㄹ': 'r/l', 'ㅁ': 'm', 'ㅂ': 'b',
-  'ㅅ': 's', 'ㅇ': 'ng', 'ㅈ': 'j', 'ㅊ': 'ch', 'ㅋ': 'k', 'ㅌ': 't',
-  'ㅍ': 'p', 'ㅎ': 'h', 'ㄲ': 'kk', 'ㄸ': 'tt', 'ㅃ': 'pp', 'ㅆ': 'ss', 'ㅉ': 'jj'
+  ㅏ: 'a',
+  ㅓ: 'eo',
+  ㅗ: 'o',
+  ㅜ: 'u',
+  ㅡ: 'eu',
+  ㅣ: 'i',
+  ㅐ: 'ae',
+  ㅔ: 'e',
+  ㅑ: 'ya',
+  ㅕ: 'yeo',
+  ㅛ: 'yo',
+  ㅠ: 'yu',
+  ㅒ: 'yae',
+  ㅖ: 'ye',
+  ㅘ: 'wa',
+  ㅙ: 'wae',
+  외: 'oe',
+  ㅝ: 'wo',
+  ㅞ: 'we',
+  위: 'wi',
+  ㅢ: 'ui',
+  ㄱ: 'g',
+  ㄴ: 'n',
+  ㄷ: 'd',
+  ㄹ: 'r/l',
+  ㅁ: 'm',
+  ㅂ: 'b',
+  ㅅ: 's',
+  ㅇ: 'ng',
+  ㅈ: 'j',
+  ㅊ: 'ch',
+  ㅋ: 'k',
+  ㅌ: 't',
+  ㅍ: 'p',
+  ㅎ: 'h',
+  ㄲ: 'kk',
+  ㄸ: 'tt',
+  ㅃ: 'pp',
+  ㅆ: 'ss',
+  ㅉ: 'jj'
 };
 
 interface SyllableDecomposition {
@@ -107,31 +244,105 @@ function romanizeWord(word: string): string {
       if (next && next.cho === 'ㅇ') {
         // Liaison before initial vowel
         switch (curr.jong) {
-          case 'ㄱ': case 'ㄲ': next.choStr = 'g'; jongStr = ''; break;
-          case 'ㄴ': next.choStr = 'n'; jongStr = ''; break;
-          case 'ㄷ': next.choStr = 'd'; jongStr = ''; break;
-          case 'ㄹ': next.choStr = 'r'; jongStr = ''; break;
-          case 'ㅁ': next.choStr = 'm'; jongStr = ''; break;
-          case 'ㅂ': next.choStr = 'b'; jongStr = ''; break;
-          case 'ㅅ': next.choStr = 's'; jongStr = ''; break;
-          case 'ㅆ': next.choStr = 'ss'; jongStr = ''; break;
-          case 'ㅈ': next.choStr = 'j'; jongStr = ''; break;
-          case 'ㅊ': next.choStr = 'ch'; jongStr = ''; break;
-          case 'ㅌ': next.choStr = 't'; jongStr = ''; break;
-          case 'ㅍ': next.choStr = 'p'; jongStr = ''; break;
-          case 'ㄳ': jongStr = 'k'; next.choStr = 's'; break;
-          case 'ㄵ': jongStr = 'n'; next.choStr = 'j'; break;
-          case 'ㄶ': jongStr = 'n'; next.choStr = ''; break;
-          case 'ㄺ': jongStr = 'r'; next.choStr = 'g'; break;
-          case 'ㄻ': jongStr = 'r'; next.choStr = 'm'; break;
-          case 'ㄼ': jongStr = 'r'; next.choStr = 'b'; break;
-          case 'ㄾ': jongStr = 'r'; next.choStr = 't'; break;
-          case 'ㄿ': jongStr = 'r'; next.choStr = 'p'; break;
-          case 'ㅀ': jongStr = 'r'; next.choStr = ''; break;
-          case 'ㅄ': jongStr = 'p'; next.choStr = 's'; break;
-          case 'ㅇ': jongStr = 'ng'; break;
+          case 'ㄱ':
+          case 'ㄲ':
+            next.choStr = 'g';
+            jongStr = '';
+            break;
+          case 'ㄴ':
+            next.choStr = 'n';
+            jongStr = '';
+            break;
+          case 'ㄷ':
+            next.choStr = 'd';
+            jongStr = '';
+            break;
+          case 'ㄹ':
+            next.choStr = 'r';
+            jongStr = '';
+            break;
+          case 'ㅁ':
+            next.choStr = 'm';
+            jongStr = '';
+            break;
+          case 'ㅂ':
+            next.choStr = 'b';
+            jongStr = '';
+            break;
+          case 'ㅅ':
+            next.choStr = 's';
+            jongStr = '';
+            break;
+          case 'ㅆ':
+            next.choStr = 'ss';
+            jongStr = '';
+            break;
+          case 'ㅈ':
+            next.choStr = 'j';
+            jongStr = '';
+            break;
+          case 'ㅊ':
+            next.choStr = 'ch';
+            jongStr = '';
+            break;
+          case 'ㅌ':
+            next.choStr = 't';
+            jongStr = '';
+            break;
+          case 'ㅍ':
+            next.choStr = 'p';
+            jongStr = '';
+            break;
+          case 'ㄳ':
+            jongStr = 'k';
+            next.choStr = 's';
+            break;
+          case 'ㄵ':
+            jongStr = 'n';
+            next.choStr = 'j';
+            break;
+          case 'ㄶ':
+            jongStr = 'n';
+            next.choStr = '';
+            break;
+          case 'ㄺ':
+            jongStr = 'r';
+            next.choStr = 'g';
+            break;
+          case 'ㄻ':
+            jongStr = 'r';
+            next.choStr = 'm';
+            break;
+          case 'ㄼ':
+            jongStr = 'r';
+            next.choStr = 'b';
+            break;
+          case 'ㄾ':
+            jongStr = 'r';
+            next.choStr = 't';
+            break;
+          case 'ㄿ':
+            jongStr = 'r';
+            next.choStr = 'p';
+            break;
+          case 'ㅀ':
+            jongStr = 'r';
+            next.choStr = '';
+            break;
+          case 'ㅄ':
+            jongStr = 'p';
+            next.choStr = 's';
+            break;
+          case 'ㅇ':
+            jongStr = 'ng';
+            break;
         }
-      } else if (next && ((curr.jong === 'ㄴ' && next.cho === 'ㄹ') || (curr.jong === 'ㄹ' && next.cho === 'ㄴ') || (curr.jong === 'ㄹ' && next.cho === 'ㄹ'))) {
+      } else if (
+        next &&
+        ((curr.jong === 'ㄴ' && next.cho === 'ㄹ') ||
+          (curr.jong === 'ㄹ' && next.cho === 'ㄴ') ||
+          (curr.jong === 'ㄹ' && next.cho === 'ㄹ'))
+      ) {
         // Liquidization (ㄴ+ㄹ, ㄹ+ㄴ, ㄹ+ㄹ -> ll)
         jongStr = 'l';
         next.choStr = 'l';

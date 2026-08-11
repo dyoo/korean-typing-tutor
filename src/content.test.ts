@@ -13,8 +13,8 @@ describe('Curriculum Content Dataset Integrity', () => {
     for (const item of contentData.items) {
       for (const char of item.target) {
         const code = char.charCodeAt(0);
-        const isKoreanSyllable = code >= 0xAC00 && code <= 0xD7A3;
-        const isHangulJamo = code >= 0x3131 && code <= 0x318E;
+        const isKoreanSyllable = code >= 0xac00 && code <= 0xd7a3;
+        const isHangulJamo = code >= 0x3131 && code <= 0x318e;
         const isAsciiPrintable = code >= 32 && code <= 126; // includes space, numbers, punctuation, English letters
 
         if (!isKoreanSyllable && !isHangulJamo && !isAsciiPrintable) {
@@ -31,7 +31,7 @@ describe('Curriculum Content Dataset Integrity', () => {
   });
 
   it('ensures all items have valid module IDs and non-empty targets', () => {
-    const moduleIds = new Set(contentData.modules.map(m => m.id));
+    const moduleIds = new Set(contentData.modules.map((m) => m.id));
 
     for (const item of contentData.items) {
       expect(item.target.trim().length).toBeGreaterThan(0);

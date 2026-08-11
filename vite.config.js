@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite'
-import { svelte } from '@sveltejs/vite-plugin-svelte'
-import { VitePWA } from 'vite-plugin-pwa'
+import { defineConfig } from 'vite';
+import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { VitePWA } from 'vite-plugin-pwa';
 
 const commitId = process.env.COMMIT_ID || 'dev';
 
@@ -37,4 +37,4 @@ export default defineConfig({
       }
     })
   ]
-})
+});

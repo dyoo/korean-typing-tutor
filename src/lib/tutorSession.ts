@@ -34,11 +34,19 @@ export class TutorSession {
   private isItemCompleted = false;
   private engine: HangulEngine;
 
-  constructor(data: CurriculumData | LessonItem[], defaultFilter: string | string[] = 'all', shuffle = true) {
+  constructor(
+    data: CurriculumData | LessonItem[],
+    defaultFilter: string | string[] = 'all',
+    shuffle = true
+  ) {
     if (Array.isArray(data)) {
       this.allItems = data;
       this.modules = [
-        { id: 'all', title: 'All Lessons', description: 'Comprehensive practice across all modules' }
+        {
+          id: 'all',
+          title: 'All Lessons',
+          description: 'Comprehensive practice across all modules'
+        }
       ];
     } else {
       this.allItems = data.items ?? [];
@@ -77,12 +85,15 @@ export class TutorSession {
         filtered = [];
       } else {
         const allowedSet = new Set(this.selectedFilter);
-        filtered = this.allItems.filter(item => allowedSet.has(item.moduleId));
+        filtered = this.allItems.filter((item) => allowedSet.has(item.moduleId));
       }
     } else if (this.selectedFilter === 'all') {
       filtered = [...this.allItems];
     } else {
-      filtered = this.allItems.filter(item => item.moduleId === this.selectedFilter || item.id.startsWith(this.selectedFilter as string));
+      filtered = this.allItems.filter(
+        (item) =>
+          item.moduleId === this.selectedFilter || item.id.startsWith(this.selectedFilter as string)
+      );
     }
 
     this.activeItems = this.shouldShuffle ? this.shuffle(filtered) : filtered;
@@ -133,14 +144,16 @@ export class TutorSession {
         translation: 'No modules selected. Please select at least one module in the menu.'
       };
     }
-    return this.activeItems[this.currentIndex] ?? {
-      id: 'fallback',
-      moduleId: 'all',
-      type: 'syllable',
-      target: '가',
-      pronunciation: 'ga',
-      translation: null
-    };
+    return (
+      this.activeItems[this.currentIndex] ?? {
+        id: 'fallback',
+        moduleId: 'all',
+        type: 'syllable',
+        target: '가',
+        pronunciation: 'ga',
+        translation: null
+      }
+    );
   }
 
   /** Returns composed user input string. */
@@ -170,7 +183,10 @@ export class TutorSession {
   }
 
   /** Formats combined Romanization and English translation text based on active settings. */
-  public getDisplayText(item = this.getCurrentItem(), options?: { showPronunciation?: boolean; showTranslation?: boolean }): string {
+  public getDisplayText(
+    item = this.getCurrentItem(),
+    options?: { showPronunciation?: boolean; showTranslation?: boolean }
+  ): string {
     if (!item) return '';
     const showPron = options?.showPronunciation ?? true;
     const showTrans = options?.showTranslation ?? true;
@@ -201,10 +217,18 @@ export class TutorSession {
       if (key === 'Backspace') {
         this.userInput = this.engine.handleKey('Backspace');
         this.errors = checkErrors(currentTarget, this.userInput);
-        this.isItemCompleted = (currentTarget.length > 0 && this.userInput === currentTarget);
-        const correctChars = this.errors.filter(err => !err.isError).length;
-        this.accuracy = this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
-        return { isMatch: this.isItemCompleted, isItemCompleted: this.isItemCompleted, isTutorialComplete: false, advanced: false };
+        this.isItemCompleted = currentTarget.length > 0 && this.userInput === currentTarget;
+        const correctChars = this.errors.filter((err) => !err.isError).length;
+        this.accuracy =
+          this.userInput.length > 0
+            ? Math.round((correctChars / this.userInput.length) * 100)
+            : 100;
+        return {
+          isMatch: this.isItemCompleted,
+          isItemCompleted: this.isItemCompleted,
+          isTutorialComplete: false,
+          advanced: false
+        };
       }
       return { isMatch: false, isItemCompleted: true, isTutorialComplete: false, advanced: false };
     }
@@ -213,8 +237,9 @@ export class TutorSession {
       this.userInput = this.engine.handleKey(key);
       this.errors = checkErrors(currentTarget, this.userInput);
 
-      const correctChars = this.errors.filter(err => !err.isError).length;
-      this.accuracy = this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
+      const correctChars = this.errors.filter((err) => !err.isError).length;
+      this.accuracy =
+        this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
 
       if (currentTarget.length > 0 && this.userInput === currentTarget) {
         this.isItemCompleted = true;
