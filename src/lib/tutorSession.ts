@@ -187,9 +187,11 @@ export class TutorSession {
 
   /** Processes single keyboard input. */
   public processKey(key: string): KeyResult {
-    if (key === 'Tab' || key === 'Escape') {
-      return { isMatch: false, isItemCompleted: this.isItemCompleted, isTutorialComplete: false, advanced: false };
+    if (key === 'Tab' || key === 'Escape' || this.activeItems.length === 0) {
+      return { isMatch: false, isItemCompleted: false, isTutorialComplete: false, advanced: false };
     }
+
+    const currentTarget = this.getCurrentItem().target;
 
     if (this.isItemCompleted) {
       if (key === 'Enter' || key === ' ' || key === 'Spacebar') {
@@ -198,9 +200,8 @@ export class TutorSession {
       }
       if (key === 'Backspace') {
         this.userInput = this.engine.handleKey('Backspace');
-        const currentTarget = this.getCurrentItem().target;
         this.errors = checkErrors(currentTarget, this.userInput);
-        this.isItemCompleted = (this.userInput === currentTarget);
+        this.isItemCompleted = (currentTarget.length > 0 && this.userInput === currentTarget);
         const correctChars = this.errors.filter(err => !err.isError).length;
         this.accuracy = this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
         return { isMatch: this.isItemCompleted, isItemCompleted: this.isItemCompleted, isTutorialComplete: false, advanced: false };
@@ -210,13 +211,12 @@ export class TutorSession {
 
     if (key === 'Backspace' || key.length === 1) {
       this.userInput = this.engine.handleKey(key);
-      const currentTarget = this.getCurrentItem().target;
       this.errors = checkErrors(currentTarget, this.userInput);
 
       const correctChars = this.errors.filter(err => !err.isError).length;
       this.accuracy = this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
 
-      if (this.userInput === currentTarget) {
+      if (currentTarget.length > 0 && this.userInput === currentTarget) {
         this.isItemCompleted = true;
         return { isMatch: true, isItemCompleted: true, isTutorialComplete: false, advanced: false };
       }

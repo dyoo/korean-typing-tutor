@@ -58,6 +58,19 @@ describe('TutorSession controller', () => {
     expect(session.getCurrentItem().id).toBe('empty');
   });
 
+  it('should not trigger item completion when no modules are selected and backspace or keys are pressed (Issue #2)', () => {
+    session.setFilter([], false);
+    const resBack = session.processKey('Backspace');
+    expect(resBack.isMatch).toBe(false);
+    expect(resBack.isItemCompleted).toBe(false);
+    expect(session.getIsItemCompleted()).toBe(false);
+
+    const resKey = session.processKey('r');
+    expect(resKey.isMatch).toBe(false);
+    expect(resKey.isItemCompleted).toBe(false);
+    expect(session.getIsItemCompleted()).toBe(false);
+  });
+
   it('should compose Hangul keystrokes during session', () => {
     session.processKey('r');
     expect(session.getUserInput()).toBe('ㄱ');
