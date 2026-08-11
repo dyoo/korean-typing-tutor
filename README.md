@@ -100,6 +100,18 @@ We use **Prettier** for automatic formatting.
   npm run format
   ```
 
+## Cleaning up the repository
+
+- **Clean build artifacts** (`dist/`):
+  ```bash
+  npm run clean
+  ```
+- **Deep clean build artifacts and dependencies** (`dist/` and `node_modules/`):
+  ```bash
+  npm run clean:all
+  npm ci
+  ```
+
 ---
 
 ## Attribution & Development
