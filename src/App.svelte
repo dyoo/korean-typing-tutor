@@ -12,6 +12,8 @@
   import CharDisplay from './lib/CharDisplay.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import SettingsModal from './lib/SettingsModal.svelte';
+  import TargetDisplay from './lib/TargetDisplay.svelte';
+  import ExercisePrompt from './lib/ExercisePrompt.svelte';
   import {
     CURRICULUM_CATEGORIES,
     ALL_CATEGORY_IDS,
@@ -293,65 +295,21 @@
   </div>
 
   <div class="w-full max-w-full flex-1 flex flex-col items-center justify-start py-4 px-2 md:px-8 overflow-hidden">
-    <div class="target-display relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text w-full max-w-full text-giant">
-      {#each wordTokens as token}
-        {#if token.type === 'space'}
-          {@const i = token.indices[0]}
-          {@const isError = errors.find(e => e.index === i)?.isError ?? false}
-          {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
-          
-          <CharDisplay
-            char=" "
-            {isError}
-            {isCurrent}
-            variant="target"
-            dataIndex={i}
-          />
-        {:else}
-          <span class="inline-flex whitespace-nowrap">
-            {#each token.indices as i}
-              {@const char = currentItem.target[i]}
-              {@const isError = errors.find(e => e.index === i)?.isError ?? false}
-              {@const isCurrent = (i === activeTargetCursorIndex && !isCompleted)}
-              
-              <CharDisplay
-                {char}
-                {isError}
-                {isCurrent}
-                variant="target"
-                dataIndex={i}
-              />
-            {/each}
-          </span>
-        {/if}
-      {/each}
-    </div>
-
-    {#if displayText.trim().length > 0}
-      <div class="text-subgiant text-gray-500 dark:text-gray-400 font-medium italic mt-6 text-center tracking-wide min-h-[3rem] h-auto flex flex-col items-center justify-center select-text max-w-full px-4 py-2">
-        {displayText}
-      </div>
-    {/if}
+    <TargetDisplay
+      {wordTokens}
+      {errors}
+      {activeTargetCursorIndex}
+      {isCompleted}
+      {currentItem}
+      {displayText}
+    />
 
     <div class="flex-1 min-h-[1rem]"></div>
 
-    <div class="mb-2 h-14 flex items-center justify-center shrink-0">
-      {#if isCompleted}
-        <span class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold px-5 py-2 rounded-full text-base md:text-lg border border-emerald-300 dark:border-emerald-800 shadow-sm text-center">
-          ✓ Correct! Press <kbd class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border dark:border-gray-700 px-2 py-0.5 rounded shadow text-sm md:text-base">Enter ↵</kbd> or <kbd class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border dark:border-gray-700 px-2 py-0.5 rounded shadow text-sm md:text-base">Space</kbd>
-        </span>
-      {:else}
-        <button
-          type="button"
-          onclick={handleSkip}
-          onmousedown={(e) => e.stopPropagation()}
-          class="inline-flex items-center gap-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 font-medium px-4 py-1.5 rounded-full text-xs md:text-sm border border-gray-300 dark:border-gray-700 shadow-2xs transition-colors cursor-pointer"
-        >
-          <span>Skip exercise</span>
-          <span>➔</span>
-        </button>
-      {/if}
-    </div>
+    <ExercisePrompt
+      {isCompleted}
+      onskip={handleSkip}
+    />
   </div>
 
   <div class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-4 shrink-0 px-2 md:px-8">
