@@ -1,16 +1,14 @@
 import type { CurriculumData, LessonItem, ModuleDefinition } from '../types/korean';
 
 /** Lesson item as stored inside per-module JSON files (without redundant moduleId). */
-export type RawLessonItem = Omit<LessonItem, 'moduleId'>;
+type RawLessonItem = Omit<LessonItem, 'moduleId'>;
 
-export interface ModuleFile {
+interface ModuleFile {
   id: string;
   title: string;
   description: string;
   items: RawLessonItem[];
 }
-
-export type { CurriculumData };
 
 /** Canonical ordered list of module IDs for curriculum progression. */
 const MODULE_ORDER = [

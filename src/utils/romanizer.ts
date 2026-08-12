@@ -1,8 +1,7 @@
-import type { LessonItem, SyllableDecomposition } from '../types/korean';
+import type { LessonItem } from '../types/korean';
 import { decomposeSyllable } from './koreanEngine';
 
 export { decomposeSyllable };
-export type { SyllableDecomposition };
 
 /** Revised Romanization map for initial consonants (Choseong). */
 const INITIAL_CONSONANT_MAP: Record<string, string> = {

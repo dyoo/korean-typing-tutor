@@ -1,9 +1,4 @@
-/** State container for active Hangul syllable composition. */
-export interface CompositionState {
-  initialConsonant: string | null;
-  vowel: string | null;
-  finalConsonant: string | null;
-}
+
 
 /** Structured decomposition result for a single Hangul syllable. */
 export interface SyllableDecomposition {
