@@ -1,13 +1,3 @@
-/** Types of Jamo components in a Hangul syllable block. */
-export type JamoType = 'initialConsonant' | 'vowel' | 'finalConsonant';
-
-/** Mapping definition for QWERTY keys to Hangul Jamo. */
-export interface JamoMapping {
-  key: string;
-  jamo: string;
-  type: JamoType;
-}
-
 /** State container for active Hangul syllable composition. */
 export interface CompositionState {
   initialConsonant: string | null;

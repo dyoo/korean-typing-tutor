@@ -18,14 +18,7 @@
   import SettingsModal from './lib/SettingsModal.svelte';
   import TargetDisplay from './lib/TargetDisplay.svelte';
   import ExercisePrompt from './lib/ExercisePrompt.svelte';
-  import {
-    CURRICULUM_CATEGORIES,
-    ALL_CATEGORY_IDS,
-    isGroupAllChecked,
-    isGroupSomeChecked,
-    getGroupCheckedCount,
-    toggleCategoryGroupIds,
-  } from './utils/curriculumCategories';
+  import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
@@ -176,15 +169,7 @@
     syncState();
   }
 
-  function toggleModuleModal(e: MouseEvent) {
-    e.stopPropagation();
-    showModuleModal = !showModuleModal;
-    if (showModuleModal) {
-      showSettingsModal = false;
-    } else {
-      inputElement?.focus();
-    }
-  }
+
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Tab' || e.key === 'Escape' || e.altKey || e.ctrlKey || e.metaKey) {
