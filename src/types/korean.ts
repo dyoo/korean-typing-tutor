@@ -15,6 +15,14 @@ export interface CompositionState {
   finalConsonant: string | null;
 }
 
+/** Structured decomposition result for a single Hangul syllable. */
+export interface SyllableDecomposition {
+  initialConsonant: string;
+  vowel: string;
+  finalConsonant: string | null;
+  raw?: string;
+}
+
 /** Error report entry for character mismatch tracking. */
 export interface ErrorReport {
   index: number;

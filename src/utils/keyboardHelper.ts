@@ -1,4 +1,4 @@
-import { decomposeCharToJamos, isSyllableComplete } from './koreanEngine';
+import { decomposeStringToJamos } from './koreanEngine';
 import { JAMO_TO_KEY } from './keyboardData';
 
 function getKeyInfoResult(keyInfo?: {
@@ -25,7 +25,7 @@ function getKeyInfoResult(keyInfo?: {
  * - target: '예', input: 'ㅇ'    -> ['left-shift', 'p'] (requires Left-Shift + 'ㅔ' -> 'ㅖ')
  * - target: '가', input: 'ㄱ'    -> ['k'] (requires 'ㅏ')
  * - target: '화', input: '호'   -> ['k'] (requires 'ㅏ' for compound vowel ㅘ)
- * - target: '안녕하세요', input: '안' -> ['ㄴ'] for '녕' -> ['s']
+ * - target: '하나와', input: '한' -> ['k'] (requires 'ㅏ' for '나' since 'ㄴ' is already typed into '한')
  */
 export function getNextRequiredKeys(
   target: string | undefined,
@@ -36,51 +36,26 @@ export function getNextRequiredKeys(
     return [];
   }
 
-  const userInput = input ?? '';
-  if (userInput.length === 0) {
-    const firstChar = target[0];
-    if (firstChar === ' ') return [' '];
-    const jamos = decomposeCharToJamos(firstChar);
-    if (!jamos || jamos.length === 0) return [];
-    const firstJamo = jamos[0];
-    return getKeyInfoResult(JAMO_TO_KEY[firstJamo]);
+  const targetJamos = decomposeStringToJamos(target);
+  const inputJamos = decomposeStringToJamos(input ?? '');
+
+  let matchCount = 0;
+  while (
+    matchCount < inputJamos.length &&
+    matchCount < targetJamos.length &&
+    inputJamos[matchCount] === targetJamos[matchCount]
+  ) {
+    matchCount++;
   }
 
-  const lastInputIndex = userInput.length - 1;
-  const isLastComplete = isSyllableComplete(
-    target[lastInputIndex],
-    userInput[lastInputIndex],
-    target[lastInputIndex + 1],
-  );
-
-  const activeIndex = isLastComplete ? userInput.length : lastInputIndex;
-  if (activeIndex >= target.length) {
+  if (matchCount >= targetJamos.length) {
     return [];
   }
 
-  const activeTargetChar = target[activeIndex];
-  if (activeTargetChar === ' ') {
+  const nextJamo = targetJamos[matchCount];
+  if (nextJamo === ' ') {
     return [' '];
   }
 
-  const activeInputChar = userInput[activeIndex];
-  const targetJamos = decomposeCharToJamos(activeTargetChar);
-  if (!targetJamos) {
-    return [];
-  }
-
-  if (!activeInputChar) {
-    const firstJamo = targetJamos[0];
-    return getKeyInfoResult(JAMO_TO_KEY[firstJamo]);
-  }
-
-  const inputJamos = decomposeCharToJamos(activeInputChar);
-  if (targetJamos.startsWith(inputJamos) && inputJamos.length < targetJamos.length) {
-    const nextJamo = targetJamos[inputJamos.length];
-    return getKeyInfoResult(JAMO_TO_KEY[nextJamo]);
-  }
-
-  // Fallback: If input doesn't match prefix, highlight the first Jamo of the active target character
-  const firstJamo = targetJamos[0];
-  return getKeyInfoResult(JAMO_TO_KEY[firstJamo]);
+  return getKeyInfoResult(JAMO_TO_KEY[nextJamo]);
 }

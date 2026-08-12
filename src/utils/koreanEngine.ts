@@ -1,4 +1,4 @@
-import type { ErrorReport } from '../types/korean';
+import type { ErrorReport, SyllableDecomposition } from '../types/korean';
 
 /**
  * Unicode Base Offset for Hangul Syllables.
@@ -301,6 +301,38 @@ const VOWEL_STANDALONE = [
   'ㅣ',
 ];
 
+/** Standalone Compatibility Final Consonant (Jongseong) characters (0..27). */
+const FINAL_CONSONANT_STANDALONE = [
+  '',
+  'ㄱ',
+  'ㄲ',
+  'ㄳ',
+  'ㄴ',
+  'ㄵ',
+  'ㄶ',
+  'ㄷ',
+  'ㄹ',
+  'ㄺ',
+  'ㄻ',
+  'ㄼ',
+  'ㄽ',
+  'ㄾ',
+  'ㄿ',
+  'ㅀ',
+  'ㅁ',
+  'ㅂ',
+  'ㅄ',
+  'ㅅ',
+  'ㅆ',
+  'ㅇ',
+  'ㅈ',
+  'ㅊ',
+  'ㅋ',
+  'ㅌ',
+  'ㅍ',
+  'ㅎ',
+];
+
 /**
  * Map of single Final Consonant (Jongseong) index to standalone Initial Consonant (Choseong) / Jamo consonant.
  * Index 1..27 corresponding to Unicode Hangul Final Consonant (Jongseong) definitions.
@@ -391,6 +423,45 @@ export function decomposeCharToJamos(char: string | undefined): string {
   }
 
   return char;
+}
+
+/**
+ * Decomposes an entire string (syllables, standalone Jamos, and spaces) into an array of individual Jamos and spaces.
+ * Example: '하나와' -> ['ㅎ', 'ㅏ', 'ㄴ', 'ㅏ', 'ㅇ', 'ㅗ', 'ㅏ']
+ * Example: '사 과' -> ['ㅅ', 'ㅏ', ' ', 'ㄱ', 'ㅗ', 'ㅏ']
+ */
+export function decomposeStringToJamos(str: string | undefined): string[] {
+  if (!str) return [];
+  const result: string[] = [];
+  for (const char of str) {
+    if (char === ' ') {
+      result.push(' ');
+    } else {
+      const jamos = decomposeCharToJamos(char);
+      for (const jamo of jamos) {
+        result.push(jamo);
+      }
+    }
+  }
+  return result;
+}
+
+/**
+ * Decomposes a single Hangul syllable character into its constituent Jamo (Choseong, Jungseong, Jongseong).
+ * Returns null if the character is outside the Unicode Hangul Syllables block (U+AC00..U+D7A3).
+ */
+export function decomposeSyllable(char: string | undefined): SyllableDecomposition | null {
+  if (!char) return null;
+  const code = char.charCodeAt(0) - HANGUL_BASE;
+  if (code < 0 || code > 11171) return null;
+  const initialConsonantIndex = Math.floor(code / 588);
+  const vowelIndex = Math.floor((code % 588) / 28);
+  const finalConsonantIndex = code % 28;
+  return {
+    initialConsonant: INITIAL_CONSONANT_STANDALONE[initialConsonantIndex] ?? '',
+    vowel: VOWEL_STANDALONE[vowelIndex] ?? '',
+    finalConsonant: FINAL_CONSONANT_STANDALONE[finalConsonantIndex] || null,
+  };
 }
 
 /**

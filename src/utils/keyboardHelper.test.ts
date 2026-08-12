@@ -33,6 +33,13 @@ describe('getNextRequiredKeys helper', () => {
     expect(getNextRequiredKeys('가나다', '가나', false)).toEqual(['e']); // 'ㄷ' for '다'
   });
 
+  it('should correctly hint vowel when initial consonant of next syllable was absorbed into previous syllable block (Issue #4)', () => {
+    // Target '하나와', input '한' (where 'ㄴ' was absorbed into '하' -> '한'). Next required key for '나' is 'ㅏ' ('k').
+    expect(getNextRequiredKeys('하나와', '한', false)).toEqual(['k']);
+    // Target '달고기', input '닭' (where 'ㄱ' was absorbed into '달' -> '닭'). Next required key for '고' is 'ㅗ' ('h').
+    expect(getNextRequiredKeys('달고기', '닭', false)).toEqual(['h']);
+  });
+
   it('should return space key when target character is a space', () => {
     expect(getNextRequiredKeys('사 과', '사', false)).toEqual([' ']);
   });

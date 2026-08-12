@@ -1,84 +1,8 @@
-import type { LessonItem } from '../types/korean';
+import type { LessonItem, SyllableDecomposition } from '../types/korean';
+import { decomposeSyllable } from './koreanEngine';
 
-/** Initial Hangul consonants (Choseong). */
-const INITIAL_CONSONANTS = [
-  'ㄱ',
-  'ㄲ',
-  'ㄴ',
-  'ㄷ',
-  'ㄸ',
-  'ㄹ',
-  'ㅁ',
-  'ㅂ',
-  'ㅃ',
-  'ㅅ',
-  'ㅆ',
-  'ㅇ',
-  'ㅈ',
-  'ㅉ',
-  'ㅊ',
-  'ㅋ',
-  'ㅌ',
-  'ㅍ',
-  'ㅎ',
-];
-
-/** Medial Hangul vowels (Jungseong). */
-const VOWELS = [
-  'ㅏ',
-  'ㅐ',
-  'ㅑ',
-  'ㅒ',
-  'ㅓ',
-  'ㅔ',
-  'ㅕ',
-  'ㅖ',
-  'ㅗ',
-  'ㅘ',
-  'ㅙ',
-  '외',
-  '요',
-  'ㅜ',
-  'ㅝ',
-  'ㅞ',
-  '위',
-  '유',
-  'ㅡ',
-  'ㅢ',
-  'ㅣ',
-];
-
-/** Final Hangul consonants (Jongseong). */
-const FINAL_CONSONANTS = [
-  '',
-  'ㄱ',
-  'ㄲ',
-  'ㄳ',
-  'ㄴ',
-  'ㄵ',
-  'ㄶ',
-  'ㄷ',
-  'ㄹ',
-  'ㄺ',
-  'ㄻ',
-  'ㄼ',
-  'ㄽ',
-  'ㄾ',
-  'ㄿ',
-  'ㅀ',
-  'ㅁ',
-  'ㅂ',
-  'ㅄ',
-  'ㅅ',
-  'ㅆ',
-  'ㅇ',
-  'ㅈ',
-  'ㅊ',
-  'ㅋ',
-  'ㅌ',
-  'ㅍ',
-  'ㅎ',
-];
+export { decomposeSyllable };
+export type { SyllableDecomposition };
 
 /** Revised Romanization map for initial consonants (Choseong). */
 const INITIAL_CONSONANT_MAP: Record<string, string> = {
@@ -116,13 +40,13 @@ const VOWEL_MAP: Record<string, string> = {
   ㅗ: 'o',
   ㅘ: 'wa',
   ㅙ: 'wae',
-  외: 'oe',
-  요: 'yo',
+  ㅚ: 'oe',
+  ㅛ: 'yo',
   ㅜ: 'u',
   ㅝ: 'wo',
   ㅞ: 'we',
-  위: 'wi',
-  유: 'yu',
+  ㅟ: 'wi',
+  ㅠ: 'yu',
   ㅡ: 'eu',
   ㅢ: 'ui',
   ㅣ: 'i',
@@ -146,10 +70,10 @@ const SINGLE_JAMO_PRONUNCIATION: Record<string, string> = {
   ㅖ: 'ye',
   ㅘ: 'wa',
   ㅙ: 'wae',
-  외: 'oe',
+  ㅚ: 'oe',
   ㅝ: 'wo',
   ㅞ: 'we',
-  위: 'wi',
+  ㅟ: 'wi',
   ㅢ: 'ui',
   ㄱ: 'g',
   ㄴ: 'n',
@@ -172,35 +96,11 @@ const SINGLE_JAMO_PRONUNCIATION: Record<string, string> = {
   ㅉ: 'jj',
 };
 
-interface SyllableDecomposition {
-  initialConsonant: string;
-  vowel: string;
-  finalConsonant: string;
-  initialConsonantStr?: string;
-  raw?: string;
-}
-
-/**
- * Decomposes a single Hangul syllable character into its constituent Jamo (Choseong, Jungseong, Jongseong).
- * Returns null if the character is outside the Unicode Hangul Syllables block (U+AC00..U+D7A3).
- */
-export function decomposeSyllable(char: string): SyllableDecomposition | null {
-  const code = char.charCodeAt(0) - 0xac00;
-  if (code < 0 || code > 11171) return null;
-  const initialConsonantIndex = Math.floor(code / 588);
-  const vowelIndex = Math.floor((code % 588) / 28);
-  const finalConsonantIndex = code % 28;
-  return {
-    initialConsonant: INITIAL_CONSONANTS[initialConsonantIndex],
-    vowel: VOWELS[vowelIndex],
-    finalConsonant: FINAL_CONSONANTS[finalConsonantIndex],
-  };
-}
-
 /**
  * Converts a final consonant (Jongseong) to its default non-liaison Revised Romanization letter.
  */
-function getNormalFinalConsonantStr(finalConsonant: string): string {
+function getNormalFinalConsonantStr(finalConsonant: string | null): string {
+  if (!finalConsonant) return '';
   if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(finalConsonant)) return 'k';
   if (['ㄴ', 'ㄵ', 'ㄶ'].includes(finalConsonant)) return 'n';
   if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(finalConsonant)) return 't';
@@ -225,7 +125,7 @@ function romanizeWord(word: string): string {
   for (let i = 0; i < word.length; i++) {
     const d = decomposeSyllable(word[i]);
     if (d) syls.push(d);
-    else syls.push({ initialConsonant: '', vowel: '', finalConsonant: '', raw: word[i] });
+    else syls.push({ initialConsonant: '', vowel: '', finalConsonant: null, raw: word[i] });
   }
 
   for (let i = 0; i < syls.length; i++) {

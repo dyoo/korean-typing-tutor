@@ -7,7 +7,7 @@ describe('Dynamic Romanizer Engine', () => {
     expect(decomposeSyllable('가')).toEqual({
       initialConsonant: 'ㄱ',
       vowel: 'ㅏ',
-      finalConsonant: '',
+      finalConsonant: null,
     });
     expect(decomposeSyllable('한')).toEqual({
       initialConsonant: 'ㅎ',
