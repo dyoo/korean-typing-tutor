@@ -35,7 +35,6 @@
       : modules.map((m) => m.id),
   );
 
-  let currentIndex = $state(session.getCurrentIndex());
   let userInput = $state(session.getUserInput());
   let errors = $state(session.getErrors());
   let currentItem = $state(session.getCurrentItem());
@@ -86,7 +85,7 @@
   }
 
   function focusInput(e?: MouseEvent) {
-    if (window.getSelection() && window.getSelection()?.toString().trim().length! > 0) {
+    if (window.getSelection() && (window.getSelection()?.toString().trim().length ?? 0) > 0) {
       return;
     }
     if (e && e.target) {
@@ -111,7 +110,6 @@
   }
 
   function syncState() {
-    currentIndex = session.getCurrentIndex();
     userInput = session.getUserInput();
     errors = session.getErrors();
     currentItem = session.getCurrentItem();

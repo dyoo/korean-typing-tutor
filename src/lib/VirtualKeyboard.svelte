@@ -1,6 +1,5 @@
 <script lang="ts">
   import { DUBEOLSIK_ROWS } from '../utils/keyboardData';
-  import type { KeyCapDefinition } from '../utils/keyboardData';
   import ShiftKey from './ShiftKey.svelte';
 
   interface Props {

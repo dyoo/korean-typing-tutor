@@ -136,7 +136,7 @@ function romanizeWord(word: string): string {
 
     const next = syls[i + 1];
     let initialConsonantStr = INITIAL_CONSONANT_MAP[curr.initialConsonant] || '';
-    let vowelStr = VOWEL_MAP[curr.vowel] || '';
+    const vowelStr = VOWEL_MAP[curr.vowel] || '';
     let finalConsonantStr = '';
 
     if (curr.finalConsonant) {
