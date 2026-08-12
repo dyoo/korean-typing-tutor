@@ -3,24 +3,12 @@
  */
 
 /**
- * Given the target string and selected character indices,
- * returns the exact substring slice preserving all U+0020 spaces and character fidelity.
+ * Handles copy events on any character-based display container (.target-display or .input-display).
+ * Detects selected data-char spans and populates the clipboard with their exact string representation (preserving spaces).
  */
-export function getSelectedTargetText(targetString: string, indices: number[]): string | null {
-  if (indices.length === 0) return null;
-  const minIdx = Math.min(...indices);
-  const maxIdx = Math.max(...indices);
-  return targetString.slice(minIdx, maxIdx + 1);
-}
-
-/**
- * Handles copy events on the target display.
- * Detects selected data-target-index spans and populates the clipboard with the exact target text slice.
- */
-export function handleTargetCopyEvent(
+export function handleCopyEvent(
   e: ClipboardEvent,
-  targetString: string,
-  selection: Selection | null,
+  selection: Selection | null = typeof window !== 'undefined' ? window.getSelection() : null,
 ): boolean {
   if (!selection || selection.isCollapsed || selection.rangeCount === 0) return false;
 
@@ -30,11 +18,11 @@ export function handleTargetCopyEvent(
     container.nodeType === Node.ELEMENT_NODE ? (container as HTMLElement) : container.parentElement;
   if (!element) return false;
 
-  const targetWrapper = element.closest('.target-display');
-  if (!targetWrapper) return false;
+  const wrapper = element.closest('.target-display, .input-display');
+  if (!wrapper) return false;
 
-  const spans = targetWrapper.querySelectorAll('[data-target-index]');
-  const indices: number[] = [];
+  const spans = wrapper.querySelectorAll('[data-char]');
+  const selectedChars: string[] = [];
   spans.forEach((span) => {
     let isSelected = false;
     try {
@@ -55,24 +43,29 @@ export function handleTargetCopyEvent(
       }
     }
 
-    if (!isSelected && targetWrapper) {
-      isSelected = true;
-    }
-
     if (isSelected) {
-      const idxStr = span.getAttribute('data-target-index');
-      if (idxStr !== null) {
-        indices.push(parseInt(idxStr, 10));
+      const charVal = span.getAttribute('data-char');
+      if (charVal !== null) {
+        selectedChars.push(charVal);
       }
     }
   });
 
-  const textToCopy = getSelectedTargetText(targetString, indices);
-  if (textToCopy && e.clipboardData) {
-    e.clipboardData.setData('text/plain', textToCopy);
+  if (selectedChars.length > 0 && e.clipboardData) {
+    e.clipboardData.setData('text/plain', selectedChars.join(''));
     e.preventDefault();
     return true;
   }
 
   return false;
+}
+
+/**
+ * Backward-compatible wrapper for handleCopyEvent.
+ */
+export function handleTargetCopyEvent(
+  e: ClipboardEvent,
+  selection?: Selection | null,
+): boolean {
+  return handleCopyEvent(e, selection);
 }

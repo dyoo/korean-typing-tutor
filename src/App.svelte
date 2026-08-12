@@ -11,7 +11,7 @@
     getWordTokens,
   } from './utils/koreanEngine';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
-  import { handleTargetCopyEvent } from './utils/clipboard';
+  import { handleCopyEvent } from './utils/clipboard';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CharDisplay from './lib/CharDisplay.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
@@ -266,8 +266,7 @@
   }
 
   function handleCopy(e: ClipboardEvent) {
-    const sel = window.getSelection();
-    handleTargetCopyEvent(e, currentItem.target, sel);
+    handleCopyEvent(e);
   }
 </script>
 
@@ -344,7 +343,8 @@
     class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-4 shrink-0 px-2 md:px-8"
   >
     <div
-      class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-xl px-4 overflow-hidden"
+      class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-xl px-4 overflow-hidden cursor-text"
+      onclick={focusInput}
     >
       {#if userInput.length === 0}
         <span
@@ -359,7 +359,7 @@
       {:else}
         <div
           bind:this={inputContainerElement}
-          class="flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold"
+          class="input-display flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold select-text z-10"
         >
           {#each userInput.split('') as char, i}
             {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
@@ -372,9 +372,10 @@
                 {isError}
                 {isCurrent}
                 variant="input"
+                dataIndex={i}
               />
             {:else}
-              <CharDisplay {char} {isError} {isCurrent} variant="input" />
+              <CharDisplay {char} {isError} {isCurrent} variant="input" dataIndex={i} />
             {/if}
           {/each}
 
@@ -395,7 +396,7 @@
       <input
         bind:this={inputElement}
         type="text"
-        class="absolute inset-0 w-full h-full opacity-0 cursor-text"
+        class="absolute inset-0 w-full h-full opacity-0 pointer-events-none z-0"
         value={userInput}
         onkeydown={handleKeydown}
         oninput={handleInputPrevent}

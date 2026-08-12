@@ -31,6 +31,7 @@
 <span
   bind:this={elementRef}
   data-target-index={dataIndex}
+  data-char={char}
   class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5"
 >
   <span class="whitespace-pre {textColor}">
