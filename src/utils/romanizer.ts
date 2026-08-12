@@ -1,7 +1,7 @@
 import type { LessonItem } from '../types/korean';
 
-/** Initial Hangul consonants (초성). */
-const CHOSEONG = [
+/** Initial Hangul consonants (Choseong). */
+const INITIAL_CONSONANTS = [
   'ㄱ',
   'ㄲ',
   'ㄴ',
@@ -23,8 +23,8 @@ const CHOSEONG = [
   'ㅎ',
 ];
 
-/** Medial Hangul vowels (중성). */
-const JUNGSEONG = [
+/** Medial Hangul vowels (Jungseong). */
+const VOWELS = [
   'ㅏ',
   'ㅐ',
   'ㅑ',
@@ -48,8 +48,8 @@ const JUNGSEONG = [
   'ㅣ',
 ];
 
-/** Final Hangul consonants (종성). */
-const JONGSEONG = [
+/** Final Hangul consonants (Jongseong). */
+const FINAL_CONSONANTS = [
   '',
   'ㄱ',
   'ㄲ',
@@ -80,8 +80,8 @@ const JONGSEONG = [
   'ㅎ',
 ];
 
-/** Revised Romanization map for initial consonants (초성). */
-const CHO_MAP: Record<string, string> = {
+/** Revised Romanization map for initial consonants (Choseong). */
+const INITIAL_CONSONANT_MAP: Record<string, string> = {
   ㄱ: 'g',
   ㄲ: 'kk',
   ㄴ: 'n',
@@ -103,8 +103,8 @@ const CHO_MAP: Record<string, string> = {
   ㅎ: 'h',
 };
 
-/** Revised Romanization map for vowels (중성). */
-const JUNG_MAP: Record<string, string> = {
+/** Revised Romanization map for vowels (Jungseong). */
+const VOWEL_MAP: Record<string, string> = {
   ㅏ: 'a',
   ㅐ: 'ae',
   ㅑ: 'ya',
@@ -173,41 +173,41 @@ const SINGLE_JAMO_PRONUNCIATION: Record<string, string> = {
 };
 
 interface SyllableDecomposition {
-  cho: string;
-  jung: string;
-  jong: string;
-  choStr?: string;
+  initialConsonant: string;
+  vowel: string;
+  finalConsonant: string;
+  initialConsonantStr?: string;
   raw?: string;
 }
 
 /**
- * Decomposes a single Hangul syllable character into its constituent Jamo (초성, 중성, 종성).
+ * Decomposes a single Hangul syllable character into its constituent Jamo (Choseong, Jungseong, Jongseong).
  * Returns null if the character is outside the Unicode Hangul Syllables block (U+AC00..U+D7A3).
  */
 export function decomposeSyllable(char: string): SyllableDecomposition | null {
   const code = char.charCodeAt(0) - 0xac00;
   if (code < 0 || code > 11171) return null;
-  const choIdx = Math.floor(code / 588);
-  const jungIdx = Math.floor((code % 588) / 28);
-  const jongIdx = code % 28;
+  const initialConsonantIndex = Math.floor(code / 588);
+  const vowelIndex = Math.floor((code % 588) / 28);
+  const finalConsonantIndex = code % 28;
   return {
-    cho: CHOSEONG[choIdx],
-    jung: JUNGSEONG[jungIdx],
-    jong: JONGSEONG[jongIdx],
+    initialConsonant: INITIAL_CONSONANTS[initialConsonantIndex],
+    vowel: VOWELS[vowelIndex],
+    finalConsonant: FINAL_CONSONANTS[finalConsonantIndex],
   };
 }
 
 /**
- * Converts a final consonant (종성) to its default non-liaison Revised Romanization letter.
+ * Converts a final consonant (Jongseong) to its default non-liaison Revised Romanization letter.
  */
-function getNormalJongStr(jong: string): string {
-  if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(jong)) return 'k';
-  if (['ㄴ', 'ㄵ', 'ㄶ'].includes(jong)) return 'n';
-  if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(jong)) return 't';
-  if (['ㄹ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㅀ'].includes(jong)) return 'l';
-  if (['ㅁ', 'ㄻ'].includes(jong)) return 'm';
-  if (['ㅂ', 'ㅍ', 'ㄿ', 'ㅄ'].includes(jong)) return 'p';
-  if (jong === 'ㅇ') return 'ng';
+function getNormalFinalConsonantStr(finalConsonant: string): string {
+  if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(finalConsonant)) return 'k';
+  if (['ㄴ', 'ㄵ', 'ㄶ'].includes(finalConsonant)) return 'n';
+  if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(finalConsonant)) return 't';
+  if (['ㄹ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㅀ'].includes(finalConsonant)) return 'l';
+  if (['ㅁ', 'ㄻ'].includes(finalConsonant)) return 'm';
+  if (['ㅂ', 'ㅍ', 'ㄿ', 'ㅄ'].includes(finalConsonant)) return 'p';
+  if (finalConsonant === 'ㅇ') return 'ng';
   return '';
 }
 
@@ -225,7 +225,7 @@ function romanizeWord(word: string): string {
   for (let i = 0; i < word.length; i++) {
     const d = decomposeSyllable(word[i]);
     if (d) syls.push(d);
-    else syls.push({ cho: '', jung: '', jong: '', raw: word[i] });
+    else syls.push({ initialConsonant: '', vowel: '', finalConsonant: '', raw: word[i] });
   }
 
   for (let i = 0; i < syls.length; i++) {
@@ -236,135 +236,135 @@ function romanizeWord(word: string): string {
     }
 
     const next = syls[i + 1];
-    let choStr = CHO_MAP[curr.cho] || '';
-    let jungStr = JUNG_MAP[curr.jung] || '';
-    let jongStr = '';
+    let initialConsonantStr = INITIAL_CONSONANT_MAP[curr.initialConsonant] || '';
+    let vowelStr = VOWEL_MAP[curr.vowel] || '';
+    let finalConsonantStr = '';
 
-    if (curr.jong) {
-      if (next && next.cho === 'ㅇ') {
+    if (curr.finalConsonant) {
+      if (next && next.initialConsonant === 'ㅇ') {
         // Liaison before initial vowel
-        switch (curr.jong) {
+        switch (curr.finalConsonant) {
           case 'ㄱ':
           case 'ㄲ':
-            next.choStr = 'g';
-            jongStr = '';
+            next.initialConsonantStr = 'g';
+            finalConsonantStr = '';
             break;
           case 'ㄴ':
-            next.choStr = 'n';
-            jongStr = '';
+            next.initialConsonantStr = 'n';
+            finalConsonantStr = '';
             break;
           case 'ㄷ':
-            next.choStr = 'd';
-            jongStr = '';
+            next.initialConsonantStr = 'd';
+            finalConsonantStr = '';
             break;
           case 'ㄹ':
-            next.choStr = 'r';
-            jongStr = '';
+            next.initialConsonantStr = 'r';
+            finalConsonantStr = '';
             break;
           case 'ㅁ':
-            next.choStr = 'm';
-            jongStr = '';
+            next.initialConsonantStr = 'm';
+            finalConsonantStr = '';
             break;
           case 'ㅂ':
-            next.choStr = 'b';
-            jongStr = '';
+            next.initialConsonantStr = 'b';
+            finalConsonantStr = '';
             break;
           case 'ㅅ':
-            next.choStr = 's';
-            jongStr = '';
+            next.initialConsonantStr = 's';
+            finalConsonantStr = '';
             break;
           case 'ㅆ':
-            next.choStr = 'ss';
-            jongStr = '';
+            next.initialConsonantStr = 'ss';
+            finalConsonantStr = '';
             break;
           case 'ㅈ':
-            next.choStr = 'j';
-            jongStr = '';
+            next.initialConsonantStr = 'j';
+            finalConsonantStr = '';
             break;
           case 'ㅊ':
-            next.choStr = 'ch';
-            jongStr = '';
+            next.initialConsonantStr = 'ch';
+            finalConsonantStr = '';
             break;
           case 'ㅌ':
-            next.choStr = 't';
-            jongStr = '';
+            next.initialConsonantStr = 't';
+            finalConsonantStr = '';
             break;
           case 'ㅍ':
-            next.choStr = 'p';
-            jongStr = '';
+            next.initialConsonantStr = 'p';
+            finalConsonantStr = '';
             break;
           case 'ㄳ':
-            jongStr = 'k';
-            next.choStr = 's';
+            finalConsonantStr = 'k';
+            next.initialConsonantStr = 's';
             break;
           case 'ㄵ':
-            jongStr = 'n';
-            next.choStr = 'j';
+            finalConsonantStr = 'n';
+            next.initialConsonantStr = 'j';
             break;
           case 'ㄶ':
-            jongStr = 'n';
-            next.choStr = '';
+            finalConsonantStr = 'n';
+            next.initialConsonantStr = '';
             break;
           case 'ㄺ':
-            jongStr = 'r';
-            next.choStr = 'g';
+            finalConsonantStr = 'r';
+            next.initialConsonantStr = 'g';
             break;
           case 'ㄻ':
-            jongStr = 'r';
-            next.choStr = 'm';
+            finalConsonantStr = 'r';
+            next.initialConsonantStr = 'm';
             break;
           case 'ㄼ':
-            jongStr = 'r';
-            next.choStr = 'b';
+            finalConsonantStr = 'r';
+            next.initialConsonantStr = 'b';
             break;
           case 'ㄾ':
-            jongStr = 'r';
-            next.choStr = 't';
+            finalConsonantStr = 'r';
+            next.initialConsonantStr = 't';
             break;
           case 'ㄿ':
-            jongStr = 'r';
-            next.choStr = 'p';
+            finalConsonantStr = 'r';
+            next.initialConsonantStr = 'p';
             break;
           case 'ㅀ':
-            jongStr = 'r';
-            next.choStr = '';
+            finalConsonantStr = 'r';
+            next.initialConsonantStr = '';
             break;
           case 'ㅄ':
-            jongStr = 'p';
-            next.choStr = 's';
+            finalConsonantStr = 'p';
+            next.initialConsonantStr = 's';
             break;
           case 'ㅇ':
-            jongStr = 'ng';
+            finalConsonantStr = 'ng';
             break;
         }
       } else if (
         next &&
-        ((curr.jong === 'ㄴ' && next.cho === 'ㄹ') ||
-          (curr.jong === 'ㄹ' && next.cho === 'ㄴ') ||
-          (curr.jong === 'ㄹ' && next.cho === 'ㄹ'))
+        ((curr.finalConsonant === 'ㄴ' && next.initialConsonant === 'ㄹ') ||
+          (curr.finalConsonant === 'ㄹ' && next.initialConsonant === 'ㄴ') ||
+          (curr.finalConsonant === 'ㄹ' && next.initialConsonant === 'ㄹ'))
       ) {
         // Liquidization (ㄴ+ㄹ, ㄹ+ㄴ, ㄹ+ㄹ -> ll)
-        jongStr = 'l';
-        next.choStr = 'l';
-      } else if (next && (next.cho === 'ㄴ' || next.cho === 'ㅁ')) {
+        finalConsonantStr = 'l';
+        next.initialConsonantStr = 'l';
+      } else if (next && (next.initialConsonant === 'ㄴ' || next.initialConsonant === 'ㅁ')) {
         // Nasalization before ㄴ/ㅁ
-        if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(curr.jong)) jongStr = 'ng';
-        else if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(curr.jong)) jongStr = 'n';
-        else if (['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'].includes(curr.jong)) jongStr = 'm';
-        else if (curr.jong === 'ㄴ') jongStr = 'n';
-        else if (curr.jong === 'ㄹ') jongStr = 'l';
-        else if (curr.jong === 'ㅁ') jongStr = 'm';
-        else if (curr.jong === 'ㅇ') jongStr = 'ng';
-      } else if (next && next.cho === 'ㄹ') {
-        jongStr = getNormalJongStr(curr.jong);
+        if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(curr.finalConsonant)) finalConsonantStr = 'ng';
+        else if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(curr.finalConsonant)) finalConsonantStr = 'n';
+        else if (['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'].includes(curr.finalConsonant)) finalConsonantStr = 'm';
+        else if (curr.finalConsonant === 'ㄴ') finalConsonantStr = 'n';
+        else if (curr.finalConsonant === 'ㄹ') finalConsonantStr = 'l';
+        else if (curr.finalConsonant === 'ㅁ') finalConsonantStr = 'm';
+        else if (curr.finalConsonant === 'ㅇ') finalConsonantStr = 'ng';
+      } else if (next && next.initialConsonant === 'ㄹ') {
+        finalConsonantStr = getNormalFinalConsonantStr(curr.finalConsonant);
       } else {
-        jongStr = getNormalJongStr(curr.jong);
+        finalConsonantStr = getNormalFinalConsonantStr(curr.finalConsonant);
       }
     }
 
-    if (curr.choStr !== undefined) choStr = curr.choStr;
+    if (curr.initialConsonantStr !== undefined) initialConsonantStr = curr.initialConsonantStr;
 
-    res += choStr + jungStr + jongStr;
+    res += initialConsonantStr + vowelStr + finalConsonantStr;
   }
 
   return res;

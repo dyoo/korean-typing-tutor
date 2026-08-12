@@ -1,5 +1,5 @@
 /** Types of Jamo components in a Hangul syllable block. */
-export type JamoType = 'choseong' | 'jungseong' | 'jongseong';
+export type JamoType = 'initialConsonant' | 'vowel' | 'finalConsonant';
 
 /** Mapping definition for QWERTY keys to Hangul Jamo. */
 export interface JamoMapping {
@@ -10,9 +10,9 @@ export interface JamoMapping {
 
 /** State container for active Hangul syllable composition. */
 export interface CompositionState {
-  chosung: string | null;
-  jungseong: string | null;
-  jongseong: string | null;
+  initialConsonant: string | null;
+  vowel: string | null;
+  finalConsonant: string | null;
 }
 
 /** Error report entry for character mismatch tracking. */

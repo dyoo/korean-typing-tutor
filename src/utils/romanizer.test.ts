@@ -3,10 +3,10 @@ import { romanize, decomposeSyllable, getPronunciation } from './romanizer';
 import type { LessonItem } from '../types/korean';
 
 describe('Dynamic Romanizer Engine', () => {
-  it('should decompose Hangul syllables into 초성, 중성, 종성', () => {
-    expect(decomposeSyllable('가')).toEqual({ cho: 'ㄱ', jung: 'ㅏ', jong: '' });
-    expect(decomposeSyllable('한')).toEqual({ cho: 'ㅎ', jung: 'ㅏ', jong: 'ㄴ' });
-    expect(decomposeSyllable('글')).toEqual({ cho: 'ㄱ', jung: 'ㅡ', jong: 'ㄹ' });
+  it('should decompose Hangul syllables into initial consonant (Choseong), vowel (Jungseong), and final consonant (Jongseong)', () => {
+    expect(decomposeSyllable('가')).toEqual({ initialConsonant: 'ㄱ', vowel: 'ㅏ', finalConsonant: '' });
+    expect(decomposeSyllable('한')).toEqual({ initialConsonant: 'ㅎ', vowel: 'ㅏ', finalConsonant: 'ㄴ' });
+    expect(decomposeSyllable('글')).toEqual({ initialConsonant: 'ㄱ', vowel: 'ㅡ', finalConsonant: 'ㄹ' });
     expect(decomposeSyllable('A')).toBeNull();
   });
 

@@ -7,13 +7,13 @@ describe('getNextRequiredKeys helper', () => {
     expect(getNextRequiredKeys('', '', false)).toEqual([]);
   });
 
-  it('should return the key for the initial choseong when input is empty', () => {
+  it('should return the key for the initial consonant (Choseong) when input is empty', () => {
     expect(getNextRequiredKeys('가', '', false)).toEqual(['r']); // 'ㄱ'
     expect(getNextRequiredKeys('사과', '', false)).toEqual(['t']); // 'ㅅ'
     expect(getNextRequiredKeys('우유', '', false)).toEqual(['d']); // 'ㅇ'
   });
 
-  it('should return the key for the next required jungseong when choseong is entered', () => {
+  it('should return the key for the next required vowel (Jungseong) when initial consonant (Choseong) is entered', () => {
     expect(getNextRequiredKeys('가', 'ㄱ', false)).toEqual(['k']); // 'ㅏ'
     expect(getNextRequiredKeys('사과', 'ㅅ', false)).toEqual(['k']); // 'ㅏ'
   });

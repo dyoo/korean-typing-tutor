@@ -7,11 +7,11 @@ import type { ErrorReport } from '../types/korean';
 const HANGUL_BASE = 0xac00;
 
 /**
- * QWERTY to Choseong (Initial Consonant) Index Mapping (0..18).
+ * QWERTY to Initial Consonant (Choseong) Index Mapping (0..18).
  * In standard Dubeolsik (2-set) Korean keyboard layout:
  * Left-hand keys correspond to consonants.
  */
-const CHOSEONG_MAP: Record<string, number> = {
+const INITIAL_CONSONANT_MAP: Record<string, number> = {
   r: 0, // ㄱ
   R: 1, // ㄲ
   s: 2, // ㄴ
@@ -34,10 +34,10 @@ const CHOSEONG_MAP: Record<string, number> = {
 };
 
 /**
- * QWERTY to Jungseong (Medial Vowel) Index Mapping (0..20).
+ * QWERTY to Vowel (Jungseong) Index Mapping (0..20).
  * Right-hand keys correspond to vowels.
  */
-const JUNGSEONG_MAP: Record<string, number> = {
+const VOWEL_MAP: Record<string, number> = {
   k: 0, // ㅏ
   o: 1, // ㅐ
   i: 2, // ㅑ
@@ -55,11 +55,11 @@ const JUNGSEONG_MAP: Record<string, number> = {
 };
 
 /**
- * QWERTY to Jongseong (Final Consonant) Index Mapping (1..27).
+ * QWERTY to Final Consonant (Jongseong) Index Mapping (1..27).
  * Note: Index 0 represents NO final consonant.
- * Double consonants ㄸ (E), ㅃ (Q), ㅉ (W) cannot be used as Jongseong.
+ * Double consonants ㄸ (E), ㅃ (Q), ㅉ (W) cannot be used as Final Consonant (Jongseong).
  */
-const JONGSEONG_MAP: Record<string, number> = {
+const FINAL_CONSONANT_MAP: Record<string, number> = {
   r: 1, // ㄱ
   R: 2, // ㄲ
   s: 4, // ㄴ
@@ -78,8 +78,8 @@ const JONGSEONG_MAP: Record<string, number> = {
   g: 27, // ㅎ
 };
 
-/** Direct Hangul Choseong Jamo Mapping (for native 2-set Korean OS input mode). */
-const DIRECT_CHOSEONG_MAP: Record<string, number> = {
+/** Direct Hangul Initial Consonant (Choseong) Jamo Mapping (for native 2-set Korean OS input mode). */
+const DIRECT_INITIAL_CONSONANT_MAP: Record<string, number> = {
   ㄱ: 0,
   ㄲ: 1,
   ㄴ: 2,
@@ -101,8 +101,8 @@ const DIRECT_CHOSEONG_MAP: Record<string, number> = {
   ㅎ: 18,
 };
 
-/** Direct Hangul Jungseong Jamo Mapping (for native 2-set Korean OS input mode). */
-const DIRECT_JUNGSEONG_MAP: Record<string, number> = {
+/** Direct Hangul Vowel (Jungseong) Jamo Mapping (for native 2-set Korean OS input mode). */
+const DIRECT_VOWEL_MAP: Record<string, number> = {
   ㅏ: 0,
   ㅐ: 1,
   ㅑ: 2,
@@ -126,8 +126,8 @@ const DIRECT_JUNGSEONG_MAP: Record<string, number> = {
   ㅣ: 20,
 };
 
-/** Direct Hangul Jongseong Jamo Mapping (for native 2-set Korean OS input mode). */
-const DIRECT_JONGSEONG_MAP: Record<string, number> = {
+/** Direct Hangul Final Consonant (Jongseong) Jamo Mapping (for native 2-set Korean OS input mode). */
+const DIRECT_FINAL_CONSONANT_MAP: Record<string, number> = {
   ㄱ: 1,
   ㄲ: 2,
   ㄳ: 3,
@@ -158,11 +158,11 @@ const DIRECT_JONGSEONG_MAP: Record<string, number> = {
 };
 
 /**
- * Compound Vowel Combinations.
- * Maps pair of (first_vowel, second_vowel) to compound Jungseong index.
+ * Compound Vowel (Jungseong) Combinations.
+ * Maps pair of (first_vowel, second_vowel) to compound Vowel (Jungseong) index.
  * Example: ㅗ (8) + ㅏ (0) = ㅘ (9).
  */
-const COMPOUND_JUNGSEONG: Record<string, number> = {
+const COMPOUND_VOWEL: Record<string, number> = {
   '8,0': 9, // ㅗ + ㅏ = ㅘ
   '8,1': 10, // ㅗ + ㅐ = ㅙ
   '8,20': 11, // ㅗ + ㅣ = ㅚ
@@ -173,9 +173,9 @@ const COMPOUND_JUNGSEONG: Record<string, number> = {
 };
 
 /**
- * Decomposition map for compound vowels (used when Backspace is pressed).
+ * Decomposition map for compound vowels (Jungseong) (used when Backspace is pressed).
  */
-const COMPOUND_JUNGSEONG_DECOMP: Record<number, [number, number]> = {
+const COMPOUND_VOWEL_DECOMP: Record<number, [number, number]> = {
   9: [8, 0], // ㅘ -> ㅗ, ㅏ
   10: [8, 1], // ㅙ -> ㅗ, ㅐ
   11: [8, 20], // ㅚ -> ㅗ, ㅣ
@@ -186,11 +186,11 @@ const COMPOUND_JUNGSEONG_DECOMP: Record<number, [number, number]> = {
 };
 
 /**
- * Compound Final Consonant Combinations.
- * Maps pair of (first_jongseong, second_jongseong) to compound Jongseong index.
+ * Compound Final Consonant (Jongseong) Combinations.
+ * Maps pair of (first_final_consonant, second_final_consonant) to compound Final Consonant (Jongseong) index.
  * Example: ㄹ (8) + ㄱ (1) = ㄺ (9).
  */
-const COMPOUND_JONGSEONG: Record<string, number> = {
+const COMPOUND_FINAL_CONSONANT: Record<string, number> = {
   '1,19': 3, // ㄱ + ㅅ = ㄳ
   '4,22': 5, // ㄴ + ㅈ = ㄵ
   '4,27': 6, // ㄴ + ㅎ = ㄶ
@@ -205,9 +205,9 @@ const COMPOUND_JONGSEONG: Record<string, number> = {
 };
 
 /**
- * Decomposition map for compound final consonants (used for Backspace and Liaison splitting).
+ * Decomposition map for compound final consonants (Jongseong) (used for Backspace and Liaison splitting).
  */
-const COMPOUND_JONGSEONG_DECOMP: Record<number, [number, number]> = {
+const COMPOUND_FINAL_CONSONANT_DECOMP: Record<number, [number, number]> = {
   3: [1, 19], // ㄳ -> ㄱ, ㅅ
   5: [4, 22], // ㄵ -> ㄴ, ㅈ
   6: [4, 27], // ㄶ -> ㄴ, ㅎ
@@ -222,10 +222,10 @@ const COMPOUND_JONGSEONG_DECOMP: Record<number, [number, number]> = {
 };
 
 /**
- * Map Jongseong index to Choseong index.
+ * Map Final Consonant (Jongseong) index to Initial Consonant (Choseong) index.
  * Used when a final consonant carries over to become the initial consonant of the next syllable.
  */
-const JONGSEONG_TO_CHOSEONG: Record<number, number> = {
+const FINAL_CONSONANT_TO_INITIAL_CONSONANT: Record<number, number> = {
   1: 0, // ㄱ -> ㄱ
   2: 1, // ㄲ -> ㄲ
   4: 2, // ㄴ -> ㄴ
@@ -253,8 +253,8 @@ function makeCompoundKey(firstIndex: number, secondIndex: number): string {
   return `${firstIndex},${secondIndex}`;
 }
 
-/** Standalone Compatibility Choseong characters (used when rendering partial syllables). */
-const CHOSEONG_STANDALONE = [
+/** Standalone Compatibility Initial Consonant (Choseong) characters (used when rendering partial syllables). */
+const INITIAL_CONSONANT_STANDALONE = [
   'ㄱ',
   'ㄲ',
   'ㄴ',
@@ -276,8 +276,8 @@ const CHOSEONG_STANDALONE = [
   'ㅎ',
 ];
 
-/** Standalone Compatibility Jungseong characters. */
-const JUNGSEONG_STANDALONE = [
+/** Standalone Compatibility Vowel (Jungseong) characters. */
+const VOWEL_STANDALONE = [
   'ㅏ',
   'ㅐ',
   'ㅑ',
@@ -302,10 +302,10 @@ const JUNGSEONG_STANDALONE = [
 ];
 
 /**
- * Map of single Jongseong index to standalone Choseong/Jamo consonant.
- * Index 1..27 corresponding to Unicode Hangul Jongseong definitions.
+ * Map of single Final Consonant (Jongseong) index to standalone Initial Consonant (Choseong) / Jamo consonant.
+ * Index 1..27 corresponding to Unicode Hangul Final Consonant (Jongseong) definitions.
  */
-const JONGSEONG_SINGLE_JAMO: Record<number, string> = {
+const FINAL_CONSONANT_SINGLE_JAMO: Record<number, string> = {
   1: 'ㄱ',
   2: 'ㄲ',
   4: 'ㄴ',
@@ -358,27 +358,27 @@ export function decomposeCharToJamos(char: string | undefined): string {
   const code = char.charCodeAt(0);
   if (code >= HANGUL_BASE && code <= 0xd7a3) {
     const offset = code - HANGUL_BASE;
-    const jongIndex = offset % 28;
-    const jungIndex = Math.floor(offset / 28) % 21;
-    const choIndex = Math.floor(offset / (21 * 28));
+    const finalConsonantIndex = offset % 28;
+    const vowelIndex = Math.floor(offset / 28) % 21;
+    const initialConsonantIndex = Math.floor(offset / (21 * 28));
 
-    let result = CHOSEONG_STANDALONE[choIndex] ?? '';
+    let result = INITIAL_CONSONANT_STANDALONE[initialConsonantIndex] ?? '';
 
-    // Decompose Jungseong (vowel)
-    if (COMPOUND_JUNGSEONG_DECOMP[jungIndex]) {
-      const [v1, v2] = COMPOUND_JUNGSEONG_DECOMP[jungIndex];
-      result += (JUNGSEONG_STANDALONE[v1] ?? '') + (JUNGSEONG_STANDALONE[v2] ?? '');
+    // Decompose Vowel (Jungseong)
+    if (COMPOUND_VOWEL_DECOMP[vowelIndex]) {
+      const [v1, v2] = COMPOUND_VOWEL_DECOMP[vowelIndex];
+      result += (VOWEL_STANDALONE[v1] ?? '') + (VOWEL_STANDALONE[v2] ?? '');
     } else {
-      result += JUNGSEONG_STANDALONE[jungIndex] ?? '';
+      result += VOWEL_STANDALONE[vowelIndex] ?? '';
     }
 
-    // Decompose Jongseong (final consonant)
-    if (jongIndex > 0) {
-      if (COMPOUND_JONGSEONG_DECOMP[jongIndex]) {
-        const [j1, j2] = COMPOUND_JONGSEONG_DECOMP[jongIndex];
-        result += (JONGSEONG_SINGLE_JAMO[j1] ?? '') + (JONGSEONG_SINGLE_JAMO[j2] ?? '');
+    // Decompose Final Consonant (Jongseong)
+    if (finalConsonantIndex > 0) {
+      if (COMPOUND_FINAL_CONSONANT_DECOMP[finalConsonantIndex]) {
+        const [f1, f2] = COMPOUND_FINAL_CONSONANT_DECOMP[finalConsonantIndex];
+        result += (FINAL_CONSONANT_SINGLE_JAMO[f1] ?? '') + (FINAL_CONSONANT_SINGLE_JAMO[f2] ?? '');
       } else {
-        result += JONGSEONG_SINGLE_JAMO[jongIndex] ?? '';
+        result += FINAL_CONSONANT_SINGLE_JAMO[finalConsonantIndex] ?? '';
       }
     }
 
@@ -394,20 +394,20 @@ export function decomposeCharToJamos(char: string | undefined): string {
 }
 
 /**
- * Extracts the Choseong (initial consonant) Jamo character from a given character.
+ * Extracts the Initial Consonant (Choseong) Jamo character from a given character.
  * Example: '장' -> 'ㅈ', 'ㅈ' -> 'ㅈ'.
  */
-export function getChoseongJamo(char: string | undefined): string | null {
+export function getInitialConsonantJamo(char: string | undefined): string | null {
   if (!char) return null;
 
   const code = char.charCodeAt(0);
   if (code >= HANGUL_BASE && code <= 0xd7a3) {
     const offset = code - HANGUL_BASE;
-    const choIndex = Math.floor(offset / (21 * 28));
-    return CHOSEONG_STANDALONE[choIndex] ?? null;
+    const initialConsonantIndex = Math.floor(offset / (21 * 28));
+    return INITIAL_CONSONANT_STANDALONE[initialConsonantIndex] ?? null;
   }
 
-  if (CHOSEONG_STANDALONE.includes(char)) {
+  if (INITIAL_CONSONANT_STANDALONE.includes(char)) {
     return char;
   }
 
@@ -430,9 +430,9 @@ export function isPartialOrExactMatch(
   let targetJamos = decomposeCharToJamos(targetChar);
 
   if (nextTargetChar) {
-    const nextCho = getChoseongJamo(nextTargetChar);
-    if (nextCho) {
-      targetJamos += nextCho;
+    const nextInitialConsonant = getInitialConsonantJamo(nextTargetChar);
+    if (nextInitialConsonant) {
+      targetJamos += nextInitialConsonant;
     }
   }
 
@@ -448,7 +448,7 @@ export function isPartialOrExactMatch(
  *
  * Example:
  * - isSyllableComplete('화', '화', '장') -> true (exact match)
- * - isSyllableComplete('화', compose('ghkw'), '장') -> true ('화' + '장''s Choseong 'ㅈ')
+ * - isSyllableComplete('화', compose('ghkw'), '장') -> true ('화' + '장''s Initial Consonant (Choseong) 'ㅈ')
  * - isSyllableComplete('화', compose('ghkd'), '장') -> false ('화' + 'ㅇ' trailing consonant)
  * - isSyllableComplete('장', '자', '실') -> false ('자' is incomplete for '장')
  */
@@ -466,8 +466,8 @@ export function isSyllableComplete(
   if (inputJamos.startsWith(targetJamos)) {
     const remaining = inputJamos.slice(targetJamos.length);
     if (remaining.length > 0 && nextTargetChar) {
-      const nextCho = getChoseongJamo(nextTargetChar);
-      if (nextCho === remaining) {
+      const nextInitialConsonant = getInitialConsonantJamo(nextTargetChar);
+      if (nextInitialConsonant === remaining) {
         return true;
       }
     }
@@ -481,18 +481,18 @@ export function isSyllableComplete(
  * Implements a state machine that converts raw QWERTY keystrokes OR native Korean 2-set Jamos into composed Hangul syllables.
  */
 export class HangulEngine {
-  private currentChoseong: number | null = null;
-  private currentJungseong: number | null = null;
-  private currentJongseong: number | null = null;
+  private currentInitialConsonant: number | null = null;
+  private currentVowel: number | null = null;
+  private currentFinalConsonant: number | null = null;
   private composedString = '';
 
   /**
-   * Assembles Choseong, Jungseong, and Jongseong indices into a single Unicode Hangul Syllable character.
+   * Assembles Initial Consonant (Choseong), Vowel (Jungseong), and Final Consonant (Jongseong) indices into a single Unicode Hangul Syllable character.
    * Unicode Hangul Syllable Math Formula:
-   *   Code = (ChoseongIndex * 21 + JungseongIndex) * 28 + JongseongIndex + 0xAC00
+   *   Code = (InitialConsonantIndex * 21 + VowelIndex) * 28 + FinalConsonantIndex + 0xAC00
    */
-  private assemble(c: number, v: number, f: number): string {
-    const code = (c * 21 + v) * 28 + f + HANGUL_BASE;
+  private assemble(initialConsonant: number, vowel: number, finalConsonant: number): string {
+    const code = (initialConsonant * 21 + vowel) * 28 + finalConsonant + HANGUL_BASE;
     return String.fromCharCode(code);
   }
 
@@ -500,14 +500,14 @@ export class HangulEngine {
    * Returns the string representation of the syllable block currently being composed.
    */
   private getCurrentChar(): string {
-    if (this.currentChoseong !== null && this.currentJungseong !== null) {
-      return this.assemble(this.currentChoseong, this.currentJungseong, this.currentJongseong ?? 0);
+    if (this.currentInitialConsonant !== null && this.currentVowel !== null) {
+      return this.assemble(this.currentInitialConsonant, this.currentVowel, this.currentFinalConsonant ?? 0);
     }
-    if (this.currentChoseong !== null) {
-      return CHOSEONG_STANDALONE[this.currentChoseong] ?? '';
+    if (this.currentInitialConsonant !== null) {
+      return INITIAL_CONSONANT_STANDALONE[this.currentInitialConsonant] ?? '';
     }
-    if (this.currentJungseong !== null) {
-      return JUNGSEONG_STANDALONE[this.currentJungseong] ?? '';
+    if (this.currentVowel !== null) {
+      return VOWEL_STANDALONE[this.currentVowel] ?? '';
     }
     return '';
   }
@@ -520,9 +520,9 @@ export class HangulEngine {
     if (char) {
       this.composedString += char;
     }
-    this.currentChoseong = null;
-    this.currentJungseong = null;
-    this.currentJongseong = null;
+    this.currentInitialConsonant = null;
+    this.currentVowel = null;
+    this.currentFinalConsonant = null;
   }
 
   /**
@@ -532,23 +532,23 @@ export class HangulEngine {
   public handleKey(key: string): string {
     // --- 1. Handle Backspace key ---
     if (key === 'Backspace') {
-      if (this.currentJongseong !== null && this.currentJongseong > 0) {
-        // Decompose compound Jongseong back to single Jongseong, or remove Jongseong
-        if (COMPOUND_JONGSEONG_DECOMP[this.currentJongseong]) {
-          this.currentJongseong = COMPOUND_JONGSEONG_DECOMP[this.currentJongseong][0];
+      if (this.currentFinalConsonant !== null && this.currentFinalConsonant > 0) {
+        // Decompose compound Final Consonant (Jongseong) back to single Final Consonant, or remove Final Consonant
+        if (COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant]) {
+          this.currentFinalConsonant = COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant][0];
         } else {
-          this.currentJongseong = null;
+          this.currentFinalConsonant = null;
         }
-      } else if (this.currentJungseong !== null) {
-        // Decompose compound Jungseong back to single Jungseong, or remove Jungseong
-        if (COMPOUND_JUNGSEONG_DECOMP[this.currentJungseong]) {
-          this.currentJungseong = COMPOUND_JUNGSEONG_DECOMP[this.currentJungseong][0];
+      } else if (this.currentVowel !== null) {
+        // Decompose compound Vowel (Jungseong) back to single Vowel, or remove Vowel
+        if (COMPOUND_VOWEL_DECOMP[this.currentVowel]) {
+          this.currentVowel = COMPOUND_VOWEL_DECOMP[this.currentVowel][0];
         } else {
-          this.currentJungseong = null;
+          this.currentVowel = null;
         }
-      } else if (this.currentChoseong !== null) {
-        // Remove Choseong
-        this.currentChoseong = null;
+      } else if (this.currentInitialConsonant !== null) {
+        // Remove Initial Consonant (Choseong)
+        this.currentInitialConsonant = null;
       } else if (this.composedString.length > 0) {
         // Delete last finished character from composed string
         this.composedString = this.composedString.slice(0, -1);
@@ -564,9 +564,9 @@ export class HangulEngine {
     }
 
     // Lookup Jamo indices from QWERTY maps or direct Hangul Jamo maps
-    let cho = CHOSEONG_MAP[key] ?? DIRECT_CHOSEONG_MAP[key];
-    let jung = JUNGSEONG_MAP[key] ?? DIRECT_JUNGSEONG_MAP[key];
-    let jong = JONGSEONG_MAP[key] ?? DIRECT_JONGSEONG_MAP[key];
+    let initialConsonant = INITIAL_CONSONANT_MAP[key] ?? DIRECT_INITIAL_CONSONANT_MAP[key];
+    let vowel = VOWEL_MAP[key] ?? DIRECT_VOWEL_MAP[key];
+    let finalConsonant = FINAL_CONSONANT_MAP[key] ?? DIRECT_FINAL_CONSONANT_MAP[key];
 
     /**
      * Standard Dubeolsik (2-set) Shift Key Handling:
@@ -576,139 +576,139 @@ export class HangulEngine {
      * treats Shift + Key identically to its lower-case key (e.g. 'X' -> 'x' -> ㅌ).
      */
     if (
-      cho === undefined &&
-      jung === undefined &&
-      jong === undefined &&
+      initialConsonant === undefined &&
+      vowel === undefined &&
+      finalConsonant === undefined &&
       key.length === 1 &&
       key >= 'A' &&
       key <= 'Z'
     ) {
       const lower = key.toLowerCase();
-      cho = CHOSEONG_MAP[lower];
-      jung = JUNGSEONG_MAP[lower];
-      jong = JONGSEONG_MAP[lower];
+      initialConsonant = INITIAL_CONSONANT_MAP[lower];
+      vowel = VOWEL_MAP[lower];
+      finalConsonant = FINAL_CONSONANT_MAP[lower];
     }
 
     // --- 2. Handle non-Korean keys (spaces, numbers, punctuation) ---
-    if (cho === undefined && jung === undefined) {
+    if (initialConsonant === undefined && vowel === undefined) {
       this.flushCurrent();
       this.composedString += key;
       return this.getComposedText();
     }
 
     // --- 3. State 1: Empty block (start new syllable) ---
-    if (this.currentChoseong === null && this.currentJungseong === null) {
-      if (cho !== undefined) {
-        this.currentChoseong = cho;
-      } else if (jung !== undefined) {
-        this.currentJungseong = jung;
+    if (this.currentInitialConsonant === null && this.currentVowel === null) {
+      if (initialConsonant !== undefined) {
+        this.currentInitialConsonant = initialConsonant;
+      } else if (vowel !== undefined) {
+        this.currentVowel = vowel;
       }
       return this.getComposedText();
     }
 
-    // --- 4. State 2: Block has Choseong only (e.g. 'ㄱ') ---
-    if (this.currentChoseong !== null && this.currentJungseong === null) {
-      if (jung !== undefined) {
+    // --- 4. State 2: Block has Initial Consonant (Choseong) only (e.g. 'ㄱ') ---
+    if (this.currentInitialConsonant !== null && this.currentVowel === null) {
+      if (vowel !== undefined) {
         // Add vowel -> forms syllable (e.g. 'ㄱ' + 'ㅏ' -> '가')
-        this.currentJungseong = jung;
-      } else if (cho !== undefined) {
+        this.currentVowel = vowel;
+      } else if (initialConsonant !== undefined) {
         // Double initial consonant typed without vowel -> flush prev, start new block
         this.flushCurrent();
-        this.currentChoseong = cho;
+        this.currentInitialConsonant = initialConsonant;
       }
       return this.getComposedText();
     }
 
-    // --- 5. State 3: Block has standalone Jungseong only (e.g. 'ㅏ') ---
-    if (this.currentChoseong === null && this.currentJungseong !== null) {
-      if (jung !== undefined) {
-        const compoundKey = makeCompoundKey(this.currentJungseong, jung);
-        if (COMPOUND_JUNGSEONG[compoundKey] !== undefined) {
-          this.currentJungseong = COMPOUND_JUNGSEONG[compoundKey];
+    // --- 5. State 3: Block has standalone Vowel (Jungseong) only (e.g. 'ㅏ') ---
+    if (this.currentInitialConsonant === null && this.currentVowel !== null) {
+      if (vowel !== undefined) {
+        const compoundKey = makeCompoundKey(this.currentVowel, vowel);
+        if (COMPOUND_VOWEL[compoundKey] !== undefined) {
+          this.currentVowel = COMPOUND_VOWEL[compoundKey];
         } else {
           this.flushCurrent();
-          this.currentJungseong = jung;
+          this.currentVowel = vowel;
         }
-      } else if (cho !== undefined) {
+      } else if (initialConsonant !== undefined) {
         this.flushCurrent();
-        this.currentChoseong = cho;
+        this.currentInitialConsonant = initialConsonant;
       }
       return this.getComposedText();
     }
 
-    // --- 6. State 4: Block has Choseong + Jungseong (e.g. '가') ---
+    // --- 6. State 4: Block has Initial Consonant (Choseong) + Vowel (Jungseong) (e.g. '가') ---
     if (
-      this.currentChoseong !== null &&
-      this.currentJungseong !== null &&
-      (this.currentJongseong === null || this.currentJongseong === 0)
+      this.currentInitialConsonant !== null &&
+      this.currentVowel !== null &&
+      (this.currentFinalConsonant === null || this.currentFinalConsonant === 0)
     ) {
-      if (jung !== undefined) {
+      if (vowel !== undefined) {
         // Try combining into compound vowel (e.g. '고' + 'ㅏ' -> '과')
-        const compoundKey = makeCompoundKey(this.currentJungseong, jung);
-        if (COMPOUND_JUNGSEONG[compoundKey] !== undefined) {
-          this.currentJungseong = COMPOUND_JUNGSEONG[compoundKey];
+        const compoundKey = makeCompoundKey(this.currentVowel, vowel);
+        if (COMPOUND_VOWEL[compoundKey] !== undefined) {
+          this.currentVowel = COMPOUND_VOWEL[compoundKey];
         } else {
           this.flushCurrent();
-          this.currentJungseong = jung;
+          this.currentVowel = vowel;
         }
-      } else if (jong !== undefined) {
+      } else if (finalConsonant !== undefined) {
         // Add final consonant (e.g. '하' + 'ㄴ' -> '한')
-        this.currentJongseong = jong;
-      } else if (cho !== undefined) {
+        this.currentFinalConsonant = finalConsonant;
+      } else if (initialConsonant !== undefined) {
         this.flushCurrent();
-        this.currentChoseong = cho;
+        this.currentInitialConsonant = initialConsonant;
       }
       return this.getComposedText();
     }
 
-    // --- 7. State 5: Block has Choseong + Jungseong + Jongseong (e.g. '한' or '닭') ---
+    // --- 7. State 5: Block has Initial Consonant (Choseong) + Vowel (Jungseong) + Final Consonant (Jongseong) (e.g. '한' or '닭') ---
     if (
-      this.currentChoseong !== null &&
-      this.currentJungseong !== null &&
-      this.currentJongseong !== null &&
-      this.currentJongseong > 0
+      this.currentInitialConsonant !== null &&
+      this.currentVowel !== null &&
+      this.currentFinalConsonant !== null &&
+      this.currentFinalConsonant > 0
     ) {
-      if (jung !== undefined) {
+      if (vowel !== undefined) {
         /**
          * Liaison Rule / Syllable Splitting:
          * A vowel is typed after a syllable that already has a final consonant (Jongseong).
-         * 1) If Jongseong is compound (e.g. '닭' = '달' + 'ㄱ'):
+         * 1) If Final Consonant (Jongseong) is compound (e.g. '닭' = '달' + 'ㄱ'):
          *    First part ('ㄹ') stays as final consonant of 1st syllable.
          *    Second part ('ㄱ') becomes initial consonant of 2nd syllable ('기') -> '달기'.
-         * 2) If Jongseong is single (e.g. '한' + 'ㅏ'):
+         * 2) If Final Consonant (Jongseong) is single (e.g. '한' + 'ㅏ'):
          *    The final consonant ('ㄴ') moves to become initial consonant of 2nd syllable ('나') -> '하나'.
          */
-        if (COMPOUND_JONGSEONG_DECOMP[this.currentJongseong]) {
-          const [firstJong, secondJong] = COMPOUND_JONGSEONG_DECOMP[this.currentJongseong];
-          this.currentJongseong = firstJong;
+        if (COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant]) {
+          const [firstFinalConsonant, secondFinalConsonant] = COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant];
+          this.currentFinalConsonant = firstFinalConsonant;
           const firstChar = this.getCurrentChar();
           this.composedString += firstChar;
 
-          this.currentChoseong = JONGSEONG_TO_CHOSEONG[secondJong];
-          this.currentJungseong = jung;
-          this.currentJongseong = null;
+          this.currentInitialConsonant = FINAL_CONSONANT_TO_INITIAL_CONSONANT[secondFinalConsonant];
+          this.currentVowel = vowel;
+          this.currentFinalConsonant = null;
         } else {
-          const prevJong = this.currentJongseong;
-          this.currentJongseong = null;
+          const prevFinalConsonant = this.currentFinalConsonant;
+          this.currentFinalConsonant = null;
           const firstChar = this.getCurrentChar();
           this.composedString += firstChar;
 
-          this.currentChoseong = JONGSEONG_TO_CHOSEONG[prevJong];
-          this.currentJungseong = jung;
-          this.currentJongseong = null;
+          this.currentInitialConsonant = FINAL_CONSONANT_TO_INITIAL_CONSONANT[prevFinalConsonant];
+          this.currentVowel = vowel;
+          this.currentFinalConsonant = null;
         }
-      } else if (jong !== undefined) {
-        // Try combining into compound Jongseong (e.g. '달' + 'ㄱ' -> '닭')
-        const compoundKey = makeCompoundKey(this.currentJongseong, jong);
-        if (COMPOUND_JONGSEONG[compoundKey] !== undefined) {
-          this.currentJongseong = COMPOUND_JONGSEONG[compoundKey];
-        } else if (cho !== undefined) {
+      } else if (finalConsonant !== undefined) {
+        // Try combining into compound Final Consonant (Jongseong) (e.g. '달' + 'ㄱ' -> '닭')
+        const compoundKey = makeCompoundKey(this.currentFinalConsonant, finalConsonant);
+        if (COMPOUND_FINAL_CONSONANT[compoundKey] !== undefined) {
+          this.currentFinalConsonant = COMPOUND_FINAL_CONSONANT[compoundKey];
+        } else if (initialConsonant !== undefined) {
           this.flushCurrent();
-          this.currentChoseong = cho;
+          this.currentInitialConsonant = initialConsonant;
         }
-      } else if (cho !== undefined) {
+      } else if (initialConsonant !== undefined) {
         this.flushCurrent();
-        this.currentChoseong = cho;
+        this.currentInitialConsonant = initialConsonant;
       }
       return this.getComposedText();
     }
@@ -727,9 +727,9 @@ export class HangulEngine {
    * Resets engine state for a new typing lesson.
    */
   public reset(): void {
-    this.currentChoseong = null;
-    this.currentJungseong = null;
-    this.currentJongseong = null;
+    this.currentInitialConsonant = null;
+    this.currentVowel = null;
+    this.currentFinalConsonant = null;
     this.composedString = '';
   }
 

@@ -6,7 +6,7 @@ import {
   isPartialOrExactMatch,
   isSyllableComplete,
   decomposeCharToJamos,
-  getChoseongJamo,
+  getInitialConsonantJamo,
   calculateTargetCursorIndex,
   calculateInputCursorIndex,
   getWordTokens,
@@ -21,11 +21,11 @@ describe('Jamo decomposition helpers', () => {
     expect(decomposeCharToJamos('ㄳ')).toBe('ㄱㅅ');
   });
 
-  it('should extract Choseong Jamo correctly', () => {
-    expect(getChoseongJamo('장')).toBe('ㅈ');
-    expect(getChoseongJamo('요')).toBe('ㅇ');
-    expect(getChoseongJamo('ㄱ')).toBe('ㄱ');
-    expect(getChoseongJamo(' ')).toBe(null);
+  it('should extract Initial Consonant (Choseong) Jamo correctly', () => {
+    expect(getInitialConsonantJamo('장')).toBe('ㅈ');
+    expect(getInitialConsonantJamo('요')).toBe('ㅇ');
+    expect(getInitialConsonantJamo('ㄱ')).toBe('ㄱ');
+    expect(getInitialConsonantJamo(' ')).toBe(null);
   });
 
   it('should evaluate isSyllableComplete correctly to prevent cursor backtracking', () => {
