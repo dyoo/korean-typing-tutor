@@ -759,7 +759,7 @@ export function checkErrors(target: string, input: string): ErrorReport[] {
       if (t === undefined) {
         isError = true;
       } else if (i < input.length - 1) {
-        isError = !isSyllableComplete(t, inp, nextT);
+        isError = inp !== t;
       } else {
         isError = !isPartialOrExactMatch(t, inp, nextT);
       }

@@ -109,6 +109,15 @@ describe('checkErrors and isPartialOrExactMatch functions', () => {
     expect(errorsWhenWrongConsonant[0].isError).toBe(true);
   });
 
+  it('should flag completed incorrect syllables as errors (Issue #3: typing 난날이 for 나날이)', () => {
+    const target = '나날이';
+    const input = '난날이';
+    const errors = checkErrors(target, input);
+    expect(errors[0].isError).toBe(true); // '난' is finalized and incorrect for '나'
+    expect(errors[1].isError).toBe(false); // '날' matches '날'
+    expect(errors[2].isError).toBe(false); // '이' matches '이'
+  });
+
   it('should handle step-by-step typing of multi-syllable word 화장실 without false errors', () => {
     const target = '화장실';
     const engine = new HangulEngine();
