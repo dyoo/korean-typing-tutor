@@ -5,352 +5,252 @@
   "items": [
     {
       "id": "kc-1",
-      "moduleId": "korean_culture",
-      "type": "word",
       "target": "추석",
       "translation": "Chuseok (Korean Thanksgiving)"
     },
     {
       "id": "kc-2",
-      "moduleId": "korean_culture",
-      "type": "word",
       "target": "설날",
       "pronunciation": "seollal",
       "translation": "Seollal (Lunar New Year)"
     },
     {
       "id": "kc-3",
-      "moduleId": "korean_culture",
-      "type": "word",
       "target": "한복",
       "translation": "Hanbok (Traditional Korean clothing)"
     },
     {
       "id": "kc-4",
-      "moduleId": "korean_culture",
-      "type": "word",
       "target": "떡국",
       "translation": "Tteokguk (Rice cake soup)"
     },
     {
       "id": "kc-5",
-      "moduleId": "korean_culture",
-      "type": "word",
       "target": "송편",
       "translation": "Songpyeon (Half-moon rice cakes)"
     },
     {
       "id": "kc-6",
-      "moduleId": "korean_culture",
-      "type": "word",
       "target": "한옥",
       "translation": "Hanok (Traditional Korean house)"
     },
     {
       "id": "kc-7",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "즐거운 추석 보내세요.",
       "translation": "Have a wonderful Chuseok holiday."
     },
     {
       "id": "kc-8",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "새해 복 많이 받으세요.",
       "translation": "Happy Lunar New Year!"
     },
     {
       "id": "korean_culture-ext-1",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "설날에는 떡국을 먹습니다.",
       "translation": "On New Year's Day, we eat rice cake soup."
     },
     {
       "id": "korean_culture-ext-2",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "추석에는 송편을 만듭니다.",
       "translation": "On Chuseok, we make half-moon rice cakes."
     },
     {
       "id": "korean_culture-ext-3",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "한복은 한국의 전통 옷입니다.",
       "translation": "Hanbok is traditional Korean clothing."
     },
     {
       "id": "korean_culture-ext-4",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "한옥은 한국의 전통 집입니다.",
       "translation": "Hanok is a traditional Korean house."
     },
     {
       "id": "korean_culture-ext-5",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "김장 문화는 유네스코 인류무형문화유산입니다.",
       "translation": "Kimjang culture is a UNESCO Intangible Cultural Heritage."
     },
     {
       "id": "korean_culture-ext-6",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "태극기는 한국의 국기입니다.",
       "translation": "Taegeukgi is the national flag of Korea."
     },
     {
       "id": "korean_culture-ext-7",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "무궁화는 한국의 국화입니다.",
       "translation": "Rose of Sharon is the national flower of Korea."
     },
     {
       "id": "korean_culture-ext-8",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "경복궁은 조선 시대의 궁궐입니다.",
       "translation": "Gyeongbokgung is a royal palace of the Joseon Dynasty."
     },
     {
       "id": "korean_culture-ext-9",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "남산타워에서 서울 야경을 볼 수 있습니다.",
       "translation": "You can see the night view of Seoul from Namsan Tower."
     },
     {
       "id": "korean_culture-ext-10",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "제주도는 한국에서 가장 큰 섬입니다.",
       "translation": "Jeju Island is the largest island in Korea."
     },
     {
       "id": "korean_culture-ext-11",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "한라산은 제주도에 있는 높고 아름다운 산입니다.",
       "translation": "Hallasan is a tall and beautiful mountain on Jeju Island."
     },
     {
       "id": "korean_culture-ext-12",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "한강은 서울 시내를 지나는 아름다운 강입니다.",
       "translation": "The Han River is a beautiful river running through downtown Seoul."
     },
     {
       "id": "korean_culture-ext-13",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "동대문디자인플라자(DDP)는 현대 건축의 명소입니다.",
       "translation": "Dongdaemun Design Plaza is a landmark of modern architecture."
     },
     {
       "id": "korean_culture-ext-14",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "홍대는 청춘과 예술의 거리입니다.",
       "translation": "Hongdae is a street of youth and art."
     },
     {
       "id": "korean_culture-ext-15",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "인사동에서 전통 차를 마실 수 있습니다.",
       "translation": "You can drink traditional tea in Insadong."
     },
     {
       "id": "korean_culture-ext-16",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "북촌한옥마을은 전통 한옥이 잘 보존된 곳입니다.",
       "translation": "Bukchon Hanok Village is a well-preserved traditional hanok area."
     },
     {
       "id": "korean_culture-ext-17",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "전주한옥마을에서 맛있는 비빔밥을 먹을 수 있습니다.",
       "translation": "You can eat delicious bibimbap in Jeonju Hanok Village."
     },
     {
       "id": "korean_culture-ext-18",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "부산 해운대는 유명한 바닷가입니다.",
       "translation": "Haeundae in Busan is a famous beach."
     },
     {
       "id": "korean_culture-ext-19",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "불국사와 석굴암은 경주의 대표적인 문화재입니다.",
       "translation": "Bulguksa and Seokguram are Gyeongju's representative cultural heritage."
     },
     {
       "id": "korean_culture-ext-20",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "판소리는 한국의 전통 소리 예술입니다.",
       "translation": "Pansori is traditional Korean musical storytelling art."
     },
     {
       "id": "korean_culture-ext-21",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "사물놀이는 4가지 전통 악기 연주입니다.",
       "translation": "Samulnori is a performance using four traditional percussion instruments."
     },
     {
       "id": "korean_culture-ext-22",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "탈춤은 한국의 전통 가면 무용입니다.",
       "translation": "Talchum is traditional Korean mask dance."
     },
     {
       "id": "korean_culture-ext-23",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "씨름은 한국의 전통 민속 경기입니다.",
       "translation": "Ssireum is traditional Korean folk wrestling."
     },
     {
       "id": "korean_culture-ext-24",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "한지는 한국의 전통 종이입니다.",
       "translation": "Hanji is traditional Korean paper."
     },
     {
       "id": "korean_culture-ext-25",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "옹기는 한국의 전통 항아리입니다.",
       "translation": "Onggi is traditional Korean earthenware."
     },
     {
       "id": "korean_culture-ext-26",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "막걸리는 한국의 전통 쌀막걸리입니다.",
       "translation": "Makgeolli is traditional Korean rice wine."
     },
     {
       "id": "korean_culture-ext-27",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "소주는 한국에서 가장 인기 있는 음료입니다.",
       "translation": "Soju is the most popular distilled beverage in Korea."
     },
     {
       "id": "korean_culture-ext-28",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "치맥은 치킨과 맥주의 조합입니다.",
       "translation": "Chimaek is the pairing of fried chicken and beer."
     },
     {
       "id": "korean_culture-ext-29",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "길거리 음식으로는 떡볶이와 어묵이 있습니다.",
       "translation": "Street foods include tteokbokki and fish cakes."
     },
     {
       "id": "korean_culture-ext-30",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "붕어빵은 겨울철 대표 길거리 간식입니다.",
       "translation": "Bungeoppang is an iconic winter street snack."
     },
     {
       "id": "korean_culture-ext-31",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "호떡은 달콤한 쫄깃한 팬케이크입니다.",
       "translation": "Hotteok is a sweet, chewy filled pancake."
     },
     {
       "id": "korean_culture-ext-32",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "포장마차에서 맛있는 밤참을 먹습니다.",
       "translation": "People eat delicious late-night snacks at street carts (pojangmacha)."
     },
     {
       "id": "korean_culture-ext-33",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "찜질방에서 따뜻하게 휴식을 취합니다.",
       "translation": "People relax warmly in a Korean bathhouse (jjimjilbang)."
     },
     {
       "id": "korean_culture-ext-34",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "노래방에서 친구들과 노래를 부릅니다.",
       "translation": "People sing songs with friends at a noraebang (karaoke)."
     },
     {
       "id": "korean_culture-ext-35",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "PC방에서 고사양 게임을 즐깁니다.",
       "translation": "People enjoy high-spec games at a PC bang."
     },
     {
       "id": "korean_culture-ext-36",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "배달 문화가 매우 발전되어 있습니다.",
       "translation": "Food delivery culture is extremely developed in Korea."
     },
     {
       "id": "korean_culture-ext-37",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "새해 복 많이 받으세요!",
       "translation": "Happy New Year! (Lit: May you receive much luck in the New Year!)"
     },
     {
       "id": "korean_culture-ext-38",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "즐거운 추석 보내세요!",
       "translation": "Have a joyful Chuseok holiday!"
     },
     {
       "id": "korean_culture-ext-39",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "한국에 오신 것을 환영합니다!",
       "translation": "Welcome to Korea!"
     },
     {
       "id": "korean_culture-ext-40",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "한국 문화를 함께 체험해 봐요.",
       "translation": "Let's experience Korean culture together."
     },
     {
       "id": "korean_culture-ext-41",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "한국은 전통과 현대가 조화를 이루는 곳입니다.",
       "translation": "Korea is a place where tradition and modernity harmonize."
     },
     {
       "id": "korean_culture-ext-42",
-      "moduleId": "korean_culture",
-      "type": "sentence",
       "target": "다양한 한국 문화를 즐겨 보세요!",
       "translation": "Please enjoy the diverse aspects of Korean culture!"
     }

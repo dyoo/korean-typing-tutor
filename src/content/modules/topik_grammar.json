@@ -5,352 +5,252 @@
   "items": [
     {
       "id": "tp-1",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "이름이 무엇입니까?",
       "translation": "What is your name?"
     },
     {
       "id": "tp-2",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "저는 학생입니다.",
       "translation": "I am a student."
     },
     {
       "id": "tp-3",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "어디에 가요?",
       "translation": "Where are you going?"
     },
     {
       "id": "tp-4",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "학교에 가요.",
       "translation": "I am going to school."
     },
     {
       "id": "tp-5",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "지금 몇 시예요?",
       "translation": "What time is it now?"
     },
     {
       "id": "tp-6",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "한국 음식을 좋아해요.",
       "translation": "I like Korean food."
     },
     {
       "id": "tp-7",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "버스를 타고 가요.",
       "translation": "I go by bus."
     },
     {
       "id": "tp-8",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "오늘 날씨가 따뜻해요.",
       "pronunciation": "oneul nalssiga ttatteut-haeyo.",
       "translation": "The weather is warm today."
     },
     {
       "id": "tp-9",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "커피를 마시고 싶어요.",
       "translation": "I want to drink coffee."
     },
     {
       "id": "tp-10",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "한국어를 할 수 있어요.",
       "translation": "I can speak Korean."
     },
     {
       "id": "topik_grammar-ext-1",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-은/는 -입니다",
       "translation": "Subject Marker & Is/Are (Standard Form)"
     },
     {
       "id": "topik_grammar-ext-2",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-이/가 아닙니다",
       "translation": "Negative Subject Identifier (Is Not)"
     },
     {
       "id": "topik_grammar-ext-3",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-을/를 먹습니다",
       "translation": "Object Marker & Verb Conjugation"
     },
     {
       "id": "topik_grammar-ext-4",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-에 갑니다",
       "translation": "Directional Particle (Go To)"
     },
     {
       "id": "topik_grammar-ext-5",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-에서 공부합니다",
       "translation": "Location of Action Particle (Study At)"
     },
     {
       "id": "topik_grammar-ext-6",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-하고 같이 갑니다",
       "translation": "Comitative Particle (Go Together With)"
     },
     {
       "id": "topik_grammar-ext-7",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-지만 어렵지 않습니다",
       "translation": "Conversational Contrast (But Not Difficult)"
     },
     {
       "id": "topik_grammar-ext-8",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-기 때문에 좋아합니다",
       "translation": "Causation Connector (Because Of)"
     },
     {
       "id": "topik_grammar-ext-9",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-으러 갑니다",
       "translation": "Purpose of Movement (Go To Do)"
     },
     {
       "id": "topik_grammar-ext-10",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-으세요",
       "translation": "Polite Honorific Request"
     },
     {
       "id": "topik_grammar-ext-11",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-지 마세요",
       "translation": "Negative Prohibition (Please Do Not)"
     },
     {
       "id": "topik_grammar-ext-12",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-아/어 주세요",
       "translation": "Request for Favor (Please Do For Me)"
     },
     {
       "id": "topik_grammar-ext-13",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-아/어 봐야 합니다",
       "translation": "Experiential Necessity (Should Try Doing)"
     },
     {
       "id": "topik_grammar-ext-14",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-ㄹ 수 있습니다",
       "translation": "Ability / Possibility (Can Do)"
     },
     {
       "id": "topik_grammar-ext-15",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-ㄹ 수 없습니다",
       "translation": "Inability / Impossibility (Cannot Do)"
     },
     {
       "id": "topik_grammar-ext-16",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-아/어 야 합니다",
       "translation": "Obligation / Imperative (Must Do)"
     },
     {
       "id": "topik_grammar-ext-17",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-기로 했습니다",
       "translation": "Decision / Resolution (Decided To Do)"
     },
     {
       "id": "topik_grammar-ext-18",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-는 동안에",
       "translation": "Temporal Duration (While Doing)"
     },
     {
       "id": "topik_grammar-ext-19",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-기 전에",
       "translation": "Preceding Temporal Point (Before Doing)"
     },
     {
       "id": "topik_grammar-ext-20",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-은 후에",
       "translation": "Subsequent Temporal Point (After Doing)"
     },
     {
       "id": "topik_grammar-ext-21",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-면서 공부합니다",
       "translation": "Simultaneous Actions (While Studying)"
     },
     {
       "id": "topik_grammar-ext-22",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-거나 쉬어요",
       "translation": "Disjunctive Option (Or Rest)"
     },
     {
       "id": "topik_grammar-ext-23",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-지만 괜찮아요",
       "translation": "Concessive Contrast (But It Is Okay)"
     },
     {
       "id": "topik_grammar-ext-24",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-아/어 도 됩니다",
       "translation": "Permission (Allowed To Do)"
     },
     {
       "id": "topik_grammar-ext-25",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-으면 안 됩니다",
       "translation": "Prohibition (Not Allowed To Do)"
     },
     {
       "id": "topik_grammar-ext-26",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-ㄹ 것 같습니다",
       "translation": "Supposition / Conjecture (Seems Like)"
     },
     {
       "id": "topik_grammar-ext-27",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-ㄹ 때 기쁩니다",
       "translation": "Temporal Point (When ... I Am Glad)"
     },
     {
       "id": "topik_grammar-ext-28",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-아/어 지고 있습니다",
       "translation": "Progressive State Change (Is Becoming)"
     },
     {
       "id": "topik_grammar-ext-29",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-게 되었습니다",
       "translation": "Resultant State Shift (Turned Out To Be)"
     },
     {
       "id": "topik_grammar-ext-30",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-ㄹ 겸 해서",
       "translation": "Dual Purpose (To Do And Also)"
     },
     {
       "id": "topik_grammar-ext-31",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-ㄹ 수밖에 없습니다",
       "translation": "Inevitability (No Choice But To)"
     },
     {
       "id": "topik_grammar-ext-32",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-기 마련입니다",
       "translation": "Natural Law / Inevitability (Bound To Happen)"
     },
     {
       "id": "topik_grammar-ext-33",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-ㄹ 뿐만 아니라",
       "translation": "Additive Emphasis (Not Only ... But Also)"
     },
     {
       "id": "topik_grammar-ext-34",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-에 비해서",
       "translation": "Comparative Basis (Compared To)"
     },
     {
       "id": "topik_grammar-ext-35",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-에 비하여",
       "translation": "Comparative Reference (In Comparison With)"
     },
     {
       "id": "topik_grammar-ext-36",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-에 따르면",
       "translation": "Source Citation (According To)"
     },
     {
       "id": "topik_grammar-ext-37",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-에 의하면",
       "translation": "Evidential Reporting (According to Information)"
     },
     {
       "id": "topik_grammar-ext-38",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-을/를 위해",
       "translation": "Benefactive Purpose (For The Sake Of)"
     },
     {
       "id": "topik_grammar-ext-39",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-에 대해",
       "translation": "Topical Reference (About / Concerning)"
     },
     {
       "id": "topik_grammar-ext-40",
-      "moduleId": "topik_grammar",
-      "type": "sentence",
       "target": "-에 관해",
       "translation": "Subject Concern (Regarding)"
     }

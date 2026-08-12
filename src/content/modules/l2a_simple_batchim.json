@@ -5,351 +5,251 @@
   "items": [
     {
       "id": "l2a-1",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "산",
       "translation": "mountain"
     },
     {
       "id": "l2a-2",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "달",
       "translation": "moon"
     },
     {
       "id": "l2a-3",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "물",
       "translation": "water"
     },
     {
       "id": "l2a-4",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "집",
       "translation": "house"
     },
     {
       "id": "l2a-5",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "밤",
       "translation": "night"
     },
     {
       "id": "l2a-6",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "눈",
       "translation": "eye / snow"
     },
     {
       "id": "l2a-7",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "손",
       "translation": "hand"
     },
     {
       "id": "l2a-8",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "발",
       "translation": "foot"
     },
     {
       "id": "l2a-9",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "책",
       "translation": "book"
     },
     {
       "id": "l2a-10",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "방",
       "translation": "room"
     },
     {
       "id": "l2a-11",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "공",
       "translation": "ball"
     },
     {
       "id": "l2a-12",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "밥",
       "translation": "rice / meal"
     },
     {
       "id": "l2a-13",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "곰",
       "translation": "bear"
     },
     {
       "id": "l2a-14",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "말",
       "translation": "horse / speech"
     },
     {
       "id": "l2a-15",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "땅",
       "translation": "land / ground"
     },
     {
       "id": "l2a-16",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "꽃",
       "translation": "flower"
     },
     {
       "id": "l2a-17",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "빛",
       "translation": "light"
     },
     {
       "id": "l2a-18",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "숲",
       "translation": "forest"
     },
     {
       "id": "l2a-19",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "밭",
       "translation": "field"
     },
     {
       "id": "l2a-20",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "옷",
       "translation": "clothes"
     },
     {
       "id": "l2a_simple_batchim-ext-1",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "봄",
       "translation": "Spring"
     },
     {
       "id": "l2a_simple_batchim-ext-2",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "눈",
       "translation": "Eye / Snow"
     },
     {
       "id": "l2a_simple_batchim-ext-3",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "손",
       "translation": "Hand"
     },
     {
       "id": "l2a_simple_batchim-ext-4",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "공",
       "translation": "Ball"
     },
     {
       "id": "l2a_simple_batchim-ext-5",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "문",
       "translation": "Door / Gate"
     },
     {
       "id": "l2a_simple_batchim-ext-6",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "발",
       "translation": "Foot"
     },
     {
       "id": "l2a_simple_batchim-ext-7",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "길",
       "translation": "Road / Path"
     },
     {
       "id": "l2a_simple_batchim-ext-8",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "돈",
       "translation": "Money"
     },
     {
       "id": "l2a_simple_batchim-ext-9",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "꿈",
       "translation": "Dream"
     },
     {
       "id": "l2a_simple_batchim-ext-10",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "국",
       "translation": "Soup"
     },
     {
       "id": "l2a_simple_batchim-ext-11",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "밥",
       "translation": "Rice / Meal"
     },
     {
       "id": "l2a_simple_batchim-ext-12",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "곰",
       "translation": "Bear"
     },
     {
       "id": "l2a_simple_batchim-ext-13",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "옷",
       "translation": "Clothes"
     },
     {
       "id": "l2a_simple_batchim-ext-14",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "숲",
       "translation": "Forest"
     },
     {
       "id": "l2a_simple_batchim-ext-15",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "낮",
       "translation": "Daytime"
     },
     {
       "id": "l2a_simple_batchim-ext-16",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "꽃",
       "translation": "Flower"
     },
     {
       "id": "l2a_simple_batchim-ext-17",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "잎",
       "translation": "Leaf"
     },
     {
       "id": "l2a_simple_batchim-ext-18",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "빛",
       "translation": "Light / Shine"
     },
     {
       "id": "l2a_simple_batchim-ext-19",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "맛",
       "translation": "Taste / Flavor"
     },
     {
       "id": "l2a_simple_batchim-ext-20",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "밭",
       "translation": "Field / Farm"
     },
     {
       "id": "l2a_simple_batchim-ext-21",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "솥",
       "translation": "Pot / Cauldron"
     },
     {
       "id": "l2a_simple_batchim-ext-22",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "몫",
       "translation": "Share / Portion"
     },
     {
       "id": "l2a_simple_batchim-ext-23",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "곳",
       "translation": "Place / Spot"
     },
     {
       "id": "l2a_simple_batchim-ext-24",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "몸",
       "translation": "Body"
     },
     {
       "id": "l2a_simple_batchim-ext-25",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "밤",
       "translation": "Night / Chestnut"
     },
     {
       "id": "l2a_simple_batchim-ext-26",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "방",
       "translation": "Room"
     },
     {
       "id": "l2a_simple_batchim-ext-27",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "강",
       "translation": "River"
     },
     {
       "id": "l2a_simple_batchim-ext-28",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "섬",
       "translation": "Island"
     },
     {
       "id": "l2a_simple_batchim-ext-29",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "해",
       "translation": "Sun / Year"
     },
     {
       "id": "l2a_simple_batchim-ext-30",
-      "moduleId": "l2a_simple_batchim",
-      "type": "syllable",
       "target": "달",
       "translation": "Moon / Month"
     }

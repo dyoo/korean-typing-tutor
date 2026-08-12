@@ -12,7 +12,6 @@ const mockCurriculum: CurriculumData = {
     {
       id: 'l1-1',
       moduleId: 'l1',
-      type: 'syllable',
       target: '가',
       pronunciation: 'ga',
       translation: null,
@@ -20,7 +19,6 @@ const mockCurriculum: CurriculumData = {
     {
       id: 'l3-1',
       moduleId: 'l3',
-      type: 'word',
       target: '사과',
       pronunciation: 'sagwa',
       translation: 'apple',

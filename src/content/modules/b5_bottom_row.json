@@ -5,351 +5,251 @@
   "items": [
     {
       "id": "b5-1",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "코",
       "translation": "Nose"
     },
     {
       "id": "b5-2",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "기차",
       "translation": "Train"
     },
     {
       "id": "b5-3",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "파도",
       "translation": "Wave"
     },
     {
       "id": "b5-4",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "구름",
       "translation": "Cloud"
     },
     {
       "id": "b5-5",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "나무",
       "translation": "Tree / Wood"
     },
     {
       "id": "b5-6",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "우유",
       "translation": "Milk"
     },
     {
       "id": "b5-7",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "휴지",
       "translation": "Tissue"
     },
     {
       "id": "b5-8",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "치마",
       "translation": "Skirt"
     },
     {
       "id": "b5-9",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "커피",
       "translation": "Coffee"
     },
     {
       "id": "b5_bottom_row-ext-1",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "타조",
       "translation": "Ostrich"
     },
     {
       "id": "b5_bottom_row-ext-2",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "포도",
       "translation": "Grape"
     },
     {
       "id": "b5_bottom_row-ext-3",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "카메라",
       "translation": "Camera"
     },
     {
       "id": "b5_bottom_row-ext-4",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "택시",
       "translation": "Taxi"
     },
     {
       "id": "b5_bottom_row-ext-5",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "초콜릿",
       "translation": "Chocolate"
     },
     {
       "id": "b5_bottom_row-ext-6",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "피아노",
       "translation": "Piano"
     },
     {
       "id": "b5_bottom_row-ext-7",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "토마토",
       "translation": "Tomato"
     },
     {
       "id": "b5_bottom_row-ext-8",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "우산",
       "translation": "Umbrella"
     },
     {
       "id": "b5_bottom_row-ext-9",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "의자",
       "translation": "Chair"
     },
     {
       "id": "b5_bottom_row-ext-10",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "코끼리",
       "translation": "Elephant"
     },
     {
       "id": "b5_bottom_row-ext-11",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "치약",
       "translation": "Toothpaste"
     },
     {
       "id": "b5_bottom_row-ext-12",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "칫솔",
       "translation": "Toothbrush"
     },
     {
       "id": "b5_bottom_row-ext-13",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "카레",
       "translation": "Curry"
     },
     {
       "id": "b5_bottom_row-ext-14",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "파인애플",
       "translation": "Pineapple"
     },
     {
       "id": "b5_bottom_row-ext-15",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "쿠키",
       "translation": "Cookie"
     },
     {
       "id": "b5_bottom_row-ext-16",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "케이크",
       "translation": "Cake"
     },
     {
       "id": "b5_bottom_row-ext-17",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "티셔츠",
       "translation": "T-shirt"
     },
     {
       "id": "b5_bottom_row-ext-18",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "코트",
       "translation": "Coat"
     },
     {
       "id": "b5_bottom_row-ext-19",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "파자마",
       "translation": "Pajamas"
     },
     {
       "id": "b5_bottom_row-ext-20",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "플루트",
       "translation": "Flute"
     },
     {
       "id": "b5_bottom_row-ext-21",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "트럭",
       "translation": "Truck"
     },
     {
       "id": "b5_bottom_row-ext-22",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "헬리콥터",
       "translation": "Helicopter"
     },
     {
       "id": "b5_bottom_row-ext-23",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "컴퓨터",
       "translation": "Computer"
     },
     {
       "id": "b5_bottom_row-ext-24",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "키보드",
       "translation": "Keyboard"
     },
     {
       "id": "b5_bottom_row-ext-25",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "마우스",
       "translation": "Mouse"
     },
     {
       "id": "b5_bottom_row-ext-26",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "모니터",
       "translation": "Monitor"
     },
     {
       "id": "b5_bottom_row-ext-27",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "프린터",
       "translation": "Printer"
     },
     {
       "id": "b5_bottom_row-ext-28",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "스마트폰",
       "translation": "Smartphone"
     },
     {
       "id": "b5_bottom_row-ext-29",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "텔레비전",
       "translation": "Television"
     },
     {
       "id": "b5_bottom_row-ext-30",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "라디오",
       "translation": "Radio"
     },
     {
       "id": "b5_bottom_row-ext-31",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "마이크",
       "translation": "Microphone"
     },
     {
       "id": "b5_bottom_row-ext-32",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "스피커",
       "translation": "Speaker"
     },
     {
       "id": "b5_bottom_row-ext-33",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "헤드폰",
       "translation": "Headphones"
     },
     {
       "id": "b5_bottom_row-ext-34",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "배터리",
       "translation": "Battery"
     },
     {
       "id": "b5_bottom_row-ext-35",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "충전기",
       "translation": "Charger"
     },
     {
       "id": "b5_bottom_row-ext-36",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "케이블",
       "translation": "Cable"
     },
     {
       "id": "b5_bottom_row-ext-37",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "어댑터",
       "translation": "Adapter"
     },
     {
       "id": "b5_bottom_row-ext-38",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "리모컨",
       "translation": "Remote control"
     },
     {
       "id": "b5_bottom_row-ext-39",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "스위치",
       "translation": "Switch"
     },
     {
       "id": "b5_bottom_row-ext-40",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "플러그",
       "translation": "Plug"
     },
     {
       "id": "b5_bottom_row-ext-41",
-      "moduleId": "b5_bottom_row",
-      "type": "word",
       "target": "소켓",
       "translation": "Socket"
     }

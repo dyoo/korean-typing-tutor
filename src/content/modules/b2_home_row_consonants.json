@@ -5,358 +5,258 @@
   "items": [
     {
       "id": "b2-1",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁ",
       "pronunciation": "m (Key A)",
       "translation": "Home Row Consonant 'M'"
     },
     {
       "id": "b2-2",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴ",
       "pronunciation": "n (Key S)",
       "translation": "Home Row Consonant 'N'"
     },
     {
       "id": "b2-3",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇ",
       "pronunciation": "ng (Key D)",
       "translation": "Home Row Consonant 'NG'"
     },
     {
       "id": "b2-4",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹ",
       "pronunciation": "r/l (Key F)",
       "translation": "Home Row Consonant 'R/L'"
     },
     {
       "id": "b2-5",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎ",
       "pronunciation": "h (Key G)",
       "translation": "Home Row Consonant 'H'"
     },
     {
       "id": "b2-6",
-      "moduleId": "b2_home_row_consonants",
-      "type": "word",
       "target": "ㅁㄴㅇㄹㅎ",
       "pronunciation": "m-n-ng-r-h",
       "translation": "Home Row Consonant Drill"
     },
     {
       "id": "b2-7",
-      "moduleId": "b2_home_row_consonants",
-      "type": "word",
       "target": "ㅎㄹㅇㄴㅁ",
       "pronunciation": "h-r-ng-n-m",
       "translation": "Reverse Home Row Drill"
     },
     {
       "id": "b2_home_row_consonants-ext-1",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㄴ",
       "translation": "Consonant Pair M-N"
     },
     {
       "id": "b2_home_row_consonants-ext-2",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㅇ",
       "translation": "Consonant Pair N-NG"
     },
     {
       "id": "b2_home_row_consonants-ext-3",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇㄹ",
       "translation": "Consonant Pair NG-R"
     },
     {
       "id": "b2_home_row_consonants-ext-4",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㅎ",
       "translation": "Consonant Pair R-H"
     },
     {
       "id": "b2_home_row_consonants-ext-5",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎㅁ",
       "translation": "Consonant Pair H-M"
     },
     {
       "id": "b2_home_row_consonants-ext-6",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㅇ",
       "translation": "Consonant Pair M-NG"
     },
     {
       "id": "b2_home_row_consonants-ext-7",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㄹ",
       "translation": "Consonant Pair N-R"
     },
     {
       "id": "b2_home_row_consonants-ext-8",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇㅎ",
       "translation": "Consonant Pair NG-H"
     },
     {
       "id": "b2_home_row_consonants-ext-9",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㅁ",
       "translation": "Consonant Pair R-M"
     },
     {
       "id": "b2_home_row_consonants-ext-10",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎㄴ",
       "translation": "Consonant Pair H-N"
     },
     {
       "id": "b2_home_row_consonants-ext-11",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㄴㅇ",
       "translation": "Consonant Trio M-N-NG"
     },
     {
       "id": "b2_home_row_consonants-ext-12",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㅇㄹ",
       "translation": "Consonant Trio N-NG-R"
     },
     {
       "id": "b2_home_row_consonants-ext-13",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇㄹㅎ",
       "translation": "Consonant Trio NG-R-H"
     },
     {
       "id": "b2_home_row_consonants-ext-14",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㅎㅁ",
       "translation": "Consonant Trio R-H-M"
     },
     {
       "id": "b2_home_row_consonants-ext-15",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎㅁㄴ",
       "translation": "Consonant Trio H-M-N"
     },
     {
       "id": "b2_home_row_consonants-ext-16",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㄴㅇㄹ",
       "translation": "Consonant Quad M-N-NG-R"
     },
     {
       "id": "b2_home_row_consonants-ext-17",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㅇㄹㅎ",
       "translation": "Consonant Quad N-NG-R-H"
     },
     {
       "id": "b2_home_row_consonants-ext-18",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇㄹㅎㅁ",
       "translation": "Consonant Quad NG-R-H-M"
     },
     {
       "id": "b2_home_row_consonants-ext-19",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㅎㅁㄴ",
       "translation": "Consonant Quad R-H-M-N"
     },
     {
       "id": "b2_home_row_consonants-ext-20",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎㅁㄴㅇ",
       "translation": "Consonant Quad H-M-N-NG"
     },
     {
       "id": "b2_home_row_consonants-ext-21",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㅁㄴㄴ",
       "translation": "Repeated Consonants MM-NN"
     },
     {
       "id": "b2_home_row_consonants-ext-22",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇㅇㄹㄹ",
       "translation": "Repeated Consonants NGNG-RR"
     },
     {
       "id": "b2_home_row_consonants-ext-23",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎㅎㅁㅁ",
       "translation": "Repeated Consonants HH-MM"
     },
     {
       "id": "b2_home_row_consonants-ext-24",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㄴㅇㅇ",
       "translation": "Repeated Consonants NN-NGNG"
     },
     {
       "id": "b2_home_row_consonants-ext-25",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㄹㅎㅎ",
       "translation": "Repeated Consonants RR-HH"
     },
     {
       "id": "b2_home_row_consonants-ext-26",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㄴㅁㄴ",
       "translation": "Alternating M-N-M-N"
     },
     {
       "id": "b2_home_row_consonants-ext-27",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㅇㄴㅇ",
       "translation": "Alternating N-NG-N-NG"
     },
     {
       "id": "b2_home_row_consonants-ext-28",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇㄹㅇㄹ",
       "translation": "Alternating NG-R-NG-R"
     },
     {
       "id": "b2_home_row_consonants-ext-29",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㅎㄹㅎ",
       "translation": "Alternating R-H-R-H"
     },
     {
       "id": "b2_home_row_consonants-ext-30",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎㅁㅎㅁ",
       "translation": "Alternating H-M-H-M"
     },
     {
       "id": "b2_home_row_consonants-ext-31",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㅇㅁㅇ",
       "translation": "Alternating M-NG-M-NG"
     },
     {
       "id": "b2_home_row_consonants-ext-32",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㄹㄴㄹ",
       "translation": "Alternating N-R-N-R"
     },
     {
       "id": "b2_home_row_consonants-ext-33",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇㅎㅇㅎ",
       "translation": "Alternating NG-H-NG-H"
     },
     {
       "id": "b2_home_row_consonants-ext-34",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㅁㄹㅁ",
       "translation": "Alternating R-M-R-M"
     },
     {
       "id": "b2_home_row_consonants-ext-35",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎㄴㅎㄴ",
       "translation": "Alternating H-N-H-N"
     },
     {
       "id": "b2_home_row_consonants-ext-36",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㄹㅁㄹ",
       "translation": "Alternating M-R-M-R"
     },
     {
       "id": "b2_home_row_consonants-ext-37",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㅎㄴㅎ",
       "translation": "Alternating N-H-N-H"
     },
     {
       "id": "b2_home_row_consonants-ext-38",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅇㅁㅇㅁ",
       "translation": "Alternating NG-M-NG-M"
     },
     {
       "id": "b2_home_row_consonants-ext-39",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㄴㄹㄴ",
       "translation": "Alternating R-N-R-N"
     },
     {
       "id": "b2_home_row_consonants-ext-40",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅎㅇㅎㅇ",
       "translation": "Alternating H-NG-H-NG"
     },
     {
       "id": "b2_home_row_consonants-ext-41",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㅁㅎㅁㅎ",
       "translation": "Alternating M-H-M-H"
     },
     {
       "id": "b2_home_row_consonants-ext-42",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄴㅁㄴㅁ",
       "translation": "Alternating N-M-N-M"
     },
     {
       "id": "b2_home_row_consonants-ext-43",
-      "moduleId": "b2_home_row_consonants",
-      "type": "syllable",
       "target": "ㄹㅇㄹㅇ",
       "translation": "Alternating R-NG-R-NG"
     }

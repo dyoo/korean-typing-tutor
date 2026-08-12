@@ -5,351 +5,251 @@
   "items": [
     {
       "id": "sj-1",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "아메리카노 한 잔 주세요.",
       "translation": "One Americano please."
     },
     {
       "id": "sj-2",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "메뉴판 좀 보여 주세요.",
       "translation": "Please show me the menu."
     },
     {
       "id": "sj-3",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "이거 얼마예요?",
       "translation": "How much is this?"
     },
     {
       "id": "sj-4",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "카드로 계산할게요.",
       "translation": "I will pay by card."
     },
     {
       "id": "sj-5",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "영수증 주세요.",
       "translation": "Please give me a receipt."
     },
     {
       "id": "sj-6",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "강남역으로 가 주세요.",
       "translation": "Please take me to Gangnam Station."
     },
     {
       "id": "sj-7",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "여기서 내려 주세요.",
       "translation": "Please drop me off here."
     },
     {
       "id": "sj-8",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "감기약 좀 주세요.",
       "translation": "Please give me cold medicine."
     },
     {
       "id": "sj-9",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "머리가 아파요.",
       "translation": "My head hurts."
     },
     {
       "id": "sj-10",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "사진 좀 찍어 주시겠어요?",
       "translation": "Could you take a picture for me?"
     },
     {
       "id": "sejong_phrases-ext-1",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "이름이 무엇입니까?",
       "translation": "What is your name?"
     },
     {
       "id": "sejong_phrases-ext-2",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "어느 나라 사람입니까?",
       "translation": "Which country are you from?"
     },
     {
       "id": "sejong_phrases-ext-3",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "직업이 무엇입니까?",
       "translation": "What is your occupation?"
     },
     {
       "id": "sejong_phrases-ext-4",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "한국어를 왜 배워요?",
       "translation": "Why do you learn Korean?"
     },
     {
       "id": "sejong_phrases-ext-5",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "한국 생활이 어때요?",
       "translation": "How is life in Korea?"
     },
     {
       "id": "sejong_phrases-ext-6",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "무슨 음식을 제일 좋아해요?",
       "translation": "What food do you like the most?"
     },
     {
       "id": "sejong_phrases-ext-7",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "주말에 보통 뭐 해요?",
       "translation": "What do you usually do on weekends?"
     },
     {
       "id": "sejong_phrases-ext-8",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "취미가 무엇입니까?",
       "translation": "What is your hobby?"
     },
     {
       "id": "sejong_phrases-ext-9",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "어디에 살고 있습니까?",
       "translation": "Where do you live?"
     },
     {
       "id": "sejong_phrases-ext-10",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "가족이 몇 명입니까?",
       "translation": "How many people are in your family?"
     },
     {
       "id": "sejong_phrases-ext-11",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "한국에 언제 왔어요?",
       "translation": "When did you come to Korea?"
     },
     {
       "id": "sejong_phrases-ext-12",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "한국 날씨가 어때요?",
       "translation": "How is the weather in Korea?"
     },
     {
       "id": "sejong_phrases-ext-13",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "한국 음식이 입에 맞아요?",
       "translation": "Does Korean food suit your taste?"
     },
     {
       "id": "sejong_phrases-ext-14",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "취직을 준비하고 있어요.",
       "translation": "I am preparing for job employment."
     },
     {
       "id": "sejong_phrases-ext-15",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "한국 대학에 진학하고 싶어요.",
       "translation": "I want to enter a Korean university."
     },
     {
       "id": "sejong_phrases-ext-16",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "친구를 많이 사귀고 싶어요.",
       "translation": "I want to make many friends."
     },
     {
       "id": "sejong_phrases-ext-17",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "한국 노래를 자주 들어요.",
       "translation": "I listen to Korean songs often."
     },
     {
       "id": "sejong_phrases-ext-18",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "한국 드라마를 좋아해요.",
       "translation": "I like Korean dramas."
     },
     {
       "id": "sejong_phrases-ext-19",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "K-POP을 즐겨 들어요.",
       "translation": "I enjoy listening to K-POP."
     },
     {
       "id": "sejong_phrases-ext-20",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "주말에 친구를 만나요.",
       "translation": "I meet friends on the weekend."
     },
     {
       "id": "sejong_phrases-ext-21",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "도서관에서 책을 읽어요.",
       "translation": "I read books at the library."
     },
     {
       "id": "sejong_phrases-ext-22",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "카페에서 커피를 마셔요.",
       "translation": "I drink coffee at a cafe."
     },
     {
       "id": "sejong_phrases-ext-23",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "공원에서 산책을 해요.",
       "translation": "I take a walk in the park."
     },
     {
       "id": "sejong_phrases-ext-24",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "식당에서 밥을 먹어요.",
       "translation": "I eat a meal at a restaurant."
     },
     {
       "id": "sejong_phrases-ext-25",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "마트에서 장을 봐요.",
       "translation": "I shop for groceries at the market."
     },
     {
       "id": "sejong_phrases-ext-26",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "집에서 쉬고 있어요.",
       "translation": "I am resting at home."
     },
     {
       "id": "sejong_phrases-ext-27",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "영화관에서 영화를 봐요.",
       "translation": "I watch a movie at the cinema."
     },
     {
       "id": "sejong_phrases-ext-28",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "백화점에서 옷을 사요.",
       "translation": "I buy clothes at the department store."
     },
     {
       "id": "sejong_phrases-ext-29",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "버스를 타고 가요.",
       "translation": "I go by bus."
     },
     {
       "id": "sejong_phrases-ext-30",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "지하철을 이용해요.",
       "translation": "I use the subway."
     },
     {
       "id": "sejong_phrases-ext-31",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "택시를 불렀어요.",
       "translation": "I called a taxi."
     },
     {
       "id": "sejong_phrases-ext-32",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "비행기 표를 예매했어요.",
       "translation": "I booked a plane ticket."
     },
     {
       "id": "sejong_phrases-ext-33",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "호텔을 예약했어요.",
       "translation": "I reserved a hotel room."
     },
     {
       "id": "sejong_phrases-ext-34",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "길을 잃어버렸어요.",
       "translation": "I got lost on the road."
     },
     {
       "id": "sejong_phrases-ext-35",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "도움이 필요해요.",
       "translation": "I need help."
     },
     {
       "id": "sejong_phrases-ext-36",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "영어 할 줄 아세요?",
       "translation": "Do you know how to speak English?"
     },
     {
       "id": "sejong_phrases-ext-37",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "천천히 다시 말씀해 주세요.",
       "translation": "Please say it again slowly."
     },
     {
       "id": "sejong_phrases-ext-38",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "다음에 또 만나서 이야기해요.",
       "translation": "Let's meet and talk again next time."
     },
     {
       "id": "sejong_phrases-ext-39",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "감사합니다. 안녕히 계세요.",
       "translation": "Thank you. Goodbye."
     },
     {
       "id": "sejong_phrases-ext-40",
-      "moduleId": "sejong_phrases",
-      "type": "sentence",
       "target": "네, 안녕히 가세요.",
       "translation": "Yes, goodbye."
     }

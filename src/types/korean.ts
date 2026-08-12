@@ -32,7 +32,6 @@ export interface ModuleDefinition {
 export interface LessonItem {
   id: string;
   moduleId: string;
-  type: 'syllable' | 'word' | 'sentence';
   target: string;
   pronunciation?: string | null;
   translation?: string | null;

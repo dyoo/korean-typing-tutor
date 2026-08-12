@@ -5,351 +5,251 @@
   "items": [
     {
       "id": "pro-1",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "식은 죽 먹기.",
       "translation": "A piece of cake (Lit: Eating cold porridge)."
     },
     {
       "id": "pro-2",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "티끌 모아 태산.",
       "translation": "Every little bit counts (Lit: Gathering dust makes a mountain)."
     },
     {
       "id": "pro-3",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "가는 말이 고와야 오는 말이 곱다.",
       "translation": "Nice words bring nice words back."
     },
     {
       "id": "pro-4",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "고생 끝에 즐거움이 온다.",
       "translation": "Pleasure comes after hardship."
     },
     {
       "id": "pro-5",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "시작이 반이다.",
       "translation": "Starting is half the battle."
     },
     {
       "id": "pro-6",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "돌다리도 두들겨 보고 건너라.",
       "translation": "Look before you leap (Lit: Tap even a stone bridge before crossing)."
     },
     {
       "id": "korean_proverbs-ext-1",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "낮말은 새가 듣고 밤말은 쥐가 듣는다.",
       "translation": "Birds hear day words, mice hear night words (Walls have ears)."
     },
     {
       "id": "korean_proverbs-ext-2",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "가는 말이 고와야 오는 말이 곱다.",
       "translation": "Nice words spoken lead to nice words returned (What goes around comes around)."
     },
     {
       "id": "korean_proverbs-ext-3",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "속빈 강정.",
       "translation": "Hollow puffed rice cake (All show and no substance)."
     },
     {
       "id": "korean_proverbs-ext-4",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "고생 끝에 낙이 온다.",
       "translation": "Joy comes at the end of hardship (No pain, no gain)."
     },
     {
       "id": "korean_proverbs-ext-5",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "티끌 모아 태산.",
       "translation": "Gathering dust creates a great mountain (Every little bit adds up)."
     },
     {
       "id": "korean_proverbs-ext-6",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "우물 안 개구리.",
       "translation": "A frog inside a well (A person of narrow vision)."
     },
     {
       "id": "korean_proverbs-ext-7",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "원숭이도 나무에서 떨어진다.",
       "translation": "Even monkeys fall from trees (Even experts make mistakes)."
     },
     {
       "id": "korean_proverbs-ext-8",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "백지장도 맞들면 낫다.",
       "translation": "Even a sheet of paper is lighter when lifted together (Two heads are better than one)."
     },
     {
       "id": "korean_proverbs-ext-9",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "금강산도 식후경.",
       "translation": "Even Mount Geumgang is enjoyed after eating (Eating comes first)."
     },
     {
       "id": "korean_proverbs-ext-10",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "소 잃고 외양간 고친다.",
       "translation": "Fixing the barn after losing the cow (Locking the stable after the horse bolts)."
     },
     {
       "id": "korean_proverbs-ext-11",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "공든 탑이 무너지랴.",
       "translation": "A tower built with devotion will not fall easily (Hard work never betrays)."
     },
     {
       "id": "korean_proverbs-ext-12",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "바늘 도둑이 소 도둑 된다.",
       "translation": "A needle thief becomes a cow thief (Minor bad habits lead to major crimes)."
     },
     {
       "id": "korean_proverbs-ext-13",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "아는 길도 물어가라.",
       "translation": "Even on a familiar road, ask directions (Always double-check)."
     },
     {
       "id": "korean_proverbs-ext-14",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "천 리 길도 한 걸음부터.",
       "translation": "A journey of a thousand miles begins with a single step."
     },
     {
       "id": "korean_proverbs-ext-15",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "병 주고 약 준다.",
       "translation": "Giving a disease then offering medicine (Harming someone then pretending to help)."
     },
     {
       "id": "korean_proverbs-ext-16",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "누워서 떡 먹기.",
       "translation": "Eating rice cake lying down (A piece of cake)."
     },
     {
       "id": "korean_proverbs-ext-17",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "식은 죽 먹기.",
       "translation": "Eating cooled porridge (Extremely easy)."
     },
     {
       "id": "korean_proverbs-ext-18",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "땅 짚고 헤엄치기.",
       "translation": "Swimming while touching the ground (Effortless)."
     },
     {
       "id": "korean_proverbs-ext-19",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "그림의 떡.",
       "translation": "A rice cake in a painting (Unattainable desire)."
     },
     {
       "id": "korean_proverbs-ext-20",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "새발의 피.",
       "translation": "Blood on a bird's foot (A drop in the ocean)."
     },
     {
       "id": "korean_proverbs-ext-21",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "등잔 밑이 어둡다.",
       "translation": "It is dark under the lamp (Overlooking what is right under one's nose)."
     },
     {
       "id": "korean_proverbs-ext-22",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "호랑이도 제 말 하면 온다.",
       "translation": "Speak of the tiger and it appears (Speak of the devil)."
     },
     {
       "id": "korean_proverbs-ext-23",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "개구리 올챙이 적 생각 못 한다.",
       "translation": "The frog forgets its tadpole days (Arrogance after success)."
     },
     {
       "id": "korean_proverbs-ext-24",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "도둑이 제 발 저린다.",
       "translation": "The thief's foot feels numb (A guilty conscience needs no accuser)."
     },
     {
       "id": "korean_proverbs-ext-25",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "뛰는 놈 위에 나는 놈 있다.",
       "translation": "Above a running person is a flying person (There is always someone better)."
     },
     {
       "id": "korean_proverbs-ext-26",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "세 살 버릇 여든까지 간다.",
       "translation": "Habits formed at age three last until age eighty."
     },
     {
       "id": "korean_proverbs-ext-27",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "발 없는 말이 천 리 간다.",
       "translation": "Footless words travel a thousand miles (Rumors spread fast)."
     },
     {
       "id": "korean_proverbs-ext-28",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "일석이조",
       "translation": "Killing two birds with one stone (一石二鳥)"
     },
     {
       "id": "korean_proverbs-ext-29",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "동문서답",
       "translation": "East question, West answer (An irrelevant answer) (東問西答)"
     },
     {
       "id": "korean_proverbs-ext-30",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "작심삼일",
       "translation": "A resolution lasting three days (Short-lived resolve) (作心三日)"
     },
     {
       "id": "korean_proverbs-ext-31",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "대기만성",
       "translation": "Great vessels mature late (Great talents mature with time) (大器晚成)"
     },
     {
       "id": "korean_proverbs-ext-32",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "십시일반",
       "translation": "Ten spoons make one bowl of rice (Many small contributions make a big difference) (十匙一飯)"
     },
     {
       "id": "korean_proverbs-ext-33",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "유비무환",
       "translation": "If prepared, there is no worry (Preparation prevents disaster) (有備無患)"
     },
     {
       "id": "korean_proverbs-ext-34",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "역지사지",
       "translation": "Thinking from the other person's shoes (Empathy) (易地思之)"
     },
     {
       "id": "korean_proverbs-ext-35",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "사필귀정",
       "translation": "Justice will eventually prevail (事必歸正)"
     },
     {
       "id": "korean_proverbs-ext-36",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "청출어람",
       "translation": "Blue comes from indigo (The pupil surpasses the master) (青出於藍)"
     },
     {
       "id": "korean_proverbs-ext-37",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "고진감래",
       "translation": "Sweetness comes after bitterness (苦盡甘來)"
     },
     {
       "id": "korean_proverbs-ext-38",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "칠전팔기",
       "translation": "Fall seven times, stand up eight (Perseverance) (七顛八起)"
     },
     {
       "id": "korean_proverbs-ext-39",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "자업자득",
       "translation": "Reap what you sow (自業自得)"
     },
     {
       "id": "korean_proverbs-ext-40",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "결초보은",
       "translation": "Repaying a favor even beyond death (結草報恩)"
     },
     {
       "id": "korean_proverbs-ext-41",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "심사숙고",
       "translation": "Deep contemplation and careful thought (深思熟考)"
     },
     {
       "id": "korean_proverbs-ext-42",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "일어탁수",
       "translation": "One fish muddies the entire stream (一魚濁水)"
     },
     {
       "id": "korean_proverbs-ext-43",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "과유불급",
       "translation": "Excess is as bad as deficiency (過猶不及)"
     },
     {
       "id": "korean_proverbs-ext-44",
-      "moduleId": "korean_proverbs",
-      "type": "sentence",
       "target": "동고동락",
       "translation": "Sharing joys and sorrows together (同苦同樂)"
     }

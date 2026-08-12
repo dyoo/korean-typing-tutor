@@ -5,351 +5,251 @@
   "items": [
     {
       "id": "l2b-1",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "밖",
       "translation": "outside (쌍받침 ㄲ)"
     },
     {
       "id": "l2b-2",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "있",
       "translation": "to exist / have (쌍받침 ㅆ)"
     },
     {
       "id": "l2b-3",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "없",
       "translation": "not exist / lack (겹받침 ㅄ)"
     },
     {
       "id": "l2b-4",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "닭",
       "translation": "chicken / rooster (겹받침 ㄺ)"
     },
     {
       "id": "l2b-5",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "흙",
       "translation": "soil / earth (겹받침 ㄺ)"
     },
     {
       "id": "l2b-6",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "삶",
       "translation": "life / living (겹받침 ㄻ)"
     },
     {
       "id": "l2b-7",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "앉",
       "translation": "to sit (겹받침 ㄵ)"
     },
     {
       "id": "l2b-8",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "넓",
       "translation": "spacious / wide (겹받침 ㄼ)"
     },
     {
       "id": "l2b_complex_batchim-ext-1",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "밟다",
       "translation": "To step on"
     },
     {
       "id": "l2b_complex_batchim-ext-2",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "앎",
       "translation": "Knowledge / Knowing"
     },
     {
       "id": "l2b_complex_batchim-ext-3",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "굶다",
       "translation": "To starve / Skip a meal"
     },
     {
       "id": "l2b_complex_batchim-ext-4",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "곯다",
       "translation": "To spoil / Rot"
     },
     {
       "id": "l2b_complex_batchim-ext-5",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "앓다",
       "translation": "To suffer / Be sick"
     },
     {
       "id": "l2b_complex_batchim-ext-6",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "뚫다",
       "translation": "To pierce / Drill"
     },
     {
       "id": "l2b_complex_batchim-ext-7",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "잃다",
       "translation": "To lose"
     },
     {
       "id": "l2b_complex_batchim-ext-8",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "끊다",
       "translation": "To cut off / Quit"
     },
     {
       "id": "l2b_complex_batchim-ext-9",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "앉다",
       "translation": "To sit"
     },
     {
       "id": "l2b_complex_batchim-ext-10",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "얹다",
       "translation": "To place on top"
     },
     {
       "id": "l2b_complex_batchim-ext-11",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "핥다",
       "translation": "To lick"
     },
     {
       "id": "l2b_complex_batchim-ext-12",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "읊다",
       "translation": "To recite (poetry)"
     },
     {
       "id": "l2b_complex_batchim-ext-13",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "값",
       "translation": "Price / Value"
     },
     {
       "id": "l2b_complex_batchim-ext-14",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "맑다",
       "translation": "Clear / Pure"
     },
     {
       "id": "l2b_complex_batchim-ext-15",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "붉다",
       "translation": "Red / Crimson"
     },
     {
       "id": "l2b_complex_batchim-ext-16",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "굵다",
       "translation": "Thick / Stout"
     },
     {
       "id": "l2b_complex_batchim-ext-17",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "짧다",
       "translation": "Short"
     },
     {
       "id": "l2b_complex_batchim-ext-18",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "얇다",
       "translation": "Thin"
     },
     {
       "id": "l2b_complex_batchim-ext-19",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "앳되다",
       "translation": "Youthful"
     },
     {
       "id": "l2b_complex_batchim-ext-20",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "얹어놓다",
       "translation": "To place upon"
     },
     {
       "id": "l2b_complex_batchim-ext-21",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "읊조리다",
       "translation": "To murmur / Recite"
     },
     {
       "id": "l2b_complex_batchim-ext-22",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "핥아먹다",
       "translation": "To lick clean"
     },
     {
       "id": "l2b_complex_batchim-ext-23",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "뚫어지다",
       "translation": "To be pierced"
     },
     {
       "id": "l2b_complex_batchim-ext-24",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "잃어버리다",
       "translation": "To lose completely"
     },
     {
       "id": "l2b_complex_batchim-ext-25",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "끊어지다",
       "translation": "To snap / Be severed"
     },
     {
       "id": "l2b_complex_batchim-ext-26",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "앉아있다",
       "translation": "To be sitting"
     },
     {
       "id": "l2b_complex_batchim-ext-27",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "값지다",
       "translation": "Valuable / Priceless"
     },
     {
       "id": "l2b_complex_batchim-ext-28",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "맑아지다",
       "translation": "To clear up"
     },
     {
       "id": "l2b_complex_batchim-ext-29",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "붉어지다",
       "translation": "To turn red"
     },
     {
       "id": "l2b_complex_batchim-ext-30",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "굵어지다",
       "translation": "To become thick"
     },
     {
       "id": "l2b_complex_batchim-ext-31",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "짧아지다",
       "translation": "To shorten"
     },
     {
       "id": "l2b_complex_batchim-ext-32",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "얇아지다",
       "translation": "To thin out"
     },
     {
       "id": "l2b_complex_batchim-ext-33",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "닭고기",
       "translation": "Chicken meat"
     },
     {
       "id": "l2b_complex_batchim-ext-34",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "흙냄새",
       "translation": "Earthy smell"
     },
     {
       "id": "l2b_complex_batchim-ext-35",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "삶의 길",
       "translation": "Path of life"
     },
     {
       "id": "l2b_complex_batchim-ext-36",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "넓은 바다",
       "translation": "Wide sea"
     },
     {
       "id": "l2b_complex_batchim-ext-37",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "값진 보물",
       "translation": "Valuable treasure"
     },
     {
       "id": "l2b_complex_batchim-ext-38",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "맑은 하늘",
       "translation": "Clear sky"
     },
     {
       "id": "l2b_complex_batchim-ext-39",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "짧은 시간",
       "translation": "Short time"
     },
     {
       "id": "l2b_complex_batchim-ext-40",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "넓은 집",
       "translation": "Spacious house"
     },
     {
       "id": "l2b_complex_batchim-ext-41",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "닭의 알",
       "translation": "Chicken egg"
     },
     {
       "id": "l2b_complex_batchim-ext-42",
-      "moduleId": "l2b_complex_batchim",
-      "type": "syllable",
       "target": "흙먼지",
       "translation": "Earthy dust"
     }

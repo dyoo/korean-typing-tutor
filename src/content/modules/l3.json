@@ -5,421 +5,301 @@
   "items": [
     {
       "id": "l3-1",
-      "moduleId": "l3",
-      "type": "word",
       "target": "사과",
       "translation": "apple"
     },
     {
       "id": "l3-2",
-      "moduleId": "l3",
-      "type": "word",
       "target": "우유",
       "translation": "milk"
     },
     {
       "id": "l3-3",
-      "moduleId": "l3",
-      "type": "word",
       "target": "김치",
       "translation": "kimchi"
     },
     {
       "id": "l3-4",
-      "moduleId": "l3",
-      "type": "word",
       "target": "불고기",
       "translation": "bulgogi (marinated beef)"
     },
     {
       "id": "l3-5",
-      "moduleId": "l3",
-      "type": "word",
       "target": "비빔밥",
       "translation": "bibimbap"
     },
     {
       "id": "l3-6",
-      "moduleId": "l3",
-      "type": "word",
       "target": "강아지",
       "translation": "puppy"
     },
     {
       "id": "l3-7",
-      "moduleId": "l3",
-      "type": "word",
       "target": "고양이",
       "translation": "cat"
     },
     {
       "id": "l3-8",
-      "moduleId": "l3",
-      "type": "word",
       "target": "선생님",
       "translation": "teacher"
     },
     {
       "id": "l3-9",
-      "moduleId": "l3",
-      "type": "word",
       "target": "친구",
       "translation": "friend"
     },
     {
       "id": "l3-10",
-      "moduleId": "l3",
-      "type": "word",
       "target": "하늘",
       "translation": "sky"
     },
     {
       "id": "l3-11",
-      "moduleId": "l3",
-      "type": "word",
       "target": "구름",
       "translation": "cloud"
     },
     {
       "id": "l3-12",
-      "moduleId": "l3",
-      "type": "word",
       "target": "바다",
       "translation": "sea / ocean"
     },
     {
       "id": "l3-13",
-      "moduleId": "l3",
-      "type": "word",
       "target": "컴퓨터",
       "translation": "computer"
     },
     {
       "id": "l3-14",
-      "moduleId": "l3",
-      "type": "word",
       "target": "휴대폰",
       "translation": "mobile phone"
     },
     {
       "id": "l3-15",
-      "moduleId": "l3",
-      "type": "word",
       "target": "물",
       "translation": "water"
     },
     {
       "id": "l3-16",
-      "moduleId": "l3",
-      "type": "word",
       "target": "밥",
       "translation": "rice / meal"
     },
     {
       "id": "l3-17",
-      "moduleId": "l3",
-      "type": "word",
       "target": "차",
       "translation": "tea / car"
     },
     {
       "id": "l3-18",
-      "moduleId": "l3",
-      "type": "word",
       "target": "주스",
       "translation": "juice"
     },
     {
       "id": "l3-19",
-      "moduleId": "l3",
-      "type": "word",
       "target": "빵",
       "translation": "bread"
     },
     {
       "id": "l3-20",
-      "moduleId": "l3",
-      "type": "word",
       "target": "생선",
       "translation": "fish"
     },
     {
       "id": "l3-21",
-      "moduleId": "l3",
-      "type": "word",
       "target": "계란",
       "translation": "egg"
     },
     {
       "id": "l3-22",
-      "moduleId": "l3",
-      "type": "word",
       "target": "라면",
       "translation": "ramen"
     },
     {
       "id": "l3-23",
-      "moduleId": "l3",
-      "type": "word",
       "target": "떡볶이",
       "translation": "spicy rice cakes"
     },
     {
       "id": "l3-24",
-      "moduleId": "l3",
-      "type": "word",
       "target": "치킨",
       "translation": "fried chicken"
     },
     {
       "id": "l3-25",
-      "moduleId": "l3",
-      "type": "word",
       "target": "피자",
       "translation": "pizza"
     },
     {
       "id": "l3-26",
-      "moduleId": "l3",
-      "type": "word",
       "target": "아이스크림",
       "translation": "ice cream"
     },
     {
       "id": "l3-27",
-      "moduleId": "l3",
-      "type": "word",
       "target": "소금",
       "translation": "salt"
     },
     {
       "id": "l3-28",
-      "moduleId": "l3",
-      "type": "word",
       "target": "설탕",
       "translation": "sugar"
     },
     {
       "id": "l3-29",
-      "moduleId": "l3",
-      "type": "word",
       "target": "가족",
       "translation": "family"
     },
     {
       "id": "l3-30",
-      "moduleId": "l3",
-      "type": "word",
       "target": "부모님",
       "translation": "parents"
     },
     {
       "id": "l3-31",
-      "moduleId": "l3",
-      "type": "word",
       "target": "아버지",
       "translation": "father"
     },
     {
       "id": "l3-32",
-      "moduleId": "l3",
-      "type": "word",
       "target": "어머니",
       "translation": "mother"
     },
     {
       "id": "l3-33",
-      "moduleId": "l3",
-      "type": "word",
       "target": "형",
       "translation": "older brother (male speaker)"
     },
     {
       "id": "l3-34",
-      "moduleId": "l3",
-      "type": "word",
       "target": "누나",
       "translation": "older sister (male speaker)"
     },
     {
       "id": "l3-35",
-      "moduleId": "l3",
-      "type": "word",
       "target": "오빠",
       "translation": "older brother (female speaker)"
     },
     {
       "id": "l3-36",
-      "moduleId": "l3",
-      "type": "word",
       "target": "언니",
       "translation": "older sister (female speaker)"
     },
     {
       "id": "l3-37",
-      "moduleId": "l3",
-      "type": "word",
       "target": "동생",
       "translation": "younger sibling"
     },
     {
       "id": "l3-38",
-      "moduleId": "l3",
-      "type": "word",
       "target": "할아버지",
       "translation": "grandfather"
     },
     {
       "id": "l3-39",
-      "moduleId": "l3",
-      "type": "word",
       "target": "할머니",
       "translation": "grandmother"
     },
     {
       "id": "l3-40",
-      "moduleId": "l3",
-      "type": "word",
       "target": "아기",
       "translation": "baby"
     },
     {
       "id": "l3-41",
-      "moduleId": "l3",
-      "type": "word",
       "target": "사람",
       "translation": "person / human"
     },
     {
       "id": "l3-42",
-      "moduleId": "l3",
-      "type": "word",
       "target": "학생",
       "translation": "student"
     },
     {
       "id": "l3-43",
-      "moduleId": "l3",
-      "type": "word",
       "target": "의사",
       "translation": "doctor"
     },
     {
       "id": "l3-44",
-      "moduleId": "l3",
-      "type": "word",
       "target": "산",
       "translation": "mountain"
     },
     {
       "id": "l3-45",
-      "moduleId": "l3",
-      "type": "word",
       "target": "강",
       "translation": "river"
     },
     {
       "id": "l3-46",
-      "moduleId": "l3",
-      "type": "word",
       "target": "나무",
       "translation": "tree"
     },
     {
       "id": "l3-47",
-      "moduleId": "l3",
-      "type": "word",
       "target": "꽃",
       "translation": "flower"
     },
     {
       "id": "l3-48",
-      "moduleId": "l3",
-      "type": "word",
       "target": "새",
       "translation": "bird"
     },
     {
       "id": "l3-49",
-      "moduleId": "l3",
-      "type": "word",
       "target": "말",
       "translation": "horse / speech"
     },
     {
       "id": "l3-50",
-      "moduleId": "l3",
-      "type": "word",
       "target": "소",
       "translation": "cow / ox"
     },
     {
       "id": "l3-51",
-      "moduleId": "l3",
-      "type": "word",
       "target": "돼지",
       "translation": "pig"
     },
     {
       "id": "l3-52",
-      "moduleId": "l3",
-      "type": "word",
       "target": "책",
       "translation": "book"
     },
     {
       "id": "l3-53",
-      "moduleId": "l3",
-      "type": "word",
       "target": "시계",
       "translation": "clock / watch"
     },
     {
       "id": "l3-54",
-      "moduleId": "l3",
-      "type": "word",
       "target": "안경",
       "translation": "glasses"
     },
     {
       "id": "l3-55",
-      "moduleId": "l3",
-      "type": "word",
       "target": "모자",
       "translation": "hat / cap"
     },
     {
       "id": "l3-56",
-      "moduleId": "l3",
-      "type": "word",
       "target": "옷",
       "translation": "clothes"
     },
     {
       "id": "l3-57",
-      "moduleId": "l3",
-      "type": "word",
       "target": "신발",
       "translation": "shoes"
     },
     {
       "id": "l3-58",
-      "moduleId": "l3",
-      "type": "word",
       "target": "가방",
       "translation": "bag / backpack"
     },
     {
       "id": "l3-59",
-      "moduleId": "l3",
-      "type": "word",
       "target": "우산",
       "translation": "umbrella"
     },
     {
       "id": "l3-60",
-      "moduleId": "l3",
-      "type": "word",
       "target": "지갑",
       "translation": "wallet"
     }

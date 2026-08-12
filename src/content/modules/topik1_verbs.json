@@ -5,351 +5,251 @@
   "items": [
     {
       "id": "t1vb-1",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "일어나다",
       "translation": "to get up"
     },
     {
       "id": "t1vb-2",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "일하다",
       "translation": "to work"
     },
     {
       "id": "t1vb-3",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "쉬다",
       "translation": "to rest"
     },
     {
       "id": "t1vb-4",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "사다",
       "translation": "to buy"
     },
     {
       "id": "t1vb-5",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "팔다",
       "translation": "to sell"
     },
     {
       "id": "t1vb-6",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "기다리다",
       "translation": "to wait"
     },
     {
       "id": "t1vb-7",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "약속하다",
       "translation": "to make a promise"
     },
     {
       "id": "t1vb-8",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "생각하다",
       "translation": "to think"
     },
     {
       "id": "t1vb-9",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "준비하다",
       "translation": "to prepare"
     },
     {
       "id": "t1vb-10",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "출발하다",
       "translation": "to depart"
     },
     {
       "id": "topik1_verbs-ext-1",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "공부하다",
       "translation": "To study"
     },
     {
       "id": "topik1_verbs-ext-2",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "일하다",
       "translation": "To work"
     },
     {
       "id": "topik1_verbs-ext-3",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "운동하다",
       "translation": "To exercise"
     },
     {
       "id": "topik1_verbs-ext-4",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "요리하다",
       "translation": "To cook"
     },
     {
       "id": "topik1_verbs-ext-5",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "청소하다",
       "translation": "To clean"
     },
     {
       "id": "topik1_verbs-ext-6",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "빨래하다",
       "translation": "To do laundry"
     },
     {
       "id": "topik1_verbs-ext-7",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "쇼핑하다",
       "translation": "To shop"
     },
     {
       "id": "topik1_verbs-ext-8",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "전화하다",
       "translation": "To make a phone call"
     },
     {
       "id": "topik1_verbs-ext-9",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "이야기하다",
       "translation": "To converse / Talk"
     },
     {
       "id": "topik1_verbs-ext-10",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "약속하다",
       "translation": "To promise / Make an appointment"
     },
     {
       "id": "topik1_verbs-ext-11",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "선물하다",
       "translation": "To give a gift"
     },
     {
       "id": "topik1_verbs-ext-12",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "취직하다",
       "translation": "To get a job"
     },
     {
       "id": "topik1_verbs-ext-13",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "졸업하다",
       "translation": "To graduate"
     },
     {
       "id": "topik1_verbs-ext-14",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "입학하다",
       "translation": "To enter a school"
     },
     {
       "id": "topik1_verbs-ext-15",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "이사가다",
       "translation": "To move to a new house"
     },
     {
       "id": "topik1_verbs-ext-16",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "여행하다",
       "translation": "To travel"
     },
     {
       "id": "topik1_verbs-ext-17",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "산책하다",
       "translation": "To take a walk"
     },
     {
       "id": "topik1_verbs-ext-18",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "운전하다",
       "translation": "To drive"
     },
     {
       "id": "topik1_verbs-ext-19",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "주문하다",
       "translation": "To order (food/goods)"
     },
     {
       "id": "topik1_verbs-ext-20",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "결제하다",
       "translation": "To make a payment"
     },
     {
       "id": "topik1_verbs-ext-21",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "환불하다",
       "translation": "To request a refund"
     },
     {
       "id": "topik1_verbs-ext-22",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "예약하다",
       "translation": "To reserve / Book"
     },
     {
       "id": "topik1_verbs-ext-23",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "취소하다",
       "translation": "To cancel"
     },
     {
       "id": "topik1_verbs-ext-24",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "도착하다",
       "translation": "To arrive"
     },
     {
       "id": "topik1_verbs-ext-25",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "출발하다",
       "translation": "To depart"
     },
     {
       "id": "topik1_verbs-ext-26",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "준비하다",
       "translation": "To prepare"
     },
     {
       "id": "topik1_verbs-ext-27",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "시작하다",
       "translation": "To start / Begin"
     },
     {
       "id": "topik1_verbs-ext-28",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "끝나다",
       "translation": "To finish / End"
     },
     {
       "id": "topik1_verbs-ext-29",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "포기하다",
       "translation": "To give up"
     },
     {
       "id": "topik1_verbs-ext-30",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "성공하다",
       "translation": "To succeed"
     },
     {
       "id": "topik1_verbs-ext-31",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "실패하다",
       "translation": "To fail"
     },
     {
       "id": "topik1_verbs-ext-32",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "연습하다",
       "translation": "To practice"
     },
     {
       "id": "topik1_verbs-ext-33",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "복습하다",
       "translation": "To review lessons"
     },
     {
       "id": "topik1_verbs-ext-34",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "예습하다",
       "translation": "To preview lessons"
     },
     {
       "id": "topik1_verbs-ext-35",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "기억하다",
       "translation": "To remember"
     },
     {
       "id": "topik1_verbs-ext-36",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "잊어버리다",
       "translation": "To forget"
     },
     {
       "id": "topik1_verbs-ext-37",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "생각하다",
       "translation": "To think"
     },
     {
       "id": "topik1_verbs-ext-38",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "고민하다",
       "translation": "To worry / Ponder"
     },
     {
       "id": "topik1_verbs-ext-39",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "결정하다",
       "translation": "To decide"
     },
     {
       "id": "topik1_verbs-ext-40",
-      "moduleId": "topik1_verbs",
-      "type": "word",
       "target": "도와주다",
       "translation": "To help out"
     }

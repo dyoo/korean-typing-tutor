@@ -1,10 +1,13 @@
 import type { LessonItem, ModuleDefinition } from '../types/korean';
 
+/** Lesson item as stored inside per-module JSON files (without redundant moduleId). */
+export type RawLessonItem = Omit<LessonItem, 'moduleId'>;
+
 export interface ModuleFile {
   id: string;
   title: string;
   description: string;
-  items: LessonItem[];
+  items: RawLessonItem[];
 }
 
 export interface CurriculumData {
@@ -60,7 +63,12 @@ for (const id of MODULE_ORDER) {
       title: mod.title,
       description: mod.description,
     });
-    items.push(...mod.items);
+    items.push(
+      ...mod.items.map((item) => ({
+        ...item,
+        moduleId: mod.id,
+      })),
+    );
   }
 }
 
@@ -71,7 +79,12 @@ for (const [id, mod] of moduleMap.entries()) {
       title: mod.title,
       description: mod.description,
     });
-    items.push(...mod.items);
+    items.push(
+      ...mod.items.map((item) => ({
+        ...item,
+        moduleId: mod.id,
+      })),
+    );
   }
 }
 

@@ -53,7 +53,6 @@ describe('Dynamic Romanizer Engine', () => {
     const itemWithOverride: LessonItem = {
       id: 'test-1',
       moduleId: 'test',
-      type: 'syllable',
       target: 'ㅏ',
       pronunciation: 'a (Key K)',
       translation: 'A',
@@ -63,7 +62,6 @@ describe('Dynamic Romanizer Engine', () => {
     const itemWithoutOverride: LessonItem = {
       id: 'test-2',
       moduleId: 'test',
-      type: 'word',
       target: '호랑이',
       translation: 'Tiger',
     };

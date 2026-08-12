@@ -5,351 +5,251 @@
   "items": [
     {
       "id": "korean_tongue_twisters-1",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "경찰청 창살은 외창살인가 쌍창살인가.",
       "translation": "Is the police station window bar a single bar or a double bar?"
     },
     {
       "id": "korean_tongue_twisters-2",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "내가 그린 기린 그림은 목이 긴 기린 그림이고, 네가 그린 기린 그림은 목 안 긴 기린 그림이다.",
       "translation": "The giraffe picture I drew is a long-necked giraffe picture, and the giraffe picture you drew is a short-necked giraffe picture."
     },
     {
       "id": "korean_tongue_twisters-3",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "간장 공장 공장장은 강 공장장이고, 된장 공장 공장장은 공 공장장이다.",
       "translation": "The manager of the soy sauce factory is Manager Kang, and the manager of the bean paste factory is Manager Kong."
     },
     {
       "id": "korean_tongue_twisters-4",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "들콩깍지는 깐 콩깍지인가 안 깐 콩깍지인가.",
       "translation": "Is the wild bean pod a peeled bean pod or an unpeeled bean pod?"
     },
     {
       "id": "korean_tongue_twisters-5",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "안흥 찐빵집 찐빵은 뜨거운 찐빵이고, 양평 찐빵집 찐빵은 차가운 찐빵이다.",
       "translation": "The steamed bun at Anheung shop is a hot bun, and the bun at Yangpyeong shop is a cold bun."
     },
     {
       "id": "korean_tongue_twisters-6",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "서울특별시 특허허가과 허가과장 허과장.",
       "translation": "Section Manager Heo of the Patent Authorization Section of Seoul Metropolitan City."
     },
     {
       "id": "korean_tongue_twisters-7",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "중앙청 창살은 쌍창살이고 구청 창살은 외창살이다.",
       "translation": "The Central Government window bar is a double bar and the District Office window bar is a single bar."
     },
     {
       "id": "korean_tongue_twisters-8",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "저기 있는 저 분은 상표 붙인 통조림을 산 분인가, 상표 안 붙인 통조림을 산 분인가.",
       "translation": "Is that person over there someone who bought a labeled can or an unlabeled can?"
     },
     {
       "id": "korean_tongue_twisters-9",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "칠월 칠일은 평창군 평창읍 찰옥수수 수확날이다.",
       "translation": "July 7th is the waxy corn harvest day in Pyeongchang-eup, Pyeongchang-gun."
     },
     {
       "id": "korean_tongue_twisters-10",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "저기 계신 저 분이 바로 우리 구의 새 대건축가이시다.",
       "translation": "That person standing over there is our district new great architect."
     },
     {
       "id": "korean_tongue_twisters-11",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "한양 양장점 옆 한영 양장점, 한영 양장점 옆 한양 양장점.",
       "translation": "Hanyoung tailor shop next to Hanyang tailor shop, Hanyang tailor shop next to Hanyoung tailor shop."
     },
     {
       "id": "korean_tongue_twisters-12",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "뼛조각이 굵은 닭은 닭장에 있고, 뼛조각이 가는 닭은 흙 속에 있다.",
       "translation": "The chicken with thick bones is in the coop, and the chicken with thin bones is in the soil."
     },
     {
       "id": "korean_tongue_twisters-13",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "제주도 서귀포시 감귤 농장의 붉은 감귤은 단 감귤이다.",
       "translation": "The red tangerines at the citrus farm in Seogwipo, Jeju Island are sweet tangerines."
     },
     {
       "id": "korean_tongue_twisters-14",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "멍멍이네 꿀돈은 꿀 꿀돈이고 꿀돈이네 멍멍이는 멍 멍멍이다.",
       "translation": "Meong-meong piggy is a honey pig, and Ggul-don puppy is a barking puppy."
     },
     {
       "id": "korean_tongue_twisters-15",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "신진 샴푸의 샴푸 용기는 핑크색 샴푸 용기이다.",
       "translation": "The shampoo bottle of Shinjin Shampoo is a pink shampoo bottle."
     },
     {
       "id": "korean_tongue_twisters-16",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "경찰청 쇠창살은 외철창살이고 검찰청 쇠창살은 쌍철창살이다.",
       "translation": "The police station iron bars are single iron bars, and the prosecution office iron bars are double iron bars."
     },
     {
       "id": "korean_tongue_twisters-17",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "저기 저 뜀틀이 내가 뛸 뜀틀인가 내가 안 뛸 뜀틀인가.",
       "translation": "Is that vaulting horse over there one I will jump or one I won’t jump?"
     },
     {
       "id": "korean_tongue_twisters-18",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "신진 샹송가수의 신춘 샹송쇼.",
       "translation": "New chanson singer’s spring chanson show."
     },
     {
       "id": "korean_tongue_twisters-19",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "상표 붙인 큰 깡통은 깐 깡통인가 안 깐 깡통인가.",
       "translation": "Is the large labeled tin can an opened can or an unopened can?"
     },
     {
       "id": "korean_tongue_twisters-20",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "고려고 교복은 고급 교복이고 고려고 교복은 고급 원단을 사용했다.",
       "translation": "Goryeo High School uniforms are luxury uniforms made with premium fabric."
     },
     {
       "id": "korean_tongue_twisters-21",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "작년에 온 솥장수는 새 솥장수이고, 금년에 온 솥장수는 헌 솥장수이다.",
       "translation": "The cauldron seller who came last year is a new seller, and the one who came this year is an old seller."
     },
     {
       "id": "korean_tongue_twisters-22",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "도토리가 문을 도로록, 드르륵, 두루룩 열었는가.",
       "translation": "Did the acorn open the door with a rolling, clattering, sliding sound?"
     },
     {
       "id": "korean_tongue_twisters-23",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "앞집 팥죽은 붉은 팥 풋팥죽이고, 뒷집 콩죽은 햇콩 단콩 콩죽이다.",
       "translation": "The front house red bean porridge is fresh red bean porridge, and the back house bean porridge is sweet new bean porridge."
     },
     {
       "id": "korean_tongue_twisters-24",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "박 법학 박사님은 백 법학 박사님보다 법학을 더 잘 아신다.",
       "translation": "Dr. Park, Doctor of Law, knows law better than Dr. Baek, Doctor of Law."
     },
     {
       "id": "korean_tongue_twisters-25",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "시골 찹쌀 햇찹쌀, 도시 햇찹쌀 시골 찹쌀, 햇찹쌀 찰찹쌀.",
       "translation": "Countryside sticky rice, newly harvested sticky rice, city sticky rice, glutinous sticky rice."
     },
     {
       "id": "korean_tongue_twisters-26",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "내가 그린 구름그림은 새털구름 그린 구름그림이고, 네가 그린 구름그림은 깃털구름 그린 구름그림이다.",
       "translation": "The cloud picture I drew is a cirrus cloud picture, and the cloud picture you drew is a feather cloud picture."
     },
     {
       "id": "korean_tongue_twisters-27",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "저기 가는 저 상장사가 새 상 상장사냐 헌 상 상장사냐.",
       "translation": "Is that merchant selling merchant boxes over there selling new boxes or old boxes?"
     },
     {
       "id": "korean_tongue_twisters-28",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "양양역 앞 양장점은 양양 양장점이고, 영양역 앞 영화관은 영양 영화관이다.",
       "translation": "The tailor shop in front of Yangyang Station is Yangyang Tailor Shop, and the cinema in front of Yeongyang Station is Yeongyang Cinema."
     },
     {
       "id": "korean_tongue_twisters-29",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "작은 토끼 토끼통 옆에는 큰 토끼 토끼통이 있고, 큰 토끼 토끼통 옆에는 작은 토끼 토끼통이 있다.",
       "translation": "Next to the small rabbit cage is a big rabbit cage, and next to the big rabbit cage is a small rabbit cage."
     },
     {
       "id": "korean_tongue_twisters-30",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "한국관광공사 곽진광 관광과장.",
       "translation": "Section Manager Kwak Jin-gwang of Korea Tourism Organization."
     },
     {
       "id": "korean_tongue_twisters-31",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "백합 백화점 옆 백화 백화점, 백화 백화점 옆 백합 백화점.",
       "translation": "Baekhwa Department Store next to Baekhap Department Store, Baekhap Department Store next to Baekhwa Department Store."
     },
     {
       "id": "korean_tongue_twisters-32",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "생각이란 생각하면 생각할수록 생각나는 것이 생각이므로, 생각하지 않는 생각이 좋은 생각이라 생각한다.",
       "translation": "Since thought is something that comes to mind the more you think, I think not thinking is a good thought."
     },
     {
       "id": "korean_tongue_twisters-33",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "체다치즈를 최고 많이 먹은 최다은이 체다치즈 먹기 대회 최다 우승자이다.",
       "translation": "Choi Da-eun, who ate the most cheddar cheese, is the record winner of the cheddar cheese eating contest."
     },
     {
       "id": "korean_tongue_twisters-34",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "이수지가 저수지에 갔는데, 이 수지가 저수지에 간 걸까 저 수지가 저수지에 간 걸까 고민했다.",
       "translation": "Lee Su-ji went to the reservoir and pondered whether this Su-ji went to the reservoir or that Su-ji went."
     },
     {
       "id": "korean_tongue_twisters-35",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "칠월 칠일은 평창 친구 친정 칠순 잔칫날이다.",
       "translation": "July 7th is the 70th birthday celebration day for Pyeongchang friend’s mother."
     },
     {
       "id": "korean_tongue_twisters-36",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "우리집 깨죽은 검은깨 깨죽인데 사람들은 햇콩 단콩 콩죽 깨죽 먹기를 싫어하더라.",
       "translation": "Our house sesame porridge is black sesame porridge, but people dislike eating bean porridge and sesame porridge."
     },
     {
       "id": "korean_tongue_twisters-37",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "뽕나무 숲의 뽕나무는 뽕뽕 방귀 뀐 뽕나무인가 뽕뽕뽕 방귀 뀐 뽕나무인가.",
       "translation": "Is the mulberry tree in the mulberry forest a farting mulberry tree or a loud farting mulberry tree?"
     },
     {
       "id": "korean_tongue_twisters-38",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "그 집 콩밭은 검정 콩밭이고 내 집 콩밭은 강낭콩밭이며 검정 콩밭 옆에 강낭콩밭이 있다.",
       "translation": "Their bean field is a black bean field, my bean field is a kidney bean field, and next to the black bean field is a kidney bean field."
     },
     {
       "id": "korean_tongue_twisters-39",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "우유 성분 함유율은 칼슘 함유량이 철분 함유량보다 높은가.",
       "translation": "In the milk composition ratio, is the calcium content higher than the iron content?"
     },
     {
       "id": "korean_tongue_twisters-40",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "앞집 꽃집은 장미꽃 꽃집이고 옆집 꽃꽂이집은 튤립꽃 꽃꽂이집이다.",
       "translation": "The front flower shop is a rose flower shop, and the neighboring flower arrangement shop is a tulip flower shop."
     },
     {
       "id": "korean_tongue_twisters-41",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "정희수가 희희낙락하게 희끄무리한 흰머리를 뽑으며 웃었다.",
       "translation": "Jung Hee-soo smiled happily while pulling out grayish white hairs."
     },
     {
       "id": "korean_tongue_twisters-42",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "철수 책상 새 책상, 철수 책장 헌 책장.",
       "translation": "Cheolsu’s desk is a new desk, Cheolsu’s bookshelf is an old bookshelf."
     },
     {
       "id": "korean_tongue_twisters-43",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "칠수 책상 새 책상, 칠수 책장 헌 책장.",
       "translation": "Chilsu’s desk is a new desk, Chilsu’s bookshelf is an old bookshelf."
     },
     {
       "id": "korean_tongue_twisters-44",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "김서방네 지붕 위에 콩깍지가 깐 콩깍지냐 안 깐 콩깍지냐.",
       "translation": "Is the bean pod on Mr. Kim’s roof a peeled bean pod or an unpeeled bean pod?"
     },
     {
       "id": "korean_tongue_twisters-45",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "우리집 옆집 앞집 뒷창살은 홑겹창살이고, 우리집 뒷집 앞집 옆창살은 겹홑창살이다.",
       "translation": "Our neighbor’s front house back window bar is a single bar, and our back house front house side window bar is a double bar."
     },
     {
       "id": "korean_tongue_twisters-46",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "저기 있는 말뚝이 말 맬 말뚝이냐 말 못 맬 말뚝이냐.",
       "translation": "Is that post over there a post for tying a horse or a post not for tying a horse?"
     },
     {
       "id": "korean_tongue_twisters-47",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "안촉촉한 초코칩 나라에 살던 안촉촉한 초코칩이 촉촉한 초코칩 나라의 촉촉한 초코칩을 보고 촉촉한 초코칩이 되고 싶었다.",
       "translation": "The un-moist chocochip living in un-moist chocochip land wanted to become a moist chocochip after seeing the moist chocochip."
     },
     {
       "id": "korean_tongue_twisters-48",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "목동 로얄 뉴로얄 레스토랑 뉴메뉴 미트소시지소스 스파게티.",
       "translation": "Mokdong Royal New Royal Restaurant new menu meat sausage sauce spaghetti."
     },
     {
       "id": "korean_tongue_twisters-49",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "가랑가랑 가랑비 오면 개구리가 개굴개굴 노래를 한다.",
       "translation": "When drizzle falls gently, frogs sing ribbit ribbit."
     },
     {
       "id": "korean_tongue_twisters-50",
-      "moduleId": "korean_tongue_twisters",
-      "type": "sentence",
       "target": "알콩달콩 깨끗한 콩은 안 깐 콩이고 깐깐한 알콩달콩은 깐 콩이다.",
       "translation": "Sweet clean beans are unpeeled beans, and meticulous sweet beans are peeled beans."
     }
