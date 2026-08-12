@@ -35,7 +35,8 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - `src/utils/keyboardHelper.ts`: Logic for computing next required target keys and opposite-hand Shift chording hints.
 - `src/utils/keyboardData.ts`: Dubeolsik keycap metadata and Jamo-to-key dictionary.
 - `src/types/korean.ts`: Type definitions for the domain model.
-- `src/content.json`: The curriculum data.
+- `src/content/modules/*.json`: Per-module curriculum lesson datasets.
+- `src/content/index.ts`: Curriculum dataset aggregator and canonical module order.
 - `vite.config.js`: Configuration for Vite, PWA, and Workbox precaching support.
 
 ## Current Priority

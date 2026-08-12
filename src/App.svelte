@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import contentData from './content.json';
+  import contentData from './content';
   import { TutorSession } from './lib/tutorSession';
   import type { CurriculumData } from './lib/tutorSession';
   import { loadSettings, saveSettings, applyTheme } from './lib/settings';

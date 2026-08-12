@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import contentData from './content.json';
+import contentData from './content';
 
 describe('Curriculum Content Dataset Integrity', () => {
   it('contains modules and items', () => {

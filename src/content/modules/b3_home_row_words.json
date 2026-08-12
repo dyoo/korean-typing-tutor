@@ -1,0 +1,357 @@
+{
+  "id": "b3_home_row_words",
+  "title": "Beginner 3 — Home Row Words & Phrases (홈로 단어)",
+  "description": "Real Korean words typed 100% on the Home Row: 나, 너, 아이, 어머니, 호랑이, 나란히",
+  "items": [
+    {
+      "id": "b3-1",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나",
+      "translation": "I / Me"
+    },
+    {
+      "id": "b3-2",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "너",
+      "translation": "You"
+    },
+    {
+      "id": "b3-3",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "아이",
+      "translation": "Child / Baby"
+    },
+    {
+      "id": "b3-4",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나이",
+      "translation": "Age"
+    },
+    {
+      "id": "b3-5",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "하나",
+      "translation": "One"
+    },
+    {
+      "id": "b3-6",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "하마",
+      "translation": "Hippo"
+    },
+    {
+      "id": "b3-7",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "아하",
+      "translation": "Aha!"
+    },
+    {
+      "id": "b3-8",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "어머",
+      "translation": "Oh my!"
+    },
+    {
+      "id": "b3-9",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "머리",
+      "translation": "Head / Hair"
+    },
+    {
+      "id": "b3-10",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "어머니",
+      "translation": "Mother"
+    },
+    {
+      "id": "b3-11",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "호랑이",
+      "translation": "Tiger (All 7 keys on Home Row!)"
+    },
+    {
+      "id": "b3-12",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "이하",
+      "translation": "Below / Less than"
+    },
+    {
+      "id": "b3-13",
+      "moduleId": "b3_home_row_words",
+      "type": "sentence",
+      "target": "나란히",
+      "translation": "Side by side"
+    },
+    {
+      "id": "b3-14",
+      "moduleId": "b3_home_row_words",
+      "type": "sentence",
+      "target": "하나하나",
+      "translation": "One by one"
+    },
+    {
+      "id": "b3_home_row_words-ext-1",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나라",
+      "translation": "Country / Nation"
+    },
+    {
+      "id": "b3_home_row_words-ext-2",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "너랑",
+      "translation": "With you"
+    },
+    {
+      "id": "b3_home_row_words-ext-3",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "아라",
+      "translation": "Ara (Korean name)"
+    },
+    {
+      "id": "b3_home_row_words-ext-4",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "마음",
+      "translation": "Mind / Heart"
+    },
+    {
+      "id": "b3_home_row_words-ext-5",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나름",
+      "translation": "In one's own way"
+    },
+    {
+      "id": "b3_home_row_words-ext-6",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "마누라",
+      "translation": "Wife (casual)"
+    },
+    {
+      "id": "b3_home_row_words-ext-7",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나라나",
+      "translation": "My country (poetic)"
+    },
+    {
+      "id": "b3_home_row_words-ext-8",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "어머나",
+      "translation": "Oh my goodness!"
+    },
+    {
+      "id": "b3_home_row_words-ext-9",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "하나로",
+      "translation": "As one"
+    },
+    {
+      "id": "b3_home_row_words-ext-10",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "너희",
+      "translation": "You guys"
+    },
+    {
+      "id": "b3_home_row_words-ext-11",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나도",
+      "translation": "Me too"
+    },
+    {
+      "id": "b3_home_row_words-ext-12",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "너도",
+      "translation": "You too"
+    },
+    {
+      "id": "b3_home_row_words-ext-13",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "마침",
+      "translation": "Just in time"
+    },
+    {
+      "id": "b3_home_row_words-ext-14",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나날이",
+      "translation": "Day by day"
+    },
+    {
+      "id": "b3_home_row_words-ext-15",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "하나만",
+      "translation": "Just one"
+    },
+    {
+      "id": "b3_home_row_words-ext-16",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "마음이",
+      "translation": "Heart / Mind (subject)"
+    },
+    {
+      "id": "b3_home_row_words-ext-17",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "너하고",
+      "translation": "With you"
+    },
+    {
+      "id": "b3_home_row_words-ext-18",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나하고",
+      "translation": "With me"
+    },
+    {
+      "id": "b3_home_row_words-ext-19",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "머리가",
+      "translation": "Head (subject)"
+    },
+    {
+      "id": "b3_home_row_words-ext-20",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나리",
+      "translation": "Lily / Nobleman"
+    },
+    {
+      "id": "b3_home_row_words-ext-21",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "마나",
+      "translation": "Mana"
+    },
+    {
+      "id": "b3_home_row_words-ext-22",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "너머",
+      "translation": "Beyond / Over"
+    },
+    {
+      "id": "b3_home_row_words-ext-23",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "하나씩",
+      "translation": "One by one"
+    },
+    {
+      "id": "b3_home_row_words-ext-24",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "호랑이가",
+      "translation": "Tiger (subject)"
+    },
+    {
+      "id": "b3_home_row_words-ext-25",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "어머니와",
+      "translation": "With mother"
+    },
+    {
+      "id": "b3_home_row_words-ext-26",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "아이랑",
+      "translation": "With a child"
+    },
+    {
+      "id": "b3_home_row_words-ext-27",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "마음으로",
+      "translation": "With heart"
+    },
+    {
+      "id": "b3_home_row_words-ext-28",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나라의",
+      "translation": "Country's"
+    },
+    {
+      "id": "b3_home_row_words-ext-29",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나만의",
+      "translation": "My own"
+    },
+    {
+      "id": "b3_home_row_words-ext-30",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "너만의",
+      "translation": "Your own"
+    },
+    {
+      "id": "b3_home_row_words-ext-31",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "어머니가",
+      "translation": "Mother (subject)"
+    },
+    {
+      "id": "b3_home_row_words-ext-32",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "아이의",
+      "translation": "Child's"
+    },
+    {
+      "id": "b3_home_row_words-ext-33",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나이와",
+      "translation": "Age and"
+    },
+    {
+      "id": "b3_home_row_words-ext-34",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "하나와",
+      "translation": "One and"
+    },
+    {
+      "id": "b3_home_row_words-ext-35",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "마음의",
+      "translation": "Mind's / Heart's"
+    },
+    {
+      "id": "b3_home_row_words-ext-36",
+      "moduleId": "b3_home_row_words",
+      "type": "word",
+      "target": "나라를",
+      "translation": "Country (object)"
+    }
+  ]
+}

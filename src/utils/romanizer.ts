@@ -349,8 +349,10 @@ function romanizeWord(word: string): string {
       } else if (next && (next.initialConsonant === 'ㄴ' || next.initialConsonant === 'ㅁ')) {
         // Nasalization before ㄴ/ㅁ
         if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(curr.finalConsonant)) finalConsonantStr = 'ng';
-        else if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(curr.finalConsonant)) finalConsonantStr = 'n';
-        else if (['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'].includes(curr.finalConsonant)) finalConsonantStr = 'm';
+        else if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(curr.finalConsonant))
+          finalConsonantStr = 'n';
+        else if (['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'].includes(curr.finalConsonant))
+          finalConsonantStr = 'm';
         else if (curr.finalConsonant === 'ㄴ') finalConsonantStr = 'n';
         else if (curr.finalConsonant === 'ㄹ') finalConsonantStr = 'l';
         else if (curr.finalConsonant === 'ㅁ') finalConsonantStr = 'm';

@@ -1,0 +1,740 @@
+{
+  "id": "kpop_slang",
+  "title": "K-Pop & Modern Slang",
+  "description": "Popular Korean expressions, K-pop lyrics, and modern slang",
+  "items": [
+    {
+      "id": "kp-1",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "대박",
+      "translation": "Awesome / Jackpot / Amazing"
+    },
+    {
+      "id": "kp-2",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "화이팅",
+      "translation": "Fighting! / You can do it!"
+    },
+    {
+      "id": "kp-3",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "심쿵",
+      "translation": "Heart-throbbing / Heart attack from cuteness"
+    },
+    {
+      "id": "kp-4",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "꿀잼",
+      "translation": "Super fun / Hilarious"
+    },
+    {
+      "id": "kp-5",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "최애",
+      "translation": "Ultimate bias / Favorite member"
+    },
+    {
+      "id": "kp-6",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "레전드",
+      "translation": "Legendary"
+    },
+    {
+      "id": "kp-7",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "진짜 대박이다!",
+      "translation": "That is seriously awesome!"
+    },
+    {
+      "id": "kp-8",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "오늘도 화이팅하세요!",
+      "translation": "Cheer up and do your best today too!"
+    },
+    {
+      "id": "kp-9",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "덕후",
+      "translation": "Hardcore fan / Otaku"
+    },
+    {
+      "id": "kp-10",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "입덕",
+      "translation": "Becoming a fan / Stanning"
+    },
+    {
+      "id": "kp-11",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "덕질",
+      "translation": "Fan activity / Stanning"
+    },
+    {
+      "id": "kp-12",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "성덕",
+      "translation": "Successful fan (meets idol)"
+    },
+    {
+      "id": "kp-13",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "피켓팅",
+      "translation": "Blood-soaked ticket buying"
+    },
+    {
+      "id": "kp-14",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "막콘",
+      "translation": "Final concert of a tour"
+    },
+    {
+      "id": "kp-15",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "응원봉",
+      "translation": "Official lightstick"
+    },
+    {
+      "id": "kp-16",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "포카",
+      "translation": "Photocard"
+    },
+    {
+      "id": "kp-17",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "역조공",
+      "translation": "Reverse fan gift from idols"
+    },
+    {
+      "id": "kp-18",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "컴백",
+      "translation": "Comeback / New release"
+    },
+    {
+      "id": "kp-19",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "노잼",
+      "translation": "Not fun / Boring"
+    },
+    {
+      "id": "kp-20",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "핵잼",
+      "translation": "Super hilarious / Extremely fun"
+    },
+    {
+      "id": "kp-21",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "갓생",
+      "translation": "Productive, diligent life"
+    },
+    {
+      "id": "kp-22",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "억까",
+      "translation": "Unreasonable hate / Forced hate"
+    },
+    {
+      "id": "kp-23",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "억빠",
+      "translation": "Forced overpraising / Blind bias"
+    },
+    {
+      "id": "kp-24",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "뇌절",
+      "translation": "Overdoing it / Pushing joke too far"
+    },
+    {
+      "id": "kp-25",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "소확행",
+      "translation": "Small but certain happiness"
+    },
+    {
+      "id": "kp-26",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "점메추",
+      "translation": "Lunch menu recommendation"
+    },
+    {
+      "id": "kp-27",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "오운완",
+      "translation": "Today's workout completed"
+    },
+    {
+      "id": "kp-28",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "중꺾마",
+      "translation": "Unbreakable heart"
+    },
+    {
+      "id": "kp-29",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "폼미쳤다",
+      "translation": "Form is crazy / Skill is insane"
+    },
+    {
+      "id": "kp-30",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "알잘딱깔센",
+      "translation": "Smart, neat, and flexible"
+    },
+    {
+      "id": "kp-31",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "실화냐",
+      "translation": "Is this real? / For real?"
+    },
+    {
+      "id": "kp-32",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "킹받네",
+      "translation": "Super annoying"
+    },
+    {
+      "id": "kp-33",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "어쩔티비",
+      "translation": "So what, go watch TV!"
+    },
+    {
+      "id": "kp-34",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "이번 신곡 진짜 미쳤어요!",
+      "translation": "This new song is seriously crazy good!"
+    },
+    {
+      "id": "kp-35",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "콘서트 티켓팅 성공했어요!",
+      "translation": "I successfully got concert tickets!"
+    },
+    {
+      "id": "kp-36",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "최애는 최애고 은우는 은우다",
+      "translation": "Bias is bias, but Cha Eun-woo is Cha Eun-woo."
+    },
+    {
+      "id": "kp-37",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "오늘 착장 완전 대박!",
+      "translation": "Today's outfit is totally awesome!"
+    },
+    {
+      "id": "kp-38",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "스밍 열심히 돌려요!",
+      "translation": "Let's stream the music hard!"
+    },
+    {
+      "id": "kp-39",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "올콘",
+      "translation": "Attending all concert dates"
+    },
+    {
+      "id": "kp-40",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "첫콘",
+      "translation": "Opening concert of a tour"
+    },
+    {
+      "id": "kp-41",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "탈덕",
+      "translation": "Leaving a fandom"
+    },
+    {
+      "id": "kp-42",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "차애",
+      "translation": "Second favorite bias"
+    },
+    {
+      "id": "kp-43",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "음원차트",
+      "translation": "Music streaming chart"
+    },
+    {
+      "id": "kp-44",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "실물",
+      "translation": "In-person visual / Real life look"
+    },
+    {
+      "id": "kp-45",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "비주얼",
+      "translation": "Visual / Center appearance"
+    },
+    {
+      "id": "kp-46",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "음방",
+      "translation": "Music show broadcast"
+    },
+    {
+      "id": "kp-47",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "사녹",
+      "translation": "Pre-recording for music shows"
+    },
+    {
+      "id": "kp-48",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "팬싸",
+      "translation": "Fan sign event"
+    },
+    {
+      "id": "kp-49",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "하이터치",
+      "translation": "High-touch event"
+    },
+    {
+      "id": "kp-50",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "직캠",
+      "translation": "Fan-cam / Focus video"
+    },
+    {
+      "id": "kp-51",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "안구정화",
+      "translation": "Eye purification / Eye candy"
+    },
+    {
+      "id": "kp-52",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "뇌피셜",
+      "translation": "Head-canon / Speculating"
+    },
+    {
+      "id": "kp-53",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "지못미",
+      "translation": "Sorry I couldn't protect you"
+    },
+    {
+      "id": "kp-54",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "득템",
+      "translation": "Great find / Lucky acquisition"
+    },
+    {
+      "id": "kp-55",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "솔까말",
+      "translation": "Honestly speaking"
+    },
+    {
+      "id": "kp-56",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "얼죽아",
+      "translation": "Iced Americano even in freezing cold"
+    },
+    {
+      "id": "kp-57",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "부캐",
+      "translation": "Alternate persona / Alt character"
+    },
+    {
+      "id": "kp-58",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "본캐",
+      "translation": "Main character / Primary self"
+    },
+    {
+      "id": "kp-59",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "삼귀다",
+      "translation": "Pre-relationship talking phase"
+    },
+    {
+      "id": "kp-60",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "갓성비",
+      "translation": "God-tier cost effectiveness"
+    },
+    {
+      "id": "kp-61",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "완내스",
+      "translation": "Totally my style"
+    },
+    {
+      "id": "kp-62",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "갓막내",
+      "translation": "Golden Maknae (youngest member)"
+    },
+    {
+      "id": "kp-63",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "오늘 라이브 진짜 대박이었어요!",
+      "translation": "Today's live stream was seriously amazing!"
+    },
+    {
+      "id": "kp-64",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "직캠 영상 봤어요?",
+      "translation": "Have you watched the fancam video?"
+    },
+    {
+      "id": "kp-65",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "이번 춤 완전 갓벽해요!",
+      "translation": "This dance is totally god-tier perfect!"
+    },
+    {
+      "id": "kp-66",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "팬싸 응모 완료했어요!",
+      "pronunciation": "paenssa eungmo wallyeohaesseoyo!",
+      "translation": "I finished entering the fansign raffle!"
+    },
+    {
+      "id": "kp-67",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "음방 1위 축하해요!",
+      "pronunciation": "eumbang ilwi chukahaeyo!",
+      "translation": "Congratulations on taking #1 on music shows!"
+    },
+    {
+      "id": "kp-68",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "실물이 훨씬 예뻐요!",
+      "pronunciation": "silmuri heolssin yeppeoyo!",
+      "translation": "Looks even prettier in person!"
+    },
+    {
+      "id": "kp-69",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "엔딩요정",
+      "translation": "Ending Fairy (music show camera pose)"
+    },
+    {
+      "id": "kp-70",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "최애돌",
+      "translation": "Favorite idol"
+    },
+    {
+      "id": "kp-71",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "칼군무",
+      "translation": "Knife-sharp synchronized dance"
+    },
+    {
+      "id": "kp-72",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "센터",
+      "translation": "Center position"
+    },
+    {
+      "id": "kp-73",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "떼창",
+      "translation": "Concert crowd sing-along"
+    },
+    {
+      "id": "kp-74",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "덕통사고",
+      "translation": "Sudden unexpected obsession with idol"
+    },
+    {
+      "id": "kp-75",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "금손",
+      "translation": "Golden hands / Super talented fan artist"
+    },
+    {
+      "id": "kp-76",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "똥손",
+      "translation": "Poop hands / Unlucky ticket buyer"
+    },
+    {
+      "id": "kp-77",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "총공",
+      "translation": "Coordinated streaming attack"
+    },
+    {
+      "id": "kp-78",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "음원강자",
+      "translation": "Digital chart powerhouse artist"
+    },
+    {
+      "id": "kp-79",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "꾸안꾸",
+      "translation": "Effortlessly chic style"
+    },
+    {
+      "id": "kp-80",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "손민수",
+      "translation": "Copying someone's fashion/style"
+    },
+    {
+      "id": "kp-81",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "팬사랑",
+      "translation": "Deep love for fans"
+    },
+    {
+      "id": "kp-82",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "세계관",
+      "translation": "Fictional storyline universe"
+    },
+    {
+      "id": "kp-83",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "할많하않",
+      "translation": "Lots to say but keeping silent"
+    },
+    {
+      "id": "kp-84",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "인생샷",
+      "translation": "Once-in-a-lifetime best photo"
+    },
+    {
+      "id": "kp-85",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "최애짤",
+      "translation": "Favorite idol meme/photo"
+    },
+    {
+      "id": "kp-86",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "댕댕이",
+      "pronunciation": "daengdaeng-i",
+      "translation": "Cute puppy"
+    },
+    {
+      "id": "kp-87",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "냥냥이",
+      "pronunciation": "nyangnyang-i",
+      "translation": "Cute kitty"
+    },
+    {
+      "id": "kp-88",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "주접",
+      "translation": "Cheesy over-the-top fan praise"
+    },
+    {
+      "id": "kp-89",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "월드투어",
+      "translation": "World tour"
+    },
+    {
+      "id": "kp-90",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "주접댓글",
+      "translation": "Cheesy fan praise comments"
+    },
+    {
+      "id": "kp-91",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "만반잘부",
+      "translation": "Nice to meet you!"
+    },
+    {
+      "id": "kp-92",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "내또속",
+      "translation": "Fooled again!"
+    },
+    {
+      "id": "kp-93",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "음반왕",
+      "translation": "Physical album sales king"
+    },
+    {
+      "id": "kp-94",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "빌보드",
+      "translation": "Billboard chart"
+    },
+    {
+      "id": "kp-95",
+      "moduleId": "kpop_slang",
+      "type": "word",
+      "target": "빛선배",
+      "translation": "Shining legendary senior artist"
+    },
+    {
+      "id": "kp-96",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "엔딩요정 카메라 봤어요?",
+      "translation": "Did you see the Ending Fairy look at the camera?"
+    },
+    {
+      "id": "kp-97",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "이번 칼군무 진짜 대박이에요!",
+      "translation": "This synchronized dance is seriously insane!"
+    },
+    {
+      "id": "kp-98",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "콘서트에서 떼창 소름 돋았어요!",
+      "translation": "The concert crowd sing-along gave me goosebumps!"
+    },
+    {
+      "id": "kp-99",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "사진 완전 인생샷이에요!",
+      "translation": "This photo is totally the shot of a lifetime!"
+    },
+    {
+      "id": "kp-100",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "오늘 의상 완전 꾸안꾸 스타일!",
+      "translation": "Today's outfit is total effort-free chic style!"
+    },
+    {
+      "id": "kp-101",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "주접댓글 진짜 웃겨요!",
+      "translation": "The cheesy fan praise comments are so funny!"
+    },
+    {
+      "id": "kp-102",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "세계관 해석 영상 봤어요?",
+      "translation": "Have you watched the storyline theory video?"
+    },
+    {
+      "id": "kp-103",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "오늘 팬사랑 진짜 감동이에요!",
+      "translation": "Today's fan love was so touching!"
+    },
+    {
+      "id": "kp-104",
+      "moduleId": "kpop_slang",
+      "type": "sentence",
+      "target": "이번 월드투어 꼭 갈 거예요!",
+      "translation": "I'm definitely going to this world tour!"
+    }
+  ]
+}

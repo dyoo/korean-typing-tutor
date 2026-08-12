@@ -1,0 +1,357 @@
+{
+  "id": "b6_shift_keys",
+  "title": "Beginner 6 — Shift Keys & Double Consonants (Shift 키 & 쌍자음)",
+  "description": "Shift chording for double consonants & compound vowels: ㄲ, ㄸ, ㅃ, ㅆ, ㅉ, ㅒ, ㅖ",
+  "items": [
+    {
+      "id": "b6-1",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "까치",
+      "translation": "Magpie"
+    },
+    {
+      "id": "b6-2",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "토끼",
+      "translation": "Rabbit"
+    },
+    {
+      "id": "b6-3",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "뿌리",
+      "translation": "Root"
+    },
+    {
+      "id": "b6-4",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "아빠",
+      "translation": "Dad"
+    },
+    {
+      "id": "b6-5",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "진짜",
+      "translation": "Really / Real"
+    },
+    {
+      "id": "b6-6",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "짜장면",
+      "translation": "Black bean noodles"
+    },
+    {
+      "id": "b6-7",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예쁘다",
+      "translation": "Pretty"
+    },
+    {
+      "id": "b6-8",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "시계",
+      "translation": "Clock / Watch"
+    },
+    {
+      "id": "b6_shift_keys-ext-1",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "토끼",
+      "translation": "Rabbit"
+    },
+    {
+      "id": "b6_shift_keys-ext-2",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "뿌리",
+      "translation": "Root"
+    },
+    {
+      "id": "b6_shift_keys-ext-3",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "아빠",
+      "translation": "Dad / Father"
+    },
+    {
+      "id": "b6_shift_keys-ext-4",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "오빠",
+      "translation": "Older brother (female speaker)"
+    },
+    {
+      "id": "b6_shift_keys-ext-5",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예쁘다",
+      "translation": "Pretty"
+    },
+    {
+      "id": "b6_shift_keys-ext-6",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "짜장면",
+      "translation": "Black bean noodles"
+    },
+    {
+      "id": "b6_shift_keys-ext-7",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "짝꿍",
+      "translation": "Desk partner / Buddy"
+    },
+    {
+      "id": "b6_shift_keys-ext-8",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "따뜻하다",
+      "translation": "Warm"
+    },
+    {
+      "id": "b6_shift_keys-ext-9",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "찌개",
+      "translation": "Stew"
+    },
+    {
+      "id": "b6_shift_keys-ext-10",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "깨끗하다",
+      "translation": "Clean"
+    },
+    {
+      "id": "b6_shift_keys-ext-11",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "쌍둥이",
+      "translation": "Twins"
+    },
+    {
+      "id": "b6_shift_keys-ext-12",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "꼬마",
+      "translation": "Little child"
+    },
+    {
+      "id": "b6_shift_keys-ext-13",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "뚝배기",
+      "translation": "Earthenware pot"
+    },
+    {
+      "id": "b6_shift_keys-ext-14",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "빵집",
+      "translation": "Bakery"
+    },
+    {
+      "id": "b6_shift_keys-ext-15",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "썰매",
+      "translation": "Sled"
+    },
+    {
+      "id": "b6_shift_keys-ext-16",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "쭈꾸미",
+      "translation": "Webfoot octopus"
+    },
+    {
+      "id": "b6_shift_keys-ext-17",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "얘기",
+      "translation": "Story / Conversation"
+    },
+    {
+      "id": "b6_shift_keys-ext-18",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "시계",
+      "translation": "Clock / Watch"
+    },
+    {
+      "id": "b6_shift_keys-ext-19",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예술",
+      "translation": "Art"
+    },
+    {
+      "id": "b6_shift_keys-ext-20",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "이야기",
+      "translation": "Story / Talk"
+    },
+    {
+      "id": "b6_shift_keys-ext-21",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예절",
+      "translation": "Etiquette / Manners"
+    },
+    {
+      "id": "b6_shift_keys-ext-22",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예금",
+      "translation": "Bank deposit"
+    },
+    {
+      "id": "b6_shift_keys-ext-23",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예약",
+      "translation": "Reservation"
+    },
+    {
+      "id": "b6_shift_keys-ext-24",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예측",
+      "translation": "Prediction / Forecast"
+    },
+    {
+      "id": "b6_shift_keys-ext-25",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예방",
+      "translation": "Prevention"
+    },
+    {
+      "id": "b6_shift_keys-ext-26",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예고",
+      "translation": "Notice / Preview"
+    },
+    {
+      "id": "b6_shift_keys-ext-27",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예식",
+      "translation": "Ceremony / Wedding"
+    },
+    {
+      "id": "b6_shift_keys-ext-28",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예산",
+      "translation": "Budget"
+    },
+    {
+      "id": "b6_shift_keys-ext-29",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예쁜",
+      "translation": "Pretty (adjective modifier)"
+    },
+    {
+      "id": "b6_shift_keys-ext-30",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "예술가",
+      "translation": "Artist"
+    },
+    {
+      "id": "b6_shift_keys-ext-31",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "얘들아",
+      "translation": "Hey kids / Everyone"
+    },
+    {
+      "id": "b6_shift_keys-ext-32",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "깨어남",
+      "translation": "Awakening"
+    },
+    {
+      "id": "b6_shift_keys-ext-33",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "따스함",
+      "translation": "Warmth"
+    },
+    {
+      "id": "b6_shift_keys-ext-34",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "뽀뽀",
+      "translation": "Kiss"
+    },
+    {
+      "id": "b6_shift_keys-ext-35",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "싸움",
+      "translation": "Fight / Battle"
+    },
+    {
+      "id": "b6_shift_keys-ext-36",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "쪼개기",
+      "translation": "Splitting / Chopping"
+    },
+    {
+      "id": "b6_shift_keys-ext-37",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "까닭",
+      "translation": "Reason / Cause"
+    },
+    {
+      "id": "b6_shift_keys-ext-38",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "뜨겁다",
+      "translation": "Hot (temperature)"
+    },
+    {
+      "id": "b6_shift_keys-ext-39",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "빠르다",
+      "translation": "Fast / Quick"
+    },
+    {
+      "id": "b6_shift_keys-ext-40",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "쓰다",
+      "translation": "To write / To use"
+    },
+    {
+      "id": "b6_shift_keys-ext-41",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "찌르다",
+      "translation": "To pierce / Poke"
+    },
+    {
+      "id": "b6_shift_keys-ext-42",
+      "moduleId": "b6_shift_keys",
+      "type": "word",
+      "target": "껌",
+      "translation": "Chewing gum"
+    }
+  ]
+}

@@ -1,0 +1,357 @@
+{
+  "id": "b4_top_row",
+  "title": "Beginner 4 — Top Row Keys (상단 자음/모음)",
+  "description": "Top QWERTY row: Q (ㅂ), W (ㅈ), E (ㄷ), R (ㄱ), T (ㅅ), Y (ㅛ), U (ㅕ), I (ㅑ), O (ㅐ), P (ㅔ)",
+  "items": [
+    {
+      "id": "b4-1",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "가구",
+      "translation": "Furniture"
+    },
+    {
+      "id": "b4-2",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "고기",
+      "translation": "Meat"
+    },
+    {
+      "id": "b4-3",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "다리",
+      "translation": "Leg / Bridge"
+    },
+    {
+      "id": "b4-4",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "도로",
+      "translation": "Road"
+    },
+    {
+      "id": "b4-5",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "사자",
+      "translation": "Lion"
+    },
+    {
+      "id": "b4-6",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "나비",
+      "translation": "Butterfly"
+    },
+    {
+      "id": "b4-7",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "바지",
+      "translation": "Pants"
+    },
+    {
+      "id": "b4-8",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "오리",
+      "translation": "Duck"
+    },
+    {
+      "id": "b4-9",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "지도",
+      "translation": "Map"
+    },
+    {
+      "id": "b4_top_row-ext-1",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "구두",
+      "translation": "Dress shoes"
+    },
+    {
+      "id": "b4_top_row-ext-2",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "지구",
+      "translation": "Earth / Globe"
+    },
+    {
+      "id": "b4_top_row-ext-3",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "바다",
+      "translation": "Sea / Ocean"
+    },
+    {
+      "id": "b4_top_row-ext-4",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "소리",
+      "translation": "Sound / Voice"
+    },
+    {
+      "id": "b4_top_row-ext-5",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "자기",
+      "translation": "Self / Honey"
+    },
+    {
+      "id": "b4_top_row-ext-6",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "비누",
+      "translation": "Soap"
+    },
+    {
+      "id": "b4_top_row-ext-7",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "부모",
+      "translation": "Parents"
+    },
+    {
+      "id": "b4_top_row-ext-8",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "두부",
+      "translation": "Tofu"
+    },
+    {
+      "id": "b4_top_row-ext-9",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "가수",
+      "translation": "Singer"
+    },
+    {
+      "id": "b4_top_row-ext-10",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "기자",
+      "translation": "Reporter / Journalist"
+    },
+    {
+      "id": "b4_top_row-ext-11",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "돼지",
+      "translation": "Pig"
+    },
+    {
+      "id": "b4_top_row-ext-12",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "개구리",
+      "translation": "Frog"
+    },
+    {
+      "id": "b4_top_row-ext-13",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "다람쥐",
+      "translation": "Squirrel"
+    },
+    {
+      "id": "b4_top_row-ext-14",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "바람",
+      "translation": "Wind"
+    },
+    {
+      "id": "b4_top_row-ext-15",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "조개",
+      "translation": "Clam / Shellfish"
+    },
+    {
+      "id": "b4_top_row-ext-16",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "모기",
+      "translation": "Mosquito"
+    },
+    {
+      "id": "b4_top_row-ext-17",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "자전거",
+      "translation": "Bicycle"
+    },
+    {
+      "id": "b4_top_row-ext-18",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "비행기",
+      "translation": "Airplane"
+    },
+    {
+      "id": "b4_top_row-ext-19",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "자동차",
+      "translation": "Car / Automobile"
+    },
+    {
+      "id": "b4_top_row-ext-20",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "기차",
+      "translation": "Train"
+    },
+    {
+      "id": "b4_top_row-ext-21",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "도서관",
+      "translation": "Library"
+    },
+    {
+      "id": "b4_top_row-ext-22",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "우체국",
+      "translation": "Post office"
+    },
+    {
+      "id": "b4_top_row-ext-23",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "병원",
+      "translation": "Hospital"
+    },
+    {
+      "id": "b4_top_row-ext-24",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "경찰서",
+      "translation": "Police station"
+    },
+    {
+      "id": "b4_top_row-ext-25",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "미술관",
+      "translation": "Art museum"
+    },
+    {
+      "id": "b4_top_row-ext-26",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "시계",
+      "translation": "Clock / Watch"
+    },
+    {
+      "id": "b4_top_row-ext-27",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "아기",
+      "translation": "Baby"
+    },
+    {
+      "id": "b4_top_row-ext-28",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "모자",
+      "translation": "Hat / Cap"
+    },
+    {
+      "id": "b4_top_row-ext-29",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "휴지",
+      "translation": "Tissue / Paper towel"
+    },
+    {
+      "id": "b4_top_row-ext-30",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "주스",
+      "translation": "Juice"
+    },
+    {
+      "id": "b4_top_row-ext-31",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "부자",
+      "translation": "Rich person / Father and son"
+    },
+    {
+      "id": "b4_top_row-ext-32",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "의자",
+      "translation": "Chair"
+    },
+    {
+      "id": "b4_top_row-ext-33",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "지갑",
+      "translation": "Wallet"
+    },
+    {
+      "id": "b4_top_row-ext-34",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "가방",
+      "translation": "Bag / Backpack"
+    },
+    {
+      "id": "b4_top_row-ext-35",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "우산",
+      "translation": "Umbrella"
+    },
+    {
+      "id": "b4_top_row-ext-36",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "열쇠",
+      "translation": "Key"
+    },
+    {
+      "id": "b4_top_row-ext-37",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "연필",
+      "translation": "Pencil"
+    },
+    {
+      "id": "b4_top_row-ext-38",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "볼펜",
+      "translation": "Ballpoint pen"
+    },
+    {
+      "id": "b4_top_row-ext-39",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "공책",
+      "translation": "Notebook"
+    },
+    {
+      "id": "b4_top_row-ext-40",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "침대",
+      "translation": "Bed"
+    },
+    {
+      "id": "b4_top_row-ext-41",
+      "moduleId": "b4_top_row",
+      "type": "word",
+      "target": "책상",
+      "translation": "Desk"
+    }
+  ]
+}

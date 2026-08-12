@@ -501,7 +501,11 @@ export class HangulEngine {
    */
   private getCurrentChar(): string {
     if (this.currentInitialConsonant !== null && this.currentVowel !== null) {
-      return this.assemble(this.currentInitialConsonant, this.currentVowel, this.currentFinalConsonant ?? 0);
+      return this.assemble(
+        this.currentInitialConsonant,
+        this.currentVowel,
+        this.currentFinalConsonant ?? 0,
+      );
     }
     if (this.currentInitialConsonant !== null) {
       return INITIAL_CONSONANT_STANDALONE[this.currentInitialConsonant] ?? '';
@@ -535,7 +539,8 @@ export class HangulEngine {
       if (this.currentFinalConsonant !== null && this.currentFinalConsonant > 0) {
         // Decompose compound Final Consonant (Jongseong) back to single Final Consonant, or remove Final Consonant
         if (COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant]) {
-          this.currentFinalConsonant = COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant][0];
+          this.currentFinalConsonant =
+            COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant][0];
         } else {
           this.currentFinalConsonant = null;
         }
@@ -679,7 +684,8 @@ export class HangulEngine {
          *    The final consonant ('ㄴ') moves to become initial consonant of 2nd syllable ('나') -> '하나'.
          */
         if (COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant]) {
-          const [firstFinalConsonant, secondFinalConsonant] = COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant];
+          const [firstFinalConsonant, secondFinalConsonant] =
+            COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant];
           this.currentFinalConsonant = firstFinalConsonant;
           const firstChar = this.getCurrentChar();
           this.composedString += firstChar;

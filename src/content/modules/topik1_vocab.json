@@ -1,0 +1,357 @@
+{
+  "id": "topik1_vocab",
+  "title": "TOPIK I — Essential Nouns",
+  "description": "Official TOPIK 1 vocabulary: Places, time, calendar, and transport",
+  "items": [
+    {
+      "id": "t1v-1",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "월요일",
+      "translation": "Monday"
+    },
+    {
+      "id": "t1v-2",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "화요일",
+      "translation": "Tuesday"
+    },
+    {
+      "id": "t1v-3",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "수요일",
+      "translation": "Wednesday"
+    },
+    {
+      "id": "t1v-4",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "목요일",
+      "translation": "Thursday"
+    },
+    {
+      "id": "t1v-5",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "금요일",
+      "translation": "Friday"
+    },
+    {
+      "id": "t1v-6",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "토요일",
+      "translation": "Saturday"
+    },
+    {
+      "id": "t1v-7",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "일요일",
+      "translation": "Sunday"
+    },
+    {
+      "id": "t1v-8",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "오늘",
+      "translation": "today"
+    },
+    {
+      "id": "t1v-9",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "내일",
+      "translation": "tomorrow"
+    },
+    {
+      "id": "t1v-10",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "어제",
+      "translation": "yesterday"
+    },
+    {
+      "id": "t1v-11",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "도서관",
+      "translation": "library"
+    },
+    {
+      "id": "t1v-12",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "병원",
+      "translation": "hospital"
+    },
+    {
+      "id": "t1v-13",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "은행",
+      "translation": "bank"
+    },
+    {
+      "id": "t1v-14",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "약국",
+      "translation": "pharmacy"
+    },
+    {
+      "id": "t1v-15",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "공항",
+      "translation": "airport"
+    },
+    {
+      "id": "topik1_vocab-ext-1",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "학교",
+      "translation": "School"
+    },
+    {
+      "id": "topik1_vocab-ext-2",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "식당",
+      "translation": "Restaurant"
+    },
+    {
+      "id": "topik1_vocab-ext-3",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "병원",
+      "translation": "Hospital"
+    },
+    {
+      "id": "topik1_vocab-ext-4",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "은행",
+      "translation": "Bank"
+    },
+    {
+      "id": "topik1_vocab-ext-5",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "우체국",
+      "translation": "Post office"
+    },
+    {
+      "id": "topik1_vocab-ext-6",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "도서관",
+      "translation": "Library"
+    },
+    {
+      "id": "topik1_vocab-ext-7",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "공원",
+      "translation": "Park"
+    },
+    {
+      "id": "topik1_vocab-ext-8",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "공항",
+      "translation": "Airport"
+    },
+    {
+      "id": "topik1_vocab-ext-9",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "역",
+      "translation": "Station"
+    },
+    {
+      "id": "topik1_vocab-ext-10",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "집",
+      "translation": "House / Home"
+    },
+    {
+      "id": "topik1_vocab-ext-11",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "회사",
+      "translation": "Company / Office"
+    },
+    {
+      "id": "topik1_vocab-ext-12",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "가게",
+      "translation": "Store / Shop"
+    },
+    {
+      "id": "topik1_vocab-ext-13",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "시장",
+      "translation": "Market"
+    },
+    {
+      "id": "topik1_vocab-ext-14",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "약국",
+      "translation": "Pharmacy"
+    },
+    {
+      "id": "topik1_vocab-ext-15",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "화장실",
+      "translation": "Restroom"
+    },
+    {
+      "id": "topik1_vocab-ext-16",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "사무실",
+      "translation": "Office room"
+    },
+    {
+      "id": "topik1_vocab-ext-17",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "방",
+      "translation": "Room"
+    },
+    {
+      "id": "topik1_vocab-ext-18",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "교실",
+      "translation": "Classroom"
+    },
+    {
+      "id": "topik1_vocab-ext-19",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "운동장",
+      "translation": "Playground / Sports field"
+    },
+    {
+      "id": "topik1_vocab-ext-20",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "백화점",
+      "translation": "Department store"
+    },
+    {
+      "id": "topik1_vocab-ext-21",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "편의점",
+      "translation": "Convenience store"
+    },
+    {
+      "id": "topik1_vocab-ext-22",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "미용실",
+      "translation": "Hair salon"
+    },
+    {
+      "id": "topik1_vocab-ext-23",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "극장",
+      "translation": "Theater / Movie theater"
+    },
+    {
+      "id": "topik1_vocab-ext-24",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "박물관",
+      "translation": "Museum"
+    },
+    {
+      "id": "topik1_vocab-ext-25",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "미술관",
+      "translation": "Art gallery"
+    },
+    {
+      "id": "topik1_vocab-ext-26",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "호텔",
+      "translation": "Hotel"
+    },
+    {
+      "id": "topik1_vocab-ext-27",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "수영장",
+      "translation": "Swimming pool"
+    },
+    {
+      "id": "topik1_vocab-ext-28",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "헬스장",
+      "translation": "Gym / Fitness center"
+    },
+    {
+      "id": "topik1_vocab-ext-29",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "주차장",
+      "translation": "Parking lot"
+    },
+    {
+      "id": "topik1_vocab-ext-30",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "주유소",
+      "translation": "Gas station"
+    },
+    {
+      "id": "topik1_vocab-ext-31",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "경찰서",
+      "translation": "Police station"
+    },
+    {
+      "id": "topik1_vocab-ext-32",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "소방서",
+      "translation": "Fire station"
+    },
+    {
+      "id": "topik1_vocab-ext-33",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "동물원",
+      "translation": "Zoo"
+    },
+    {
+      "id": "topik1_vocab-ext-34",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "식물원",
+      "translation": "Botanical garden"
+    },
+    {
+      "id": "topik1_vocab-ext-35",
+      "moduleId": "topik1_vocab",
+      "type": "word",
+      "target": "놀이공원",
+      "translation": "Amusement park"
+    }
+  ]
+}

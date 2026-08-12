@@ -27,7 +27,7 @@ A minimalist, high-performance Progressive Web App (PWA) designed to help Englis
 
 ## Curriculum & Educational Sources
 
-Our curriculum dataset ([`src/content.json`](file:///Users/dyoo/work/korean-typing-tutor/src/content.json)) contains over **1,170+ practice items** across 20 structured modules. Much of the curriculum—including beginner row-by-row progression drills, expanded vocabulary, K-Pop slang, single-sentence reading passage splits, and Revised Romanization—was generated, structured, and curated in collaboration with **Antigravity** (Google DeepMind's agentic AI coding assistant).
+Our curriculum dataset ([`src/content/modules/*.json`](file:///Users/dyoo/work/korean-typing-tutor/src/content/modules)) contains over **1,220+ practice items** across 21 structured modules. Much of the curriculum—including beginner row-by-row progression drills, expanded vocabulary, K-Pop slang, single-sentence reading passage splits, and Revised Romanization—was generated, structured, and curated in collaboration with **Antigravity** (Google DeepMind's agentic AI coding assistant).
 
 ### Educational Sources & Standards:
 

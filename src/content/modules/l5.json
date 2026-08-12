@@ -1,0 +1,371 @@
+{
+  "id": "l5",
+  "title": "Level 5 — Sentences & Expressions",
+  "description": "Conversational phrases and short expressions",
+  "items": [
+    {
+      "id": "l5-1",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "안녕하세요.",
+      "translation": "Hello."
+    },
+    {
+      "id": "l5-2",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "감사합니다.",
+      "translation": "Thank you."
+    },
+    {
+      "id": "l5-3",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "반갑습니다.",
+      "translation": "Nice to meet you."
+    },
+    {
+      "id": "l5-4",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "또 만나요.",
+      "translation": "See you again."
+    },
+    {
+      "id": "l5-5",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "죄송합니다.",
+      "translation": "I am sorry."
+    },
+    {
+      "id": "l5-6",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "괜찮아요.",
+      "translation": "It is okay."
+    },
+    {
+      "id": "l5-7",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "잘 자요.",
+      "translation": "Good night."
+    },
+    {
+      "id": "l5-8",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "수고하셨습니다.",
+      "translation": "Great job / Thank you for your hard work."
+    },
+    {
+      "id": "l5-9",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "맛있게 드세요.",
+      "translation": "Bon appétit / Enjoy your meal."
+    },
+    {
+      "id": "l5-10",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "어디 가요?",
+      "translation": "Where are you going?"
+    },
+    {
+      "id": "l5-11",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "몇 시예요?",
+      "translation": "What time is it?"
+    },
+    {
+      "id": "l5-12",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "도와주세요.",
+      "translation": "Please help me."
+    },
+    {
+      "id": "l5-13",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "이거 뭐예요?",
+      "translation": "What is this?"
+    },
+    {
+      "id": "l5-14",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "잠시만요.",
+      "translation": "Just a moment."
+    },
+    {
+      "id": "l5-15",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "실례합니다.",
+      "translation": "Excuse me."
+    },
+    {
+      "id": "l5-16",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "축하합니다!",
+      "translation": "Congratulations!"
+    },
+    {
+      "id": "l5-17",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "잘 먹겠습니다.",
+      "translation": "Thank you for the meal (before eating)."
+    },
+    {
+      "id": "l5-18",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "잘 먹었습니다.",
+      "translation": "Thank you for the meal (after eating)."
+    },
+    {
+      "id": "l5-19",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "다녀오겠습니다.",
+      "translation": "I will be back."
+    },
+    {
+      "id": "l5-20",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "다녀왔습니다.",
+      "translation": "I am back."
+    },
+    {
+      "id": "l5-21",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "어떻게 지내세요?",
+      "translation": "How are you doing?"
+    },
+    {
+      "id": "l5-22",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "오랜만이에요.",
+      "translation": "Long time no see."
+    },
+    {
+      "id": "l5-23",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "무슨 일이에요?",
+      "translation": "What happened?"
+    },
+    {
+      "id": "l5-24",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "걱정하지 마세요.",
+      "translation": "Don't worry."
+    },
+    {
+      "id": "l5-25",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "좋은 하루 보내세요.",
+      "translation": "Have a good day."
+    },
+    {
+      "id": "l5-26",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "주말 잘 보내세요.",
+      "translation": "Have a great weekend."
+    },
+    {
+      "id": "l5-27",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "날씨가 참 좋네요.",
+      "translation": "The weather is really nice."
+    },
+    {
+      "id": "l5-28",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "오늘 너무 추워요.",
+      "translation": "It's so cold today."
+    },
+    {
+      "id": "l5-29",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "오늘 너무 더워요.",
+      "translation": "It's so hot today."
+    },
+    {
+      "id": "l5-30",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "배고파요.",
+      "translation": "I am hungry."
+    },
+    {
+      "id": "l5-31",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "목말라요.",
+      "translation": "I am thirsty."
+    },
+    {
+      "id": "l5-32",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "피곤해요.",
+      "translation": "I am tired."
+    },
+    {
+      "id": "l5-33",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "심심해요.",
+      "translation": "I am bored."
+    },
+    {
+      "id": "l5-34",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "기분이 좋아요.",
+      "translation": "I feel good."
+    },
+    {
+      "id": "l5-35",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "한국어 공부가 재미있어요.",
+      "translation": "Studying Korean is fun."
+    },
+    {
+      "id": "l5-36",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "천천히 말씀해 주세요.",
+      "translation": "Please speak slowly."
+    },
+    {
+      "id": "l5-37",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "다시 말씀해 주세요.",
+      "translation": "Please say that again."
+    },
+    {
+      "id": "l5-38",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "이해했어요.",
+      "translation": "I understood."
+    },
+    {
+      "id": "l5-39",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "잘 모르겠어요.",
+      "translation": "I don't really know."
+    },
+    {
+      "id": "l5-40",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "지금 어디예요?",
+      "translation": "Where are you now?"
+    },
+    {
+      "id": "l5-41",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "조금만 기다려 주세요.",
+      "translation": "Please wait a little bit."
+    },
+    {
+      "id": "l5-42",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "내일 만나요.",
+      "translation": "See you tomorrow."
+    },
+    {
+      "id": "l5-43",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "조심히 가세요.",
+      "translation": "Go home safely."
+    },
+    {
+      "id": "l5-44",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "좋은 꿈 꾸세요.",
+      "translation": "Sweet dreams."
+    },
+    {
+      "id": "l5-45",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "무슨 음식 좋아해요?",
+      "translation": "What food do you like?"
+    },
+    {
+      "id": "l5-46",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "저는 한국어를 배워요.",
+      "translation": "I am learning Korean."
+    },
+    {
+      "id": "l5-47",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "오늘 기분이 어때요?",
+      "translation": "How are you feeling today?"
+    },
+    {
+      "id": "l5-48",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "정말 감사해요.",
+      "translation": "Thank you so much."
+    },
+    {
+      "id": "l5-49",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "언제 시간 있어요?",
+      "translation": "When are you free?"
+    },
+    {
+      "id": "l5-50",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "지금 가고 있어요.",
+      "translation": "I am on my way now."
+    },
+    {
+      "id": "l5-51",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "집에 가고 싶어요.",
+      "translation": "I want to go home."
+    },
+    {
+      "id": "l5-52",
+      "moduleId": "l5",
+      "type": "sentence",
+      "target": "조금 있다가 봐요.",
+      "translation": "See you in a little bit."
+    }
+  ]
+}

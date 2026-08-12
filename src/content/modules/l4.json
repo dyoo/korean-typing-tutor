@@ -1,0 +1,427 @@
+{
+  "id": "l4",
+  "title": "Level 4 — Verbs & Adjectives",
+  "description": "Common action verbs and descriptive adjectives",
+  "items": [
+    {
+      "id": "l4-1",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "먹다",
+      "translation": "to eat"
+    },
+    {
+      "id": "l4-2",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "마시다",
+      "translation": "to drink"
+    },
+    {
+      "id": "l4-3",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "가다",
+      "translation": "to go"
+    },
+    {
+      "id": "l4-4",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "오다",
+      "translation": "to come"
+    },
+    {
+      "id": "l4-5",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "자다",
+      "translation": "to sleep"
+    },
+    {
+      "id": "l4-6",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "만나다",
+      "translation": "to meet"
+    },
+    {
+      "id": "l4-7",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "공부하다",
+      "translation": "to study"
+    },
+    {
+      "id": "l4-8",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "운동하다",
+      "translation": "to exercise"
+    },
+    {
+      "id": "l4-9",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "예쁘다",
+      "translation": "pretty"
+    },
+    {
+      "id": "l4-10",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "귀엽다",
+      "translation": "cute"
+    },
+    {
+      "id": "l4-11",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "크다",
+      "translation": "big / tall"
+    },
+    {
+      "id": "l4-12",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "작다",
+      "translation": "small"
+    },
+    {
+      "id": "l4-13",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "빠르다",
+      "translation": "fast"
+    },
+    {
+      "id": "l4-14",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "느리다",
+      "translation": "slow"
+    },
+    {
+      "id": "l4-15",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "기쁘다",
+      "translation": "glad / happy"
+    },
+    {
+      "id": "l4-16",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "보다",
+      "translation": "to watch / see"
+    },
+    {
+      "id": "l4-17",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "듣다",
+      "translation": "to listen / hear"
+    },
+    {
+      "id": "l4-18",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "읽다",
+      "translation": "to read"
+    },
+    {
+      "id": "l4-19",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "쓰다",
+      "translation": "to write / use / bitter"
+    },
+    {
+      "id": "l4-20",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "말하다",
+      "translation": "to speak / talk"
+    },
+    {
+      "id": "l4-21",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "하다",
+      "translation": "to do"
+    },
+    {
+      "id": "l4-22",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "살다",
+      "translation": "to live"
+    },
+    {
+      "id": "l4-23",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "걷다",
+      "translation": "to walk"
+    },
+    {
+      "id": "l4-24",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "달리다",
+      "translation": "to run"
+    },
+    {
+      "id": "l4-25",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "타다",
+      "translation": "to ride / take"
+    },
+    {
+      "id": "l4-26",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "내리다",
+      "translation": "to get off"
+    },
+    {
+      "id": "l4-27",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "사다",
+      "translation": "to buy"
+    },
+    {
+      "id": "l4-28",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "팔다",
+      "translation": "to sell"
+    },
+    {
+      "id": "l4-29",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "주다",
+      "translation": "to give"
+    },
+    {
+      "id": "l4-30",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "받다",
+      "translation": "to receive"
+    },
+    {
+      "id": "l4-31",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "알다",
+      "translation": "to know"
+    },
+    {
+      "id": "l4-32",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "모르다",
+      "translation": "to not know"
+    },
+    {
+      "id": "l4-33",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "웃다",
+      "translation": "to laugh / smile"
+    },
+    {
+      "id": "l4-34",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "울다",
+      "translation": "to cry"
+    },
+    {
+      "id": "l4-35",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "앉다",
+      "translation": "to sit"
+    },
+    {
+      "id": "l4-36",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "서다",
+      "translation": "to stand"
+    },
+    {
+      "id": "l4-37",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "씻다",
+      "translation": "to wash"
+    },
+    {
+      "id": "l4-38",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "입다",
+      "translation": "to wear (clothes)"
+    },
+    {
+      "id": "l4-39",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "벗다",
+      "translation": "to take off (clothes)"
+    },
+    {
+      "id": "l4-40",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "열다",
+      "translation": "to open"
+    },
+    {
+      "id": "l4-41",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "닫다",
+      "translation": "to close"
+    },
+    {
+      "id": "l4-42",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "찾다",
+      "translation": "to find / search"
+    },
+    {
+      "id": "l4-43",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "만들다",
+      "translation": "to make"
+    },
+    {
+      "id": "l4-44",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "돕다",
+      "translation": "to help"
+    },
+    {
+      "id": "l4-45",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "슬프다",
+      "translation": "sad"
+    },
+    {
+      "id": "l4-46",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "좋다",
+      "translation": "good / to like"
+    },
+    {
+      "id": "l4-47",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "나쁘다",
+      "translation": "bad"
+    },
+    {
+      "id": "l4-48",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "많다",
+      "translation": "many / much"
+    },
+    {
+      "id": "l4-49",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "적다",
+      "translation": "few / little"
+    },
+    {
+      "id": "l4-50",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "높다",
+      "translation": "high / tall"
+    },
+    {
+      "id": "l4-51",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "낮다",
+      "translation": "low"
+    },
+    {
+      "id": "l4-52",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "길다",
+      "translation": "long"
+    },
+    {
+      "id": "l4-53",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "짧다",
+      "translation": "short"
+    },
+    {
+      "id": "l4-54",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "춥다",
+      "translation": "cold (weather)"
+    },
+    {
+      "id": "l4-55",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "덥다",
+      "translation": "hot (weather)"
+    },
+    {
+      "id": "l4-56",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "맛있다",
+      "translation": "delicious"
+    },
+    {
+      "id": "l4-57",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "재미있다",
+      "translation": "fun / interesting"
+    },
+    {
+      "id": "l4-58",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "바쁘다",
+      "translation": "busy"
+    },
+    {
+      "id": "l4-59",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "피곤하다",
+      "translation": "tired"
+    },
+    {
+      "id": "l4-60",
+      "moduleId": "l4",
+      "type": "word",
+      "target": "어렵다",
+      "translation": "difficult"
+    }
+  ]
+}
