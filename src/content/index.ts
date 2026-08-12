@@ -1,4 +1,4 @@
-import type { LessonItem, ModuleDefinition } from '../types/korean';
+import type { CurriculumData, LessonItem, ModuleDefinition } from '../types/korean';
 
 /** Lesson item as stored inside per-module JSON files (without redundant moduleId). */
 export type RawLessonItem = Omit<LessonItem, 'moduleId'>;
@@ -10,10 +10,7 @@ export interface ModuleFile {
   items: RawLessonItem[];
 }
 
-export interface CurriculumData {
-  modules: ModuleDefinition[];
-  items: LessonItem[];
-}
+export type { CurriculumData };
 
 /** Canonical ordered list of module IDs for curriculum progression. */
 const MODULE_ORDER = [
@@ -55,36 +52,30 @@ for (const path in moduleFiles) {
 const modules: ModuleDefinition[] = [];
 const items: LessonItem[] = [];
 
+function appendModule(mod: ModuleFile): void {
+  modules.push({
+    id: mod.id,
+    title: mod.title,
+    description: mod.description,
+  });
+  items.push(
+    ...mod.items.map((item) => ({
+      ...item,
+      moduleId: mod.id,
+    })),
+  );
+}
+
 for (const id of MODULE_ORDER) {
   const mod = moduleMap.get(id);
   if (mod) {
-    modules.push({
-      id: mod.id,
-      title: mod.title,
-      description: mod.description,
-    });
-    items.push(
-      ...mod.items.map((item) => ({
-        ...item,
-        moduleId: mod.id,
-      })),
-    );
+    appendModule(mod);
   }
 }
 
 for (const [id, mod] of moduleMap.entries()) {
   if (!MODULE_ORDER.includes(id)) {
-    modules.push({
-      id: mod.id,
-      title: mod.title,
-      description: mod.description,
-    });
-    items.push(
-      ...mod.items.map((item) => ({
-        ...item,
-        moduleId: mod.id,
-      })),
-    );
+    appendModule(mod);
   }
 }
 

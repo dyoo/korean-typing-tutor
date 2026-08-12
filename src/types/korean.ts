@@ -44,3 +44,9 @@ export interface LessonItem {
   pronunciation?: string | null;
   translation?: string | null;
 }
+
+/** Structure of the imported content dataset containing modules and lesson items. */
+export interface CurriculumData {
+  modules: ModuleDefinition[];
+  items: LessonItem[];
+}

@@ -1,12 +1,8 @@
 import { HangulEngine, checkErrors } from '../utils/koreanEngine';
 import { getPronunciation } from '../utils/romanizer';
-import type { ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
+import type { CurriculumData, ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
 
-/** Structure of the imported content dataset containing modules and lesson items. */
-export interface CurriculumData {
-  modules: ModuleDefinition[];
-  items: LessonItem[];
-}
+export type { CurriculumData };
 
 /** Result object returned when a keystroke is processed by the TutorSession controller. */
 export interface KeyResult {
