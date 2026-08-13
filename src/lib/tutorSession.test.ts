@@ -247,4 +247,32 @@ describe('TutorSession controller', () => {
     expect(session.getUserInput()).toBe('과');
     expect(session.getInputCursorIndex()).toBe(0);
   });
+
+  it('should decompose individual Jamos step-by-step when backspacing an incomplete block typed mid-word', () => {
+    session.setFilter('l3', false);
+    session.processKey('r'); // ㄱ
+    session.processKey('k'); // ㅏ -> 가
+    session.processKey('s'); // ㄴ
+    session.processKey('k'); // ㅏ -> 나 => '가나'
+    expect(session.getUserInput()).toBe('가나');
+
+    session.processKey('Home');
+    session.processKey('ArrowRight'); // cursor index 1 (between '가' and '나')
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    session.processKey('r'); // ㄱ -> '가ㄱ나'
+    session.processKey('n'); // ㅜ -> '가구나'
+    session.processKey('r'); // ㄱ -> '가국나' (active batchim ㄱ)
+    expect(session.getUserInput()).toBe('가국나');
+
+    session.processKey('Backspace'); // decomposes active batchim 'ㄱ' -> '가구나'
+    expect(session.getUserInput()).toBe('가구나');
+
+    session.processKey('Backspace'); // decomposes active vowel 'ㅜ' -> '가ㄱ나'
+    expect(session.getUserInput()).toBe('가ㄱ나');
+
+    session.processKey('Backspace'); // removes active consonant 'ㄱ' -> '가나'
+    expect(session.getUserInput()).toBe('가나');
+    expect(session.getInputCursorIndex()).toBe(1);
+  });
 });
