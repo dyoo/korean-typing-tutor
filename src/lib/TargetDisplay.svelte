@@ -16,6 +16,8 @@
     currentItem: LessonItem;
     displayText: string;
     minFontSizeRem?: number;
+    maxFontSizeRem?: number;
+    lockFontSize?: boolean;
   }
 
   let {
@@ -26,6 +28,8 @@
     currentItem,
     displayText,
     minFontSizeRem = 1.25,
+    maxFontSizeRem = 5.5,
+    lockFontSize = false,
   }: Props = $props();
 
   let targetLength = $derived(currentItem.target.length);
@@ -33,7 +37,13 @@
 
   let fontSizeClass = $derived(getTargetFontSizeClass(targetLength, displayTextLength));
   let fontSizeStyle = $derived(
-    getTargetFontSizeStyle(targetLength, displayTextLength, minFontSizeRem),
+    getTargetFontSizeStyle(
+      targetLength,
+      displayTextLength,
+      minFontSizeRem,
+      maxFontSizeRem,
+      lockFontSize,
+    ),
   );
   let fontWeightClass = $derived(getTargetFontWeightClass(targetLength));
   let subtextClass = $derived(getSubtextFontSizeClass(targetLength));

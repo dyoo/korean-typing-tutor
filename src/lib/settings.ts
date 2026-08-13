@@ -14,6 +14,8 @@ export interface TutorSettings {
   enabledModuleIds?: string[];
   collapsedCategoryIds?: string[];
   minFontSizeRem?: number;
+  maxFontSizeRem?: number;
+  lockFontSize?: boolean;
 }
 
 /** LocalStorage key for persisting user settings across browser sessions. */
@@ -26,6 +28,8 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   showVirtualKeyboard: true,
   theme: 'system',
   minFontSizeRem: 1.25,
+  maxFontSizeRem: 5.5,
+  lockFontSize: false,
 };
 
 /**
@@ -54,9 +58,16 @@ export function loadSettings(): TutorSettings {
       minFontSizeRem:
         typeof parsed.minFontSizeRem === 'number' &&
         parsed.minFontSizeRem >= 1.0 &&
-        parsed.minFontSizeRem <= 4.0
+        parsed.minFontSizeRem <= 7.0
           ? parsed.minFontSizeRem
           : 1.25,
+      maxFontSizeRem:
+        typeof parsed.maxFontSizeRem === 'number' &&
+        parsed.maxFontSizeRem >= 1.0 &&
+        parsed.maxFontSizeRem <= 7.0
+          ? parsed.maxFontSizeRem
+          : 5.5,
+      lockFontSize: typeof parsed.lockFontSize === 'boolean' ? parsed.lockFontSize : false,
     };
   } catch {
     return DEFAULT_SETTINGS;

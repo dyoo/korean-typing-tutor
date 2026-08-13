@@ -62,14 +62,20 @@ describe('fontScaler utility', () => {
   });
 
   describe('getTargetFontSizeStyle', () => {
-    it('returns empty string when minFontSizeRem is <= 1.25', () => {
-      expect(getTargetFontSizeStyle(10, 0, 1.25)).toBe('');
-      expect(getTargetFontSizeStyle(10, 0, 1.0)).toBe('');
+    it('returns empty string when using default min and max bounds', () => {
+      expect(getTargetFontSizeStyle(10, 0, 1.25, 5.5, false)).toBe('');
+      expect(getTargetFontSizeStyle(10, 0, 1.0, 5.5, false)).toBe('');
     });
 
-    it('returns max() CSS style when minFontSizeRem exceeds 1.25', () => {
-      expect(getTargetFontSizeStyle(100, 0, 2.5)).toBe(
-        'font-size: max(2.5rem, clamp(1.25rem, 2.25vw, 1.75rem));',
+    it('returns fixed font-size style when lockFontSize is true', () => {
+      expect(getTargetFontSizeStyle(10, 0, 3.0, 3.0, true)).toBe('font-size: 3rem;');
+      expect(getTargetFontSizeStyle(100, 0, 2.5, 5.5, true)).toBe('font-size: 2.5rem;');
+    });
+
+    it('returns bounded clamp CSS style when custom min or max font sizes are specified', () => {
+      expect(getTargetFontSizeStyle(100, 0, 2.5, 5.5, false)).toBe('font-size: 2.5rem;');
+      expect(getTargetFontSizeStyle(5, 0, 1.25, 4.0, false)).toBe(
+        'font-size: clamp(2.75rem, 6vw, 4rem);',
       );
     });
   });

@@ -222,7 +222,37 @@
   }
 
   function handleMinFontSizeChange(minFontSizeRem: number) {
-    settings = { ...settings, minFontSizeRem };
+    let maxFontSizeRem = settings.maxFontSizeRem ?? 5.5;
+    if (settings.lockFontSize) {
+      maxFontSizeRem = minFontSizeRem;
+    } else if (minFontSizeRem > maxFontSizeRem) {
+      maxFontSizeRem = minFontSizeRem;
+    }
+    settings = { ...settings, minFontSizeRem, maxFontSizeRem };
+    saveSettings(settings);
+    syncState();
+  }
+
+  function handleMaxFontSizeChange(maxFontSizeRem: number) {
+    let minFontSizeRem = settings.minFontSizeRem ?? 1.25;
+    if (settings.lockFontSize) {
+      minFontSizeRem = maxFontSizeRem;
+    } else if (maxFontSizeRem < minFontSizeRem) {
+      minFontSizeRem = maxFontSizeRem;
+    }
+    settings = { ...settings, minFontSizeRem, maxFontSizeRem };
+    saveSettings(settings);
+    syncState();
+  }
+
+  function handleToggleLockFontSize() {
+    const lockFontSize = !settings.lockFontSize;
+    let minFontSizeRem = settings.minFontSizeRem ?? 1.25;
+    let maxFontSizeRem = settings.maxFontSizeRem ?? 5.5;
+    if (lockFontSize) {
+      maxFontSizeRem = minFontSizeRem;
+    }
+    settings = { ...settings, lockFontSize, minFontSizeRem, maxFontSizeRem };
     saveSettings(settings);
     syncState();
   }
@@ -307,6 +337,8 @@
       ontoggletranslation={toggleTranslation}
       ontogglevirtualkeyboard={toggleVirtualKeyboard}
       onminfontsizechange={handleMinFontSizeChange}
+      onmaxfontsizechange={handleMaxFontSizeChange}
+      ontogglelockfontsize={handleToggleLockFontSize}
     />
   </div>
 
@@ -321,6 +353,8 @@
       {currentItem}
       {displayText}
       minFontSizeRem={settings.minFontSizeRem}
+      maxFontSizeRem={settings.maxFontSizeRem}
+      lockFontSize={settings.lockFontSize}
     />
 
     <ExercisePrompt {isCompleted} onskip={handleSkip} />

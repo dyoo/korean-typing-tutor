@@ -22,6 +22,8 @@
     ontoggletranslation,
     ontogglevirtualkeyboard,
     onminfontsizechange,
+    onmaxfontsizechange,
+    ontogglelockfontsize,
   }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
@@ -38,6 +40,11 @@
   function handleMinFontSizeInput(e: Event) {
     const val = parseFloat((e.target as HTMLInputElement).value);
     onminfontsizechange?.(val);
+  }
+
+  function handleMaxFontSizeInput(e: Event) {
+    const val = parseFloat((e.target as HTMLInputElement).value);
+    onmaxfontsizechange?.(val);
   }
 </script>
 
@@ -145,25 +152,81 @@
       </label>
 
       <div
-        class="flex flex-col gap-1 select-none text-sm font-semibold text-gray-700 dark:text-gray-200 pt-1 border-t border-gray-100 dark:border-gray-700"
+        class="flex flex-col gap-2 select-none text-sm font-semibold text-gray-700 dark:text-gray-200 pt-2 border-t border-gray-100 dark:border-gray-700"
       >
-        <div class="flex items-center justify-between">
-          <span>Min Target Font Size</span>
-          <span
-            class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
-          >
-            {settings.minFontSizeRem ?? 1.25}rem
-          </span>
-        </div>
-        <input
-          type="range"
-          min="1.0"
-          max="3.5"
-          step="0.25"
-          value={settings.minFontSizeRem ?? 1.25}
-          oninput={handleMinFontSizeInput}
-          class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
-        />
+        <label
+          class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
+        >
+          <span>Lock Font Size</span>
+          <input
+            type="checkbox"
+            checked={settings.lockFontSize ?? false}
+            onchange={ontogglelockfontsize}
+            class="w-4 h-4 text-blue-600 rounded cursor-pointer"
+          />
+        </label>
+
+        {#if settings.lockFontSize}
+          <div class="flex flex-col gap-1 mt-1">
+            <div class="flex items-center justify-between">
+              <span>Font Size</span>
+              <span
+                class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+              >
+                {settings.minFontSizeRem ?? 1.25}rem
+              </span>
+            </div>
+            <input
+              type="range"
+              min="1.0"
+              max="6.0"
+              step="0.25"
+              value={settings.minFontSizeRem ?? 1.25}
+              oninput={handleMinFontSizeInput}
+              class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
+            />
+          </div>
+        {:else}
+          <div class="flex flex-col gap-1 mt-1">
+            <div class="flex items-center justify-between">
+              <span>Min Font Size</span>
+              <span
+                class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+              >
+                {settings.minFontSizeRem ?? 1.25}rem
+              </span>
+            </div>
+            <input
+              type="range"
+              min="1.0"
+              max="6.0"
+              step="0.25"
+              value={settings.minFontSizeRem ?? 1.25}
+              oninput={handleMinFontSizeInput}
+              class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
+            />
+          </div>
+
+          <div class="flex flex-col gap-1 mt-1">
+            <div class="flex items-center justify-between">
+              <span>Max Font Size</span>
+              <span
+                class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+              >
+                {settings.maxFontSizeRem ?? 5.5}rem
+              </span>
+            </div>
+            <input
+              type="range"
+              min="1.0"
+              max="6.0"
+              step="0.25"
+              value={settings.maxFontSizeRem ?? 5.5}
+              oninput={handleMaxFontSizeInput}
+              class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
+            />
+          </div>
+        {/if}
       </div>
     </div>
   {/if}

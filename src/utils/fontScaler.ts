@@ -62,31 +62,63 @@ export function getSubtextFontSizeClass(targetLength: number): string {
 }
 
 /**
- * Computes an inline font-size style override if minFontSizeRem exceeds default floor.
+ * Computes an inline font-size style string enforcing user-configured minimum, maximum,
+ * and locked font size bounds.
  *
  * @param targetLength - Length of primary target text.
  * @param displayTextLength - Length of secondary display text.
- * @param minFontSizeRem - User-configured minimum font size in rem (default: 1.25rem).
+ * @param minFontSizeRem - User-configured minimum font size floor in rem (default: 1.25rem).
+ * @param maxFontSizeRem - User-configured maximum font size ceiling in rem (default: 5.5rem).
+ * @param lockFontSize - Whether font sizes are locked to a fixed size.
  * @returns Inline CSS font-size style string or empty string.
  */
 export function getTargetFontSizeStyle(
   targetLength: number,
   displayTextLength: number = 0,
   minFontSizeRem: number = 1.25,
+  maxFontSizeRem: number = 5.5,
+  lockFontSize: boolean = false,
 ): string {
-  if (!minFontSizeRem || minFontSizeRem <= 1.25) return '';
-
-  const effectiveLength = targetLength + (displayTextLength > 0 ? displayTextLength * 0.35 : 0);
-  let clampStr: string;
-  if (effectiveLength <= 15) {
-    clampStr = 'clamp(2.75rem, 6vw, 5.5rem)';
-  } else if (effectiveLength <= 35) {
-    clampStr = 'clamp(2rem, 4.5vw, 3.5rem)';
-  } else if (effectiveLength <= 75) {
-    clampStr = 'clamp(1.5rem, 3vw, 2.25rem)';
-  } else {
-    clampStr = 'clamp(1.25rem, 2.25vw, 1.75rem)';
+  if (lockFontSize) {
+    return `font-size: ${minFontSizeRem}rem;`;
   }
 
-  return `font-size: max(${minFontSizeRem}rem, ${clampStr});`;
+  const isCustomMin = typeof minFontSizeRem === 'number' && minFontSizeRem > 1.25;
+  const isCustomMax = typeof maxFontSizeRem === 'number' && maxFontSizeRem < 5.5;
+
+  if (!isCustomMin && !isCustomMax) {
+    return '';
+  }
+
+  const effectiveLength = targetLength + (displayTextLength > 0 ? displayTextLength * 0.35 : 0);
+  let baseMin: number;
+  let baseMax: number;
+  let vwScale: string;
+
+  if (effectiveLength <= 15) {
+    baseMin = 2.75;
+    baseMax = 5.5;
+    vwScale = '6vw';
+  } else if (effectiveLength <= 35) {
+    baseMin = 2.0;
+    baseMax = 3.5;
+    vwScale = '4.5vw';
+  } else if (effectiveLength <= 75) {
+    baseMin = 1.5;
+    baseMax = 2.25;
+    vwScale = '3vw';
+  } else {
+    baseMin = 1.25;
+    baseMax = 1.75;
+    vwScale = '2.25vw';
+  }
+
+  const effectiveMin = Math.max(minFontSizeRem, baseMin);
+  const effectiveMax = Math.min(maxFontSizeRem, baseMax);
+
+  if (effectiveMin >= effectiveMax) {
+    return `font-size: ${effectiveMin}rem;`;
+  }
+
+  return `font-size: clamp(${effectiveMin}rem, ${vwScale}, ${effectiveMax}rem);`;
 }
