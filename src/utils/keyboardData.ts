@@ -3,7 +3,7 @@ export interface KeyCapDefinition {
   key: string;
   jamo: string;
   shiftJamo?: string;
-  type: 'consonant' | 'vowel';
+  type: 'consonant' | 'vowel' | 'punctuation';
 }
 
 /**
@@ -37,7 +37,7 @@ export const DUBEOLSIK_ROWS: KeyCapDefinition[][] = [
     { key: 'k', jamo: 'ㅏ', type: 'vowel' },
     { key: 'l', jamo: 'ㅣ', type: 'vowel' },
   ],
-  // Row 3: Z X C V B N M
+  // Row 3: Z X C V B N M , .
   [
     { key: 'z', jamo: 'ㅋ', type: 'consonant' },
     { key: 'x', jamo: 'ㅌ', type: 'consonant' },
@@ -46,6 +46,8 @@ export const DUBEOLSIK_ROWS: KeyCapDefinition[][] = [
     { key: 'b', jamo: 'ㅠ', type: 'vowel' },
     { key: 'n', jamo: 'ㅜ', type: 'vowel' },
     { key: 'm', jamo: 'ㅡ', type: 'vowel' },
+    { key: ',', jamo: ',', shiftJamo: '<', type: 'punctuation' },
+    { key: '.', jamo: '.', shiftJamo: '>', type: 'punctuation' },
   ],
 ];
 
@@ -85,4 +87,6 @@ export const JAMO_TO_KEY: Record<string, { key: string; shift?: boolean; hand: '
     ㅠ: { key: 'b', hand: 'right' },
     ㅜ: { key: 'n', hand: 'right' },
     ㅡ: { key: 'm', hand: 'right' },
+    ',': { key: ',', hand: 'right' },
+    '.': { key: '.', hand: 'right' },
   };

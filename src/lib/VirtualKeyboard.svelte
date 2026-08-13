@@ -55,77 +55,172 @@
   class="virtual-keyboard w-full max-w-4xl flex flex-col items-center gap-1.5 p-3 bg-white/90 dark:bg-gray-800/90 border-2 border-gray-200 dark:border-gray-700 rounded-2xl shadow-sm select-none"
 >
   {#each DUBEOLSIK_ROWS as row, rowIndex}
-    <div class="flex items-center justify-center gap-1 sm:gap-1.5 w-full">
-      {#if rowIndex === 1}
-        <!-- Row 2 left indentation offset -->
-        <div class="w-2 sm:w-3 shrink-0"></div>
-      {:else if rowIndex === 2}
-        <ShiftKey
-          side="Left"
-          isTarget={isLeftShiftTarget}
-          onselect={(e) => handleKeyClick('Shift', e)}
-        />
-      {/if}
-
-      {#each row as cap}
-        {@const isTarget = activeKeys.includes(cap.key.toLowerCase())}
-        {@const isConsonant = cap.type === 'consonant'}
-
-        <button
-          type="button"
-          tabindex="-1"
-          onmousedown={(e) => handleKeyClick(cap.key, e)}
-          class="relative flex flex-col items-center justify-between w-8 sm:w-11 md:w-12 h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer shrink-0 p-1
-            {isTarget
-            ? 'bg-blue-600 text-white border-blue-700 shadow-sm ring-2 ring-blue-500 font-bold'
-            : isConsonant
-              ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
-              : 'bg-amber-50/70 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/60 text-gray-900 dark:text-gray-100 hover:bg-amber-100/70 dark:hover:bg-amber-900/50'}"
-          aria-label="{cap.jamo} (Key {cap.key.toUpperCase()})"
-        >
-          <!-- Top row labels: English QWERTY key & Shift Jamo -->
-          <div
-            class="flex items-center justify-between w-full text-[9px] sm:text-[10px] leading-none font-mono"
-          >
-            <span class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}>
-              {cap.key.toUpperCase()}
-            </span>
-            {#if cap.shiftJamo}
-              <span
-                class={isTarget ? 'text-blue-200 font-bold' : 'text-gray-400 dark:text-gray-500'}
-              >
-                {cap.shiftJamo}
-              </span>
-            {/if}
-          </div>
-
-          <!-- Center label: Main Hangul Jamo (dynamically shows shifted Jamo when Shift is active) -->
-          <span class="text-sm sm:text-lg md:text-xl font-semibold leading-none my-auto">
-            {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-          </span>
-        </button>
-      {/each}
-
+    <div
+      class="grid w-full max-w-4xl gap-1 sm:gap-1.5"
+      style="grid-template-columns: repeat(26, minmax(0, 1fr));"
+    >
       {#if rowIndex === 0}
+        <!-- Left spacer (span 2) -->
+        <div style="grid-column: span 2;"></div>
+
+        {#each row as cap}
+          {@const isTarget = activeKeys.includes(cap.key.toLowerCase())}
+          {@const isConsonant = cap.type === 'consonant'}
+
+          <button
+            type="button"
+            tabindex="-1"
+            onmousedown={(e) => handleKeyClick(cap.key, e)}
+            style="grid-column: span 2;"
+            class="relative flex flex-col items-center justify-between h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer p-1
+              {isTarget
+              ? 'bg-blue-600 text-white border-blue-700 shadow-sm ring-2 ring-blue-500 font-bold'
+              : isConsonant
+                ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
+                : 'bg-amber-50/70 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/60 text-gray-900 dark:text-gray-100 hover:bg-amber-100/70 dark:hover:bg-amber-900/50'}"
+            aria-label="{cap.jamo} (Key {cap.key.toUpperCase()})"
+          >
+            <div
+              class="flex items-center justify-between w-full text-[9px] sm:text-[10px] leading-none font-mono"
+            >
+              <span
+                class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}
+              >
+                {cap.key.toUpperCase()}
+              </span>
+              {#if cap.shiftJamo}
+                <span
+                  class={isTarget ? 'text-blue-200 font-bold' : 'text-gray-400 dark:text-gray-500'}
+                >
+                  {cap.shiftJamo}
+                </span>
+              {/if}
+            </div>
+            <span class="text-sm sm:text-lg md:text-xl font-semibold leading-none my-auto">
+              {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+            </span>
+          </button>
+        {/each}
+
+        <!-- Backspace (span 4) -->
         <button
           type="button"
           tabindex="-1"
           onmousedown={(e) => handleKeyClick('Backspace', e)}
-          class="flex items-center justify-center gap-1 w-12 sm:w-16 h-10 sm:h-13 rounded-lg border text-xs font-medium transition-colors cursor-pointer shrink-0 p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+          style="grid-column: span 4;"
+          class="flex items-center justify-center gap-1 h-10 sm:h-13 rounded-lg border text-xs font-semibold transition-colors cursor-pointer p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
           aria-label="Backspace"
         >
           <span class="text-sm font-bold">⌫</span>
           <span class="hidden sm:inline text-[10px]">Delete</span>
         </button>
       {:else if rowIndex === 1}
-        <!-- Row 2 right indentation offset -->
-        <div class="w-2 sm:w-3 shrink-0"></div>
+        <!-- Left Caps stagger offset (span 3) -->
+        <div style="grid-column: span 3;"></div>
+
+        {#each row as cap}
+          {@const isTarget = activeKeys.includes(cap.key.toLowerCase())}
+          {@const isConsonant = cap.type === 'consonant'}
+
+          <button
+            type="button"
+            tabindex="-1"
+            onmousedown={(e) => handleKeyClick(cap.key, e)}
+            style="grid-column: span 2;"
+            class="relative flex flex-col items-center justify-between h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer p-1
+              {isTarget
+              ? 'bg-blue-600 text-white border-blue-700 shadow-sm ring-2 ring-blue-500 font-bold'
+              : isConsonant
+                ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
+                : 'bg-amber-50/70 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/60 text-gray-900 dark:text-gray-100 hover:bg-amber-100/70 dark:hover:bg-amber-900/50'}"
+            aria-label="{cap.jamo} (Key {cap.key.toUpperCase()})"
+          >
+            <div
+              class="flex items-center justify-between w-full text-[9px] sm:text-[10px] leading-none font-mono"
+            >
+              <span
+                class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}
+              >
+                {cap.key.toUpperCase()}
+              </span>
+              {#if cap.shiftJamo}
+                <span
+                  class={isTarget ? 'text-blue-200 font-bold' : 'text-gray-400 dark:text-gray-500'}
+                >
+                  {cap.shiftJamo}
+                </span>
+              {/if}
+            </div>
+            <span class="text-sm sm:text-lg md:text-xl font-semibold leading-none my-auto">
+              {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+            </span>
+          </button>
+        {/each}
+
+        <!-- Right Enter balance offset (span 5) -->
+        <div style="grid-column: span 5;"></div>
       {:else if rowIndex === 2}
-        <ShiftKey
-          side="Right"
-          isTarget={isRightShiftTarget}
-          onselect={(e) => handleKeyClick('Shift', e)}
-        />
+        <!-- Left Shift (span 4) -->
+        <div style="grid-column: span 4;">
+          <ShiftKey
+            side="Left"
+            isTarget={isLeftShiftTarget}
+            widthClass="w-full"
+            onselect={(e) => handleKeyClick('Shift', e)}
+          />
+        </div>
+
+        {#each row as cap}
+          {@const isTarget = activeKeys.includes(cap.key.toLowerCase())}
+          {@const isConsonant = cap.type === 'consonant'}
+          {@const isPunctuation = cap.type === 'punctuation'}
+
+          <button
+            type="button"
+            tabindex="-1"
+            onmousedown={(e) => handleKeyClick(cap.key, e)}
+            style="grid-column: span 2;"
+            class="relative flex flex-col items-center justify-between h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer p-1
+              {isTarget
+              ? 'bg-blue-600 text-white border-blue-700 shadow-sm ring-2 ring-blue-500 font-bold'
+              : isConsonant
+                ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
+                : isPunctuation
+                  ? 'bg-slate-100/80 dark:bg-slate-800/60 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  : 'bg-amber-50/70 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/60 text-gray-900 dark:text-gray-100 hover:bg-amber-100/70 dark:hover:bg-amber-900/50'}"
+            aria-label="{cap.jamo} (Key {cap.key.toUpperCase()})"
+          >
+            <div
+              class="flex items-center justify-between w-full text-[9px] sm:text-[10px] leading-none font-mono"
+            >
+              <span
+                class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}
+              >
+                {cap.key.toUpperCase()}
+              </span>
+              {#if cap.shiftJamo}
+                <span
+                  class={isTarget ? 'text-blue-200 font-bold' : 'text-gray-400 dark:text-gray-500'}
+                >
+                  {cap.shiftJamo}
+                </span>
+              {/if}
+            </div>
+            <span class="text-sm sm:text-lg md:text-xl font-semibold leading-none my-auto">
+              {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+            </span>
+          </button>
+        {/each}
+
+        <!-- Right Shift (span 4) -->
+        <div style="grid-column: span 4;">
+          <ShiftKey
+            side="Right"
+            isTarget={isRightShiftTarget}
+            widthClass="w-full"
+            onselect={(e) => handleKeyClick('Shift', e)}
+          />
+        </div>
       {/if}
     </div>
   {/each}
