@@ -212,66 +212,43 @@ export class TutorSession {
     return parts.join(' · ');
   }
 
+  /** Helper to construct standardized KeyResult response objects. */
+  private makeResult(
+    isMatch = false,
+    isItemCompleted = this.isItemCompleted,
+    isTutorialComplete = false,
+    advanced = false,
+  ): KeyResult {
+    return { isMatch, isItemCompleted, isTutorialComplete, advanced };
+  }
+
   /** Processes single keyboard input. */
   public processKey(key: string): KeyResult {
     if (key === 'Tab' || key === 'Escape' || this.activeItems.length === 0) {
-      return { isMatch: false, isItemCompleted: false, isTutorialComplete: false, advanced: false };
+      return this.makeResult();
+    }
+
+    // Navigation Keys
+    if (key === 'ArrowLeft') this.setInputCursorIndex(this.inputCursorIndex - 1);
+    else if (key === 'ArrowRight') this.setInputCursorIndex(this.inputCursorIndex + 1);
+    else if (key === 'Home') this.setInputCursorIndex(0);
+    else if (key === 'End') this.setInputCursorIndex(this.userInput.length);
+
+    if (key === 'ArrowLeft' || key === 'ArrowRight' || key === 'Home' || key === 'End') {
+      return this.makeResult();
     }
 
     const currentTarget = this.getCurrentItem().target;
 
-    // Navigation Keys
-    if (key === 'ArrowLeft') {
-      this.setInputCursorIndex(this.inputCursorIndex - 1);
-      return {
-        isMatch: false,
-        isItemCompleted: this.isItemCompleted,
-        isTutorialComplete: false,
-        advanced: false,
-      };
-    }
-    if (key === 'ArrowRight') {
-      this.setInputCursorIndex(this.inputCursorIndex + 1);
-      return {
-        isMatch: false,
-        isItemCompleted: this.isItemCompleted,
-        isTutorialComplete: false,
-        advanced: false,
-      };
-    }
-    if (key === 'Home') {
-      this.setInputCursorIndex(0);
-      return {
-        isMatch: false,
-        isItemCompleted: this.isItemCompleted,
-        isTutorialComplete: false,
-        advanced: false,
-      };
-    }
-    if (key === 'End') {
-      this.setInputCursorIndex(this.userInput.length);
-      return {
-        isMatch: false,
-        isItemCompleted: this.isItemCompleted,
-        isTutorialComplete: false,
-        advanced: false,
-      };
-    }
-
     if (this.isItemCompleted) {
       if (key === 'Enter' || key === ' ' || key === 'Spacebar') {
         const isTutorialComplete = this.advanceLevel();
-        return { isMatch: true, isItemCompleted: false, isTutorialComplete, advanced: true };
+        return this.makeResult(true, false, isTutorialComplete, true);
       }
       if (key === 'Backspace' || key === 'Delete') {
         this.isItemCompleted = false;
       } else {
-        return {
-          isMatch: false,
-          isItemCompleted: true,
-          isTutorialComplete: false,
-          advanced: false,
-        };
+        return this.makeResult(false, true);
       }
     }
 
@@ -294,15 +271,10 @@ export class TutorSession {
 
     if (currentTarget.length > 0 && this.userInput === currentTarget) {
       this.isItemCompleted = true;
-      return { isMatch: true, isItemCompleted: true, isTutorialComplete: false, advanced: false };
+      return this.makeResult(true, true);
     }
 
-    return {
-      isMatch: false,
-      isItemCompleted: this.isItemCompleted,
-      isTutorialComplete: false,
-      advanced: false,
-    };
+    return this.makeResult();
   }
 
   /** Advances to next item in module and reshuffles when cycling back. */
