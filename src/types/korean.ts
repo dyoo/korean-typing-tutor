@@ -1,5 +1,3 @@
-
-
 /** Structured decomposition result for a single Hangul syllable. */
 export interface SyllableDecomposition {
   initialConsonant: string;

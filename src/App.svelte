@@ -167,8 +167,6 @@
     syncState();
   }
 
-
-
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Tab' || e.key === 'Escape' || e.altKey || e.ctrlKey || e.metaKey) {
       return;
@@ -257,7 +255,7 @@
 
 <main
   oncopy={handleCopy}
-  class="flex flex-col items-center justify-between min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-4 md:px-8 md:py-6 overflow-x-hidden transition-colors"
+  class="flex flex-col items-center justify-between h-screen max-h-screen h-dvh max-h-dvh bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-3 md:px-8 md:py-5 overflow-hidden transition-colors"
 >
   <div class="w-full max-w-7xl flex items-center justify-between gap-4 shrink-0">
     <div class="relative flex items-center gap-3">
@@ -306,7 +304,7 @@
   </div>
 
   <div
-    class="w-full max-w-full flex-1 flex flex-col items-center justify-start py-4 px-2 md:px-8 overflow-hidden"
+    class="w-full max-w-full flex-1 min-h-0 flex flex-col items-center justify-between py-2 md:py-4 px-2 md:px-8 overflow-hidden"
   >
     <TargetDisplay
       {wordTokens}
@@ -317,13 +315,11 @@
       {displayText}
     />
 
-    <div class="flex-1 min-h-[1rem]"></div>
-
     <ExercisePrompt {isCompleted} onskip={handleSkip} />
   </div>
 
   <div
-    class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-4 shrink-0 px-2 md:px-8"
+    class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-2 md:pb-4 shrink-0 px-2 md:px-8"
   >
     <div
       class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-xl px-4 overflow-hidden cursor-text"

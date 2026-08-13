@@ -20,11 +20,11 @@
   let textColor = $derived(
     isError
       ? variant === 'target'
-        ? 'text-red-600 dark:text-red-400 font-bold'
-        : 'text-red-500 dark:text-red-400'
+        ? 'text-red-600 dark:text-red-400'
+        : 'text-red-500 dark:text-red-400 font-bold'
       : variant === 'target'
-        ? 'text-gray-900 dark:text-gray-100 font-bold'
-        : 'text-blue-600 dark:text-blue-400',
+        ? 'text-gray-900 dark:text-gray-100'
+        : 'text-blue-600 dark:text-blue-400 font-bold',
   );
 </script>
 

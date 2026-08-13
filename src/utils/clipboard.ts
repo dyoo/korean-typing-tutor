@@ -63,9 +63,6 @@ export function handleCopyEvent(
 /**
  * Backward-compatible wrapper for handleCopyEvent.
  */
-export function handleTargetCopyEvent(
-  e: ClipboardEvent,
-  selection?: Selection | null,
-): boolean {
+export function handleTargetCopyEvent(e: ClipboardEvent, selection?: Selection | null): boolean {
   return handleCopyEvent(e, selection);
 }

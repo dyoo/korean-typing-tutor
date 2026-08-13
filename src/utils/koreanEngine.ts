@@ -78,8 +78,6 @@ const FINAL_CONSONANT_MAP: Record<string, number> = {
   g: 27, // ㅎ
 };
 
-
-
 /**
  * Compound Vowel (Jungseong) Combinations.
  * Maps pair of (first_vowel, second_vowel) to compound Vowel (Jungseong) index.

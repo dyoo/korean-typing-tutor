@@ -1,6 +1,11 @@
 <script lang="ts">
   import CharDisplay from './CharDisplay.svelte';
   import type { ErrorReport, LessonItem } from '../types/korean';
+  import {
+    getTargetFontSizeClass,
+    getTargetFontWeightClass,
+    getSubtextFontSizeClass,
+  } from '../utils/fontScaler';
 
   interface Props {
     wordTokens: Array<{ type: 'word' | 'space'; indices: number[] }>;
@@ -19,36 +24,47 @@
     currentItem,
     displayText,
   }: Props = $props();
+
+  let targetLength = $derived(currentItem.target.length);
+  let displayTextLength = $derived(displayText.length);
+
+  let fontSizeClass = $derived(getTargetFontSizeClass(targetLength, displayTextLength));
+  let fontWeightClass = $derived(getTargetFontWeightClass(targetLength));
+  let subtextClass = $derived(getSubtextFontSizeClass(targetLength));
 </script>
 
 <div
-  class="target-display relative flex flex-wrap break-keep justify-center gap-y-4 font-bold tracking-normal text-center select-text w-full max-w-full text-giant"
+  class="w-full max-w-full flex-1 min-h-0 flex flex-col items-center justify-center overflow-y-auto px-2 py-2 select-text"
 >
-  {#each wordTokens as token}
-    {#if token.type === 'space'}
-      {@const i = token.indices[0]}
-      {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
-      {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
-
-      <CharDisplay char=" " {isError} {isCurrent} variant="target" dataIndex={i} />
-    {:else}
-      <span class="inline-flex whitespace-nowrap">
-        {#each token.indices as i}
-          {@const char = currentItem.target[i]}
-          {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
-          {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
-
-          <CharDisplay {char} {isError} {isCurrent} variant="target" dataIndex={i} />
-        {/each}
-      </span>
-    {/if}
-  {/each}
-</div>
-
-{#if displayText.trim().length > 0}
   <div
-    class="text-subgiant text-gray-500 dark:text-gray-400 font-medium italic mt-6 text-center tracking-wide min-h-[3rem] h-auto flex flex-col items-center justify-center select-text max-w-full px-4 py-2"
+    class="target-display relative flex flex-wrap break-keep justify-center gap-y-3 md:gap-y-4 tracking-normal text-center w-full max-w-full {fontSizeClass} {fontWeightClass}"
   >
-    {displayText}
+    {#each wordTokens as token}
+      {#if token.type === 'space'}
+        {@const i = token.indices[0]}
+        {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
+        {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
+
+        <CharDisplay char=" " {isError} {isCurrent} variant="target" dataIndex={i} />
+      {:else}
+        <span class="inline-flex flex-wrap max-w-full">
+          {#each token.indices as i}
+            {@const char = currentItem.target[i]}
+            {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
+            {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
+
+            <CharDisplay {char} {isError} {isCurrent} variant="target" dataIndex={i} />
+          {/each}
+        </span>
+      {/if}
+    {/each}
   </div>
-{/if}
+
+  {#if displayText.trim().length > 0}
+    <div
+      class="subtext-display text-gray-500 dark:text-gray-400 font-medium italic mt-3 md:mt-4 text-center tracking-wide flex flex-col items-center justify-center max-w-full px-4 py-1 shrink-0 {subtextClass}"
+    >
+      {displayText}
+    </div>
+  {/if}
+</div>
