@@ -182,11 +182,7 @@ describe('TutorSession controller', () => {
     expect(session.getInputCursorIndex()).toBe(2);
 
     session.processKey('ArrowLeft'); // index 1 (between '사' and '과')
-    session.processKey('Backspace'); // decomposes active prefix '사' -> 'ㅅ'
-    expect(session.getUserInput()).toBe('ㅅ과');
-    expect(session.getInputCursorIndex()).toBe(1);
-
-    session.processKey('Backspace'); // removes 'ㅅ'
+    session.processKey('Backspace'); // deletes completed block '사'
     expect(session.getUserInput()).toBe('과');
     expect(session.getInputCursorIndex()).toBe(0);
 
@@ -212,5 +208,43 @@ describe('TutorSession controller', () => {
 
     session.processKey('s'); // ㄴ -> '한국'
     expect(session.getUserInput()).toBe('한국');
+  });
+
+  it('should not alter completed prefix syllables when typing in front of another character', () => {
+    session.setFilter('l3', false);
+    session.processKey('r'); // ㄱ
+    session.processKey('k'); // ㅏ -> 가
+    session.processKey('s'); // ㄴ
+    session.processKey('k'); // ㅏ -> 나 => '가나'
+    expect(session.getUserInput()).toBe('가나');
+
+    session.processKey('Home');
+    session.processKey('ArrowRight'); // cursor index 1 (between '가' and '나')
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    session.processKey('r'); // ㄱ -> '가ㄱ나'
+    expect(session.getUserInput()).toBe('가ㄱ나');
+    expect(session.getInputCursorIndex()).toBe(2);
+
+    session.processKey('k'); // ㅏ -> '가가나'
+    expect(session.getUserInput()).toBe('가가나');
+    expect(session.getInputCursorIndex()).toBe(2);
+  });
+
+  it('should delete completed block when backspacing within a word', () => {
+    session.setFilter('l3', false);
+    session.processKey('t'); // ㅅ
+    session.processKey('k'); // ㅏ -> 사
+    session.processKey('r'); // ㄱ
+    session.processKey('h'); // ㅗ
+    session.processKey('k'); // ㅏ -> 과 => '사과'
+    expect(session.getUserInput()).toBe('사과');
+
+    session.processKey('ArrowLeft'); // cursor index 1 (between '사' and '과')
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    session.processKey('Backspace'); // deletes completed block '사'
+    expect(session.getUserInput()).toBe('과');
+    expect(session.getInputCursorIndex()).toBe(0);
   });
 });

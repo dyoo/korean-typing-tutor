@@ -750,14 +750,26 @@ export class HangulEngine {
   }
 
   /**
-   * Resets engine state and re-hydrates composition by processing individual Jamos from prefix string.
+   * Resets engine state and re-hydrates composition state from prefix string.
+   * Completed syllable blocks are stored directly in composedString without active Jamos,
+   * while trailing standalone Jamos are restored into active initial/vowel composition state.
    */
   public resetTo(prefix: string): void {
     this.reset();
     if (!prefix) return;
-    const jamos = decomposeStringToJamos(prefix);
-    for (const jamo of jamos) {
-      this.handleKey(jamo);
+
+    const lastChar = prefix[prefix.length - 1];
+    const initIdx = INITIAL_CONSONANT_STANDALONE.indexOf(lastChar);
+    const vowelIdx = VOWEL_STANDALONE.indexOf(lastChar);
+
+    if (initIdx !== -1) {
+      this.composedString = prefix.slice(0, -1);
+      this.currentInitialConsonant = initIdx;
+    } else if (vowelIdx !== -1) {
+      this.composedString = prefix.slice(0, -1);
+      this.currentVowel = vowelIdx;
+    } else {
+      this.composedString = prefix;
     }
   }
 
