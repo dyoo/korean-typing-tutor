@@ -37,11 +37,15 @@
   <span class="whitespace-pre {textColor}">
     {char === ' ' ? ' ' : char}
   </span>
-  {#if isError}
-    <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-red-500 dark:bg-red-400 rounded-full"
-    ></span>
-  {:else if isCurrent}
-    <span class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"
-    ></span>
+  {#if isCurrent}
+    {#if variant === 'input'}
+      <span
+        class="absolute -right-0.5 top-1/2 -translate-y-1/2 h-[65%] w-[2.5px] bg-blue-600 dark:bg-blue-500 rounded-full"
+      ></span>
+    {:else}
+      <span
+        class="absolute bottom-0 left-1/2 -translate-x-1/2 h-[2px] w-[0.85em] bg-blue-600 dark:bg-blue-500 rounded-full"
+      ></span>
+    {/if}
   {/if}
 </span>

@@ -403,11 +403,11 @@
           {#if activeInputCursorIndex === userInput.length && !isCompleted}
             <span
               bind:this={activeCursorElement}
-              class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5 min-w-[0.7em]"
+              class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5"
             >
               <span class="opacity-0 select-none">&nbsp;</span>
               <span
-                class="absolute bottom-0 h-[3px] w-[0.7em] bg-blue-600 dark:bg-blue-500 rounded-full"
+                class="absolute left-0 top-1/2 -translate-y-1/2 h-[65%] w-[2.5px] bg-blue-600 dark:bg-blue-500 rounded-full"
               ></span>
             </span>
           {/if}
