@@ -106,7 +106,18 @@
         </button>
       {/each}
 
-      {#if rowIndex === 1}
+      {#if rowIndex === 0}
+        <button
+          type="button"
+          tabindex="-1"
+          onmousedown={(e) => handleKeyClick('Backspace', e)}
+          class="flex items-center justify-center gap-1 w-12 sm:w-16 h-10 sm:h-13 rounded-lg border text-xs font-medium transition-colors cursor-pointer shrink-0 p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+          aria-label="Backspace"
+        >
+          <span class="text-sm font-bold">⌫</span>
+          <span class="hidden sm:inline text-[10px]">Delete</span>
+        </button>
+      {:else if rowIndex === 1}
         <!-- Row 2 right indentation offset -->
         <div class="w-2 sm:w-3 shrink-0"></div>
       {:else if rowIndex === 2}
