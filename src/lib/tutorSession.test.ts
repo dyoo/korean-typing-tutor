@@ -275,4 +275,32 @@ describe('TutorSession controller', () => {
     expect(session.getUserInput()).toBe('가나');
     expect(session.getInputCursorIndex()).toBe(1);
   });
+
+  it('should delete the completed preceding character block when backspacing once more after clearing an active incomplete mid-word block', () => {
+    session.setFilter('l3', false);
+    session.processKey('r'); // ㄱ
+    session.processKey('k'); // ㅏ -> 가
+    session.processKey('s'); // ㄴ
+    session.processKey('k'); // ㅏ -> 나 => '가나'
+    expect(session.getUserInput()).toBe('가나');
+
+    session.processKey('Home');
+    session.processKey('ArrowRight'); // cursor index 1 (between '가' and '나')
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    session.processKey('r'); // ㄱ -> '가ㄱ나'
+    session.processKey('n'); // ㅜ -> '가구나'
+    session.processKey('r'); // ㄱ -> '가국나' (active batchim ㄱ)
+    expect(session.getUserInput()).toBe('가국나');
+
+    session.processKey('Backspace'); // decomposes active batchim 'ㄱ' -> '가구나'
+    session.processKey('Backspace'); // decomposes active vowel 'ㅜ' -> '가ㄱ나'
+    session.processKey('Backspace'); // removes active consonant 'ㄱ' -> '가나'
+    expect(session.getUserInput()).toBe('가나');
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    session.processKey('Backspace'); // deletes completed block '가' -> '나'
+    expect(session.getUserInput()).toBe('나');
+    expect(session.getInputCursorIndex()).toBe(0);
+  });
 });
