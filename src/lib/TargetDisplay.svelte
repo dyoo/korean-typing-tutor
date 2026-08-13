@@ -1,6 +1,7 @@
 <script lang="ts">
   import CharDisplay from './CharDisplay.svelte';
   import type { ErrorReport, LessonItem } from '../types/korean';
+  import type { CursorColorMode } from '../utils/cursorColor';
   import {
     getTargetFontSizeClass,
     getTargetFontWeightClass,
@@ -18,6 +19,7 @@
     minFontSizeRem?: number;
     maxFontSizeRem?: number;
     lockFontSize?: boolean;
+    cursorColor?: CursorColorMode;
   }
 
   let {
@@ -30,6 +32,7 @@
     minFontSizeRem = 1.25,
     maxFontSizeRem = 5.5,
     lockFontSize = false,
+    cursorColor = 'amber',
   }: Props = $props();
 
   let targetLength = $derived(currentItem.target.length);
@@ -62,7 +65,7 @@
         {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
         {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
 
-        <CharDisplay char=" " {isError} {isCurrent} variant="target" dataIndex={i} />
+        <CharDisplay char=" " {isError} {isCurrent} variant="target" dataIndex={i} {cursorColor} />
       {:else}
         <span class="inline-flex flex-wrap max-w-full">
           {#each token.indices as i}
@@ -70,7 +73,14 @@
             {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
             {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
 
-            <CharDisplay {char} {isError} {isCurrent} variant="target" dataIndex={i} />
+            <CharDisplay
+              {char}
+              {isError}
+              {isCurrent}
+              variant="target"
+              dataIndex={i}
+              {cursorColor}
+            />
           {/each}
         </span>
       {/if}

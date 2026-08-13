@@ -20,6 +20,7 @@
   import ExercisePrompt from './lib/ExercisePrompt.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
+  import { getCursorColorClass, type CursorColorMode } from './utils/cursorColor';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   const modules = session.getModules();
@@ -57,6 +58,8 @@
   let activeRequiredKeys = $derived(
     getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
+
+  let cursorBgClass = $derived(getCursorColorClass(settings.cursorColor));
 
   $effect(() => {
     if (
@@ -221,6 +224,12 @@
     syncState();
   }
 
+  function handleCursorColorChange(cursorColor: CursorColorMode) {
+    settings = { ...settings, cursorColor };
+    saveSettings(settings);
+    syncState();
+  }
+
   function handleMinFontSizeChange(minFontSizeRem: number) {
     let maxFontSizeRem = settings.maxFontSizeRem ?? 5.5;
     if (settings.lockFontSize) {
@@ -339,6 +348,7 @@
       onminfontsizechange={handleMinFontSizeChange}
       onmaxfontsizechange={handleMaxFontSizeChange}
       ontogglelockfontsize={handleToggleLockFontSize}
+      oncursorcolorchange={handleCursorColorChange}
     />
   </div>
 
@@ -355,6 +365,7 @@
       minFontSizeRem={settings.minFontSizeRem}
       maxFontSizeRem={settings.maxFontSizeRem}
       lockFontSize={settings.lockFontSize}
+      cursorColor={settings.cursorColor}
     />
 
     <ExercisePrompt {isCompleted} onskip={handleSkip} />
@@ -394,9 +405,17 @@
                 {isCurrent}
                 variant="input"
                 dataIndex={i}
+                cursorColor={settings.cursorColor}
               />
             {:else}
-              <CharDisplay {char} {isError} {isCurrent} variant="input" dataIndex={i} />
+              <CharDisplay
+                {char}
+                {isError}
+                {isCurrent}
+                variant="input"
+                dataIndex={i}
+                cursorColor={settings.cursorColor}
+              />
             {/if}
           {/each}
 
@@ -407,7 +426,7 @@
             >
               <span class="opacity-0 select-none">&nbsp;</span>
               <span
-                class="absolute left-0 top-1/2 -translate-y-1/2 h-[65%] w-[2.5px] bg-blue-600 dark:bg-blue-500 rounded-full"
+                class="absolute left-0 top-1/2 -translate-y-1/2 h-[65%] w-[2.5px] {cursorBgClass} rounded-full"
               ></span>
             </span>
           {/if}

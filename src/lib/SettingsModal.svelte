@@ -1,6 +1,8 @@
 <script lang="ts">
   import type { TutorSettings, ThemeMode } from './settings';
+  import type { CursorColorMode } from '../utils/cursorColor';
   import DualRangeSlider from './DualRangeSlider.svelte';
+  import CursorColorSelect from './CursorColorSelect.svelte';
 
   interface Props {
     isOpen: boolean;
@@ -14,6 +16,7 @@
     onminfontsizechange?: (minSize: number) => void;
     onmaxfontsizechange?: (maxSize: number) => void;
     ontogglelockfontsize?: () => void;
+    oncursorcolorchange?: (cursorColor: CursorColorMode) => void;
   }
 
   let {
@@ -28,6 +31,7 @@
     onminfontsizechange,
     onmaxfontsizechange,
     ontogglelockfontsize,
+    oncursorcolorchange,
   }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
@@ -94,7 +98,7 @@
       tabindex="-1"
       role="region"
       aria-label="Display Settings Panel"
-      class="settings-modal absolute right-0 top-11 z-50 w-64 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3"
+      class="settings-modal absolute right-0 top-11 z-50 w-76 sm:w-80 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3"
     >
       <div
         class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono pb-1 border-b border-gray-100 dark:border-gray-700"
@@ -116,6 +120,11 @@
           <option value="dark">Dark</option>
         </select>
       </label>
+
+      <CursorColorSelect
+        value={settings.cursorColor ?? 'amber'}
+        onchange={(val) => oncursorcolorchange?.(val)}
+      />
 
       <label
         class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"

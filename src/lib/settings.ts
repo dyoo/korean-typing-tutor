@@ -1,3 +1,5 @@
+import type { CursorColorMode } from '../utils/cursorColor';
+
 /**
  * Supported theme modes: system (follows OS), light, or dark.
  */
@@ -16,6 +18,7 @@ export interface TutorSettings {
   minFontSizeRem?: number;
   maxFontSizeRem?: number;
   lockFontSize?: boolean;
+  cursorColor?: CursorColorMode;
 }
 
 /** LocalStorage key for persisting user settings across browser sessions. */
@@ -30,6 +33,7 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   minFontSizeRem: 1.25,
   maxFontSizeRem: 5.5,
   lockFontSize: false,
+  cursorColor: 'amber',
 };
 
 /**
@@ -42,6 +46,7 @@ export function loadSettings(): TutorSettings {
     if (!raw) return DEFAULT_SETTINGS;
     const parsed = JSON.parse(raw);
     const validThemes: ThemeMode[] = ['system', 'light', 'dark'];
+    const validCursorColors: CursorColorMode[] = ['amber', 'sky', 'emerald', 'blue'];
     return {
       showPronunciation:
         typeof parsed.showPronunciation === 'boolean' ? parsed.showPronunciation : true,
@@ -68,6 +73,7 @@ export function loadSettings(): TutorSettings {
           ? parsed.maxFontSizeRem
           : 5.5,
       lockFontSize: typeof parsed.lockFontSize === 'boolean' ? parsed.lockFontSize : false,
+      cursorColor: validCursorColors.includes(parsed.cursorColor) ? parsed.cursorColor : 'amber',
     };
   } catch {
     return DEFAULT_SETTINGS;
