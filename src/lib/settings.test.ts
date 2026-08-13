@@ -13,18 +13,20 @@ describe('Settings module persistence', () => {
     expect(settings.theme).toBe('system');
   });
 
-  it('should save and load custom user settings including theme', () => {
+  it('should save and load custom user settings including theme and minFontSizeRem', () => {
     saveSettings({
       showPronunciation: false,
       showTranslation: true,
       showVirtualKeyboard: true,
       theme: 'dark',
+      minFontSizeRem: 2.25,
     });
     const loaded = loadSettings();
     expect(loaded.showPronunciation).toBe(false);
     expect(loaded.showTranslation).toBe(true);
     expect(loaded.showVirtualKeyboard).toBe(true);
     expect(loaded.theme).toBe('dark');
+    expect(loaded.minFontSizeRem).toBe(2.25);
   });
 
   it('should save and load selected curriculum module preferences and collapsed categories', () => {

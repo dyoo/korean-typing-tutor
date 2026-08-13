@@ -3,6 +3,7 @@ import {
   getTargetFontSizeClass,
   getTargetFontWeightClass,
   getSubtextFontSizeClass,
+  getTargetFontSizeStyle,
 } from './fontScaler';
 
 describe('fontScaler utility', () => {
@@ -57,6 +58,19 @@ describe('fontScaler utility', () => {
 
     it('returns responsive small text class for long targets', () => {
       expect(getSubtextFontSizeClass(50)).toBe('text-sm md:text-base');
+    });
+  });
+
+  describe('getTargetFontSizeStyle', () => {
+    it('returns empty string when minFontSizeRem is <= 1.25', () => {
+      expect(getTargetFontSizeStyle(10, 0, 1.25)).toBe('');
+      expect(getTargetFontSizeStyle(10, 0, 1.0)).toBe('');
+    });
+
+    it('returns max() CSS style when minFontSizeRem exceeds 1.25', () => {
+      expect(getTargetFontSizeStyle(100, 0, 2.5)).toBe(
+        'font-size: max(2.5rem, clamp(1.25rem, 2.25vw, 1.75rem));',
+      );
     });
   });
 });

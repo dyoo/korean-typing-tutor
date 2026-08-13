@@ -13,6 +13,7 @@ export interface TutorSettings {
   theme: ThemeMode;
   enabledModuleIds?: string[];
   collapsedCategoryIds?: string[];
+  minFontSizeRem?: number;
 }
 
 /** LocalStorage key for persisting user settings across browser sessions. */
@@ -24,6 +25,7 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   showTranslation: true,
   showVirtualKeyboard: true,
   theme: 'system',
+  minFontSizeRem: 1.25,
 };
 
 /**
@@ -49,6 +51,12 @@ export function loadSettings(): TutorSettings {
       collapsedCategoryIds: Array.isArray(parsed.collapsedCategoryIds)
         ? parsed.collapsedCategoryIds
         : undefined,
+      minFontSizeRem:
+        typeof parsed.minFontSizeRem === 'number' &&
+        parsed.minFontSizeRem >= 1.0 &&
+        parsed.minFontSizeRem <= 4.0
+          ? parsed.minFontSizeRem
+          : 1.25,
     };
   } catch {
     return DEFAULT_SETTINGS;

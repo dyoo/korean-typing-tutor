@@ -60,3 +60,33 @@ export function getSubtextFontSizeClass(targetLength: number): string {
     return 'text-sm md:text-base';
   }
 }
+
+/**
+ * Computes an inline font-size style override if minFontSizeRem exceeds default floor.
+ *
+ * @param targetLength - Length of primary target text.
+ * @param displayTextLength - Length of secondary display text.
+ * @param minFontSizeRem - User-configured minimum font size in rem (default: 1.25rem).
+ * @returns Inline CSS font-size style string or empty string.
+ */
+export function getTargetFontSizeStyle(
+  targetLength: number,
+  displayTextLength: number = 0,
+  minFontSizeRem: number = 1.25,
+): string {
+  if (!minFontSizeRem || minFontSizeRem <= 1.25) return '';
+
+  const effectiveLength = targetLength + (displayTextLength > 0 ? displayTextLength * 0.35 : 0);
+  let clampStr: string;
+  if (effectiveLength <= 15) {
+    clampStr = 'clamp(2.75rem, 6vw, 5.5rem)';
+  } else if (effectiveLength <= 35) {
+    clampStr = 'clamp(2rem, 4.5vw, 3.5rem)';
+  } else if (effectiveLength <= 75) {
+    clampStr = 'clamp(1.5rem, 3vw, 2.25rem)';
+  } else {
+    clampStr = 'clamp(1.25rem, 2.25vw, 1.75rem)';
+  }
+
+  return `font-size: max(${minFontSizeRem}rem, ${clampStr});`;
+}

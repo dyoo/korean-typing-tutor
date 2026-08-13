@@ -5,6 +5,7 @@
     getTargetFontSizeClass,
     getTargetFontWeightClass,
     getSubtextFontSizeClass,
+    getTargetFontSizeStyle,
   } from '../utils/fontScaler';
 
   interface Props {
@@ -14,6 +15,7 @@
     isCompleted: boolean;
     currentItem: LessonItem;
     displayText: string;
+    minFontSizeRem?: number;
   }
 
   let {
@@ -23,12 +25,16 @@
     isCompleted,
     currentItem,
     displayText,
+    minFontSizeRem = 1.25,
   }: Props = $props();
 
   let targetLength = $derived(currentItem.target.length);
   let displayTextLength = $derived(displayText.length);
 
   let fontSizeClass = $derived(getTargetFontSizeClass(targetLength, displayTextLength));
+  let fontSizeStyle = $derived(
+    getTargetFontSizeStyle(targetLength, displayTextLength, minFontSizeRem),
+  );
   let fontWeightClass = $derived(getTargetFontWeightClass(targetLength));
   let subtextClass = $derived(getSubtextFontSizeClass(targetLength));
 </script>
@@ -38,6 +44,7 @@
 >
   <div
     class="target-display relative flex flex-wrap break-keep justify-center gap-y-3 md:gap-y-4 tracking-normal text-center w-full max-w-full {fontSizeClass} {fontWeightClass}"
+    style={fontSizeStyle}
   >
     {#each wordTokens as token}
       {#if token.type === 'space'}

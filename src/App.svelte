@@ -221,6 +221,12 @@
     syncState();
   }
 
+  function handleMinFontSizeChange(minFontSizeRem: number) {
+    settings = { ...settings, minFontSizeRem };
+    saveSettings(settings);
+    syncState();
+  }
+
   function toggleSettingsModal(e: MouseEvent) {
     e.stopPropagation();
     showSettingsModal = !showSettingsModal;
@@ -300,6 +306,7 @@
       ontogglepronunciation={togglePronunciation}
       ontoggletranslation={toggleTranslation}
       ontogglevirtualkeyboard={toggleVirtualKeyboard}
+      onminfontsizechange={handleMinFontSizeChange}
     />
   </div>
 
@@ -313,6 +320,7 @@
       {isCompleted}
       {currentItem}
       {displayText}
+      minFontSizeRem={settings.minFontSizeRem}
     />
 
     <ExercisePrompt {isCompleted} onskip={handleSkip} />
