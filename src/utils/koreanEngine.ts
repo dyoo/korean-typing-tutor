@@ -739,11 +739,26 @@ export class HangulEngine {
   /**
    * Resets engine state for a new typing lesson.
    */
+  /**
+   * Resets engine state for a new typing lesson.
+   */
   public reset(): void {
     this.currentInitialConsonant = null;
     this.currentVowel = null;
     this.currentFinalConsonant = null;
     this.composedString = '';
+  }
+
+  /**
+   * Resets engine state and re-hydrates composition by processing individual Jamos from prefix string.
+   */
+  public resetTo(prefix: string): void {
+    this.reset();
+    if (!prefix) return;
+    const jamos = decomposeStringToJamos(prefix);
+    for (const jamo of jamos) {
+      this.handleKey(jamo);
+    }
   }
 
   /**
@@ -805,9 +820,13 @@ export function calculateTargetCursorIndex(
   target: string,
   userInput: string,
   isCompleted: boolean,
+  inputCursorIndex?: number,
 ): number {
   if (isCompleted || !target) {
     return -1;
+  }
+  if (typeof inputCursorIndex === 'number' && inputCursorIndex >= 0) {
+    return Math.min(inputCursorIndex, target.length - 1);
   }
   if (userInput.length === 0) {
     return 0;
@@ -830,9 +849,13 @@ export function calculateInputCursorIndex(
   userInput: string,
   target: string,
   isCompleted: boolean,
+  inputCursorIndex?: number,
 ): number {
   if (isCompleted) {
     return -1;
+  }
+  if (typeof inputCursorIndex === 'number' && inputCursorIndex >= 0) {
+    return Math.min(inputCursorIndex, userInput.length);
   }
   if (userInput.length === 0) {
     return 0;

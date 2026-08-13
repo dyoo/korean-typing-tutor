@@ -161,4 +161,56 @@ describe('TutorSession controller', () => {
     expect(session.getAccuracy()).toBe(100);
     expect(session.getIsItemCompleted()).toBe(false);
   });
+
+  it('should support Arrow keys, Home, End navigation and mid-text deletion and insertion', () => {
+    session.setFilter('l3', false); // target '사과'
+    session.processKey('t'); // ㅅ
+    session.processKey('k'); // ㅏ -> 사
+    session.processKey('r'); // ㄱ
+    session.processKey('h'); // ㅗ
+    session.processKey('k'); // ㅏ -> 과 => '사과'
+    expect(session.getUserInput()).toBe('사과');
+    expect(session.getInputCursorIndex()).toBe(2);
+
+    session.processKey('ArrowLeft');
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    session.processKey('Home');
+    expect(session.getInputCursorIndex()).toBe(0);
+
+    session.processKey('End');
+    expect(session.getInputCursorIndex()).toBe(2);
+
+    session.processKey('ArrowLeft'); // index 1 (between '사' and '과')
+    session.processKey('Backspace'); // decomposes active prefix '사' -> 'ㅅ'
+    expect(session.getUserInput()).toBe('ㅅ과');
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    session.processKey('Backspace'); // removes 'ㅅ'
+    expect(session.getUserInput()).toBe('과');
+    expect(session.getInputCursorIndex()).toBe(0);
+
+    session.processKey('Delete'); // forward deletes '과' at index 0
+    expect(session.getUserInput()).toBe('');
+    expect(session.getInputCursorIndex()).toBe(0);
+  });
+
+  it('should construct composed Hangul blocks when typing at the beginning of an existing text (e.g. typing g+k+s before 국 -> 한국)', () => {
+    session.processKey('r'); // ㄱ
+    session.processKey('n'); // ㅜ
+    session.processKey('r'); // ㄱ -> '국'
+    expect(session.getUserInput()).toBe('국');
+
+    session.processKey('Home'); // cursor index 0 before '국'
+    expect(session.getInputCursorIndex()).toBe(0);
+
+    session.processKey('g'); // ㅎ -> 'ㅎ국'
+    expect(session.getUserInput()).toBe('ㅎ국');
+
+    session.processKey('k'); // ㅏ -> '하국'
+    expect(session.getUserInput()).toBe('하국');
+
+    session.processKey('s'); // ㄴ -> '한국'
+    expect(session.getUserInput()).toBe('한국');
+  });
 });

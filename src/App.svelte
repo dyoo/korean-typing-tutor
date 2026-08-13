@@ -20,7 +20,7 @@
   import ExercisePrompt from './lib/ExercisePrompt.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
-  import { getCursorColorClass, type CursorColorMode } from './utils/cursorColor';
+  import type { CursorColorMode } from './utils/cursorColor';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   const modules = session.getModules();
@@ -44,22 +44,22 @@
   let inputContainerElement = $state<HTMLDivElement | null>(null);
   let activeCursorElement = $state<HTMLElement | null>(null);
 
+  let sessionCursorIndex = $state(session.getInputCursorIndex());
+
   let displayText = $derived(session.getDisplayText(currentItem, settings));
   let wordTokens = $derived(getWordTokens(currentItem.target));
 
   let activeTargetCursorIndex = $derived(
-    calculateTargetCursorIndex(currentItem.target, userInput, isCompleted),
+    calculateTargetCursorIndex(currentItem.target, userInput, isCompleted, sessionCursorIndex),
   );
 
   let activeInputCursorIndex = $derived(
-    calculateInputCursorIndex(userInput, currentItem.target, isCompleted),
+    calculateInputCursorIndex(userInput, currentItem.target, isCompleted, sessionCursorIndex),
   );
 
   let activeRequiredKeys = $derived(
     getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
-
-  let cursorBgClass = $derived(getCursorColorClass(settings.cursorColor));
 
   $effect(() => {
     if (
@@ -114,9 +114,16 @@
 
   function syncState() {
     userInput = session.getUserInput();
+    sessionCursorIndex = session.getInputCursorIndex();
     errors = session.getErrors();
     currentItem = session.getCurrentItem();
     isCompleted = session.getIsItemCompleted();
+  }
+
+  function setInputCursorPosition(index: number) {
+    session.setInputCursorIndex(index);
+    syncState();
+    inputElement?.focus();
   }
 
   function toggleModule(modId: string) {
@@ -175,7 +182,16 @@
       return;
     }
 
-    if (e.key === 'Backspace' || e.key === 'Enter' || e.key.length === 1) {
+    if (
+      e.key === 'Backspace' ||
+      e.key === 'Delete' ||
+      e.key === 'Enter' ||
+      e.key === 'ArrowLeft' ||
+      e.key === 'ArrowRight' ||
+      e.key === 'Home' ||
+      e.key === 'End' ||
+      e.key.length === 1
+    ) {
       e.preventDefault();
       session.processKey(e.key);
       syncState();
@@ -395,7 +411,9 @@
         >
           {#each userInput.split('') as char, i}
             {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
-            {@const isCurrent = i === activeInputCursorIndex && !isCompleted}
+            {@const isLeading = i === activeInputCursorIndex && !isCompleted}
+            {@const isTrailing = i === activeInputCursorIndex - 1 && !isCompleted}
+            {@const isCurrent = isLeading || isTrailing}
 
             {#if isCurrent}
               <CharDisplay
@@ -403,9 +421,11 @@
                 {char}
                 {isError}
                 {isCurrent}
+                isLeadingCursor={isLeading}
                 variant="input"
                 dataIndex={i}
                 cursorColor={settings.cursorColor}
+                onselect={() => setInputCursorPosition(i + 1)}
               />
             {:else}
               <CharDisplay
@@ -415,21 +435,10 @@
                 variant="input"
                 dataIndex={i}
                 cursorColor={settings.cursorColor}
+                onselect={() => setInputCursorPosition(i + 1)}
               />
             {/if}
           {/each}
-
-          {#if activeInputCursorIndex === userInput.length && !isCompleted}
-            <span
-              bind:this={activeCursorElement}
-              class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5"
-            >
-              <span class="opacity-0 select-none">&nbsp;</span>
-              <span
-                class="absolute left-0 top-1/2 -translate-y-1/2 h-[65%] w-[2.5px] {cursorBgClass} rounded-full"
-              ></span>
-            </span>
-          {/if}
         </div>
       {/if}
 

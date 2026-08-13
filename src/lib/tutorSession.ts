@@ -158,6 +158,20 @@ export class TutorSession {
     return this.userInput;
   }
 
+  /** Returns active input cursor index. */
+  public getInputCursorIndex(): number {
+    return this.inputCursorIndex;
+  }
+
+  /** Sets active input cursor index and re-hydrates engine with prefix. */
+  public setInputCursorIndex(index: number): void {
+    const clamped = Math.max(0, Math.min(this.userInput.length, Math.floor(index)));
+    const prefix = this.userInput.slice(0, clamped);
+    this.suffix = this.userInput.slice(clamped);
+    this.inputCursorIndex = clamped;
+    this.engine.resetTo(prefix);
+  }
+
   /** Returns error flags for each character index. */
   public getErrors(): ErrorReport[] {
     return this.errors;
@@ -206,51 +220,97 @@ export class TutorSession {
 
     const currentTarget = this.getCurrentItem().target;
 
+    // Navigation Keys
+    if (key === 'ArrowLeft') {
+      this.setInputCursorIndex(this.inputCursorIndex - 1);
+      return {
+        isMatch: false,
+        isItemCompleted: this.isItemCompleted,
+        isTutorialComplete: false,
+        advanced: false,
+      };
+    }
+    if (key === 'ArrowRight') {
+      this.setInputCursorIndex(this.inputCursorIndex + 1);
+      return {
+        isMatch: false,
+        isItemCompleted: this.isItemCompleted,
+        isTutorialComplete: false,
+        advanced: false,
+      };
+    }
+    if (key === 'Home') {
+      this.setInputCursorIndex(0);
+      return {
+        isMatch: false,
+        isItemCompleted: this.isItemCompleted,
+        isTutorialComplete: false,
+        advanced: false,
+      };
+    }
+    if (key === 'End') {
+      this.setInputCursorIndex(this.userInput.length);
+      return {
+        isMatch: false,
+        isItemCompleted: this.isItemCompleted,
+        isTutorialComplete: false,
+        advanced: false,
+      };
+    }
+
     if (this.isItemCompleted) {
       if (key === 'Enter' || key === ' ' || key === 'Spacebar') {
         const isTutorialComplete = this.advanceLevel();
         return { isMatch: true, isItemCompleted: false, isTutorialComplete, advanced: true };
       }
-      if (key === 'Backspace') {
-        this.userInput = this.engine.handleKey('Backspace');
-        this.errors = checkErrors(currentTarget, this.userInput);
-        this.isItemCompleted = currentTarget.length > 0 && this.userInput === currentTarget;
-        const correctChars = this.errors.filter((err) => !err.isError).length;
-        this.accuracy =
-          this.userInput.length > 0
-            ? Math.round((correctChars / this.userInput.length) * 100)
-            : 100;
+      if (key === 'Backspace' || key === 'Delete') {
+        this.isItemCompleted = false;
+      } else {
         return {
-          isMatch: this.isItemCompleted,
-          isItemCompleted: this.isItemCompleted,
+          isMatch: false,
+          isItemCompleted: true,
           isTutorialComplete: false,
           advanced: false,
         };
       }
-      return { isMatch: false, isItemCompleted: true, isTutorialComplete: false, advanced: false };
     }
 
-    if (key === 'Backspace' || key.length === 1) {
-      this.userInput = this.engine.handleKey(key);
-      this.errors = checkErrors(currentTarget, this.userInput);
-
-      const correctChars = this.errors.filter((err) => !err.isError).length;
-      this.accuracy =
-        this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
-
-      if (currentTarget.length > 0 && this.userInput === currentTarget) {
-        this.isItemCompleted = true;
-        return { isMatch: true, isItemCompleted: true, isTutorialComplete: false, advanced: false };
+    // Forward Delete Key
+    if (key === 'Delete') {
+      if (this.suffix.length > 0) {
+        this.suffix = this.suffix.slice(1);
+        this.userInput = this.engine.getComposedText() + this.suffix;
       }
+    } else if (key === 'Backspace' || key.length === 1) {
+      const newPrefix = this.engine.handleKey(key);
+      this.inputCursorIndex = newPrefix.length;
+      this.userInput = newPrefix + this.suffix;
     }
 
-    return { isMatch: false, isItemCompleted: false, isTutorialComplete: false, advanced: false };
+    this.errors = checkErrors(currentTarget, this.userInput);
+    const correctChars = this.errors.filter((err) => !err.isError).length;
+    this.accuracy =
+      this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
+
+    if (currentTarget.length > 0 && this.userInput === currentTarget) {
+      this.isItemCompleted = true;
+      return { isMatch: true, isItemCompleted: true, isTutorialComplete: false, advanced: false };
+    }
+
+    return {
+      isMatch: false,
+      isItemCompleted: this.isItemCompleted,
+      isTutorialComplete: false,
+      advanced: false,
+    };
   }
 
   /** Advances to next item in module and reshuffles when cycling back. */
   public advanceLevel(): boolean {
     this.engine.reset();
     this.userInput = '';
+    this.inputCursorIndex = 0;
+    this.suffix = '';
     this.errors = [];
     this.isItemCompleted = false;
 
@@ -271,6 +331,8 @@ export class TutorSession {
     this.engine.reset();
     this.currentIndex = 0;
     this.userInput = '';
+    this.inputCursorIndex = 0;
+    this.suffix = '';
     this.errors = [];
     this.accuracy = 100;
     this.isItemCompleted = false;
