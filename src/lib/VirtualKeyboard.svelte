@@ -9,22 +9,42 @@
 
   let { activeKeys = [], onkeyselect }: Props = $props();
 
+  let isVirtualShiftActive = $state(false);
+
   let isSpaceTarget = $derived(activeKeys.includes(' '));
   let isLeftShiftTarget = $derived(
-    activeKeys.includes('left-shift') || activeKeys.includes('shift'),
+    isVirtualShiftActive || activeKeys.includes('left-shift') || activeKeys.includes('shift'),
   );
   let isRightShiftTarget = $derived(
-    activeKeys.includes('right-shift') || activeKeys.includes('shift'),
+    isVirtualShiftActive || activeKeys.includes('right-shift') || activeKeys.includes('shift'),
   );
+
+  let isShiftActive = $derived(isLeftShiftTarget || isRightShiftTarget);
+
+  function toggleShift(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    isVirtualShiftActive = !isVirtualShiftActive;
+  }
 
   function handleKeyClick(key: string, e: MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
 
+    if (key === 'Shift') {
+      toggleShift(e);
+      return;
+    }
+
     let outputKey = key;
-    if (key.length === 1 && (isLeftShiftTarget || isRightShiftTarget)) {
+    if (key.length === 1 && isShiftActive) {
       outputKey = key.toUpperCase();
     }
+
+    if (isVirtualShiftActive) {
+      isVirtualShiftActive = false;
+    }
+
     onkeyselect?.(outputKey);
   }
 </script>
@@ -79,9 +99,9 @@
             {/if}
           </div>
 
-          <!-- Center label: Main Hangul Jamo -->
+          <!-- Center label: Main Hangul Jamo (dynamically shows shifted Jamo when Shift is active) -->
           <span class="text-sm sm:text-lg md:text-xl font-semibold leading-none my-auto">
-            {cap.jamo}
+            {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
           </span>
         </button>
       {/each}
