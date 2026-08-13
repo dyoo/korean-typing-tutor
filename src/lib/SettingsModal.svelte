@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { TutorSettings, ThemeMode } from './settings';
+  import DualRangeSlider from './DualRangeSlider.svelte';
 
   interface Props {
     isOpen: boolean;
@@ -10,6 +11,9 @@
     ontogglepronunciation: () => void;
     ontoggletranslation: () => void;
     ontogglevirtualkeyboard: () => void;
+    onminfontsizechange?: (minSize: number) => void;
+    onmaxfontsizechange?: (maxSize: number) => void;
+    ontogglelockfontsize?: () => void;
   }
 
   let {
@@ -42,10 +46,8 @@
     onminfontsizechange?.(val);
   }
 
-  function handleMaxFontSizeInput(e: Event) {
-    const val = parseFloat((e.target as HTMLInputElement).value);
-    onmaxfontsizechange?.(val);
-  }
+  let minVal = $derived(settings.minFontSizeRem ?? 1.25);
+  let maxVal = $derived(settings.maxFontSizeRem ?? 5.5);
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
@@ -173,7 +175,7 @@
               <span
                 class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
               >
-                {settings.minFontSizeRem ?? 1.25}rem
+                {minVal}rem
               </span>
             </div>
             <input
@@ -181,7 +183,7 @@
               min="1.0"
               max="6.0"
               step="0.25"
-              value={settings.minFontSizeRem ?? 1.25}
+              value={minVal}
               oninput={handleMinFontSizeInput}
               class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
             />
@@ -189,41 +191,22 @@
         {:else}
           <div class="flex flex-col gap-1 mt-1">
             <div class="flex items-center justify-between">
-              <span>Min Font Size</span>
+              <span>Min & Max Font Size</span>
               <span
                 class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
               >
-                {settings.minFontSizeRem ?? 1.25}rem
+                {minVal}rem – {maxVal}rem
               </span>
             </div>
-            <input
-              type="range"
-              min="1.0"
-              max="6.0"
-              step="0.25"
-              value={settings.minFontSizeRem ?? 1.25}
-              oninput={handleMinFontSizeInput}
-              class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
-            />
-          </div>
 
-          <div class="flex flex-col gap-1 mt-1">
-            <div class="flex items-center justify-between">
-              <span>Max Font Size</span>
-              <span
-                class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
-              >
-                {settings.maxFontSizeRem ?? 5.5}rem
-              </span>
-            </div>
-            <input
-              type="range"
-              min="1.0"
-              max="6.0"
-              step="0.25"
-              value={settings.maxFontSizeRem ?? 5.5}
-              oninput={handleMaxFontSizeInput}
-              class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
+            <DualRangeSlider
+              min={1.0}
+              max={6.0}
+              step={0.25}
+              minValue={minVal}
+              maxValue={maxVal}
+              onminchange={(val) => onminfontsizechange?.(val)}
+              onmaxchange={(val) => onmaxfontsizechange?.(val)}
             />
           </div>
         {/if}
