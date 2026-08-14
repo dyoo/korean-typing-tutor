@@ -50,6 +50,9 @@
   let isCompleted = $state(session.getIsItemCompleted());
   let inputElement = $state<HTMLInputElement | null>(null);
 
+  let isLeftShiftPressed = $state(false);
+  let isRightShiftPressed = $state(false);
+
   let sessionCursorIndex = $state(session.getInputCursorIndex());
 
   let displayText = $derived(session.getDisplayText(currentItem, settings));
@@ -187,6 +190,17 @@
   }
 
   function handleKeydown(e: KeyboardEvent) {
+    if (e.key === 'Shift') {
+      if (e.code === 'ShiftLeft') {
+        isLeftShiftPressed = true;
+      } else if (e.code === 'ShiftRight') {
+        isRightShiftPressed = true;
+      } else {
+        isLeftShiftPressed = true;
+      }
+      return;
+    }
+
     if (e.key === 'Tab' || e.key === 'Escape' || e.altKey || e.ctrlKey || e.metaKey) {
       return;
     }
@@ -205,6 +219,24 @@
       session.processKey(e.key);
       syncState();
     }
+  }
+
+  function handleKeyup(e: KeyboardEvent) {
+    if (e.key === 'Shift') {
+      if (e.code === 'ShiftLeft') {
+        isLeftShiftPressed = false;
+      } else if (e.code === 'ShiftRight') {
+        isRightShiftPressed = false;
+      } else {
+        isLeftShiftPressed = false;
+        isRightShiftPressed = false;
+      }
+    }
+  }
+
+  function handleWindowBlur() {
+    isLeftShiftPressed = false;
+    isRightShiftPressed = false;
   }
 
   function handleInputPrevent(e: Event) {
@@ -303,7 +335,11 @@
   }
 </script>
 
-<svelte:window onclick={handleWindowClick} />
+<svelte:window
+  onclick={handleWindowClick}
+  onkeyup={handleKeyup}
+  onblur={handleWindowBlur}
+/>
 
 <main
   oncopy={handleCopy}
@@ -367,6 +403,7 @@
       hasEnabledModules={mode === 'mastery' || enabledModuleIds.length > 0}
       cursorColor={settings.cursorColor}
       onkeydown={handleKeydown}
+      onkeyup={handleKeyup}
       oninputprevent={handleInputPrevent}
       onsetcursorposition={setInputCursorPosition}
       onfocuscontainer={focusInput}
@@ -380,6 +417,8 @@
           {unlockedJamos}
           activeJamo={activeLearningJamo?.jamo ?? null}
           jamoStats={masteryState.jamoStats}
+          {isLeftShiftPressed}
+          {isRightShiftPressed}
           onkeyselect={handleVirtualKeySelect}
         />
       </div>

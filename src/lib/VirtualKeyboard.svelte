@@ -12,6 +12,8 @@
     unlockedJamos?: Set<string>;
     activeJamo?: string | null;
     jamoStats?: Record<string, JamoStats>;
+    isLeftShiftPressed?: boolean;
+    isRightShiftPressed?: boolean;
   }
 
   let {
@@ -21,19 +23,27 @@
     unlockedJamos = new Set(),
     activeJamo = null,
     jamoStats = {},
+    isLeftShiftPressed = false,
+    isRightShiftPressed = false,
   }: Props = $props();
 
   let isVirtualShiftActive = $state(false);
 
   let isSpaceTarget = $derived(activeKeys.includes(' '));
   let isLeftShiftTarget = $derived(
-    isVirtualShiftActive || activeKeys.includes('left-shift') || activeKeys.includes('shift'),
+    activeKeys.includes('left-shift') || (activeKeys.includes('shift') && !activeKeys.includes('right-shift')),
   );
   let isRightShiftTarget = $derived(
-    isVirtualShiftActive || activeKeys.includes('right-shift') || activeKeys.includes('shift'),
+    activeKeys.includes('right-shift') || (activeKeys.includes('shift') && !activeKeys.includes('left-shift')),
   );
 
-  let isShiftActive = $derived(isLeftShiftTarget || isRightShiftTarget);
+  let isShiftActive = $derived(
+    isVirtualShiftActive ||
+      isLeftShiftPressed ||
+      isRightShiftPressed ||
+      isLeftShiftTarget ||
+      isRightShiftTarget,
+  );
 
   function toggleShift(e: MouseEvent) {
     e.preventDefault();
@@ -143,6 +153,7 @@
           <ShiftKey
             side="Left"
             isTarget={isLeftShiftTarget}
+            isPressed={isVirtualShiftActive || isLeftShiftPressed}
             widthClass="w-full"
             onselect={(e) => handleKeyClick('Shift', e)}
           />
@@ -174,6 +185,7 @@
           <ShiftKey
             side="Right"
             isTarget={isRightShiftTarget}
+            isPressed={isVirtualShiftActive || isRightShiftPressed}
             widthClass="w-full"
             onselect={(e) => handleKeyClick('Shift', e)}
           />

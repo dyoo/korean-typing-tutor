@@ -12,6 +12,7 @@
     cursorColor?: CursorColorMode;
     inputElement?: HTMLInputElement | null;
     onkeydown: (e: KeyboardEvent) => void;
+    onkeyup?: (e: KeyboardEvent) => void;
     oninputprevent: (e: Event) => void;
     onsetcursorposition: (index: number) => void;
     onfocuscontainer?: (e?: MouseEvent) => void;
@@ -26,6 +27,7 @@
     cursorColor = 'amber',
     inputElement = $bindable(null),
     onkeydown,
+    onkeyup,
     oninputprevent,
     onsetcursorposition,
     onfocuscontainer,
@@ -108,6 +110,7 @@
     class="absolute inset-0 w-full h-full opacity-0 pointer-events-none z-0"
     value={userInput}
     {onkeydown}
+    {onkeyup}
     oninput={oninputprevent}
     autocomplete="off"
     autocorrect="off"
