@@ -13,6 +13,7 @@ import {
   selectNextMasteryItem,
   calculateJamoProgress,
   setMasteryProgressionLevel,
+  isHangulJamo,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
 
@@ -119,15 +120,23 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
   });
 
   it('should evaluate whether vocabulary items are eligible based on unlocked Jamo set', () => {
+    expect(isHangulJamo('ㄱ')).toBe(true);
+    expect(isHangulJamo('ㅏ')).toBe(true);
+    expect(isHangulJamo(' ')).toBe(false);
+    expect(isHangulJamo('-')).toBe(false);
+    expect(isHangulJamo('!')).toBe(false);
+
     const unlocked = new Set(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']); // Stage 1 keys
 
     const validItem1: LessonItem = { id: '1', moduleId: 'test', target: '아', translation: 'Ah' };
     const validItem2: LessonItem = { id: '2', moduleId: 'test', target: '어라', translation: 'Oh' };
-    const invalidItem1: LessonItem = { id: '3', moduleId: 'test', target: '고기', translation: 'Meat' }; // Contains ㄱ, ㅗ
-    const invalidItem2: LessonItem = { id: '4', moduleId: 'test', target: '사과', translation: 'Apple' }; // Contains ㅅ, ㄱ, ㅗ
+    const validItem3: LessonItem = { id: '3', moduleId: 'test', target: '알아-어라!', translation: 'With hyphen and punctuation' };
+    const invalidItem1: LessonItem = { id: '4', moduleId: 'test', target: '고기', translation: 'Meat' }; // Contains ㄱ, ㅗ
+    const invalidItem2: LessonItem = { id: '5', moduleId: 'test', target: '사과', translation: 'Apple' }; // Contains ㅅ, ㄱ, ㅗ
 
     expect(isItemEligible(validItem1, unlocked)).toBe(true);
     expect(isItemEligible(validItem2, unlocked)).toBe(true);
+    expect(isItemEligible(validItem3, unlocked)).toBe(true);
     expect(isItemEligible(invalidItem1, unlocked)).toBe(false);
     expect(isItemEligible(invalidItem2, unlocked)).toBe(false);
   });

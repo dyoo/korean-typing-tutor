@@ -303,14 +303,24 @@ export function recordJamoAttempt(
 }
 
 /**
- * Validates whether 100% of an item's constituent Jamos belong to the unlocked Jamo set.
+ * Helper to determine if a character is a Hangul Jamo (compatibility or standard Unicode Jamo).
+ */
+export function isHangulJamo(char: string): boolean {
+  if (!char) return false;
+  const code = char.charCodeAt(0);
+  return (code >= 0x3131 && code <= 0x318e) || (code >= 0x1100 && code <= 0x11ff);
+}
+
+/**
+ * Validates whether all of an item's constituent Hangul Jamos belong to the unlocked Jamo set.
+ * Non-Jamo characters (spaces, hyphens, punctuation, symbols) are allowed and do not block eligibility.
  */
 export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): boolean {
   if (!item.target || item.target.trim() === '') return false;
   const jamos = decomposeStringToJamos(item.target);
   if (jamos.length === 0) return false;
 
-  return jamos.every((j) => j === ' ' || unlockedJamos.has(j));
+  return jamos.every((j) => !isHangulJamo(j) || unlockedJamos.has(j));
 }
 
 /**
