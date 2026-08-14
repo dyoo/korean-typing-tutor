@@ -14,6 +14,7 @@ import {
   calculateJamoProgress,
   setMasteryProgressionLevel,
   isHangulJamo,
+  getAdaptiveLengthMultiplier,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
 
@@ -166,6 +167,27 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     // Select with active Jamo 'ㅗ'
     const selected = selectNextMasteryItem(eligible, 'ㅗ', state.jamoStats);
     expect(eligible.some((i) => i.id === selected.id)).toBe(true);
+  });
+
+  it('should scale adaptive length multipliers based on mastery progress', () => {
+    // Early stage (< 30% progress): 1-2 char words receive 4x multiplier, long sentences suppressed (0.2x)
+    expect(getAdaptiveLengthMultiplier(1, 10)).toBe(4.0);
+    expect(getAdaptiveLengthMultiplier(2, 20)).toBe(4.0);
+    expect(getAdaptiveLengthMultiplier(4, 25)).toBe(1.0);
+    expect(getAdaptiveLengthMultiplier(15, 25)).toBe(0.2);
+
+    // Mid stage (30% to 70% progress): 2-4 char words prioritized (3.0x)
+    expect(getAdaptiveLengthMultiplier(1, 50)).toBe(1.5);
+    expect(getAdaptiveLengthMultiplier(2, 50)).toBe(3.0);
+    expect(getAdaptiveLengthMultiplier(3, 50)).toBe(3.0);
+    expect(getAdaptiveLengthMultiplier(4, 50)).toBe(3.0);
+    expect(getAdaptiveLengthMultiplier(10, 50)).toBe(0.5);
+
+    // Advanced stage (>= 70% progress): full breadth with longer phrases welcomed (1.5x for length >= 3)
+    expect(getAdaptiveLengthMultiplier(1, 80)).toBe(1.0);
+    expect(getAdaptiveLengthMultiplier(2, 90)).toBe(1.0);
+    expect(getAdaptiveLengthMultiplier(5, 80)).toBe(1.5);
+    expect(getAdaptiveLengthMultiplier(20, 100)).toBe(1.5);
   });
 
   it('should calculate accurate mastery fill percentage (0 to 100%)', () => {

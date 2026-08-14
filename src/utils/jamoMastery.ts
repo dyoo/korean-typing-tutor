@@ -373,8 +373,31 @@ export function getEligibleMasteryItems(
 }
 
 /**
+ * Calculates a progressive length multiplier based on the active Jamo's mastery progress.
+ * - Early stage (0–30% progress): Strongly biases toward 1–2 character words.
+ * - Mid stage (30–70% progress): Biases toward 2–4 character core vocabulary.
+ * - Advanced stage (70–100% progress): Unlocks full breadth, including longer phrases and sentences.
+ */
+export function getAdaptiveLengthMultiplier(targetLength: number, progressPercent: number): number {
+  if (progressPercent < 30) {
+    if (targetLength <= 2) return 4.0;
+    if (targetLength <= 4) return 1.0;
+    return 0.2;
+  } else if (progressPercent < 70) {
+    if (targetLength >= 2 && targetLength <= 4) return 3.0;
+    if (targetLength === 1) return 1.5;
+    if (targetLength <= 8) return 1.0;
+    return 0.5;
+  } else {
+    if (targetLength >= 3) return 1.5;
+    return 1.0;
+  }
+}
+
+/**
  * Selects the next exercise item from eligible items, biasing selection toward words
- * that contain the active learning Jamo or Jamos with lower accuracy.
+ * that contain the active learning Jamo, struggling Jamos, and scaling target word
+ * length adaptively based on the active Jamo's progress.
  */
 export function selectNextMasteryItem(
   eligibleItems: LessonItem[],
@@ -402,27 +425,33 @@ export function selectNextMasteryItem(
     return pool[0];
   }
 
-  // Assign weights to items based on whether they contain active/struggling Jamos
+  const activeStats = activeJamo ? jamoStats[activeJamo] : undefined;
+  const activeProgress = activeStats ? calculateJamoProgress(activeStats) : 100;
+
+  // Assign weights to items based on whether they contain active/struggling Jamos and adaptive word length
   const weightedList: { item: LessonItem; weight: number }[] = [];
 
   for (const item of pool) {
     const jamos = decomposeStringToJamos(item.target);
-    let weight = 1;
+    let jamoWeight = 1;
 
     for (const j of jamos) {
       if (j === activeJamo) {
-        weight += 3; // 3x multiplier for the active learning Jamo
+        jamoWeight += 3; // 3x multiplier for the active learning Jamo
       }
       const stats = jamoStats[j];
       if (stats && stats.totalAttempts > 0) {
         const acc = calculateJamoAccuracy(stats);
         if (acc < 0.9) {
-          weight += 2; // Extra weight for struggling Jamos
+          jamoWeight += 2; // Extra weight for struggling Jamos
         }
       }
     }
 
-    weightedList.push({ item, weight });
+    const lengthMultiplier = getAdaptiveLengthMultiplier(item.target.length, activeProgress);
+    const finalWeight = jamoWeight * lengthMultiplier;
+
+    weightedList.push({ item, weight: finalWeight });
   }
 
   const totalWeight = weightedList.reduce((sum, w) => sum + w.weight, 0);
