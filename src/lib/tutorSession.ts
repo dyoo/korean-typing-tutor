@@ -52,6 +52,7 @@ export class TutorSession {
 
   private mode: TutorMode = 'mastery';
   private masteryState: MasteryState;
+  private saveTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
     data: CurriculumData | LessonItem[],
@@ -338,6 +339,20 @@ export class TutorSession {
     return null;
   }
 
+  /**
+   * Schedules a debounced save to LocalStorage.
+   * Waits 30 seconds of inactivity before writing to avoid mobile I/O heat and battery drain.
+   */
+  private scheduleSave(): void {
+    if (this.saveTimeout !== null) {
+      clearTimeout(this.saveTimeout);
+    }
+    this.saveTimeout = setTimeout(() => {
+      saveMasteryState(this.masteryState);
+      this.saveTimeout = null;
+    }, 30000);
+  }
+
   /** Processes single keyboard input. */
   public processKey(key: string): KeyResult {
     if (key === 'Tab' || key === 'Escape' || this.activeItems.length === 0) {
@@ -423,7 +438,7 @@ export class TutorSession {
         }
       }
 
-      saveMasteryState(this.masteryState);
+      this.scheduleSave();
     }
 
     if (currentTarget.length > 0 && this.userInput === currentTarget) {
