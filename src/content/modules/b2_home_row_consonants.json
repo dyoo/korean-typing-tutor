@@ -3,13 +3,48 @@
   "title": "Beginner 2 — Home Row Consonants (홈로 자음)",
   "description": "Left-hand home row consonants: A (ㅁ), S (ㄴ), D (ㅇ), F (ㄹ), G (ㅎ)",
   "items": [
-    { "id": "b2-1", "target": "ㅁ", "pronunciation": "m (Key A)", "translation": "Home Row Consonant 'M'" },
-    { "id": "b2-2", "target": "ㄴ", "pronunciation": "n (Key S)", "translation": "Home Row Consonant 'N'" },
-    { "id": "b2-3", "target": "ㅇ", "pronunciation": "ng (Key D)", "translation": "Home Row Consonant 'NG'" },
-    { "id": "b2-4", "target": "ㄹ", "pronunciation": "r/l (Key F)", "translation": "Home Row Consonant 'R/L'" },
-    { "id": "b2-5", "target": "ㅎ", "pronunciation": "h (Key G)", "translation": "Home Row Consonant 'H'" },
-    { "id": "b2-6", "target": "ㅁㄴㅇㄹㅎ", "pronunciation": "m-n-ng-r-h", "translation": "Home Row Consonant Drill" },
-    { "id": "b2-7", "target": "ㅎㄹㅇㄴㅁ", "pronunciation": "h-r-ng-n-m", "translation": "Reverse Home Row Drill" },
+    {
+      "id": "b2-1",
+      "target": "ㅁ",
+      "pronunciation": "m (Key A)",
+      "translation": "Home Row Consonant 'M'"
+    },
+    {
+      "id": "b2-2",
+      "target": "ㄴ",
+      "pronunciation": "n (Key S)",
+      "translation": "Home Row Consonant 'N'"
+    },
+    {
+      "id": "b2-3",
+      "target": "ㅇ",
+      "pronunciation": "ng (Key D)",
+      "translation": "Home Row Consonant 'NG'"
+    },
+    {
+      "id": "b2-4",
+      "target": "ㄹ",
+      "pronunciation": "r/l (Key F)",
+      "translation": "Home Row Consonant 'R/L'"
+    },
+    {
+      "id": "b2-5",
+      "target": "ㅎ",
+      "pronunciation": "h (Key G)",
+      "translation": "Home Row Consonant 'H'"
+    },
+    {
+      "id": "b2-6",
+      "target": "ㅁㄴㅇㄹㅎ",
+      "pronunciation": "m-n-ng-r-h",
+      "translation": "Home Row Consonant Drill"
+    },
+    {
+      "id": "b2-7",
+      "target": "ㅎㄹㅇㄴㅁ",
+      "pronunciation": "h-r-ng-n-m",
+      "translation": "Reverse Home Row Drill"
+    },
     { "id": "b2-8", "target": "마", "translation": "Syllable 'MA'" },
     { "id": "b2-9", "target": "나", "translation": "Syllable 'NA' / I, Me" },
     { "id": "b2-10", "target": "아", "translation": "Syllable 'AH'" },

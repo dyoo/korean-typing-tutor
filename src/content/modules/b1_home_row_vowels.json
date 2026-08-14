@@ -3,10 +3,30 @@
   "title": "Beginner 1 — Home Row Vowels (홈로 모음)",
   "description": "Right-hand home row vowels: H (ㅗ), J (ㅓ), K (ㅏ), L (ㅣ)",
   "items": [
-    { "id": "b1-1", "target": "ㅏ", "pronunciation": "a (Key K)", "translation": "Home Row Vowel 'A'" },
-    { "id": "b1-2", "target": "ㅓ", "pronunciation": "eo (Key J)", "translation": "Home Row Vowel 'EO'" },
-    { "id": "b1-3", "target": "ㅗ", "pronunciation": "o (Key H)", "translation": "Home Row Vowel 'O'" },
-    { "id": "b1-4", "target": "ㅣ", "pronunciation": "i (Key L)", "translation": "Home Row Vowel 'I'" },
+    {
+      "id": "b1-1",
+      "target": "ㅏ",
+      "pronunciation": "a (Key K)",
+      "translation": "Home Row Vowel 'A'"
+    },
+    {
+      "id": "b1-2",
+      "target": "ㅓ",
+      "pronunciation": "eo (Key J)",
+      "translation": "Home Row Vowel 'EO'"
+    },
+    {
+      "id": "b1-3",
+      "target": "ㅗ",
+      "pronunciation": "o (Key H)",
+      "translation": "Home Row Vowel 'O'"
+    },
+    {
+      "id": "b1-4",
+      "target": "ㅣ",
+      "pronunciation": "i (Key L)",
+      "translation": "Home Row Vowel 'I'"
+    },
     { "id": "b1-5", "target": "아", "translation": "Syllable 'AH'" },
     { "id": "b1-6", "target": "어", "translation": "Syllable 'EO'" },
     { "id": "b1-7", "target": "오", "translation": "Syllable 'OH'" },
@@ -32,8 +52,18 @@
     { "id": "b1-27", "target": "이오아", "translation": "Vowel Trio I-O-A" },
     { "id": "b1-28", "target": "아어이", "translation": "Vowel Trio A-EO-I" },
     { "id": "b1-29", "target": "어오이", "translation": "Vowel Trio EO-O-I" },
-    { "id": "b1-30", "target": "아어오이", "pronunciation": "a-eo-o-i", "translation": "Home Row Vowel Quad A-EO-O-I" },
-    { "id": "b1-31", "target": "오이아어", "pronunciation": "o-i-a-eo", "translation": "Home Row Vowel Quad O-I-A-EO" },
+    {
+      "id": "b1-30",
+      "target": "아어오이",
+      "pronunciation": "a-eo-o-i",
+      "translation": "Home Row Vowel Quad A-EO-O-I"
+    },
+    {
+      "id": "b1-31",
+      "target": "오이아어",
+      "pronunciation": "o-i-a-eo",
+      "translation": "Home Row Vowel Quad O-I-A-EO"
+    },
     { "id": "b1-32", "target": "어오이아", "translation": "Home Row Vowel Quad EO-O-I-A" },
     { "id": "b1-33", "target": "이아오어", "translation": "Home Row Vowel Quad I-A-O-EO" },
     { "id": "b1-34", "target": "아아아", "translation": "Vowel Rhythm A-A-A" },

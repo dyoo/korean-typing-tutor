@@ -137,9 +137,24 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
 
     const validItem1: LessonItem = { id: '1', moduleId: 'test', target: '아', translation: 'Ah' };
     const validItem2: LessonItem = { id: '2', moduleId: 'test', target: '어라', translation: 'Oh' };
-    const validItem3: LessonItem = { id: '3', moduleId: 'test', target: '알아-어라!', translation: 'With hyphen and punctuation' };
-    const invalidItem1: LessonItem = { id: '4', moduleId: 'test', target: '고기', translation: 'Meat' }; // Contains ㄱ, ㅗ
-    const invalidItem2: LessonItem = { id: '5', moduleId: 'test', target: '사과', translation: 'Apple' }; // Contains ㅅ, ㄱ, ㅗ
+    const validItem3: LessonItem = {
+      id: '3',
+      moduleId: 'test',
+      target: '알아-어라!',
+      translation: 'With hyphen and punctuation',
+    };
+    const invalidItem1: LessonItem = {
+      id: '4',
+      moduleId: 'test',
+      target: '고기',
+      translation: 'Meat',
+    }; // Contains ㄱ, ㅗ
+    const invalidItem2: LessonItem = {
+      id: '5',
+      moduleId: 'test',
+      target: '사과',
+      translation: 'Apple',
+    }; // Contains ㅅ, ㄱ, ㅗ
 
     expect(isItemEligible(validItem1, unlocked)).toBe(true);
     expect(isItemEligible(validItem2, unlocked)).toBe(true);
@@ -166,10 +181,30 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     // All basic jamos unlocked through Stage 5 (33 keys), but no compound batchim yet
     const unlocked = new Set(JAMO_PROGRESSION_ORDER.slice(0, 33).map((i) => i.jamo));
 
-    const chickenItem: LessonItem = { id: 'c1', moduleId: 'test', target: '닭', translation: 'Chicken' }; // ㄺ
-    const nothaveItem: LessonItem = { id: 'c2', moduleId: 'test', target: '없다', translation: 'Not have' }; // ㅄ
-    const manyItem: LessonItem = { id: 'c3', moduleId: 'test', target: '많다', translation: 'Many' }; // ㄶ
-    const simpleItem: LessonItem = { id: 'c4', moduleId: 'test', target: '나무', translation: 'Tree' };
+    const chickenItem: LessonItem = {
+      id: 'c1',
+      moduleId: 'test',
+      target: '닭',
+      translation: 'Chicken',
+    }; // ㄺ
+    const nothaveItem: LessonItem = {
+      id: 'c2',
+      moduleId: 'test',
+      target: '없다',
+      translation: 'Not have',
+    }; // ㅄ
+    const manyItem: LessonItem = {
+      id: 'c3',
+      moduleId: 'test',
+      target: '많다',
+      translation: 'Many',
+    }; // ㄶ
+    const simpleItem: LessonItem = {
+      id: 'c4',
+      moduleId: 'test',
+      target: '나무',
+      translation: 'Tree',
+    };
 
     expect(isItemEligible(chickenItem, unlocked)).toBe(false);
     expect(isItemEligible(nothaveItem, unlocked)).toBe(false);

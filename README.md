@@ -6,7 +6,7 @@ A minimalist, high-performance Progressive Web App (PWA) designed to help Englis
 
 ## Core Features
 
-- **Distraction-Free Design (Strict Requirement)**:
+- **Distraction-Free Design**:
   - **Zero Animations**: No bouncing, flashing, pulsing, or motion effects. The interface remains static, clean, and focused on learning without cognitive overload.
   - **Deliberate Progression**: The user must explicitly press <kbd>Enter</kbd> or <kbd>Space</kbd> to advance to the next word, allowing time to inspect and understand their typed input.
 - **Universal Dual-Input Engine**:
@@ -14,12 +14,9 @@ A minimalist, high-performance Progressive Web App (PWA) designed to help Englis
 - **Contextual Learning**:
   - Displays Romanized English pronunciation alongside Hangul characters.
   - Displays English translations for words, sentences, reading passages, and proverbs.
-- **Real-Time Dynamic Underline Feedback**:
-  - Immediate visual feedback using color-coded bottom underlines (Gray = Untyped, Blue = Valid partial composition, Emerald = Correct match, Red = Error).
-- **Responsive Korean Word-Boundary Wrapping**:
-  - `break-keep` (`word-break: keep-all`) typography wrapping multi-sentence paragraphs naturally at word boundaries across lines without viewport overflow.
-- **Mouse Text Selection**:
-  - Supports mouse highlighting and copying over Korean text for quick lookup without focus stealing.
+- **Dual Typing Modes**:
+  - **Free-form**: Practice specific modules or the entire curriculum with randomized order.
+  - **Mastery**: A structured progression system that unlocks new Jamos as you improve, automatically selecting relevant practice items.
 - **Progressive Web App**:
   - Installable on mobile and desktop devices with full offline support.
 
@@ -64,6 +61,7 @@ For additional practice and alternative tools, here are other great web applicat
 - **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
 - **Testing**: [Vitest](https://vitest.dev/)
 - **PWA Support**: [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
+- **Architecture**: Client-side only (LocalStorage for persistence)
 
 ---
 
@@ -134,6 +132,7 @@ We use **Prettier** for automatic formatting.
   npm run clean:all
   npm ci
   ```
+- **Dead code detection**: Run `npx knip` to identify unused exports, dead files, and unused dependencies.
 
 ---
 

@@ -69,17 +69,94 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = [
   { jamo: 'ㅖ', key: 'p', shift: true, hand: 'right', stage: 5, stageName: 'Shift Keys' },
 
   // Stage 6: Compound Final Consonants (겹받침)
-  { jamo: 'ㄶ', key: 'sg', combination: ['ㄴ', 'ㅎ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㄵ', key: 'sw', combination: ['ㄴ', 'ㅈ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㄺ', key: 'fr', combination: ['ㄹ', 'ㄱ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㄻ', key: 'fa', combination: ['ㄹ', 'ㅁ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㄼ', key: 'fq', combination: ['ㄹ', 'ㅂ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㅄ', key: 'qt', combination: ['ㅂ', 'ㅅ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㅀ', key: 'fg', combination: ['ㄹ', 'ㅎ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㄳ', key: 'rt', combination: ['ㄱ', 'ㅅ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㄾ', key: 'fx', combination: ['ㄹ', 'ㅌ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㄿ', key: 'fv', combination: ['ㄹ', 'ㅍ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-  { jamo: 'ㄽ', key: 'ft', combination: ['ㄹ', 'ㅅ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  {
+    jamo: 'ㄶ',
+    key: 'sg',
+    combination: ['ㄴ', 'ㅎ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㄵ',
+    key: 'sw',
+    combination: ['ㄴ', 'ㅈ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㄺ',
+    key: 'fr',
+    combination: ['ㄹ', 'ㄱ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㄻ',
+    key: 'fa',
+    combination: ['ㄹ', 'ㅁ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㄼ',
+    key: 'fq',
+    combination: ['ㄹ', 'ㅂ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㅄ',
+    key: 'qt',
+    combination: ['ㅂ', 'ㅅ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㅀ',
+    key: 'fg',
+    combination: ['ㄹ', 'ㅎ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㄳ',
+    key: 'rt',
+    combination: ['ㄱ', 'ㅅ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㄾ',
+    key: 'fx',
+    combination: ['ㄹ', 'ㅌ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㄿ',
+    key: 'fv',
+    combination: ['ㄹ', 'ㅍ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
+  {
+    jamo: 'ㄽ',
+    key: 'ft',
+    combination: ['ㄹ', 'ㅅ'],
+    hand: 'left',
+    stage: 6,
+    stageName: 'Compound Batchim',
+  },
 ];
 
 /**
@@ -139,7 +216,8 @@ export function loadMasteryState(): MasteryState {
               ? stats.recentHistory.slice(-ROLLING_WINDOW_SIZE)
               : [],
             isMastered: typeof stats.isMastered === 'boolean' ? stats.isMastered : false,
-            lastPracticed: typeof stats.lastPracticed === 'number' ? stats.lastPracticed : undefined,
+            lastPracticed:
+              typeof stats.lastPracticed === 'number' ? stats.lastPracticed : undefined,
           };
         }
       }
@@ -294,7 +372,11 @@ export function recordJamoAttempt(
   let newlyUnlockedJamo: string | undefined = undefined;
 
   // Evaluate Mastery Criteria: at least 20 attempts with >= 95% rolling accuracy
-  if (!stats.isMastered && stats.totalAttempts >= MIN_MASTERY_ATTEMPTS && accuracy >= MIN_MASTERY_ACCURACY) {
+  if (
+    !stats.isMastered &&
+    stats.totalAttempts >= MIN_MASTERY_ATTEMPTS &&
+    accuracy >= MIN_MASTERY_ACCURACY
+  ) {
     stats.isMastered = true;
     newlyMastered = true;
 
@@ -323,7 +405,17 @@ export function recordJamoAttempt(
 
 /** Set of all 11 Korean compound final consonants (겹받침). */
 export const COMPOUND_BATCHIM_SET = new Set([
-  'ㄳ', 'ㄵ', 'ㄶ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅄ',
+  'ㄳ',
+  'ㄵ',
+  'ㄶ',
+  'ㄺ',
+  'ㄻ',
+  'ㄼ',
+  'ㄽ',
+  'ㄾ',
+  'ㄿ',
+  'ㅀ',
+  'ㅄ',
 ]);
 
 /**
@@ -380,7 +472,19 @@ export function getEligibleMasteryItems(
   // return single/compound syllables composed of the unlocked Jamos.
   if (eligible.length === 0) {
     const fallbackList: LessonItem[] = [];
-    const basicCombinations = ['어', '아', '얼', '라', '알', '러', '어라', '알아', '얼마', '오이', '아이'];
+    const basicCombinations = [
+      '어',
+      '아',
+      '얼',
+      '라',
+      '알',
+      '러',
+      '어라',
+      '알아',
+      '얼마',
+      '오이',
+      '아이',
+    ];
     for (const word of basicCombinations) {
       const jamos = decomposeStringToJamos(word);
       if (jamos.every((j) => unlockedJamos.has(j))) {

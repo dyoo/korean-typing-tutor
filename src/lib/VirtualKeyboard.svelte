@@ -31,10 +31,12 @@
 
   let isSpaceTarget = $derived(activeKeys.includes(' '));
   let isLeftShiftTarget = $derived(
-    activeKeys.includes('left-shift') || (activeKeys.includes('shift') && !activeKeys.includes('right-shift')),
+    activeKeys.includes('left-shift') ||
+      (activeKeys.includes('shift') && !activeKeys.includes('right-shift')),
   );
   let isRightShiftTarget = $derived(
-    activeKeys.includes('right-shift') || (activeKeys.includes('shift') && !activeKeys.includes('left-shift')),
+    activeKeys.includes('right-shift') ||
+      (activeKeys.includes('shift') && !activeKeys.includes('left-shift')),
   );
 
   let isShiftActive = $derived(

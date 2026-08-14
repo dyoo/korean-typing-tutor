@@ -58,13 +58,16 @@
 <div class="w-full max-w-7xl flex items-center justify-between gap-4 shrink-0">
   <div class="relative flex items-center gap-3">
     <!-- Mode Switcher Toggle Button -->
-    <div class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-300 dark:border-gray-700">
+    <div
+      class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-300 dark:border-gray-700"
+    >
       <button
         type="button"
         onclick={() => {
           if (mode !== 'curriculum') ontogglemode();
         }}
-        class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode === 'curriculum'
+        class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode ===
+        'curriculum'
           ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-xs'
           : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"
       >
@@ -75,7 +78,8 @@
         onclick={() => {
           if (mode !== 'mastery') ontogglemode();
         }}
-        class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode === 'mastery'
+        class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode ===
+        'mastery'
           ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-xs'
           : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"
       >
@@ -116,7 +120,9 @@
       <div
         class="flex items-center gap-2.5 bg-white dark:bg-gray-800 border-2 border-amber-300 dark:border-amber-700/60 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 shadow-sm text-sm"
       >
-        <span class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline">
+        <span
+          class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline"
+        >
           Jamos Unlocked
         </span>
         <span
@@ -125,8 +131,12 @@
           {masteryUnlockedCount}/{masteryTotalCount}
         </span>
         {#if activeJamoChar}
-          <div class="flex items-center gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80">
-            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:inline">
+          <div
+            class="flex items-center gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80"
+          >
+            <span
+              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:inline"
+            >
               Focus:
             </span>
             <span

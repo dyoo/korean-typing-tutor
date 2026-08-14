@@ -10,25 +10,25 @@ export const HANGUL_BASE = 0xac00;
  * Left-hand keys correspond to consonants.
  */
 export const INITIAL_CONSONANT_MAP: Record<string, number> = {
-  'r': 0, // ㄱ
-  'R': 1, // ㄲ
-  's': 2, // ㄴ
-  'e': 3, // ㄷ
-  'E': 4, // ㄸ
-  'f': 5, // ㄹ
-  'a': 6, // ㅁ
-  'q': 7, // ㅂ
-  'Q': 8, // ㅃ
-  't': 9, // ㅅ
-  'T': 10, // ㅆ
-  'd': 11, // ㅇ
-  'w': 12, // ㅈ
-  'W': 13, // ㅉ
-  'c': 14, // ㅊ
-  'z': 15, // ㅋ
-  'x': 16, // ㅌ
-  'v': 17, // ㅍ
-  'g': 18, // ㅎ
+  r: 0, // ㄱ
+  R: 1, // ㄲ
+  s: 2, // ㄴ
+  e: 3, // ㄷ
+  E: 4, // ㄸ
+  f: 5, // ㄹ
+  a: 6, // ㅁ
+  q: 7, // ㅂ
+  Q: 8, // ㅃ
+  t: 9, // ㅅ
+  T: 10, // ㅆ
+  d: 11, // ㅇ
+  w: 12, // ㅈ
+  W: 13, // ㅉ
+  c: 14, // ㅊ
+  z: 15, // ㅋ
+  x: 16, // ㅌ
+  v: 17, // ㅍ
+  g: 18, // ㅎ
 };
 
 /**
@@ -36,20 +36,20 @@ export const INITIAL_CONSONANT_MAP: Record<string, number> = {
  * Right-hand keys correspond to vowels.
  */
 export const VOWEL_MAP: Record<string, number> = {
-  'k': 0, // ㅏ
-  'o': 1, // ㅐ
-  'i': 2, // ㅑ
-  'O': 3, // ㅒ
-  'j': 4, // ㅓ
-  'p': 5, // ㅔ
-  'u': 6, // ㅕ
-  'P': 7, // ㅖ
-  'h': 8, // ㅗ
-  'y': 12, // ㅛ
-  'n': 13, // ㅜ
-  'b': 17, // ㅠ
-  'm': 18, // ㅡ
-  'l': 20, // ㅣ
+  k: 0, // ㅏ
+  o: 1, // ㅐ
+  i: 2, // ㅑ
+  O: 3, // ㅒ
+  j: 4, // ㅓ
+  p: 5, // ㅔ
+  u: 6, // ㅕ
+  P: 7, // ㅖ
+  h: 8, // ㅗ
+  y: 12, // ㅛ
+  n: 13, // ㅜ
+  b: 17, // ㅠ
+  m: 18, // ㅡ
+  l: 20, // ㅣ
 };
 
 /**
@@ -58,22 +58,22 @@ export const VOWEL_MAP: Record<string, number> = {
  * Double consonants ㄸ (E), ㅃ (Q), ㅉ (W) cannot be used as Final Consonant (Jongseong).
  */
 export const FINAL_CONSONANT_MAP: Record<string, number> = {
-  'r': 1, // ㄱ
-  'R': 2, // ㄲ
-  's': 4, // ㄴ
-  'e': 7, // ㄷ
-  'f': 8, // ㄹ
-  'a': 16, // ㅁ
-  'q': 17, // ㅂ
-  't': 19, // ㅅ
-  'T': 20, // ㅆ
-  'd': 21, // ㅇ
-  'w': 22, // ㅈ
-  'c': 23, // ㅊ
-  'z': 24, // ㅋ
-  'x': 25, // ㅌ
-  'v': 26, // ㅍ
-  'g': 27, // ㅎ
+  r: 1, // ㄱ
+  R: 2, // ㄲ
+  s: 4, // ㄴ
+  e: 7, // ㄷ
+  f: 8, // ㄹ
+  a: 16, // ㅁ
+  q: 17, // ㅂ
+  t: 19, // ㅅ
+  T: 20, // ㅆ
+  d: 21, // ㅇ
+  w: 22, // ㅈ
+  c: 23, // ㅊ
+  z: 24, // ㅋ
+  x: 25, // ㅌ
+  v: 26, // ㅍ
+  g: 27, // ㅎ
 };
 
 /**
@@ -294,22 +294,22 @@ export const FINAL_CONSONANT_SINGLE_JAMO: Record<number, string> = {
  * Map of standalone compound Jamo characters to their decomposed individual Jamo sequence.
  */
 export const STANDALONE_COMPOUND_MAP: Record<string, string> = {
-  'ㅘ': 'ㅗㅏ',
-  'ㅙ': 'ㅗㅐ',
-  'ㅚ': 'ㅗㅣ',
-  'ㅝ': 'ㅜㅓ',
-  'ㅞ': 'ㅜㅔ',
-  'ㅟ': 'ㅜㅣ',
-  'ㅢ': 'ㅡㅣ',
-  'ㄳ': 'ㄱㅅ',
-  'ㄵ': 'ㄴㅈ',
-  'ㄶ': 'ㄴㅎ',
-  'ㄺ': 'ㄹㄱ',
-  'ㄻ': 'ㄹㅁ',
-  'ㄼ': 'ㄹㅂ',
-  'ㄽ': 'ㄹㅅ',
-  'ㄾ': 'ㄹㅌ',
-  'ㄿ': 'ㄹㅍ',
-  'ㅀ': 'ㄹㅎ',
-  'ㅄ': 'ㅂㅅ',
+  ㅘ: 'ㅗㅏ',
+  ㅙ: 'ㅗㅐ',
+  ㅚ: 'ㅗㅣ',
+  ㅝ: 'ㅜㅓ',
+  ㅞ: 'ㅜㅔ',
+  ㅟ: 'ㅜㅣ',
+  ㅢ: 'ㅡㅣ',
+  ㄳ: 'ㄱㅅ',
+  ㄵ: 'ㄴㅈ',
+  ㄶ: 'ㄴㅎ',
+  ㄺ: 'ㄹㄱ',
+  ㄻ: 'ㄹㅁ',
+  ㄼ: 'ㄹㅂ',
+  ㄽ: 'ㄹㅅ',
+  ㄾ: 'ㄹㅌ',
+  ㄿ: 'ㄹㅍ',
+  ㅀ: 'ㄹㅎ',
+  ㅄ: 'ㅂㅅ',
 };

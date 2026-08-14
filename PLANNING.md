@@ -62,12 +62,12 @@ Phases 1, 2, 3, 4, and 5 are **COMPLETED**. The application features an authenti
 ### Phase 5: Spaced-Repetition Jamo Mastery Mode (Adaptive Learning) — COMPLETED
 
 - [x] **Home-Row Outward Progression Sequence (35 keys):**
-  1. *Stage 1 (Home Index):* `ㅓ`, `ㅏ`, `ㅇ`, `ㄹ`
-  2. *Stage 2 (Remaining Home Row):* `ㅗ`, `ㅣ`, `ㅁ`, `ㄴ`, `ㅎ`
-  3. *Stage 3 (Top Row):* `ㄱ`, `ㅅ`, `ㄷ`, `ㅈ`, `ㅂ`, `ㅜ`, `ㅡ`, `ㅕ`, `ㅑ`, `ㅛ`, `ㅐ`, `ㅔ`
-  4. *Stage 4 (Bottom Row):* `ㅋ`, `ㅌ`, `ㅊ`, `ㅍ`, `ㅠ`
-  5. *Stage 5 (Shift Keys):* `ㄲ`, `ㅆ`, `ㄸ`, `ㅉ`, `ㅃ`, `ㅒ`, `ㅖ`
-  6. *Stage 6 (Punctuation):* `,`, `.`
+  1. _Stage 1 (Home Index):_ `ㅓ`, `ㅏ`, `ㅇ`, `ㄹ`
+  2. _Stage 2 (Remaining Home Row):_ `ㅗ`, `ㅣ`, `ㅁ`, `ㄴ`, `ㅎ`
+  3. _Stage 3 (Top Row):_ `ㄱ`, `ㅅ`, `ㄷ`, `ㅈ`, `ㅂ`, `ㅜ`, `ㅡ`, `ㅕ`, `ㅑ`, `ㅛ`, `ㅐ`, `ㅔ`
+  4. _Stage 4 (Bottom Row):_ `ㅋ`, `ㅌ`, `ㅊ`, `ㅍ`, `ㅠ`
+  5. _Stage 5 (Shift Keys):_ `ㄲ`, `ㅆ`, `ㄸ`, `ㅉ`, `ㅃ`, `ㅒ`, `ㅖ`
+  6. _Stage 6 (Punctuation):_ `,`, `.`
 - [x] **Mastery Evaluation Criteria:** 20 evaluated attempts with $\ge 95\%$ rolling accuracy on the sliding window.
 - [x] **Vocabulary Filtering with Non-Hangul Tolerance:** Real-time eligibility checking allowing spaces, dashes, and punctuation while strictly verifying all constituent Hangul Jamos belong to the unlocked set.
 - [x] **Active Learning Biased Selection:** Weighted random selection prioritizing exercises containing the active learning key and struggling Jamos without immediate word repetitions.

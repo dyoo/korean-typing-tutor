@@ -335,11 +335,7 @@
   }
 </script>
 
-<svelte:window
-  onclick={handleWindowClick}
-  onkeyup={handleKeyup}
-  onblur={handleWindowBlur}
-/>
+<svelte:window onclick={handleWindowClick} onkeyup={handleKeyup} onblur={handleWindowBlur} />
 
 <main
   oncopy={handleCopy}

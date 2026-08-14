@@ -12,14 +12,14 @@ Take a learner from **zero Korean typing ability** to **fluent touch-typing of a
 
 The learner begins with 4 home-row index keys (`ㅓ, ㅏ, ㅇ, ㄹ`) — the minimum set to form real Korean syllables. New keys unlock **one at a time**, radiating outward from the home row:
 
-| Stage | Keys | Cumulative Count |
-| :--- | :--- | :--- |
-| 1 | Home Index (`ㅓ, ㅏ, ㅇ, ㄹ`) | 4 |
-| 2 | Full Home Row + Basic Vowels (`ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ`) | 11 |
-| 3 | Top Row (`ㄱ, ㅅ, ㄷ, ㅈ, ㅂ, ㅛ, ㅕ, ㅑ, ㅐ, ㅔ`) | 21 |
-| 4 | Bottom Row (`ㅋ, ㅌ, ㅊ, ㅍ, ㅠ`) | 26 |
-| 5 | Shift Keys (`ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ`) | 33 |
-| 6 | Compound Batchim (`ㄶ, ㄵ, ㄺ, ㄻ, ㄼ, ㅄ, ㅀ, ㄳ, ㄾ, ㄿ, ㄽ`) | 44 |
+| Stage | Keys                                                            | Cumulative Count |
+| :---- | :-------------------------------------------------------------- | :--------------- |
+| 1     | Home Index (`ㅓ, ㅏ, ㅇ, ㄹ`)                                   | 4                |
+| 2     | Full Home Row + Basic Vowels (`ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ`)     | 11               |
+| 3     | Top Row (`ㄱ, ㅅ, ㄷ, ㅈ, ㅂ, ㅛ, ㅕ, ㅑ, ㅐ, ㅔ`)              | 21               |
+| 4     | Bottom Row (`ㅋ, ㅌ, ㅊ, ㅍ, ㅠ`)                               | 26               |
+| 5     | Shift Keys (`ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ`)                       | 33               |
+| 6     | Compound Batchim (`ㄶ, ㄵ, ㄺ, ㄻ, ㄼ, ㅄ, ㅀ, ㄳ, ㄾ, ㄿ, ㄽ`) | 44               |
 
 ### 2. Rolling 20-Attempt Accuracy Window
 

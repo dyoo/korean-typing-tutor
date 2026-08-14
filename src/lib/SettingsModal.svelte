@@ -108,7 +108,9 @@
       <div
         class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2"
       >
-        <span class="font-bold text-sm text-gray-900 dark:text-gray-100 uppercase tracking-wider font-mono">
+        <span
+          class="font-bold text-sm text-gray-900 dark:text-gray-100 uppercase tracking-wider font-mono"
+        >
           Settings
         </span>
         <button
@@ -117,7 +119,13 @@
           class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1 rounded-md cursor-pointer"
           aria-label="Close Settings Panel"
         >
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -184,7 +192,9 @@
       <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <span class="font-bold text-gray-900 dark:text-gray-100">Typography Sizing</span>
-          <label class="flex items-center gap-1.5 cursor-pointer text-[11px] text-gray-500 dark:text-gray-400">
+          <label
+            class="flex items-center gap-1.5 cursor-pointer text-[11px] text-gray-500 dark:text-gray-400"
+          >
             <input
               type="checkbox"
               checked={settings.lockFontSize}
@@ -261,11 +271,20 @@
             >
               <optgroup label="Preset Stages">
                 <option value="4">Stage 1: Home Index (4 keys · ㅓ, ㅏ, ㅇ, ㄹ)</option>
-                <option value="11">Stage 2: Home Row & Basic Vowels (11 keys · + ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ)</option>
-                <option value="21">Stage 3: Top Row (21 keys · + ㄱ, ㅅ, ㄷ, ㅈ, ㅂ, ㅛ, ㅕ, ㅑ, ㅐ, ㅔ)</option>
+                <option value="11"
+                  >Stage 2: Home Row & Basic Vowels (11 keys · + ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ)</option
+                >
+                <option value="21"
+                  >Stage 3: Top Row (21 keys · + ㄱ, ㅅ, ㄷ, ㅈ, ㅂ, ㅛ, ㅕ, ㅑ, ㅐ, ㅔ)</option
+                >
                 <option value="26">Stage 4: Bottom Row (26 keys · + ㅋ, ㅌ, ㅊ, ㅍ, ㅠ)</option>
-                <option value="33">Stage 5: Shift Keys (33 keys · + ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ)</option>
-                <option value="44">Stage 6: Compound Batchim (44 items · + ㄶ, ㄵ, ㄺ, ㄻ, ㄼ, ㅄ, ㅀ, ㄳ, ㄾ, ㄿ, ㄽ)</option>
+                <option value="33"
+                  >Stage 5: Shift Keys (33 keys · + ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ)</option
+                >
+                <option value="44"
+                  >Stage 6: Compound Batchim (44 items · + ㄶ, ㄵ, ㄺ, ㄻ, ㄼ, ㅄ, ㅀ, ㄳ, ㄾ, ㄿ,
+                  ㄽ)</option
+                >
               </optgroup>
               <optgroup label="Individual Jamo Progression">
                 {#each JAMO_PROGRESSION_ORDER as item, idx}
