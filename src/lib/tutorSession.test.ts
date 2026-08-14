@@ -354,4 +354,14 @@ describe('TutorSession controller', () => {
     session.setMode('curriculum');
     expect(session.getMode()).toBe('curriculum');
   });
+
+  it('should maintain the active lesson item without swapping during mid-exercise Jamo unlocks', () => {
+    session.setMode('mastery');
+    const initialItem = session.getCurrentItem();
+
+    // Type a key
+    session.processKey('k'); // ㅏ
+    // Item must remain the exact same item
+    expect(session.getCurrentItem().id).toBe(initialItem.id);
+  });
 });

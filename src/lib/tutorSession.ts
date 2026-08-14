@@ -383,9 +383,6 @@ export class TutorSession {
       const attemptResult = recordJamoAttempt(this.masteryState, expectedJamoBefore, isCorrect);
       if (attemptResult.newlyUnlockedJamo) {
         newlyUnlockedJamo = attemptResult.newlyUnlockedJamo;
-        // Refresh eligible pool with the newly unlocked Jamo
-        const unlocked = getUnlockedJamos(this.masteryState);
-        this.activeItems = getEligibleMasteryItems(this.allItems, unlocked);
       }
       saveMasteryState(this.masteryState);
     }
@@ -408,8 +405,17 @@ export class TutorSession {
     let isComplete = false;
 
     if (this.mode === 'mastery') {
+      const currentItem = this.getCurrentItem();
+      const unlocked = getUnlockedJamos(this.masteryState);
+      this.activeItems = getEligibleMasteryItems(this.allItems, unlocked);
+
       const activeJamo = getActiveLearningJamo(this.masteryState);
-      const nextItem = selectNextMasteryItem(this.activeItems, activeJamo?.jamo ?? null, this.masteryState.jamoStats);
+      const nextItem = selectNextMasteryItem(
+        this.activeItems,
+        activeJamo?.jamo ?? null,
+        this.masteryState.jamoStats,
+        currentItem.id,
+      );
       const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
       this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
     } else {

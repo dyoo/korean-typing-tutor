@@ -371,6 +371,7 @@ export function selectNextMasteryItem(
   eligibleItems: LessonItem[],
   activeJamo: string | null,
   jamoStats: Record<string, JamoStats>,
+  currentItemId?: string,
 ): LessonItem {
   if (eligibleItems.length === 0) {
     return {
@@ -381,14 +382,21 @@ export function selectNextMasteryItem(
     };
   }
 
-  if (eligibleItems.length === 1) {
-    return eligibleItems[0];
+  // Filter out the item just finished to prevent immediate repetition if choices exist
+  const candidates =
+    eligibleItems.length > 1 && currentItemId
+      ? eligibleItems.filter((i) => i.id !== currentItemId)
+      : eligibleItems;
+
+  const pool = candidates.length > 0 ? candidates : eligibleItems;
+  if (pool.length === 1) {
+    return pool[0];
   }
 
   // Assign weights to items based on whether they contain active/struggling Jamos
   const weightedList: { item: LessonItem; weight: number }[] = [];
 
-  for (const item of eligibleItems) {
+  for (const item of pool) {
     const jamos = decomposeStringToJamos(item.target);
     let weight = 1;
 
