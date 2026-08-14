@@ -826,6 +826,7 @@ export function compose(input: string): string {
 
 /**
  * Calculates the active target character index for cursor display on the main target text.
+ * Determines the target character being actively composed based on the prefix of userInput up to inputCursorIndex.
  * Clamps result to target.length - 1 when not completed so the target cursor never disappears.
  */
 export function calculateTargetCursorIndex(
@@ -837,19 +838,21 @@ export function calculateTargetCursorIndex(
   if (isCompleted || !target) {
     return -1;
   }
-  if (typeof inputCursorIndex === 'number' && inputCursorIndex >= 0) {
-    return Math.min(inputCursorIndex, target.length - 1);
-  }
-  if (userInput.length === 0) {
+  const effectiveInput =
+    typeof inputCursorIndex === 'number' && inputCursorIndex >= 0
+      ? userInput.slice(0, inputCursorIndex)
+      : userInput;
+
+  if (effectiveInput.length === 0) {
     return 0;
   }
-  const lastIndex = userInput.length - 1;
+  const lastIndex = effectiveInput.length - 1;
   const isLastComplete = isSyllableComplete(
     target[lastIndex],
-    userInput[lastIndex],
+    effectiveInput[lastIndex],
     target[lastIndex + 1],
   );
-  const rawIndex = isLastComplete ? userInput.length : lastIndex;
+  const rawIndex = isLastComplete ? effectiveInput.length : lastIndex;
   return Math.min(rawIndex, target.length - 1);
 }
 

@@ -339,6 +339,42 @@ describe('Cursor index calculation helpers', () => {
     expect(calculateTargetCursorIndex('가나다', '가나다', true)).toBe(-1);
   });
 
+  it('should calculate active target cursor index correctly when inputCursorIndex is provided', () => {
+    const target = '글로벌';
+
+    // Before typing: cursor is at index 0 ('글')
+    expect(calculateTargetCursorIndex(target, '', false, 0)).toBe(0);
+
+    // First Jamo 'ㄱ' typed: cursor must STAY at index 0 ('글')
+    expect(calculateTargetCursorIndex(target, 'ㄱ', false, 1)).toBe(0);
+
+    // Partial syllable '그' composed: cursor must STAY at index 0 ('글')
+    expect(calculateTargetCursorIndex(target, '그', false, 1)).toBe(0);
+
+    // Syllable 1 '글' completed: cursor moves to index 1 ('로')
+    expect(calculateTargetCursorIndex(target, '글', false, 1)).toBe(1);
+
+    // In-progress Jamo for 2nd syllable 'ㄹ': cursor stays at index 1 ('로')
+    expect(calculateTargetCursorIndex(target, '글ㄹ', false, 2)).toBe(1);
+
+    // Syllable 2 '로' completed: cursor moves to index 2 ('벌')
+    expect(calculateTargetCursorIndex(target, '글로', false, 2)).toBe(2);
+
+    // In-progress Jamo for 3rd syllable 'ㅂ': cursor stays at index 2 ('벌')
+    expect(calculateTargetCursorIndex(target, '글로ㅂ', false, 3)).toBe(2);
+
+    // Completed: cursor returns -1
+    expect(calculateTargetCursorIndex(target, '글로벌', true, 3)).toBe(-1);
+
+    // Mid-text navigation via Arrow keys:
+    // Caret at index 0 (before '글') -> highlights '글' (0)
+    expect(calculateTargetCursorIndex(target, '글로벌', false, 0)).toBe(0);
+    // Caret at index 1 (after '글') -> highlights '로' (1)
+    expect(calculateTargetCursorIndex(target, '글로벌', false, 1)).toBe(1);
+    // Caret at index 2 (after '로') -> highlights '벌' (2)
+    expect(calculateTargetCursorIndex(target, '글로벌', false, 2)).toBe(2);
+  });
+
   it('should calculate active input cursor index correctly', () => {
     // Initial state: input cursor at position 0
     expect(calculateInputCursorIndex('', '가나다', false)).toBe(0);
