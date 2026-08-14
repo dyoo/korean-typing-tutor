@@ -129,12 +129,6 @@
     inputElement?.focus();
   }
 
-  function handleResetMastery() {
-    session.resetMasteryProgress();
-    syncState();
-    inputElement?.focus();
-  }
-
   function handleMasteryLevelChange(level: number) {
     session.setMasteryProgressionLevel(level);
     syncState();
@@ -340,7 +334,6 @@
     ontogglelockfontsize={handleToggleLockFontSize}
     oncursorcolorchange={handleCursorColorChange}
     onmasterylevelchange={handleMasteryLevelChange}
-    onresetmastery={handleResetMastery}
   />
 
   <div

@@ -195,7 +195,13 @@ export function setMasteryProgressionLevel(
         };
         state.jamoStats[jamo] = stats;
       }
-      if (i < clamped - 1) {
+      if (clamped === 4) {
+        // Stage 1 clean slate: all keys unmastered with zero attempts
+        stats.isMastered = false;
+        stats.totalAttempts = 0;
+        stats.correctAttempts = 0;
+        stats.recentHistory = [];
+      } else if (i < clamped - 1) {
         // Preceding keys are marked as mastered
         stats.isMastered = true;
       } else {

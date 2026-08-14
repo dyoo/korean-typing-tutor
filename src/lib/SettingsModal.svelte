@@ -20,7 +20,6 @@
     ontogglelockfontsize?: () => void;
     oncursorcolorchange?: (cursorColor: CursorColorMode) => void;
     onmasterylevelchange?: (level: number) => void;
-    onresetmastery?: () => void;
   }
 
   let {
@@ -38,7 +37,6 @@
     ontogglelockfontsize,
     oncursorcolorchange,
     onmasterylevelchange,
-    onresetmastery,
   }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
@@ -245,15 +243,6 @@
       <div class="flex flex-col gap-2 pt-3 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <span class="font-bold text-gray-900 dark:text-gray-100">Jamo Mastery Progress</span>
-          {#if onresetmastery}
-            <button
-              type="button"
-              onclick={onresetmastery}
-              class="text-[11px] text-red-600 dark:text-red-400 hover:underline font-semibold cursor-pointer"
-            >
-              Reset All
-            </button>
-          {/if}
         </div>
 
         {#if onmasterylevelchange}

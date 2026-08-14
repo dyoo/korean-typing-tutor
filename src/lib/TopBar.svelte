@@ -26,7 +26,6 @@
     ontogglelockfontsize: () => void;
     oncursorcolorchange: (cursorColor: CursorColorMode) => void;
     onmasterylevelchange?: (level: number) => void;
-    onresetmastery?: () => void;
   }
 
   let {
@@ -51,7 +50,6 @@
     ontogglelockfontsize,
     oncursorcolorchange,
     onmasterylevelchange,
-    onresetmastery,
   }: Props = $props();
 </script>
 
@@ -155,6 +153,5 @@
     {ontogglelockfontsize}
     {oncursorcolorchange}
     {onmasterylevelchange}
-    {onresetmastery}
   />
 </div>
