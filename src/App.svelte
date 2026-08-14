@@ -12,7 +12,11 @@
   } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
-  import { JAMO_PROGRESSION_ORDER } from './utils/jamoMastery';
+  import {
+    JAMO_PROGRESSION_ORDER,
+    getUnlockedJamos,
+    getActiveLearningJamo,
+  } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import TargetDisplay from './lib/TargetDisplay.svelte';
@@ -63,8 +67,8 @@
     getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
 
-  let unlockedJamos = $derived(session.getUnlockedJamos());
-  let activeLearningJamo = $derived(session.getActiveLearningJamo());
+  let unlockedJamos = $derived(getUnlockedJamos(masteryState));
+  let activeLearningJamo = $derived(getActiveLearningJamo(masteryState));
 
   onMount(() => {
     session.setFilter(enabledModuleIds, true);
@@ -109,7 +113,7 @@
     currentItem = session.getCurrentItem();
     isCompleted = session.getIsItemCompleted();
     mode = session.getMode();
-    masteryState = session.getMasteryState();
+    masteryState = { ...session.getMasteryState() };
   }
 
   function setInputCursorPosition(index: number) {
