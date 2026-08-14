@@ -64,9 +64,7 @@
     <span class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}>
       {cap.key.toUpperCase()}
     </span>
-    {#if isMastered && !isTarget}
-      <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
-    {:else if cap.shiftJamo}
+    {#if cap.shiftJamo}
       <span class={isTarget ? 'text-blue-200 font-bold' : 'text-gray-400 dark:text-gray-500'}>
         {cap.shiftJamo}
       </span>
