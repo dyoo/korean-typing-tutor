@@ -12,11 +12,7 @@
   } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
-  import {
-    JAMO_PROGRESSION_ORDER,
-    getUnlockedJamos,
-    getActiveLearningJamo,
-  } from './utils/jamoMastery';
+  import { JAMO_PROGRESSION_ORDER, getActiveLearningJamo } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import TargetDisplay from './lib/TargetDisplay.svelte';
@@ -70,7 +66,6 @@
     getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
 
-  let unlockedJamos = $derived(getUnlockedJamos(masteryState));
   let activeLearningJamo = $derived(getActiveLearningJamo(masteryState));
 
   onMount(() => {
@@ -116,7 +111,8 @@
     currentItem = session.getCurrentItem();
     isCompleted = session.getIsItemCompleted();
     mode = session.getMode();
-    masteryState = { ...session.getMasteryState() };
+    // Assign reference directly; Svelte 5 $state is deeply reactive, so mutations in TutorSession will trigger updates without needing a new object every keystroke.
+    masteryState = session.getMasteryState();
   }
 
   function setInputCursorPosition(index: number) {
@@ -411,9 +407,7 @@
         <VirtualKeyboard
           activeKeys={activeRequiredKeys}
           {mode}
-          {unlockedJamos}
-          activeJamo={activeLearningJamo?.jamo ?? null}
-          jamoStats={masteryState.jamoStats}
+          {masteryState}
           {isLeftShiftPressed}
           {isRightShiftPressed}
           onkeyselect={handleVirtualKeySelect}

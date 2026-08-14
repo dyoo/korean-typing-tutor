@@ -1,17 +1,19 @@
 <script lang="ts">
   import { DUBEOLSIK_ROWS } from '../utils/keyboardData';
-  import { calculateJamoProgress } from '../utils/jamoMastery';
+  import {
+    calculateJamoProgress,
+    getUnlockedJamos,
+    getActiveLearningJamo,
+  } from '../utils/jamoMastery';
   import ShiftKey from './ShiftKey.svelte';
   import VirtualKey from './VirtualKey.svelte';
-  import type { TutorMode, JamoStats } from '../types/mastery';
+  import type { TutorMode, MasteryState } from '../types/mastery';
 
   interface Props {
     activeKeys?: string[];
     onkeyselect?: (key: string) => void;
     mode?: TutorMode;
-    unlockedJamos?: Set<string>;
-    activeJamo?: string | null;
-    jamoStats?: Record<string, JamoStats>;
+    masteryState?: MasteryState;
     isLeftShiftPressed?: boolean;
     isRightShiftPressed?: boolean;
   }
@@ -20,12 +22,16 @@
     activeKeys = [],
     onkeyselect,
     mode = 'curriculum',
-    unlockedJamos = new Set(),
-    activeJamo = null,
-    jamoStats = {},
+    masteryState,
     isLeftShiftPressed = false,
     isRightShiftPressed = false,
   }: Props = $props();
+
+  // Derive values internally so they only trigger re-renders when the underlying masteryState actually changes,
+  // preventing the entire keyboard from re-rendering on every keystroke.
+  let unlockedJamos = $derived(masteryState ? getUnlockedJamos(masteryState) : new Set());
+  let activeJamo = $derived(masteryState ? getActiveLearningJamo(masteryState) : null);
+  let jamoStats = $derived(masteryState ? masteryState.jamoStats : {});
 
   let isVirtualShiftActive = $state(false);
 
@@ -93,7 +99,7 @@
           {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
           {@const isLocked =
             mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-          {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
           {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
           {@const progressPercent =
             mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
@@ -130,7 +136,7 @@
           {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
           {@const isLocked =
             mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-          {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
           {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
           {@const progressPercent =
             mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
@@ -165,7 +171,7 @@
           {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
           {@const isLocked =
             mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-          {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
           {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
           {@const progressPercent =
             mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
