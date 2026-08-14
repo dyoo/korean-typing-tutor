@@ -34,7 +34,7 @@ export function calculateTargetCursorIndex(
 
 /**
  * Calculates the active input position index for cursor display on the user input display.
- * Returns -1 if completed, or an index from 0 to userInput.length.
+ * Returns an index from 0 to userInput.length (placed at the end of input when completed).
  */
 export function calculateInputCursorIndex(
   userInput: string,
@@ -42,14 +42,14 @@ export function calculateInputCursorIndex(
   isCompleted: boolean,
   inputCursorIndex?: number,
 ): number {
-  if (isCompleted) {
-    return -1;
-  }
   if (typeof inputCursorIndex === 'number' && inputCursorIndex >= 0) {
     return Math.min(inputCursorIndex, userInput.length);
   }
   if (userInput.length === 0) {
     return 0;
+  }
+  if (isCompleted) {
+    return userInput.length;
   }
   const lastIndex = userInput.length - 1;
   const isLastComplete = isSyllableComplete(

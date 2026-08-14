@@ -71,8 +71,8 @@
     >
       {#each userInput.split('') as char, i}
         {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
-        {@const isLeading = i === activeInputCursorIndex && !isCompleted}
-        {@const isTrailing = i === activeInputCursorIndex - 1 && !isCompleted}
+        {@const isLeading = i === activeInputCursorIndex}
+        {@const isTrailing = i === activeInputCursorIndex - 1}
         {@const isCurrent = isLeading || isTrailing}
 
         {#if isCurrent}

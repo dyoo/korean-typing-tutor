@@ -75,8 +75,8 @@ describe('Cursor index calculation helpers (cursorHelper)', () => {
     // In-progress 2nd char: input cursor is under 2nd char (1)
     expect(calculateInputCursorIndex('가ㄴ', '가나다', false)).toBe(1);
 
-    // Returns -1 when item is completed
-    expect(calculateInputCursorIndex('가나다', '가나다', true)).toBe(-1);
+    // Positions cursor at the end of input when item is completed
+    expect(calculateInputCursorIndex('가나다', '가나다', true)).toBe(3);
   });
 });
 
