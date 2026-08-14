@@ -1,6 +1,6 @@
 <script lang="ts">
   import CharDisplay from './CharDisplay.svelte';
-  import type { ErrorReport, LessonItem } from '../types/korean';
+  import type { LessonItem } from '../types/korean';
   import type { CursorColorMode } from '../utils/cursorColor';
   import {
     getTargetFontSizeClass,
@@ -11,7 +11,7 @@
 
   interface Props {
     wordTokens: Array<{ type: 'word' | 'space'; indices: number[] }>;
-    errors: ErrorReport[];
+    errorMap: Map<number, boolean>;
     activeTargetCursorIndex: number;
     isCompleted: boolean;
     currentItem: LessonItem;
@@ -24,7 +24,7 @@
 
   let {
     wordTokens,
-    errors,
+    errorMap,
     activeTargetCursorIndex,
     isCompleted,
     currentItem,
@@ -62,7 +62,7 @@
     {#each wordTokens as token}
       {#if token.type === 'space'}
         {@const i = token.indices[0]}
-        {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
+        {@const isError = errorMap.get(i) ?? false}
         {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
 
         <CharDisplay char=" " {isError} {isCurrent} variant="target" dataIndex={i} {cursorColor} />
@@ -70,7 +70,7 @@
         <span class="inline-flex flex-wrap max-w-full">
           {#each token.indices as i}
             {@const char = currentItem.target[i]}
-            {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
+            {@const isError = errorMap.get(i) ?? false}
             {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
 
             <CharDisplay

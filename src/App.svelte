@@ -66,6 +66,9 @@
     getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
 
+  // Map errors to O(1) lookups by index to avoid O(N^2) .find() calls in child {#each} loops.
+  let errorMap = $derived(new Map(errors.map((e) => [e.index, e.isError])));
+
   let activeLearningJamo = $derived(getActiveLearningJamo(masteryState));
 
   onMount(() => {
@@ -370,7 +373,7 @@
   >
     <TargetDisplay
       {wordTokens}
-      {errors}
+      {errorMap}
       {activeTargetCursorIndex}
       {isCompleted}
       {currentItem}
@@ -390,7 +393,7 @@
     <InputDisplay
       bind:inputElement
       {userInput}
-      {errors}
+      {errorMap}
       {activeInputCursorIndex}
       {isCompleted}
       hasEnabledModules={mode === 'mastery' || enabledModuleIds.length > 0}

@@ -1,11 +1,10 @@
 <script lang="ts">
   import CharDisplay from './CharDisplay.svelte';
-  import type { ErrorReport } from '../types/korean';
   import type { CursorColorMode } from '../utils/cursorColor';
 
   interface Props {
     userInput: string;
-    errors: ErrorReport[];
+    errorMap: Map<number, boolean>;
     activeInputCursorIndex: number;
     isCompleted: boolean;
     hasEnabledModules: boolean;
@@ -20,7 +19,7 @@
 
   let {
     userInput,
-    errors,
+    errorMap,
     activeInputCursorIndex,
     isCompleted,
     hasEnabledModules,
@@ -95,7 +94,7 @@
       class="input-display flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold select-text z-10"
     >
       {#each userInput.split('') as char, i}
-        {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
+        {@const isError = errorMap.get(i) ?? false}
         {@const isLeading = i === activeInputCursorIndex}
         {@const isTrailing = i === activeInputCursorIndex - 1}
         {@const isCurrent = isLeading || isTrailing}
