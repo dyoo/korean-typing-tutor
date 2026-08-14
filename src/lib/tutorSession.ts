@@ -1,7 +1,20 @@
 import { HangulEngine } from '../utils/hangulEngine';
 import { checkErrors } from '../utils/hangulMatch';
 import { getPronunciation } from '../utils/romanizer';
+import {
+  loadMasteryState,
+  saveMasteryState,
+  createDefaultMasteryState,
+  getUnlockedJamos,
+  getActiveLearningJamo,
+  recordJamoAttempt,
+  getEligibleMasteryItems,
+  selectNextMasteryItem,
+  JAMO_PROGRESSION_ORDER,
+} from '../utils/jamoMastery';
+import { decomposeStringToJamos } from '../utils/hangulDecompose';
 import type { CurriculumData, ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
+import type { TutorMode, MasteryState, JamoProgressionItem } from '../types/mastery';
 
 export type { CurriculumData };
 
@@ -11,6 +24,7 @@ export interface KeyResult {
   isItemCompleted: boolean;
   isTutorialComplete: boolean;
   advanced: boolean;
+  newlyUnlockedJamo?: string;
 }
 
 /**
@@ -26,10 +40,15 @@ export class TutorSession {
   private shouldShuffle: boolean;
   private currentIndex = 0;
   private userInput = '';
+  private inputCursorIndex = 0;
+  private suffix = '';
   private errors: ErrorReport[] = [];
   private accuracy = 100;
   private isItemCompleted = false;
   private engine: HangulEngine;
+
+  private mode: TutorMode = 'curriculum';
+  private masteryState: MasteryState;
 
   constructor(
     data: CurriculumData | LessonItem[],
@@ -53,6 +72,8 @@ export class TutorSession {
     this.selectedFilter = defaultFilter;
     this.shouldShuffle = shuffle;
     this.engine = new HangulEngine();
+    this.masteryState = loadMasteryState();
+    this.mode = this.masteryState.mode ?? 'curriculum';
     this.applyFilterAndShuffle();
   }
 
@@ -71,11 +92,14 @@ export class TutorSession {
     return arr;
   }
 
-  /** Filters items by active module ID(s) and applies shuffling. */
+  /** Filters items by active mode / module ID(s) and applies shuffling. */
   private applyFilterAndShuffle(): void {
     let filtered: LessonItem[];
 
-    if (Array.isArray(this.selectedFilter)) {
+    if (this.mode === 'mastery') {
+      const unlocked = getUnlockedJamos(this.masteryState);
+      filtered = getEligibleMasteryItems(this.allItems, unlocked);
+    } else if (Array.isArray(this.selectedFilter)) {
       if (this.selectedFilter.includes('all')) {
         filtered = [...this.allItems];
       } else if (this.selectedFilter.length === 0) {
@@ -96,6 +120,55 @@ export class TutorSession {
 
     this.activeItems = this.shouldShuffle ? this.shuffle(filtered) : filtered;
     this.resetSessionState();
+  }
+
+  /** Returns active application mode ('curriculum' or 'mastery'). */
+  public getMode(): TutorMode {
+    return this.mode;
+  }
+
+  /** Sets active application mode and refreshes item queue. */
+  public setMode(mode: TutorMode): void {
+    this.mode = mode;
+    this.masteryState.mode = mode;
+    saveMasteryState(this.masteryState);
+    this.applyFilterAndShuffle();
+  }
+
+  /** Returns the current user mastery state. */
+  public getMasteryState(): MasteryState {
+    return this.masteryState;
+  }
+
+  /** Returns set of unlocked Jamos in mastery mode. */
+  public getUnlockedJamos(): Set<string> {
+    return getUnlockedJamos(this.masteryState);
+  }
+
+  /** Returns the active learning Jamo in mastery mode. */
+  public getActiveLearningJamo(): JamoProgressionItem | null {
+    return getActiveLearningJamo(this.masteryState);
+  }
+
+  /** Resets user mastery progress back to default Stage 1 keys. */
+  public resetMasteryProgress(): void {
+    this.masteryState = createDefaultMasteryState();
+    this.masteryState.mode = this.mode;
+    saveMasteryState(this.masteryState);
+    this.applyFilterAndShuffle();
+  }
+
+  /** Manually unlocks the next Jamo in the progression sequence. */
+  public unlockNextJamoManually(): string | undefined {
+    if (this.masteryState.unlockedCount < JAMO_PROGRESSION_ORDER.length) {
+      const nextIndex = this.masteryState.unlockedCount;
+      this.masteryState.unlockedCount += 1;
+      const nextJamo = JAMO_PROGRESSION_ORDER[nextIndex].jamo;
+      saveMasteryState(this.masteryState);
+      this.applyFilterAndShuffle();
+      return nextJamo;
+    }
+    return undefined;
   }
 
   /** Updates active module filter and reshuffles items. */
@@ -139,7 +212,10 @@ export class TutorSession {
         type: 'word',
         target: '',
         pronunciation: '',
-        translation: 'No modules selected. Please select at least one module in the menu.',
+        translation:
+          this.mode === 'mastery'
+            ? 'No eligible words found for current Jamos.'
+            : 'No modules selected. Please select at least one module in the menu.',
       };
     }
     return (
@@ -219,8 +295,25 @@ export class TutorSession {
     isItemCompleted = this.isItemCompleted,
     isTutorialComplete = false,
     advanced = false,
+    newlyUnlockedJamo?: string,
   ): KeyResult {
-    return { isMatch, isItemCompleted, isTutorialComplete, advanced };
+    return { isMatch, isItemCompleted, isTutorialComplete, advanced, newlyUnlockedJamo };
+  }
+
+  /**
+   * Identifies the current target Jamo expected at the typing cursor.
+   */
+  private getCurrentExpectedJamo(): string | null {
+    const currentTarget = this.getCurrentItem().target;
+    if (!currentTarget) return null;
+
+    const targetJamos = decomposeStringToJamos(currentTarget);
+    const inputJamos = decomposeStringToJamos(this.userInput);
+
+    if (inputJamos.length < targetJamos.length) {
+      return targetJamos[inputJamos.length];
+    }
+    return null;
   }
 
   /** Processes single keyboard input. */
@@ -253,6 +346,8 @@ export class TutorSession {
       }
     }
 
+    const expectedJamoBefore = this.getCurrentExpectedJamo();
+
     // Forward Delete Key
     if (key === 'Delete') {
       if (this.suffix.length > 0) {
@@ -270,50 +365,75 @@ export class TutorSession {
     this.accuracy =
       this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
 
+    let newlyUnlockedJamo: string | undefined = undefined;
+
+    // In Mastery Mode, evaluate Jamo telemetry on printable keys
+    if (this.mode === 'mastery' && expectedJamoBefore && key.length === 1) {
+      const currentInputJamos = decomposeStringToJamos(this.userInput);
+      const isCorrect = currentInputJamos.length > 0 && currentInputJamos[currentInputJamos.length - 1] === expectedJamoBefore;
+
+      const attemptResult = recordJamoAttempt(this.masteryState, expectedJamoBefore, isCorrect);
+      if (attemptResult.newlyUnlockedJamo) {
+        newlyUnlockedJamo = attemptResult.newlyUnlockedJamo;
+        // Refresh eligible pool with the newly unlocked Jamo
+        const unlocked = getUnlockedJamos(this.masteryState);
+        this.activeItems = getEligibleMasteryItems(this.allItems, unlocked);
+      }
+      saveMasteryState(this.masteryState);
+    }
+
     if (currentTarget.length > 0 && this.userInput === currentTarget) {
       this.isItemCompleted = true;
-      return this.makeResult(true, true);
+      return this.makeResult(true, true, false, false, newlyUnlockedJamo);
     }
 
-    return this.makeResult();
+    return this.makeResult(false, this.isItemCompleted, false, false, newlyUnlockedJamo);
   }
 
-  /** Advances to next item in module and reshuffles when cycling back. */
+  /** Advances to next lesson item, returning true if wrapped around. */
   public advanceLevel(): boolean {
-    this.engine.reset();
-    this.userInput = '';
-    this.inputCursorIndex = 0;
-    this.suffix = '';
-    this.errors = [];
-    this.isItemCompleted = false;
-
-    if (this.currentIndex < this.activeItems.length - 1) {
-      this.currentIndex++;
+    if (this.activeItems.length === 0) {
+      this.resetSessionState();
       return false;
-    } else {
-      this.currentIndex = 0;
-      if (this.shouldShuffle) {
-        this.activeItems = this.shuffle(this.activeItems);
-      }
-      return true;
     }
+
+    let isComplete = false;
+
+    if (this.mode === 'mastery') {
+      const activeJamo = getActiveLearningJamo(this.masteryState);
+      const nextItem = selectNextMasteryItem(this.activeItems, activeJamo?.jamo ?? null, this.masteryState.jamoStats);
+      const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
+      this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
+    } else {
+      this.currentIndex += 1;
+      if (this.currentIndex >= this.activeItems.length) {
+        this.currentIndex = 0;
+        isComplete = true;
+        if (this.shouldShuffle) {
+          this.activeItems = this.shuffle(this.activeItems);
+        }
+      }
+    }
+
+    this.resetSessionState();
+    return isComplete;
   }
 
-  /** Resets state back to initial level position. */
-  private resetSessionState(): void {
-    this.engine.reset();
-    this.currentIndex = 0;
+  /** Resets dynamic typing state for current lesson item. */
+  public resetSessionState(): void {
     this.userInput = '';
     this.inputCursorIndex = 0;
     this.suffix = '';
     this.errors = [];
     this.accuracy = 100;
     this.isItemCompleted = false;
+    this.engine.reset();
   }
 
-  /** Resets session and reshuffles items. */
+  /** Manually resets entire session back to index 0. */
   public resetSession(): void {
-    if (this.shouldShuffle) {
+    this.currentIndex = 0;
+    if (this.shouldShuffle && this.mode !== 'mastery') {
       this.activeItems = this.shuffle(this.activeItems);
     }
     this.resetSessionState();

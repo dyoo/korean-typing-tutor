@@ -2,13 +2,25 @@
   import { DUBEOLSIK_ROWS } from '../utils/keyboardData';
   import ShiftKey from './ShiftKey.svelte';
   import VirtualKey from './VirtualKey.svelte';
+  import type { TutorMode, JamoStats } from '../types/mastery';
 
   interface Props {
     activeKeys?: string[];
     onkeyselect?: (key: string) => void;
+    mode?: TutorMode;
+    unlockedJamos?: Set<string>;
+    activeJamo?: string | null;
+    jamoStats?: Record<string, JamoStats>;
   }
 
-  let { activeKeys = [], onkeyselect }: Props = $props();
+  let {
+    activeKeys = [],
+    onkeyselect,
+    mode = 'curriculum',
+    unlockedJamos = new Set(),
+    activeJamo = null,
+    jamoStats = {},
+  }: Props = $props();
 
   let isVirtualShiftActive = $state(false);
 
@@ -65,10 +77,19 @@
         <div style="grid-column: span 2;"></div>
 
         {#each row as cap}
+          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+          {@const isLocked =
+            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
+          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+
           <VirtualKey
             {cap}
             isTarget={activeKeys.includes(cap.key.toLowerCase())}
             {isShiftActive}
+            {isLocked}
+            {isActiveLearning}
+            {isMastered}
             onselect={handleKeyClick}
           />
         {/each}
@@ -90,10 +111,19 @@
         <div style="grid-column: span 3;"></div>
 
         {#each row as cap}
+          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+          {@const isLocked =
+            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
+          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+
           <VirtualKey
             {cap}
             isTarget={activeKeys.includes(cap.key.toLowerCase())}
             {isShiftActive}
+            {isLocked}
+            {isActiveLearning}
+            {isMastered}
             onselect={handleKeyClick}
           />
         {/each}
@@ -112,10 +142,19 @@
         </div>
 
         {#each row as cap}
+          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+          {@const isLocked =
+            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
+          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+
           <VirtualKey
             {cap}
             isTarget={activeKeys.includes(cap.key.toLowerCase())}
             {isShiftActive}
+            {isLocked}
+            {isActiveLearning}
+            {isMastered}
             onselect={handleKeyClick}
           />
         {/each}

@@ -320,4 +320,26 @@ describe('TutorSession controller', () => {
     expect(session.getUserInput()).toBe('나');
     expect(session.getInputCursorIndex()).toBe(0);
   });
+
+  it('should support switching to Mastery Mode and managing Jamo progression', () => {
+    session.setMode('mastery');
+    expect(session.getMode()).toBe('mastery');
+
+    const unlocked = session.getUnlockedJamos();
+    expect(unlocked.has('ㅓ')).toBe(true);
+    expect(unlocked.has('ㅏ')).toBe(true);
+    expect(unlocked.has('ㅇ')).toBe(true);
+    expect(unlocked.has('ㄹ')).toBe(true);
+
+    const initialUnlockedCount = session.getMasteryState().unlockedCount;
+    const newlyUnlocked = session.unlockNextJamoManually();
+    expect(newlyUnlocked).toBe('ㅗ');
+    expect(session.getMasteryState().unlockedCount).toBe(initialUnlockedCount + 1);
+
+    session.resetMasteryProgress();
+    expect(session.getMasteryState().unlockedCount).toBe(4);
+
+    session.setMode('curriculum');
+    expect(session.getMode()).toBe('curriculum');
+  });
 });

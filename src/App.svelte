@@ -12,6 +12,7 @@
   } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
+  import { JAMO_PROGRESSION_ORDER } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import TargetDisplay from './lib/TargetDisplay.svelte';
@@ -36,6 +37,9 @@
       : modules.map((m) => m.id),
   );
 
+  let mode = $state(session.getMode());
+  let masteryState = $state(session.getMasteryState());
+
   let userInput = $state(session.getUserInput());
   let errors = $state(session.getErrors());
   let currentItem = $state(session.getCurrentItem());
@@ -58,6 +62,9 @@
   let activeRequiredKeys = $derived(
     getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
+
+  let unlockedJamos = $derived(session.getUnlockedJamos());
+  let activeLearningJamo = $derived(session.getActiveLearningJamo());
 
   onMount(() => {
     session.setFilter(enabledModuleIds, true);
@@ -101,10 +108,25 @@
     errors = session.getErrors();
     currentItem = session.getCurrentItem();
     isCompleted = session.getIsItemCompleted();
+    mode = session.getMode();
+    masteryState = session.getMasteryState();
   }
 
   function setInputCursorPosition(index: number) {
     session.setInputCursorIndex(index);
+    syncState();
+    inputElement?.focus();
+  }
+
+  function toggleMode() {
+    const newMode = mode === 'curriculum' ? 'mastery' : 'curriculum';
+    session.setMode(newMode);
+    syncState();
+    inputElement?.focus();
+  }
+
+  function handleResetMastery() {
+    session.resetMasteryProgress();
     syncState();
     inputElement?.focus();
   }
@@ -210,16 +232,28 @@
     syncState();
   }
 
-  function handleVirtualKeySelect(key: string) {
-    session.processKey(key);
-    syncState();
-    inputElement?.focus();
-  }
-
   function handleThemeChange(theme: ThemeMode) {
     settings = { ...settings, theme };
     saveSettings(settings);
-    applyTheme(settings.theme);
+    applyTheme(theme);
+    syncState();
+  }
+
+  function handleMinFontSizeChange(minFontSizeRem: number) {
+    settings = { ...settings, minFontSizeRem };
+    saveSettings(settings);
+    syncState();
+  }
+
+  function handleMaxFontSizeChange(maxFontSizeRem: number) {
+    settings = { ...settings, maxFontSizeRem };
+    saveSettings(settings);
+    syncState();
+  }
+
+  function handleToggleLockFontSize() {
+    settings = { ...settings, lockFontSize: !settings.lockFontSize };
+    saveSettings(settings);
     syncState();
   }
 
@@ -229,44 +263,14 @@
     syncState();
   }
 
-  function handleMinFontSizeChange(minFontSizeRem: number) {
-    let maxFontSizeRem = settings.maxFontSizeRem ?? 5.5;
-    if (settings.lockFontSize) {
-      maxFontSizeRem = minFontSizeRem;
-    } else if (minFontSizeRem > maxFontSizeRem) {
-      maxFontSizeRem = minFontSizeRem;
-    }
-    settings = { ...settings, minFontSizeRem, maxFontSizeRem };
-    saveSettings(settings);
+  function handleVirtualKeySelect(key: string) {
+    session.processKey(key);
     syncState();
+    inputElement?.focus();
   }
 
-  function handleMaxFontSizeChange(maxFontSizeRem: number) {
-    let minFontSizeRem = settings.minFontSizeRem ?? 1.25;
-    if (settings.lockFontSize) {
-      minFontSizeRem = maxFontSizeRem;
-    } else if (maxFontSizeRem < minFontSizeRem) {
-      minFontSizeRem = maxFontSizeRem;
-    }
-    settings = { ...settings, minFontSizeRem, maxFontSizeRem };
-    saveSettings(settings);
-    syncState();
-  }
-
-  function handleToggleLockFontSize() {
-    const lockFontSize = !settings.lockFontSize;
-    let minFontSizeRem = settings.minFontSizeRem ?? 1.25;
-    let maxFontSizeRem = settings.maxFontSizeRem ?? 5.5;
-    if (lockFontSize) {
-      maxFontSizeRem = minFontSizeRem;
-    }
-    settings = { ...settings, lockFontSize, minFontSizeRem, maxFontSizeRem };
-    saveSettings(settings);
-    syncState();
-  }
-
-  function toggleSettingsModal(e: MouseEvent) {
-    e.stopPropagation();
+  function toggleSettingsModal(e?: MouseEvent) {
+    e?.stopPropagation();
     showSettingsModal = !showSettingsModal;
     if (showSettingsModal) {
       showCurriculumSidebar = false;
@@ -302,8 +306,13 @@
   class="flex flex-col items-center justify-between h-screen max-h-screen h-dvh max-h-dvh bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-3 md:px-8 md:py-5 overflow-hidden transition-colors"
 >
   <TopBar
+    {mode}
+    ontogglemode={toggleMode}
     enabledModuleCount={enabledModuleIds.length}
     totalModuleCount={modules.length}
+    masteryUnlockedCount={masteryState.unlockedCount}
+    masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
+    activeJamoChar={activeLearningJamo?.jamo ?? null}
     {showSettingsModal}
     {settings}
     ontogglecurriculum={toggleCurriculumSidebar}
@@ -320,6 +329,7 @@
     onmaxfontsizechange={handleMaxFontSizeChange}
     ontogglelockfontsize={handleToggleLockFontSize}
     oncursorcolorchange={handleCursorColorChange}
+    onresetmastery={handleResetMastery}
   />
 
   <div
@@ -350,7 +360,7 @@
       {errors}
       {activeInputCursorIndex}
       {isCompleted}
-      hasEnabledModules={enabledModuleIds.length > 0}
+      hasEnabledModules={mode === 'mastery' || enabledModuleIds.length > 0}
       cursorColor={settings.cursorColor}
       onkeydown={handleKeydown}
       oninputprevent={handleInputPrevent}
@@ -360,7 +370,14 @@
 
     {#if settings.showVirtualKeyboard}
       <div class="w-full flex justify-center mt-3">
-        <VirtualKeyboard activeKeys={activeRequiredKeys} onkeyselect={handleVirtualKeySelect} />
+        <VirtualKeyboard
+          activeKeys={activeRequiredKeys}
+          {mode}
+          {unlockedJamos}
+          activeJamo={activeLearningJamo?.jamo ?? null}
+          jamoStats={masteryState.jamoStats}
+          onkeyselect={handleVirtualKeySelect}
+        />
       </div>
     {/if}
 

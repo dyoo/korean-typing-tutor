@@ -17,6 +17,7 @@
     onmaxfontsizechange?: (maxSize: number) => void;
     ontogglelockfontsize?: () => void;
     oncursorcolorchange?: (cursorColor: CursorColorMode) => void;
+    onresetmastery?: () => void;
   }
 
   let {
@@ -32,6 +33,7 @@
     onmaxfontsizechange,
     ontogglelockfontsize,
     oncursorcolorchange,
+    onresetmastery,
   }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
@@ -98,38 +100,53 @@
       tabindex="-1"
       role="region"
       aria-label="Display Settings Panel"
-      class="settings-modal absolute right-0 top-11 z-50 w-76 sm:w-80 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 flex flex-col gap-3"
+      class="settings-modal absolute right-0 top-full mt-2 w-72 sm:w-80 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 z-50 flex flex-col gap-4 text-xs font-semibold text-gray-700 dark:text-gray-200"
     >
       <div
-        class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 font-mono pb-1 border-b border-gray-100 dark:border-gray-700"
+        class="flex items-center justify-between border-b border-gray-200 dark:border-gray-700 pb-2"
       >
-        Display Settings
+        <span class="font-bold text-sm text-gray-900 dark:text-gray-100 uppercase tracking-wider font-mono">
+          Settings
+        </span>
+        <button
+          type="button"
+          onclick={onclose}
+          class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1 rounded-md cursor-pointer"
+          aria-label="Close Settings Panel"
+        >
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
 
-      <label
-        class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
-      >
-        <span>Theme</span>
+      <!-- Theme Selector -->
+      <div class="flex items-center justify-between">
+        <label for="theme-select" class="cursor-pointer">Theme</label>
         <select
+          id="theme-select"
           value={settings.theme}
           onchange={handleSelectTheme}
-          class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200 font-medium rounded px-2 py-1 text-xs focus:outline-none focus:border-blue-600 cursor-pointer"
+          class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2.5 py-1 text-xs focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
-          <option value="system">System</option>
-          <option value="light">Light</option>
-          <option value="dark">Dark</option>
+          <option value="system">System Default</option>
+          <option value="light">Light Mode</option>
+          <option value="dark">Dark Mode</option>
         </select>
-      </label>
+      </div>
 
-      <CursorColorSelect
-        value={settings.cursorColor ?? 'amber'}
-        onchange={(val) => oncursorcolorchange?.(val)}
-      />
+      <!-- Cursor Color Accent Selector -->
+      <div class="flex items-center justify-between">
+        <label for="cursor-color-select" class="cursor-pointer">Cursor Accent</label>
+        <CursorColorSelect
+          selectedColor={settings.cursorColor ?? 'amber'}
+          oncolorchange={(color) => oncursorcolorchange?.(color)}
+        />
+      </div>
 
-      <label
-        class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
-      >
-        <span>Show Pronunciation</span>
+      <!-- Romanization / Pronunciation Toggle -->
+      <label class="flex items-center justify-between cursor-pointer">
+        <span>Show Romanization</span>
         <input
           type="checkbox"
           checked={settings.showPronunciation}
@@ -138,10 +155,9 @@
         />
       </label>
 
-      <label
-        class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
-      >
-        <span>Show Translation</span>
+      <!-- English Translation Toggle -->
+      <label class="flex items-center justify-between cursor-pointer">
+        <span>Show English Translation</span>
         <input
           type="checkbox"
           checked={settings.showTranslation}
@@ -150,10 +166,9 @@
         />
       </label>
 
-      <label
-        class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
-      >
-        <span>Show Virtual Keyboard</span>
+      <!-- Virtual Keyboard Toggle -->
+      <label class="flex items-center justify-between cursor-pointer">
+        <span>Show Virtual Keyboard Helper</span>
         <input
           type="checkbox"
           checked={settings.showVirtualKeyboard}
@@ -162,20 +177,20 @@
         />
       </label>
 
-      <div
-        class="flex flex-col gap-2 select-none text-sm font-semibold text-gray-700 dark:text-gray-200 pt-2 border-t border-gray-100 dark:border-gray-700"
-      >
-        <label
-          class="flex items-center justify-between cursor-pointer select-none text-sm font-semibold text-gray-700 dark:text-gray-200"
-        >
-          <span>Lock Font Size</span>
-          <input
-            type="checkbox"
-            checked={settings.lockFontSize ?? false}
-            onchange={ontogglelockfontsize}
-            class="w-4 h-4 text-blue-600 rounded cursor-pointer"
-          />
-        </label>
+      <!-- Target Text Size Slider & Lock Toggle -->
+      <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-gray-900 dark:text-gray-100">Typography Sizing</span>
+          <label class="flex items-center gap-1.5 cursor-pointer text-[11px] text-gray-500 dark:text-gray-400">
+            <input
+              type="checkbox"
+              checked={settings.lockFontSize}
+              onchange={ontogglelockfontsize}
+              class="w-3.5 h-3.5 text-blue-600 rounded cursor-pointer"
+            />
+            <span>Lock Size</span>
+          </label>
+        </div>
 
         {#if settings.lockFontSize}
           <div class="flex flex-col gap-1 mt-1">
@@ -220,6 +235,20 @@
           </div>
         {/if}
       </div>
+
+      <!-- Jamo Mastery Progress Section -->
+      {#if onresetmastery}
+        <div class="pt-3 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+          <span class="text-xs text-gray-700 dark:text-gray-300 font-semibold">Jamo Mastery Progress</span>
+          <button
+            type="button"
+            onclick={onresetmastery}
+            class="text-xs text-red-600 dark:text-red-400 hover:underline font-semibold cursor-pointer"
+          >
+            Reset Progress
+          </button>
+        </div>
+      {/if}
     </div>
   {/if}
 </div>
