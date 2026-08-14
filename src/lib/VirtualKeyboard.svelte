@@ -5,6 +5,7 @@
     getUnlockedJamos,
     getActiveLearningJamo,
   } from '../utils/jamoMastery';
+  import { isShiftTarget, resolveKeyOutput } from '../utils/virtualKeyboardShift';
   import ShiftKey from './ShiftKey.svelte';
   import VirtualKey from './VirtualKey.svelte';
   import type { TutorMode, MasteryState } from '../types/mastery';
@@ -36,21 +37,18 @@
   let isVirtualShiftActive = $state(false);
 
   let isSpaceTarget = $derived(activeKeys.includes(' '));
-  let isLeftShiftTarget = $derived(
-    activeKeys.includes('left-shift') ||
-      (activeKeys.includes('shift') && !activeKeys.includes('right-shift')),
-  );
-  let isRightShiftTarget = $derived(
-    activeKeys.includes('right-shift') ||
-      (activeKeys.includes('shift') && !activeKeys.includes('left-shift')),
+  let isLeftShiftTarget = $derived(isShiftTarget(activeKeys, 'left'));
+  let isRightShiftTarget = $derived(isShiftTarget(activeKeys, 'right'));
+
+  // Actual shift state: only from physical keyboard or virtual toggle, never from target highlighting.
+  // This prevents the keyboard from auto-shifting when the target character requires shift.
+  let isShiftPressed = $derived(
+    isVirtualShiftActive || isLeftShiftPressed || isRightShiftPressed,
   );
 
+  // Combined shift state for display: includes target highlighting so keys show the shifted jamo.
   let isShiftActive = $derived(
-    isVirtualShiftActive ||
-      isLeftShiftPressed ||
-      isRightShiftPressed ||
-      isLeftShiftTarget ||
-      isRightShiftTarget,
+    isShiftPressed || isLeftShiftTarget || isRightShiftTarget,
   );
 
   function toggleShift(e: MouseEvent) {
@@ -68,10 +66,7 @@
       return;
     }
 
-    let outputKey = key;
-    if (key.length === 1 && isShiftActive) {
-      outputKey = key.toUpperCase();
-    }
+    let outputKey = resolveKeyOutput(key, isShiftPressed);
 
     if (isVirtualShiftActive) {
       isVirtualShiftActive = false;
@@ -114,19 +109,19 @@
       {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
       {@const progressPercent = mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-      <VirtualKey
-        {cap}
-        isTarget={activeKeys.includes(cap.key.toLowerCase())}
-        {isShiftActive}
-        {isLocked}
-        {isActiveLearning}
-        {isMastered}
-        {progressPercent}
-        onselect={handleKeyClick}
-      />
-    {/each}
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key.toLowerCase())}
+            isShiftActive={isShiftPressed}
+            {isLocked}
+            {isActiveLearning}
+            {isMastered}
+            {progressPercent}
+            onselect={handleKeyClick}
+          />
+        {/each}
 
-    <!-- Desktop: Backspace (span 4) at end of row -->
+        <!-- Desktop: Backspace (span 4) at end of row -->
     <button
       type="button"
       tabindex="-1"
@@ -159,19 +154,19 @@
       {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
       {@const progressPercent = mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-      <VirtualKey
-        {cap}
-        isTarget={activeKeys.includes(cap.key.toLowerCase())}
-        {isShiftActive}
-        {isLocked}
-        {isActiveLearning}
-        {isMastered}
-        {progressPercent}
-        onselect={handleKeyClick}
-      />
-    {/each}
+        <VirtualKey
+          {cap}
+          isTarget={activeKeys.includes(cap.key.toLowerCase())}
+          isShiftActive={isShiftPressed}
+          {isLocked}
+          {isActiveLearning}
+          {isMastered}
+          {progressPercent}
+          onselect={handleKeyClick}
+        />
+      {/each}
 
-    <!-- Desktop: 5-col right spacer -->
+      <!-- Desktop: 5-col right spacer -->
     <div style="grid-column: span 5;" class="hidden sm:block"></div>
     <!-- Mobile: 3-col right spacer (2 + 18 + 3 = 23) -->
     <div style="grid-column: span 3;" class="sm:hidden"></div>
@@ -199,19 +194,19 @@
       {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
       {@const progressPercent = mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-      <VirtualKey
-        {cap}
-        isTarget={activeKeys.includes(cap.key.toLowerCase())}
-        {isShiftActive}
-        {isLocked}
-        {isActiveLearning}
-        {isMastered}
-        {progressPercent}
-        onselect={handleKeyClick}
-      />
-    {/each}
+        <VirtualKey
+          {cap}
+          isTarget={activeKeys.includes(cap.key.toLowerCase())}
+          isShiftActive={isShiftPressed}
+          {isLocked}
+          {isActiveLearning}
+          {isMastered}
+          {progressPercent}
+          onselect={handleKeyClick}
+        />
+      {/each}
 
-    <!-- Desktop: right Shift (span 4) -->
+      <!-- Desktop: right Shift (span 4) -->
     <div style="grid-column: span 4;" class="hidden sm:block">
       <ShiftKey
         side="Right"

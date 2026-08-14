@@ -59,7 +59,7 @@
   {/if}
 
   <div
-    class="relative z-10 flex items-center justify-between w-full text-[11px] sm:text-[10px] leading-none font-mono"
+    class="relative z-10 flex items-center justify-between w-full text-xs sm:text-[10px] leading-none font-mono"
   >
     <span class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}>
       {cap.key.toUpperCase()}
@@ -72,7 +72,7 @@
       </span>
     {/if}
   </div>
-  <span class="relative z-10 text-lg sm:text-lg md:text-xl font-semibold leading-none my-auto">
+  <span class="relative z-10 text-xl sm:text-lg md:text-xl font-semibold leading-none my-auto">
     {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
   </span>
 </button>
