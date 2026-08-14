@@ -9,7 +9,7 @@
     calculateTargetCursorIndex,
     calculateInputCursorIndex,
     getWordTokens,
-  } from './utils/koreanEngine';
+  } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';

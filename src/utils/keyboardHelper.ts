@@ -1,4 +1,4 @@
-import { decomposeStringToJamos } from './koreanEngine';
+import { decomposeStringToJamos } from './hangulDecompose';
 import { JAMO_TO_KEY } from './keyboardData';
 
 function getKeyInfoResult(keyInfo?: {

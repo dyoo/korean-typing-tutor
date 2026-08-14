@@ -1,5 +1,5 @@
 import type { LessonItem } from '../types/korean';
-import { decomposeSyllable } from './koreanEngine';
+import { decomposeSyllable } from './hangulDecompose';
 
 export { decomposeSyllable };
 

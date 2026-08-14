@@ -1,4 +1,5 @@
-import { HangulEngine, checkErrors } from '../utils/koreanEngine';
+import { HangulEngine } from '../utils/hangulEngine';
+import { checkErrors } from '../utils/hangulMatch';
 import { getPronunciation } from '../utils/romanizer';
 import type { CurriculumData, ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
 

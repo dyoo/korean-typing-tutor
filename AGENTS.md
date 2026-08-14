@@ -33,7 +33,11 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - `src/App.svelte`: The primary UI component and interaction handler.
 - `src/lib/tutorSession.ts`: Session controller managing curriculum filtering, item shuffling, accuracy stats, and keystroke routing.
 - `src/lib/VirtualKeyboard.svelte`: Interactive Dubeolsik virtual keyboard layout helper component.
-- `src/utils/koreanEngine.ts`: The core logic for keystroke mapping, Hangul composition arithmetic, and error evaluation.
+- `src/utils/hangulEngine.ts`: The Hangul IME composition state machine and keystroke handler.
+- `src/utils/hangulDecompose.ts`: Unicode Jamo decomposition and extraction utilities.
+- `src/utils/hangulMatch.ts`: Real-time Hangul syllable matching, completion checks, and error evaluation.
+- `src/utils/hangulTables.ts`: Unicode Hangul tables, Jamo arrays, and compound combination dictionaries.
+- `src/utils/cursorHelper.ts`: Active target and input cursor position calculations and word token grouping.
 - `src/utils/keyboardHelper.ts`: Logic for computing next required target keys and opposite-hand Shift chording hints.
 - `src/utils/keyboardData.ts`: Dubeolsik keycap metadata and Jamo-to-key dictionary.
 - `src/types/korean.ts`: Type definitions for the domain model.
