@@ -1,257 +1,87 @@
 {
   "id": "b4_top_row",
   "title": "Beginner 4 — Top Row Keys (상단 자음/모음)",
-  "description": "Top QWERTY row: Q (ㅂ), W (ㅈ), E (ㄷ), R (ㄱ), T (ㅅ), Y (ㅛ), U (ㅕ), I (ㅑ), O (ㅐ), P (ㅔ)",
+  "description": "High-frequency vocabulary utilizing Top Row keys: ㅂ, ㅈ, ㄷ, ㄱ, ㅅ, ㅛ, ㅕ, ㅑ, ㅐ, ㅔ, ㅜ, ㅡ",
   "items": [
-    {
-      "id": "b4-1",
-      "target": "가구",
-      "translation": "Furniture"
-    },
-    {
-      "id": "b4-2",
-      "target": "고기",
-      "translation": "Meat"
-    },
-    {
-      "id": "b4-3",
-      "target": "다리",
-      "translation": "Leg / Bridge"
-    },
-    {
-      "id": "b4-4",
-      "target": "도로",
-      "translation": "Road"
-    },
-    {
-      "id": "b4-5",
-      "target": "사자",
-      "translation": "Lion"
-    },
-    {
-      "id": "b4-6",
-      "target": "나비",
-      "translation": "Butterfly"
-    },
-    {
-      "id": "b4-7",
-      "target": "바지",
-      "translation": "Pants"
-    },
-    {
-      "id": "b4-8",
-      "target": "오리",
-      "translation": "Duck"
-    },
-    {
-      "id": "b4-9",
-      "target": "지도",
-      "translation": "Map"
-    },
-    {
-      "id": "b4_top_row-ext-1",
-      "target": "구두",
-      "translation": "Dress shoes"
-    },
-    {
-      "id": "b4_top_row-ext-2",
-      "target": "지구",
-      "translation": "Earth / Globe"
-    },
-    {
-      "id": "b4_top_row-ext-3",
-      "target": "바다",
-      "translation": "Sea / Ocean"
-    },
-    {
-      "id": "b4_top_row-ext-4",
-      "target": "소리",
-      "translation": "Sound / Voice"
-    },
-    {
-      "id": "b4_top_row-ext-5",
-      "target": "자기",
-      "translation": "Self / Honey"
-    },
-    {
-      "id": "b4_top_row-ext-6",
-      "target": "비누",
-      "translation": "Soap"
-    },
-    {
-      "id": "b4_top_row-ext-7",
-      "target": "부모",
-      "translation": "Parents"
-    },
-    {
-      "id": "b4_top_row-ext-8",
-      "target": "두부",
-      "translation": "Tofu"
-    },
-    {
-      "id": "b4_top_row-ext-9",
-      "target": "가수",
-      "translation": "Singer"
-    },
-    {
-      "id": "b4_top_row-ext-10",
-      "target": "기자",
-      "translation": "Reporter / Journalist"
-    },
-    {
-      "id": "b4_top_row-ext-11",
-      "target": "돼지",
-      "translation": "Pig"
-    },
-    {
-      "id": "b4_top_row-ext-12",
-      "target": "개구리",
-      "translation": "Frog"
-    },
-    {
-      "id": "b4_top_row-ext-13",
-      "target": "다람쥐",
-      "translation": "Squirrel"
-    },
-    {
-      "id": "b4_top_row-ext-14",
-      "target": "바람",
-      "translation": "Wind"
-    },
-    {
-      "id": "b4_top_row-ext-15",
-      "target": "조개",
-      "translation": "Clam / Shellfish"
-    },
-    {
-      "id": "b4_top_row-ext-16",
-      "target": "모기",
-      "translation": "Mosquito"
-    },
-    {
-      "id": "b4_top_row-ext-17",
-      "target": "자전거",
-      "translation": "Bicycle"
-    },
-    {
-      "id": "b4_top_row-ext-18",
-      "target": "비행기",
-      "translation": "Airplane"
-    },
-    {
-      "id": "b4_top_row-ext-19",
-      "target": "자동차",
-      "translation": "Car / Automobile"
-    },
-    {
-      "id": "b4_top_row-ext-20",
-      "target": "기차",
-      "translation": "Train"
-    },
-    {
-      "id": "b4_top_row-ext-21",
-      "target": "도서관",
-      "translation": "Library"
-    },
-    {
-      "id": "b4_top_row-ext-22",
-      "target": "우체국",
-      "translation": "Post office"
-    },
-    {
-      "id": "b4_top_row-ext-23",
-      "target": "병원",
-      "translation": "Hospital"
-    },
-    {
-      "id": "b4_top_row-ext-24",
-      "target": "경찰서",
-      "translation": "Police station"
-    },
-    {
-      "id": "b4_top_row-ext-25",
-      "target": "미술관",
-      "translation": "Art museum"
-    },
-    {
-      "id": "b4_top_row-ext-26",
-      "target": "시계",
-      "translation": "Clock / Watch"
-    },
-    {
-      "id": "b4_top_row-ext-27",
-      "target": "아기",
-      "translation": "Baby"
-    },
-    {
-      "id": "b4_top_row-ext-28",
-      "target": "모자",
-      "translation": "Hat / Cap"
-    },
-    {
-      "id": "b4_top_row-ext-29",
-      "target": "휴지",
-      "translation": "Tissue / Paper towel"
-    },
-    {
-      "id": "b4_top_row-ext-30",
-      "target": "주스",
-      "translation": "Juice"
-    },
-    {
-      "id": "b4_top_row-ext-31",
-      "target": "부자",
-      "translation": "Rich person / Father and son"
-    },
-    {
-      "id": "b4_top_row-ext-32",
-      "target": "의자",
-      "translation": "Chair"
-    },
-    {
-      "id": "b4_top_row-ext-33",
-      "target": "지갑",
-      "translation": "Wallet"
-    },
-    {
-      "id": "b4_top_row-ext-34",
-      "target": "가방",
-      "translation": "Bag / Backpack"
-    },
-    {
-      "id": "b4_top_row-ext-35",
-      "target": "우산",
-      "translation": "Umbrella"
-    },
-    {
-      "id": "b4_top_row-ext-36",
-      "target": "열쇠",
-      "translation": "Key"
-    },
-    {
-      "id": "b4_top_row-ext-37",
-      "target": "연필",
-      "translation": "Pencil"
-    },
-    {
-      "id": "b4_top_row-ext-38",
-      "target": "볼펜",
-      "translation": "Ballpoint pen"
-    },
-    {
-      "id": "b4_top_row-ext-39",
-      "target": "공책",
-      "translation": "Notebook"
-    },
-    {
-      "id": "b4_top_row-ext-40",
-      "target": "침대",
-      "translation": "Bed"
-    },
-    {
-      "id": "b4_top_row-ext-41",
-      "target": "책상",
-      "translation": "Desk"
-    }
+    { "id": "b4-1", "target": "가구", "translation": "Furniture" },
+    { "id": "b4-2", "target": "고기", "translation": "Meat" },
+    { "id": "b4-3", "target": "다리", "translation": "Leg / Bridge" },
+    { "id": "b4-4", "target": "도로", "translation": "Road" },
+    { "id": "b4-5", "target": "사자", "translation": "Lion" },
+    { "id": "b4-6", "target": "나비", "translation": "Butterfly" },
+    { "id": "b4-7", "target": "바지", "translation": "Pants" },
+    { "id": "b4-8", "target": "오리", "translation": "Duck" },
+    { "id": "b4-9", "target": "지도", "translation": "Map" },
+    { "id": "b4-10", "target": "구두", "translation": "Dress shoes" },
+    { "id": "b4-11", "target": "지구", "translation": "Earth / Globe" },
+    { "id": "b4-12", "target": "바다", "translation": "Ocean / Sea" },
+    { "id": "b4-13", "target": "하늘", "translation": "Sky" },
+    { "id": "b4-14", "target": "구름", "translation": "Cloud" },
+    { "id": "b4-15", "target": "사람", "translation": "Person / Human" },
+    { "id": "b4-16", "target": "바람", "translation": "Wind / Breeze" },
+    { "id": "b4-17", "target": "사랑", "translation": "Love" },
+    { "id": "b4-18", "target": "가수", "translation": "Singer" },
+    { "id": "b4-19", "target": "도시", "translation": "City" },
+    { "id": "b4-20", "target": "사과", "translation": "Apple" },
+    { "id": "b4-21", "target": "소리", "translation": "Sound / Voice" },
+    { "id": "b4-22", "target": "나무", "translation": "Tree / Wood" },
+    { "id": "b4-23", "target": "누나", "translation": "Older sister (for male)" },
+    { "id": "b4-24", "target": "모자", "translation": "Hat / Cap" },
+    { "id": "b4-25", "target": "우주", "translation": "Universe / Space" },
+    { "id": "b4-26", "target": "가게", "translation": "Store / Shop" },
+    { "id": "b4-27", "target": "노래", "translation": "Song" },
+    { "id": "b4-28", "target": "모래", "translation": "Sand" },
+    { "id": "b4-29", "target": "배", "translation": "Boat / Pear / Belly" },
+    { "id": "b4-30", "target": "새", "translation": "Bird" },
+    { "id": "b4-31", "target": "해", "translation": "Sun / Year" },
+    { "id": "b4-32", "target": "비", "translation": "Rain" },
+    { "id": "b4-33", "target": "눈", "translation": "Eye / Snow" },
+    { "id": "b4-34", "target": "달", "translation": "Moon / Month" },
+    { "id": "b4-35", "target": "별", "translation": "Star" },
+    { "id": "b4-36", "target": "물", "translation": "Water" },
+    { "id": "b4-37", "target": "불", "translation": "Fire" },
+    { "id": "b4-38", "target": "손", "translation": "Hand" },
+    { "id": "b4-39", "target": "발", "translation": "Foot" },
+    { "id": "b4-40", "target": "입", "translation": "Mouth" },
+    { "id": "b4-41", "target": "귀", "translation": "Ear" },
+    { "id": "b4-42", "target": "개", "translation": "Dog" },
+    { "id": "b4-43", "target": "소", "translation": "Cow / Ox" },
+    { "id": "b4-44", "target": "곰", "translation": "Bear" },
+    { "id": "b4-45", "target": "봄", "translation": "Spring" },
+    { "id": "b4-46", "target": "여름", "translation": "Summer" },
+    { "id": "b4-47", "target": "가을", "translation": "Autumn / Fall" },
+    { "id": "b4-48", "target": "겨울", "translation": "Winter" },
+    { "id": "b4-49", "target": "오늘", "translation": "Today" },
+    { "id": "b4-50", "target": "내일", "translation": "Tomorrow" },
+    { "id": "b4-51", "target": "어제", "translation": "Yesterday" },
+    { "id": "b4-52", "target": "우리", "translation": "We / Us / Our" },
+    { "id": "b4-53", "target": "시간", "translation": "Time / Hour" },
+    { "id": "b4-54", "target": "세상", "translation": "World" },
+    { "id": "b4-55", "target": "생각", "translation": "Thought / Idea" },
+    { "id": "b4-56", "target": "이야기", "translation": "Story / Talk" },
+    { "id": "b4-57", "target": "가족", "translation": "Family" },
+    { "id": "b4-58", "target": "선생님", "translation": "Teacher" },
+    { "id": "b4-59", "target": "학생", "translation": "Student" },
+    { "id": "b4-60", "target": "학교", "translation": "School" },
+    { "id": "b4-61", "target": "교실", "translation": "Classroom" },
+    { "id": "b4-62", "target": "의자", "translation": "Chair" },
+    { "id": "b4-63", "target": "책상", "translation": "Desk" },
+    { "id": "b4-64", "target": "수첩", "translation": "Pocket notebook" },
+    { "id": "b4-65", "target": "시계", "translation": "Clock / Watch" },
+    { "id": "b4-66", "target": "안경", "translation": "Glasses" },
+    { "id": "b4-67", "target": "신발", "translation": "Shoes" },
+    { "id": "b4-68", "target": "양말", "translation": "Socks" },
+    { "id": "b4-69", "target": "우산", "translation": "Umbrella" },
+    { "id": "b4-70", "target": "지갑", "translation": "Wallet" },
+    { "id": "b4-71", "target": "가방", "translation": "Bag / Backpack" },
+    { "id": "b4-72", "target": "문", "translation": "Door" },
+    { "id": "b4-73", "target": "창문", "translation": "Window" },
+    { "id": "b4-74", "target": "방", "translation": "Room" },
+    { "id": "b4-75", "target": "거실", "translation": "Living room" },
+    { "id": "b4-76", "target": "식당", "translation": "Restaurant" },
+    { "id": "b4-77", "target": "도서관", "translation": "Library" },
+    { "id": "b4-78", "target": "공원", "translation": "Park" },
+    { "id": "b4-79", "target": "병원", "translation": "Hospital" },
+    { "id": "b4-80", "target": "약국", "translation": "Pharmacy" }
   ]
 }

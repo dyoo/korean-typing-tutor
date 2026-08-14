@@ -3,255 +3,80 @@
   "title": "Beginner 6 — Shift Keys & Double Consonants (Shift 키 & 쌍자음)",
   "description": "Shift chording for double consonants & compound vowels: ㄲ, ㄸ, ㅃ, ㅆ, ㅉ, ㅒ, ㅖ",
   "items": [
-    {
-      "id": "b6-1",
-      "target": "까치",
-      "translation": "Magpie"
-    },
-    {
-      "id": "b6-2",
-      "target": "토끼",
-      "translation": "Rabbit"
-    },
-    {
-      "id": "b6-3",
-      "target": "뿌리",
-      "translation": "Root"
-    },
-    {
-      "id": "b6-4",
-      "target": "아빠",
-      "translation": "Dad"
-    },
-    {
-      "id": "b6-5",
-      "target": "진짜",
-      "translation": "Really / Real"
-    },
-    {
-      "id": "b6-6",
-      "target": "짜장면",
-      "translation": "Black bean noodles"
-    },
-    {
-      "id": "b6-7",
-      "target": "예쁘다",
-      "translation": "Pretty"
-    },
-    {
-      "id": "b6-8",
-      "target": "시계",
-      "translation": "Clock / Watch"
-    },
-    {
-      "id": "b6_shift_keys-ext-1",
-      "target": "토끼",
-      "translation": "Rabbit"
-    },
-    {
-      "id": "b6_shift_keys-ext-2",
-      "target": "뿌리",
-      "translation": "Root"
-    },
-    {
-      "id": "b6_shift_keys-ext-3",
-      "target": "아빠",
-      "translation": "Dad / Father"
-    },
-    {
-      "id": "b6_shift_keys-ext-4",
-      "target": "오빠",
-      "translation": "Older brother (female speaker)"
-    },
-    {
-      "id": "b6_shift_keys-ext-5",
-      "target": "예쁘다",
-      "translation": "Pretty"
-    },
-    {
-      "id": "b6_shift_keys-ext-6",
-      "target": "짜장면",
-      "translation": "Black bean noodles"
-    },
-    {
-      "id": "b6_shift_keys-ext-7",
-      "target": "짝꿍",
-      "translation": "Desk partner / Buddy"
-    },
-    {
-      "id": "b6_shift_keys-ext-8",
-      "target": "따뜻하다",
-      "translation": "Warm"
-    },
-    {
-      "id": "b6_shift_keys-ext-9",
-      "target": "찌개",
-      "translation": "Stew"
-    },
-    {
-      "id": "b6_shift_keys-ext-10",
-      "target": "깨끗하다",
-      "translation": "Clean"
-    },
-    {
-      "id": "b6_shift_keys-ext-11",
-      "target": "쌍둥이",
-      "translation": "Twins"
-    },
-    {
-      "id": "b6_shift_keys-ext-12",
-      "target": "꼬마",
-      "translation": "Little child"
-    },
-    {
-      "id": "b6_shift_keys-ext-13",
-      "target": "뚝배기",
-      "translation": "Earthenware pot"
-    },
-    {
-      "id": "b6_shift_keys-ext-14",
-      "target": "빵집",
-      "translation": "Bakery"
-    },
-    {
-      "id": "b6_shift_keys-ext-15",
-      "target": "썰매",
-      "translation": "Sled"
-    },
-    {
-      "id": "b6_shift_keys-ext-16",
-      "target": "쭈꾸미",
-      "translation": "Webfoot octopus"
-    },
-    {
-      "id": "b6_shift_keys-ext-17",
-      "target": "얘기",
-      "translation": "Story / Conversation"
-    },
-    {
-      "id": "b6_shift_keys-ext-18",
-      "target": "시계",
-      "translation": "Clock / Watch"
-    },
-    {
-      "id": "b6_shift_keys-ext-19",
-      "target": "예술",
-      "translation": "Art"
-    },
-    {
-      "id": "b6_shift_keys-ext-20",
-      "target": "이야기",
-      "translation": "Story / Talk"
-    },
-    {
-      "id": "b6_shift_keys-ext-21",
-      "target": "예절",
-      "translation": "Etiquette / Manners"
-    },
-    {
-      "id": "b6_shift_keys-ext-22",
-      "target": "예금",
-      "translation": "Bank deposit"
-    },
-    {
-      "id": "b6_shift_keys-ext-23",
-      "target": "예약",
-      "translation": "Reservation"
-    },
-    {
-      "id": "b6_shift_keys-ext-24",
-      "target": "예측",
-      "translation": "Prediction / Forecast"
-    },
-    {
-      "id": "b6_shift_keys-ext-25",
-      "target": "예방",
-      "translation": "Prevention"
-    },
-    {
-      "id": "b6_shift_keys-ext-26",
-      "target": "예고",
-      "translation": "Notice / Preview"
-    },
-    {
-      "id": "b6_shift_keys-ext-27",
-      "target": "예식",
-      "translation": "Ceremony / Wedding"
-    },
-    {
-      "id": "b6_shift_keys-ext-28",
-      "target": "예산",
-      "translation": "Budget"
-    },
-    {
-      "id": "b6_shift_keys-ext-29",
-      "target": "예쁜",
-      "translation": "Pretty (adjective modifier)"
-    },
-    {
-      "id": "b6_shift_keys-ext-30",
-      "target": "예술가",
-      "translation": "Artist"
-    },
-    {
-      "id": "b6_shift_keys-ext-31",
-      "target": "얘들아",
-      "translation": "Hey kids / Everyone"
-    },
-    {
-      "id": "b6_shift_keys-ext-32",
-      "target": "깨어남",
-      "translation": "Awakening"
-    },
-    {
-      "id": "b6_shift_keys-ext-33",
-      "target": "따스함",
-      "translation": "Warmth"
-    },
-    {
-      "id": "b6_shift_keys-ext-34",
-      "target": "뽀뽀",
-      "translation": "Kiss"
-    },
-    {
-      "id": "b6_shift_keys-ext-35",
-      "target": "싸움",
-      "translation": "Fight / Battle"
-    },
-    {
-      "id": "b6_shift_keys-ext-36",
-      "target": "쪼개기",
-      "translation": "Splitting / Chopping"
-    },
-    {
-      "id": "b6_shift_keys-ext-37",
-      "target": "까닭",
-      "translation": "Reason / Cause"
-    },
-    {
-      "id": "b6_shift_keys-ext-38",
-      "target": "뜨겁다",
-      "translation": "Hot (temperature)"
-    },
-    {
-      "id": "b6_shift_keys-ext-39",
-      "target": "빠르다",
-      "translation": "Fast / Quick"
-    },
-    {
-      "id": "b6_shift_keys-ext-40",
-      "target": "쓰다",
-      "translation": "To write / To use"
-    },
-    {
-      "id": "b6_shift_keys-ext-41",
-      "target": "찌르다",
-      "translation": "To pierce / Poke"
-    },
-    {
-      "id": "b6_shift_keys-ext-42",
-      "target": "껌",
-      "translation": "Chewing gum"
-    }
+    { "id": "b6-1", "target": "까치", "translation": "Magpie" },
+    { "id": "b6-2", "target": "토끼", "translation": "Rabbit" },
+    { "id": "b6-3", "target": "꼬리", "translation": "Tail" },
+    { "id": "b6-4", "target": "꽃", "translation": "Flower" },
+    { "id": "b6-5", "target": "꿈", "translation": "Dream" },
+    { "id": "b6-6", "target": "뿌리", "translation": "Root" },
+    { "id": "b6-7", "target": "아빠", "translation": "Dad" },
+    { "id": "b6-8", "target": "오빠", "translation": "Older brother (for female)" },
+    { "id": "b6-9", "target": "빵", "translation": "Bread" },
+    { "id": "b6-10", "target": "뼈", "translation": "Bone" },
+    { "id": "b6-11", "target": "뽀뽀", "translation": "Kiss / Peck" },
+    { "id": "b6-12", "target": "진짜", "translation": "Really / Truly" },
+    { "id": "b6-13", "target": "짜장면", "translation": "Black bean noodles" },
+    { "id": "b6-14", "target": "찌개", "translation": "Korean stew" },
+    { "id": "b6-15", "target": "쪽지", "translation": "Short note / Message" },
+    { "id": "b6-16", "target": "짝꿍", "translation": "Partner / Classmate" },
+    { "id": "b6-17", "target": "딸기", "translation": "Strawberry" },
+    { "id": "b6-18", "target": "땅", "translation": "Earth / Land / Ground" },
+    { "id": "b6-19", "target": "떡", "translation": "Rice cake" },
+    { "id": "b6-20", "target": "뜨겁다", "translation": "To be hot to touch" },
+    { "id": "b6-21", "target": "뜻", "translation": "Meaning / Intention" },
+    { "id": "b6-22", "target": "쓰기", "translation": "Writing" },
+    { "id": "b6-23", "target": "씨앗", "translation": "Seed" },
+    { "id": "b6-24", "target": "싸움", "translation": "Fight / Conflict" },
+    { "id": "b6-25", "target": "쓰레기", "translation": "Trash / Waste" },
+    { "id": "b6-26", "target": "쌀", "translation": "Uncooked rice" },
+    { "id": "b6-27", "target": "쑥", "translation": "Mugwort" },
+    { "id": "b6-28", "target": "예술", "translation": "Art" },
+    { "id": "b6-29", "target": "예절", "translation": "Etiquette / Manners" },
+    { "id": "b6-30", "target": "예약", "translation": "Reservation / Booking" },
+    { "id": "b6-31", "target": "예쁘다", "translation": "To be pretty" },
+    { "id": "b6-32", "target": "시계", "translation": "Clock / Watch" },
+    { "id": "b6-33", "target": "세계", "translation": "World / Globe" },
+    { "id": "b6-34", "target": "계절", "translation": "Season" },
+    { "id": "b6-35", "target": "계획", "translation": "Plan / Project" },
+    { "id": "b6-36", "target": "계란", "translation": "Egg" },
+    { "id": "b6-37", "target": "계단", "translation": "Stairs / Steps" },
+    { "id": "b6-38", "target": "계산", "translation": "Calculation / Bill" },
+    { "id": "b6-39", "target": "얘기", "translation": "Story / Conversation" },
+    { "id": "b6-40", "target": "얘들아", "translation": "Hey guys / Children!" },
+    { "id": "b6-41", "target": "코끼리", "translation": "Elephant" },
+    { "id": "b6-42", "target": "아저씨", "translation": "Middle-aged man / Mister" },
+    { "id": "b6-43", "target": "아가씨", "translation": "Young lady / Miss" },
+    { "id": "b6-44", "target": "어깨", "translation": "Shoulder" },
+    { "id": "b6-45", "target": "날씨", "translation": "Weather" },
+    { "id": "b6-46", "target": "글씨", "translation": "Handwriting / Lettering" },
+    { "id": "b6-47", "target": "말씀", "translation": "Words / Speech (honorific)" },
+    { "id": "b6-48", "target": "바쁘다", "translation": "To be busy" },
+    { "id": "b6-49", "target": "나쁘다", "translation": "To be bad" },
+    { "id": "b6-50", "target": "비싸다", "translation": "To be expensive" },
+    { "id": "b6-51", "target": "싸다", "translation": "To be inexpensive / Cheap" },
+    { "id": "b6-52", "target": "쓰다", "translation": "To write / To use" },
+    { "id": "b6-53", "target": "끄다", "translation": "To turn off / Extinguish" },
+    { "id": "b6-54", "target": "짜다", "translation": "To be salty / To squeeze" },
+    { "id": "b6-55", "target": "맵다", "translation": "To be spicy" },
+    { "id": "b6-56", "target": "똑똑하다", "translation": "To be smart / Clever" },
+    { "id": "b6-57", "target": "깨끗하다", "translation": "To be clean" },
+    { "id": "b6-58", "target": "따뜻하다", "translation": "To be warm" },
+    { "id": "b6-59", "target": "씩씩하다", "translation": "To be brave / Spirited" },
+    { "id": "b6-60", "target": "쌀쌀하다", "translation": "To be chilly" },
+    { "id": "b6-61", "target": "깜짝", "translation": "Startled / Surprised" },
+    { "id": "b6-62", "target": "반짝반짝", "translation": "Twinkling brightly" },
+    { "id": "b6-63", "target": "조끼", "translation": "Vest" },
+    { "id": "b6-64", "target": "찌꺼기", "translation": "Dregs / Residue" },
+    { "id": "b6-65", "target": "쑥스럽다", "translation": "To feel shy / Embarrassed" },
+    { "id": "b6-66", "target": "씁쓸하다", "translation": "To feel bittersweet" },
+    { "id": "b6-67", "target": "뿌듯하다", "translation": "To feel proud / Satisfied" },
+    { "id": "b6-68", "target": "계약", "translation": "Contract / Agreement" },
+    { "id": "b6-69", "target": "달콤하다", "translation": "To be sweet" },
+    { "id": "b6-70", "target": "새롭다", "translation": "To be fresh / New" },
+    { "id": "b6-71", "target": "즐겁다", "translation": "To be joyful / Pleasant" },
+    { "id": "b6-72", "target": "고맙다", "translation": "To be grateful / Thank you" },
+    { "id": "b6-73", "target": "반갑다", "translation": "To be glad to meet" },
+    { "id": "b6-74", "target": "귀엽다", "translation": "To be cute" },
+    { "id": "b6-75", "target": "어렵다", "translation": "To be difficult" }
   ]
 }

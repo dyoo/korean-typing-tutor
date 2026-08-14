@@ -3,261 +3,55 @@
   "title": "Beginner 1 — Home Row Vowels (홈로 모음)",
   "description": "Right-hand home row vowels: H (ㅗ), J (ㅓ), K (ㅏ), L (ㅣ)",
   "items": [
-    {
-      "id": "b1-1",
-      "target": "ㅏ",
-      "pronunciation": "a (Key K)",
-      "translation": "Home Row Vowel 'A'"
-    },
-    {
-      "id": "b1-2",
-      "target": "ㅓ",
-      "pronunciation": "eo (Key J)",
-      "translation": "Home Row Vowel 'EO'"
-    },
-    {
-      "id": "b1-3",
-      "target": "ㅗ",
-      "pronunciation": "o (Key H)",
-      "translation": "Home Row Vowel 'O'"
-    },
-    {
-      "id": "b1-4",
-      "target": "ㅣ",
-      "pronunciation": "i (Key L)",
-      "translation": "Home Row Vowel 'I'"
-    },
-    {
-      "id": "b1-5",
-      "target": "아",
-      "translation": "Syllable 'AH'"
-    },
-    {
-      "id": "b1-6",
-      "target": "어",
-      "translation": "Syllable 'EO'"
-    },
-    {
-      "id": "b1-7",
-      "target": "오",
-      "translation": "Syllable 'OH'"
-    },
-    {
-      "id": "b1-8",
-      "target": "이",
-      "translation": "Syllable 'EE'"
-    },
-    {
-      "id": "b1-9",
-      "target": "아어오이",
-      "pronunciation": "a-eo-o-i",
-      "translation": "Home Row Vowel Drill"
-    },
-    {
-      "id": "b1-10",
-      "target": "오이아어",
-      "pronunciation": "o-i-a-eo",
-      "translation": "Home Row Vowel Drill"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-1",
-      "target": "아오",
-      "translation": "Home Row Vowel Pair A-O"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-2",
-      "target": "어이",
-      "translation": "Home Row Vowel Pair EO-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-3",
-      "target": "아이",
-      "translation": "Home Row Vowel Pair A-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-4",
-      "target": "오이",
-      "translation": "Home Row Vowel Pair O-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-5",
-      "target": "오아",
-      "translation": "Home Row Vowel Pair O-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-6",
-      "target": "아어",
-      "translation": "Home Row Vowel Pair A-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-7",
-      "target": "어오",
-      "translation": "Home Row Vowel Pair EO-O"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-8",
-      "target": "이아",
-      "translation": "Home Row Vowel Pair I-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-9",
-      "target": "이어",
-      "translation": "Home Row Vowel Pair I-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-10",
-      "target": "이오",
-      "translation": "Home Row Vowel Pair I-O"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-11",
-      "target": "아아",
-      "translation": "Repeated Vowel A-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-12",
-      "target": "어어",
-      "translation": "Repeated Vowel EO-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-13",
-      "target": "오오",
-      "translation": "Repeated Vowel O-O"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-14",
-      "target": "이이",
-      "translation": "Repeated Vowel I-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-15",
-      "target": "아오이",
-      "translation": "Home Row Vowel Trio A-O-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-16",
-      "target": "어이아",
-      "translation": "Home Row Vowel Trio EO-I-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-17",
-      "target": "오아어",
-      "translation": "Home Row Vowel Trio O-A-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-18",
-      "target": "이오아",
-      "translation": "Home Row Vowel Trio I-O-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-19",
-      "target": "아어이",
-      "translation": "Home Row Vowel Trio A-EO-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-20",
-      "target": "어오이",
-      "translation": "Home Row Vowel Trio EO-O-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-21",
-      "target": "아아아",
-      "translation": "Vowel Rhythm A-A-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-22",
-      "target": "어어어",
-      "translation": "Vowel Rhythm EO-EO-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-23",
-      "target": "오오오",
-      "translation": "Vowel Rhythm O-O-O"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-24",
-      "target": "이이이",
-      "translation": "Vowel Rhythm I-I-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-25",
-      "target": "아어이오",
-      "translation": "Home Row Vowel Quad A-EO-I-O"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-26",
-      "target": "오이아어",
-      "translation": "Home Row Vowel Quad O-I-A-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-27",
-      "target": "어오이아",
-      "translation": "Home Row Vowel Quad EO-O-I-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-28",
-      "target": "아오어이",
-      "translation": "Home Row Vowel Quad A-O-EO-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-29",
-      "target": "이아오어",
-      "translation": "Home Row Vowel Quad I-A-O-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-30",
-      "target": "오어이아",
-      "translation": "Home Row Vowel Quad O-EO-I-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-31",
-      "target": "아어아어",
-      "translation": "Alternating Vowels A-EO-A-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-32",
-      "target": "오이오이",
-      "translation": "Alternating Vowels O-I-O-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-33",
-      "target": "이아이아",
-      "translation": "Alternating Vowels I-A-I-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-34",
-      "target": "어오어오",
-      "translation": "Alternating Vowels EO-O-EO-O"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-35",
-      "target": "아이아이",
-      "translation": "Alternating Vowels A-I-A-I"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-36",
-      "target": "오아오아",
-      "translation": "Alternating Vowels O-A-O-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-37",
-      "target": "이어이어",
-      "translation": "Alternating Vowels I-EO-I-EO"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-38",
-      "target": "어아어아",
-      "translation": "Alternating Vowels EO-A-EO-A"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-39",
-      "target": "아오아오",
-      "translation": "Alternating Vowels A-O-A-O"
-    },
-    {
-      "id": "b1_home_row_vowels-ext-40",
-      "target": "이오이오",
-      "translation": "Alternating Vowels I-O-I-O"
-    }
+    { "id": "b1-1", "target": "ㅏ", "pronunciation": "a (Key K)", "translation": "Home Row Vowel 'A'" },
+    { "id": "b1-2", "target": "ㅓ", "pronunciation": "eo (Key J)", "translation": "Home Row Vowel 'EO'" },
+    { "id": "b1-3", "target": "ㅗ", "pronunciation": "o (Key H)", "translation": "Home Row Vowel 'O'" },
+    { "id": "b1-4", "target": "ㅣ", "pronunciation": "i (Key L)", "translation": "Home Row Vowel 'I'" },
+    { "id": "b1-5", "target": "아", "translation": "Syllable 'AH'" },
+    { "id": "b1-6", "target": "어", "translation": "Syllable 'EO'" },
+    { "id": "b1-7", "target": "오", "translation": "Syllable 'OH'" },
+    { "id": "b1-8", "target": "이", "translation": "Syllable 'EE'" },
+    { "id": "b1-9", "target": "아어", "translation": "Vowel Pair A-EO" },
+    { "id": "b1-10", "target": "오이", "translation": "Cucumber / Vowel Pair O-I" },
+    { "id": "b1-11", "target": "아이", "translation": "Child / Vowel Pair A-I" },
+    { "id": "b1-12", "target": "어이", "translation": "Hey! / Vowel Pair EO-I" },
+    { "id": "b1-13", "target": "아오", "translation": "Vowel Pair A-O" },
+    { "id": "b1-14", "target": "어오", "translation": "Vowel Pair EO-O" },
+    { "id": "b1-15", "target": "오아", "translation": "Vowel Pair O-A" },
+    { "id": "b1-16", "target": "오어", "translation": "Vowel Pair O-EO" },
+    { "id": "b1-17", "target": "이아", "translation": "Vowel Pair I-A" },
+    { "id": "b1-18", "target": "이어", "translation": "Connect / Vowel Pair I-EO" },
+    { "id": "b1-19", "target": "이오", "translation": "Vowel Pair I-O" },
+    { "id": "b1-20", "target": "아아", "translation": "Ah, ah (exclamation)" },
+    { "id": "b1-21", "target": "어어", "translation": "Uh-oh (exclamation)" },
+    { "id": "b1-22", "target": "오오", "translation": "Oh, oh (exclamation)" },
+    { "id": "b1-23", "target": "이이", "translation": "Tsk tsk (exclamation)" },
+    { "id": "b1-24", "target": "아오이", "translation": "Vowel Trio A-O-I" },
+    { "id": "b1-25", "target": "어이아", "translation": "Vowel Trio EO-I-A" },
+    { "id": "b1-26", "target": "오아어", "translation": "Vowel Trio O-A-EO" },
+    { "id": "b1-27", "target": "이오아", "translation": "Vowel Trio I-O-A" },
+    { "id": "b1-28", "target": "아어이", "translation": "Vowel Trio A-EO-I" },
+    { "id": "b1-29", "target": "어오이", "translation": "Vowel Trio EO-O-I" },
+    { "id": "b1-30", "target": "아어오이", "pronunciation": "a-eo-o-i", "translation": "Home Row Vowel Quad A-EO-O-I" },
+    { "id": "b1-31", "target": "오이아어", "pronunciation": "o-i-a-eo", "translation": "Home Row Vowel Quad O-I-A-EO" },
+    { "id": "b1-32", "target": "어오이아", "translation": "Home Row Vowel Quad EO-O-I-A" },
+    { "id": "b1-33", "target": "이아오어", "translation": "Home Row Vowel Quad I-A-O-EO" },
+    { "id": "b1-34", "target": "아아아", "translation": "Vowel Rhythm A-A-A" },
+    { "id": "b1-35", "target": "어어어", "translation": "Vowel Rhythm EO-EO-EO" },
+    { "id": "b1-36", "target": "오오오", "translation": "Vowel Rhythm O-O-O" },
+    { "id": "b1-37", "target": "이이이", "translation": "Vowel Rhythm I-I-I" },
+    { "id": "b1-38", "target": "아어아어", "translation": "Alternating Vowels A-EO-A-EO" },
+    { "id": "b1-39", "target": "오이오이", "translation": "Alternating Vowels O-I-O-I" },
+    { "id": "b1-40", "target": "이아이아", "translation": "Alternating Vowels I-A-I-A" },
+    { "id": "b1-41", "target": "어오어오", "translation": "Alternating Vowels EO-O-EO-O" },
+    { "id": "b1-42", "target": "아이아이", "translation": "Alternating Vowels A-I-A-I" },
+    { "id": "b1-43", "target": "오아오아", "translation": "Alternating Vowels O-A-O-A" },
+    { "id": "b1-44", "target": "이어이어", "translation": "Alternating Vowels I-EO-I-EO" },
+    { "id": "b1-45", "target": "이오이오", "translation": "Alternating Vowels I-O-I-O" },
+    { "id": "b1-46", "target": "아오아오", "translation": "Alternating Vowels A-O-A-O" },
+    { "id": "b1-47", "target": "어아어아", "translation": "Alternating Vowels EO-A-EO-A" },
+    { "id": "b1-48", "target": "이오아어", "translation": "Four-Vowel Cycle I-O-A-EO" },
+    { "id": "b1-49", "target": "오어아이", "translation": "Four-Vowel Cycle O-EO-A-I" },
+    { "id": "b1-50", "target": "아이오어", "translation": "Four-Vowel Cycle A-I-O-EO" }
   ]
 }
