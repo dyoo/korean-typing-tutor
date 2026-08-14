@@ -30,12 +30,14 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = [
   { jamo: 'ㅇ', key: 'd', hand: 'left', stage: 1, stageName: 'Home Row Index Keys' },
   { jamo: 'ㄹ', key: 'f', hand: 'left', stage: 1, stageName: 'Home Row Index Keys' },
 
-  // Stage 2: Remaining Home Row Keys
+  // Stage 2: Remaining Home Row & Fundamental Vowels
   { jamo: 'ㅗ', key: 'h', hand: 'right', stage: 2, stageName: 'Home Row' },
   { jamo: 'ㅣ', key: 'l', hand: 'right', stage: 2, stageName: 'Home Row' },
   { jamo: 'ㅁ', key: 'a', hand: 'left', stage: 2, stageName: 'Home Row' },
   { jamo: 'ㄴ', key: 's', hand: 'left', stage: 2, stageName: 'Home Row' },
   { jamo: 'ㅎ', key: 'g', hand: 'left', stage: 2, stageName: 'Home Row' },
+  { jamo: 'ㅜ', key: 'n', hand: 'right', stage: 2, stageName: 'Basic Vowels' },
+  { jamo: 'ㅡ', key: 'm', hand: 'right', stage: 2, stageName: 'Basic Vowels' },
 
   // Stage 3: Top Row Keys
   { jamo: 'ㄱ', key: 'r', hand: 'left', stage: 3, stageName: 'Top Row' },
@@ -43,11 +45,9 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = [
   { jamo: 'ㄷ', key: 'e', hand: 'left', stage: 3, stageName: 'Top Row' },
   { jamo: 'ㅈ', key: 'w', hand: 'left', stage: 3, stageName: 'Top Row' },
   { jamo: 'ㅂ', key: 'q', hand: 'left', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅜ', key: 'n', hand: 'right', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅡ', key: 'm', hand: 'right', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅛ', key: 'y', hand: 'right', stage: 3, stageName: 'Top Row' },
   { jamo: 'ㅕ', key: 'u', hand: 'right', stage: 3, stageName: 'Top Row' },
   { jamo: 'ㅑ', key: 'i', hand: 'right', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅛ', key: 'y', hand: 'right', stage: 3, stageName: 'Top Row' },
   { jamo: 'ㅐ', key: 'o', hand: 'right', stage: 3, stageName: 'Top Row' },
   { jamo: 'ㅔ', key: 'p', hand: 'right', stage: 3, stageName: 'Top Row' },
 
@@ -196,8 +196,11 @@ export function setMasteryProgressionLevel(
         state.jamoStats[jamo] = stats;
       }
       if (i < clamped - 1) {
+        // Preceding keys are marked as mastered
         stats.isMastered = true;
-      } else if (i >= clamped) {
+      } else {
+        // The active frontier key (i === clamped - 1) and all locked keys beyond (i >= clamped)
+        // are explicitly set to unmastered so the frontier key is actively learned as the candidate
         stats.isMastered = false;
         stats.totalAttempts = 0;
         stats.correctAttempts = 0;

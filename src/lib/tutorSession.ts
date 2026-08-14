@@ -95,31 +95,43 @@ export class TutorSession {
 
   /** Filters items by active mode / module ID(s) and applies shuffling. */
   private applyFilterAndShuffle(): void {
-    let filtered: LessonItem[];
-
     if (this.mode === 'mastery') {
       const unlocked = getUnlockedJamos(this.masteryState);
-      filtered = getEligibleMasteryItems(this.allItems, unlocked);
-    } else if (Array.isArray(this.selectedFilter)) {
-      if (this.selectedFilter.includes('all')) {
-        filtered = [...this.allItems];
-      } else if (this.selectedFilter.length === 0) {
-        filtered = [];
-      } else {
-        const allowedSet = new Set(this.selectedFilter);
-        filtered = this.allItems.filter((item) => allowedSet.has(item.moduleId));
-      }
-    } else if (this.selectedFilter === 'all') {
-      filtered = [...this.allItems];
-    } else {
-      filtered = this.allItems.filter(
-        (item) =>
-          item.moduleId === this.selectedFilter ||
-          item.id.startsWith(this.selectedFilter as string),
+      this.activeItems = getEligibleMasteryItems(this.allItems, unlocked);
+
+      const activeJamo = getActiveLearningJamo(this.masteryState);
+      const nextItem = selectNextMasteryItem(
+        this.activeItems,
+        activeJamo?.jamo ?? null,
+        this.masteryState.jamoStats,
       );
+      const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
+      this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
+    } else {
+      let filtered: LessonItem[];
+      if (Array.isArray(this.selectedFilter)) {
+        if (this.selectedFilter.includes('all')) {
+          filtered = [...this.allItems];
+        } else if (this.selectedFilter.length === 0) {
+          filtered = [];
+        } else {
+          const allowedSet = new Set(this.selectedFilter);
+          filtered = this.allItems.filter((item) => allowedSet.has(item.moduleId));
+        }
+      } else if (this.selectedFilter === 'all') {
+        filtered = [...this.allItems];
+      } else {
+        filtered = this.allItems.filter(
+          (item) =>
+            item.moduleId === this.selectedFilter ||
+            item.id.startsWith(this.selectedFilter as string),
+        );
+      }
+
+      this.activeItems = this.shouldShuffle ? this.shuffle(filtered) : filtered;
+      this.currentIndex = 0;
     }
 
-    this.activeItems = this.shouldShuffle ? this.shuffle(filtered) : filtered;
     this.resetSessionState();
   }
 

@@ -32,7 +32,7 @@
       : isLocked
         ? 'bg-gray-100/60 dark:bg-gray-800/40 border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 opacity-50'
         : isActiveLearning
-          ? 'bg-amber-50/60 dark:bg-amber-950/40 border-amber-400 dark:border-amber-600 text-amber-950 dark:text-amber-100 ring-2 ring-amber-400/60 font-bold'
+          ? 'bg-amber-50/80 dark:bg-amber-950/50 border-amber-400 dark:border-amber-500 text-gray-900 dark:text-gray-100 ring-2 ring-amber-400/80 dark:ring-amber-500/80 font-bold shadow-xs'
           : isConsonant
             ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
             : isPunctuation

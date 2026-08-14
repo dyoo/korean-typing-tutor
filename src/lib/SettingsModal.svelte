@@ -272,8 +272,8 @@
             >
               <optgroup label="Preset Stages">
                 <option value="4">Stage 1: Home Index (4 keys · ㅓ, ㅏ, ㅇ, ㄹ)</option>
-                <option value="9">Stage 2: Full Home Row (9 keys · + ㅗ, ㅣ, ㅁ, ㄴ, ㅎ)</option>
-                <option value="21">Stage 3: Top Row (21 keys · + ㄱ, ㅅ, ㄷ, ㅈ, ㅂ, ㅜ, ㅡ, ㅕ, ㅑ, ㅛ, ㅐ, ㅔ)</option>
+                <option value="11">Stage 2: Home Row & Basic Vowels (11 keys · + ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ)</option>
+                <option value="21">Stage 3: Top Row (21 keys · + ㄱ, ㅅ, ㄷ, ㅈ, ㅂ, ㅛ, ㅕ, ㅑ, ㅐ, ㅔ)</option>
                 <option value="26">Stage 4: Bottom Row (26 keys · + ㅋ, ㅌ, ㅊ, ㅍ, ㅠ)</option>
                 <option value="33">Stage 5: Shift Keys (33 keys · + ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ)</option>
                 <option value="35">Stage 6: All Keys & Punctuation (35 keys · + , .)</option>

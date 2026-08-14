@@ -212,10 +212,20 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     expect(state.jamoStats['ㄴ'].isMastered).toBe(true);
     // 9th key ('ㅎ') is the active target and not yet mastered
     expect(state.jamoStats['ㅎ'].isMastered).toBe(false);
+    expect(getActiveLearningJamo(state)?.jamo).toBe('ㅎ');
+
+    // Force unlock to 10 keys (up to ㅜ)
+    setMasteryProgressionLevel(state, 10, true);
+    expect(state.unlockedCount).toBe(10);
+    expect(getUnlockedJamos(state).size).toBe(10);
+    expect(state.jamoStats['ㅎ'].isMastered).toBe(true);
+    expect(state.jamoStats['ㅜ'].isMastered).toBe(false);
+    expect(getActiveLearningJamo(state)?.jamo).toBe('ㅜ');
 
     // Clamps to min 4 and max 35
     setMasteryProgressionLevel(state, 1);
     expect(state.unlockedCount).toBe(4);
+    expect(getActiveLearningJamo(state)?.jamo).toBe('ㄹ');
 
     setMasteryProgressionLevel(state, 100);
     expect(state.unlockedCount).toBe(35);
