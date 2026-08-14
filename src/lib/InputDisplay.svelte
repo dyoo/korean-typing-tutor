@@ -35,6 +35,7 @@
 
   let inputContainerElement = $state<HTMLDivElement | null>(null);
   let activeCursorElement = $state<HTMLElement | null>(null);
+  let rafId: number | null = null;
 
   $effect(() => {
     if (
@@ -43,12 +44,34 @@
       activeCursorElement &&
       inputContainerElement
     ) {
-      activeCursorElement.scrollIntoView({
-        behavior: 'instant',
-        block: 'nearest',
-        inline: 'nearest',
+      if (rafId !== null) cancelAnimationFrame(rafId);
+
+      rafId = requestAnimationFrame(() => {
+        const container = inputContainerElement;
+        const cursor = activeCursorElement;
+        if (!container || !cursor) {
+          rafId = null;
+          return;
+        }
+
+        // Read layout once inside rAF, then write scrollLeft.
+        // Batching prevents per-keystroke layout thrashing that causes mobile heat.
+        const containerWidth = container.clientWidth;
+        const cursorLeft = cursor.offsetLeft;
+        const cursorWidth = cursor.offsetWidth;
+        const scrollLeft = container.scrollLeft;
+
+        const viewRight = scrollLeft + containerWidth;
+        if (cursorLeft < scrollLeft || cursorLeft + cursorWidth > viewRight) {
+          container.scrollLeft = cursorLeft - containerWidth * 0.25;
+        }
+        rafId = null;
       });
     }
+
+    return () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   });
 </script>
 
