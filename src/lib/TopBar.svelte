@@ -1,5 +1,6 @@
 <script lang="ts">
   import SettingsModal from './SettingsModal.svelte';
+  import GitHubLink from './GitHubLink.svelte';
   import type { TutorSettings, ThemeMode } from './settings';
   import type { CursorColorMode } from '../utils/cursorColor';
   import type { TutorMode } from '../types/mastery';
@@ -16,7 +17,7 @@
     settings: TutorSettings;
     ontogglemode: () => void;
     ontogglecurriculum: (e?: MouseEvent) => void;
-    ontogglesettings: (e: MouseEvent) => void;
+    ontogglesettings: (e?: MouseEvent) => void;
     onclosesettings: () => void;
     onthemechange: (theme: ThemeMode) => void;
     ontogglepronunciation: () => void;
@@ -155,7 +156,10 @@
     {/if}
   </div>
 
-  <SettingsModal
+  <div class="flex items-center gap-2">
+    <GitHubLink />
+
+    <SettingsModal
     isOpen={showSettingsModal}
     {settings}
     {masteryUnlockedCount}
@@ -171,4 +175,5 @@
     {oncursorcolorchange}
     {onmasterylevelchange}
   />
+  </div>
 </div>
