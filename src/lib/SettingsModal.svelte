@@ -147,13 +147,10 @@
       </div>
 
       <!-- Cursor Color Accent Selector -->
-      <div class="flex items-center justify-between">
-        <label for="cursor-color-select" class="cursor-pointer">Cursor Accent</label>
-        <CursorColorSelect
-          selectedColor={settings.cursorColor ?? 'amber'}
-          oncolorchange={(color) => oncursorcolorchange?.(color)}
-        />
-      </div>
+      <CursorColorSelect
+        value={settings.cursorColor ?? 'amber'}
+        onchange={(color) => oncursorcolorchange?.(color)}
+      />
 
       <!-- Romanization / Pronunciation Toggle -->
       <label class="flex items-center justify-between cursor-pointer">

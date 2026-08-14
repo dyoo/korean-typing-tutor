@@ -52,20 +52,20 @@
     </button>
 
     {#if isOpen}
-      <!-- Backdrop overlay for click-outside -->
+      <!-- Backdrop overlay for click-outside, z-index above SettingsModal panel (z-50) -->
       <div
         role="button"
         tabindex="-1"
         aria-label="Close cursor color menu backdrop"
-        onclick={() => (isOpen = false)}
+        onclick={(e) => { e.stopPropagation(); isOpen = false; }}
         onkeydown={(e) => {
           if (e.key === 'Escape') isOpen = false;
         }}
-        class="fixed inset-0 z-40 bg-transparent"
+        class="fixed inset-0 z-[60] bg-transparent"
       ></div>
 
       <div
-        class="absolute right-0 top-full mt-1 z-50 w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1 flex flex-col gap-0.5"
+        class="absolute right-0 top-full mt-1 z-[70] w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg py-1 flex flex-col gap-0.5"
       >
         {#each OPTIONS as opt}
           {@const isSelected = opt.id === value}
