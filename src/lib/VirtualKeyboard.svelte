@@ -1,5 +1,6 @@
 <script lang="ts">
   import { DUBEOLSIK_ROWS } from '../utils/keyboardData';
+  import { calculateJamoProgress } from '../utils/jamoMastery';
   import ShiftKey from './ShiftKey.svelte';
   import VirtualKey from './VirtualKey.svelte';
   import type { TutorMode, JamoStats } from '../types/mastery';
@@ -82,6 +83,8 @@
             mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
           {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
           {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+          {@const progressPercent =
+            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
           <VirtualKey
             {cap}
@@ -90,6 +93,7 @@
             {isLocked}
             {isActiveLearning}
             {isMastered}
+            {progressPercent}
             onselect={handleKeyClick}
           />
         {/each}
@@ -116,6 +120,8 @@
             mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
           {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
           {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+          {@const progressPercent =
+            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
           <VirtualKey
             {cap}
@@ -124,6 +130,7 @@
             {isLocked}
             {isActiveLearning}
             {isMastered}
+            {progressPercent}
             onselect={handleKeyClick}
           />
         {/each}
@@ -147,6 +154,8 @@
             mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
           {@const isActiveLearning = mode === 'mastery' && activeJamo === activeChar}
           {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+          {@const progressPercent =
+            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
           <VirtualKey
             {cap}
@@ -155,6 +164,7 @@
             {isLocked}
             {isActiveLearning}
             {isMastered}
+            {progressPercent}
             onselect={handleKeyClick}
           />
         {/each}

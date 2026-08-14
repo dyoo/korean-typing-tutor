@@ -195,6 +195,18 @@ export function calculateJamoAccuracy(stats: JamoStats): number {
 }
 
 /**
+ * Calculates percentage progress (0 to 100) towards mastery for a single Jamo.
+ */
+export function calculateJamoProgress(stats?: JamoStats): number {
+  if (!stats) return 0;
+  if (stats.isMastered) return 100;
+  if (stats.totalAttempts === 0) return 0;
+  const accuracy = calculateJamoAccuracy(stats);
+  const attemptRatio = Math.min(stats.totalAttempts, MIN_MASTERY_ATTEMPTS) / MIN_MASTERY_ATTEMPTS;
+  return Math.min(100, Math.max(0, Math.round(attemptRatio * accuracy * 100)));
+}
+
+/**
  * Records a single keystroke outcome for a target Jamo and evaluates mastery promotion.
  */
 export function recordJamoAttempt(

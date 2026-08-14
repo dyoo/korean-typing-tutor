@@ -8,6 +8,7 @@
     isLocked?: boolean;
     isActiveLearning?: boolean;
     isMastered?: boolean;
+    progressPercent?: number;
     onselect?: (key: string, e: MouseEvent) => void;
   }
 
@@ -18,6 +19,7 @@
     isLocked = false,
     isActiveLearning = false,
     isMastered = false,
+    progressPercent = 0,
     onselect,
   }: Props = $props();
 
@@ -30,7 +32,7 @@
       : isLocked
         ? 'bg-gray-100/60 dark:bg-gray-800/40 border-gray-200 dark:border-gray-800 text-gray-400 dark:text-gray-600 opacity-50'
         : isActiveLearning
-          ? 'bg-amber-100 dark:bg-amber-950/80 border-amber-400 dark:border-amber-600 text-amber-950 dark:text-amber-100 ring-2 ring-amber-400/50 font-bold'
+          ? 'bg-amber-50/60 dark:bg-amber-950/40 border-amber-400 dark:border-amber-600 text-amber-950 dark:text-amber-100 ring-2 ring-amber-400/60 font-bold'
           : isConsonant
             ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
             : isPunctuation
@@ -44,11 +46,20 @@
   tabindex="-1"
   onmousedown={(e) => onselect?.(cap.key, e)}
   style="grid-column: span 2;"
-  class="relative flex flex-col items-center justify-between h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer p-1 {activeColorClasses}"
+  class="relative overflow-hidden flex flex-col items-center justify-between h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer p-1 {activeColorClasses}"
   aria-label="{cap.jamo} (Key {cap.key.toUpperCase()})"
 >
+  {#if progressPercent > 0 && !isLocked && !isTarget}
+    <div
+      class="absolute bottom-0 inset-x-0 pointer-events-none transition-all duration-150 {isMastered
+        ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+        : 'bg-amber-400/30 dark:bg-amber-400/25'}"
+      style="height: {progressPercent}%;"
+    ></div>
+  {/if}
+
   <div
-    class="flex items-center justify-between w-full text-[9px] sm:text-[10px] leading-none font-mono"
+    class="relative z-10 flex items-center justify-between w-full text-[9px] sm:text-[10px] leading-none font-mono"
   >
     <span class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}>
       {cap.key.toUpperCase()}
@@ -61,7 +72,7 @@
       </span>
     {/if}
   </div>
-  <span class="text-sm sm:text-lg md:text-xl font-semibold leading-none my-auto">
+  <span class="relative z-10 text-sm sm:text-lg md:text-xl font-semibold leading-none my-auto">
     {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
   </span>
 </button>

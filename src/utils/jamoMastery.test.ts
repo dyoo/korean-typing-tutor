@@ -11,6 +11,7 @@ import {
   isItemEligible,
   getEligibleMasteryItems,
   selectNextMasteryItem,
+  calculateJamoProgress,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
 
@@ -155,5 +156,31 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     // Select with active Jamo 'ㅗ'
     const selected = selectNextMasteryItem(eligible, 'ㅗ', state.jamoStats);
     expect(eligible.some((i) => i.id === selected.id)).toBe(true);
+  });
+
+  it('should calculate accurate mastery fill percentage (0 to 100%)', () => {
+    expect(calculateJamoProgress(undefined)).toBe(0);
+
+    const stats = {
+      totalAttempts: 0,
+      correctAttempts: 0,
+      recentHistory: [],
+      isMastered: false,
+    };
+    expect(calculateJamoProgress(stats)).toBe(0);
+
+    // 10 correct attempts out of 20 needed = 50%
+    stats.totalAttempts = 10;
+    stats.correctAttempts = 10;
+    stats.recentHistory = new Array(10).fill(true);
+    expect(calculateJamoProgress(stats)).toBe(50);
+
+    // 10 attempts with 80% accuracy = (10/20) * 0.8 = 40%
+    stats.recentHistory = [true, true, true, true, false, true, true, true, true, false];
+    expect(calculateJamoProgress(stats)).toBe(40);
+
+    // Mastered Jamo = 100%
+    stats.isMastered = true;
+    expect(calculateJamoProgress(stats)).toBe(100);
   });
 });
