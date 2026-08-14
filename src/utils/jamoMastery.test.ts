@@ -12,6 +12,7 @@ import {
   getEligibleMasteryItems,
   selectNextMasteryItem,
   calculateJamoProgress,
+  setMasteryProgressionLevel,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
 
@@ -182,5 +183,32 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     // Mastered Jamo = 100%
     stats.isMastered = true;
     expect(calculateJamoProgress(stats)).toBe(100);
+  });
+
+  it('should support forcing mastery progress to a specific level', () => {
+    const state = createDefaultMasteryState();
+    expect(state.unlockedCount).toBe(4);
+
+    // Force unlock to 9 keys (Full Home Row)
+    setMasteryProgressionLevel(state, 9, true);
+    expect(state.unlockedCount).toBe(9);
+    expect(getUnlockedJamos(state).size).toBe(9);
+    expect(state.jamoStats['ㅓ'].isMastered).toBe(true);
+    expect(state.jamoStats['ㅏ'].isMastered).toBe(true);
+    expect(state.jamoStats['ㅇ'].isMastered).toBe(true);
+    expect(state.jamoStats['ㄹ'].isMastered).toBe(true);
+    expect(state.jamoStats['ㅗ'].isMastered).toBe(true);
+    expect(state.jamoStats['ㅣ'].isMastered).toBe(true);
+    expect(state.jamoStats['ㅁ'].isMastered).toBe(true);
+    expect(state.jamoStats['ㄴ'].isMastered).toBe(true);
+    // 9th key ('ㅎ') is the active target and not yet mastered
+    expect(state.jamoStats['ㅎ'].isMastered).toBe(false);
+
+    // Clamps to min 4 and max 35
+    setMasteryProgressionLevel(state, 1);
+    expect(state.unlockedCount).toBe(4);
+
+    setMasteryProgressionLevel(state, 100);
+    expect(state.unlockedCount).toBe(35);
   });
 });

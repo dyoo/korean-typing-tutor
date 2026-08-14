@@ -171,6 +171,43 @@ export function getUnlockedJamos(state: MasteryState): Set<string> {
 }
 
 /**
+ * Sets the mastery unlocked count to a specific level (clamped between 4 and 35).
+ * Optionally marks all unlocked Jamos before the active target as mastered.
+ */
+export function setMasteryProgressionLevel(
+  state: MasteryState,
+  level: number,
+  markPrecedingMastered = true,
+): void {
+  const clamped = Math.max(4, Math.min(level, JAMO_PROGRESSION_ORDER.length));
+  state.unlockedCount = clamped;
+
+  if (markPrecedingMastered) {
+    for (let i = 0; i < JAMO_PROGRESSION_ORDER.length; i++) {
+      const jamo = JAMO_PROGRESSION_ORDER[i].jamo;
+      let stats = state.jamoStats[jamo];
+      if (!stats) {
+        stats = {
+          totalAttempts: 0,
+          correctAttempts: 0,
+          recentHistory: [],
+          isMastered: false,
+        };
+        state.jamoStats[jamo] = stats;
+      }
+      if (i < clamped - 1) {
+        stats.isMastered = true;
+      } else if (i >= clamped) {
+        stats.isMastered = false;
+        stats.totalAttempts = 0;
+        stats.correctAttempts = 0;
+        stats.recentHistory = [];
+      }
+    }
+  }
+}
+
+/**
  * Returns the currently active learning Jamo (the newest unlocked Jamo that hasn't yet achieved mastery).
  */
 export function getActiveLearningJamo(state: MasteryState): JamoProgressionItem | null {

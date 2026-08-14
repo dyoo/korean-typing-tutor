@@ -344,6 +344,10 @@ describe('TutorSession controller', () => {
     expect(newlyUnlocked).toBe('ㅗ');
     expect(session.getMasteryState().unlockedCount).toBe(initialUnlockedCount + 1);
 
+    session.setMasteryProgressionLevel(9);
+    expect(session.getMasteryState().unlockedCount).toBe(9);
+    expect(session.getUnlockedJamos().size).toBe(9);
+
     session.resetMasteryProgress();
     expect(session.getMasteryState().unlockedCount).toBe(4);
 

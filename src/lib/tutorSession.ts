@@ -10,6 +10,7 @@ import {
   recordJamoAttempt,
   getEligibleMasteryItems,
   selectNextMasteryItem,
+  setMasteryProgressionLevel,
   JAMO_PROGRESSION_ORDER,
 } from '../utils/jamoMastery';
 import { decomposeStringToJamos } from '../utils/hangulDecompose';
@@ -154,6 +155,13 @@ export class TutorSession {
   public resetMasteryProgress(): void {
     this.masteryState = createDefaultMasteryState();
     this.masteryState.mode = this.mode;
+    saveMasteryState(this.masteryState);
+    this.applyFilterAndShuffle();
+  }
+
+  /** Manually sets the mastery progression level (unlocked count). */
+  public setMasteryProgressionLevel(level: number): void {
+    setMasteryProgressionLevel(this.masteryState, level, true);
     saveMasteryState(this.masteryState);
     this.applyFilterAndShuffle();
   }

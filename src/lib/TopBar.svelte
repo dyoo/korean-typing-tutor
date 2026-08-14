@@ -25,6 +25,7 @@
     onmaxfontsizechange: (maxFontSizeRem: number) => void;
     ontogglelockfontsize: () => void;
     oncursorcolorchange: (cursorColor: CursorColorMode) => void;
+    onmasterylevelchange?: (level: number) => void;
     onresetmastery?: () => void;
   }
 
@@ -49,6 +50,7 @@
     onmaxfontsizechange,
     ontogglelockfontsize,
     oncursorcolorchange,
+    onmasterylevelchange,
     onresetmastery,
   }: Props = $props();
 </script>
@@ -134,6 +136,7 @@
   <SettingsModal
     isOpen={showSettingsModal}
     {settings}
+    {masteryUnlockedCount}
     {ontogglesettings}
     onclose={onclosesettings}
     {onthemechange}
@@ -144,6 +147,7 @@
     {onmaxfontsizechange}
     {ontogglelockfontsize}
     {oncursorcolorchange}
+    {onmasterylevelchange}
     {onresetmastery}
   />
 </div>

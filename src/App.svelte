@@ -135,6 +135,12 @@
     inputElement?.focus();
   }
 
+  function handleMasteryLevelChange(level: number) {
+    session.setMasteryProgressionLevel(level);
+    syncState();
+    inputElement?.focus();
+  }
+
   function toggleModule(modId: string) {
     if (enabledModuleIds.includes(modId)) {
       if (enabledModuleIds.length === 1) return;
@@ -333,6 +339,7 @@
     onmaxfontsizechange={handleMaxFontSizeChange}
     ontogglelockfontsize={handleToggleLockFontSize}
     oncursorcolorchange={handleCursorColorChange}
+    onmasterylevelchange={handleMasteryLevelChange}
     onresetmastery={handleResetMastery}
   />
 
