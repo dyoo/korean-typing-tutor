@@ -46,7 +46,7 @@
   tabindex="-1"
   onmousedown={(e) => onselect?.(cap.key, e)}
   style="grid-column: span 2;"
-  class="relative overflow-hidden flex flex-col items-center justify-between h-10 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer p-1 {activeColorClasses}"
+  class="relative overflow-hidden flex flex-col items-center justify-between h-14 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer p-1 {activeColorClasses}"
   aria-label="{cap.jamo} (Key {cap.key.toUpperCase()})"
 >
   {#if progressPercent > 0 && !isLocked && !isTarget}
@@ -59,20 +59,20 @@
   {/if}
 
   <div
-    class="relative z-10 flex items-center justify-between w-full text-[9px] sm:text-[10px] leading-none font-mono"
+    class="relative z-10 flex items-center justify-between w-full text-[11px] sm:text-[10px] leading-none font-mono"
   >
     <span class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}>
       {cap.key.toUpperCase()}
     </span>
     {#if isMastered && !isTarget}
-      <span class="text-[8px] text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
+      <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">✓</span>
     {:else if cap.shiftJamo}
       <span class={isTarget ? 'text-blue-200 font-bold' : 'text-gray-400 dark:text-gray-500'}>
         {cap.shiftJamo}
       </span>
     {/if}
   </div>
-  <span class="relative z-10 text-sm sm:text-lg md:text-xl font-semibold leading-none my-auto">
+  <span class="relative z-10 text-lg sm:text-lg md:text-xl font-semibold leading-none my-auto">
     {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
   </span>
 </button>
