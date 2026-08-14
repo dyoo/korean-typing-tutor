@@ -13,11 +13,11 @@
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
-  import CharDisplay from './lib/CharDisplay.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
-  import SettingsModal from './lib/SettingsModal.svelte';
   import TargetDisplay from './lib/TargetDisplay.svelte';
   import ExercisePrompt from './lib/ExercisePrompt.svelte';
+  import TopBar from './lib/TopBar.svelte';
+  import InputDisplay from './lib/InputDisplay.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
   import type { CursorColorMode } from './utils/cursorColor';
@@ -41,8 +41,6 @@
   let currentItem = $state(session.getCurrentItem());
   let isCompleted = $state(session.getIsItemCompleted());
   let inputElement = $state<HTMLInputElement | null>(null);
-  let inputContainerElement = $state<HTMLDivElement | null>(null);
-  let activeCursorElement = $state<HTMLElement | null>(null);
 
   let sessionCursorIndex = $state(session.getInputCursorIndex());
 
@@ -60,21 +58,6 @@
   let activeRequiredKeys = $derived(
     getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
-
-  $effect(() => {
-    if (
-      userInput !== undefined &&
-      activeInputCursorIndex !== undefined &&
-      activeCursorElement &&
-      inputContainerElement
-    ) {
-      activeCursorElement.scrollIntoView({
-        behavior: 'instant',
-        block: 'nearest',
-        inline: 'nearest',
-      });
-    }
-  });
 
   onMount(() => {
     session.setFilter(enabledModuleIds, true);
@@ -318,55 +301,26 @@
   oncopy={handleCopy}
   class="flex flex-col items-center justify-between h-screen max-h-screen h-dvh max-h-dvh bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 py-3 md:px-8 md:py-5 overflow-hidden transition-colors"
 >
-  <div class="w-full max-w-7xl flex items-center justify-between gap-4 shrink-0">
-    <div class="relative flex items-center gap-3">
-      <button
-        type="button"
-        onclick={toggleCurriculumSidebar}
-        onmousedown={(e) => e.stopPropagation()}
-        class="flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
-        aria-label="Open Curriculum Sidebar"
-      >
-        <svg
-          class="w-5 h-5 text-gray-600 dark:text-gray-300 shrink-0"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-        <span
-          class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline"
-        >
-          Curriculum
-        </span>
-        <span
-          class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
-        >
-          {enabledModuleIds.length}/{modules.length}
-        </span>
-      </button>
-    </div>
-
-    <SettingsModal
-      isOpen={showSettingsModal}
-      {settings}
-      ontogglesettings={toggleSettingsModal}
-      onclose={() => {
-        showSettingsModal = false;
-        inputElement?.focus();
-      }}
-      onthemechange={handleThemeChange}
-      ontogglepronunciation={togglePronunciation}
-      ontoggletranslation={toggleTranslation}
-      ontogglevirtualkeyboard={toggleVirtualKeyboard}
-      onminfontsizechange={handleMinFontSizeChange}
-      onmaxfontsizechange={handleMaxFontSizeChange}
-      ontogglelockfontsize={handleToggleLockFontSize}
-      oncursorcolorchange={handleCursorColorChange}
-    />
-  </div>
+  <TopBar
+    enabledModuleCount={enabledModuleIds.length}
+    totalModuleCount={modules.length}
+    {showSettingsModal}
+    {settings}
+    ontogglecurriculum={toggleCurriculumSidebar}
+    ontogglesettings={toggleSettingsModal}
+    onclosesettings={() => {
+      showSettingsModal = false;
+      inputElement?.focus();
+    }}
+    onthemechange={handleThemeChange}
+    ontogglepronunciation={togglePronunciation}
+    ontoggletranslation={toggleTranslation}
+    ontogglevirtualkeyboard={toggleVirtualKeyboard}
+    onminfontsizechange={handleMinFontSizeChange}
+    onmaxfontsizechange={handleMaxFontSizeChange}
+    ontogglelockfontsize={handleToggleLockFontSize}
+    oncursorcolorchange={handleCursorColorChange}
+  />
 
   <div
     class="w-full max-w-full flex-1 min-h-0 flex flex-col items-center justify-between py-2 md:py-4 px-2 md:px-8 overflow-hidden"
@@ -390,71 +344,19 @@
   <div
     class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-2 md:pb-4 shrink-0 px-2 md:px-8"
   >
-    <div
-      class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-xl px-4 overflow-hidden cursor-text"
-      onclick={focusInput}
-    >
-      {#if userInput.length === 0}
-        <span
-          class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap select-none"
-        >
-          {enabledModuleIds.length === 0
-            ? 'Select a module above to begin...'
-            : isCompleted
-              ? 'Press Enter or Space for next word'
-              : 'Start typing...'}
-        </span>
-      {:else}
-        <div
-          bind:this={inputContainerElement}
-          class="input-display flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold select-text z-10"
-        >
-          {#each userInput.split('') as char, i}
-            {@const isError = errors.find((e) => e.index === i)?.isError ?? false}
-            {@const isLeading = i === activeInputCursorIndex && !isCompleted}
-            {@const isTrailing = i === activeInputCursorIndex - 1 && !isCompleted}
-            {@const isCurrent = isLeading || isTrailing}
-
-            {#if isCurrent}
-              <CharDisplay
-                bind:elementRef={activeCursorElement}
-                {char}
-                {isError}
-                {isCurrent}
-                isLeadingCursor={isLeading}
-                variant="input"
-                dataIndex={i}
-                cursorColor={settings.cursorColor}
-                onselect={() => setInputCursorPosition(i + 1)}
-              />
-            {:else}
-              <CharDisplay
-                {char}
-                {isError}
-                {isCurrent}
-                variant="input"
-                dataIndex={i}
-                cursorColor={settings.cursorColor}
-                onselect={() => setInputCursorPosition(i + 1)}
-              />
-            {/if}
-          {/each}
-        </div>
-      {/if}
-
-      <input
-        bind:this={inputElement}
-        type="text"
-        class="absolute inset-0 w-full h-full opacity-0 pointer-events-none z-0"
-        value={userInput}
-        onkeydown={handleKeydown}
-        oninput={handleInputPrevent}
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="off"
-        spellcheck="false"
-      />
-    </div>
+    <InputDisplay
+      bind:inputElement
+      {userInput}
+      {errors}
+      {activeInputCursorIndex}
+      {isCompleted}
+      hasEnabledModules={enabledModuleIds.length > 0}
+      cursorColor={settings.cursorColor}
+      onkeydown={handleKeydown}
+      oninputprevent={handleInputPrevent}
+      onsetcursorposition={setInputCursorPosition}
+      onfocuscontainer={focusInput}
+    />
 
     {#if settings.showVirtualKeyboard}
       <div class="w-full flex justify-center mt-3">
