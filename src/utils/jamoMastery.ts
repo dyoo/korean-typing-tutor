@@ -430,9 +430,49 @@ export function getAdaptiveLengthMultiplier(targetLength: number, progressPercen
 }
 
 /**
- * Selects the next exercise item from eligible items, biasing selection toward words
- * that contain the active learning Jamo, struggling Jamos, and scaling target word
- * length adaptively based on the active Jamo's progress.
+ * Probability (0–1) that each exercise will feature the active learning Jamo.
+ * The two-pass selection first flips this coin to decide whether to restrict
+ * candidates to focus-containing words, ensuring the learner consistently
+ * practices the newest Jamo rather than relying on additive weight bonuses.
+ */
+const FOCUS_JAMO_PROBABILITY = 0.4;
+
+/**
+ * Checks whether a lesson item contains the specified Jamo character,
+ * either as a decomposed basic Jamo or as a compound batchim (겹받침)
+ * embedded in a syllable's final consonant position.
+ */
+function itemContainsJamo(item: LessonItem, jamo: string): boolean {
+  const jamos = decomposeStringToJamos(item.target);
+  if (jamos.includes(jamo)) return true;
+
+  // For compound batchim targets, also check syllable final consonant slots directly,
+  // since decomposition yields the component Jamos rather than the compound itself
+  if (COMPOUND_BATCHIM_SET.has(jamo)) {
+    for (const char of item.target) {
+      const code = char.charCodeAt(0) - HANGUL_BASE;
+      if (code >= 0 && code <= 11171) {
+        const finalIndex = code % 28;
+        if (finalIndex > 0 && FINAL_CONSONANT_STANDALONE[finalIndex] === jamo) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Selects the next exercise item using a two-pass approach:
+ *
+ * **Pass 1 — Pool decision:** A coin flip (70% probability) decides whether to
+ * restrict candidates to words containing the active learning Jamo. This guarantees
+ * the focus Jamo appears in ~70% of exercises regardless of pool composition.
+ *
+ * **Pass 2 — Weighted pick:** Within the chosen pool, items are weighted by
+ * struggling-Jamo bonuses and adaptive word length, then selected via weighted
+ * random sampling.
  */
 export function selectNextMasteryItem(
   eligibleItems: LessonItem[],
@@ -460,39 +500,32 @@ export function selectNextMasteryItem(
     return pool[0];
   }
 
+  // --- Pass 1: Decide whether to select from focus pool or general pool ---
+  let selectionPool = pool;
+  if (activeJamo) {
+    const focusPool = pool.filter((item) => itemContainsJamo(item, activeJamo));
+    if (focusPool.length > 0 && Math.random() < FOCUS_JAMO_PROBABILITY) {
+      selectionPool = focusPool;
+    }
+  }
+
+  // --- Pass 2: Weighted selection within the chosen pool ---
   const activeStats = activeJamo ? jamoStats[activeJamo] : undefined;
   const activeProgress = activeStats ? calculateJamoProgress(activeStats) : 100;
-  const isActiveCompoundBatchim = activeJamo ? COMPOUND_BATCHIM_SET.has(activeJamo) : false;
 
-  // Assign weights to items based on whether they contain active/struggling Jamos and adaptive word length
   const weightedList: { item: LessonItem; weight: number }[] = [];
 
-  for (const item of pool) {
+  for (const item of selectionPool) {
     const jamos = decomposeStringToJamos(item.target);
     let jamoWeight = 1;
 
+    // Boost words containing struggling Jamos (<90% rolling accuracy)
     for (const j of jamos) {
-      if (j === activeJamo) {
-        jamoWeight += 3; // 3x multiplier for the active learning Jamo
-      }
       const stats = jamoStats[j];
       if (stats && stats.totalAttempts > 0) {
         const acc = calculateJamoAccuracy(stats);
         if (acc < 0.9) {
-          jamoWeight += 2; // Extra weight for struggling Jamos
-        }
-      }
-    }
-
-    // If active learning target is a compound batchim (e.g. ㄺ, ㅄ, ㄶ), check syllables directly
-    if (isActiveCompoundBatchim && activeJamo) {
-      for (const char of item.target) {
-        const code = char.charCodeAt(0) - HANGUL_BASE;
-        if (code >= 0 && code <= 11171) {
-          const finalIndex = code % 28;
-          if (finalIndex > 0 && FINAL_CONSONANT_STANDALONE[finalIndex] === activeJamo) {
-            jamoWeight += 6; // 6x multiplier for words featuring the target compound batchim!
-          }
+          jamoWeight += 2;
         }
       }
     }
