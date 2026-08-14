@@ -107,6 +107,7 @@
   <input
     bind:this={inputElement}
     type="text"
+    inputmode="none"
     class="absolute inset-0 w-full h-full opacity-0 pointer-events-none z-0"
     value={userInput}
     {onkeydown}
