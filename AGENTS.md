@@ -24,6 +24,7 @@ You are assisting in the development of a Korean Typing Tutor PWA. The goal is t
 - **VCS Workflow**: Use `jj` (Jujutsu) for version control operations. Never combine creating commits/revisions with pushing. Always create commits without pushing unless explicitly requested. Do not prefix commit/CL descriptions with conventional commit categories (e.g. avoid `feat:`, `fix:`, `chore:`, `style:` prefixes); write direct, plain descriptive summary messages instead.
 - **Testing**: Always use one-time non-interactive test execution (e.g., `npx vitest run` or `npm test` configured with `vitest run`) rather than interactive watch mode.
 - **Linting**: Use `npx eslint .` (or `npm run lint`) to perform static analysis and ensure zero lint errors across `.ts` and `.svelte` files.
+- **Type Checking**: Use `npx svelte-check` (or `npm run check`) to perform cross-component type validation. This catches prop name mismatches, missing imports, and type errors across `.svelte` component boundaries that ESLint alone cannot detect.
 - **Dead Code Detection**: Use `npx knip` to analyze and identify unused exports, dead files, and unused dependencies whenever asked to audit or clean up dead code.
 - **Opposite-Hand Shift Chording**: When guiding Shift key targets (e.g. `ㄲ`, `ㅖ`), always recommend the opposite-hand Shift key (`right-shift` for left-hand keys `Q`/`W`/`E`/`R`/`T`, `left-shift` for right-hand keys `O`/`P`) to reinforce proper touch-typing ergonomics.
 - **CSS**: Use Tailwind utility classes directly in the markup.

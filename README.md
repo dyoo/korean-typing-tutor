@@ -60,6 +60,7 @@ For additional practice and alternative tools, here are other great web applicat
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
 - **Testing**: [Vitest](https://vitest.dev/)
+- **Type Checking**: [svelte-check](https://github.com/sveltejs/language-tools/tree/master/packages/svelte-check)
 - **PWA Support**: [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
 - **Architecture**: Client-side only (LocalStorage for persistence)
 
@@ -110,6 +111,15 @@ We use **Vitest** for automated unit testing to ensure the Korean composition en
 - **Run in Watch Mode**:
   ```bash
   npm test -- --watch
+  ```
+
+## Type Checking
+
+We use **svelte-check** for cross-component type validation. This catches prop name mismatches, missing imports, and type errors across `.svelte` component boundaries that ESLint alone cannot detect.
+
+- **Run type checker**:
+  ```bash
+  npm run check
   ```
 
 ## Formatting code
