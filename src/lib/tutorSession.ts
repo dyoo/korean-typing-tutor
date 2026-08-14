@@ -353,6 +353,15 @@ export class TutorSession {
     }, 30000);
   }
 
+  /** Immediately saves any pending mastery state to LocalStorage. */
+  public flushPendingSave(): void {
+    if (this.saveTimeout !== null) {
+      clearTimeout(this.saveTimeout);
+      this.saveTimeout = null;
+    }
+    saveMasteryState(this.masteryState);
+  }
+
   /** Processes single keyboard input. */
   public processKey(key: string): KeyResult {
     if (key === 'Tab' || key === 'Escape' || this.activeItems.length === 0) {

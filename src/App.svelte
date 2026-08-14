@@ -76,6 +76,13 @@
     syncState();
     applyTheme(settings.theme);
     inputElement?.focus();
+
+    // Ensure pending debounced saves are flushed if the user navigates away or closes the tab.
+    const handleBeforeUnload = () => {
+      session.flushPendingSave();
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   });
 
   function handleWindowClick(e: MouseEvent) {
