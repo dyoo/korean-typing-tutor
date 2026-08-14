@@ -68,7 +68,7 @@
           ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-xs'
           : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"
       >
-        Curriculum
+        Free-form
       </button>
       <button
         type="button"
@@ -89,7 +89,7 @@
         onclick={ontogglecurriculum}
         onmousedown={(e) => e.stopPropagation()}
         class="flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
-        aria-label="Open Curriculum Sidebar"
+        aria-label="Open Free-form Modules Sidebar"
       >
         <svg
           class="w-5 h-5 text-gray-600 dark:text-gray-300 shrink-0"
@@ -114,7 +114,7 @@
     {:else}
       <!-- Mastery Mode Progress Badge -->
       <div
-        class="flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-amber-300 dark:border-amber-700/60 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 shadow-sm text-sm"
+        class="flex items-center gap-2.5 bg-white dark:bg-gray-800 border-2 border-amber-300 dark:border-amber-700/60 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 shadow-sm text-sm"
       >
         <span class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline">
           Jamos Unlocked
@@ -125,9 +125,16 @@
           {masteryUnlockedCount}/{masteryTotalCount}
         </span>
         {#if activeJamoChar}
-          <span class="text-[11px] font-mono text-gray-500 dark:text-gray-400">
-            Focus: <strong class="text-amber-600 dark:text-amber-400 font-bold">{activeJamoChar}</strong>
-          </span>
+          <div class="flex items-center gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80">
+            <span class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:inline">
+              Focus:
+            </span>
+            <span
+              class="text-base sm:text-lg font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[28px] shadow-2xs"
+            >
+              {activeJamoChar}
+            </span>
+          </div>
         {/if}
       </div>
     {/if}

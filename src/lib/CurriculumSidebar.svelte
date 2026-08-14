@@ -56,7 +56,7 @@
   <div
     role="dialog"
     aria-modal="true"
-    aria-label="Curriculum Sidebar"
+    aria-label="Free-form Modules Sidebar"
     class="fixed inset-y-0 left-0 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 border-r-2 border-gray-200 dark:border-gray-700 shadow-2xl flex flex-col"
   >
     <!-- Header -->
@@ -67,7 +67,7 @@
         <h2
           class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-gray-100 font-mono"
         >
-          Curriculum Modules
+          Free-form Modules
         </h2>
         <span class="text-xs text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
           Enabled ({enabledModuleIds.length}/{modules.length})
