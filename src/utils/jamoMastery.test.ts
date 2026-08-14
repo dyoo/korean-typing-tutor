@@ -23,21 +23,22 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     localStorage.clear();
   });
 
-  it('should have a complete progression sequence containing all Jamos, compound batchim, and punctuation', () => {
-    expect(JAMO_PROGRESSION_ORDER.length).toBe(46);
+  it('should have a complete progression sequence containing all Jamos and compound batchim', () => {
+    expect(JAMO_PROGRESSION_ORDER.length).toBe(44);
     const jamoChars = JAMO_PROGRESSION_ORDER.map((item) => item.jamo);
     // Stage 1 initial keys
     expect(jamoChars.slice(0, 4)).toEqual(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']);
-    // Contains double consonants and punctuation
+    // Contains double consonants
     expect(jamoChars).toContain('ㄲ');
     expect(jamoChars).toContain('ㅆ');
-    expect(jamoChars).toContain(',');
-    expect(jamoChars).toContain('.');
     // Contains compound batchim (겹받침)
     expect(jamoChars).toContain('ㄶ');
     expect(jamoChars).toContain('ㄺ');
     expect(jamoChars).toContain('ㅄ');
     expect(jamoChars).toContain('ㅀ');
+    // Does not contain punctuation (mastery focuses on Jamos only)
+    expect(jamoChars).not.toContain(',');
+    expect(jamoChars).not.toContain('.');
   });
 
   it('should initialize with Stage 1 (4 keys) unlocked by default', () => {
@@ -282,12 +283,12 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     expect(state.jamoStats['ㄹ'].isMastered).toBe(false);
     expect(getActiveLearningJamo(state)?.jamo).toBe('ㄹ');
 
-    // Clamps to min 4 and max 46
+    // Clamps to min 4 and max 44
     setMasteryProgressionLevel(state, 1);
     expect(state.unlockedCount).toBe(4);
     expect(getActiveLearningJamo(state)?.jamo).toBe('ㄹ');
 
     setMasteryProgressionLevel(state, 100);
-    expect(state.unlockedCount).toBe(46);
+    expect(state.unlockedCount).toBe(44);
   });
 });

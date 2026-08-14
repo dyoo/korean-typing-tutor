@@ -266,7 +266,6 @@
                 <option value="26">Stage 4: Bottom Row (26 keys · + ㅋ, ㅌ, ㅊ, ㅍ, ㅠ)</option>
                 <option value="33">Stage 5: Shift Keys (33 keys · + ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ)</option>
                 <option value="44">Stage 6: Compound Batchim (44 items · + ㄶ, ㄵ, ㄺ, ㄻ, ㄼ, ㅄ, ㅀ, ㄳ, ㄾ, ㄿ, ㄽ)</option>
-                <option value="46">Stage 7: All Keys & Punctuation (46 items · + , .)</option>
               </optgroup>
               <optgroup label="Individual Jamo Progression">
                 {#each JAMO_PROGRESSION_ORDER as item, idx}

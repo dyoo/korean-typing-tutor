@@ -80,10 +80,6 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = [
   { jamo: 'ㄾ', key: 'fx', combination: ['ㄹ', 'ㅌ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
   { jamo: 'ㄿ', key: 'fv', combination: ['ㄹ', 'ㅍ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
   { jamo: 'ㄽ', key: 'ft', combination: ['ㄹ', 'ㅅ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
-
-  // Stage 7: Punctuation
-  { jamo: ',', key: ',', hand: 'right', stage: 7, stageName: 'Punctuation' },
-  { jamo: '.', key: '.', hand: 'right', stage: 7, stageName: 'Punctuation' },
 ];
 
 /**

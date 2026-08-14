@@ -4,7 +4,7 @@ The mastery engine is a **spaced-repetition typing tutor** that teaches the enti
 
 ## Goal
 
-Take a learner from **zero Korean typing ability** to **fluent touch-typing of all 46 Dubeolsik targets** (26 basic Jamos, 7 double consonants/shifted vowels, 11 compound batchim, 2 punctuation marks) — drilling each new finger motion on authentic Korean vocabulary, scaling from single syllables to full sentences.
+Take a learner from **zero Korean typing ability** to **fluent touch-typing of all 44 Dubeolsik Jamo targets** (26 basic Jamos, 7 double consonants/shifted vowels, 11 compound batchim) — drilling each new finger motion on authentic Korean vocabulary, scaling from single syllables to full sentences.
 
 ## Core Mechanics
 
@@ -20,7 +20,6 @@ The learner begins with 4 home-row index keys (`ㅓ, ㅏ, ㅇ, ㄹ`) — the min
 | 4 | Bottom Row (`ㅋ, ㅌ, ㅊ, ㅍ, ㅠ`) | 26 |
 | 5 | Shift Keys (`ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ`) | 33 |
 | 6 | Compound Batchim (`ㄶ, ㄵ, ㄺ, ㄻ, ㄼ, ㅄ, ㅀ, ㄳ, ㄾ, ㄿ, ㄽ`) | 44 |
-| 7 | Punctuation (`,` `.`) | 46 |
 
 ### 2. Rolling 20-Attempt Accuracy Window
 
