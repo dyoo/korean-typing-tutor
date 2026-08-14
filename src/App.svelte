@@ -115,14 +115,22 @@
   }
 
   function syncState() {
-    userInput = session.getUserInput();
-    sessionCursorIndex = session.getInputCursorIndex();
-    errors = session.getErrors();
-    currentItem = session.getCurrentItem();
-    isCompleted = session.getIsItemCompleted();
-    mode = session.getMode();
-    // Assign reference directly; Svelte 5 $state is deeply reactive, so mutations in TutorSession will trigger updates without needing a new object every keystroke.
-    masteryState = session.getMasteryState();
+    const newUserInput = session.getUserInput();
+    const newCursorIndex = session.getInputCursorIndex();
+    const newErrors = session.getErrors();
+    const newCurrentItem = session.getCurrentItem();
+    const newIsCompleted = session.getIsItemCompleted();
+    const newMode = session.getMode();
+
+    // Only reassign $state variables when they actually change to prevent unnecessary re-renders.
+    // userInput and cursorIndex change on every keystroke; the rest rarely do.
+    if (userInput !== newUserInput) userInput = newUserInput;
+    if (sessionCursorIndex !== newCursorIndex) sessionCursorIndex = newCursorIndex;
+    errors = newErrors; // Always updated (new array from checkErrors), but O(1) Map lookup handles it.
+    if (currentItem.id !== newCurrentItem.id) currentItem = newCurrentItem;
+    if (isCompleted !== newIsCompleted) isCompleted = newIsCompleted;
+    if (mode !== newMode) mode = newMode;
+    // masteryState is a reference; Svelte 5 deep reactivity handles mutations without reassignment.
   }
 
   function setInputCursorPosition(index: number) {
