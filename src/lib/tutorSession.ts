@@ -47,7 +47,7 @@ export class TutorSession {
   private isItemCompleted = false;
   private engine: HangulEngine;
 
-  private mode: TutorMode = 'curriculum';
+  private mode: TutorMode = 'mastery';
   private masteryState: MasteryState;
 
   constructor(
@@ -73,7 +73,7 @@ export class TutorSession {
     this.shouldShuffle = shuffle;
     this.engine = new HangulEngine();
     this.masteryState = loadMasteryState();
-    this.mode = this.masteryState.mode ?? 'curriculum';
+    this.mode = this.masteryState.mode ?? 'mastery';
     this.applyFilterAndShuffle();
   }
 

@@ -87,7 +87,7 @@ export function createDefaultMasteryState(): MasteryState {
   }
 
   return {
-    mode: 'curriculum',
+    mode: 'mastery',
     unlockedCount: 4, // Initial Stage 1 keys: ㅓ, ㅏ, ㅇ, ㄹ
     jamoStats,
   };
@@ -115,7 +115,7 @@ export function loadMasteryState(): MasteryState {
         ? parsed.unlockedCount
         : 4;
 
-    const mode = parsed.mode === 'mastery' ? 'mastery' : 'curriculum';
+    const mode = parsed.mode === 'curriculum' ? 'curriculum' : 'mastery';
 
     const jamoStats = { ...defaultState.jamoStats };
     if (parsed.jamoStats && typeof parsed.jamoStats === 'object') {

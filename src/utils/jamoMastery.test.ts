@@ -35,7 +35,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
   it('should initialize with Stage 1 (4 keys) unlocked by default', () => {
     const state = createDefaultMasteryState();
     expect(state.unlockedCount).toBe(4);
-    expect(state.mode).toBe('curriculum');
+    expect(state.mode).toBe('mastery');
     const unlocked = getUnlockedJamos(state);
     expect(unlocked.size).toBe(4);
     expect(unlocked.has('ㅓ')).toBe(true);

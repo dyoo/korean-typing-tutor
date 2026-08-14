@@ -30,10 +30,18 @@ describe('TutorSession controller', () => {
   let session: TutorSession;
 
   beforeEach(() => {
+    localStorage.clear();
     session = new TutorSession(mockCurriculum, 'all', false);
+    session.setMode('curriculum');
   });
 
-  it('should initialize cleanly from CurriculumData JSON format', () => {
+  it('should initialize with Mastery Mode as default', () => {
+    localStorage.clear();
+    const defaultSession = new TutorSession(mockCurriculum, 'all', false);
+    expect(defaultSession.getMode()).toBe('mastery');
+  });
+
+  it('should initialize cleanly from CurriculumData JSON format in curriculum mode', () => {
     expect(session.getModules().length).toBe(3);
     expect(session.getModules()[1].title).toBe('Level 1 — Basic Syllables');
     expect(session.getCurrentIndex()).toBe(0);
