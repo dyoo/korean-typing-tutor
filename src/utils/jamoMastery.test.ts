@@ -23,8 +23,8 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     localStorage.clear();
   });
 
-  it('should have a complete progression sequence containing all 35 Dubeolsik Jamos and punctuation', () => {
-    expect(JAMO_PROGRESSION_ORDER.length).toBe(35);
+  it('should have a complete progression sequence containing all Jamos, compound batchim, and punctuation', () => {
+    expect(JAMO_PROGRESSION_ORDER.length).toBe(46);
     const jamoChars = JAMO_PROGRESSION_ORDER.map((item) => item.jamo);
     // Stage 1 initial keys
     expect(jamoChars.slice(0, 4)).toEqual(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']);
@@ -33,6 +33,11 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     expect(jamoChars).toContain('ㅆ');
     expect(jamoChars).toContain(',');
     expect(jamoChars).toContain('.');
+    // Contains compound batchim (겹받침)
+    expect(jamoChars).toContain('ㄶ');
+    expect(jamoChars).toContain('ㄺ');
+    expect(jamoChars).toContain('ㅄ');
+    expect(jamoChars).toContain('ㅀ');
   });
 
   it('should initialize with Stage 1 (4 keys) unlocked by default', () => {
@@ -156,6 +161,30 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     expect(eligible.map((i) => i.target)).toEqual(['아', '얼']);
   });
 
+  it('should gate items with compound batchim until the compound is unlocked', () => {
+    // All basic jamos unlocked through Stage 5 (33 keys), but no compound batchim yet
+    const unlocked = new Set(JAMO_PROGRESSION_ORDER.slice(0, 33).map((i) => i.jamo));
+
+    const chickenItem: LessonItem = { id: 'c1', moduleId: 'test', target: '닭', translation: 'Chicken' }; // ㄺ
+    const nothaveItem: LessonItem = { id: 'c2', moduleId: 'test', target: '없다', translation: 'Not have' }; // ㅄ
+    const manyItem: LessonItem = { id: 'c3', moduleId: 'test', target: '많다', translation: 'Many' }; // ㄶ
+    const simpleItem: LessonItem = { id: 'c4', moduleId: 'test', target: '나무', translation: 'Tree' };
+
+    expect(isItemEligible(chickenItem, unlocked)).toBe(false);
+    expect(isItemEligible(nothaveItem, unlocked)).toBe(false);
+    expect(isItemEligible(manyItem, unlocked)).toBe(false);
+    expect(isItemEligible(simpleItem, unlocked)).toBe(true);
+
+    // Unlock ㄺ compound batchim
+    unlocked.add('ㄺ');
+    expect(isItemEligible(chickenItem, unlocked)).toBe(true);
+    expect(isItemEligible(nothaveItem, unlocked)).toBe(false); // still needs ㅄ
+
+    // Unlock ㅄ compound batchim
+    unlocked.add('ㅄ');
+    expect(isItemEligible(nothaveItem, unlocked)).toBe(true);
+  });
+
   it('should select next mastery item and give weighted priority to active learning Jamo', () => {
     const eligible: LessonItem[] = [
       { id: '1', moduleId: 'test', target: '아', translation: 'Ah' },
@@ -253,12 +282,12 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     expect(state.jamoStats['ㄹ'].isMastered).toBe(false);
     expect(getActiveLearningJamo(state)?.jamo).toBe('ㄹ');
 
-    // Clamps to min 4 and max 35
+    // Clamps to min 4 and max 46
     setMasteryProgressionLevel(state, 1);
     expect(state.unlockedCount).toBe(4);
     expect(getActiveLearningJamo(state)?.jamo).toBe('ㄹ');
 
     setMasteryProgressionLevel(state, 100);
-    expect(state.unlockedCount).toBe(35);
+    expect(state.unlockedCount).toBe(46);
   });
 });

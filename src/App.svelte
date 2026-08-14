@@ -353,6 +353,7 @@
     masteryUnlockedCount={masteryState.unlockedCount}
     masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
     activeJamoChar={activeLearningJamo?.jamo ?? null}
+    activeLearningCombination={activeLearningJamo?.combination}
     {showSettingsModal}
     {settings}
     ontogglecurriculum={toggleCurriculumSidebar}

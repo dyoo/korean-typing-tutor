@@ -33,6 +33,7 @@ export interface JamoProgressionItem {
   hand: 'left' | 'right';
   stage: number;
   stageName: string;
+  combination?: [string, string];
 }
 
 /** Result of checking or recording a Jamo attempt. */

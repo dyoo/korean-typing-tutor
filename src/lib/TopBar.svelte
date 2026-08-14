@@ -11,6 +11,7 @@
     masteryUnlockedCount: number;
     masteryTotalCount: number;
     activeJamoChar?: string | null;
+    activeLearningCombination?: [string, string];
     showSettingsModal: boolean;
     settings: TutorSettings;
     ontogglemode: () => void;
@@ -35,6 +36,7 @@
     masteryUnlockedCount,
     masteryTotalCount,
     activeJamoChar = null,
+    activeLearningCombination,
     showSettingsModal,
     settings,
     ontogglemode,
@@ -128,9 +130,14 @@
               Focus:
             </span>
             <span
-              class="text-base sm:text-lg font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[28px] shadow-2xs"
+              class="text-base sm:text-lg font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[28px] shadow-2xs gap-1"
             >
-              {activeJamoChar}
+              <span>{activeJamoChar}</span>
+              {#if activeLearningCombination}
+                <span class="text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90">
+                  ({activeLearningCombination[0]}+{activeLearningCombination[1]})
+                </span>
+              {/if}
             </span>
           </div>
         {/if}

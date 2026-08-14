@@ -6,6 +6,7 @@ import type {
   MasteryAttemptResult,
 } from '../types/mastery';
 import { decomposeStringToJamos } from './hangulDecompose';
+import { FINAL_CONSONANT_STANDALONE, HANGUL_BASE } from './hangulTables';
 
 /** Storage key used for persisting Jamo mastery progress in LocalStorage. */
 const MASTERY_STORAGE_KEY = 'korean_tutor_mastery';
@@ -67,9 +68,22 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = [
   { jamo: 'ㅒ', key: 'o', shift: true, hand: 'right', stage: 5, stageName: 'Shift Keys' },
   { jamo: 'ㅖ', key: 'p', shift: true, hand: 'right', stage: 5, stageName: 'Shift Keys' },
 
-  // Stage 6: Punctuation
-  { jamo: ',', key: ',', hand: 'right', stage: 6, stageName: 'Punctuation' },
-  { jamo: '.', key: '.', hand: 'right', stage: 6, stageName: 'Punctuation' },
+  // Stage 6: Compound Final Consonants (겹받침)
+  { jamo: 'ㄶ', key: 'sg', combination: ['ㄴ', 'ㅎ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㄵ', key: 'sw', combination: ['ㄴ', 'ㅈ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㄺ', key: 'fr', combination: ['ㄹ', 'ㄱ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㄻ', key: 'fa', combination: ['ㄹ', 'ㅁ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㄼ', key: 'fq', combination: ['ㄹ', 'ㅂ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㅄ', key: 'qt', combination: ['ㅂ', 'ㅅ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㅀ', key: 'fg', combination: ['ㄹ', 'ㅎ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㄳ', key: 'rt', combination: ['ㄱ', 'ㅅ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㄾ', key: 'fx', combination: ['ㄹ', 'ㅌ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㄿ', key: 'fv', combination: ['ㄹ', 'ㅍ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+  { jamo: 'ㄽ', key: 'ft', combination: ['ㄹ', 'ㅅ'], hand: 'left', stage: 6, stageName: 'Compound Batchim' },
+
+  // Stage 7: Punctuation
+  { jamo: ',', key: ',', hand: 'right', stage: 7, stageName: 'Punctuation' },
+  { jamo: '.', key: '.', hand: 'right', stage: 7, stageName: 'Punctuation' },
 ];
 
 /**
@@ -311,6 +325,11 @@ export function recordJamoAttempt(
   };
 }
 
+/** Set of all 11 Korean compound final consonants (겹받침). */
+export const COMPOUND_BATCHIM_SET = new Set([
+  'ㄳ', 'ㄵ', 'ㄶ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ', 'ㅄ',
+]);
+
 /**
  * Helper to determine if a character is a Hangul Jamo (compatibility or standard Unicode Jamo).
  */
@@ -322,14 +341,34 @@ export function isHangulJamo(char: string): boolean {
 
 /**
  * Validates whether all of an item's constituent Hangul Jamos belong to the unlocked Jamo set.
- * Non-Jamo characters (spaces, hyphens, punctuation, symbols) are allowed and do not block eligibility.
+ * Syllables with compound final consonants (겹받침) also require their specific compound
+ * batchim to be unlocked in the progression sequence.
  */
 export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): boolean {
   if (!item.target || item.target.trim() === '') return false;
+
+  // 1. Verify that all decomposed basic Jamos are unlocked
   const jamos = decomposeStringToJamos(item.target);
   if (jamos.length === 0) return false;
+  if (!jamos.every((j) => !isHangulJamo(j) || unlockedJamos.has(j))) {
+    return false;
+  }
 
-  return jamos.every((j) => !isHangulJamo(j) || unlockedJamos.has(j));
+  // 2. Verify that compound final consonants (겹받침) are unlocked
+  for (const char of item.target) {
+    const code = char.charCodeAt(0) - HANGUL_BASE;
+    if (code >= 0 && code <= 11171) {
+      const finalConsonantIndex = code % 28;
+      if (finalConsonantIndex > 0) {
+        const finalChar = FINAL_CONSONANT_STANDALONE[finalConsonantIndex];
+        if (finalChar && COMPOUND_BATCHIM_SET.has(finalChar) && !unlockedJamos.has(finalChar)) {
+          return false;
+        }
+      }
+    }
+  }
+
+  return true;
 }
 
 /**
@@ -427,6 +466,7 @@ export function selectNextMasteryItem(
 
   const activeStats = activeJamo ? jamoStats[activeJamo] : undefined;
   const activeProgress = activeStats ? calculateJamoProgress(activeStats) : 100;
+  const isActiveCompoundBatchim = activeJamo ? COMPOUND_BATCHIM_SET.has(activeJamo) : false;
 
   // Assign weights to items based on whether they contain active/struggling Jamos and adaptive word length
   const weightedList: { item: LessonItem; weight: number }[] = [];
@@ -444,6 +484,19 @@ export function selectNextMasteryItem(
         const acc = calculateJamoAccuracy(stats);
         if (acc < 0.9) {
           jamoWeight += 2; // Extra weight for struggling Jamos
+        }
+      }
+    }
+
+    // If active learning target is a compound batchim (e.g. ㄺ, ㅄ, ㄶ), check syllables directly
+    if (isActiveCompoundBatchim && activeJamo) {
+      for (const char of item.target) {
+        const code = char.charCodeAt(0) - HANGUL_BASE;
+        if (code >= 0 && code <= 11171) {
+          const finalIndex = code % 28;
+          if (finalIndex > 0 && FINAL_CONSONANT_STANDALONE[finalIndex] === activeJamo) {
+            jamoWeight += 6; // 6x multiplier for words featuring the target compound batchim!
+          }
         }
       }
     }

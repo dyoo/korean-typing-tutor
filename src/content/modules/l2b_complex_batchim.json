@@ -252,6 +252,121 @@
       "id": "l2b_complex_batchim-ext-42",
       "target": "흙먼지",
       "translation": "Earthy dust"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-43",
+      "target": "몫",
+      "translation": "Share / Portion (겹받침 ㄳ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-44",
+      "target": "삯",
+      "translation": "Wage / Reward (겹받침 ㄳ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-45",
+      "target": "품삯",
+      "translation": "Labor wage"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-46",
+      "target": "몫을 나누다",
+      "translation": "To divide shares"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-47",
+      "target": "외골수",
+      "translation": "Single-minded person (겹받침 ㄽ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-48",
+      "target": "많다",
+      "translation": "To be many / plentiful (겹받침 ㄶ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-49",
+      "target": "많이",
+      "translation": "A lot / Many"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-50",
+      "target": "않다",
+      "translation": "To not do (겹받침 ㄶ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-51",
+      "target": "괜찮다",
+      "translation": "To be fine / okay (겹받침 ㄶ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-52",
+      "target": "괜찮아요",
+      "translation": "It is okay / No problem"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-53",
+      "target": "앉아요",
+      "translation": "Please sit down (연음: 안자요)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-54",
+      "target": "읽다",
+      "translation": "To read (겹받침 ㄺ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-55",
+      "target": "읽어요",
+      "translation": "Reading (연음: 일거요)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-56",
+      "target": "밝다",
+      "translation": "To be bright (겹받침 ㄺ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-57",
+      "target": "젊은이",
+      "translation": "Young person / Youth (겹받침 ㄻ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-58",
+      "target": "닮다",
+      "translation": "To resemble / Look like (겹받침 ㄻ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-59",
+      "target": "여덟",
+      "translation": "Eight (number 8) (겹받침 ㄼ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-60",
+      "target": "없다",
+      "translation": "To not exist / not have (겹받침 ㅄ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-61",
+      "target": "없어요",
+      "translation": "There is none / I don't have"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-62",
+      "target": "싫다",
+      "translation": "To dislike / Hate (겹받침 ㅀ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-63",
+      "target": "싫어요",
+      "translation": "I dislike it / No"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-64",
+      "target": "끓다",
+      "translation": "To boil (겹받침 ㅀ)"
+    },
+    {
+      "id": "l2b_complex_batchim-ext-65",
+      "target": "끓이다",
+      "translation": "To boil water / cook soup"
     }
   ]
 }
