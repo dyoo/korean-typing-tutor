@@ -55,4 +55,18 @@ describe('getNextRequiredKeys helper', () => {
     expect(getNextRequiredKeys('얘', 'ㅇ', false)).toEqual(['left-shift', 'o']); // 'ㅒ' (right hand O) -> Left-Shift
     expect(getNextRequiredKeys('예', 'ㅇ', false)).toEqual(['left-shift', 'p']); // 'ㅖ' (right hand P) -> Left-Shift
   });
+
+  it('should return punctuation keys for comma and period', () => {
+    expect(getNextRequiredKeys(',', '', false)).toEqual([',']);
+    expect(getNextRequiredKeys('.', '', false)).toEqual(['.']);
+    expect(getNextRequiredKeys('가요.', '가요', false)).toEqual(['.']);
+    expect(getNextRequiredKeys('사과, 배', '사과', false)).toEqual([',']);
+  });
+
+  it('should return empty array for unsupported or unknown characters', () => {
+    expect(getNextRequiredKeys('123', '', false)).toEqual([]);
+    expect(getNextRequiredKeys('$', '', false)).toEqual([]);
+    expect(getNextRequiredKeys('<', '', false)).toEqual([]);
+    expect(getNextRequiredKeys('>', '', false)).toEqual([]);
+  });
 });

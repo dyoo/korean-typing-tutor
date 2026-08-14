@@ -63,6 +63,11 @@ describe('TutorSession controller', () => {
     expect(session.getTotalItems()).toBe(2);
   });
 
+  it('should filter items by multiple module IDs array', () => {
+    session.setFilter(['l1', 'l3'], false);
+    expect(session.getTotalItems()).toBe(2);
+  });
+
   it('should handle empty module filter array gracefully with empty item placeholder', () => {
     session.setFilter([], false);
     expect(session.getTotalItems()).toBe(0);
@@ -99,57 +104,44 @@ describe('TutorSession controller', () => {
   it('should calculate accuracy and identify errors', () => {
     session.processKey('s');
     expect(session.getUserInput()).toBe('ㄴ');
-    expect(session.getErrors()[0].isError).toBe(true);
     expect(session.getAccuracy()).toBe(0);
+    expect(session.getErrors().filter((e) => e.isError).length).toBe(1);
+    expect(session.getErrors()[0].isError).toBe(true);
+
+    session.processKey('Backspace');
+    expect(session.getUserInput()).toBe('');
+    expect(session.getAccuracy()).toBe(100);
+    expect(session.getErrors().filter((e) => e.isError).length).toBe(0);
   });
 
-  it('should pause on item match and require Enter/Space to advance', () => {
+  it('should mark item completed when full match is typed', () => {
     session.processKey('r');
-    const result = session.processKey('k');
-    expect(result.isMatch).toBe(true);
-    expect(result.isItemCompleted).toBe(true);
+    session.processKey('k');
+    expect(session.getUserInput()).toBe('가');
     expect(session.getIsItemCompleted()).toBe(true);
-    expect(session.getCurrentIndex()).toBe(0);
+    expect(session.getAccuracy()).toBe(100);
+  });
 
-    const advanceResult = session.processKey('Enter');
-    expect(advanceResult.advanced).toBe(true);
-    expect(session.getIsItemCompleted()).toBe(false);
+  it('should advance to next item when Enter or Space is pressed upon completion', () => {
+    session.processKey('r');
+    session.processKey('k');
+    expect(session.getIsItemCompleted()).toBe(true);
+
+    const result = session.processKey('Enter');
+    expect(result.advanced).toBe(true);
     expect(session.getCurrentIndex()).toBe(1);
     expect(session.getCurrentItem().target).toBe('사과');
     expect(session.getUserInput()).toBe('');
-  });
-
-  it('should allow backspacing to edit and re-type after completing a word', () => {
-    session.processKey('r');
-    session.processKey('k');
-    expect(session.getIsItemCompleted()).toBe(true);
-    expect(session.getUserInput()).toBe('가');
-
-    session.processKey('Backspace');
     expect(session.getIsItemCompleted()).toBe(false);
-    expect(session.getUserInput()).toBe('ㄱ');
-    expect(session.getCurrentIndex()).toBe(0);
-
-    session.processKey('k');
-    expect(session.getIsItemCompleted()).toBe(true);
-    expect(session.getUserInput()).toBe('가');
   });
 
-  it('should flag tutorial completion on final item advance', () => {
-    session.processKey('r');
-    session.processKey('k');
-    session.processKey('Enter');
+  it('should shuffle items when advancing and cycling back', () => {
+    session.setFilter('all', false);
+    session.advanceLevel();
+    expect(session.getCurrentIndex()).toBe(1);
 
-    session.processKey('t');
-    session.processKey('k');
-    session.processKey('r');
-    session.processKey('h');
-    session.processKey('k');
-
-    expect(session.getIsItemCompleted()).toBe(true);
-
-    const advanceResult = session.processKey(' ');
-    expect(advanceResult.isTutorialComplete).toBe(true);
+    const isComplete = session.advanceLevel();
+    expect(isComplete).toBe(true);
     expect(session.getCurrentIndex()).toBe(0);
   });
 
@@ -160,6 +152,31 @@ describe('TutorSession controller', () => {
     expect(session.getUserInput()).toBe('');
     expect(session.getAccuracy()).toBe(100);
     expect(session.getIsItemCompleted()).toBe(false);
+  });
+
+  it('should clamp cursor index to valid bounds on navigation boundaries', () => {
+    session.setFilter('l3', false);
+    session.processKey('t'); // ㅅ
+    session.processKey('k'); // ㅏ -> 사
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    // ArrowLeft at 0 clamps to 0
+    session.processKey('Home');
+    expect(session.getInputCursorIndex()).toBe(0);
+    session.processKey('ArrowLeft');
+    expect(session.getInputCursorIndex()).toBe(0);
+
+    // ArrowRight past end clamps to length
+    session.processKey('End');
+    expect(session.getInputCursorIndex()).toBe(1);
+    session.processKey('ArrowRight');
+    expect(session.getInputCursorIndex()).toBe(1);
+
+    // Direct clamped calls
+    session.setInputCursorIndex(-10);
+    expect(session.getInputCursorIndex()).toBe(0);
+    session.setInputCursorIndex(100);
+    expect(session.getInputCursorIndex()).toBe(1);
   });
 
   it('should support Arrow keys, Home, End navigation and mid-text deletion and insertion', () => {

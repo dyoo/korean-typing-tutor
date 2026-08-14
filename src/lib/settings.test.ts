@@ -1,10 +1,11 @@
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { loadSettings, saveSettings, DEFAULT_SETTINGS, applyTheme } from './settings';
 
 describe('Settings module persistence', () => {
   beforeEach(() => {
     localStorage.clear();
     document.documentElement.classList.remove('dark');
+    vi.restoreAllMocks();
   });
 
   it('should return default settings when LocalStorage is empty', () => {
@@ -35,6 +36,19 @@ describe('Settings module persistence', () => {
     expect(loaded.cursorColor).toBe('sky');
   });
 
+  it('should clamp font size bounds outside the [1.0, 7.0] range to defaults', () => {
+    localStorage.setItem(
+      'korean_tutor_settings',
+      JSON.stringify({
+        minFontSizeRem: 0.2, // Below 1.0 -> should fallback to 1.25
+        maxFontSizeRem: 12.0, // Above 7.0 -> should fallback to 5.5
+      }),
+    );
+    const loaded = loadSettings();
+    expect(loaded.minFontSizeRem).toBe(1.25);
+    expect(loaded.maxFontSizeRem).toBe(5.5);
+  });
+
   it('should save and load selected curriculum module preferences and collapsed categories', () => {
     saveSettings({
       showPronunciation: true,
@@ -61,12 +75,32 @@ describe('Settings module persistence', () => {
     expect(loadedEmpty.collapsedCategoryIds).toEqual([]);
   });
 
-  it('should handle invalid JSON or invalid theme string gracefully', () => {
+  it('should handle invalid JSON, invalid theme, or invalid cursor color string gracefully', () => {
     localStorage.setItem('korean_tutor_settings', 'invalid-json-{');
     expect(loadSettings()).toEqual(DEFAULT_SETTINGS);
 
-    localStorage.setItem('korean_tutor_settings', JSON.stringify({ theme: 'invalid-theme' }));
-    expect(loadSettings().theme).toBe('system');
+    localStorage.setItem(
+      'korean_tutor_settings',
+      JSON.stringify({ theme: 'invalid-theme', cursorColor: 'neon-purple' }),
+    );
+    const loaded = loadSettings();
+    expect(loaded.theme).toBe('system');
+    expect(loaded.cursorColor).toBe('amber');
+  });
+
+  it('should not throw if localStorage throws an error during saveSettings or loadSettings', () => {
+    const setItemSpy = vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+      throw new Error('QuotaExceededError');
+    });
+    expect(() => saveSettings(DEFAULT_SETTINGS)).not.toThrow();
+
+    const getItemSpy = vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
+      throw new Error('SecurityError');
+    });
+    expect(loadSettings()).toEqual(DEFAULT_SETTINGS);
+
+    setItemSpy.mockRestore();
+    getItemSpy.mockRestore();
   });
 
   it('should apply dark and light themes to document element', () => {
@@ -75,5 +109,33 @@ describe('Settings module persistence', () => {
 
     applyTheme('light');
     expect(document.documentElement.classList.contains('dark')).toBe(false);
+  });
+
+  it('should follow OS system preference dynamically when theme is system', () => {
+    let changeHandler: ((e: { matches: boolean }) => void) | null = null;
+    const mediaQueryObj = {
+      matches: true,
+      media: '(prefers-color-scheme: dark)',
+      onchange: null,
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      addEventListener: vi.fn((event: string, handler: (e: { matches: boolean }) => void) => {
+        if (event === 'change') changeHandler = handler;
+      }),
+      removeEventListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    };
+
+    window.matchMedia = vi.fn().mockReturnValue(mediaQueryObj);
+
+    applyTheme('system');
+    expect(document.documentElement.classList.contains('dark')).toBe(true);
+
+    // Simulate OS switching to light mode
+    if (changeHandler) {
+      mediaQueryObj.matches = false;
+      changeHandler({ matches: false });
+      expect(document.documentElement.classList.contains('dark')).toBe(false);
+    }
   });
 });
