@@ -18,6 +18,7 @@
     settings: TutorSettings;
     ontogglemode: () => void;
     ontogglecurriculum: (e?: MouseEvent) => void;
+    ontogglemastery: (e?: MouseEvent) => void;
     ontogglesettings: (e?: MouseEvent) => void;
     onclosesettings: () => void;
     onthemechange: (theme: ThemeMode) => void;
@@ -28,7 +29,6 @@
     onmaxfontsizechange: (maxFontSizeRem: number) => void;
     ontogglelockfontsize: () => void;
     oncursorcolorchange: (cursorColor: CursorColorMode) => void;
-    onmasterylevelchange?: (level: number) => void;
   }
 
   let {
@@ -43,6 +43,7 @@
     settings,
     ontogglemode,
     ontogglecurriculum,
+    ontogglemastery,
     ontogglesettings,
     onclosesettings,
     onthemechange,
@@ -53,7 +54,6 @@
     onmaxfontsizechange,
     ontogglelockfontsize,
     oncursorcolorchange,
-    onmasterylevelchange,
   }: Props = $props();
 </script>
 
@@ -89,9 +89,22 @@
       </button>
     {:else}
       <!-- Mastery Mode Progress Badge -->
-      <div
-        class="flex items-center gap-2.5 bg-white dark:bg-gray-800 border-2 border-amber-300 dark:border-amber-700/60 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 shadow-sm text-sm"
+      <button
+        type="button"
+        onclick={ontogglemastery}
+        onmousedown={(e) => e.stopPropagation()}
+        class="flex items-center gap-2.5 bg-white dark:bg-gray-800 border-2 border-amber-300 dark:border-amber-700/60 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-amber-600 dark:hover:border-amber-500 focus:outline-none shadow-sm text-sm cursor-pointer"
+        aria-label="Open Mastery Progress Sidebar"
       >
+        <svg
+          class="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
         <span
           class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline"
         >
@@ -123,7 +136,7 @@
             </span>
           </div>
         {/if}
-      </div>
+      </button>
     {/if}
 
     <ModeSwitcher {mode} {ontogglemode} />
@@ -135,7 +148,6 @@
     <SettingsModal
     isOpen={showSettingsModal}
     {settings}
-    {masteryUnlockedCount}
     {ontogglesettings}
     onclose={onclosesettings}
     {onthemechange}
@@ -146,7 +158,6 @@
     {onmaxfontsizechange}
     {ontogglelockfontsize}
     {oncursorcolorchange}
-    {onmasterylevelchange}
   />
   </div>
 </div>

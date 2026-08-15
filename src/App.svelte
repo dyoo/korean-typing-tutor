@@ -15,6 +15,7 @@
   import { JAMO_PROGRESSION_ORDER, getActiveLearningJamo } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
+  import MasterySidebar from './lib/MasterySidebar.svelte';
   import TargetDisplay from './lib/TargetDisplay.svelte';
   import ExercisePrompt from './lib/ExercisePrompt.svelte';
   import TopBar from './lib/TopBar.svelte';
@@ -30,6 +31,7 @@
   let settings = $state<TutorSettings>(initialSettings);
   let showSettingsModal = $state(false);
   let showCurriculumSidebar = $state(false);
+  let showMasterySidebar = $state(false);
 
   let enabledModuleIds = $state<string[]>(
     Array.isArray(initialSettings.enabledModuleIds)
@@ -286,6 +288,7 @@
     showSettingsModal = !showSettingsModal;
     if (showSettingsModal) {
       showCurriculumSidebar = false;
+      showMasterySidebar = false;
     } else {
       inputElement?.focus();
     }
@@ -296,6 +299,7 @@
     showCurriculumSidebar = !showCurriculumSidebar;
     if (showCurriculumSidebar) {
       showSettingsModal = false;
+      showMasterySidebar = false;
     } else {
       inputElement?.focus();
     }
@@ -303,6 +307,22 @@
 
   function closeCurriculumSidebar() {
     showCurriculumSidebar = false;
+    inputElement?.focus();
+  }
+
+  function toggleMasterySidebar(e?: MouseEvent) {
+    e?.stopPropagation();
+    showMasterySidebar = !showMasterySidebar;
+    if (showMasterySidebar) {
+      showSettingsModal = false;
+      showCurriculumSidebar = false;
+    } else {
+      inputElement?.focus();
+    }
+  }
+
+  function closeMasterySidebar() {
+    showMasterySidebar = false;
     inputElement?.focus();
   }
 
@@ -329,6 +349,7 @@
     {showSettingsModal}
     {settings}
     ontogglecurriculum={toggleCurriculumSidebar}
+    ontogglemastery={toggleMasterySidebar}
     ontogglesettings={toggleSettingsModal}
     onclosesettings={() => {
       showSettingsModal = false;
@@ -342,7 +363,6 @@
     onmaxfontsizechange={handleMaxFontSizeChange}
     ontogglelockfontsize={handleToggleLockFontSize}
     oncursorcolorchange={handleCursorColorChange}
-    onmasterylevelchange={handleMasteryLevelChange}
   />
 
   <div
@@ -409,6 +429,13 @@
   ontogglecategorygroup={toggleCategoryGroup}
   onselectall={selectAllModules}
   ondeselectall={deselectAllModules}
+/>
+
+<MasterySidebar
+  isOpen={showMasterySidebar}
+  masteryUnlockedCount={masteryState.unlockedCount}
+  onclose={closeMasterySidebar}
+  onmasterylevelchange={handleMasteryLevelChange}
 />
 
 <style>

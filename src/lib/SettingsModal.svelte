@@ -1,14 +1,12 @@
 <script lang="ts">
   import type { TutorSettings, ThemeMode } from './settings';
   import type { CursorColorMode } from '../utils/cursorColor';
-  import { JAMO_PROGRESSION_ORDER } from '../utils/jamoMastery';
   import DualRangeSlider from './DualRangeSlider.svelte';
   import CursorColorSelect from './CursorColorSelect.svelte';
 
   interface Props {
     isOpen: boolean;
     settings: TutorSettings;
-    masteryUnlockedCount?: number;
     ontogglesettings: (e?: MouseEvent) => void;
     onclose: () => void;
     onthemechange: (theme: ThemeMode) => void;
@@ -19,13 +17,11 @@
     onmaxfontsizechange?: (maxSize: number) => void;
     ontogglelockfontsize?: () => void;
     oncursorcolorchange?: (cursorColor: CursorColorMode) => void;
-    onmasterylevelchange?: (level: number) => void;
   }
 
   let {
     isOpen,
     settings,
-    masteryUnlockedCount = 4,
     ontogglesettings,
     onclose,
     onthemechange,
@@ -36,7 +32,6 @@
     onmaxfontsizechange,
     ontogglelockfontsize,
     oncursorcolorchange,
-    onmasterylevelchange,
   }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
@@ -242,57 +237,6 @@
               onminchange={(val) => onminfontsizechange?.(val)}
               onmaxchange={(val) => onmaxfontsizechange?.(val)}
             />
-          </div>
-        {/if}
-      </div>
-
-      <!-- Jamo Mastery Progress Section -->
-      <div class="flex flex-col gap-2 pt-3 border-t border-gray-200 dark:border-gray-700">
-        <div class="flex items-center justify-between">
-          <span class="font-bold text-gray-900 dark:text-gray-100">Jamo Mastery Progress</span>
-        </div>
-
-        {#if onmasterylevelchange}
-          <div class="flex flex-col gap-1 mt-1">
-            <label for="mastery-level-select" class="text-[11px] text-gray-500 dark:text-gray-400">
-              Unlock Up To:
-            </label>
-            <select
-              id="mastery-level-select"
-              value={masteryUnlockedCount}
-              onchange={(e) => {
-                const val = parseInt((e.target as HTMLSelectElement).value, 10);
-                if (!isNaN(val)) onmasterylevelchange(val);
-              }}
-              class="w-full bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2.5 py-1.5 text-xs focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
-            >
-              <optgroup label="Preset Stages">
-                <option value="4">Stage 1: Home Index (4 keys · ㅓ, ㅏ, ㅇ, ㄹ)</option>
-                <option value="11"
-                  >Stage 2: Home Row & Basic Vowels (11 keys · + ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ)</option
-                >
-                <option value="21"
-                  >Stage 3: Top Row (21 keys · + ㄱ, ㅅ, ㄷ, ㅈ, ㅂ, ㅛ, ㅕ, ㅑ, ㅐ, ㅔ)</option
-                >
-                <option value="26">Stage 4: Bottom Row (26 keys · + ㅋ, ㅌ, ㅊ, ㅍ, ㅠ)</option>
-                <option value="33"
-                  >Stage 5: Shift Keys (33 keys · + ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ)</option
-                >
-                <option value="44"
-                  >Stage 6: Compound Batchim (44 items · + ㄶ, ㄵ, ㄺ, ㄻ, ㄼ, ㅄ, ㅀ, ㄳ, ㄾ, ㄿ,
-                  ㄽ)</option
-                >
-              </optgroup>
-              <optgroup label="Individual Jamo Progression">
-                {#each JAMO_PROGRESSION_ORDER as item, idx}
-                  {#if idx >= 3}
-                    <option value={idx + 1}>
-                      {idx + 1}. Up to {item.jamo} ({item.stageName})
-                    </option>
-                  {/if}
-                {/each}
-              </optgroup>
-            </select>
           </div>
         {/if}
       </div>
