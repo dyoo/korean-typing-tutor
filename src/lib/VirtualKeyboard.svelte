@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { DUBEOLSIK_ROWS } from '../utils/keyboardData';
+  import { DUBEOLSIK_ROWS, SYMBOL_ROWS } from '../utils/keyboardData';
   import {
     calculateJamoProgress,
     getUnlockedJamos,
@@ -35,8 +35,14 @@
   let jamoStats = $derived(masteryState ? masteryState.jamoStats : {});
 
   let isVirtualShiftActive = $state(false);
+  let isSymbolMode = $state(false);
 
   let isSpaceTarget = $derived(activeKeys.includes(' '));
+  let isCommaTarget = $derived(activeKeys.includes(','));
+  let isPeriodTarget = $derived(activeKeys.includes('.'));
+  let isBackspaceTarget = $derived(
+    activeKeys.includes('backspace') || activeKeys.includes('Backspace'),
+  );
   let isLeftShiftTarget = $derived(isShiftTarget(activeKeys, 'left'));
   let isRightShiftTarget = $derived(isShiftTarget(activeKeys, 'right'));
 
@@ -51,6 +57,12 @@
     e.preventDefault();
     e.stopPropagation();
     isVirtualShiftActive = !isVirtualShiftActive;
+  }
+
+  function toggleSymbolMode(e: MouseEvent) {
+    e.preventDefault();
+    e.stopPropagation();
+    isSymbolMode = !isSymbolMode;
   }
 
   function handleKeyClick(key: string, e: MouseEvent) {
@@ -77,195 +89,346 @@
   aria-label="Virtual Korean Keyboard Helper"
   class="virtual-keyboard w-screen sm:w-full -mx-[calc((100vw-100%)/2)] sm:mx-0 max-w-none sm:max-w-5xl flex flex-col items-center gap-1.5 p-2 sm:p-3 bg-white/90 dark:bg-gray-800/90 border-2 border-b-0 border-gray-200 dark:border-gray-700 rounded-t-2xl rounded-b-none shadow-sm select-none"
 >
-  <!-- Row 0: Q W E R T Y U I O P -->
-  <div class="grid w-full gap-1 sm:gap-1.5 kb-grid">
-    <!-- Desktop: 2-col left spacer -->
-    <div style="grid-column: span 2;" class="hidden sm:block"></div>
-    <!-- Mobile: 1-col left spacer -->
-    <div style="grid-column: span 1;" class="sm:hidden"></div>
+  <!-- ==================== DESKTOP LAYOUT (sm: and above) ==================== -->
+  <div class="hidden sm:flex flex-col items-center w-full gap-1.5">
+    <!-- Desktop Row 0: Q W E R T Y U I O P + Backspace -->
+    <div class="grid w-full gap-1.5 kb-grid">
+      <div style="grid-column: span 2;"></div>
 
-    {#each DUBEOLSIK_ROWS[0] as cap}
-      {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-      {@const isLocked =
-        mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-      {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-      {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-      {@const progressPercent =
-        mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
+      {#each DUBEOLSIK_ROWS[0] as cap}
+        {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+        {@const isLocked =
+          mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+        {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
+        {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+        {@const progressPercent =
+          mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-      <VirtualKey
-        {cap}
-        isTarget={activeKeys.includes(cap.key.toLowerCase())}
-        isShiftActive={isShiftPressed}
-        {isLocked}
-        {isActiveLearning}
-        {isMastered}
-        {progressPercent}
-        onselect={handleKeyClick}
-      />
-    {/each}
+        <VirtualKey
+          {cap}
+          isTarget={activeKeys.includes(cap.key.toLowerCase())}
+          isShiftActive={isShiftPressed}
+          {isLocked}
+          {isActiveLearning}
+          {isMastered}
+          {progressPercent}
+          onselect={handleKeyClick}
+        />
+      {/each}
 
-    <!-- Desktop: Backspace (span 4) at end of row -->
-    <button
-      type="button"
-      tabindex="-1"
-      onmousedown={(e) => handleKeyClick('Backspace', e)}
-      style="grid-column: span 4;"
-      class="hidden sm:flex items-center justify-center gap-1 h-10 sm:h-13 rounded-lg border text-xs font-semibold transition-colors cursor-pointer p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700
-        {activeKeys.includes('Backspace')
-        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-        : ''}"
-      aria-label="Backspace"
-    >
-      <span class="text-sm font-bold">⌫</span>
-      <span class="hidden sm:inline text-[10px]">Delete</span>
-    </button>
-    <!-- Mobile: 2-col right spacer (1 + 20 + 2 = 23) -->
-    <div style="grid-column: span 2;" class="sm:hidden"></div>
-  </div>
-
-  <!-- Row 1: A S D F G H J K L -->
-  <div class="grid w-full gap-1 sm:gap-1.5 kb-grid">
-    <!-- Desktop: 3-col left spacer -->
-    <div style="grid-column: span 3;" class="hidden sm:block"></div>
-    <!-- Mobile: 2-col left spacer (staggered +1 from row 0) -->
-    <div style="grid-column: span 2;" class="sm:hidden"></div>
-
-    {#each DUBEOLSIK_ROWS[1] as cap}
-      {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-      {@const isLocked =
-        mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-      {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-      {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-      {@const progressPercent =
-        mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
-
-      <VirtualKey
-        {cap}
-        isTarget={activeKeys.includes(cap.key.toLowerCase())}
-        isShiftActive={isShiftPressed}
-        {isLocked}
-        {isActiveLearning}
-        {isMastered}
-        {progressPercent}
-        onselect={handleKeyClick}
-      />
-    {/each}
-
-    <!-- Desktop: 5-col right spacer -->
-    <div style="grid-column: span 5;" class="hidden sm:block"></div>
-    <!-- Mobile: 3-col right spacer (2 + 18 + 3 = 23) -->
-    <div style="grid-column: span 3;" class="sm:hidden"></div>
-  </div>
-
-  <!-- Row 2: Z X C V B N M , . -->
-  <div class="grid w-full gap-1 sm:gap-1.5 kb-grid">
-    <!-- Desktop: left Shift (span 4) -->
-    <div style="grid-column: span 4;" class="hidden sm:block">
-      <ShiftKey
-        side="Left"
-        isTarget={isLeftShiftTarget}
-        isPressed={isVirtualShiftActive || isLeftShiftPressed}
-        widthClass="w-full"
-        onselect={(e) => handleKeyClick('Shift', e)}
-      />
+      <button
+        type="button"
+        tabindex="-1"
+        onmousedown={(e) => handleKeyClick('Backspace', e)}
+        style="grid-column: span 4;"
+        class="flex items-center justify-center gap-1 h-13 rounded-lg border text-xs font-semibold transition-colors cursor-pointer p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700
+          {isBackspaceTarget
+          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+          : ''}"
+        aria-label="Backspace"
+      >
+        <span class="text-sm font-bold">⌫</span>
+        <span class="text-[10px]">Delete</span>
+      </button>
     </div>
-    <!-- Mobile: 3-col left spacer (staggered +1 from row 1) -->
-    <div style="grid-column: span 3;" class="sm:hidden"></div>
 
-    {#each DUBEOLSIK_ROWS[2] as cap}
-      {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-      {@const isLocked =
-        mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-      {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-      {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-      {@const progressPercent =
-        mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
+    <!-- Desktop Row 1: A S D F G H J K L -->
+    <div class="grid w-full gap-1.5 kb-grid">
+      <div style="grid-column: span 3;"></div>
 
-      <VirtualKey
-        {cap}
-        isTarget={activeKeys.includes(cap.key.toLowerCase())}
-        isShiftActive={isShiftPressed}
-        {isLocked}
-        {isActiveLearning}
-        {isMastered}
-        {progressPercent}
-        onselect={handleKeyClick}
-      />
-    {/each}
+      {#each DUBEOLSIK_ROWS[1] as cap}
+        {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+        {@const isLocked =
+          mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+        {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
+        {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+        {@const progressPercent =
+          mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-    <!-- Desktop: right Shift (span 4) -->
-    <div style="grid-column: span 4;" class="hidden sm:block">
-      <ShiftKey
-        side="Right"
-        isTarget={isRightShiftTarget}
-        isPressed={isVirtualShiftActive || isRightShiftPressed}
-        widthClass="w-full"
-        onselect={(e) => handleKeyClick('Shift', e)}
-      />
+        <VirtualKey
+          {cap}
+          isTarget={activeKeys.includes(cap.key.toLowerCase())}
+          isShiftActive={isShiftPressed}
+          {isLocked}
+          {isActiveLearning}
+          {isMastered}
+          {progressPercent}
+          onselect={handleKeyClick}
+        />
+      {/each}
+
+      <div style="grid-column: span 5;"></div>
     </div>
-    <!-- Mobile: 2-col right spacer (3 + 18 + 2 = 23) -->
-    <div style="grid-column: span 2;" class="sm:hidden"></div>
+
+    <!-- Desktop Row 2: Left Shift + Z X C V B N M , . + Right Shift -->
+    <div class="grid w-full gap-1.5 kb-grid">
+      <div style="grid-column: span 4;">
+        <ShiftKey
+          side="Left"
+          isTarget={isLeftShiftTarget}
+          isPressed={isVirtualShiftActive || isLeftShiftPressed}
+          widthClass="w-full"
+          onselect={(e) => handleKeyClick('Shift', e)}
+        />
+      </div>
+
+      {#each DUBEOLSIK_ROWS[2] as cap}
+        {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+        {@const isLocked =
+          mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+        {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
+        {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+        {@const progressPercent =
+          mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
+
+        <VirtualKey
+          {cap}
+          isTarget={activeKeys.includes(cap.key.toLowerCase())}
+          isShiftActive={isShiftPressed}
+          {isLocked}
+          {isActiveLearning}
+          {isMastered}
+          {progressPercent}
+          onselect={handleKeyClick}
+        />
+      {/each}
+
+      <div style="grid-column: span 4;">
+        <ShiftKey
+          side="Right"
+          isTarget={isRightShiftTarget}
+          isPressed={isVirtualShiftActive || isRightShiftPressed}
+          widthClass="w-full"
+          onselect={(e) => handleKeyClick('Shift', e)}
+        />
+      </div>
+    </div>
+
+    <!-- Desktop Spacebar Row -->
+    <div class="flex items-center justify-center w-full mt-0.5">
+      <button
+        type="button"
+        tabindex="-1"
+        onmousedown={(e) => handleKeyClick(' ', e)}
+        class="w-64 md:w-80 h-8 rounded-lg border text-xs font-semibold uppercase tracking-wider flex items-center justify-center transition-colors cursor-pointer shrink-0
+          {isSpaceTarget
+          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+          : 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}"
+        aria-label="Spacebar"
+      >
+        <span>Space</span>
+      </button>
+    </div>
   </div>
 
-  <!-- Mobile: Shift + Space + Backspace row -->
-  <div class="flex items-center w-full gap-1 sm:hidden mt-0.5">
-    <button
-      type="button"
-      tabindex="-1"
-      onmousedown={(e) => handleKeyClick('Shift', e)}
-      class="h-14 flex-1 max-w-[15%] rounded-lg border text-lg font-semibold transition-colors cursor-pointer bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
-        {isLeftShiftTarget ||
-      isRightShiftTarget ||
-      isVirtualShiftActive ||
-      isLeftShiftPressed ||
-      isRightShiftPressed
-        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-        : ''}"
-      aria-label="Shift"
-    >
-      ⇧
-    </button>
-    <button
-      type="button"
-      tabindex="-1"
-      onmousedown={(e) => handleKeyClick(' ', e)}
-      class="h-14 flex-1 rounded-lg border text-sm font-semibold uppercase tracking-wider flex items-center justify-center transition-colors cursor-pointer bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 active:bg-gray-200 dark:active:bg-gray-700
-        {isSpaceTarget
-        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-        : ''}"
-      aria-label="Spacebar"
-    >
-      <span>Space</span>
-    </button>
-    <button
-      type="button"
-      tabindex="-1"
-      onmousedown={(e) => handleKeyClick('Backspace', e)}
-      class="h-14 flex-1 max-w-[15%] rounded-lg border text-lg font-bold transition-colors cursor-pointer bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
-        {activeKeys.includes('Backspace')
-        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-        : ''}"
-      aria-label="Backspace"
-    >
-      ⌫
-    </button>
-  </div>
+  <!-- ==================== MOBILE LAYOUT (< sm) ==================== -->
+  <div class="flex sm:hidden flex-col items-center w-full gap-1">
+    {#if !isSymbolMode}
+      <!-- Mobile Row 0: Q W E R T Y U I O P (10 keys) -->
+      <div class="flex items-center w-full gap-1">
+        {#each DUBEOLSIK_ROWS[0] as cap}
+          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+          {@const isLocked =
+            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
+          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+          {@const progressPercent =
+            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-  <!-- Desktop Spacebar Row -->
-  <div class="hidden sm:flex items-center justify-center w-full mt-0.5">
-    <button
-      type="button"
-      tabindex="-1"
-      onmousedown={(e) => handleKeyClick(' ', e)}
-      class="w-64 md:w-80 h-8 rounded-lg border text-xs font-semibold uppercase tracking-wider flex items-center justify-center transition-colors cursor-pointer shrink-0
-        {isSpaceTarget
-        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-        : 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}"
-      aria-label="Spacebar"
-    >
-      <span>Space</span>
-    </button>
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key.toLowerCase())}
+            isShiftActive={isShiftPressed}
+            {isLocked}
+            {isActiveLearning}
+            {isMastered}
+            {progressPercent}
+            onselect={handleKeyClick}
+          />
+        {/each}
+      </div>
+
+      <!-- Mobile Row 1: A S D F G H J K L (9 keys, staggered with 5% offset) -->
+      <div class="flex items-center justify-center w-full gap-1 px-[5%]">
+        {#each DUBEOLSIK_ROWS[1] as cap}
+          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+          {@const isLocked =
+            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
+          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+          {@const progressPercent =
+            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
+
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key.toLowerCase())}
+            isShiftActive={isShiftPressed}
+            {isLocked}
+            {isActiveLearning}
+            {isMastered}
+            {progressPercent}
+            onselect={handleKeyClick}
+          />
+        {/each}
+      </div>
+
+      <!-- Mobile Row 2: Shift (1.5x) + ㅋ ㅌ ㅊ ㅍ ㅠ ㅜ ㅡ (7 keys) + Backspace (1.5x) -->
+      <div class="flex items-center w-full gap-1">
+        <button
+          type="button"
+          tabindex="-1"
+          onmousedown={(e) => handleKeyClick('Shift', e)}
+          class="h-14 flex-[1.5] min-w-0 rounded-lg border text-lg font-semibold transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
+            {isLeftShiftTarget ||
+          isRightShiftTarget ||
+          isVirtualShiftActive ||
+          isLeftShiftPressed ||
+          isRightShiftPressed
+            ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm font-bold'
+            : ''}"
+          aria-label="Shift"
+        >
+          ⇧
+        </button>
+
+        {#each DUBEOLSIK_ROWS[2].slice(0, 7) as cap}
+          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
+          {@const isLocked =
+            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
+          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
+          {@const progressPercent =
+            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
+
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key.toLowerCase())}
+            isShiftActive={isShiftPressed}
+            {isLocked}
+            {isActiveLearning}
+            {isMastered}
+            {progressPercent}
+            onselect={handleKeyClick}
+          />
+        {/each}
+
+        <button
+          type="button"
+          tabindex="-1"
+          onmousedown={(e) => handleKeyClick('Backspace', e)}
+          class="h-14 flex-[1.5] min-w-0 rounded-lg border text-lg font-bold transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
+            {isBackspaceTarget
+            ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+            : ''}"
+          aria-label="Backspace"
+        >
+          ⌫
+        </button>
+      </div>
+    {:else}
+      <!-- Mobile Symbol Mode Row 0: 1 2 3 4 5 6 7 8 9 0 (10 keys) -->
+      <div class="flex items-center w-full gap-1">
+        {#each SYMBOL_ROWS[0] as cap}
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key)}
+            isShiftActive={false}
+            onselect={handleKeyClick}
+          />
+        {/each}
+      </div>
+
+      <!-- Mobile Symbol Mode Row 1: @ # ₩ _ & - + ( ) / (10 keys) -->
+      <div class="flex items-center w-full gap-1">
+        {#each SYMBOL_ROWS[1] as cap}
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key)}
+            isShiftActive={false}
+            onselect={handleKeyClick}
+          />
+        {/each}
+      </div>
+
+      <!-- Mobile Symbol Mode Row 2: Spacer + * " ' : ; ! ? (7 keys) + Backspace -->
+      <div class="flex items-center w-full gap-1">
+        <div class="flex-[1.5] min-w-0"></div>
+
+        {#each SYMBOL_ROWS[2] as cap}
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key)}
+            isShiftActive={false}
+            onselect={handleKeyClick}
+          />
+        {/each}
+
+        <button
+          type="button"
+          tabindex="-1"
+          onmousedown={(e) => handleKeyClick('Backspace', e)}
+          class="h-14 flex-[1.5] min-w-0 rounded-lg border text-lg font-bold transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
+            {isBackspaceTarget
+            ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+            : ''}"
+          aria-label="Backspace"
+        >
+          ⌫
+        </button>
+      </div>
+    {/if}
+
+    <!-- Mobile Bottom Row: ?123 Toggle + Comma + Space + Period -->
+    <div class="flex items-center w-full gap-1 mt-0.5">
+      <button
+        type="button"
+        tabindex="-1"
+        onmousedown={toggleSymbolMode}
+        class="h-14 flex-[1.5] max-w-[18%] rounded-lg border text-xs font-bold font-mono transition-colors cursor-pointer flex items-center justify-center bg-slate-200 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-slate-200 active:bg-slate-300 dark:active:bg-slate-600 shadow-2xs"
+        aria-label={isSymbolMode ? 'Switch to Korean Letters' : 'Switch to Numbers and Symbols'}
+      >
+        {isSymbolMode ? 'ㄱㄴㄷ' : '?123'}
+      </button>
+
+      <button
+        type="button"
+        tabindex="-1"
+        onmousedown={(e) => handleKeyClick(',', e)}
+        class="h-14 flex-1 max-w-[12%] rounded-lg border text-lg font-bold font-mono transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 active:bg-slate-200 dark:active:bg-slate-700
+          {isCommaTarget
+          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+          : ''}"
+        aria-label="Comma"
+      >
+        ,
+      </button>
+
+      <button
+        type="button"
+        tabindex="-1"
+        onmousedown={(e) => handleKeyClick(' ', e)}
+        class="h-14 flex-[5] rounded-lg border text-sm font-semibold uppercase tracking-wider flex items-center justify-center transition-colors cursor-pointer bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 active:bg-gray-200 dark:active:bg-gray-700
+          {isSpaceTarget
+          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+          : ''}"
+        aria-label="Spacebar"
+      >
+        <span>Space</span>
+      </button>
+
+      <button
+        type="button"
+        tabindex="-1"
+        onmousedown={(e) => handleKeyClick('.', e)}
+        class="h-14 flex-1 max-w-[12%] rounded-lg border text-lg font-bold font-mono transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 active:bg-slate-200 dark:active:bg-slate-700
+          {isPeriodTarget
+          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+          : ''}"
+        aria-label="Period"
+      >
+        .
+      </button>
+    </div>
   </div>
 </div>
 
@@ -273,12 +436,5 @@
   /* Desktop: 26-col grid matching physical keyboard layout */
   .kb-grid {
     grid-template-columns: repeat(26, minmax(0, 1fr));
-  }
-
-  /* Mobile: 23-col grid with separate modifier rows, preserving physical stagger */
-  @media (max-width: 639px) {
-    .kb-grid {
-      grid-template-columns: repeat(23, minmax(0, 1fr));
-    }
   }
 </style>

@@ -24,7 +24,7 @@
   }: Props = $props();
 
   let isConsonant = $derived(cap.type === 'consonant');
-  let isPunctuation = $derived(cap.type === 'punctuation');
+  let isPunctuationOrSymbol = $derived(cap.type === 'punctuation' || cap.type === 'symbol');
 
   let activeColorClasses = $derived(
     isTarget
@@ -35,7 +35,7 @@
           ? 'bg-amber-50/80 dark:bg-amber-950/50 border-amber-400 dark:border-amber-500 text-gray-900 dark:text-gray-100 ring-2 ring-amber-400/80 dark:ring-amber-500/80 font-bold shadow-xs'
           : isConsonant
             ? 'bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700'
-            : isPunctuation
+            : isPunctuationOrSymbol
               ? 'bg-slate-100/80 dark:bg-slate-800/60 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
               : 'bg-amber-50/70 dark:bg-amber-950/30 border-amber-200 dark:border-amber-900/60 text-gray-900 dark:text-gray-100 hover:bg-amber-100/70 dark:hover:bg-amber-900/50',
   );
@@ -46,7 +46,7 @@
   tabindex="-1"
   onmousedown={(e) => onselect?.(cap.key, e)}
   style="grid-column: span 2;"
-  class="relative overflow-hidden flex flex-col items-center justify-between h-14 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer p-1 {activeColorClasses}"
+  class="relative overflow-hidden flex flex-col items-center justify-between h-14 sm:h-13 flex-1 min-w-0 sm:flex-initial rounded-lg border text-center transition-colors cursor-pointer p-1 {activeColorClasses}"
   aria-label="{cap.jamo} (Key {cap.key.toUpperCase()})"
 >
   {#if progressPercent > 0 && !isLocked && !isTarget}
@@ -62,7 +62,7 @@
     class="relative z-10 flex items-center justify-between w-full text-xs sm:text-[10px] leading-none font-mono"
   >
     <span class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}>
-      {cap.key.toUpperCase()}
+      {cap.type === 'symbol' ? '' : cap.key.toUpperCase()}
     </span>
     {#if cap.shiftJamo}
       <span class={isTarget ? 'text-blue-200 font-bold' : 'text-gray-400 dark:text-gray-500'}>

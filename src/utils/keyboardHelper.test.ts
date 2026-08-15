@@ -63,8 +63,14 @@ describe('getNextRequiredKeys helper', () => {
     expect(getNextRequiredKeys('사과, 배', '사과', false)).toEqual([',']);
   });
 
+  it('should return keys for numbers and supported symbols', () => {
+    expect(getNextRequiredKeys('123', '', false)).toEqual(['1']);
+    expect(getNextRequiredKeys('123', '1', false)).toEqual(['2']);
+    expect(getNextRequiredKeys('!?', '', false)).toEqual(['right-shift', '!']);
+    expect(getNextRequiredKeys('!?', '!', false)).toEqual(['left-shift', '?']);
+  });
+
   it('should return empty array for unsupported or unknown characters', () => {
-    expect(getNextRequiredKeys('123', '', false)).toEqual([]);
     expect(getNextRequiredKeys('$', '', false)).toEqual([]);
     expect(getNextRequiredKeys('<', '', false)).toEqual([]);
     expect(getNextRequiredKeys('>', '', false)).toEqual([]);
