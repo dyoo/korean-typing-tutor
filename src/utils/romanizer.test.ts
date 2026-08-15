@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { romanize, decomposeSyllable, getPronunciation } from './romanizer';
+import { romanize, getPronunciation } from './romanizer';
+import { decomposeSyllable } from './hangulDecompose';
 import type { LessonItem } from '../types/korean';
 
 describe('Dynamic Romanizer Engine', () => {

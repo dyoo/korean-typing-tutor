@@ -200,11 +200,6 @@ export class TutorSession {
   }
 
   /** Returns active filter module ID or array of IDs. */
-  public getFilter(): string | string[] {
-    return this.selectedFilter;
-  }
-
-  /** Returns active filter module ID or array of IDs. */
   public getSelectedFilter(): string | string[] {
     return this.selectedFilter;
   }

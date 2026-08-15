@@ -1,8 +1,6 @@
 import type { LessonItem, SyllableDecomposition } from '../types/korean';
 import { decomposeSyllable } from './hangulDecompose';
 
-export { decomposeSyllable };
-
 /** Revised Romanization map for initial consonants (Choseong). */
 const INITIAL_CONSONANT_MAP: Record<string, string> = {
   ㄱ: 'g',

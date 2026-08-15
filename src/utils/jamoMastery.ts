@@ -465,7 +465,7 @@ export const COMPOUND_BATCHIM_SET = new Set([
 /**
  * Helper to determine if a character is a Hangul Jamo (compatibility or standard Unicode Jamo).
  */
-export function isHangulJamo(char: string): boolean {
+function isHangulJamo(char: string): boolean {
   if (!char) {
     return false;
   }

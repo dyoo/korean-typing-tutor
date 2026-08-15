@@ -58,8 +58,8 @@ describe('TutorSession controller', () => {
   });
 
   it('should filter items by selected level module', () => {
-    session.setFilter('l3', false);
-    expect(session.getFilter()).toBe('l3');
+    session.setFilter('l3');
+    expect(session.getSelectedFilter()).toBe('l3');
     expect(session.getTotalItems()).toBe(1);
     expect(session.getCurrentItem().target).toBe('사과');
 

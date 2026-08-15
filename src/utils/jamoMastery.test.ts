@@ -13,7 +13,6 @@ import {
   selectNextMasteryItem,
   calculateJamoProgress,
   setMasteryProgressionLevel,
-  isHangulJamo,
   getAdaptiveLengthMultiplier,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
@@ -128,12 +127,6 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
   });
 
   it('should evaluate whether vocabulary items are eligible based on unlocked Jamo set', () => {
-    expect(isHangulJamo('ㄱ')).toBe(true);
-    expect(isHangulJamo('ㅏ')).toBe(true);
-    expect(isHangulJamo(' ')).toBe(false);
-    expect(isHangulJamo('-')).toBe(false);
-    expect(isHangulJamo('!')).toBe(false);
-
     const unlocked = new Set(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']); // Stage 1 keys
 
     const validItem1: LessonItem = { id: '1', moduleId: 'test', target: '아', translation: 'Ah' };

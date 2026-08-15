@@ -1,4 +1,3 @@
-import type { ErrorReport } from '../types/korean';
 import {
   HANGUL_BASE,
   INITIAL_CONSONANT_MAP,
@@ -16,7 +15,6 @@ import {
   DIRECT_VOWEL_MAP,
   DIRECT_FINAL_CONSONANT_MAP,
 } from './hangulTables';
-import { checkErrors } from './hangulMatch';
 
 /**
  * Korean Hangul Composition Engine.
@@ -305,14 +303,6 @@ export class HangulEngine {
     } else {
       this.composedString = prefix;
     }
-  }
-
-  /**
-   * Compares target string vs user composed input and returns error flags per character position.
-   * Utilizes isPartialOrExactMatch to ensure valid in-progress Hangul syllables are not marked as errors.
-   */
-  public checkErrors(target: string, input: string): ErrorReport[] {
-    return checkErrors(target, input);
   }
 }
 
