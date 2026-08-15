@@ -1,6 +1,7 @@
 <script lang="ts">
   import SettingsModal from './SettingsModal.svelte';
   import GitHubLink from './GitHubLink.svelte';
+  import ModeSwitcher from './ModeSwitcher.svelte';
   import type { TutorSettings, ThemeMode } from './settings';
   import type { CursorColorMode } from '../utils/cursorColor';
   import type { TutorMode } from '../types/mastery';
@@ -58,36 +59,6 @@
 
 <div class="w-full max-w-7xl flex items-center justify-between gap-4 shrink-0">
   <div class="relative flex items-center gap-3">
-    <!-- Mode Switcher Toggle Button -->
-    <div
-      class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-300 dark:border-gray-700"
-    >
-      <button
-        type="button"
-        onclick={() => {
-          if (mode !== 'curriculum') ontogglemode();
-        }}
-        class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode ===
-        'curriculum'
-          ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-xs'
-          : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"
-      >
-        Free-form
-      </button>
-      <button
-        type="button"
-        onclick={() => {
-          if (mode !== 'mastery') ontogglemode();
-        }}
-        class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode ===
-        'mastery'
-          ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-xs'
-          : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"
-      >
-        Mastery
-      </button>
-    </div>
-
     {#if mode === 'curriculum'}
       <button
         type="button"
@@ -154,6 +125,8 @@
         {/if}
       </div>
     {/if}
+
+    <ModeSwitcher {mode} {ontogglemode} />
   </div>
 
   <div class="flex items-center gap-2">
