@@ -249,50 +249,46 @@
     inputElement?.focus();
   }
 
-  function togglePronunciation() {
-    settings = { ...settings, showPronunciation: !settings.showPronunciation };
+  function updateSetting<K extends keyof TutorSettings>(key: K, value: TutorSettings[K]) {
+    settings = { ...settings, [key]: value };
     saveSettings(settings);
+  }
+
+  function togglePronunciation() {
+    updateSetting('showPronunciation', !settings.showPronunciation);
   }
 
   function toggleTranslation() {
-    settings = { ...settings, showTranslation: !settings.showTranslation };
-    saveSettings(settings);
+    updateSetting('showTranslation', !settings.showTranslation);
   }
 
   function toggleVirtualKeyboard() {
-    settings = { ...settings, showVirtualKeyboard: !settings.showVirtualKeyboard };
-    saveSettings(settings);
+    updateSetting('showVirtualKeyboard', !settings.showVirtualKeyboard);
   }
 
   function toggleKeyboardHint() {
-    settings = { ...settings, showKeyboardHint: !settings.showKeyboardHint };
-    saveSettings(settings);
+    updateSetting('showKeyboardHint', !settings.showKeyboardHint);
   }
 
   function handleThemeChange(theme: ThemeMode) {
-    settings = { ...settings, theme };
-    saveSettings(settings);
+    updateSetting('theme', theme);
     applyTheme(theme);
   }
 
   function handleMinFontSizeChange(minFontSizeRem: number) {
-    settings = { ...settings, minFontSizeRem };
-    saveSettings(settings);
+    updateSetting('minFontSizeRem', minFontSizeRem);
   }
 
   function handleMaxFontSizeChange(maxFontSizeRem: number) {
-    settings = { ...settings, maxFontSizeRem };
-    saveSettings(settings);
+    updateSetting('maxFontSizeRem', maxFontSizeRem);
   }
 
   function handleToggleLockFontSize() {
-    settings = { ...settings, lockFontSize: !settings.lockFontSize };
-    saveSettings(settings);
+    updateSetting('lockFontSize', !settings.lockFontSize);
   }
 
   function handleCursorColorChange(cursorColor: CursorColorMode) {
-    settings = { ...settings, cursorColor };
-    saveSettings(settings);
+    updateSetting('cursorColor', cursorColor);
   }
 
   function handleVirtualKeySelect(key: string) {
