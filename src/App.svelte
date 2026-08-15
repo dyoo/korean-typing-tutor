@@ -85,10 +85,23 @@
     activeLearningJamo ? calculateJamoProgress(masteryState.jamoStats[activeLearningJamo.jamo]) : 0,
   );
 
+  function isTouchDevice(): boolean {
+    return (
+      typeof window !== 'undefined' &&
+      (window.matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window)
+    );
+  }
+
+  function focusInputElement() {
+    if (!isTouchDevice()) {
+      inputElement?.focus();
+    }
+  }
+
   onMount(() => {
     session.setFilter(enabledModuleIds, true);
     applyTheme(settings.theme);
-    inputElement?.focus();
+    focusInputElement();
 
     // Ensure pending debounced saves are flushed if the user navigates away or closes the tab.
     const handleBeforeUnload = () => {
@@ -124,23 +137,23 @@
         return;
       }
     }
-    inputElement?.focus();
+    focusInputElement();
   }
 
   function setInputCursorPosition(index: number) {
     session.setInputCursorIndex(index);
-    inputElement?.focus();
+    focusInputElement();
   }
 
   function toggleMode() {
     const newMode = mode === 'curriculum' ? 'mastery' : 'curriculum';
     session.setMode(newMode);
-    inputElement?.focus();
+    focusInputElement();
   }
 
   function handleMasteryLevelChange(level: number) {
     session.setMasteryProgressionLevel(level);
-    inputElement?.focus();
+    focusInputElement();
   }
 
   function toggleModule(modId: string) {
@@ -248,7 +261,7 @@
   function handleSkip(e: MouseEvent) {
     e.stopPropagation();
     session.advanceLevel();
-    inputElement?.focus();
+    focusInputElement();
   }
 
   function updateSetting<K extends keyof TutorSettings>(key: K, value: TutorSettings[K]) {
@@ -295,14 +308,13 @@
 
   function handleVirtualKeySelect(key: string) {
     session.processKey(key);
-    inputElement?.focus();
   }
 
   function togglePanel(panel: 'settings' | 'curriculum' | 'mastery', e?: MouseEvent) {
     e?.stopPropagation();
     if (activePanel === panel) {
       activePanel = 'none';
-      inputElement?.focus();
+      focusInputElement();
     } else {
       activePanel = panel;
     }
@@ -310,7 +322,7 @@
 
   function closePanel() {
     activePanel = 'none';
-    inputElement?.focus();
+    focusInputElement();
   }
 
   function toggleSettingsModal(e?: MouseEvent) {
