@@ -51,7 +51,7 @@ export class TutorSession {
   private engine: HangulEngine;
 
   public mode: TutorMode = $state('mastery');
-  public masteryState: MasteryState = $state() as MasteryState;
+  public masteryState: MasteryState = $state(loadMasteryState());
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
@@ -76,7 +76,6 @@ export class TutorSession {
     this.selectedFilter = defaultFilter;
     this.shouldShuffle = shuffle;
     this.engine = new HangulEngine();
-    this.masteryState = loadMasteryState();
     this.mode = this.masteryState.mode ?? 'mastery';
     this.applyFilterAndShuffle();
   }
@@ -124,10 +123,9 @@ export class TutorSession {
       } else if (this.selectedFilter === 'all') {
         filtered = [...this.allItems];
       } else {
+        const filter = this.selectedFilter;
         filtered = this.allItems.filter(
-          (item) =>
-            item.moduleId === this.selectedFilter ||
-            item.id.startsWith(this.selectedFilter as string),
+          (item) => item.moduleId === filter || item.id.startsWith(filter),
         );
       }
 
@@ -232,7 +230,6 @@ export class TutorSession {
       return {
         id: 'empty',
         moduleId: '',
-        type: 'word',
         target: '',
         pronunciation: '',
         translation:
@@ -245,7 +242,6 @@ export class TutorSession {
       this.activeItems[this.currentIndex] ?? {
         id: 'fallback',
         moduleId: 'all',
-        type: 'syllable',
         target: '가',
         pronunciation: 'ga',
         translation: null,

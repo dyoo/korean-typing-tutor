@@ -1,4 +1,4 @@
-import type { LessonItem } from '../types/korean';
+import type { LessonItem, SyllableDecomposition } from '../types/korean';
 import { decomposeSyllable } from './hangulDecompose';
 
 export { decomposeSyllable };
@@ -111,6 +111,13 @@ function getNormalFinalConsonantStr(finalConsonant: string | null): string {
 }
 
 /**
+ * A syllable decomposition annotated with romanization overrides computed during word traversal.
+ * `initialConsonantStr` holds a phonologically-adjusted romanized initial consonant (e.g. from
+ * liaison or liquidization) that takes precedence over the base Choseong mapping.
+ */
+type RomanizedSyllable = SyllableDecomposition & { initialConsonantStr?: string };
+
+/**
  * Romanizes a single continuous Korean word, taking into account phonological sound change rules
  * (liaison before vowels, nasalization before ㄴ/ㅁ, liquidization of ㄴ+ㄹ/ㄹ+ㄴ).
  */
@@ -120,7 +127,7 @@ function romanizeWord(word: string): string {
   }
 
   let res = '';
-  const syls: SyllableDecomposition[] = [];
+  const syls: RomanizedSyllable[] = [];
   for (let i = 0; i < word.length; i++) {
     const d = decomposeSyllable(word[i]);
     if (d) syls.push(d);
