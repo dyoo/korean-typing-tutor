@@ -115,7 +115,11 @@ describe('Settings module persistence', () => {
   });
 
   it('should follow OS system preference dynamically when theme is system', () => {
-    let changeHandler: ((e: { matches: boolean }) => void) | null = null;
+    // Non-null default keeps the handler callable even before the mock
+    // captures a listener; addEventListener overwrites it with the real one.
+    let changeHandler: (e: { matches: boolean }) => void = () => {
+      /* no-op until matchMedia captures the real change handler */
+    };
     const mediaQueryObj = {
       matches: true,
       media: '(prefers-color-scheme: dark)',
@@ -137,10 +141,8 @@ describe('Settings module persistence', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(true);
 
     // Simulate OS switching to light mode
-    if (changeHandler) {
-      mediaQueryObj.matches = false;
-      changeHandler({ matches: false });
-      expect(document.documentElement.classList.contains('dark')).toBe(false);
-    }
+    mediaQueryObj.matches = false;
+    changeHandler({ matches: false });
+    expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
 });
