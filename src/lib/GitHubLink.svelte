@@ -2,7 +2,7 @@
   /**
    * GitHubLink — compact repository link pill for the top bar.
    * Shows the GitHub octocat icon with "GitHub" text on desktop,
-   * collapses to icon-only on mobile to fit the single-row top bar.
+   * hidden on mobile screens to preserve room for mode switching and settings.
    */
 </script>
 
@@ -10,7 +10,7 @@
   href="https://github.com/dyoo/korean-typing-tutor"
   target="_blank"
   rel="noopener noreferrer"
-  class="flex items-center gap-1.5 text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors normal-case font-sans font-medium text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 rounded-full px-2.5 py-1.5 sm:px-3 bg-white dark:bg-gray-800 shadow-2xs"
+  class="hidden sm:flex items-center gap-1.5 text-gray-400 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors normal-case font-sans font-medium text-xs border border-gray-200 dark:border-gray-700 hover:border-gray-400 dark:hover:border-gray-500 rounded-full px-2.5 py-1.5 sm:px-3 bg-white dark:bg-gray-800 shadow-2xs"
   onclick={(e: MouseEvent) => e.stopPropagation()}
   onmousedown={(e: MouseEvent) => e.stopPropagation()}
 >
