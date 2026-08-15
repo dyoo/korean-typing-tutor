@@ -15,7 +15,9 @@
   <button
     type="button"
     onclick={() => {
-      if (mode !== 'curriculum') ontogglemode();
+      if (mode !== 'curriculum') {
+        ontogglemode();
+      }
     }}
     class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode ===
     'curriculum'
@@ -27,7 +29,9 @@
   <button
     type="button"
     onclick={() => {
-      if (mode !== 'mastery') ontogglemode();
+      if (mode !== 'mastery') {
+        ontogglemode();
+      }
     }}
     class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode ===
     'mastery'

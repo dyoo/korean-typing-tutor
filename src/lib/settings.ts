@@ -45,7 +45,9 @@ export const DEFAULT_SETTINGS: TutorSettings = {
 export function loadSettings(): TutorSettings {
   try {
     const raw = localStorage.getItem(SETTINGS_STORAGE_KEY);
-    if (!raw) return DEFAULT_SETTINGS;
+    if (!raw) {
+      return DEFAULT_SETTINGS;
+    }
     const parsed = JSON.parse(raw);
     const validThemes: ThemeMode[] = ['system', 'light', 'dark'];
     const validCursorColors: CursorColorMode[] = ['amber', 'sky', 'emerald', 'blue'];
@@ -101,7 +103,9 @@ let mediaQueryCleanup: (() => void) | null = null;
  * Applies the selected theme mode ('system' | 'light' | 'dark') to document.documentElement.
  */
 export function applyTheme(themeMode: ThemeMode): void {
-  if (typeof document === 'undefined') return;
+  if (typeof document === 'undefined') {
+    return;
+  }
 
   if (mediaQueryCleanup) {
     mediaQueryCleanup();

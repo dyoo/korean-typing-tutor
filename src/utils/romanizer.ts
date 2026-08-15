@@ -99,14 +99,30 @@ const SINGLE_JAMO_PRONUNCIATION: Record<string, string> = {
  * Converts a final consonant (Jongseong) to its default non-liaison Revised Romanization letter.
  */
 function getNormalFinalConsonantStr(finalConsonant: string | null): string {
-  if (!finalConsonant) return '';
-  if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(finalConsonant)) return 'k';
-  if (['ㄴ', 'ㄵ', 'ㄶ'].includes(finalConsonant)) return 'n';
-  if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(finalConsonant)) return 't';
-  if (['ㄹ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㅀ'].includes(finalConsonant)) return 'l';
-  if (['ㅁ', 'ㄻ'].includes(finalConsonant)) return 'm';
-  if (['ㅂ', 'ㅍ', 'ㄿ', 'ㅄ'].includes(finalConsonant)) return 'p';
-  if (finalConsonant === 'ㅇ') return 'ng';
+  if (!finalConsonant) {
+    return '';
+  }
+  if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(finalConsonant)) {
+    return 'k';
+  }
+  if (['ㄴ', 'ㄵ', 'ㄶ'].includes(finalConsonant)) {
+    return 'n';
+  }
+  if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(finalConsonant)) {
+    return 't';
+  }
+  if (['ㄹ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㅀ'].includes(finalConsonant)) {
+    return 'l';
+  }
+  if (['ㅁ', 'ㄻ'].includes(finalConsonant)) {
+    return 'm';
+  }
+  if (['ㅂ', 'ㅍ', 'ㄿ', 'ㅄ'].includes(finalConsonant)) {
+    return 'p';
+  }
+  if (finalConsonant === 'ㅇ') {
+    return 'ng';
+  }
   return '';
 }
 
@@ -130,8 +146,11 @@ function romanizeWord(word: string): string {
   const syls: RomanizedSyllable[] = [];
   for (let i = 0; i < word.length; i++) {
     const d = decomposeSyllable(word[i]);
-    if (d) syls.push(d);
-    else syls.push({ initialConsonant: '', vowel: '', finalConsonant: null, raw: word[i] });
+    if (d) {
+      syls.push(d);
+    } else {
+      syls.push({ initialConsonant: '', vowel: '', finalConsonant: null, raw: word[i] });
+    }
   }
 
   for (let i = 0; i < syls.length; i++) {
@@ -254,15 +273,21 @@ function romanizeWord(word: string): string {
         next.initialConsonantStr = 'l';
       } else if (next && (next.initialConsonant === 'ㄴ' || next.initialConsonant === 'ㅁ')) {
         // Nasalization before ㄴ/ㅁ
-        if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(curr.finalConsonant)) finalConsonantStr = 'ng';
-        else if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(curr.finalConsonant))
+        if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(curr.finalConsonant)) {
+          finalConsonantStr = 'ng';
+        } else if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(curr.finalConsonant)) {
           finalConsonantStr = 'n';
-        else if (['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'].includes(curr.finalConsonant))
+        } else if (['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'].includes(curr.finalConsonant)) {
           finalConsonantStr = 'm';
-        else if (curr.finalConsonant === 'ㄴ') finalConsonantStr = 'n';
-        else if (curr.finalConsonant === 'ㄹ') finalConsonantStr = 'l';
-        else if (curr.finalConsonant === 'ㅁ') finalConsonantStr = 'm';
-        else if (curr.finalConsonant === 'ㅇ') finalConsonantStr = 'ng';
+        } else if (curr.finalConsonant === 'ㄴ') {
+          finalConsonantStr = 'n';
+        } else if (curr.finalConsonant === 'ㄹ') {
+          finalConsonantStr = 'l';
+        } else if (curr.finalConsonant === 'ㅁ') {
+          finalConsonantStr = 'm';
+        } else if (curr.finalConsonant === 'ㅇ') {
+          finalConsonantStr = 'ng';
+        }
       } else if (next && next.initialConsonant === 'ㄹ') {
         finalConsonantStr = getNormalFinalConsonantStr(curr.finalConsonant);
       } else {
@@ -270,7 +295,9 @@ function romanizeWord(word: string): string {
       }
     }
 
-    if (curr.initialConsonantStr !== undefined) initialConsonantStr = curr.initialConsonantStr;
+    if (curr.initialConsonantStr !== undefined) {
+      initialConsonantStr = curr.initialConsonantStr;
+    }
 
     res += initialConsonantStr + vowelStr + finalConsonantStr;
   }

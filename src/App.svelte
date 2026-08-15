@@ -143,7 +143,9 @@
 
   function toggleModule(modId: string) {
     if (enabledModuleIds.includes(modId)) {
-      if (enabledModuleIds.length === 1) return;
+      if (enabledModuleIds.length === 1) {
+        return;
+      }
       enabledModuleIds = enabledModuleIds.filter((id) => id !== modId);
     } else {
       enabledModuleIds = [...enabledModuleIds, modId];

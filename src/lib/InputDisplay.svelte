@@ -43,7 +43,9 @@
       activeCursorElement &&
       inputContainerElement
     ) {
-      if (rafId !== null) cancelAnimationFrame(rafId);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
 
       rafId = requestAnimationFrame(() => {
         const container = inputContainerElement;
@@ -69,7 +71,9 @@
     }
 
     return () => {
-      if (rafId !== null) cancelAnimationFrame(rafId);
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
     };
   });
 </script>

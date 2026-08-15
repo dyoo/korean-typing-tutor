@@ -62,7 +62,9 @@
           isOpen = false;
         }}
         onkeydown={(e) => {
-          if (e.key === 'Escape') isOpen = false;
+          if (e.key === 'Escape') {
+            isOpen = false;
+          }
         }}
         class="fixed inset-0 z-[60] bg-transparent"
       ></div>

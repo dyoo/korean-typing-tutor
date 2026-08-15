@@ -15,7 +15,9 @@ import {
  * Example: '화' -> "ㅎㅗㅏ", '홧' -> "ㅎㅗㅏㅈ", '닭' -> "ㄷㅏㄹㄱ".
  */
 export function decomposeCharToJamos(char: string | undefined): string {
-  if (!char) return '';
+  if (!char) {
+    return '';
+  }
 
   const code = char.charCodeAt(0);
   if (code >= HANGUL_BASE && code <= 0xd7a3) {
@@ -61,7 +63,9 @@ export function decomposeCharToJamos(char: string | undefined): string {
  * Example: '사 과' -> ['ㅅ', 'ㅏ', ' ', 'ㄱ', 'ㅗ', 'ㅏ']
  */
 export function decomposeStringToJamos(str: string | undefined): string[] {
-  if (!str) return [];
+  if (!str) {
+    return [];
+  }
   const result: string[] = [];
   for (const char of str) {
     if (char === ' ') {
@@ -81,9 +85,13 @@ export function decomposeStringToJamos(str: string | undefined): string[] {
  * Returns null if the character is outside the Unicode Hangul Syllables block (U+AC00..U+D7A3).
  */
 export function decomposeSyllable(char: string | undefined): SyllableDecomposition | null {
-  if (!char) return null;
+  if (!char) {
+    return null;
+  }
   const code = char.charCodeAt(0) - HANGUL_BASE;
-  if (code < 0 || code > 11171) return null;
+  if (code < 0 || code > 11171) {
+    return null;
+  }
   const initialConsonantIndex = Math.floor(code / 588);
   const vowelIndex = Math.floor((code % 588) / 28);
   const finalConsonantIndex = code % 28;
@@ -99,7 +107,9 @@ export function decomposeSyllable(char: string | undefined): SyllableDecompositi
  * Example: '장' -> 'ㅈ', 'ㅈ' -> 'ㅈ'.
  */
 export function getInitialConsonantJamo(char: string | undefined): string | null {
-  if (!char) return null;
+  if (!char) {
+    return null;
+  }
 
   const code = char.charCodeAt(0);
   if (code >= HANGUL_BASE && code <= 0xd7a3) {

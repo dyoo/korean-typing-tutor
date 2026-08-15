@@ -91,7 +91,9 @@
       aria-label="Close settings modal backdrop"
       onclick={onclose}
       onkeydown={(e) => {
-        if (e.key === 'Escape') onclose();
+        if (e.key === 'Escape') {
+          onclose();
+        }
       }}
       class="fixed inset-0 z-40 bg-transparent select-none"
     ></div>

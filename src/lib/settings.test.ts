@@ -123,7 +123,9 @@ describe('Settings module persistence', () => {
       addListener: vi.fn(),
       removeListener: vi.fn(),
       addEventListener: vi.fn((event: string, handler: (e: { matches: boolean }) => void) => {
-        if (event === 'change') changeHandler = handler;
+        if (event === 'change') {
+          changeHandler = handler;
+        }
       }),
       removeEventListener: vi.fn(),
       dispatchEvent: vi.fn(),

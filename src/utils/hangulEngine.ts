@@ -288,7 +288,9 @@ export class HangulEngine {
    */
   public resetTo(prefix: string): void {
     this.reset();
-    if (!prefix) return;
+    if (!prefix) {
+      return;
+    }
 
     const lastChar = prefix[prefix.length - 1];
     const initIdx = INITIAL_CONSONANT_STANDALONE.indexOf(lastChar);

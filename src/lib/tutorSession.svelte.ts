@@ -285,7 +285,9 @@ export class TutorSession {
 
   /** Returns module progress percentage (0-100%). */
   public getProgressPercentage(): number {
-    if (this.activeItems.length === 0) return 0;
+    if (this.activeItems.length === 0) {
+      return 0;
+    }
     return Math.round(((this.currentIndex + 1) / this.activeItems.length) * 100);
   }
 
@@ -294,7 +296,9 @@ export class TutorSession {
     item = this.getCurrentItem(),
     options?: { showPronunciation?: boolean; showTranslation?: boolean },
   ): string {
-    if (!item) return '';
+    if (!item) {
+      return '';
+    }
     const showPron = options?.showPronunciation ?? true;
     const showTrans = options?.showTranslation ?? true;
     const parts: string[] = [];
@@ -324,7 +328,9 @@ export class TutorSession {
    */
   private getCurrentExpectedJamo(): string | null {
     const currentTarget = this.getCurrentItem().target;
-    if (!currentTarget) return null;
+    if (!currentTarget) {
+      return null;
+    }
 
     const targetJamos = decomposeStringToJamos(currentTarget);
     const inputJamos = decomposeStringToJamos(this.userInput);
@@ -365,10 +371,15 @@ export class TutorSession {
     }
 
     // Navigation Keys
-    if (key === 'ArrowLeft') this.setInputCursorIndex(this.inputCursorIndex - 1);
-    else if (key === 'ArrowRight') this.setInputCursorIndex(this.inputCursorIndex + 1);
-    else if (key === 'Home') this.setInputCursorIndex(0);
-    else if (key === 'End') this.setInputCursorIndex(this.userInput.length);
+    if (key === 'ArrowLeft') {
+      this.setInputCursorIndex(this.inputCursorIndex - 1);
+    } else if (key === 'ArrowRight') {
+      this.setInputCursorIndex(this.inputCursorIndex + 1);
+    } else if (key === 'Home') {
+      this.setInputCursorIndex(0);
+    } else if (key === 'End') {
+      this.setInputCursorIndex(this.userInput.length);
+    }
 
     if (key === 'ArrowLeft' || key === 'ArrowRight' || key === 'Home' || key === 'End') {
       return this.makeResult();

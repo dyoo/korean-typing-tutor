@@ -14,6 +14,10 @@ export default ts.config(
         ...globals.node,
       },
     },
+    rules: {
+      // Require explicit block bodies for all control flow statements; auto-fixes one-liners.
+      curly: ['error', 'all'],
+    },
   },
   {
     files: ['**/*.svelte', '**/*.svelte.ts'],

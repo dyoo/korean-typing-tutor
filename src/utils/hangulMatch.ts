@@ -11,8 +11,12 @@ export function isPartialOrExactMatch(
   inputChar: string | undefined,
   nextTargetChar?: string,
 ): boolean {
-  if (!inputChar || !targetChar) return false;
-  if (targetChar === inputChar) return true;
+  if (!inputChar || !targetChar) {
+    return false;
+  }
+  if (targetChar === inputChar) {
+    return true;
+  }
 
   let targetJamos = decomposeCharToJamos(targetChar);
 
@@ -44,8 +48,12 @@ export function isSyllableComplete(
   inputChar: string | undefined,
   nextTargetChar?: string,
 ): boolean {
-  if (!targetChar || !inputChar) return false;
-  if (targetChar === inputChar) return true;
+  if (!targetChar || !inputChar) {
+    return false;
+  }
+  if (targetChar === inputChar) {
+    return true;
+  }
 
   const targetJamos = decomposeCharToJamos(targetChar);
   const inputJamos = decomposeCharToJamos(inputChar);

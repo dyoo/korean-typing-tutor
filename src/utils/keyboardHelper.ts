@@ -6,7 +6,9 @@ function getKeyInfoResult(keyInfo?: {
   shift?: boolean;
   hand?: 'left' | 'right';
 }): string[] {
-  if (!keyInfo) return [];
+  if (!keyInfo) {
+    return [];
+  }
   const lowerKey = keyInfo.key.toLowerCase();
   if (keyInfo.shift) {
     const shiftHand = keyInfo.hand === 'left' ? 'right-shift' : 'left-shift';

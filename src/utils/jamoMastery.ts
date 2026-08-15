@@ -190,7 +190,9 @@ export function loadMasteryState(): MasteryState {
       return createDefaultMasteryState();
     }
     const raw = localStorage.getItem(MASTERY_STORAGE_KEY);
-    if (!raw) return createDefaultMasteryState();
+    if (!raw) {
+      return createDefaultMasteryState();
+    }
 
     const parsed = JSON.parse(raw);
     const defaultState = createDefaultMasteryState();
@@ -323,7 +325,9 @@ export function getActiveLearningJamo(state: MasteryState): JamoProgressionItem 
  * Calculates rolling accuracy for a given Jamo from its recent attempt history.
  */
 export function calculateJamoAccuracy(stats: JamoStats): number {
-  if (stats.recentHistory.length === 0) return 1.0;
+  if (stats.recentHistory.length === 0) {
+    return 1.0;
+  }
   const correct = stats.recentHistory.filter(Boolean).length;
   return correct / stats.recentHistory.length;
 }
@@ -332,9 +336,15 @@ export function calculateJamoAccuracy(stats: JamoStats): number {
  * Calculates percentage progress (0 to 100) towards mastery for a single Jamo.
  */
 export function calculateJamoProgress(stats?: JamoStats): number {
-  if (!stats) return 0;
-  if (stats.isMastered) return 100;
-  if (stats.totalAttempts === 0) return 0;
+  if (!stats) {
+    return 0;
+  }
+  if (stats.isMastered) {
+    return 100;
+  }
+  if (stats.totalAttempts === 0) {
+    return 0;
+  }
   const accuracy = calculateJamoAccuracy(stats);
   const attemptRatio = Math.min(stats.totalAttempts, MIN_MASTERY_ATTEMPTS) / MIN_MASTERY_ATTEMPTS;
   return Math.min(100, Math.max(0, Math.round(attemptRatio * accuracy * 100)));
@@ -360,7 +370,9 @@ export function recordJamoAttempt(
   }
 
   stats.totalAttempts += 1;
-  if (isCorrect) stats.correctAttempts += 1;
+  if (isCorrect) {
+    stats.correctAttempts += 1;
+  }
   stats.recentHistory.push(isCorrect);
   if (stats.recentHistory.length > ROLLING_WINDOW_SIZE) {
     stats.recentHistory.shift();
@@ -433,7 +445,9 @@ export const COMPOUND_BATCHIM_SET = new Set([
  * Helper to determine if a character is a Hangul Jamo (compatibility or standard Unicode Jamo).
  */
 export function isHangulJamo(char: string): boolean {
-  if (!char) return false;
+  if (!char) {
+    return false;
+  }
   const code = char.charCodeAt(0);
   return (code >= 0x3131 && code <= 0x318e) || (code >= 0x1100 && code <= 0x11ff);
 }
@@ -444,11 +458,15 @@ export function isHangulJamo(char: string): boolean {
  * batchim to be unlocked in the progression sequence.
  */
 export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): boolean {
-  if (!item.target || item.target.trim() === '') return false;
+  if (!item.target || item.target.trim() === '') {
+    return false;
+  }
 
   // 1. Verify that all decomposed basic Jamos are unlocked
   const jamos = decomposeStringToJamos(item.target);
-  if (jamos.length === 0) return false;
+  if (jamos.length === 0) {
+    return false;
+  }
   if (!jamos.every((j) => !isHangulJamo(j) || unlockedJamos.has(j))) {
     return false;
   }
@@ -530,16 +548,28 @@ export function getEligibleMasteryItems(
  */
 export function getAdaptiveLengthMultiplier(targetLength: number, progressPercent: number): number {
   if (progressPercent < 30) {
-    if (targetLength <= 2) return 4.0;
-    if (targetLength <= 4) return 1.0;
+    if (targetLength <= 2) {
+      return 4.0;
+    }
+    if (targetLength <= 4) {
+      return 1.0;
+    }
     return 0.2;
   } else if (progressPercent < 70) {
-    if (targetLength >= 2 && targetLength <= 4) return 3.0;
-    if (targetLength === 1) return 1.5;
-    if (targetLength <= 8) return 1.0;
+    if (targetLength >= 2 && targetLength <= 4) {
+      return 3.0;
+    }
+    if (targetLength === 1) {
+      return 1.5;
+    }
+    if (targetLength <= 8) {
+      return 1.0;
+    }
     return 0.5;
   } else {
-    if (targetLength >= 3) return 1.5;
+    if (targetLength >= 3) {
+      return 1.5;
+    }
     return 1.0;
   }
 }
@@ -559,7 +589,9 @@ const FOCUS_JAMO_PROBABILITY = 0.4;
  */
 function itemContainsJamo(item: LessonItem, jamo: string): boolean {
   const jamos = decomposeStringToJamos(item.target);
-  if (jamos.includes(jamo)) return true;
+  if (jamos.includes(jamo)) {
+    return true;
+  }
 
   // For compound batchim targets, also check syllable final consonant slots directly,
   // since decomposition yields the component Jamos rather than the compound itself

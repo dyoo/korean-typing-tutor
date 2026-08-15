@@ -10,16 +10,22 @@ export function handleCopyEvent(
   e: ClipboardEvent,
   selection: Selection | null = typeof window !== 'undefined' ? window.getSelection() : null,
 ): boolean {
-  if (!selection || selection.isCollapsed || selection.rangeCount === 0) return false;
+  if (!selection || selection.isCollapsed || selection.rangeCount === 0) {
+    return false;
+  }
 
   const range = selection.getRangeAt(0);
   const container = range.commonAncestorContainer;
   const element =
     container.nodeType === Node.ELEMENT_NODE ? (container as HTMLElement) : container.parentElement;
-  if (!element) return false;
+  if (!element) {
+    return false;
+  }
 
   const wrapper = element.closest('.target-display, .input-display');
-  if (!wrapper) return false;
+  if (!wrapper) {
+    return false;
+  }
 
   const spans = wrapper.querySelectorAll('[data-char]');
   const selectedChars: string[] = [];

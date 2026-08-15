@@ -28,7 +28,9 @@
   }
 
   function getValueFromPointer(e: PointerEvent): number {
-    if (!trackEl) return minValue;
+    if (!trackEl) {
+      return minValue;
+    }
     const rect = trackEl.getBoundingClientRect();
     const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
     return clampAndStep(min + ratio * (max - min));
@@ -77,7 +79,9 @@
   }
 
   function handleTrackPointerDown(e: PointerEvent) {
-    if (!trackEl) return;
+    if (!trackEl) {
+      return;
+    }
     const val = getValueFromPointer(e);
     const distMin = Math.abs(val - minValue);
     const distMax = Math.abs(val - maxValue);

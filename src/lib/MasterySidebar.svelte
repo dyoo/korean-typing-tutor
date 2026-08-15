@@ -58,7 +58,9 @@
     aria-label="Close sidebar backdrop"
     onclick={onclose}
     onkeydown={(e) => {
-      if (e.key === 'Enter' || e.key === ' ') onclose();
+      if (e.key === 'Enter' || e.key === ' ') {
+        onclose();
+      }
     }}
     class="fixed inset-0 z-40 bg-black/40 dark:bg-black/60 transition-opacity select-none"
   ></div>
