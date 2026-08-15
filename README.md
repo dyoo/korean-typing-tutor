@@ -142,15 +142,14 @@ We use **Vitest** for automated unit testing to ensure the Korean composition en
   npm run test:watch
   ```
 
-## Type Checking
+## Linting and Type Checking
 
-We use **svelte-check** for cross-component type validation. This catches prop name mismatches,
-missing imports, and type errors across `.svelte` component boundaries that ESLint alone cannot
-detect.
+We use **ESLint** for static analysis and **svelte-check** for cross-component type validation.
+Running `npm run lint` runs both in sequence.
 
-- **Run type checker**:
+- **Run linter and type checker**:
   ```bash
-  npm run check
+  npm run lint
   ```
 
 ## Formatting code

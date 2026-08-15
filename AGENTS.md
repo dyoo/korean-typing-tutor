@@ -42,7 +42,7 @@ distraction-free, high-performance typing experience for English speakers learni
   `npm test` configured with `vitest run`) rather than interactive watch mode.
 - **Linting**: Use `npx eslint .` (or `npm run lint`) to perform static analysis and ensure zero
   lint errors across `.ts` and `.svelte` files.
-- **Type Checking**: Use `npx svelte-check` (or `npm run check`) to perform cross-component type
+- **Type Checking**: Use `npx svelte-check` (or `npm run lint`) to perform cross-component type
   validation. This catches prop name mismatches, missing imports, and type errors across `.svelte`
   component boundaries that ESLint alone cannot detect.
 - **Dead Code Detection**: Use `npx knip` to analyze and identify unused exports, dead files, and
