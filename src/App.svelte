@@ -33,9 +33,11 @@
 
   const initialSettings = loadSettings();
   let settings = $state<TutorSettings>(initialSettings);
-  let showSettingsModal = $state(false);
-  let showCurriculumSidebar = $state(false);
-  let showMasterySidebar = $state(false);
+  type ActivePanel = 'none' | 'settings' | 'curriculum' | 'mastery';
+  let activePanel = $state<ActivePanel>('none');
+  let showSettingsModal = $derived(activePanel === 'settings');
+  let showCurriculumSidebar = $derived(activePanel === 'curriculum');
+  let showMasterySidebar = $derived(activePanel === 'mastery');
 
   let enabledModuleIds = $state<string[]>(
     Array.isArray(initialSettings.enabledModuleIds)
@@ -296,47 +298,31 @@
     inputElement?.focus();
   }
 
-  function toggleSettingsModal(e?: MouseEvent) {
+  function togglePanel(panel: 'settings' | 'curriculum' | 'mastery', e?: MouseEvent) {
     e?.stopPropagation();
-    showSettingsModal = !showSettingsModal;
-    if (showSettingsModal) {
-      showCurriculumSidebar = false;
-      showMasterySidebar = false;
-    } else {
+    if (activePanel === panel) {
+      activePanel = 'none';
       inputElement?.focus();
+    } else {
+      activePanel = panel;
     }
+  }
+
+  function closePanel() {
+    activePanel = 'none';
+    inputElement?.focus();
+  }
+
+  function toggleSettingsModal(e?: MouseEvent) {
+    togglePanel('settings', e);
   }
 
   function toggleCurriculumSidebar(e?: MouseEvent) {
-    e?.stopPropagation();
-    showCurriculumSidebar = !showCurriculumSidebar;
-    if (showCurriculumSidebar) {
-      showSettingsModal = false;
-      showMasterySidebar = false;
-    } else {
-      inputElement?.focus();
-    }
-  }
-
-  function closeCurriculumSidebar() {
-    showCurriculumSidebar = false;
-    inputElement?.focus();
+    togglePanel('curriculum', e);
   }
 
   function toggleMasterySidebar(e?: MouseEvent) {
-    e?.stopPropagation();
-    showMasterySidebar = !showMasterySidebar;
-    if (showMasterySidebar) {
-      showSettingsModal = false;
-      showCurriculumSidebar = false;
-    } else {
-      inputElement?.focus();
-    }
-  }
-
-  function closeMasterySidebar() {
-    showMasterySidebar = false;
-    inputElement?.focus();
+    togglePanel('mastery', e);
   }
 
   function handleCopy(e: ClipboardEvent) {
@@ -365,10 +351,7 @@
     ontogglecurriculum={toggleCurriculumSidebar}
     ontogglemastery={toggleMasterySidebar}
     ontogglesettings={toggleSettingsModal}
-    onclosesettings={() => {
-      showSettingsModal = false;
-      inputElement?.focus();
-    }}
+    onclosesettings={closePanel}
     onthemechange={handleThemeChange}
     ontogglepronunciation={togglePronunciation}
     ontoggletranslation={toggleTranslation}
@@ -437,7 +420,7 @@
   {enabledModuleIds}
   {collapsedCategoryIds}
   {modules}
-  onclose={closeCurriculumSidebar}
+  onclose={closePanel}
   ontogglemodule={toggleModule}
   ontogglecategorycollapse={toggleCategoryCollapse}
   ontogglecategorygroup={toggleCategoryGroup}
@@ -449,7 +432,7 @@
   isOpen={showMasterySidebar}
   masteryUnlockedCount={masteryState.unlockedCount}
   jamoStats={masteryState.jamoStats}
-  onclose={closeMasterySidebar}
+  onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}
 />
 
