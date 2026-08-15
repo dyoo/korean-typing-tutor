@@ -383,7 +383,7 @@
   </div>
 
   <div
-    class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-2 md:pb-4 shrink-0 px-2 md:px-8"
+    class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-0 sm:pb-2 md:pb-4 shrink-0 px-2 md:px-8"
   >
     <InputDisplay
       bind:inputElement

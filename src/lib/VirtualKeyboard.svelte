@@ -75,7 +75,7 @@
 <div
   role="region"
   aria-label="Virtual Korean Keyboard Helper"
-  class="virtual-keyboard w-screen sm:w-full -mx-[calc((100vw-100%)/2)] sm:mx-0 max-w-none sm:max-w-5xl flex flex-col items-center gap-1.5 p-2 sm:p-3 bg-white/90 dark:bg-gray-800/90 border-2 border-gray-200 dark:border-gray-700 rounded-2xl sm:rounded-b-none shadow-sm select-none"
+  class="virtual-keyboard w-screen sm:w-full -mx-[calc((100vw-100%)/2)] sm:mx-0 max-w-none sm:max-w-5xl flex flex-col items-center gap-1.5 p-2 sm:p-3 bg-white/90 dark:bg-gray-800/90 border-2 border-b-0 border-gray-200 dark:border-gray-700 rounded-t-2xl rounded-b-none shadow-sm select-none"
 >
   <!-- Row 0: Q W E R T Y U I O P -->
   <div class="grid w-full gap-1 sm:gap-1.5 kb-grid">
