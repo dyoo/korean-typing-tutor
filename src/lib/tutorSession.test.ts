@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { TutorSession } from './tutorSession';
-import type { CurriculumData } from './tutorSession';
+import { TutorSession } from './tutorSession.svelte';
+import type { CurriculumData } from './tutorSession.svelte';
 
 const mockCurriculum: CurriculumData = {
   modules: [

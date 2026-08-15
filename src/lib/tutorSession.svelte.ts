@@ -38,20 +38,20 @@ export interface KeyResult {
 export class TutorSession {
   private allItems: LessonItem[];
   private modules: ModuleDefinition[];
-  private activeItems: LessonItem[] = [];
-  private selectedFilter: string | string[] = 'all';
+  public activeItems: LessonItem[] = $state([]);
+  public selectedFilter: string | string[] = $state('all');
   private shouldShuffle: boolean;
-  private currentIndex = 0;
-  private userInput = '';
-  private inputCursorIndex = 0;
-  private suffix = '';
-  private errors: ErrorReport[] = [];
-  private accuracy = 100;
-  private isItemCompleted = false;
+  public currentIndex = $state(0);
+  public userInput = $state('');
+  public inputCursorIndex = $state(0);
+  public suffix = $state('');
+  public errors: ErrorReport[] = $state([]);
+  public accuracy = $state(100);
+  public isItemCompleted = $state(false);
   private engine: HangulEngine;
 
-  private mode: TutorMode = 'mastery';
-  private masteryState: MasteryState;
+  public mode: TutorMode = $state('mastery');
+  public masteryState: MasteryState = $state() as MasteryState;
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
@@ -118,7 +118,7 @@ export class TutorSession {
         } else if (this.selectedFilter.length === 0) {
           filtered = [];
         } else {
-          const allowedSet = new Set(this.selectedFilter);
+          const allowedSet = new Set(this.selectedFilter); // eslint-disable-line svelte/prefer-svelte-reactivity
           filtered = this.allItems.filter((item) => allowedSet.has(item.moduleId));
         }
       } else if (this.selectedFilter === 'all') {

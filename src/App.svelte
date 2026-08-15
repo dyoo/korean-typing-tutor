@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import contentData from './content';
-  import { TutorSession } from './lib/tutorSession';
-  import type { CurriculumData } from './lib/tutorSession';
+  import { TutorSession } from './lib/tutorSession.svelte';
+  import type { CurriculumData } from './lib/tutorSession.svelte';
   import { loadSettings, saveSettings, applyTheme } from './lib/settings';
   import type { TutorSettings, ThemeMode } from './lib/settings';
   import {
@@ -37,19 +37,19 @@
       : modules.map((m) => m.id),
   );
 
-  let mode = $state(session.getMode());
-  let masteryState = $state(session.getMasteryState());
+  let mode = $derived(session.getMode());
+  let masteryState = $derived(session.getMasteryState());
 
-  let userInput = $state(session.getUserInput());
-  let errors = $state(session.getErrors());
-  let currentItem = $state(session.getCurrentItem());
-  let isCompleted = $state(session.getIsItemCompleted());
+  let userInput = $derived(session.getUserInput());
+  let errors = $derived(session.getErrors());
+  let currentItem = $derived(session.getCurrentItem());
+  let isCompleted = $derived(session.getIsItemCompleted());
   let inputElement = $state<HTMLInputElement | null>(null);
 
   let isLeftShiftPressed = $state(false);
   let isRightShiftPressed = $state(false);
 
-  let sessionCursorIndex = $state(session.getInputCursorIndex());
+  let sessionCursorIndex = $derived(session.getInputCursorIndex());
 
   let displayText = $derived(session.getDisplayText(currentItem, settings));
   let wordTokens = $derived(getWordTokens(currentItem.target));
@@ -73,7 +73,6 @@
 
   onMount(() => {
     session.setFilter(enabledModuleIds, true);
-    syncState();
     applyTheme(settings.theme);
     inputElement?.focus();
 
@@ -114,41 +113,19 @@
     inputElement?.focus();
   }
 
-  function syncState() {
-    const newUserInput = session.getUserInput();
-    const newCursorIndex = session.getInputCursorIndex();
-    const newErrors = session.getErrors();
-    const newCurrentItem = session.getCurrentItem();
-    const newIsCompleted = session.getIsItemCompleted();
-    const newMode = session.getMode();
-
-    // Only reassign $state variables when they actually change to prevent unnecessary re-renders.
-    // userInput and cursorIndex change on every keystroke; the rest rarely do.
-    if (userInput !== newUserInput) userInput = newUserInput;
-    if (sessionCursorIndex !== newCursorIndex) sessionCursorIndex = newCursorIndex;
-    errors = newErrors; // Always updated (new array from checkErrors), but O(1) Map lookup handles it.
-    if (currentItem.id !== newCurrentItem.id) currentItem = newCurrentItem;
-    if (isCompleted !== newIsCompleted) isCompleted = newIsCompleted;
-    if (mode !== newMode) mode = newMode;
-    // masteryState is a reference; Svelte 5 deep reactivity handles mutations without reassignment.
-  }
-
   function setInputCursorPosition(index: number) {
     session.setInputCursorIndex(index);
-    syncState();
     inputElement?.focus();
   }
 
   function toggleMode() {
     const newMode = mode === 'curriculum' ? 'mastery' : 'curriculum';
     session.setMode(newMode);
-    syncState();
     inputElement?.focus();
   }
 
   function handleMasteryLevelChange(level: number) {
     session.setMasteryProgressionLevel(level);
-    syncState();
     inputElement?.focus();
   }
 
@@ -162,7 +139,6 @@
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
     session.setFilter(enabledModuleIds, true);
-    syncState();
   }
 
   let collapsedCategoryIds = $state<string[]>(
@@ -184,7 +160,6 @@
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
     session.setFilter(enabledModuleIds, true);
-    syncState();
   }
 
   function selectAllModules() {
@@ -192,7 +167,6 @@
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
     session.setFilter('all', true);
-    syncState();
   }
 
   function deselectAllModules() {
@@ -200,7 +174,6 @@
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
     session.setFilter(enabledModuleIds, true);
-    syncState();
   }
 
   function handleKeydown(e: KeyboardEvent) {
@@ -231,7 +204,6 @@
     ) {
       e.preventDefault();
       session.processKey(e.key);
-      syncState();
     }
   }
 
@@ -260,62 +232,52 @@
   function handleSkip(e: MouseEvent) {
     e.stopPropagation();
     session.advanceLevel();
-    syncState();
     inputElement?.focus();
   }
 
   function togglePronunciation() {
     settings = { ...settings, showPronunciation: !settings.showPronunciation };
     saveSettings(settings);
-    syncState();
   }
 
   function toggleTranslation() {
     settings = { ...settings, showTranslation: !settings.showTranslation };
     saveSettings(settings);
-    syncState();
   }
 
   function toggleVirtualKeyboard() {
     settings = { ...settings, showVirtualKeyboard: !settings.showVirtualKeyboard };
     saveSettings(settings);
-    syncState();
   }
 
   function handleThemeChange(theme: ThemeMode) {
     settings = { ...settings, theme };
     saveSettings(settings);
     applyTheme(theme);
-    syncState();
   }
 
   function handleMinFontSizeChange(minFontSizeRem: number) {
     settings = { ...settings, minFontSizeRem };
     saveSettings(settings);
-    syncState();
   }
 
   function handleMaxFontSizeChange(maxFontSizeRem: number) {
     settings = { ...settings, maxFontSizeRem };
     saveSettings(settings);
-    syncState();
   }
 
   function handleToggleLockFontSize() {
     settings = { ...settings, lockFontSize: !settings.lockFontSize };
     saveSettings(settings);
-    syncState();
   }
 
   function handleCursorColorChange(cursorColor: CursorColorMode) {
     settings = { ...settings, cursorColor };
     saveSettings(settings);
-    syncState();
   }
 
   function handleVirtualKeySelect(key: string) {
     session.processKey(key);
-    syncState();
     inputElement?.focus();
   }
 
