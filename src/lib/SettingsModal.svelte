@@ -13,6 +13,7 @@
     ontogglepronunciation: () => void;
     ontoggletranslation: () => void;
     ontogglevirtualkeyboard: () => void;
+    ontogglekeyboardhint: () => void;
     onminfontsizechange?: (minSize: number) => void;
     onmaxfontsizechange?: (maxSize: number) => void;
     ontogglelockfontsize?: () => void;
@@ -28,6 +29,7 @@
     ontogglepronunciation,
     ontoggletranslation,
     ontogglevirtualkeyboard,
+    ontogglekeyboardhint,
     onminfontsizechange,
     onmaxfontsizechange,
     ontogglelockfontsize,
@@ -176,6 +178,17 @@
           type="checkbox"
           checked={settings.showVirtualKeyboard}
           onchange={ontogglevirtualkeyboard}
+          class="w-4 h-4 text-blue-600 rounded cursor-pointer"
+        />
+      </label>
+
+      <!-- Keyboard Hint Toggle -->
+      <label class="flex items-center justify-between cursor-pointer">
+        <span>Show Keyboard Hint</span>
+        <input
+          type="checkbox"
+          checked={settings.showKeyboardHint}
+          onchange={ontogglekeyboardhint}
           class="w-4 h-4 text-blue-600 rounded cursor-pointer"
         />
       </label>

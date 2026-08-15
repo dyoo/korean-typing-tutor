@@ -68,6 +68,9 @@
     getNextRequiredKeys(currentItem.target, userInput, isCompleted),
   );
 
+  // Conditionally suppress keyboard hints when the setting is disabled.
+  let hintKeys = $derived(settings.showKeyboardHint ? activeRequiredKeys : []);
+
   // Map errors to O(1) lookups by index to avoid O(N^2) .find() calls in child {#each} loops.
   let errorMap = $derived(new Map(errors.map((e) => [e.index, e.isError])));
 
@@ -257,6 +260,11 @@
     saveSettings(settings);
   }
 
+  function toggleKeyboardHint() {
+    settings = { ...settings, showKeyboardHint: !settings.showKeyboardHint };
+    saveSettings(settings);
+  }
+
   function handleThemeChange(theme: ThemeMode) {
     settings = { ...settings, theme };
     saveSettings(settings);
@@ -365,6 +373,7 @@
     ontogglepronunciation={togglePronunciation}
     ontoggletranslation={toggleTranslation}
     ontogglevirtualkeyboard={toggleVirtualKeyboard}
+    ontogglekeyboardhint={toggleKeyboardHint}
     onminfontsizechange={handleMinFontSizeChange}
     onmaxfontsizechange={handleMaxFontSizeChange}
     ontogglelockfontsize={handleToggleLockFontSize}
@@ -411,7 +420,7 @@
     {#if settings.showVirtualKeyboard}
       <div class="w-full flex justify-center">
         <VirtualKeyboard
-          activeKeys={activeRequiredKeys}
+          activeKeys={hintKeys}
           {mode}
           {masteryState}
           {isLeftShiftPressed}

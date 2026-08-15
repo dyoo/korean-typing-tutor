@@ -26,6 +26,7 @@
     ontogglepronunciation: () => void;
     ontoggletranslation: () => void;
     ontogglevirtualkeyboard: () => void;
+    ontogglekeyboardhint: () => void;
     onminfontsizechange: (minFontSizeRem: number) => void;
     onmaxfontsizechange: (maxFontSizeRem: number) => void;
     ontogglelockfontsize: () => void;
@@ -52,6 +53,7 @@
     ontogglepronunciation,
     ontoggletranslation,
     ontogglevirtualkeyboard,
+    ontogglekeyboardhint,
     onminfontsizechange,
     onmaxfontsizechange,
     ontogglelockfontsize,
@@ -164,6 +166,7 @@
     {ontogglepronunciation}
     {ontoggletranslation}
     {ontogglevirtualkeyboard}
+    {ontogglekeyboardhint}
     {onminfontsizechange}
     {onmaxfontsizechange}
     {ontogglelockfontsize}
