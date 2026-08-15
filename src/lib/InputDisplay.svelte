@@ -75,7 +75,7 @@
 </script>
 
 <div
-  class="w-full h-24 md:h-28 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-xl px-4 overflow-hidden cursor-text"
+  class="w-full h-14 md:h-16 my-2 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-lg px-3 overflow-hidden cursor-text"
   onclick={onfocuscontainer}
 >
   {#if userInput.length === 0}
