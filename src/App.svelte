@@ -334,7 +334,7 @@
 
 <main
   oncopy={handleCopy}
-  class="flex flex-col items-center justify-between h-screen max-h-screen h-dvh max-h-dvh bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 pt-3 pb-0 md:px-8 md:pt-5 overflow-hidden transition-colors"
+  class="flex flex-col items-center justify-between h-full h-svh max-h-svh bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[env(safe-area-inset-bottom,0px)] md:px-8 md:pt-5 overflow-hidden transition-colors"
 >
   <TopBar
     {mode}
@@ -437,8 +437,13 @@
 />
 
 <style>
-  :global(body) {
+  :global(html, body, #app) {
+    height: 100%;
     margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  :global(body) {
     font-family:
       'Noto Sans KR',
       'Inter',
