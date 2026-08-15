@@ -31,6 +31,6 @@ export default ts.config(
     },
   },
   {
-    ignores: ['dist/', 'node_modules/', '.svelte-kit/', 'dev-dist/'],
+    ignores: ['dist/', 'node_modules/', '.svelte-kit/', 'dev-dist/', '.jj/'],
   },
 );
