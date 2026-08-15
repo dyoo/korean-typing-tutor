@@ -148,12 +148,12 @@
         {/if}
       </button>
     {/if}
-
-    <ModeSwitcher {mode} {ontogglemode} />
   </div>
 
   <div class="flex items-center gap-2">
     <GitHubLink />
+
+    <ModeSwitcher {mode} {ontogglemode} />
 
     <SettingsModal
     isOpen={showSettingsModal}
