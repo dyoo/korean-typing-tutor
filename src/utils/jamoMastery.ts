@@ -3,6 +3,7 @@ import type {
   MasteryState,
   JamoStats,
   JamoProgressionItem,
+  JamoStageGroup,
   MasteryAttemptResult,
 } from '../types/mastery';
 import { decomposeStringToJamos } from './hangulDecompose';
@@ -160,6 +161,26 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = [
 ];
 
 /**
+ * Groups `JAMO_PROGRESSION_ORDER` into stages, preserving the original order of items
+ * within each stage. The result is sorted by ascending stage number.
+ */
+export const JAMO_STAGES: JamoStageGroup[] = (() => {
+  const stageMap = new Map<number, JamoProgressionItem[]>();
+  for (const item of JAMO_PROGRESSION_ORDER) {
+    const group = stageMap.get(item.stage) ?? [];
+    group.push(item);
+    stageMap.set(item.stage, group);
+  }
+  return Array.from(stageMap.entries())
+    .sort(([a], [b]) => a - b)
+    .map(([stageNum, items]) => ({
+      stageNum,
+      stageName: items[0].stageName,
+      items,
+    }));
+})();
+
+/**
  * Returns the default mastery progress state starting with the 4 home-row index keys unlocked.
  */
 export function createDefaultMasteryState(): MasteryState {
@@ -199,8 +220,8 @@ export function loadMasteryState(): MasteryState {
 
     const unlockedCount =
       typeof parsed.unlockedCount === 'number' &&
-      parsed.unlockedCount >= 4 &&
-      parsed.unlockedCount <= JAMO_PROGRESSION_ORDER.length
+        parsed.unlockedCount >= 4 &&
+        parsed.unlockedCount <= JAMO_PROGRESSION_ORDER.length
         ? parsed.unlockedCount
         : 4;
 
@@ -528,13 +549,13 @@ export function getEligibleMasteryItems(
     return fallbackList.length > 0
       ? fallbackList
       : [
-          {
-            id: 'mastery-starter',
-            moduleId: 'mastery',
-            target: '아',
-            translation: 'Ah',
-          },
-        ];
+        {
+          id: 'mastery-starter',
+          moduleId: 'mastery',
+          target: '아',
+          translation: 'Ah',
+        },
+      ];
   }
 
   return eligible;

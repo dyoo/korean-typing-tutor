@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { JAMO_PROGRESSION_ORDER, calculateJamoProgress } from '../utils/jamoMastery';
-  import type { JamoProgressionItem, JamoStats } from '../types/mastery';
+  import { JAMO_PROGRESSION_ORDER, JAMO_STAGES, calculateJamoProgress } from '../utils/jamoMastery';
+  import type { JamoStats } from '../types/mastery';
 
   interface Props {
     isOpen: boolean;
@@ -13,22 +13,6 @@
   let { isOpen, masteryUnlockedCount, jamoStats, onclose, onmasterylevelchange }: Props = $props();
 
   let collapsedStageIds = $state<string[]>([]);
-
-  const stages = $derived.by(() => {
-    const stageMap = new Map<number, JamoProgressionItem[]>();
-    for (const item of JAMO_PROGRESSION_ORDER) {
-      const group = stageMap.get(item.stage) ?? [];
-      group.push(item);
-      stageMap.set(item.stage, group);
-    }
-    return Array.from(stageMap.entries())
-      .sort(([a], [b]) => a - b)
-      .map(([stageNum, items]) => ({
-        stageNum,
-        stageName: items[0].stageName,
-        items,
-      }));
-  });
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && isOpen) {
@@ -98,7 +82,7 @@
     </div>
 
     <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 [scrollbar-width:thin]">
-      {#each stages as stage}
+      {#each JAMO_STAGES as stage}
         <div
           class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-xl p-2.5 bg-gray-50/60 dark:bg-gray-800/40 gap-2"
         >

@@ -36,6 +36,16 @@ export interface JamoProgressionItem {
   combination?: [string, string];
 }
 
+/** A grouped stage of the Jamo progression sequence (for sidebar display). */
+export interface JamoStageGroup {
+  /** Numeric stage identifier (1-based). */
+  stageNum: number;
+  /** Human-readable stage label shared by all items in the group. */
+  stageName: string;
+  /** Jamos belonging to this stage, in progression order. */
+  items: JamoProgressionItem[];
+}
+
 /** Result of checking or recording a Jamo attempt. */
 export interface MasteryAttemptResult {
   jamo: string;
