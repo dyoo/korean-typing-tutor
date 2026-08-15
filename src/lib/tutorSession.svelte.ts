@@ -14,8 +14,7 @@ import {
   JAMO_PROGRESSION_ORDER,
   COMPOUND_BATCHIM_SET,
 } from '../utils/jamoMastery';
-import { decomposeStringToJamos } from '../utils/hangulDecompose';
-import { FINAL_CONSONANT_STANDALONE, HANGUL_BASE } from '../utils/hangulTables';
+import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecompose';
 import type { CurriculumData, ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
 import type { TutorMode, MasteryState, JamoProgressionItem } from '../types/mastery';
 
@@ -431,20 +430,14 @@ export class TutorSession {
       const activeItem = getActiveLearningJamo(this.masteryState);
       if (activeItem && COMPOUND_BATCHIM_SET.has(activeItem.jamo)) {
         const lastInputChar = this.userInput[this.userInput.length - 1];
-        if (lastInputChar) {
-          const code = lastInputChar.charCodeAt(0) - HANGUL_BASE;
-          if (code >= 0 && code <= 11171) {
-            const finalIndex = code % 28;
-            if (finalIndex > 0 && FINAL_CONSONANT_STANDALONE[finalIndex] === activeItem.jamo) {
-              const compoundResult = recordJamoAttempt(
-                this.masteryState,
-                activeItem.jamo,
-                isCorrect,
-              );
-              if (compoundResult.newlyUnlockedJamo) {
-                newlyUnlockedJamo = compoundResult.newlyUnlockedJamo;
-              }
-            }
+        if (lastInputChar && decomposeSyllable(lastInputChar)?.finalConsonant === activeItem.jamo) {
+          const compoundResult = recordJamoAttempt(
+            this.masteryState,
+            activeItem.jamo,
+            isCorrect,
+          );
+          if (compoundResult.newlyUnlockedJamo) {
+            newlyUnlockedJamo = compoundResult.newlyUnlockedJamo;
           }
         }
       }

@@ -6,8 +6,7 @@ import type {
   JamoStageGroup,
   MasteryAttemptResult,
 } from '../types/mastery';
-import { decomposeStringToJamos } from './hangulDecompose';
-import { FINAL_CONSONANT_STANDALONE, HANGUL_BASE } from './hangulTables';
+import { decomposeStringToJamos, decomposeSyllable } from './hangulDecompose';
 
 /** Storage key used for persisting Jamo mastery progress in LocalStorage. */
 const MASTERY_STORAGE_KEY = 'korean_tutor_mastery';
@@ -494,15 +493,9 @@ export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): bo
 
   // 2. Verify that compound final consonants (겹받침) are unlocked
   for (const char of item.target) {
-    const code = char.charCodeAt(0) - HANGUL_BASE;
-    if (code >= 0 && code <= 11171) {
-      const finalConsonantIndex = code % 28;
-      if (finalConsonantIndex > 0) {
-        const finalChar = FINAL_CONSONANT_STANDALONE[finalConsonantIndex];
-        if (finalChar && COMPOUND_BATCHIM_SET.has(finalChar) && !unlockedJamos.has(finalChar)) {
-          return false;
-        }
-      }
+    const finalChar = decomposeSyllable(char)?.finalConsonant;
+    if (finalChar && COMPOUND_BATCHIM_SET.has(finalChar) && !unlockedJamos.has(finalChar)) {
+      return false;
     }
   }
 
@@ -618,12 +611,8 @@ function itemContainsJamo(item: LessonItem, jamo: string): boolean {
   // since decomposition yields the component Jamos rather than the compound itself
   if (COMPOUND_BATCHIM_SET.has(jamo)) {
     for (const char of item.target) {
-      const code = char.charCodeAt(0) - HANGUL_BASE;
-      if (code >= 0 && code <= 11171) {
-        const finalIndex = code % 28;
-        if (finalIndex > 0 && FINAL_CONSONANT_STANDALONE[finalIndex] === jamo) {
-          return true;
-        }
+      if (decomposeSyllable(char)?.finalConsonant === jamo) {
+        return true;
       }
     }
   }
