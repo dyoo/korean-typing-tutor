@@ -24,6 +24,7 @@ export default defineConfig({
         short_name: 'KoreanTyping',
         description: 'Learn Korean through typing practice',
         theme_color: '#ffffff',
+        display: 'fullscreen',
         version: commitId,
         icons: [
           {
