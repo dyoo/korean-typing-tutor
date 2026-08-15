@@ -17,6 +17,7 @@ import {
   getAdaptiveLengthMultiplier,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
+import type { JamoStats } from '../types/mastery';
 
 describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
   beforeEach(() => {
@@ -258,7 +259,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
   it('should calculate accurate mastery fill percentage (0 to 100%)', () => {
     expect(calculateJamoProgress(undefined)).toBe(0);
 
-    const stats = {
+    const stats: JamoStats = {
       totalAttempts: 0,
       correctAttempts: 0,
       recentHistory: [],
