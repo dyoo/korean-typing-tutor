@@ -52,9 +52,9 @@
   data-target-index={dataIndex}
   data-char={char}
   onclick={handleClick}
-  class="relative inline-flex flex-col items-center pb-2 pt-1 mx-0.5 {variant === 'input'
-    ? 'cursor-pointer'
-    : ''}"
+  class="relative inline-flex flex-col items-center mx-0.5 {variant === 'input'
+    ? 'cursor-pointer py-0.5'
+    : 'pb-2 pt-1'}"
 >
   <span class="whitespace-pre {textColor}">
     {char === ' ' ? ' ' : char}

@@ -79,11 +79,11 @@
 </script>
 
 <div
-  class="w-full h-14 md:h-16 my-2 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-lg px-3 overflow-hidden cursor-text"
+  class="w-full h-12 md:h-14 my-1.5 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-lg px-3 overflow-hidden cursor-text"
 >
   {#if userInput.length === 0}
     <span
-      class="text-xl md:text-2xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap select-none"
+      class="text-lg md:text-xl text-gray-400 dark:text-gray-500 font-normal text-center whitespace-nowrap select-none"
     >
       {!hasEnabledModules
         ? 'Select a module above to begin...'
@@ -94,7 +94,7 @@
   {:else}
     <div
       bind:this={inputContainerElement}
-      class="input-display relative z-10 flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold select-text"
+      class="input-display relative z-10 flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-2xl md:text-3xl font-bold leading-tight select-text"
     >
       {#each userInput.split('') as char, i}
         {@const isError = errorMap.get(i) ?? false}
