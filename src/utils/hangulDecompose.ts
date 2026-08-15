@@ -111,16 +111,9 @@ export function getInitialConsonantJamo(char: string | undefined): string | null
     return null;
   }
 
-  const code = char.charCodeAt(0);
-  if (code >= HANGUL_BASE && code <= 0xd7a3) {
-    const offset = code - HANGUL_BASE;
-    const initialConsonantIndex = Math.floor(offset / (21 * 28));
-    return INITIAL_CONSONANT_STANDALONE[initialConsonantIndex] ?? null;
-  }
-
   if (INITIAL_CONSONANT_STANDALONE.includes(char)) {
     return char;
   }
 
-  return null;
+  return decomposeSyllable(char)?.initialConsonant ?? null;
 }
