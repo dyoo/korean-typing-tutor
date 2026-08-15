@@ -141,7 +141,9 @@
               {/if}
               <span class="relative z-10">{activeJamoChar}</span>
               {#if activeLearningCombination}
-                <span class="relative z-10 text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90">
+                <span
+                  class="relative z-10 text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90"
+                >
                   ({activeLearningCombination[0]}+{activeLearningCombination[1]})
                 </span>
               {/if}
@@ -158,19 +160,19 @@
     <ModeSwitcher {mode} {ontogglemode} />
 
     <SettingsModal
-    isOpen={showSettingsModal}
-    {settings}
-    {ontogglesettings}
-    onclose={onclosesettings}
-    {onthemechange}
-    {ontogglepronunciation}
-    {ontoggletranslation}
-    {ontogglevirtualkeyboard}
-    {ontogglekeyboardhint}
-    {onminfontsizechange}
-    {onmaxfontsizechange}
-    {ontogglelockfontsize}
-    {oncursorcolorchange}
-  />
+      isOpen={showSettingsModal}
+      {settings}
+      {ontogglesettings}
+      onclose={onclosesettings}
+      {onthemechange}
+      {ontogglepronunciation}
+      {ontoggletranslation}
+      {ontogglevirtualkeyboard}
+      {ontogglekeyboardhint}
+      {onminfontsizechange}
+      {onmaxfontsizechange}
+      {ontogglelockfontsize}
+      {oncursorcolorchange}
+    />
   </div>
 </div>

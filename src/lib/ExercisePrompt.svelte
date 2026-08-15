@@ -10,7 +10,8 @@
 <div class="mb-2 h-14 flex items-center justify-center shrink-0">
   {#if isCompleted}
     <span
-      onclick={onskip} class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold px-5 py-2 rounded-full text-base md:text-lg border border-emerald-300 dark:border-emerald-800 shadow-sm text-center cursor-pointer"
+      onclick={onskip}
+      class="inline-flex items-center gap-2 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 font-bold px-5 py-2 rounded-full text-base md:text-lg border border-emerald-300 dark:border-emerald-800 shadow-sm text-center cursor-pointer"
     >
       ✓ Correct! Press <kbd
         class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 border dark:border-gray-700 px-2 py-0.5 rounded shadow text-sm md:text-base"

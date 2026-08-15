@@ -10,13 +10,7 @@
     onmasterylevelchange: (level: number) => void;
   }
 
-  let {
-    isOpen,
-    masteryUnlockedCount,
-    jamoStats,
-    onclose,
-    onmasterylevelchange,
-  }: Props = $props();
+  let { isOpen, masteryUnlockedCount, jamoStats, onclose, onmasterylevelchange }: Props = $props();
 
   let collapsedStageIds = $state<string[]>([]);
 
@@ -115,7 +109,11 @@
               class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer"
             >
               <svg
-                class="w-3.5 h-3.5 text-gray-400 transition-transform {collapsedStageIds.includes(stage.stageName) ? '-rotate-90' : ''}"
+                class="w-3.5 h-3.5 text-gray-400 transition-transform {collapsedStageIds.includes(
+                  stage.stageName,
+                )
+                  ? '-rotate-90'
+                  : ''}"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -155,7 +153,8 @@
                   />
                   <div class="flex items-center gap-2">
                     <span
-                      class="relative overflow-hidden text-base font-bold min-w-[28px] text-center leading-none {progress >= 100
+                      class="relative overflow-hidden text-base font-bold min-w-[28px] text-center leading-none {progress >=
+                      100
                         ? 'text-emerald-600 dark:text-emerald-400'
                         : 'text-amber-600 dark:text-amber-400'}"
                     >

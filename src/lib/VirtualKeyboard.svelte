@@ -42,14 +42,10 @@
 
   // Actual shift state: only from physical keyboard or virtual toggle, never from target highlighting.
   // This prevents the keyboard from auto-shifting when the target character requires shift.
-  let isShiftPressed = $derived(
-    isVirtualShiftActive || isLeftShiftPressed || isRightShiftPressed,
-  );
+  let isShiftPressed = $derived(isVirtualShiftActive || isLeftShiftPressed || isRightShiftPressed);
 
   // Combined shift state for display: includes target highlighting so keys show the shifted jamo.
-  let isShiftActive = $derived(
-    isShiftPressed || isLeftShiftTarget || isRightShiftTarget,
-  );
+  let isShiftActive = $derived(isShiftPressed || isLeftShiftTarget || isRightShiftTarget);
 
   function toggleShift(e: MouseEvent) {
     e.preventDefault();
@@ -76,20 +72,6 @@
   }
 </script>
 
-<style>
-  /* Desktop: 26-col grid matching physical keyboard layout */
-  .kb-grid {
-    grid-template-columns: repeat(26, minmax(0, 1fr));
-  }
-
-  /* Mobile: 23-col grid with separate modifier rows, preserving physical stagger */
-  @media (max-width: 639px) {
-    .kb-grid {
-      grid-template-columns: repeat(23, minmax(0, 1fr));
-    }
-  }
-</style>
-
 <div
   role="region"
   aria-label="Virtual Korean Keyboard Helper"
@@ -104,24 +86,26 @@
 
     {#each DUBEOLSIK_ROWS[0] as cap}
       {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-      {@const isLocked = mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+      {@const isLocked =
+        mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
       {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
       {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-      {@const progressPercent = mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
+      {@const progressPercent =
+        mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-          <VirtualKey
-            {cap}
-            isTarget={activeKeys.includes(cap.key.toLowerCase())}
-            isShiftActive={isShiftPressed}
-            {isLocked}
-            {isActiveLearning}
-            {isMastered}
-            {progressPercent}
-            onselect={handleKeyClick}
-          />
-        {/each}
+      <VirtualKey
+        {cap}
+        isTarget={activeKeys.includes(cap.key.toLowerCase())}
+        isShiftActive={isShiftPressed}
+        {isLocked}
+        {isActiveLearning}
+        {isMastered}
+        {progressPercent}
+        onselect={handleKeyClick}
+      />
+    {/each}
 
-        <!-- Desktop: Backspace (span 4) at end of row -->
+    <!-- Desktop: Backspace (span 4) at end of row -->
     <button
       type="button"
       tabindex="-1"
@@ -129,8 +113,8 @@
       style="grid-column: span 4;"
       class="hidden sm:flex items-center justify-center gap-1 h-10 sm:h-13 rounded-lg border text-xs font-semibold transition-colors cursor-pointer p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700
         {activeKeys.includes('Backspace')
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : ''}"
+        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+        : ''}"
       aria-label="Backspace"
     >
       <span class="text-sm font-bold">⌫</span>
@@ -149,24 +133,26 @@
 
     {#each DUBEOLSIK_ROWS[1] as cap}
       {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-      {@const isLocked = mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+      {@const isLocked =
+        mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
       {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
       {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-      {@const progressPercent = mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
+      {@const progressPercent =
+        mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-        <VirtualKey
-          {cap}
-          isTarget={activeKeys.includes(cap.key.toLowerCase())}
-          isShiftActive={isShiftPressed}
-          {isLocked}
-          {isActiveLearning}
-          {isMastered}
-          {progressPercent}
-          onselect={handleKeyClick}
-        />
-      {/each}
+      <VirtualKey
+        {cap}
+        isTarget={activeKeys.includes(cap.key.toLowerCase())}
+        isShiftActive={isShiftPressed}
+        {isLocked}
+        {isActiveLearning}
+        {isMastered}
+        {progressPercent}
+        onselect={handleKeyClick}
+      />
+    {/each}
 
-      <!-- Desktop: 5-col right spacer -->
+    <!-- Desktop: 5-col right spacer -->
     <div style="grid-column: span 5;" class="hidden sm:block"></div>
     <!-- Mobile: 3-col right spacer (2 + 18 + 3 = 23) -->
     <div style="grid-column: span 3;" class="sm:hidden"></div>
@@ -189,24 +175,26 @@
 
     {#each DUBEOLSIK_ROWS[2] as cap}
       {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-      {@const isLocked = mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
+      {@const isLocked =
+        mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
       {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
       {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-      {@const progressPercent = mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
+      {@const progressPercent =
+        mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
 
-        <VirtualKey
-          {cap}
-          isTarget={activeKeys.includes(cap.key.toLowerCase())}
-          isShiftActive={isShiftPressed}
-          {isLocked}
-          {isActiveLearning}
-          {isMastered}
-          {progressPercent}
-          onselect={handleKeyClick}
-        />
-      {/each}
+      <VirtualKey
+        {cap}
+        isTarget={activeKeys.includes(cap.key.toLowerCase())}
+        isShiftActive={isShiftPressed}
+        {isLocked}
+        {isActiveLearning}
+        {isMastered}
+        {progressPercent}
+        onselect={handleKeyClick}
+      />
+    {/each}
 
-      <!-- Desktop: right Shift (span 4) -->
+    <!-- Desktop: right Shift (span 4) -->
     <div style="grid-column: span 4;" class="hidden sm:block">
       <ShiftKey
         side="Right"
@@ -227,9 +215,13 @@
       tabindex="-1"
       onmousedown={(e) => handleKeyClick('Shift', e)}
       class="h-14 flex-1 max-w-[15%] rounded-lg border text-lg font-semibold transition-colors cursor-pointer bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
-        {(isLeftShiftTarget || isRightShiftTarget || isVirtualShiftActive || isLeftShiftPressed || isRightShiftPressed)
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : ''}"
+        {isLeftShiftTarget ||
+      isRightShiftTarget ||
+      isVirtualShiftActive ||
+      isLeftShiftPressed ||
+      isRightShiftPressed
+        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+        : ''}"
       aria-label="Shift"
     >
       ⇧
@@ -240,8 +232,8 @@
       onmousedown={(e) => handleKeyClick(' ', e)}
       class="h-14 flex-1 rounded-lg border text-sm font-semibold uppercase tracking-wider flex items-center justify-center transition-colors cursor-pointer bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 active:bg-gray-200 dark:active:bg-gray-700
         {isSpaceTarget
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : ''}"
+        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+        : ''}"
       aria-label="Spacebar"
     >
       <span>Space</span>
@@ -252,8 +244,8 @@
       onmousedown={(e) => handleKeyClick('Backspace', e)}
       class="h-14 flex-1 max-w-[15%] rounded-lg border text-lg font-bold transition-colors cursor-pointer bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
         {activeKeys.includes('Backspace')
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : ''}"
+        ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
+        : ''}"
       aria-label="Backspace"
     >
       ⌫
@@ -276,3 +268,17 @@
     </button>
   </div>
 </div>
+
+<style>
+  /* Desktop: 26-col grid matching physical keyboard layout */
+  .kb-grid {
+    grid-template-columns: repeat(26, minmax(0, 1fr));
+  }
+
+  /* Mobile: 23-col grid with separate modifier rows, preserving physical stagger */
+  @media (max-width: 639px) {
+    .kb-grid {
+      grid-template-columns: repeat(23, minmax(0, 1fr));
+    }
+  }
+</style>

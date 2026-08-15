@@ -98,7 +98,9 @@ describe('integration: virtual keyboard click flow', () => {
     const isShiftPressed = false; // user hasn't pressed shift
 
     // Display should show shifted jamo (isShiftActiveForDisplay is true)
-    expect(isShiftActiveForDisplay(isShiftPressed, isLeftShiftTarget, isRightShiftTarget)).toBe(true);
+    expect(isShiftActiveForDisplay(isShiftPressed, isLeftShiftTarget, isRightShiftTarget)).toBe(
+      true,
+    );
 
     // But clicking 'q' should output 'q', not 'Q'
     expect(resolveKeyOutput('q', isShiftPressed)).toBe('q');

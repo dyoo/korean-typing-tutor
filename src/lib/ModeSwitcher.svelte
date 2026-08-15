@@ -6,10 +6,7 @@
     ontogglemode: () => void;
   }
 
-  let {
-    mode,
-    ontogglemode,
-  }: Props = $props();
+  let { mode, ontogglemode }: Props = $props();
 </script>
 
 <div

@@ -57,7 +57,10 @@
         role="button"
         tabindex="-1"
         aria-label="Close cursor color menu backdrop"
-        onclick={(e) => { e.stopPropagation(); isOpen = false; }}
+        onclick={(e) => {
+          e.stopPropagation();
+          isOpen = false;
+        }}
         onkeydown={(e) => {
           if (e.key === 'Escape') isOpen = false;
         }}

@@ -12,7 +12,11 @@
   } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
-  import { JAMO_PROGRESSION_ORDER, getActiveLearningJamo, calculateJamoProgress } from './utils/jamoMastery';
+  import {
+    JAMO_PROGRESSION_ORDER,
+    getActiveLearningJamo,
+    calculateJamoProgress,
+  } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import MasterySidebar from './lib/MasterySidebar.svelte';
@@ -76,9 +80,7 @@
 
   let activeLearningJamo = $derived(getActiveLearningJamo(masteryState));
   let activeJamoProgress = $derived(
-    activeLearningJamo
-      ? calculateJamoProgress(masteryState.jamoStats[activeLearningJamo.jamo])
-      : 0,
+    activeLearningJamo ? calculateJamoProgress(masteryState.jamoStats[activeLearningJamo.jamo]) : 0,
   );
 
   onMount(() => {
@@ -359,7 +361,7 @@
     masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
     activeJamoChar={activeLearningJamo?.jamo ?? null}
     activeLearningCombination={activeLearningJamo?.combination}
-    activeJamoProgress={activeJamoProgress}
+    {activeJamoProgress}
     {showSettingsModal}
     {settings}
     ontogglecurriculum={toggleCurriculumSidebar}
@@ -429,7 +431,6 @@
         />
       </div>
     {/if}
-
   </div>
 </main>
 
