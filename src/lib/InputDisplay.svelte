@@ -80,7 +80,6 @@
 
 <div
   class="w-full h-14 md:h-16 my-2 relative flex justify-center items-center bg-white dark:bg-gray-800 font-bold shadow-md rounded-lg px-3 overflow-hidden cursor-text"
-  onclick={onfocuscontainer}
 >
   {#if userInput.length === 0}
     <span
@@ -95,7 +94,7 @@
   {:else}
     <div
       bind:this={inputContainerElement}
-      class="input-display flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold select-text z-10"
+      class="input-display relative z-10 flex flex-nowrap items-center whitespace-nowrap max-w-full overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden text-giant font-bold select-text"
     >
       {#each userInput.split('') as char, i}
         {@const isError = errorMap.get(i) ?? false}
@@ -134,11 +133,12 @@
     bind:this={inputElement}
     type="text"
     inputmode="none"
-    class="absolute inset-0 w-full h-full opacity-0 pointer-events-none z-0"
+    class="absolute inset-0 w-full h-full opacity-0 z-0"
     value={userInput}
     {onkeydown}
     {onkeyup}
     oninput={oninputprevent}
+    onclick={onfocuscontainer}
     autocomplete="off"
     autocorrect="off"
     autocapitalize="off"
