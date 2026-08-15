@@ -1,10 +1,11 @@
 <script lang="ts">
-  import { JAMO_PROGRESSION_ORDER } from '../utils/jamoMastery';
-  import type { JamoProgressionItem } from '../types/mastery';
+  import { JAMO_PROGRESSION_ORDER, calculateJamoProgress } from '../utils/jamoMastery';
+  import type { JamoProgressionItem, JamoStats } from '../types/mastery';
 
   interface Props {
     isOpen: boolean;
     masteryUnlockedCount: number;
+    jamoStats: Record<string, JamoStats>;
     onclose: () => void;
     onmasterylevelchange: (level: number) => void;
   }
@@ -12,6 +13,7 @@
   let {
     isOpen,
     masteryUnlockedCount,
+    jamoStats,
     onclose,
     onmasterylevelchange,
   }: Props = $props();
@@ -138,6 +140,7 @@
                 {@const idx = JAMO_PROGRESSION_ORDER.indexOf(item)}
                 {@const level = idx + 1}
                 {@const isSelected = masteryUnlockedCount === level}
+                {@const progress = calculateJamoProgress(jamoStats[item.jamo])}
                 <label
                   class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isSelected
                     ? 'bg-amber-50 dark:bg-amber-950/40'
@@ -152,9 +155,19 @@
                   />
                   <div class="flex items-center gap-2">
                     <span
-                      class="text-base font-bold text-amber-600 dark:text-amber-400 min-w-[28px] text-center leading-none"
+                      class="relative overflow-hidden text-base font-bold min-w-[28px] text-center leading-none {progress >= 100
+                        ? 'text-emerald-600 dark:text-emerald-400'
+                        : 'text-amber-600 dark:text-amber-400'}"
                     >
-                      {item.jamo}
+                      {#if progress > 0}
+                        <div
+                          class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
+                            ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                            : 'bg-amber-400/30 dark:bg-amber-400/25'}"
+                          style="height: {progress}%;"
+                        ></div>
+                      {/if}
+                      <span class="relative z-10">{item.jamo}</span>
                     </span>
                     <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400 uppercase">
                       {item.key}{item.shift ? '+Shift' : ''}

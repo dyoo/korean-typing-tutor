@@ -390,6 +390,17 @@ export function recordJamoAttempt(
       const nextIndex = state.unlockedCount;
       state.unlockedCount += 1;
       newlyUnlockedJamo = JAMO_PROGRESSION_ORDER[nextIndex].jamo;
+
+      // Reset the newly unlocked Jamo's stats so it starts fresh (not carrying over
+      // any previous mastery flag from a higher unlock level the user may have visited).
+      const nextStats = state.jamoStats[newlyUnlockedJamo];
+      if (nextStats) {
+        nextStats.isMastered = false;
+        nextStats.totalAttempts = 0;
+        nextStats.correctAttempts = 0;
+        nextStats.recentHistory = [];
+        nextStats.lastPracticed = undefined;
+      }
     }
   }
 

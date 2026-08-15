@@ -14,6 +14,7 @@
     masteryTotalCount: number;
     activeJamoChar?: string | null;
     activeLearningCombination?: [string, string];
+    activeJamoProgress?: number;
     showSettingsModal: boolean;
     settings: TutorSettings;
     ontogglemode: () => void;
@@ -39,6 +40,7 @@
     masteryTotalCount,
     activeJamoChar = null,
     activeLearningCombination,
+    activeJamoProgress = 0,
     showSettingsModal,
     settings,
     ontogglemode,
@@ -125,11 +127,19 @@
               Focus:
             </span>
             <span
-              class="text-base sm:text-lg font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[28px] shadow-2xs gap-1"
+              class="relative overflow-hidden text-base sm:text-lg font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[28px] shadow-2xs gap-1"
             >
-              <span>{activeJamoChar}</span>
+              {#if activeJamoProgress > 0}
+                <div
+                  class="absolute bottom-0 inset-x-0 pointer-events-none {activeJamoProgress >= 100
+                    ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                    : 'bg-amber-400/30 dark:bg-amber-400/25'}"
+                  style="height: {activeJamoProgress}%;"
+                ></div>
+              {/if}
+              <span class="relative z-10">{activeJamoChar}</span>
               {#if activeLearningCombination}
-                <span class="text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90">
+                <span class="relative z-10 text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90">
                   ({activeLearningCombination[0]}+{activeLearningCombination[1]})
                 </span>
               {/if}

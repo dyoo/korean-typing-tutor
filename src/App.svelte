@@ -12,7 +12,7 @@
   } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
-  import { JAMO_PROGRESSION_ORDER, getActiveLearningJamo } from './utils/jamoMastery';
+  import { JAMO_PROGRESSION_ORDER, getActiveLearningJamo, calculateJamoProgress } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import MasterySidebar from './lib/MasterySidebar.svelte';
@@ -72,6 +72,11 @@
   let errorMap = $derived(new Map(errors.map((e) => [e.index, e.isError])));
 
   let activeLearningJamo = $derived(getActiveLearningJamo(masteryState));
+  let activeJamoProgress = $derived(
+    activeLearningJamo
+      ? calculateJamoProgress(masteryState.jamoStats[activeLearningJamo.jamo])
+      : 0,
+  );
 
   onMount(() => {
     session.setFilter(enabledModuleIds, true);
@@ -346,6 +351,7 @@
     masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
     activeJamoChar={activeLearningJamo?.jamo ?? null}
     activeLearningCombination={activeLearningJamo?.combination}
+    activeJamoProgress={activeJamoProgress}
     {showSettingsModal}
     {settings}
     ontogglecurriculum={toggleCurriculumSidebar}
@@ -434,6 +440,7 @@
 <MasterySidebar
   isOpen={showMasterySidebar}
   masteryUnlockedCount={masteryState.unlockedCount}
+  jamoStats={masteryState.jamoStats}
   onclose={closeMasterySidebar}
   onmasterylevelchange={handleMasteryLevelChange}
 />
