@@ -118,7 +118,7 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 
 ---
 
-### Phase 6: Speed & Accuracy Analytics Panel — NEXT PRIORITY
+### Phase 6: Speed & Accuracy Analytics Panel — CURRENT PRIORITY
 
 - [ ] **Real-Time WPM / SPM Calculation:** Character-per-minute (CPM) / Syllables-per-minute (SPM)
       and Words-per-minute (WPM) calculation.
@@ -126,3 +126,43 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
       preserve a minimalist experience.
 - [ ] **Performance Review Summary:** Post-session analytics displaying rolling accuracy, keystroke
       speed, and trouble keys.
+
+---
+
+### Phase 7: Kokoro TTS Voice Synthesis (WebAssembly & Web Worker) — PLANNED
+
+Add local, high-fidelity Korean text-to-speech pronunciation support using Kokoro-82M via
+`@dannyyoo/korean-kokoro` and `kokoro-js`.
+
+- [ ] **Stage 1: Dependencies & Settings Infrastructure**
+  - [ ] Add `@dannyyoo/korean-kokoro` and `kokoro-js` to `package.json`.
+  - [ ] Extend `TutorSettings` in `src/lib/settings.ts` with:
+    - `enableTTS: boolean` (default: `false` — disabled by default).
+    - `autoSpeakPrompt: boolean` (default: `false` — do not automatically speak on item load unless explicitly enabled).
+    - `ttsVoice: string` (default: `'jf_nezumi'`).
+    - `ttsSpeed: number` (default: `1.0`).
+
+- [ ] **Stage 2: Dedicated TTS Web Worker (`src/workers/tts.worker.ts`)**
+  - [ ] Initialize `KoreanSpeaker` with WASM backend & multi-threading inside a Dedicated Worker.
+  - [ ] Implement Worker message protocol (`LOAD_MODEL`, `SYNTHESIZE`, `CHECK_CACHE`, `CLEAR_CACHE`, `PROGRESS`).
+  - [ ] Run phonology conversion (Hangul-to-IPA) and ONNX WASM model inference entirely off the main thread.
+
+- [ ] **Stage 3: Main Thread TTS Controller Service (`src/utils/ttsController.svelte.ts`)**
+  - [ ] Manage Worker lifecycle, audio playback cache for prompt sentences, and error handling.
+  - [ ] Reactive state tracking (`isModelLoaded`, `isLoading`, `downloadProgress`, `isSpeaking`).
+  - [ ] Provide unified `speak(text)`, `playCurrentPrompt()`, and `stop()` methods.
+
+- [ ] **Stage 4: Download Consent Modal & Settings UI**
+  - [ ] Build `TTSDownloadModal.svelte` confirmation dialog explaining the ~80MB one-time model download when the user toggles Voice Synthesis on.
+  - [ ] Live visual download progress bar in the modal during first-time loading.
+  - [ ] Add Voice Synthesis section in `SettingsModal.svelte`:
+    - Enable/disable toggle (triggers consent modal if model is not yet downloaded).
+    - "Auto-speak new exercises" toggle (default `false`).
+    - Voice selection dropdown & playback speed slider.
+    - "Clear Offline TTS Cache (~80MB)" button to free browser storage.
+
+- [ ] **Stage 5: UI Exercise Prompt Integration & Audio Controls**
+  - [ ] Add a subtle speaker icon button to `ExercisePrompt.svelte` / `TargetDisplay.svelte` for manual on-demand pronunciation playback.
+  - [ ] Keyboard shortcut (e.g. `Alt+S` / `Ctrl+S`) to replay current exercise pronunciation.
+  - [ ] Respect `autoSpeakPrompt` setting so speech is only played automatically on prompt transition when explicitly opted-in by the user.
+
