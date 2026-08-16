@@ -3,6 +3,7 @@
   import type { CursorColorMode } from '../utils/cursorColor';
   import DualRangeSlider from './DualRangeSlider.svelte';
   import CursorColorSelect from './CursorColorSelect.svelte';
+  import TTSSettingsControl from './TTSSettingsControl.svelte';
 
   interface Props {
     isOpen: boolean;
@@ -18,6 +19,11 @@
     onmaxfontsizechange?: (maxSize: number) => void;
     ontogglelockfontsize?: () => void;
     oncursorcolorchange?: (cursorColor: CursorColorMode) => void;
+    ontoggletts?: () => void;
+    ontoggleautospeak?: () => void;
+    onvoicechange?: (voice: string) => void;
+    onspeedchange?: (speed: number) => void;
+    onclearttscache?: () => void;
   }
 
   let {
@@ -34,6 +40,11 @@
     onmaxfontsizechange,
     ontogglelockfontsize,
     oncursorcolorchange,
+    ontoggletts,
+    ontoggleautospeak,
+    onvoicechange,
+    onspeedchange,
+    onclearttscache,
   }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
@@ -194,6 +205,16 @@
           class="w-4 h-4 text-blue-600 rounded cursor-pointer"
         />
       </label>
+
+      <!-- Voice Synthesis (TTS) Section -->
+      <TTSSettingsControl
+        {settings}
+        {ontoggletts}
+        {ontoggleautospeak}
+        {onvoicechange}
+        {onspeedchange}
+        {onclearttscache}
+      />
 
       <!-- Target Text Size Slider & Lock Toggle -->
       <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">

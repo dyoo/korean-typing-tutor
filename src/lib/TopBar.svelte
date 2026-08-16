@@ -31,6 +31,11 @@
     onmaxfontsizechange: (maxFontSizeRem: number) => void;
     ontogglelockfontsize: () => void;
     oncursorcolorchange: (cursorColor: CursorColorMode) => void;
+    ontoggletts?: () => void;
+    ontoggleautospeak?: () => void;
+    onvoicechange?: (voice: string) => void;
+    onspeedchange?: (speed: number) => void;
+    onclearttscache?: () => void;
   }
 
   let {
@@ -58,6 +63,11 @@
     onmaxfontsizechange,
     ontogglelockfontsize,
     oncursorcolorchange,
+    ontoggletts,
+    ontoggleautospeak,
+    onvoicechange,
+    onspeedchange,
+    onclearttscache,
   }: Props = $props();
 </script>
 
@@ -169,10 +179,15 @@
       {ontoggletranslation}
       {ontogglevirtualkeyboard}
       {ontogglekeyboardhint}
-      {onminfontsizechange}
-      {onmaxfontsizechange}
-      {ontogglelockfontsize}
-      {oncursorcolorchange}
+      onminfontsizechange={onminfontsizechange}
+      onmaxfontsizechange={onmaxfontsizechange}
+      ontogglelockfontsize={ontogglelockfontsize}
+      oncursorcolorchange={oncursorcolorchange}
+      {ontoggletts}
+      {ontoggleautospeak}
+      {onvoicechange}
+      {onspeedchange}
+      {onclearttscache}
     />
   </div>
 </div>

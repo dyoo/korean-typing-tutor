@@ -24,6 +24,9 @@
   import ExercisePrompt from './lib/ExercisePrompt.svelte';
   import TopBar from './lib/TopBar.svelte';
   import InputDisplay from './lib/InputDisplay.svelte';
+  import TTSDownloadModal from './lib/TTSDownloadModal.svelte';
+  import TTSAudioButton from './lib/TTSAudioButton.svelte';
+  import { ttsController } from './utils/ttsController.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
   import type { CursorColorMode } from './utils/cursorColor';
@@ -269,6 +272,72 @@
     saveSettings(settings);
   }
 
+  let showTTSDownloadModal = $state(false);
+  let isTTSSpeaking = $derived(ttsController.getIsSpeaking());
+
+  function toggleTTS() {
+    if (!settings.enableTTS) {
+      // User is enabling TTS; check if model is downloaded
+      if (!ttsController.getIsLoaded() && !ttsController.getIsCached()) {
+        showTTSDownloadModal = true;
+      } else {
+        updateSetting('enableTTS', true);
+      }
+    } else {
+      updateSetting('enableTTS', false);
+      ttsController.stop();
+    }
+  }
+
+  async function handleConfirmTTSDownload() {
+    try {
+      await ttsController.loadModel();
+      updateSetting('enableTTS', true);
+      showTTSDownloadModal = false;
+    } catch {
+      // Error is displayed inside modal
+    }
+  }
+
+  function handleCancelTTSDownload() {
+    showTTSDownloadModal = false;
+  }
+
+  function toggleAutoSpeak() {
+    updateSetting('autoSpeakPrompt', !settings.autoSpeakPrompt);
+  }
+
+  function handleVoiceChange(voice: string) {
+    updateSetting('ttsVoice', voice);
+  }
+
+  function handleSpeedChange(speed: number) {
+    updateSetting('ttsSpeed', speed);
+  }
+
+  async function handleClearTTSCache() {
+    await ttsController.clearCache();
+    updateSetting('enableTTS', false);
+  }
+
+  function speakCurrentPrompt() {
+    if (currentItem && currentItem.target) {
+      ttsController.speak(
+        currentItem.target,
+        settings.ttsVoice ?? 'jf_nezumi',
+        settings.ttsSpeed ?? 1.0,
+      );
+    }
+  }
+
+  // Speak prompt on item change if auto-speak is enabled
+  $effect(() => {
+    const targetText = currentItem.target;
+    if (settings.enableTTS && settings.autoSpeakPrompt && targetText) {
+      ttsController.speak(targetText, settings.ttsVoice ?? 'jf_nezumi', settings.ttsSpeed ?? 1.0);
+    }
+  });
+
   function togglePronunciation() {
     updateSetting('showPronunciation', !settings.showPronunciation);
   }
@@ -373,6 +442,11 @@
     onmaxfontsizechange={handleMaxFontSizeChange}
     ontogglelockfontsize={handleToggleLockFontSize}
     oncursorcolorchange={handleCursorColorChange}
+    ontoggletts={toggleTTS}
+    ontoggleautospeak={toggleAutoSpeak}
+    onvoicechange={handleVoiceChange}
+    onspeedchange={handleSpeedChange}
+    onclearttscache={handleClearTTSCache}
   />
 
   <div
@@ -391,7 +465,12 @@
       cursorColor={settings.cursorColor}
     />
 
-    <ExercisePrompt {isCompleted} onskip={handleSkip} />
+    <div class="flex items-center gap-2 mb-2 h-14 shrink-0">
+      {#if settings.enableTTS}
+        <TTSAudioButton isSpeaking={isTTSSpeaking} onclick={speakCurrentPrompt} />
+      {/if}
+      <ExercisePrompt {isCompleted} onskip={handleSkip} />
+    </div>
   </div>
 
   <div
@@ -446,6 +525,12 @@
   jamoStats={masteryState.jamoStats}
   onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}
+/>
+
+<TTSDownloadModal
+  isOpen={showTTSDownloadModal}
+  onConfirm={handleConfirmTTSDownload}
+  onCancel={handleCancelTTSDownload}
 />
 
 <style>
