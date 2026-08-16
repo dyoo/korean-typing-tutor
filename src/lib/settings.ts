@@ -20,6 +20,10 @@ export interface TutorSettings {
   maxFontSizeRem?: number;
   lockFontSize?: boolean;
   cursorColor?: CursorColorMode;
+  enableTTS?: boolean;
+  autoSpeakPrompt?: boolean;
+  ttsVoice?: string;
+  ttsSpeed?: number;
 }
 
 /** LocalStorage key for persisting user settings across browser sessions. */
@@ -36,6 +40,10 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   maxFontSizeRem: 5.5,
   lockFontSize: false,
   cursorColor: 'amber',
+  enableTTS: false,
+  autoSpeakPrompt: false,
+  ttsVoice: 'jf_nezumi',
+  ttsSpeed: 1.0,
 };
 
 /**
@@ -80,6 +88,14 @@ export function loadSettings(): TutorSettings {
           : 5.5,
       lockFontSize: typeof parsed.lockFontSize === 'boolean' ? parsed.lockFontSize : false,
       cursorColor: validCursorColors.includes(parsed.cursorColor) ? parsed.cursorColor : 'amber',
+      enableTTS: typeof parsed.enableTTS === 'boolean' ? parsed.enableTTS : false,
+      autoSpeakPrompt:
+        typeof parsed.autoSpeakPrompt === 'boolean' ? parsed.autoSpeakPrompt : false,
+      ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : 'jf_nezumi',
+      ttsSpeed:
+        typeof parsed.ttsSpeed === 'number' && parsed.ttsSpeed >= 0.5 && parsed.ttsSpeed <= 2.0
+          ? parsed.ttsSpeed
+          : 1.0,
     };
   } catch {
     return DEFAULT_SETTINGS;

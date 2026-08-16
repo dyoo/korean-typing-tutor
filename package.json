@@ -17,7 +17,9 @@
     "clean:all": "rm -rf dist node_modules"
   },
   "dependencies": {
-    "@tailwindcss/postcss": "^4.3.3"
+    "@dannyyoo/korean-kokoro": "^1.0.0",
+    "@tailwindcss/postcss": "^4.3.3",
+    "kokoro-js": "^1.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
