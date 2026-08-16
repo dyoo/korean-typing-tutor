@@ -83,9 +83,13 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/lib/ShiftKey.svelte`: Shift key indicator component for the virtual keyboard.
 - `src/lib/SymbolToggleKey.svelte`: Symbol mode (`?123` / `ㄱㄴㄷ`) toggle keycap used at both ends
   of the mobile bottom row.
-- `src/lib/CursorColorSelect.svelte`: Color picker control for customizing cursor color in settings.
-- `src/lib/GitHubLink.svelte`: GitHub repository link component in the header.
+- `src/lib/TTSAudioButton.svelte`: Pronunciation play button component embedded inline with target subtext.
+- `src/lib/TTSDownloadModal.svelte`: Modal dialog for ~80MB ONNX model download consent with live download progress bar.
+- `src/lib/TTSSettingsControl.svelte`: Voice synthesis settings controls (enable toggle, speak-on-completion, voice, speed, cache purge).
 - `src/lib/settings.ts`: Settings state management, persistence, and default values.
+- `src/utils/ttsController.svelte.ts`: Reactive singleton managing TTS Web Worker, audio caching, and prompt preloading.
+- `src/workers/tts.worker.ts`: Dedicated Web Worker for Korean Kokoro-82M WASM synthesis and offline cache management.
+- `src/types/tts.ts`: Type definitions for TTS worker requests/responses and voice metadata.
 - `src/utils/jamoMastery.ts`: Spaced-repetition mastery state machine, home-row-outward progression
   sequence, rolling 20-attempt accuracy evaluation, and vocabulary filtering.
 - `src/utils/hangulEngine.ts`: The Hangul IME composition state machine and keystroke handler.
@@ -112,7 +116,7 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/content/modules/*.json`: 21 categorized curriculum and beginner lesson datasets (1,451+
   authentic items).
 - `src/content/index.ts`: Curriculum dataset aggregator and canonical module order.
-- `vite.config.js`: Configuration for Vite, PWA, and Workbox precaching support.
+- `vite.config.js`: Configuration for Vite, PWA, COOP/COEP headers, and Workbox precaching support.
 
 ## Current Priority
 
