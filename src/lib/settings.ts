@@ -41,7 +41,7 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   lockFontSize: false,
   cursorColor: 'amber',
   enableTTS: false,
-  speakOnCompletion: false,
+  speakOnCompletion: true,
   ttsVoice: 'jf_nezumi',
   ttsSpeed: 1.0,
 };
@@ -51,13 +51,17 @@ export const DEFAULT_SETTINGS: TutorSettings = {
  * Falls back to default settings if no settings are saved or parsing fails.
  */
 export function loadSettings(): TutorSettings {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return DEFAULT_SETTINGS;
+  }
+
   try {
     const raw = localStorage.getItem(SETTINGS_STORAGE_KEY);
     if (!raw) {
       return DEFAULT_SETTINGS;
     }
     const parsed = JSON.parse(raw);
-    const validThemes: ThemeMode[] = ['system', 'light', 'dark'];
+    const validThemes: ThemeMode[] = ['light', 'dark', 'system'];
     const validCursorColors: CursorColorMode[] = ['amber', 'sky', 'emerald', 'blue'];
     return {
       showPronunciation:
@@ -90,7 +94,7 @@ export function loadSettings(): TutorSettings {
       cursorColor: validCursorColors.includes(parsed.cursorColor) ? parsed.cursorColor : 'amber',
       enableTTS: typeof parsed.enableTTS === 'boolean' ? parsed.enableTTS : false,
       speakOnCompletion:
-        typeof parsed.speakOnCompletion === 'boolean' ? parsed.speakOnCompletion : false,
+        typeof parsed.speakOnCompletion === 'boolean' ? parsed.speakOnCompletion : true,
       ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : 'jf_nezumi',
       ttsSpeed:
         typeof parsed.ttsSpeed === 'number' && parsed.ttsSpeed >= 0.5 && parsed.ttsSpeed <= 2.0
