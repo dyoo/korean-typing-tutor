@@ -206,16 +206,6 @@
         />
       </label>
 
-      <!-- Voice Synthesis (TTS) Section -->
-      <TTSSettingsControl
-        {settings}
-        {ontoggletts}
-        {ontogglespeakoncompletion}
-        {onvoicechange}
-        {onspeedchange}
-        {onclearttscache}
-      />
-
       <!-- Target Text Size Slider & Lock Toggle -->
       <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
@@ -276,6 +266,16 @@
           </div>
         {/if}
       </div>
+
+      <!-- Voice Synthesis (TTS) Section -->
+      <TTSSettingsControl
+        {settings}
+        {ontoggletts}
+        {ontogglespeakoncompletion}
+        {onvoicechange}
+        {onspeedchange}
+        {onclearttscache}
+      />
     </div>
   {/if}
 </div>
