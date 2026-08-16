@@ -119,6 +119,19 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
         const voices = (speaker.getVoices() as VoiceMetadata[]) || FALLBACK_VOICES;
 
         postResponse({
+          type: 'LOAD_PROGRESS',
+          payload: {
+            file: 'voices',
+            progress: 100,
+            status: 'Preloading voice profiles...',
+          },
+        });
+
+        // Preload and cache all voice vector embeddings so first playback is instant
+        const voiceIds = voices.map((v) => v.id);
+        await speaker.preloadVoices(voiceIds);
+
+        postResponse({
           type: 'LOAD_SUCCESS',
           payload: { voices },
         });
