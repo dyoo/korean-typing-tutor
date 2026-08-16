@@ -1,5 +1,6 @@
 <script lang="ts">
   import CharDisplay from './CharDisplay.svelte';
+  import TTSAudioButton from './TTSAudioButton.svelte';
   import type { LessonItem } from '../types/korean';
   import type { CursorColorMode } from '../utils/cursorColor';
   import {
@@ -20,6 +21,9 @@
     maxFontSizeRem?: number;
     lockFontSize?: boolean;
     cursorColor?: CursorColorMode;
+    enableTTS?: boolean;
+    isTTSSpeaking?: boolean;
+    onspeak?: () => void;
   }
 
   let {
@@ -33,6 +37,9 @@
     maxFontSizeRem = 5.5,
     lockFontSize = false,
     cursorColor = 'amber',
+    enableTTS = false,
+    isTTSSpeaking = false,
+    onspeak,
   }: Props = $props();
 
   let targetLength = $derived(currentItem.target.length);
@@ -87,11 +94,14 @@
     {/each}
   </div>
 
-  {#if displayText.trim().length > 0}
-    <div
-      class="subtext-display text-gray-500 dark:text-gray-400 font-medium italic mt-3 md:mt-4 text-center tracking-wide flex flex-col items-center justify-center max-w-full px-4 py-1 shrink-0 {subtextClass}"
-    >
-      {displayText}
-    </div>
-  {/if}
+  <div
+    class="subtext-display text-gray-500 dark:text-gray-400 font-medium italic mt-3 md:mt-4 text-center tracking-wide flex items-center justify-center gap-1.5 max-w-full px-4 py-1 shrink-0 {subtextClass}"
+  >
+    {#if displayText.trim().length > 0}
+      <span>{displayText}</span>
+    {/if}
+    {#if enableTTS}
+      <TTSAudioButton isSpeaking={isTTSSpeaking} onclick={onspeak} />
+    {/if}
+  </div>
 </div>

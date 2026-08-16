@@ -27,6 +27,7 @@ export class TTSController {
     }
   >();
   private audioCache = new SvelteMap<string, string>(); // text -> blobUrl
+  private inFlightSyntheses = new SvelteMap<string, Promise<string>>(); // cacheKey -> Promise
   private nextRequestId = 0;
 
   constructor() {
@@ -96,6 +97,7 @@ export class TTSController {
           this.isCached = false;
           this.isLoaded = false;
           this.audioCache.clear();
+          this.inFlightSyntheses.clear();
           break;
       }
     };
@@ -143,6 +145,17 @@ export class TTSController {
     });
   }
 
+  public preload(
+    text: string,
+    voice: string = 'jf_nezumi',
+    speed: number = 1.0,
+  ): Promise<string> | null {
+    if (!text || text.trim().length === 0) {
+      return null;
+    }
+    return this.synthesize(text, voice, speed);
+  }
+
   public async synthesize(
     text: string,
     voice: string = 'jf_nezumi',
@@ -153,27 +166,40 @@ export class TTSController {
       return this.audioCache.get(cacheKey)!;
     }
 
-    if (!this.isLoaded) {
-      await this.loadModel();
+    if (this.inFlightSyntheses.has(cacheKey)) {
+      return this.inFlightSyntheses.get(cacheKey)!;
     }
 
-    const w = this.initWorker();
-    const id = `syn_${++this.nextRequestId}`;
+    const synthesisPromise = (async () => {
+      if (!this.isLoaded) {
+        await this.loadModel();
+      }
 
-    return new Promise((resolve, reject) => {
-      this.pendingSyntheses.set(id, {
-        resolve: (audioBlobUrl: string) => {
-          this.audioCache.set(cacheKey, audioBlobUrl);
-          resolve(audioBlobUrl);
-        },
-        reject,
+      const w = this.initWorker();
+      const id = `syn_${++this.nextRequestId}`;
+
+      return new Promise<string>((resolve, reject) => {
+        this.pendingSyntheses.set(id, {
+          resolve: (audioBlobUrl: string) => {
+            this.audioCache.set(cacheKey, audioBlobUrl);
+            this.inFlightSyntheses.delete(cacheKey);
+            resolve(audioBlobUrl);
+          },
+          reject: (err: Error) => {
+            this.inFlightSyntheses.delete(cacheKey);
+            reject(err);
+          },
+        });
+
+        w.postMessage({
+          type: 'SYNTHESIZE',
+          payload: { id, text, voice, speed },
+        } satisfies TTSWorkerRequest);
       });
+    })();
 
-      w.postMessage({
-        type: 'SYNTHESIZE',
-        payload: { id, text, voice, speed },
-      } satisfies TTSWorkerRequest);
-    });
+    this.inFlightSyntheses.set(cacheKey, synthesisPromise);
+    return synthesisPromise;
   }
 
   public async speak(

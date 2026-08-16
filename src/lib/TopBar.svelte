@@ -32,7 +32,7 @@
     ontogglelockfontsize: () => void;
     oncursorcolorchange: (cursorColor: CursorColorMode) => void;
     ontoggletts?: () => void;
-    ontoggleautospeak?: () => void;
+    ontogglespeakoncompletion?: () => void;
     onvoicechange?: (voice: string) => void;
     onspeedchange?: (speed: number) => void;
     onclearttscache?: () => void;
@@ -64,7 +64,7 @@
     ontogglelockfontsize,
     oncursorcolorchange,
     ontoggletts,
-    ontoggleautospeak,
+    ontogglespeakoncompletion,
     onvoicechange,
     onspeedchange,
     onclearttscache,
@@ -184,7 +184,7 @@
       ontogglelockfontsize={ontogglelockfontsize}
       oncursorcolorchange={oncursorcolorchange}
       {ontoggletts}
-      {ontoggleautospeak}
+      {ontogglespeakoncompletion}
       {onvoicechange}
       {onspeedchange}
       {onclearttscache}

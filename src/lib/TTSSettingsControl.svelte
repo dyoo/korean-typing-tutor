@@ -4,7 +4,7 @@
   interface Props {
     settings: TutorSettings;
     ontoggletts?: () => void;
-    ontoggleautospeak?: () => void;
+    ontogglespeakoncompletion?: () => void;
     onvoicechange?: (voice: string) => void;
     onspeedchange?: (speed: number) => void;
     onclearttscache?: () => void;
@@ -13,7 +13,7 @@
   let {
     settings,
     ontoggletts,
-    ontoggleautospeak,
+    ontogglespeakoncompletion,
     onvoicechange,
     onspeedchange,
     onclearttscache,
@@ -36,13 +36,13 @@
 
   {#if settings.enableTTS}
     <div class="flex flex-col gap-2 mt-1 pl-1">
-      <!-- Auto-speak Toggle -->
+      <!-- Speak On Completion Toggle -->
       <label class="flex items-center justify-between cursor-pointer">
-        <span class="text-gray-600 dark:text-gray-400">Auto-speak new prompt</span>
+        <span class="text-gray-600 dark:text-gray-400">Speak on completion</span>
         <input
           type="checkbox"
-          checked={settings.autoSpeakPrompt}
-          onchange={ontoggleautospeak}
+          checked={settings.speakOnCompletion}
+          onchange={ontogglespeakoncompletion}
           class="w-3.5 h-3.5 text-blue-600 rounded cursor-pointer"
         />
       </label>

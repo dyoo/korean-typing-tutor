@@ -21,7 +21,7 @@ export interface TutorSettings {
   lockFontSize?: boolean;
   cursorColor?: CursorColorMode;
   enableTTS?: boolean;
-  autoSpeakPrompt?: boolean;
+  speakOnCompletion?: boolean;
   ttsVoice?: string;
   ttsSpeed?: number;
 }
@@ -41,7 +41,7 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   lockFontSize: false,
   cursorColor: 'amber',
   enableTTS: false,
-  autoSpeakPrompt: false,
+  speakOnCompletion: false,
   ttsVoice: 'jf_nezumi',
   ttsSpeed: 1.0,
 };
@@ -89,8 +89,8 @@ export function loadSettings(): TutorSettings {
       lockFontSize: typeof parsed.lockFontSize === 'boolean' ? parsed.lockFontSize : false,
       cursorColor: validCursorColors.includes(parsed.cursorColor) ? parsed.cursorColor : 'amber',
       enableTTS: typeof parsed.enableTTS === 'boolean' ? parsed.enableTTS : false,
-      autoSpeakPrompt:
-        typeof parsed.autoSpeakPrompt === 'boolean' ? parsed.autoSpeakPrompt : false,
+      speakOnCompletion:
+        typeof parsed.speakOnCompletion === 'boolean' ? parsed.speakOnCompletion : false,
       ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : 'jf_nezumi',
       ttsSpeed:
         typeof parsed.ttsSpeed === 'number' && parsed.ttsSpeed >= 0.5 && parsed.ttsSpeed <= 2.0

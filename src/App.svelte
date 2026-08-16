@@ -25,7 +25,6 @@
   import TopBar from './lib/TopBar.svelte';
   import InputDisplay from './lib/InputDisplay.svelte';
   import TTSDownloadModal from './lib/TTSDownloadModal.svelte';
-  import TTSAudioButton from './lib/TTSAudioButton.svelte';
   import { ttsController } from './utils/ttsController.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
@@ -235,7 +234,22 @@
       e.key.length === 1
     ) {
       e.preventDefault();
-      session.processKey(e.key);
+      processKeystrokeWithAudio(e.key);
+    }
+  }
+
+  function processKeystrokeWithAudio(key: string) {
+    const wasCompleted = session.getIsItemCompleted();
+    const result = session.processKey(key);
+
+    // If typing this key newly completed the exercise, trigger audio if enabled
+    if (
+      !wasCompleted &&
+      (result.isItemCompleted || session.getIsItemCompleted()) &&
+      settings.enableTTS &&
+      settings.speakOnCompletion
+    ) {
+      speakCurrentPrompt();
     }
   }
 
@@ -303,8 +317,8 @@
     showTTSDownloadModal = false;
   }
 
-  function toggleAutoSpeak() {
-    updateSetting('autoSpeakPrompt', !settings.autoSpeakPrompt);
+  function toggleSpeakOnCompletion() {
+    updateSetting('speakOnCompletion', !settings.speakOnCompletion);
   }
 
   function handleVoiceChange(voice: string) {
@@ -328,13 +342,19 @@
         settings.ttsSpeed ?? 1.0,
       );
     }
+    focusInputElement();
   }
 
-  // Speak prompt on item change if auto-speak is enabled
+  // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
+  // so clicking the audio button plays immediately without synthesis delay.
   $effect(() => {
     const targetText = currentItem.target;
-    if (settings.enableTTS && settings.autoSpeakPrompt && targetText) {
-      ttsController.speak(targetText, settings.ttsVoice ?? 'jf_nezumi', settings.ttsSpeed ?? 1.0);
+    if (settings.enableTTS && targetText) {
+      ttsController.preload(
+        targetText,
+        settings.ttsVoice ?? 'jf_nezumi',
+        settings.ttsSpeed ?? 1.0,
+      );
     }
   });
 
@@ -376,7 +396,7 @@
   }
 
   function handleVirtualKeySelect(key: string) {
-    session.processKey(key);
+    processKeystrokeWithAudio(key);
   }
 
   function togglePanel(panel: 'settings' | 'curriculum' | 'mastery', e?: MouseEvent) {
@@ -443,7 +463,7 @@
     ontogglelockfontsize={handleToggleLockFontSize}
     oncursorcolorchange={handleCursorColorChange}
     ontoggletts={toggleTTS}
-    ontoggleautospeak={toggleAutoSpeak}
+    ontogglespeakoncompletion={toggleSpeakOnCompletion}
     onvoicechange={handleVoiceChange}
     onspeedchange={handleSpeedChange}
     onclearttscache={handleClearTTSCache}
@@ -463,14 +483,12 @@
       maxFontSizeRem={settings.maxFontSizeRem}
       lockFontSize={settings.lockFontSize}
       cursorColor={settings.cursorColor}
+      enableTTS={settings.enableTTS}
+      {isTTSSpeaking}
+      onspeak={speakCurrentPrompt}
     />
 
-    <div class="flex items-center gap-2 mb-2 h-14 shrink-0">
-      {#if settings.enableTTS}
-        <TTSAudioButton isSpeaking={isTTSSpeaking} onclick={speakCurrentPrompt} />
-      {/if}
-      <ExercisePrompt {isCompleted} onskip={handleSkip} />
-    </div>
+    <ExercisePrompt {isCompleted} onskip={handleSkip} />
   </div>
 
   <div
