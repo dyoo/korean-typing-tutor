@@ -12,6 +12,7 @@
   let isLoading = $derived(ttsController.getIsLoading());
   let downloadProgress = $derived(ttsController.getDownloadProgress());
   let downloadStatus = $derived(ttsController.getDownloadStatus());
+  let currentFileName = $derived(ttsController.getCurrentFileName());
   let loadError = $derived(ttsController.getLoadError());
 
   function handleKeydown(e: KeyboardEvent) {
@@ -87,8 +88,14 @@
       {#if isLoading}
         <div class="flex flex-col gap-1.5 my-2">
           <div class="flex items-center justify-between text-xs font-semibold">
-            <span class="text-blue-600 dark:text-blue-400">
-              {downloadStatus || 'Downloading neural model...'}
+            <span class="text-blue-600 dark:text-blue-400 truncate max-w-[75%]">
+              {#if currentFileName}
+                Downloading {currentFileName}...
+              {:else if downloadStatus}
+                {downloadStatus}...
+              {:else}
+                Connecting to model CDN...
+              {/if}
             </span>
             <span class="font-mono">{downloadProgress}%</span>
           </div>
