@@ -7,6 +7,7 @@
   } from '../utils/jamoMastery';
   import { isShiftTarget, resolveKeyOutput } from '../utils/virtualKeyboardShift';
   import ShiftKey from './ShiftKey.svelte';
+  import SymbolToggleKey from './SymbolToggleKey.svelte';
   import VirtualKey from './VirtualKey.svelte';
   import type { TutorMode, MasteryState } from '../types/mastery';
 
@@ -378,17 +379,9 @@
       </div>
     {/if}
 
-    <!-- Mobile Bottom Row: ?123 Toggle + Comma + Space + Period -->
+    <!-- Mobile Bottom Row: ?123 Toggle + Comma + Space + Period + ?123 Toggle (symmetric) -->
     <div class="flex items-center w-full gap-1 mt-0.5">
-      <button
-        type="button"
-        tabindex="-1"
-        onmousedown={toggleSymbolMode}
-        class="h-14 flex-[1.5] max-w-[18%] rounded-lg border text-xs font-bold font-mono transition-colors cursor-pointer flex items-center justify-center bg-slate-200 dark:bg-slate-700 border-slate-300 dark:border-slate-600 text-slate-800 dark:text-slate-200 active:bg-slate-300 dark:active:bg-slate-600 shadow-2xs"
-        aria-label={isSymbolMode ? 'Switch to Korean Letters' : 'Switch to Numbers and Symbols'}
-      >
-        {isSymbolMode ? 'ㄱㄴㄷ' : '?123'}
-      </button>
+      <SymbolToggleKey {isSymbolMode} onselect={toggleSymbolMode} />
 
       <button
         type="button"
@@ -428,6 +421,8 @@
       >
         .
       </button>
+
+      <SymbolToggleKey {isSymbolMode} onselect={toggleSymbolMode} />
     </div>
   </div>
 </div>

@@ -431,11 +431,7 @@ export class TutorSession {
       if (activeItem && COMPOUND_BATCHIM_SET.has(activeItem.jamo)) {
         const lastInputChar = this.userInput[this.userInput.length - 1];
         if (lastInputChar && decomposeSyllable(lastInputChar)?.finalConsonant === activeItem.jamo) {
-          const compoundResult = recordJamoAttempt(
-            this.masteryState,
-            activeItem.jamo,
-            isCorrect,
-          );
+          const compoundResult = recordJamoAttempt(this.masteryState, activeItem.jamo, isCorrect);
           if (compoundResult.newlyUnlockedJamo) {
             newlyUnlockedJamo = compoundResult.newlyUnlockedJamo;
           }

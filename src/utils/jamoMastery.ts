@@ -219,8 +219,8 @@ export function loadMasteryState(): MasteryState {
 
     const unlockedCount =
       typeof parsed.unlockedCount === 'number' &&
-        parsed.unlockedCount >= 4 &&
-        parsed.unlockedCount <= JAMO_PROGRESSION_ORDER.length
+      parsed.unlockedCount >= 4 &&
+      parsed.unlockedCount <= JAMO_PROGRESSION_ORDER.length
         ? parsed.unlockedCount
         : 4;
 
@@ -542,13 +542,13 @@ export function getEligibleMasteryItems(
     return fallbackList.length > 0
       ? fallbackList
       : [
-        {
-          id: 'mastery-starter',
-          moduleId: 'mastery',
-          target: '아',
-          translation: 'Ah',
-        },
-      ];
+          {
+            id: 'mastery-starter',
+            moduleId: 'mastery',
+            target: '아',
+            translation: 'Ah',
+          },
+        ];
   }
 
   return eligible;

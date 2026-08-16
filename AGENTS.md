@@ -81,6 +81,8 @@ distraction-free, high-performance typing experience for English speakers learni
   module listings in the sidebar.
 - `src/lib/DualRangeSlider.svelte`: Dual-handle range slider for settings controls.
 - `src/lib/ShiftKey.svelte`: Shift key indicator component for the virtual keyboard.
+- `src/lib/SymbolToggleKey.svelte`: Symbol mode (`?123` / `ㄱㄴㄷ`) toggle keycap used at both ends
+  of the mobile bottom row.
 - `src/lib/CursorColorSelect.svelte`: Color picker control for customizing cursor color in settings.
 - `src/lib/GitHubLink.svelte`: GitHub repository link component in the header.
 - `src/lib/settings.ts`: Settings state management, persistence, and default values.
