@@ -1,4 +1,4 @@
-import { SvelteMap, SvelteURL } from 'svelte/reactivity';
+import { SvelteMap } from 'svelte/reactivity';
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
 
 /**
@@ -39,7 +39,8 @@ export class TTSController {
       return this.worker;
     }
 
-    this.worker = new Worker(new SvelteURL('../workers/tts.worker.ts', import.meta.url), {
+    // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Vite static analysis requires literal new URL(..., import.meta.url)
+    this.worker = new Worker(new URL('../workers/tts.worker.ts', import.meta.url), {
       type: 'module',
     });
 
@@ -100,6 +101,18 @@ export class TTSController {
           this.inFlightSyntheses.clear();
           break;
       }
+    };
+
+    this.worker.onerror = (err: ErrorEvent) => {
+      console.error('TTS Web Worker Error:', err);
+      this.isLoading = false;
+      this.loadError = err.message || 'Web Worker failed to initialize or execute';
+    };
+
+    this.worker.onmessageerror = (err: MessageEvent) => {
+      console.error('TTS Web Worker Message Error:', err);
+      this.isLoading = false;
+      this.loadError = 'Web Worker failed to deserialize message';
     };
 
     return this.worker;

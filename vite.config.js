@@ -19,6 +19,9 @@ export default defineConfig({
       'Cross-Origin-Embedder-Policy': 'require-corp',
     },
   },
+  worker: {
+    format: 'es',
+  },
   plugins: [
     svelte(),
     VitePWA({
@@ -27,7 +30,8 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+        maximumFileSizeToCacheInBytes: 30 * 1024 * 1024, // 30 MB for ONNX runtime WASM & worker
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,json,wasm}'],
       },
       manifest: {
         name: 'Korean Typing Tutor',
