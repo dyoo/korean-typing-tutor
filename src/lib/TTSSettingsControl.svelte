@@ -27,7 +27,10 @@
       <input
         type="checkbox"
         checked={settings.enableTTS}
-        onchange={ontoggletts}
+        onchange={(e) => {
+          e.currentTarget.checked = !!settings.enableTTS;
+          ontoggletts?.();
+        }}
         class="w-4 h-4 text-blue-600 rounded cursor-pointer"
       />
       <span>Enable</span>

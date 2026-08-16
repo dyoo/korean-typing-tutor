@@ -177,7 +177,7 @@ export class TTSController {
 
   public preload(
     text: string,
-    voice: string = 'jf_nezumi',
+    voice: string = 'jm_kumo',
     speed: number = 1.0,
   ): Promise<string> | null {
     if (!text || text.trim().length === 0) {
@@ -188,7 +188,7 @@ export class TTSController {
 
   public async synthesize(
     text: string,
-    voice: string = 'jf_nezumi',
+    voice: string = 'jm_kumo',
     speed: number = 1.0,
   ): Promise<string> {
     const cacheKey = `${text}_${voice}_${speed}`;

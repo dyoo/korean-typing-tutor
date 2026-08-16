@@ -42,7 +42,7 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   cursorColor: 'amber',
   enableTTS: false,
   speakOnCompletion: true,
-  ttsVoice: 'jf_nezumi',
+  ttsVoice: 'jm_kumo',
   ttsSpeed: 1.0,
 };
 
@@ -95,7 +95,7 @@ export function loadSettings(): TutorSettings {
       enableTTS: typeof parsed.enableTTS === 'boolean' ? parsed.enableTTS : false,
       speakOnCompletion:
         typeof parsed.speakOnCompletion === 'boolean' ? parsed.speakOnCompletion : true,
-      ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : 'jf_nezumi',
+      ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : 'jm_kumo',
       ttsSpeed:
         typeof parsed.ttsSpeed === 'number' && parsed.ttsSpeed >= 0.5 && parsed.ttsSpeed <= 2.0
           ? parsed.ttsSpeed

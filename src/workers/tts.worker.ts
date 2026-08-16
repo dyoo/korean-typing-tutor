@@ -133,7 +133,7 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
     }
 
     case 'SYNTHESIZE': {
-      const { id, text, voice = 'jf_nezumi', speed = 1.0 } = message.payload;
+      const { id, text, voice = 'jm_kumo', speed = 1.0 } = message.payload;
       try {
         if (!speaker || !isModelLoaded) {
           throw new Error('TTS Model is not loaded yet');
