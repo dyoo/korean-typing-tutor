@@ -15,7 +15,7 @@
   let loadError = $derived(ttsController.getLoadError());
 
   function handleKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape' && isOpen && !isLoading) {
+    if (e.key === 'Escape' && isOpen) {
       onCancel();
     }
   }
@@ -112,9 +112,8 @@
       <div class="flex items-center justify-end gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
         <button
           type="button"
-          disabled={isLoading}
           onclick={onCancel}
-          class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 cursor-pointer"
+          class="px-3.5 py-1.5 text-xs font-semibold rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
         >
           Cancel
         </button>

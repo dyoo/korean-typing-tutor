@@ -314,6 +314,7 @@
   }
 
   function handleCancelTTSDownload() {
+    ttsController.cancelLoading();
     showTTSDownloadModal = false;
   }
 

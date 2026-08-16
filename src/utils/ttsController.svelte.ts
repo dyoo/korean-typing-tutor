@@ -145,6 +145,23 @@ export class TTSController {
     });
   }
 
+  /**
+   * Aborts model downloading and terminates active worker threads.
+   */
+  public cancelLoading(): void {
+    if (this.worker) {
+      this.worker.terminate();
+      this.worker = null;
+    }
+    this.isLoading = false;
+    this.downloadProgress = 0;
+    this.downloadStatus = '';
+    this.currentFileName = '';
+    this.loadError = null;
+    this.inFlightSyntheses.clear();
+    this.pendingSyntheses.clear();
+  }
+
   public preload(
     text: string,
     voice: string = 'jf_nezumi',
