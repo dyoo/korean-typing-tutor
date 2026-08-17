@@ -132,10 +132,10 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 ### Phase 7: Kokoro TTS Voice Synthesis (WebAssembly & Web Worker) — COMPLETED
 
 Add local, high-fidelity Korean text-to-speech pronunciation support using Kokoro-82M via
-`@dannyyoo/korean-kokoro` and `kokoro-js`.
+`korean-kokoro` and `kokoro-js`.
 
 - [x] **Stage 1: Dependencies & Settings Infrastructure**
-  - [x] Add `@dannyyoo/korean-kokoro` and `kokoro-js` to `package.json`.
+  - [x] Add `korean-kokoro` and `kokoro-js` to `package.json`.
   - [x] Extend `TutorSettings` in `src/lib/settings.ts` with:
     - `enableTTS: boolean` (default: `false` — disabled by default).
     - `ttsVoice: string` (default: `'jf_nezumi'`).

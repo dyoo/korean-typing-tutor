@@ -90,7 +90,7 @@ how to type Korean:
 
 - **Framework**: [Svelte 5](https://svelte.dev/)
 - **Build Tool**: [Vite](https://vitejs.dev/)
-- **Voice Synthesis**: [@dannyyoo/korean-kokoro](https://github.com/dannyyoo/korean-kokoro) & [Kokoro-82M ONNX](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX)
+- **Voice Synthesis**: [korean-kokoro](https://github.com/dyoo/korean-tts) & [Kokoro-82M ONNX](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
 - **Testing**: [Vitest](https://vitest.dev/)

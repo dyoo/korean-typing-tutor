@@ -1,5 +1,4 @@
-import { KoreanSpeaker } from '@dannyyoo/korean-kokoro';
-import type { SpeakerProgress } from '@dannyyoo/korean-kokoro';
+import { KoreanSpeaker, type SpeakerProgress } from 'korean-kokoro';
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
 
 /**
