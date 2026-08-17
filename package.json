@@ -19,7 +19,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "kokoro-js": "^1.2.1",
-    "korean-kokoro": "^1.1.1"
+    "korean-kokoro": "^1.1.2"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
