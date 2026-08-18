@@ -209,4 +209,22 @@ describe('TTSController Unit Tests', () => {
       expect(synthMsg.payload.voice).toBe('jm_kumo');
     }
   });
+
+  it('handles preload cancellation silently by resolving to null', async () => {
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    const preloadPromise = controller.preload('미리듣기');
+    expect(preloadPromise).not.toBeNull();
+
+    controller.stop();
+    const result = await preloadPromise;
+    expect(result).toBeNull();
+  });
 });

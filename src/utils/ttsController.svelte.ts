@@ -190,11 +190,11 @@ export class TTSController {
     text: string,
     voice: string = 'jm_kumo',
     speed: number = 1.0,
-  ): Promise<string> | null {
+  ): Promise<string | null> | null {
     if (!text || text.trim().length === 0) {
       return null;
     }
-    return this.synthesize(text, voice, speed);
+    return this.synthesize(text, voice, speed).catch(() => null);
   }
 
   public async synthesize(
