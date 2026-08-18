@@ -61,6 +61,7 @@ export class TutorSession {
 
   public mode: TutorMode = $state('mastery');
   public masteryState: MasteryState = $state(loadMasteryState());
+  public isMasteryGraduationPending: boolean = $state(false);
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
 
   constructor(
@@ -491,7 +492,11 @@ export class TutorSession {
 
       // If currently at a sentence checkpoint, record sentence completion
       if (activeTarget.type === 'checkpoint') {
-        recordSentenceCompletion(this.masteryState, activeTarget.checkpoint.id);
+        const compRes = recordSentenceCompletion(this.masteryState, activeTarget.checkpoint.id);
+        if (compRes.isAllMasteryComplete) {
+          this.isMasteryGraduationPending = true;
+          isComplete = true;
+        }
         this.scheduleSave();
       }
 
@@ -520,6 +525,16 @@ export class TutorSession {
 
     this.resetSessionState();
     return isComplete;
+  }
+
+  /** Checks if full mastery path was newly completed. */
+  public getIsMasteryGraduationPending(): boolean {
+    return this.isMasteryGraduationPending;
+  }
+
+  /** Clears the pending mastery graduation flag. */
+  public clearMasteryGraduationPending(): void {
+    this.isMasteryGraduationPending = false;
   }
 
   /** Resets dynamic typing state for current lesson item. */

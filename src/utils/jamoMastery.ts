@@ -564,13 +564,19 @@ export function calculateJamoProgress(stats?: JamoStats): number {
   return Math.min(100, Math.max(0, Math.round(attemptRatio * accuracy * 100)));
 }
 
+export interface SentenceCompletionResult {
+  newlyMastered: boolean;
+  newlyUnlockedJamo?: string;
+  isAllMasteryComplete?: boolean;
+}
+
 /**
  * Records a single sentence completion during a sentence checkpoint.
  */
 export function recordSentenceCompletion(
   state: MasteryState,
   checkpointId: string,
-): { newlyMastered: boolean; newlyUnlockedJamo?: string } {
+): SentenceCompletionResult {
   if (!state.sentenceCheckpointStats) {
     state.sentenceCheckpointStats = {};
   }
@@ -586,11 +592,18 @@ export function recordSentenceCompletion(
 
   let newlyMastered = false;
   let newlyUnlockedJamo: string | undefined = undefined;
+  let isAllMasteryComplete = false;
 
   if (!stats.isMastered && stats.completedCount >= targetCount) {
     stats.isMastered = true;
     newlyMastered = true;
     state.activeCheckpointId = null;
+
+    // If graduating the final milestone (cp_master), flag complete mastery
+    const lastCheckpoint = SENTENCE_CHECKPOINTS[SENTENCE_CHECKPOINTS.length - 1];
+    if (checkpointId === lastCheckpoint.id) {
+      isAllMasteryComplete = true;
+    }
 
     // Check if more Jamos remain to unlock
     if (state.unlockedCount < JAMO_PROGRESSION_ORDER.length) {
@@ -609,7 +622,18 @@ export function recordSentenceCompletion(
     }
   }
 
-  return { newlyMastered, newlyUnlockedJamo };
+  return { newlyMastered, newlyUnlockedJamo, isAllMasteryComplete };
+}
+
+/**
+ * Checks if the learner has graduated all checkpoints and unlocked all Jamos.
+ */
+export function isAllMasteryComplete(state: MasteryState): boolean {
+  const lastCheckpoint = SENTENCE_CHECKPOINTS[SENTENCE_CHECKPOINTS.length - 1];
+  return (
+    state.unlockedCount >= JAMO_PROGRESSION_ORDER.length &&
+    state.sentenceCheckpointStats?.[lastCheckpoint.id]?.isMastered === true
+  );
 }
 
 /**

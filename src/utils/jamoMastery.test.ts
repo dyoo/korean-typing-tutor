@@ -18,6 +18,7 @@ import {
   SENTENCE_CHECKPOINTS,
   getActiveMasteryTarget,
   recordSentenceCompletion,
+  isAllMasteryComplete,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
 import type { JamoStats } from '../types/mastery';
@@ -407,5 +408,25 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     };
     const sentenceItems = getEligibleMasteryItems(dummyCurriculum, unlocked, cpTarget);
     expect(sentenceItems.some((i) => i.target.length >= 8)).toBe(true);
+  });
+
+  it('correctly reports isAllMasteryComplete when the final checkpoint (cp_master) is graduated', () => {
+    const state = createDefaultMasteryState();
+    state.unlockedCount = JAMO_PROGRESSION_ORDER.length; // 44
+    expect(isAllMasteryComplete(state)).toBe(false);
+
+    // Complete 14 sentences for cp_master
+    for (let i = 0; i < 14; i++) {
+      const res = recordSentenceCompletion(state, 'cp_master');
+      expect(res.newlyMastered).toBe(false);
+      expect(res.isAllMasteryComplete).toBe(false);
+    }
+    expect(isAllMasteryComplete(state)).toBe(false);
+
+    // 15th sentence completes cp_master and full mastery path
+    const finalRes = recordSentenceCompletion(state, 'cp_master');
+    expect(finalRes.newlyMastered).toBe(true);
+    expect(finalRes.isAllMasteryComplete).toBe(true);
+    expect(isAllMasteryComplete(state)).toBe(true);
   });
 });

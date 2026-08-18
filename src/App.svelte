@@ -24,6 +24,7 @@
   import TopBar from './lib/TopBar.svelte';
   import InputDisplay from './lib/InputDisplay.svelte';
   import TTSDownloadModal from './lib/TTSDownloadModal.svelte';
+  import MasteryCompletionModal from './lib/MasteryCompletionModal.svelte';
   import { ttsController } from './utils/ttsController.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
@@ -39,6 +40,7 @@
   let showSettingsModal = $derived(activePanel === 'settings');
   let showCurriculumSidebar = $derived(activePanel === 'curriculum');
   let showMasterySidebar = $derived(activePanel === 'mastery');
+  let showMasteryCompletionModal = $state(false);
 
   let enabledModuleIds = $state<string[]>(
     Array.isArray(initialSettings.enabledModuleIds)
@@ -264,6 +266,12 @@
     const wasCompleted = session.getIsItemCompleted();
     const result = session.processKey(key);
 
+    // If graduating full mastery path on the last milestone, show completion dialog
+    if (session.getIsMasteryGraduationPending()) {
+      showMasteryCompletionModal = true;
+      session.clearMasteryGraduationPending();
+    }
+
     // If typing this key newly completed the exercise, trigger audio if enabled
     if (
       !wasCompleted &&
@@ -301,6 +309,28 @@
     e.stopPropagation();
     ttsController.stop();
     session.advanceLevel();
+    if (session.getIsMasteryGraduationPending()) {
+      showMasteryCompletionModal = true;
+      session.clearMasteryGraduationPending();
+    }
+    focusInputElement();
+  }
+
+  function handleCompletionSwitchToFreeForm() {
+    showMasteryCompletionModal = false;
+    session.setMode('curriculum');
+    activePanel = 'curriculum';
+    focusInputElement();
+  }
+
+  function handleCompletionOpenMasterySidebar() {
+    showMasteryCompletionModal = false;
+    activePanel = 'mastery';
+    focusInputElement();
+  }
+
+  function handleCompletionModalClose() {
+    showMasteryCompletionModal = false;
     focusInputElement();
   }
 
@@ -614,6 +644,13 @@
   isOpen={showTTSDownloadModal}
   onConfirm={handleConfirmTTSDownload}
   onCancel={handleCancelTTSDownload}
+/>
+
+<MasteryCompletionModal
+  show={showMasteryCompletionModal}
+  onClose={handleCompletionModalClose}
+  onSwitchToFreeForm={handleCompletionSwitchToFreeForm}
+  onOpenMasterySidebar={handleCompletionOpenMasterySidebar}
 />
 
 <style>
