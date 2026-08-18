@@ -122,7 +122,14 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 
 - [x] **Curated Stage-Specific Jamo Word Banks (`src/content/masteryVocabulary.ts`):** Ensure every Jamo
       in the progression sequence has authentic Korean words/short expressions constructed strictly
-      from cumulative unlocked keys.
+      from cumulative unlocked keys (expanded to $\ge 10$ authentic items per Jamo across all
+      Compound Batchims and Shift Keys).
+- [x] **Mastery Progression Banks in Free-Form Mode:** Added 5 dedicated curriculum modules
+      (`Home Row Mastery`, `Top Row Mastery`, `Bottom Row Mastery`, `Shift Keys Mastery`,
+      `Compound Batchim Mastery`) as a category right after Final Consonants in Free-form mode.
+- [x] **Iconic Public Domain Literature & Poetry:** Integrated famous poems and literary quotes by
+      King Sejong, Yun Dong-ju, Kim Sowol, Han Yong-un, Jeong Ji-yong, Yi Yuk-sa, and Hwang Jin-i
+      into the Sentence Milestone Checkpoints.
 - [x] **Length-Restricted Jamo Introduction:** Avoid long sentences while introducing new letter keys
       by restricting the exercise pool during Jamo stages to short words ($\le 12$ characters / 1–3
       words).
@@ -131,6 +138,9 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
       sentences.
 - [x] **Sentence Mastery Completion Tracking:** Implement a 15-completed-sentence requirement to
       graduate each sentence checkpoint and advance to the next keyboard section.
+- [x] **Mastery Completion Modal Dialog (`MasteryCompletionModal.svelte`):** Congratulate the learner
+      upon completing the entire mastery path and provide clear, one-click pathways to switch to
+      Free-form mode or open the Mastery Drawer to review or reset progression.
 - [x] **Mastery Sidebar & TopBar Milestone Updates:** Render sentence checkpoints with `Milestone:`
       prefix in the sidebar, live completion counters (`X/15`), single-line responsive layouts, and
       dedicated TopBar milestone pills.

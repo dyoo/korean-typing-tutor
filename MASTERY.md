@@ -118,3 +118,15 @@ When picking the next exercise in Mastery mode:
 - **Persistence:** Progress is stored in `localStorage` under `korean_tutor_mastery` and debounced (30s inactivity or on page unload) to prevent mobile I/O overhead.
 - **Manual Stage Selection:** The **Mastery Sidebar** allows learners to manually jump to any individual Jamo milestone or Sentence Checkpoint, automatically unlocking preceding keys.
 - **Clean Slate Reset:** A reset option clears all Jamo history and sets progress back to Stage 1.
+
+---
+
+## 6. Graduation Celebration & Next Steps
+
+Upon graduating the final Milestone (**Sentence Milestone 5 / Compound Batchim**):
+
+1. **Celebration Dialog (`MasteryCompletionModal.svelte`):** A high-contrast modal dialog appears congratulating the learner on mastering all 44 Hangul Jamos and 5 Sentence Milestones.
+2. **Actionable Pathways:**
+   - **Switch to Free-form Mode:** Easily transition to practice the full 26-module library of authentic vocabulary, TOPIK levels, idioms, and literature without progression locks.
+   - **Review or Reset Progress:** Open the Mastery Progress Drawer to jump to any specific stage or milestone to hone speed and accuracy.
+   - **Continue in Master Level:** Keep practicing the rich mix of authentic master-level passages and public domain Korean poetry.
