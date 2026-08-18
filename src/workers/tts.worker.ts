@@ -163,7 +163,7 @@ async function inspectWorkerStorage(): Promise<{ isCached: boolean; modelSizeFor
   let modelSizeBytes = 0;
 
   if (typeof caches !== 'undefined') {
-    for (const cacheName of ['transformers-cache', 'kokoro-voices']) {
+    for (const cacheName of ['transformers-cache', 'kokoro-voices', 'onnx-wasm-runtime']) {
       try {
         if (await caches.has(cacheName)) {
           const cache = await caches.open(cacheName);
@@ -173,6 +173,7 @@ async function inspectWorkerStorage(): Promise<{ isCached: boolean; modelSizeFor
               req.url.includes('Kokoro-82M') ||
               req.url.includes('kokoro') ||
               req.url.includes('.onnx') ||
+              req.url.includes('.wasm') ||
               req.url.includes('voices')
             ) {
               isCached = true;
@@ -197,11 +198,11 @@ async function inspectWorkerStorage(): Promise<{ isCached: boolean; modelSizeFor
 }
 
 /**
- * Directly removes cached neural model files from CacheStorage.
+ * Directly removes cached neural model files and runtime WASM binary from CacheStorage.
  */
 async function clearWorkerStorage(): Promise<void> {
   if (typeof caches !== 'undefined') {
-    for (const cacheName of ['transformers-cache', 'kokoro-voices']) {
+    for (const cacheName of ['transformers-cache', 'kokoro-voices', 'onnx-wasm-runtime']) {
       try {
         await caches.delete(cacheName);
       } catch {

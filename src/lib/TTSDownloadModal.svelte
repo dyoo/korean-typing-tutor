@@ -63,8 +63,8 @@
       </div>
 
       <p class="text-xs leading-relaxed text-gray-600 dark:text-gray-300">
-        Enabling Korean voice synthesis requires downloading the Kokoro-82M neural model (<strong
-          class="font-semibold text-gray-900 dark:text-gray-100">~80 MB</strong
+        Enabling Korean voice synthesis requires downloading the Kokoro-82M neural model and audio runtime (<strong
+          class="font-semibold text-gray-900 dark:text-gray-100">~100 MB</strong
         >).
       </p>
 
