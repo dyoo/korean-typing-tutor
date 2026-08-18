@@ -1,4 +1,4 @@
-import { KoreanSpeaker, type SpeakerProgress } from 'korean-kokoro';
+import { KoreanSpeaker, type SpeakerProgress, type SynthesisTask } from 'korean-tts';
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
 
 /**
@@ -9,6 +9,7 @@ import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../type
 
 let speaker: KoreanSpeaker | null = null;
 let isModelLoaded = false;
+const activeTasks = new Map<string, SynthesisTask>();
 
 // Fallback voice metadata in case speaker.getVoices() is called
 const FALLBACK_VOICES: VoiceMetadata[] = [
@@ -151,11 +152,15 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
           throw new Error('TTS Model is not loaded yet');
         }
 
-        const result = await speaker.synthesize({
+        const task = speaker.synthesize({
           text,
           voice,
           speed,
         });
+        activeTasks.set(id, task);
+
+        const result = await task;
+        activeTasks.delete(id);
 
         const audioBlob = result.toWavBlob();
         const audioBlobUrl = URL.createObjectURL(audioBlob);
@@ -171,17 +176,52 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
           },
         });
       } catch (err: unknown) {
-        const errorMsg = err instanceof Error ? err.message : String(err);
-        postResponse({
-          type: 'SYNTHESIS_ERROR',
-          payload: { id, error: errorMsg },
-        });
+        activeTasks.delete(id);
+        const isCancelled =
+          (typeof err === 'object' &&
+            err !== null &&
+            'isCancelled' in err &&
+            Boolean((err as { isCancelled?: boolean }).isCancelled)) ||
+          (err instanceof Error &&
+            (err.name === 'AbortError' || err.message.includes('cancelled'))) ||
+          String(err).includes('cancelled');
+
+        if (isCancelled) {
+          postResponse({
+            type: 'SYNTHESIS_CANCELLED',
+            payload: { id },
+          });
+        } else {
+          const errorMsg = err instanceof Error ? err.message : String(err);
+          postResponse({
+            type: 'SYNTHESIS_ERROR',
+            payload: { id, error: errorMsg },
+          });
+        }
+      }
+      break;
+    }
+
+    case 'CANCEL_SYNTHESIS': {
+      const targetId = message.payload?.id;
+      if (targetId) {
+        const task = activeTasks.get(targetId);
+        if (task) {
+          task.cancel('Cancelled by client');
+          activeTasks.delete(targetId);
+        }
+      } else {
+        if (speaker) {
+          speaker.cancelAll('Cancelled by client');
+        }
+        activeTasks.clear();
       }
       break;
     }
 
     case 'CLEAR_CACHE': {
       try {
+        activeTasks.clear();
         if (speaker) {
           await speaker.clearStorage();
           speaker.dispose();

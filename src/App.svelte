@@ -277,6 +277,7 @@
 
   function handleSkip(e: MouseEvent) {
     e.stopPropagation();
+    ttsController.stop();
     session.advanceLevel();
     focusInputElement();
   }
@@ -349,8 +350,11 @@
 
   // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
   // so clicking the audio button plays immediately without synthesis delay.
+  // Cancels any active synthesis or playback from the previous exercise.
   $effect(() => {
     const targetText = currentItem.target;
+    ttsController.stop();
+
     if (settings.enableTTS && targetText) {
       ttsController.preload(
         targetText,

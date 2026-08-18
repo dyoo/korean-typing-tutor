@@ -85,6 +85,15 @@ export class TTSController {
           break;
         }
 
+        case 'SYNTHESIS_CANCELLED': {
+          const pending = this.pendingSyntheses.get(msg.payload.id);
+          if (pending) {
+            pending.reject(new Error('Synthesis cancelled'));
+            this.pendingSyntheses.delete(msg.payload.id);
+          }
+          break;
+        }
+
         case 'SYNTHESIS_ERROR': {
           const pending = this.pendingSyntheses.get(msg.payload.id);
           if (pending) {
@@ -272,6 +281,28 @@ export class TTSController {
     }
   }
 
+  public cancelSynthesis(id?: string): void {
+    if (this.worker) {
+      this.worker.postMessage({
+        type: 'CANCEL_SYNTHESIS',
+        payload: id ? { id } : undefined,
+      } satisfies TTSWorkerRequest);
+    }
+    if (id) {
+      const pending = this.pendingSyntheses.get(id);
+      if (pending) {
+        pending.reject(new Error('Synthesis cancelled'));
+        this.pendingSyntheses.delete(id);
+      }
+    } else {
+      for (const pending of this.pendingSyntheses.values()) {
+        pending.reject(new Error('Synthesis cancelled'));
+      }
+      this.pendingSyntheses.clear();
+      this.inFlightSyntheses.clear();
+    }
+  }
+
   public stop(): void {
     if (this.currentAudio) {
       this.currentAudio.pause();
@@ -279,6 +310,7 @@ export class TTSController {
       this.currentAudio = null;
     }
     this.isSpeaking = false;
+    this.cancelSynthesis();
   }
 
   public async clearCache(): Promise<void> {

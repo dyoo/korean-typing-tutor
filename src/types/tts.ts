@@ -19,6 +19,7 @@ export type TTSWorkerRequest =
       payload?: { dtype?: 'q8' | 'fp32' | 'fp16' | 'q4'; device?: 'wasm' | 'webgpu' };
     }
   | { type: 'SYNTHESIZE'; payload: { id: string; text: string; voice?: string; speed?: number } }
+  | { type: 'CANCEL_SYNTHESIS'; payload?: { id?: string } }
   | { type: 'CLEAR_CACHE' };
 
 export type TTSWorkerResponse =
@@ -36,6 +37,7 @@ export type TTSWorkerResponse =
         ipa: string;
       };
     }
+  | { type: 'SYNTHESIS_CANCELLED'; payload: { id: string } }
   | { type: 'SYNTHESIS_ERROR'; payload: { id: string; error: string } }
   | { type: 'CLEAR_CACHE_SUCCESS' }
   | { type: 'CLEAR_CACHE_ERROR'; payload: { error: string } };
