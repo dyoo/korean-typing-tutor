@@ -4,9 +4,15 @@ import type {
   JamoStats,
   JamoProgressionItem,
   JamoStageGroup,
+  SentenceCheckpoint,
+  MasteryTarget,
   MasteryAttemptResult,
 } from '../types/mastery';
 import { decomposeStringToJamos, decomposeSyllable } from './hangulDecompose';
+import {
+  MASTERY_JAMO_VOCABULARY,
+  MASTERY_CHECKPOINT_SENTENCES,
+} from '../content/masteryVocabulary';
 
 /** Storage key used for persisting Jamo mastery progress in LocalStorage. */
 const MASTERY_STORAGE_KEY = 'korean_tutor_mastery';
@@ -160,8 +166,53 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = [
 ];
 
 /**
- * Groups `JAMO_PROGRESSION_ORDER` into stages, preserving the original order of items
- * within each stage. The result is sorted by ascending stage number.
+ * Interleaved sentence milestone checkpoints between key learning sections.
+ */
+export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
+  {
+    id: 'cp_home_row',
+    stage: 2,
+    stageName: 'Home Row',
+    title: 'Home Row Sentences',
+    afterJamoIndex: 11, // 'ㅡ'
+    requiredCompletions: 15,
+  },
+  {
+    id: 'cp_top_row',
+    stage: 3,
+    stageName: 'Top Row',
+    title: 'Top + Home Row Sentences',
+    afterJamoIndex: 21, // 'ㅔ'
+    requiredCompletions: 15,
+  },
+  {
+    id: 'cp_bottom_row',
+    stage: 4,
+    stageName: 'Bottom Row',
+    title: 'Full Alphabet Sentences',
+    afterJamoIndex: 26, // 'ㅠ'
+    requiredCompletions: 15,
+  },
+  {
+    id: 'cp_shift_keys',
+    stage: 5,
+    stageName: 'Shift Keys',
+    title: 'Shift Key Sentences',
+    afterJamoIndex: 33, // 'ㅖ'
+    requiredCompletions: 15,
+  },
+  {
+    id: 'cp_master',
+    stage: 6,
+    stageName: 'Compound Batchim',
+    title: 'Master Review Passages',
+    afterJamoIndex: 44, // 'ㄽ'
+    requiredCompletions: 15,
+  },
+];
+
+/**
+ * Groups `JAMO_PROGRESSION_ORDER` into stages and attaches sentence checkpoints.
  */
 export const JAMO_STAGES: JamoStageGroup[] = (() => {
   const stageMap = new Map<number, JamoProgressionItem[]>();
@@ -176,6 +227,7 @@ export const JAMO_STAGES: JamoStageGroup[] = (() => {
       stageNum,
       stageName: items[0].stageName,
       items,
+      checkpoint: SENTENCE_CHECKPOINTS.find((cp) => cp.stage === stageNum),
     }));
 })();
 
@@ -193,10 +245,21 @@ export function createDefaultMasteryState(): MasteryState {
     };
   }
 
+  const sentenceCheckpointStats: Record<string, { completedCount: number; isMastered: boolean }> =
+    {};
+  for (const cp of SENTENCE_CHECKPOINTS) {
+    sentenceCheckpointStats[cp.id] = {
+      completedCount: 0,
+      isMastered: false,
+    };
+  }
+
   return {
     mode: 'mastery',
     unlockedCount: 4, // Initial Stage 1 keys: ㅓ, ㅏ, ㅇ, ㄹ
+    activeCheckpointId: null,
     jamoStats,
+    sentenceCheckpointStats,
   };
 }
 
@@ -225,6 +288,8 @@ export function loadMasteryState(): MasteryState {
         : 4;
 
     const mode = parsed.mode === 'curriculum' ? 'curriculum' : 'mastery';
+    const activeCheckpointId =
+      typeof parsed.activeCheckpointId === 'string' ? parsed.activeCheckpointId : null;
 
     const jamoStats = { ...defaultState.jamoStats };
     if (parsed.jamoStats && typeof parsed.jamoStats === 'object') {
@@ -245,10 +310,25 @@ export function loadMasteryState(): MasteryState {
       }
     }
 
+    const sentenceCheckpointStats = { ...defaultState.sentenceCheckpointStats };
+    if (parsed.sentenceCheckpointStats && typeof parsed.sentenceCheckpointStats === 'object') {
+      for (const cp of SENTENCE_CHECKPOINTS) {
+        const stats = parsed.sentenceCheckpointStats[cp.id];
+        if (stats && typeof stats === 'object') {
+          sentenceCheckpointStats[cp.id] = {
+            completedCount: typeof stats.completedCount === 'number' ? stats.completedCount : 0,
+            isMastered: typeof stats.isMastered === 'boolean' ? stats.isMastered : false,
+          };
+        }
+      }
+    }
+
     return {
       mode,
       unlockedCount,
+      activeCheckpointId,
       jamoStats,
+      sentenceCheckpointStats,
     };
   } catch {
     return createDefaultMasteryState();
@@ -281,7 +361,56 @@ export function getUnlockedJamos(state: MasteryState): Set<string> {
 }
 
 /**
- * Sets the mastery unlocked count to a specific level (clamped between 4 and 35).
+ * Checks whether an unmastered sentence checkpoint is currently active or due.
+ */
+export function getActiveCheckpointForState(state: MasteryState): SentenceCheckpoint | null {
+  if (state.activeCheckpointId) {
+    const cp = SENTENCE_CHECKPOINTS.find((c) => c.id === state.activeCheckpointId);
+    if (cp) {
+      return cp;
+    }
+  }
+
+  // Look for the lowest checkpoint whose Jamos are unlocked & mastered, but checkpoint is unmastered
+  for (const cp of SENTENCE_CHECKPOINTS) {
+    if (state.unlockedCount >= cp.afterJamoIndex) {
+      let allPrecedingMastered = true;
+      for (let i = 0; i < cp.afterJamoIndex; i++) {
+        const j = JAMO_PROGRESSION_ORDER[i].jamo;
+        if (!state.jamoStats[j]?.isMastered) {
+          allPrecedingMastered = false;
+          break;
+        }
+      }
+
+      const cpStats = state.sentenceCheckpointStats?.[cp.id];
+      if (allPrecedingMastered && (!cpStats || !cpStats.isMastered)) {
+        return cp;
+      }
+    }
+  }
+
+  return null;
+}
+
+/**
+ * Returns the active learning target (either a specific Jamo or a Sentence Checkpoint).
+ */
+export function getActiveMasteryTarget(state: MasteryState): MasteryTarget {
+  const checkpoint = getActiveCheckpointForState(state);
+  if (checkpoint) {
+    return { type: 'checkpoint', checkpoint };
+  }
+
+  const activeJamo = getActiveLearningJamo(state);
+  return {
+    type: 'jamo',
+    item: activeJamo ?? JAMO_PROGRESSION_ORDER[0],
+  };
+}
+
+/**
+ * Sets the mastery unlocked count to a specific level (clamped between 4 and 44).
  * Optionally marks all unlocked Jamos before the active target as mastered.
  */
 export function setMasteryProgressionLevel(
@@ -291,6 +420,7 @@ export function setMasteryProgressionLevel(
 ): void {
   const clamped = Math.max(4, Math.min(level, JAMO_PROGRESSION_ORDER.length));
   state.unlockedCount = clamped;
+  state.activeCheckpointId = null;
 
   if (markPrecedingMastered) {
     for (let i = 0; i < JAMO_PROGRESSION_ORDER.length; i++) {
@@ -306,22 +436,86 @@ export function setMasteryProgressionLevel(
         state.jamoStats[jamo] = stats;
       }
       if (clamped === 4) {
-        // Stage 1 clean slate: all keys unmastered with zero attempts
         stats.isMastered = false;
         stats.totalAttempts = 0;
         stats.correctAttempts = 0;
         stats.recentHistory = [];
       } else if (i < clamped - 1) {
-        // Preceding keys are marked as mastered
         stats.isMastered = true;
       } else {
-        // The active frontier key (i === clamped - 1) and all locked keys beyond (i >= clamped)
-        // are explicitly set to unmastered so the frontier key is actively learned as the candidate
         stats.isMastered = false;
         stats.totalAttempts = 0;
         stats.correctAttempts = 0;
         stats.recentHistory = [];
       }
+    }
+
+    if (!state.sentenceCheckpointStats) {
+      state.sentenceCheckpointStats = {};
+    }
+
+    for (const cp of SENTENCE_CHECKPOINTS) {
+      if (!state.sentenceCheckpointStats[cp.id]) {
+        state.sentenceCheckpointStats[cp.id] = { completedCount: 0, isMastered: false };
+      }
+      if (clamped === 4) {
+        state.sentenceCheckpointStats[cp.id] = { completedCount: 0, isMastered: false };
+      } else if (cp.afterJamoIndex < clamped) {
+        state.sentenceCheckpointStats[cp.id].isMastered = true;
+        state.sentenceCheckpointStats[cp.id].completedCount = cp.requiredCompletions;
+      } else {
+        state.sentenceCheckpointStats[cp.id].isMastered = false;
+        state.sentenceCheckpointStats[cp.id].completedCount = 0;
+      }
+    }
+  }
+}
+
+/**
+ * Manually jumps to a specific sentence checkpoint milestone.
+ */
+export function setMasteryCheckpointLevel(state: MasteryState, checkpointId: string): void {
+  const cp = SENTENCE_CHECKPOINTS.find((c) => c.id === checkpointId);
+  if (!cp) {
+    return;
+  }
+
+  state.unlockedCount = cp.afterJamoIndex;
+  state.activeCheckpointId = checkpointId;
+
+  if (!state.sentenceCheckpointStats) {
+    state.sentenceCheckpointStats = {};
+  }
+
+  // Preceding Jamos are mastered
+  for (let i = 0; i < JAMO_PROGRESSION_ORDER.length; i++) {
+    const jamo = JAMO_PROGRESSION_ORDER[i].jamo;
+    let stats = state.jamoStats[jamo];
+    if (!stats) {
+      stats = { totalAttempts: 0, correctAttempts: 0, recentHistory: [], isMastered: false };
+      state.jamoStats[jamo] = stats;
+    }
+    if (i < cp.afterJamoIndex) {
+      stats.isMastered = true;
+    } else {
+      stats.isMastered = false;
+      stats.totalAttempts = 0;
+      stats.correctAttempts = 0;
+      stats.recentHistory = [];
+    }
+  }
+
+  // Preceding checkpoints are mastered; active checkpoint is reset to 0
+  for (const item of SENTENCE_CHECKPOINTS) {
+    if (!state.sentenceCheckpointStats[item.id]) {
+      state.sentenceCheckpointStats[item.id] = { completedCount: 0, isMastered: false };
+    }
+    if (item.afterJamoIndex < cp.afterJamoIndex) {
+      state.sentenceCheckpointStats[item.id].isMastered = true;
+      state.sentenceCheckpointStats[item.id].completedCount = item.requiredCompletions;
+    } else {
+      state.sentenceCheckpointStats[item.id].isMastered = false;
+      state.sentenceCheckpointStats[item.id].completedCount = 0;
     }
   }
 }
@@ -371,6 +565,54 @@ export function calculateJamoProgress(stats?: JamoStats): number {
 }
 
 /**
+ * Records a single sentence completion during a sentence checkpoint.
+ */
+export function recordSentenceCompletion(
+  state: MasteryState,
+  checkpointId: string,
+): { newlyMastered: boolean; newlyUnlockedJamo?: string } {
+  if (!state.sentenceCheckpointStats) {
+    state.sentenceCheckpointStats = {};
+  }
+  let stats = state.sentenceCheckpointStats[checkpointId];
+  if (!stats) {
+    stats = { completedCount: 0, isMastered: false };
+    state.sentenceCheckpointStats[checkpointId] = stats;
+  }
+
+  stats.completedCount += 1;
+  const cp = SENTENCE_CHECKPOINTS.find((c) => c.id === checkpointId);
+  const targetCount = cp?.requiredCompletions ?? 15;
+
+  let newlyMastered = false;
+  let newlyUnlockedJamo: string | undefined = undefined;
+
+  if (!stats.isMastered && stats.completedCount >= targetCount) {
+    stats.isMastered = true;
+    newlyMastered = true;
+    state.activeCheckpointId = null;
+
+    // Check if more Jamos remain to unlock
+    if (state.unlockedCount < JAMO_PROGRESSION_ORDER.length) {
+      const nextIndex = state.unlockedCount;
+      state.unlockedCount += 1;
+      newlyUnlockedJamo = JAMO_PROGRESSION_ORDER[nextIndex].jamo;
+
+      const nextStats = state.jamoStats[newlyUnlockedJamo];
+      if (nextStats) {
+        nextStats.isMastered = false;
+        nextStats.totalAttempts = 0;
+        nextStats.correctAttempts = 0;
+        nextStats.recentHistory = [];
+        nextStats.lastPracticed = undefined;
+      }
+    }
+  }
+
+  return { newlyMastered, newlyUnlockedJamo };
+}
+
+/**
  * Records a single keystroke outcome for a target Jamo and evaluates mastery promotion.
  */
 export function recordJamoAttempt(
@@ -402,6 +644,7 @@ export function recordJamoAttempt(
   const accuracy = calculateJamoAccuracy(stats);
   let newlyMastered = false;
   let newlyUnlockedJamo: string | undefined = undefined;
+  let newlyUnlockedCheckpoint: string | undefined = undefined;
 
   // Evaluate Mastery Criteria: at least 20 attempts with >= 95% rolling accuracy
   if (
@@ -412,26 +655,29 @@ export function recordJamoAttempt(
     stats.isMastered = true;
     newlyMastered = true;
 
-    // If all currently unlocked Jamos are mastered and more remain, unlock the next one
-    const unlockedSet = getUnlockedJamos(state);
-    const allUnlockedMastered = Array.from(unlockedSet).every(
-      (j) => state.jamoStats[j]?.isMastered ?? false,
-    );
+    // Check if mastering this Jamo unlocks a Sentence Checkpoint
+    const cp = getActiveCheckpointForState(state);
+    if (cp) {
+      newlyUnlockedCheckpoint = cp.id;
+    } else {
+      const unlockedSet = getUnlockedJamos(state);
+      const allUnlockedMastered = Array.from(unlockedSet).every(
+        (j) => state.jamoStats[j]?.isMastered ?? false,
+      );
 
-    if (allUnlockedMastered && state.unlockedCount < JAMO_PROGRESSION_ORDER.length) {
-      const nextIndex = state.unlockedCount;
-      state.unlockedCount += 1;
-      newlyUnlockedJamo = JAMO_PROGRESSION_ORDER[nextIndex].jamo;
+      if (allUnlockedMastered && state.unlockedCount < JAMO_PROGRESSION_ORDER.length) {
+        const nextIndex = state.unlockedCount;
+        state.unlockedCount += 1;
+        newlyUnlockedJamo = JAMO_PROGRESSION_ORDER[nextIndex].jamo;
 
-      // Reset the newly unlocked Jamo's stats so it starts fresh (not carrying over
-      // any previous mastery flag from a higher unlock level the user may have visited).
-      const nextStats = state.jamoStats[newlyUnlockedJamo];
-      if (nextStats) {
-        nextStats.isMastered = false;
-        nextStats.totalAttempts = 0;
-        nextStats.correctAttempts = 0;
-        nextStats.recentHistory = [];
-        nextStats.lastPracticed = undefined;
+        const nextStats = state.jamoStats[newlyUnlockedJamo];
+        if (nextStats) {
+          nextStats.isMastered = false;
+          nextStats.totalAttempts = 0;
+          nextStats.correctAttempts = 0;
+          nextStats.recentHistory = [];
+          nextStats.lastPracticed = undefined;
+        }
       }
     }
   }
@@ -443,6 +689,7 @@ export function recordJamoAttempt(
     attemptsCount: stats.totalAttempts,
     newlyMastered,
     newlyUnlockedJamo,
+    newlyUnlockedCheckpoint,
   };
 }
 
@@ -464,7 +711,7 @@ export const COMPOUND_BATCHIM_SET = new Set([
 /**
  * Helper to determine if a character is a Hangul Jamo (compatibility or standard Unicode Jamo).
  */
-function isHangulJamo(char: string): boolean {
+export function isHangulJamo(char: string): boolean {
   if (!char) {
     return false;
   }
@@ -503,52 +750,59 @@ export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): bo
 }
 
 /**
- * Filters an entire curriculum item list to only those items whose Jamos are all unlocked.
+ * Filters and aggregates eligible items for mastery mode.
+ * During Jamo stages, strictly restricts the pool to short words/phrases (<= 12 chars).
+ * During Sentence checkpoints, serves medium-to-long sentences (>= 8 chars).
  */
 export function getEligibleMasteryItems(
   allItems: LessonItem[],
   unlockedJamos: Set<string>,
+  activeTarget?: MasteryTarget | null,
 ): LessonItem[] {
-  const eligible = allItems.filter((item) => isItemEligible(item, unlockedJamos));
+  // If active target is a sentence checkpoint, return curated sentence bank + matching curriculum sentences
+  if (activeTarget && activeTarget.type === 'checkpoint') {
+    const cpId = activeTarget.checkpoint.id;
+    const curatedSentences = MASTERY_CHECKPOINT_SENTENCES[cpId] ?? [];
+    const matchingCurriculum = allItems.filter(
+      (item) => item.target.length >= 8 && isItemEligible(item, unlockedJamos),
+    );
+    const combined = [...curatedSentences, ...matchingCurriculum];
+    return combined.length > 0 ? combined : curatedSentences;
+  }
 
-  // Fallback: If no multi-character words match the initial small subset of Jamos,
-  // return single/compound syllables composed of the unlocked Jamos.
-  if (eligible.length === 0) {
-    const fallbackList: LessonItem[] = [];
-    const basicCombinations = [
-      '어',
-      '아',
-      '얼',
-      '라',
-      '알',
-      '러',
-      '어라',
-      '알아',
-      '얼마',
-      '오이',
-      '아이',
-    ];
-    for (const word of basicCombinations) {
-      const jamos = decomposeStringToJamos(word);
-      if (jamos.every((j) => unlockedJamos.has(j))) {
-        fallbackList.push({
-          id: `mastery-fallback-${word}`,
-          moduleId: 'mastery',
-          target: word,
-          translation: 'Practice',
-        });
-      }
+  // For Jamo stages: RESTRICT TO SHORT WORDS (<= 12 characters)
+  const curatedJamoWords: LessonItem[] = [];
+  for (const jamo of unlockedJamos) {
+    const words = MASTERY_JAMO_VOCABULARY[jamo];
+    if (words) {
+      curatedJamoWords.push(...words);
     }
-    return fallbackList.length > 0
-      ? fallbackList
-      : [
-          {
-            id: 'mastery-starter',
-            moduleId: 'mastery',
-            target: '아',
-            translation: 'Ah',
-          },
-        ];
+  }
+
+  const shortCurriculum = allItems.filter(
+    (item) => item.target.length <= 12 && isItemEligible(item, unlockedJamos),
+  );
+
+  const combinedPool = [...curatedJamoWords, ...shortCurriculum];
+
+  const seenTargets = new Set<string>();
+  const eligible: LessonItem[] = [];
+  for (const item of combinedPool) {
+    if (!seenTargets.has(item.target)) {
+      seenTargets.add(item.target);
+      eligible.push(item);
+    }
+  }
+
+  if (eligible.length === 0) {
+    return [
+      {
+        id: 'mastery-starter',
+        moduleId: 'mastery',
+        target: '아',
+        translation: 'Ah',
+      },
+    ];
   }
 
   return eligible;
@@ -556,9 +810,6 @@ export function getEligibleMasteryItems(
 
 /**
  * Calculates a progressive length multiplier based on the active Jamo's mastery progress.
- * - Early stage (0–30% progress): Strongly biases toward 1–2 character words.
- * - Mid stage (30–70% progress): Biases toward 2–4 character core vocabulary.
- * - Advanced stage (70–100% progress): Unlocks full breadth, including longer phrases and sentences.
  */
 export function getAdaptiveLengthMultiplier(targetLength: number, progressPercent: number): number {
   if (progressPercent < 30) {
@@ -590,25 +841,18 @@ export function getAdaptiveLengthMultiplier(targetLength: number, progressPercen
 
 /**
  * Probability (0–1) that each exercise will feature the active learning Jamo.
- * The two-pass selection first flips this coin to decide whether to restrict
- * candidates to focus-containing words, ensuring the learner consistently
- * practices the newest Jamo rather than relying on additive weight bonuses.
  */
 const FOCUS_JAMO_PROBABILITY = 0.4;
 
 /**
- * Checks whether a lesson item contains the specified Jamo character,
- * either as a decomposed basic Jamo or as a compound batchim (겹받침)
- * embedded in a syllable's final consonant position.
+ * Checks whether a lesson item contains the specified Jamo character.
  */
-function itemContainsJamo(item: LessonItem, jamo: string): boolean {
+export function itemContainsJamo(item: LessonItem, jamo: string): boolean {
   const jamos = decomposeStringToJamos(item.target);
   if (jamos.includes(jamo)) {
     return true;
   }
 
-  // For compound batchim targets, also check syllable final consonant slots directly,
-  // since decomposition yields the component Jamos rather than the compound itself
   if (COMPOUND_BATCHIM_SET.has(jamo)) {
     for (const char of item.target) {
       if (decomposeSyllable(char)?.finalConsonant === jamo) {
@@ -621,19 +865,11 @@ function itemContainsJamo(item: LessonItem, jamo: string): boolean {
 }
 
 /**
- * Selects the next exercise item using a two-pass approach:
- *
- * **Pass 1 — Pool decision:** A coin flip (70% probability) decides whether to
- * restrict candidates to words containing the active learning Jamo. This guarantees
- * the focus Jamo appears in ~70% of exercises regardless of pool composition.
- *
- * **Pass 2 — Weighted pick:** Within the chosen pool, items are weighted by
- * struggling-Jamo bonuses and adaptive word length, then selected via weighted
- * random sampling.
+ * Selects the next exercise item.
  */
 export function selectNextMasteryItem(
   eligibleItems: LessonItem[],
-  activeJamo: string | null,
+  activeTarget: MasteryTarget | string | null,
   jamoStats: Record<string, JamoStats>,
   currentItemId?: string,
 ): LessonItem {
@@ -646,7 +882,6 @@ export function selectNextMasteryItem(
     };
   }
 
-  // Filter out the item just finished to prevent immediate repetition if choices exist
   const candidates =
     eligibleItems.length > 1 && currentItemId
       ? eligibleItems.filter((i) => i.id !== currentItemId)
@@ -657,17 +892,31 @@ export function selectNextMasteryItem(
     return pool[0];
   }
 
-  // --- Pass 1: Decide whether to select from focus pool or general pool ---
+  const isCheckpoint =
+    typeof activeTarget === 'object' && activeTarget !== null && activeTarget.type === 'checkpoint';
+
+  if (isCheckpoint) {
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+
+  const activeJamoChar =
+    typeof activeTarget === 'string'
+      ? activeTarget
+      : activeTarget && activeTarget.type === 'jamo'
+        ? activeTarget.item.jamo
+        : null;
+
+  // Pass 1: Focus Pool Decision
   let selectionPool = pool;
-  if (activeJamo) {
-    const focusPool = pool.filter((item) => itemContainsJamo(item, activeJamo));
+  if (activeJamoChar) {
+    const focusPool = pool.filter((item) => itemContainsJamo(item, activeJamoChar));
     if (focusPool.length > 0 && Math.random() < FOCUS_JAMO_PROBABILITY) {
       selectionPool = focusPool;
     }
   }
 
-  // --- Pass 2: Weighted selection within the chosen pool ---
-  const activeStats = activeJamo ? jamoStats[activeJamo] : undefined;
+  // Pass 2: Weighted Random Selection
+  const activeStats = activeJamoChar ? jamoStats[activeJamoChar] : undefined;
   const activeProgress = activeStats ? calculateJamoProgress(activeStats) : 100;
 
   const weightedList: { item: LessonItem; weight: number }[] = [];
@@ -676,7 +925,6 @@ export function selectNextMasteryItem(
     const jamos = decomposeStringToJamos(item.target);
     let jamoWeight = 1;
 
-    // Boost words containing struggling Jamos (<90% rolling accuracy)
     for (const j of jamos) {
       const stats = jamoStats[j];
       if (stats && stats.totalAttempts > 0) {
@@ -703,5 +951,5 @@ export function selectNextMasteryItem(
     }
   }
 
-  return eligibleItems[Math.floor(Math.random() * eligibleItems.length)];
+  return pool[Math.floor(Math.random() * pool.length)];
 }

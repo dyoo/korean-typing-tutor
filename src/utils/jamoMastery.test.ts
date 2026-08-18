@@ -13,7 +13,11 @@ import {
   selectNextMasteryItem,
   calculateJamoProgress,
   setMasteryProgressionLevel,
+  setMasteryCheckpointLevel,
   getAdaptiveLengthMultiplier,
+  SENTENCE_CHECKPOINTS,
+  getActiveMasteryTarget,
+  recordSentenceCompletion,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
 import type { JamoStats } from '../types/mastery';
@@ -167,8 +171,10 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     const unlocked = new Set(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']);
 
     const eligible = getEligibleMasteryItems(allItems, unlocked);
-    expect(eligible.length).toBe(2);
-    expect(eligible.map((i) => i.target)).toEqual(['아', '얼']);
+    expect(eligible.some((i) => i.target === '아')).toBe(true);
+    expect(eligible.some((i) => i.target === '얼')).toBe(true);
+    expect(eligible.some((i) => i.target === '사과')).toBe(false);
+    expect(eligible.some((i) => i.target === '나무')).toBe(false);
   });
 
   it('should gate items with compound batchim until the compound is unlocked', () => {
@@ -319,5 +325,87 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
 
     setMasteryProgressionLevel(state, 100);
     expect(state.unlockedCount).toBe(44);
+  });
+
+  it('should activate Sentence Checkpoint 1 once all Stage 2 Jamos are mastered', () => {
+    const state = createDefaultMasteryState();
+    setMasteryProgressionLevel(state, 11, true); // Unlock through 11th key 'ㅡ'
+    expect(state.unlockedCount).toBe(11);
+
+    // Initially 'ㅡ' is unmastered
+    expect(state.jamoStats['ㅡ'].isMastered).toBe(false);
+    let target = getActiveMasteryTarget(state);
+    expect(target.type).toBe('jamo');
+    if (target.type === 'jamo') {
+      expect(target.item.jamo).toBe('ㅡ');
+    }
+
+    // Master 'ㅡ'
+    for (let i = 0; i < 20; i++) {
+      recordJamoAttempt(state, 'ㅡ', true);
+    }
+    expect(state.jamoStats['ㅡ'].isMastered).toBe(true);
+
+    // Target transitions to Checkpoint 1 (Home Row Sentences)
+    target = getActiveMasteryTarget(state);
+    expect(target.type).toBe('checkpoint');
+    if (target.type === 'checkpoint') {
+      expect(target.checkpoint.id).toBe('cp_home_row');
+      expect(target.checkpoint.title).toBe('Home Row Sentences');
+    }
+
+    // Completing 14 sentences (not yet 15) keeps checkpoint active
+    for (let i = 0; i < 14; i++) {
+      const res = recordSentenceCompletion(state, 'cp_home_row');
+      expect(res.newlyMastered).toBe(false);
+    }
+    expect(state.sentenceCheckpointStats['cp_home_row'].isMastered).toBe(false);
+
+    // 15th sentence completes the checkpoint and unlocks 12th Jamo 'ㄱ' (Top Row)
+    const res15 = recordSentenceCompletion(state, 'cp_home_row');
+    expect(res15.newlyMastered).toBe(true);
+    expect(res15.newlyUnlockedJamo).toBe('ㄱ');
+    expect(state.unlockedCount).toBe(12);
+
+    target = getActiveMasteryTarget(state);
+    expect(target.type).toBe('jamo');
+    if (target.type === 'jamo') {
+      expect(target.item.jamo).toBe('ㄱ');
+    }
+  });
+
+  it('should allow manually jumping to a sentence checkpoint via setMasteryCheckpointLevel', () => {
+    const state = createDefaultMasteryState();
+    setMasteryCheckpointLevel(state, 'cp_home_row');
+
+    expect(state.unlockedCount).toBe(11);
+    expect(state.activeCheckpointId).toBe('cp_home_row');
+    const target = getActiveMasteryTarget(state);
+    expect(target.type).toBe('checkpoint');
+    if (target.type === 'checkpoint') {
+      expect(target.checkpoint.id).toBe('cp_home_row');
+    }
+  });
+
+  it('should restrict Jamo stage exercises to short words and sentence checkpoints to sentences', () => {
+    const dummyCurriculum: LessonItem[] = [
+      { id: 'short1', moduleId: 'm1', target: '나무', translation: 'Tree' },
+      { id: 'short2', moduleId: 'm1', target: '우리나라', translation: 'Our country' },
+      { id: 'long1', moduleId: 'm1', target: '어머니와 함께 나무 아래로 걸어요', translation: 'Walk under tree with mother' },
+    ];
+    const unlocked = new Set(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ', 'ㅗ', 'ㅣ', 'ㅁ', 'ㄴ', 'ㅎ', 'ㅜ', 'ㅡ']);
+
+    // When targeting a Jamo: only short words are returned
+    const jamoTarget = getActiveMasteryTarget(createDefaultMasteryState());
+    const jamoItems = getEligibleMasteryItems(dummyCurriculum, unlocked, jamoTarget);
+    expect(jamoItems.every((i) => i.target.length <= 12)).toBe(true);
+
+    // When targeting a sentence checkpoint: sentences are returned
+    const cpTarget = {
+      type: 'checkpoint' as const,
+      checkpoint: SENTENCE_CHECKPOINTS[0],
+    };
+    const sentenceItems = getEligibleMasteryItems(dummyCurriculum, unlocked, cpTarget);
+    expect(sentenceItems.some((i) => i.target.length >= 8)).toBe(true);
   });
 });

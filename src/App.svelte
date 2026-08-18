@@ -14,7 +14,6 @@
   import { handleCopyEvent } from './utils/clipboard';
   import {
     JAMO_PROGRESSION_ORDER,
-    getActiveLearningJamo,
     calculateJamoProgress,
   } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
@@ -82,9 +81,26 @@
   // Map errors to O(1) lookups by index to avoid O(N^2) .find() calls in child {#each} loops.
   let errorMap = $derived(new Map(errors.map((e) => [e.index, e.isError])));
 
-  let activeLearningJamo = $derived(getActiveLearningJamo(masteryState));
+  let activeMasteryTarget = $derived(session.getActiveMasteryTarget());
+  let activeCheckpoint = $derived(session.getActiveCheckpoint());
+  let activeLearningJamo = $derived(
+    activeMasteryTarget.type === 'jamo' ? activeMasteryTarget.item : null,
+  );
   let activeJamoProgress = $derived(
     activeLearningJamo ? calculateJamoProgress(masteryState.jamoStats[activeLearningJamo.jamo]) : 0,
+  );
+  let activeCheckpointTitle = $derived(
+    activeMasteryTarget.type === 'checkpoint' ? activeMasteryTarget.checkpoint.title : null,
+  );
+  let activeCheckpointProgress = $derived(
+    activeMasteryTarget.type === 'checkpoint'
+      ? {
+          completed:
+            masteryState.sentenceCheckpointStats?.[activeMasteryTarget.checkpoint.id]
+              ?.completedCount ?? 0,
+          total: activeMasteryTarget.checkpoint.requiredCompletions,
+        }
+      : null,
   );
 
   function isTouchDevice(): boolean {
@@ -156,6 +172,11 @@
 
   function handleMasteryLevelChange(level: number) {
     session.setMasteryProgressionLevel(level);
+    focusInputElement();
+  }
+
+  function handleMasteryCheckpointChange(checkpointId: string) {
+    session.setMasteryCheckpointLevel(checkpointId);
     focusInputElement();
   }
 
@@ -486,6 +507,8 @@
     activeJamoChar={activeLearningJamo?.jamo ?? null}
     activeLearningCombination={activeLearningJamo?.combination}
     {activeJamoProgress}
+    {activeCheckpointTitle}
+    {activeCheckpointProgress}
     {showSettingsModal}
     {settings}
     ontogglecurriculum={toggleCurriculumSidebar}
@@ -579,9 +602,12 @@
 <MasterySidebar
   isOpen={showMasterySidebar}
   masteryUnlockedCount={masteryState.unlockedCount}
+  activeCheckpointId={masteryState.activeCheckpointId ?? activeCheckpoint?.id ?? null}
   jamoStats={masteryState.jamoStats}
+  sentenceCheckpointStats={masteryState.sentenceCheckpointStats}
   onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}
+  oncheckpointselect={handleMasteryCheckpointChange}
 />
 
 <TTSDownloadModal

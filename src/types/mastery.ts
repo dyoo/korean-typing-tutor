@@ -15,14 +15,26 @@ export interface JamoStats {
   lastPracticed?: number;
 }
 
+/** Tracking statistics for a sentence milestone checkpoint. */
+export interface SentenceCheckpointStats {
+  /** Number of completed sentences during this milestone. */
+  completedCount: number;
+  /** Whether the user has achieved the required sentence completions (e.g. 15). */
+  isMastered: boolean;
+}
+
 /** Persistent state of the user's Jamo mastery progress. */
 export interface MasteryState {
   /** Active application mode ('curriculum' or 'mastery'). */
   mode: TutorMode;
-  /** Number of unlocked Jamos from the progression order (starting at 4). */
+  /** Number of unlocked Jamos from the progression order (starting at 4, max 44). */
   unlockedCount: number;
+  /** ID of the currently active sentence milestone checkpoint (if in a sentence stage). */
+  activeCheckpointId?: string | null;
   /** Per-Jamo statistics map keyed by Jamo character. */
   jamoStats: Record<string, JamoStats>;
+  /** Per-checkpoint completion stats map keyed by checkpoint ID. */
+  sentenceCheckpointStats: Record<string, SentenceCheckpointStats>;
 }
 
 /** Metadata for each Jamo in the progression sequence. */
@@ -36,6 +48,21 @@ export interface JamoProgressionItem {
   combination?: [string, string];
 }
 
+/** Definition for an interleaved sentence milestone checkpoint. */
+export interface SentenceCheckpoint {
+  id: string;
+  stage: number;
+  stageName: string;
+  title: string;
+  afterJamoIndex: number;
+  requiredCompletions: number;
+}
+
+/** Active target in mastery mode (either a Jamo key or a Sentence Checkpoint). */
+export type MasteryTarget =
+  | { type: 'jamo'; item: JamoProgressionItem }
+  | { type: 'checkpoint'; checkpoint: SentenceCheckpoint };
+
 /** A grouped stage of the Jamo progression sequence (for sidebar display). */
 export interface JamoStageGroup {
   /** Numeric stage identifier (1-based). */
@@ -44,6 +71,8 @@ export interface JamoStageGroup {
   stageName: string;
   /** Jamos belonging to this stage, in progression order. */
   items: JamoProgressionItem[];
+  /** Optional sentence checkpoint at the end of this stage. */
+  checkpoint?: SentenceCheckpoint;
 }
 
 /** Result of checking or recording a Jamo attempt. */
@@ -54,4 +83,5 @@ export interface MasteryAttemptResult {
   attemptsCount: number;
   newlyMastered: boolean;
   newlyUnlockedJamo?: string;
+  newlyUnlockedCheckpoint?: string;
 }

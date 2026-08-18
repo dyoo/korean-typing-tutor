@@ -7,16 +7,26 @@ import {
   createDefaultMasteryState,
   getUnlockedJamos,
   getActiveLearningJamo,
+  getActiveCheckpointForState,
+  getActiveMasteryTarget,
   recordJamoAttempt,
+  recordSentenceCompletion,
   getEligibleMasteryItems,
   selectNextMasteryItem,
   setMasteryProgressionLevel,
+  setMasteryCheckpointLevel,
   JAMO_PROGRESSION_ORDER,
   COMPOUND_BATCHIM_SET,
 } from '../utils/jamoMastery';
 import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecompose';
 import type { CurriculumData, ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
-import type { TutorMode, MasteryState, JamoProgressionItem } from '../types/mastery';
+import type {
+  TutorMode,
+  MasteryState,
+  JamoProgressionItem,
+  SentenceCheckpoint,
+  MasteryTarget,
+} from '../types/mastery';
 
 export type { CurriculumData };
 
@@ -98,12 +108,12 @@ export class TutorSession {
   private applyFilterAndShuffle(): void {
     if (this.mode === 'mastery') {
       const unlocked = getUnlockedJamos(this.masteryState);
-      this.activeItems = getEligibleMasteryItems(this.allItems, unlocked);
+      const activeTarget = getActiveMasteryTarget(this.masteryState);
+      this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
 
-      const activeJamo = getActiveLearningJamo(this.masteryState);
       const nextItem = selectNextMasteryItem(
         this.activeItems,
-        activeJamo?.jamo ?? null,
+        activeTarget,
         this.masteryState.jamoStats,
       );
       const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
@@ -163,6 +173,16 @@ export class TutorSession {
     return getActiveLearningJamo(this.masteryState);
   }
 
+  /** Returns the active mastery target (Jamo key or Sentence Checkpoint). */
+  public getActiveMasteryTarget(): MasteryTarget {
+    return getActiveMasteryTarget(this.masteryState);
+  }
+
+  /** Returns the active sentence checkpoint if currently in a sentence stage. */
+  public getActiveCheckpoint(): SentenceCheckpoint | null {
+    return getActiveCheckpointForState(this.masteryState);
+  }
+
   /** Resets user mastery progress back to default Stage 1 keys. */
   public resetMasteryProgress(): void {
     this.masteryState = createDefaultMasteryState();
@@ -174,6 +194,13 @@ export class TutorSession {
   /** Manually sets the mastery progression level (unlocked count). */
   public setMasteryProgressionLevel(level: number): void {
     setMasteryProgressionLevel(this.masteryState, level, true);
+    saveMasteryState(this.masteryState);
+    this.applyFilterAndShuffle();
+  }
+
+  /** Manually jumps to a specific sentence checkpoint. */
+  public setMasteryCheckpointLevel(checkpointId: string): void {
+    setMasteryCheckpointLevel(this.masteryState, checkpointId);
     saveMasteryState(this.masteryState);
     this.applyFilterAndShuffle();
   }
@@ -460,13 +487,21 @@ export class TutorSession {
 
     if (this.mode === 'mastery') {
       const currentItem = this.getCurrentItem();
-      const unlocked = getUnlockedJamos(this.masteryState);
-      this.activeItems = getEligibleMasteryItems(this.allItems, unlocked);
+      const activeTarget = getActiveMasteryTarget(this.masteryState);
 
-      const activeJamo = getActiveLearningJamo(this.masteryState);
+      // If currently at a sentence checkpoint, record sentence completion
+      if (activeTarget.type === 'checkpoint') {
+        recordSentenceCompletion(this.masteryState, activeTarget.checkpoint.id);
+        this.scheduleSave();
+      }
+
+      const unlocked = getUnlockedJamos(this.masteryState);
+      const nextActiveTarget = getActiveMasteryTarget(this.masteryState);
+      this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, nextActiveTarget);
+
       const nextItem = selectNextMasteryItem(
         this.activeItems,
-        activeJamo?.jamo ?? null,
+        nextActiveTarget,
         this.masteryState.jamoStats,
         currentItem.id,
       );

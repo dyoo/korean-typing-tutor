@@ -1,0 +1,72 @@
+import { describe, it, expect } from 'vitest';
+import {
+  MASTERY_JAMO_VOCABULARY,
+  MASTERY_CHECKPOINT_SENTENCES,
+} from './masteryVocabulary';
+import {
+  JAMO_PROGRESSION_ORDER,
+  SENTENCE_CHECKPOINTS,
+  isItemEligible,
+} from '../utils/jamoMastery';
+import { decomposeStringToJamos } from '../utils/hangulDecompose';
+
+describe('Mastery Vocabulary Bank Verification', () => {
+  it('contains vocabulary entries for every single Jamo in progression order', () => {
+    for (const item of JAMO_PROGRESSION_ORDER) {
+      const vocab = MASTERY_JAMO_VOCABULARY[item.jamo];
+      expect(vocab, `Missing vocabulary for Jamo: ${item.jamo}`).toBeDefined();
+      expect(vocab.length, `Expected at least 1 item for Jamo: ${item.jamo}`).toBeGreaterThan(0);
+    }
+  });
+
+  it('ensures every word in each Jamo bank only uses cumulative unlocked Jamos up to that step', () => {
+    const cumulativeJamos = new Set<string>(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']);
+
+    for (const item of JAMO_PROGRESSION_ORDER) {
+      cumulativeJamos.add(item.jamo);
+      const vocab = MASTERY_JAMO_VOCABULARY[item.jamo] || [];
+
+      for (const entry of vocab) {
+        const isEligible = isItemEligible(entry, cumulativeJamos);
+        const decomposed = decomposeStringToJamos(entry.target);
+        expect(
+          isEligible,
+          `Item "${entry.target}" for Jamo "${item.jamo}" contains unauthorized Jamos: ${decomposed.join(', ')}. Cumulative unlocked: ${Array.from(cumulativeJamos).join(', ')}`,
+        ).toBe(true);
+
+        // Ensure Jamo practice items are short (<= 12 chars)
+        expect(
+          entry.target.length,
+          `Item "${entry.target}" is too long (${entry.target.length} chars) for short word practice`,
+        ).toBeLessThanOrEqual(12);
+      }
+    }
+  });
+
+  it('ensures each Sentence Checkpoint contains at least 15 valid sentences matching unlocked Jamos', () => {
+    for (const cp of SENTENCE_CHECKPOINTS) {
+      const sentences = MASTERY_CHECKPOINT_SENTENCES[cp.id];
+      expect(sentences, `Missing sentences for checkpoint: ${cp.id}`).toBeDefined();
+      expect(
+        sentences.length,
+        `Expected at least 15 sentences for ${cp.id}, got ${sentences?.length}`,
+      ).toBeGreaterThanOrEqual(15);
+
+      const unlockedJamos = new Set(
+        JAMO_PROGRESSION_ORDER.slice(0, cp.afterJamoIndex).map((i) => i.jamo),
+      );
+
+      for (const sent of sentences) {
+        // Sentence should only use unlocked letters
+        const isEligible = isItemEligible(sent, unlockedJamos);
+        expect(
+          isEligible,
+          `Sentence "${sent.target}" in ${cp.id} contains unauthorized Jamos`,
+        ).toBe(true);
+
+        // Sentence should be multi-word / medium-to-long
+        expect(sent.target.length, `Sentence "${sent.target}" should be at least 5 characters`).toBeGreaterThanOrEqual(5);
+      }
+    }
+  });
+});

@@ -1,16 +1,28 @@
 <script lang="ts">
   import { JAMO_PROGRESSION_ORDER, JAMO_STAGES, calculateJamoProgress } from '../utils/jamoMastery';
-  import type { JamoStats } from '../types/mastery';
+  import type { JamoStats, SentenceCheckpointStats } from '../types/mastery';
 
   interface Props {
     isOpen: boolean;
     masteryUnlockedCount: number;
+    activeCheckpointId?: string | null;
     jamoStats: Record<string, JamoStats>;
+    sentenceCheckpointStats?: Record<string, SentenceCheckpointStats>;
     onclose: () => void;
     onmasterylevelchange: (level: number) => void;
+    oncheckpointselect?: (checkpointId: string) => void;
   }
 
-  let { isOpen, masteryUnlockedCount, jamoStats, onclose, onmasterylevelchange }: Props = $props();
+  let {
+    isOpen,
+    masteryUnlockedCount,
+    activeCheckpointId = null,
+    jamoStats,
+    sentenceCheckpointStats = {},
+    onclose,
+    onmasterylevelchange,
+    oncheckpointselect,
+  }: Props = $props();
 
   let collapsedStageIds = $state<string[]>([]);
 
@@ -20,16 +32,20 @@
     }
   }
 
-  function toggleStageCollapse(stageId: string) {
-    if (collapsedStageIds.includes(stageId)) {
-      collapsedStageIds = collapsedStageIds.filter((id) => id !== stageId);
+  function toggleStageCollapse(stageName: string) {
+    if (collapsedStageIds.includes(stageName)) {
+      collapsedStageIds = collapsedStageIds.filter((id) => id !== stageName);
     } else {
-      collapsedStageIds = [...collapsedStageIds, stageId];
+      collapsedStageIds = [...collapsedStageIds, stageName];
     }
   }
 
   function handleLevelSelect(level: number) {
     onmasterylevelchange(level);
+  }
+
+  function handleCheckpointSelect(cpId: string) {
+    oncheckpointselect?.(cpId);
   }
 </script>
 
@@ -112,7 +128,7 @@
             <span
               class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0"
             >
-              {stage.items.length}
+              {stage.items.length} {stage.items.length === 1 ? 'key' : 'keys'}
             </span>
           </div>
 
@@ -123,7 +139,7 @@
               {#each stage.items as item}
                 {@const idx = JAMO_PROGRESSION_ORDER.indexOf(item)}
                 {@const level = idx + 1}
-                {@const isSelected = masteryUnlockedCount === level}
+                {@const isSelected = !activeCheckpointId && masteryUnlockedCount === level}
                 {@const progress = calculateJamoProgress(jamoStats[item.jamo])}
                 <label
                   class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isSelected
@@ -160,6 +176,50 @@
                   </div>
                 </label>
               {/each}
+
+              {#if stage.checkpoint}
+                {@const cp = stage.checkpoint}
+                {@const cpStats = sentenceCheckpointStats[cp.id]}
+                {@const isCpSelected = activeCheckpointId === cp.id}
+                {@const cpCompleted = cpStats?.completedCount ?? 0}
+                {@const cpMastered = cpStats?.isMastered ?? false}
+                {@const cpPercent = Math.min(100, Math.round((cpCompleted / cp.requiredCompletions) * 100))}
+                <label
+                  class="flex items-center gap-2.5 p-1.5 mt-1 rounded-lg border border-dashed border-amber-300 dark:border-amber-700/60 hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isCpSelected
+                    ? 'bg-amber-100/70 dark:bg-amber-950/60 border-amber-500 dark:border-amber-400'
+                    : 'bg-amber-50/50 dark:bg-amber-950/20'}"
+                >
+                  <input
+                    type="radio"
+                    name="mastery-level"
+                    checked={isCpSelected}
+                    onchange={() => handleCheckpointSelect(cp.id)}
+                    class="w-4 h-4 text-amber-600 rounded-full cursor-pointer shrink-0 accent-amber-600"
+                  />
+                  <div class="flex flex-col min-w-0 flex-1">
+                    <div class="flex items-center justify-between gap-1">
+                      <span class="text-xs font-bold text-gray-800 dark:text-gray-200 truncate">
+                        💬 {cp.title}
+                      </span>
+                      <span
+                        class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded shrink-0 {cpMastered
+                          ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'
+                          : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300'}"
+                      >
+                        {cpCompleted}/{cp.requiredCompletions}
+                      </span>
+                    </div>
+                    {#if cpPercent > 0}
+                      <div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full mt-1 overflow-hidden">
+                        <div
+                          class="h-full {cpMastered ? 'bg-emerald-500' : 'bg-amber-500'} transition-all"
+                          style="width: {cpPercent}%;"
+                        ></div>
+                      </div>
+                    {/if}
+                  </div>
+                </label>
+              {/if}
             </div>
           {/if}
         </div>
