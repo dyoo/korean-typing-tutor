@@ -93,7 +93,9 @@
           />
         </div>
       </div>
-
+    </div>
+  {:else}
+    <div class="flex flex-col gap-2 mt-1 pl-2">
       <!-- Clear Cache Action & Confirmation -->
       {#if isConfirmingClear}
         <div
