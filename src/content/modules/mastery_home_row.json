@@ -1,0 +1,527 @@
+{
+  "id": "mastery_home_row",
+  "title": "Home Row Mastery",
+  "description": "Home row vocabulary (Stage 1 & 2) and full home-row milestone review sentences.",
+  "items": [
+    {
+      "id": "mastery_home_row_1",
+      "target": "어",
+      "translation": "Oh / Well"
+    },
+    {
+      "id": "mastery_home_row_2",
+      "target": "어어",
+      "translation": "Uh-oh"
+    },
+    {
+      "id": "mastery_home_row_3",
+      "target": "어어어",
+      "translation": "Expressing surprise"
+    },
+    {
+      "id": "mastery_home_row_4",
+      "target": "아",
+      "translation": "Ah"
+    },
+    {
+      "id": "mastery_home_row_5",
+      "target": "아아",
+      "translation": "Ah ah"
+    },
+    {
+      "id": "mastery_home_row_6",
+      "target": "아아아",
+      "translation": "Ahhh"
+    },
+    {
+      "id": "mastery_home_row_7",
+      "target": "아라",
+      "translation": "Ara (ancient sea)"
+    },
+    {
+      "id": "mastery_home_row_8",
+      "target": "앙",
+      "translation": "Bite / Ang"
+    },
+    {
+      "id": "mastery_home_row_9",
+      "target": "엉",
+      "translation": "Ung"
+    },
+    {
+      "id": "mastery_home_row_10",
+      "target": "앙앙",
+      "translation": "Crying sound"
+    },
+    {
+      "id": "mastery_home_row_11",
+      "target": "엉엉",
+      "translation": "Sobbing sound"
+    },
+    {
+      "id": "mastery_home_row_12",
+      "target": "알",
+      "translation": "Egg / Grain"
+    },
+    {
+      "id": "mastery_home_row_13",
+      "target": "얼",
+      "translation": "Spirit / Soul"
+    },
+    {
+      "id": "mastery_home_row_14",
+      "target": "라",
+      "translation": "Ra / La"
+    },
+    {
+      "id": "mastery_home_row_15",
+      "target": "러",
+      "translation": "Reo"
+    },
+    {
+      "id": "mastery_home_row_16",
+      "target": "알아",
+      "translation": "I know"
+    },
+    {
+      "id": "mastery_home_row_17",
+      "target": "어라",
+      "translation": "Huh? / Oh dear"
+    },
+    {
+      "id": "mastery_home_row_18",
+      "target": "아라",
+      "translation": "Ara (Ancient Sea)"
+    },
+    {
+      "id": "mastery_home_row_19",
+      "target": "얼라",
+      "translation": "Child (dialect)"
+    },
+    {
+      "id": "mastery_home_row_20",
+      "target": "오",
+      "translation": "Five / Oh"
+    },
+    {
+      "id": "mastery_home_row_21",
+      "target": "올",
+      "translation": "Strand / Warp"
+    },
+    {
+      "id": "mastery_home_row_22",
+      "target": "로",
+      "translation": "Path / Furnace"
+    },
+    {
+      "id": "mastery_home_row_23",
+      "target": "오라",
+      "translation": "Come (imperative)"
+    },
+    {
+      "id": "mastery_home_row_24",
+      "target": "올라",
+      "translation": "Go up"
+    },
+    {
+      "id": "mastery_home_row_25",
+      "target": "오로라",
+      "translation": "Aurora"
+    },
+    {
+      "id": "mastery_home_row_26",
+      "target": "오알",
+      "translation": "O-R"
+    },
+    {
+      "id": "mastery_home_row_27",
+      "target": "이",
+      "translation": "Tooth / Two / This"
+    },
+    {
+      "id": "mastery_home_row_28",
+      "target": "일",
+      "translation": "One / Day / Work"
+    },
+    {
+      "id": "mastery_home_row_29",
+      "target": "아이",
+      "translation": "Child"
+    },
+    {
+      "id": "mastery_home_row_30",
+      "target": "오이",
+      "translation": "Cucumber"
+    },
+    {
+      "id": "mastery_home_row_31",
+      "target": "이리",
+      "translation": "Wolf / This way"
+    },
+    {
+      "id": "mastery_home_row_32",
+      "target": "일이",
+      "translation": "Work / Task"
+    },
+    {
+      "id": "mastery_home_row_33",
+      "target": "릴리",
+      "translation": "Lily"
+    },
+    {
+      "id": "mastery_home_row_34",
+      "target": "말",
+      "translation": "Horse / Words"
+    },
+    {
+      "id": "mastery_home_row_35",
+      "target": "몸",
+      "translation": "Body"
+    },
+    {
+      "id": "mastery_home_row_36",
+      "target": "엄마",
+      "translation": "Mom"
+    },
+    {
+      "id": "mastery_home_row_37",
+      "target": "이마",
+      "translation": "Forehead"
+    },
+    {
+      "id": "mastery_home_row_38",
+      "target": "마리",
+      "translation": "Counter for animals"
+    },
+    {
+      "id": "mastery_home_row_39",
+      "target": "모아",
+      "translation": "Gather"
+    },
+    {
+      "id": "mastery_home_row_40",
+      "target": "모이",
+      "translation": "Bird feed"
+    },
+    {
+      "id": "mastery_home_row_41",
+      "target": "미라",
+      "translation": "Mummy"
+    },
+    {
+      "id": "mastery_home_row_42",
+      "target": "모말",
+      "translation": "Horsehair"
+    },
+    {
+      "id": "mastery_home_row_43",
+      "target": "나",
+      "translation": "I / Me"
+    },
+    {
+      "id": "mastery_home_row_44",
+      "target": "너",
+      "translation": "You"
+    },
+    {
+      "id": "mastery_home_row_45",
+      "target": "나라",
+      "translation": "Country / Nation"
+    },
+    {
+      "id": "mastery_home_row_46",
+      "target": "나이",
+      "translation": "Age"
+    },
+    {
+      "id": "mastery_home_row_47",
+      "target": "날",
+      "translation": "Day / Blade"
+    },
+    {
+      "id": "mastery_home_row_48",
+      "target": "언니",
+      "translation": "Older sister (for female)"
+    },
+    {
+      "id": "mastery_home_row_49",
+      "target": "어머니",
+      "translation": "Mother"
+    },
+    {
+      "id": "mastery_home_row_50",
+      "target": "미나리",
+      "translation": "Water dropwort"
+    },
+    {
+      "id": "mastery_home_row_51",
+      "target": "안",
+      "translation": "Inside / Not"
+    },
+    {
+      "id": "mastery_home_row_52",
+      "target": "인",
+      "translation": "Person / Seal"
+    },
+    {
+      "id": "mastery_home_row_53",
+      "target": "온",
+      "translation": "All / Whole"
+    },
+    {
+      "id": "mastery_home_row_54",
+      "target": "놀이",
+      "translation": "Play / Game"
+    },
+    {
+      "id": "mastery_home_row_55",
+      "target": "하나",
+      "translation": "One"
+    },
+    {
+      "id": "mastery_home_row_56",
+      "target": "한",
+      "translation": "One / Korean"
+    },
+    {
+      "id": "mastery_home_row_57",
+      "target": "혼",
+      "translation": "Soul / Spirit"
+    },
+    {
+      "id": "mastery_home_row_58",
+      "target": "힘",
+      "translation": "Strength / Power"
+    },
+    {
+      "id": "mastery_home_row_59",
+      "target": "허리",
+      "translation": "Waist / Lower back"
+    },
+    {
+      "id": "mastery_home_row_60",
+      "target": "하이",
+      "translation": "Hi"
+    },
+    {
+      "id": "mastery_home_row_61",
+      "target": "호호",
+      "translation": "Ho-ho (laughter)"
+    },
+    {
+      "id": "mastery_home_row_62",
+      "target": "할머니",
+      "translation": "Grandmother"
+    },
+    {
+      "id": "mastery_home_row_63",
+      "target": "하하",
+      "translation": "Ha-ha"
+    },
+    {
+      "id": "mastery_home_row_64",
+      "target": "우리",
+      "translation": "We / Us / Cage"
+    },
+    {
+      "id": "mastery_home_row_65",
+      "target": "물",
+      "translation": "Water"
+    },
+    {
+      "id": "mastery_home_row_66",
+      "target": "문",
+      "translation": "Door / Gate"
+    },
+    {
+      "id": "mastery_home_row_67",
+      "target": "나무",
+      "translation": "Tree / Wood"
+    },
+    {
+      "id": "mastery_home_row_68",
+      "target": "누나",
+      "translation": "Older sister (for male)"
+    },
+    {
+      "id": "mastery_home_row_69",
+      "target": "눈",
+      "translation": "Eye / Snow"
+    },
+    {
+      "id": "mastery_home_row_70",
+      "target": "하루",
+      "translation": "One day"
+    },
+    {
+      "id": "mastery_home_row_71",
+      "target": "눈물",
+      "translation": "Tears"
+    },
+    {
+      "id": "mastery_home_row_72",
+      "target": "우물",
+      "translation": "Well (water source)"
+    },
+    {
+      "id": "mastery_home_row_73",
+      "target": "후",
+      "translation": "After / Later"
+    },
+    {
+      "id": "mastery_home_row_74",
+      "target": "무",
+      "translation": "Radish"
+    },
+    {
+      "id": "mastery_home_row_75",
+      "target": "루머",
+      "translation": "Rumor"
+    },
+    {
+      "id": "mastery_home_row_76",
+      "target": "우루루",
+      "translation": "In a rush"
+    },
+    {
+      "id": "mastery_home_row_77",
+      "target": "이름",
+      "translation": "Name"
+    },
+    {
+      "id": "mastery_home_row_78",
+      "target": "마음",
+      "translation": "Heart / Mind"
+    },
+    {
+      "id": "mastery_home_row_79",
+      "target": "하늘",
+      "translation": "Sky"
+    },
+    {
+      "id": "mastery_home_row_80",
+      "target": "흐름",
+      "translation": "Flow / Current"
+    },
+    {
+      "id": "mastery_home_row_81",
+      "target": "어른",
+      "translation": "Adult / Elder"
+    },
+    {
+      "id": "mastery_home_row_82",
+      "target": "으음",
+      "translation": "Hmm"
+    },
+    {
+      "id": "mastery_home_row_83",
+      "target": "느림",
+      "translation": "Slowness"
+    },
+    {
+      "id": "mastery_home_row_84",
+      "target": "흐린 날",
+      "translation": "Cloudy day"
+    },
+    {
+      "id": "mastery_home_row_85",
+      "target": "어머니와 아이",
+      "translation": "Mother and child"
+    },
+    {
+      "id": "mastery_home_row_86",
+      "target": "우리 어머니와 누나",
+      "translation": "Our mother and older sister"
+    },
+    {
+      "id": "mastery_home_row_87",
+      "target": "나무 위로 날아오르나",
+      "translation": "Does it fly up above the tree?"
+    },
+    {
+      "id": "mastery_home_row_88",
+      "target": "하늘 위로 흐르는 물",
+      "translation": "Water flowing skyward"
+    },
+    {
+      "id": "mastery_home_row_89",
+      "target": "이름은 하나",
+      "translation": "The name is one"
+    },
+    {
+      "id": "mastery_home_row_90",
+      "target": "눈물이 흐르는 날",
+      "translation": "A day when tears flow"
+    },
+    {
+      "id": "mastery_home_row_91",
+      "target": "너와 나의 마음",
+      "translation": "Heart of you and me"
+    },
+    {
+      "id": "mastery_home_row_92",
+      "target": "하나 모아 우리 마음",
+      "translation": "Gathering one by one, our hearts"
+    },
+    {
+      "id": "mastery_home_row_93",
+      "target": "어머니 마음은 하늘",
+      "translation": "Mother’s heart is the sky"
+    },
+    {
+      "id": "mastery_home_row_94",
+      "target": "눈물 어린 너의 눈",
+      "translation": "Your tearful eyes"
+    },
+    {
+      "id": "mastery_home_row_95",
+      "target": "물 위로 흐르는 하루",
+      "translation": "A day flowing upon the water"
+    },
+    {
+      "id": "mastery_home_row_96",
+      "target": "하루하루 늘어나는 힘",
+      "translation": "Strength increasing day by day"
+    },
+    {
+      "id": "mastery_home_row_97",
+      "target": "머리 위로 오른 은하",
+      "translation": "Milky Way risen above the head"
+    },
+    {
+      "id": "mastery_home_row_98",
+      "target": "우리 모아 하나로",
+      "translation": "Bringing us together as one"
+    },
+    {
+      "id": "mastery_home_row_99",
+      "target": "너와 나 우리 나라",
+      "translation": "You and me, our nation"
+    },
+    {
+      "id": "mastery_home_row_100",
+      "target": "이마 위로 흐르는 눈물",
+      "translation": "Tears flowing down the forehead"
+    },
+    {
+      "id": "mastery_home_row_101",
+      "target": "얼마나 멀리 오나",
+      "translation": "How far is it coming?"
+    },
+    {
+      "id": "mastery_home_row_102",
+      "target": "마음으로 알리는 말",
+      "translation": "Words communicated from the heart"
+    },
+    {
+      "id": "mastery_home_row_103",
+      "target": "어린 아이의 울음",
+      "translation": "The crying of a little child"
+    },
+    {
+      "id": "mastery_home_row_104",
+      "target": "오늘 하루 힘을 모아",
+      "translation": "Gathering strength for today"
+    }
+  ]
+}

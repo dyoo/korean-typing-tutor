@@ -1,0 +1,217 @@
+{
+  "id": "mastery_compound_batchim",
+  "title": "Compound Batchim Mastery",
+  "description": "Compound final consonants (겹받침, Stage 6) and comprehensive mastery review sentences.",
+  "items": [
+    {
+      "id": "mastery_compound_batchim_1",
+      "target": "많다",
+      "translation": "To be many / much"
+    },
+    {
+      "id": "mastery_compound_batchim_2",
+      "target": "않다",
+      "translation": "To not do"
+    },
+    {
+      "id": "mastery_compound_batchim_3",
+      "target": "괜찮다",
+      "translation": "To be okay"
+    },
+    {
+      "id": "mastery_compound_batchim_4",
+      "target": "앉다",
+      "translation": "To sit"
+    },
+    {
+      "id": "mastery_compound_batchim_5",
+      "target": "얹다",
+      "translation": "To place on top"
+    },
+    {
+      "id": "mastery_compound_batchim_6",
+      "target": "읽다",
+      "translation": "To read"
+    },
+    {
+      "id": "mastery_compound_batchim_7",
+      "target": "닭",
+      "translation": "Chicken"
+    },
+    {
+      "id": "mastery_compound_batchim_8",
+      "target": "맑다",
+      "translation": "To be clear"
+    },
+    {
+      "id": "mastery_compound_batchim_9",
+      "target": "흙",
+      "translation": "Soil / Earth"
+    },
+    {
+      "id": "mastery_compound_batchim_10",
+      "target": "삶",
+      "translation": "Life"
+    },
+    {
+      "id": "mastery_compound_batchim_11",
+      "target": "젊다",
+      "translation": "To be young"
+    },
+    {
+      "id": "mastery_compound_batchim_12",
+      "target": "굶다",
+      "translation": "To starve"
+    },
+    {
+      "id": "mastery_compound_batchim_13",
+      "target": "닮다",
+      "translation": "To resemble"
+    },
+    {
+      "id": "mastery_compound_batchim_14",
+      "target": "넓다",
+      "translation": "To be spacious / wide"
+    },
+    {
+      "id": "mastery_compound_batchim_15",
+      "target": "여덟",
+      "translation": "Eight"
+    },
+    {
+      "id": "mastery_compound_batchim_16",
+      "target": "밟다",
+      "translation": "To step on"
+    },
+    {
+      "id": "mastery_compound_batchim_17",
+      "target": "없다",
+      "translation": "To not exist / lack"
+    },
+    {
+      "id": "mastery_compound_batchim_18",
+      "target": "값",
+      "translation": "Price / Value"
+    },
+    {
+      "id": "mastery_compound_batchim_19",
+      "target": "잃다",
+      "translation": "To lose"
+    },
+    {
+      "id": "mastery_compound_batchim_20",
+      "target": "싫다",
+      "translation": "To dislike"
+    },
+    {
+      "id": "mastery_compound_batchim_21",
+      "target": "옳다",
+      "translation": "To be right / correct"
+    },
+    {
+      "id": "mastery_compound_batchim_22",
+      "target": "몫",
+      "translation": "Share / Portion"
+    },
+    {
+      "id": "mastery_compound_batchim_23",
+      "target": "삯",
+      "translation": "Wages"
+    },
+    {
+      "id": "mastery_compound_batchim_24",
+      "target": "핥다",
+      "translation": "To lick"
+    },
+    {
+      "id": "mastery_compound_batchim_25",
+      "target": "훑다",
+      "translation": "To browse / skim"
+    },
+    {
+      "id": "mastery_compound_batchim_26",
+      "target": "읊다",
+      "translation": "To recite poem"
+    },
+    {
+      "id": "mastery_compound_batchim_27",
+      "target": "외곬",
+      "translation": "Single-minded path"
+    },
+    {
+      "id": "mastery_compound_batchim_28",
+      "target": "많은 책을 읽으며 지식을 넓혀요",
+      "translation": "Expand knowledge by reading many books"
+    },
+    {
+      "id": "mastery_compound_batchim_29",
+      "target": "의자에 편안하게 앉아서 쉬어요",
+      "translation": "Sit comfortably in the chair and rest"
+    },
+    {
+      "id": "mastery_compound_batchim_30",
+      "target": "닭고기로 끓인 따뜻한 삼계탕",
+      "translation": "Warm chicken soup cooked with ginseng"
+    },
+    {
+      "id": "mastery_compound_batchim_31",
+      "target": "맑은 가을 하늘 아래 넓은 들판",
+      "translation": "Wide open field under a clear autumn sky"
+    },
+    {
+      "id": "mastery_compound_batchim_32",
+      "target": "젊은 날의 소중한 꿈과 삶",
+      "translation": "Precious dreams and life of youth"
+    },
+    {
+      "id": "mastery_compound_batchim_33",
+      "target": "어려움이 있어도 희망을 잃지 않아요",
+      "translation": "Never lose hope even through hardship"
+    },
+    {
+      "id": "mastery_compound_batchim_34",
+      "target": "값진 경험이 인생의 큰 자산이 됩니다",
+      "translation": "Valuable experiences become great assets in life"
+    },
+    {
+      "id": "mastery_compound_batchim_35",
+      "target": "비 온 뒤에 땅이 굳어진다는 속담",
+      "translation": "Proverb that ground hardens after rain"
+    },
+    {
+      "id": "mastery_compound_batchim_36",
+      "target": "자신의 몫을 다하는 성실한 태도",
+      "translation": "A sincere attitude fulfilling one’s own share"
+    },
+    {
+      "id": "mastery_compound_batchim_37",
+      "target": "외곬으로 한 우물을 파는 장인정신",
+      "translation": "Craftsmanship devoting oneself to a single pursuit"
+    },
+    {
+      "id": "mastery_compound_batchim_38",
+      "target": "밤하늘의 별을 보며 시를 읊어요",
+      "translation": "Recite poetry looking up at the night stars"
+    },
+    {
+      "id": "mastery_compound_batchim_39",
+      "target": "흙 냄새 가득한 고향의 시골길",
+      "translation": "Country road filled with the scent of soil"
+    },
+    {
+      "id": "mastery_compound_batchim_40",
+      "target": "서로를 닮아가는 정다운 사람들의 모습",
+      "translation": "Loving people growing to resemble one another"
+    },
+    {
+      "id": "mastery_compound_batchim_41",
+      "target": "마음이 넓고 너그러운 태도를 가져요",
+      "translation": "Have an open-minded and generous attitude"
+    },
+    {
+      "id": "mastery_compound_batchim_42",
+      "target": "축하합니다! 모든 한글 자모를 마스터하셨습니다.",
+      "translation": "Congratulations! You have mastered all Korean Hangul Jamos."
+    }
+  ]
+}

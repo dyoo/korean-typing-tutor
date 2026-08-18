@@ -15,7 +15,12 @@ describe('curriculumCategories helper module', () => {
     expect(CURRICULUM_CATEGORIES.length).toBeGreaterThan(0);
     expect(ALL_CATEGORY_IDS).toContain('beginner');
     expect(ALL_CATEGORY_IDS).toContain('batchim');
+    expect(ALL_CATEGORY_IDS).toContain('mastery_banks');
     expect(ALL_CATEGORY_IDS).toContain('topik1');
+    
+    const batchimIndex = ALL_CATEGORY_IDS.indexOf('batchim');
+    const masteryIndex = ALL_CATEGORY_IDS.indexOf('mastery_banks');
+    expect(masteryIndex).toBe(batchimIndex + 1);
   });
 
   it('correctly calculates isGroupAllChecked', () => {

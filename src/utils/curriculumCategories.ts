@@ -24,6 +24,17 @@ export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
     moduleIds: ['l2a_simple_batchim', 'l2b_complex_batchim'],
   },
   {
+    id: 'mastery_banks',
+    name: 'Mastery Progression Banks',
+    moduleIds: [
+      'mastery_home_row',
+      'mastery_top_row',
+      'mastery_bottom_row',
+      'mastery_shift_keys',
+      'mastery_compound_batchim',
+    ],
+  },
+  {
     id: 'core',
     name: 'Core Vocabulary & Verbs',
     moduleIds: ['l3', 'l4', 'l5'],

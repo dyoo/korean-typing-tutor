@@ -1,0 +1,457 @@
+{
+  "id": "mastery_top_row",
+  "title": "Top Row Mastery",
+  "description": "Top row vocabulary (Stage 3) and top + home row milestone review sentences.",
+  "items": [
+    {
+      "id": "mastery_top_row_1",
+      "target": "가구",
+      "translation": "Furniture"
+    },
+    {
+      "id": "mastery_top_row_2",
+      "target": "고기",
+      "translation": "Meat"
+    },
+    {
+      "id": "mastery_top_row_3",
+      "target": "가을",
+      "translation": "Autumn"
+    },
+    {
+      "id": "mastery_top_row_4",
+      "target": "길",
+      "translation": "Road / Street"
+    },
+    {
+      "id": "mastery_top_row_5",
+      "target": "구름",
+      "translation": "Cloud"
+    },
+    {
+      "id": "mastery_top_row_6",
+      "target": "강",
+      "translation": "River"
+    },
+    {
+      "id": "mastery_top_row_7",
+      "target": "감",
+      "translation": "Persimmon / Feeling"
+    },
+    {
+      "id": "mastery_top_row_8",
+      "target": "국",
+      "translation": "Soup / Nation"
+    },
+    {
+      "id": "mastery_top_row_9",
+      "target": "그림",
+      "translation": "Picture / Drawing"
+    },
+    {
+      "id": "mastery_top_row_10",
+      "target": "사람",
+      "translation": "Person / Human"
+    },
+    {
+      "id": "mastery_top_row_11",
+      "target": "사랑",
+      "translation": "Love"
+    },
+    {
+      "id": "mastery_top_row_12",
+      "target": "소",
+      "translation": "Cow / Bull"
+    },
+    {
+      "id": "mastery_top_row_13",
+      "target": "손",
+      "translation": "Hand"
+    },
+    {
+      "id": "mastery_top_row_14",
+      "target": "시간",
+      "translation": "Time / Hour"
+    },
+    {
+      "id": "mastery_top_row_15",
+      "target": "소리",
+      "translation": "Sound / Noise"
+    },
+    {
+      "id": "mastery_top_row_16",
+      "target": "산",
+      "translation": "Mountain"
+    },
+    {
+      "id": "mastery_top_row_17",
+      "target": "사슴",
+      "translation": "Deer"
+    },
+    {
+      "id": "mastery_top_row_18",
+      "target": "시소",
+      "translation": "Seesaw"
+    },
+    {
+      "id": "mastery_top_row_19",
+      "target": "다리",
+      "translation": "Leg / Bridge"
+    },
+    {
+      "id": "mastery_top_row_20",
+      "target": "달",
+      "translation": "Moon / Month"
+    },
+    {
+      "id": "mastery_top_row_21",
+      "target": "돈",
+      "translation": "Money"
+    },
+    {
+      "id": "mastery_top_row_22",
+      "target": "돌",
+      "translation": "Stone / Rock"
+    },
+    {
+      "id": "mastery_top_row_23",
+      "target": "들",
+      "translation": "Field / Plural marker"
+    },
+    {
+      "id": "mastery_top_row_24",
+      "target": "도마",
+      "translation": "Cutting board"
+    },
+    {
+      "id": "mastery_top_row_25",
+      "target": "도시",
+      "translation": "City"
+    },
+    {
+      "id": "mastery_top_row_26",
+      "target": "두 사람",
+      "translation": "Two people"
+    },
+    {
+      "id": "mastery_top_row_27",
+      "target": "지도",
+      "translation": "Map"
+    },
+    {
+      "id": "mastery_top_row_28",
+      "target": "자리",
+      "translation": "Seat / Spot"
+    },
+    {
+      "id": "mastery_top_row_29",
+      "target": "잠",
+      "translation": "Sleep"
+    },
+    {
+      "id": "mastery_top_row_30",
+      "target": "주말",
+      "translation": "Weekend"
+    },
+    {
+      "id": "mastery_top_row_31",
+      "target": "자석",
+      "translation": "Magnet"
+    },
+    {
+      "id": "mastery_top_row_32",
+      "target": "자라",
+      "translation": "Softshell turtle / Grow"
+    },
+    {
+      "id": "mastery_top_row_33",
+      "target": "바다",
+      "translation": "Sea / Ocean"
+    },
+    {
+      "id": "mastery_top_row_34",
+      "target": "밥",
+      "translation": "Rice / Meal"
+    },
+    {
+      "id": "mastery_top_row_35",
+      "target": "발",
+      "translation": "Foot"
+    },
+    {
+      "id": "mastery_top_row_36",
+      "target": "밤",
+      "translation": "Night / Chestnut"
+    },
+    {
+      "id": "mastery_top_row_37",
+      "target": "봄",
+      "translation": "Spring season"
+    },
+    {
+      "id": "mastery_top_row_38",
+      "target": "바람",
+      "translation": "Wind / Breeze"
+    },
+    {
+      "id": "mastery_top_row_39",
+      "target": "방",
+      "translation": "Room"
+    },
+    {
+      "id": "mastery_top_row_40",
+      "target": "비",
+      "translation": "Rain"
+    },
+    {
+      "id": "mastery_top_row_41",
+      "target": "집",
+      "translation": "House / Home"
+    },
+    {
+      "id": "mastery_top_row_42",
+      "target": "지갑",
+      "translation": "Wallet"
+    },
+    {
+      "id": "mastery_top_row_43",
+      "target": "요리",
+      "translation": "Cooking / Cuisine"
+    },
+    {
+      "id": "mastery_top_row_44",
+      "target": "교실",
+      "translation": "Classroom"
+    },
+    {
+      "id": "mastery_top_row_45",
+      "target": "요일",
+      "translation": "Day of week"
+    },
+    {
+      "id": "mastery_top_row_46",
+      "target": "요구",
+      "translation": "Demand / Request"
+    },
+    {
+      "id": "mastery_top_row_47",
+      "target": "음료",
+      "translation": "Beverage / Drink"
+    },
+    {
+      "id": "mastery_top_row_48",
+      "target": "요람",
+      "translation": "Cradle"
+    },
+    {
+      "id": "mastery_top_row_49",
+      "target": "여기",
+      "translation": "Here"
+    },
+    {
+      "id": "mastery_top_row_50",
+      "target": "여름",
+      "translation": "Summer"
+    },
+    {
+      "id": "mastery_top_row_51",
+      "target": "여자",
+      "translation": "Woman / Female"
+    },
+    {
+      "id": "mastery_top_row_52",
+      "target": "연습",
+      "translation": "Practice"
+    },
+    {
+      "id": "mastery_top_row_53",
+      "target": "역",
+      "translation": "Station"
+    },
+    {
+      "id": "mastery_top_row_54",
+      "target": "연기",
+      "translation": "Smoke / Acting"
+    },
+    {
+      "id": "mastery_top_row_55",
+      "target": "이야기",
+      "translation": "Story / Conversation"
+    },
+    {
+      "id": "mastery_top_row_56",
+      "target": "야구",
+      "translation": "Baseball"
+    },
+    {
+      "id": "mastery_top_row_57",
+      "target": "양",
+      "translation": "Sheep / Quantity"
+    },
+    {
+      "id": "mastery_top_row_58",
+      "target": "약속",
+      "translation": "Promise / Appointment"
+    },
+    {
+      "id": "mastery_top_row_59",
+      "target": "야경",
+      "translation": "Night view"
+    },
+    {
+      "id": "mastery_top_row_60",
+      "target": "노래",
+      "translation": "Song"
+    },
+    {
+      "id": "mastery_top_row_61",
+      "target": "배",
+      "translation": "Boat / Pear / Stomach"
+    },
+    {
+      "id": "mastery_top_row_62",
+      "target": "새",
+      "translation": "Bird / New"
+    },
+    {
+      "id": "mastery_top_row_63",
+      "target": "해",
+      "translation": "Sun / Year"
+    },
+    {
+      "id": "mastery_top_row_64",
+      "target": "개미",
+      "translation": "Ant"
+    },
+    {
+      "id": "mastery_top_row_65",
+      "target": "매일",
+      "translation": "Every day"
+    },
+    {
+      "id": "mastery_top_row_66",
+      "target": "여행",
+      "translation": "Travel / Trip"
+    },
+    {
+      "id": "mastery_top_row_67",
+      "target": "열매",
+      "translation": "Fruit / Berry"
+    },
+    {
+      "id": "mastery_top_row_68",
+      "target": "가게",
+      "translation": "Shop / Store"
+    },
+    {
+      "id": "mastery_top_row_69",
+      "target": "베개",
+      "translation": "Pillow"
+    },
+    {
+      "id": "mastery_top_row_70",
+      "target": "세상",
+      "translation": "World / Earth"
+    },
+    {
+      "id": "mastery_top_row_71",
+      "target": "제비",
+      "translation": "Swallow (bird)"
+    },
+    {
+      "id": "mastery_top_row_72",
+      "target": "세금",
+      "translation": "Tax"
+    },
+    {
+      "id": "mastery_top_row_73",
+      "target": "메모",
+      "translation": "Memo"
+    },
+    {
+      "id": "mastery_top_row_74",
+      "target": "가을 바람이 시원해요",
+      "translation": "Autumn breeze is refreshing"
+    },
+    {
+      "id": "mastery_top_row_75",
+      "target": "바다로 여행을 가요",
+      "translation": "Let’s go on a trip to the sea"
+    },
+    {
+      "id": "mastery_top_row_76",
+      "target": "오늘 저녁에 밥을 먹어요",
+      "translation": "Eat dinner tonight"
+    },
+    {
+      "id": "mastery_top_row_77",
+      "target": "이웃과 재미난 이야기를 해요",
+      "translation": "Chat fun stories with a neighbor"
+    },
+    {
+      "id": "mastery_top_row_78",
+      "target": "일어나서 운동을 해요",
+      "translation": "Wake up and exercise"
+    },
+    {
+      "id": "mastery_top_row_79",
+      "target": "새로운 노래를 들어요",
+      "translation": "Listen to a new song"
+    },
+    {
+      "id": "mastery_top_row_80",
+      "target": "가게에서 맛난 음식을 사요",
+      "translation": "Buy delicious food at the store"
+    },
+    {
+      "id": "mastery_top_row_81",
+      "target": "도서관에서 조용히 공부해요",
+      "translation": "Study quietly in the library"
+    },
+    {
+      "id": "mastery_top_row_82",
+      "target": "사랑하는 가족과 모여 살아요",
+      "translation": "Live together with beloved family"
+    },
+    {
+      "id": "mastery_top_row_83",
+      "target": "주말에 시원한 바람을 맞아요",
+      "translation": "Feel the cool breeze on the weekend"
+    },
+    {
+      "id": "mastery_top_row_84",
+      "target": "밤하늘에 아름다운 별을 봐요",
+      "translation": "Look at beautiful stars in the night sky"
+    },
+    {
+      "id": "mastery_top_row_85",
+      "target": "매일 조금 더 발전하는 나",
+      "translation": "Me improving a little more every day"
+    },
+    {
+      "id": "mastery_top_row_86",
+      "target": "세상 곳곳을 여행하며 살아요",
+      "translation": "Travel all over the world and live"
+    },
+    {
+      "id": "mastery_top_row_87",
+      "target": "여름 바닷가에서 수영을 해요",
+      "translation": "Swim at the summer beach"
+    },
+    {
+      "id": "mastery_top_row_88",
+      "target": "방 안을 조용하게 정리해요",
+      "translation": "Quietly tidy up the room"
+    },
+    {
+      "id": "mastery_top_row_89",
+      "target": "지갑과 물건을 잘 모아요",
+      "translation": "Collect wallet and items well"
+    },
+    {
+      "id": "mastery_top_row_90",
+      "target": "가을 바람에 노래를 불러요",
+      "translation": "Sing a song in the autumn wind"
+    }
+  ]
+}
