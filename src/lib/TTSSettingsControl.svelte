@@ -40,7 +40,7 @@
   </div>
 
   {#if settings.enableTTS}
-    <div class="flex flex-col gap-2 mt-1 pl-1">
+    <div class="flex flex-col gap-2 mt-1 pl-2">
       <!-- Speak On Completion Toggle -->
       <label class="flex items-center justify-between cursor-pointer">
         <span class="text-gray-600 dark:text-gray-400">Speak on completion</span>
@@ -72,7 +72,7 @@
       </div>
 
       <!-- Playback Speed Slider -->
-      <div class="flex flex-col gap-1">
+      <div class="flex flex-col gap-1.5">
         <div class="flex items-center justify-between">
           <span class="text-gray-600 dark:text-gray-400">Speed</span>
           <span
@@ -81,15 +81,17 @@
             {settings.ttsSpeed ?? 1.0}x
           </span>
         </div>
-        <input
-          type="range"
-          min="0.5"
-          max="1.5"
-          step="0.1"
-          value={settings.ttsSpeed ?? 1.0}
-          oninput={(e) => onspeedchange?.(parseFloat((e.target as HTMLInputElement).value))}
-          class="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
-        />
+        <div class="pl-2">
+          <input
+            type="range"
+            min="0.5"
+            max="1.5"
+            step="0.1"
+            value={settings.ttsSpeed ?? 1.0}
+            oninput={(e) => onspeedchange?.(parseFloat((e.target as HTMLInputElement).value))}
+            class="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
+          />
+        </div>
       </div>
 
       <!-- Clear Cache Action & Confirmation -->

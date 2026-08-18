@@ -200,7 +200,7 @@
         </div>
 
         {#if settings.showVirtualKeyboard}
-          <div class="flex flex-col gap-2 mt-1 pl-1">
+          <div class="flex flex-col gap-2 mt-1 pl-2">
             <!-- Keyboard Hint Toggle -->
             <label class="flex items-center justify-between cursor-pointer">
               <span class="text-gray-600 dark:text-gray-400">Show keyboard hints</span>
@@ -232,48 +232,54 @@
           </label>
         </div>
 
-        {#if settings.lockFontSize}
-          <div class="flex flex-col gap-1 mt-1">
-            <div class="flex items-center justify-between">
-              <span>Font Size</span>
-              <span
-                class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
-              >
-                {minVal}rem
-              </span>
+        <div class="flex flex-col gap-2 mt-1 pl-2">
+          {#if settings.lockFontSize}
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Font size</span>
+                <span
+                  class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+                >
+                  {minVal}rem
+                </span>
+              </div>
+              <div class="pl-2">
+                <input
+                  type="range"
+                  min="1.0"
+                  max="6.0"
+                  step="0.25"
+                  value={minVal}
+                  oninput={handleMinFontSizeInput}
+                  class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
+                />
+              </div>
             </div>
-            <input
-              type="range"
-              min="1.0"
-              max="6.0"
-              step="0.25"
-              value={minVal}
-              oninput={handleMinFontSizeInput}
-              class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
-            />
-          </div>
-        {:else}
-          <div class="flex flex-col gap-1 mt-1">
-            <div class="flex items-center justify-between">
-              <span>Min & Max Font Size</span>
-              <span
-                class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
-              >
-                {minVal}rem – {maxVal}rem
-              </span>
-            </div>
+          {:else}
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-gray-600 dark:text-gray-400">Min & max font size</span>
+                <span
+                  class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+                >
+                  {minVal}rem – {maxVal}rem
+                </span>
+              </div>
 
-            <DualRangeSlider
-              min={1.0}
-              max={6.0}
-              step={0.25}
-              minValue={minVal}
-              maxValue={maxVal}
-              onminchange={(val) => onminfontsizechange?.(val)}
-              onmaxchange={(val) => onmaxfontsizechange?.(val)}
-            />
-          </div>
-        {/if}
+              <div class="pl-2">
+                <DualRangeSlider
+                  min={1.0}
+                  max={6.0}
+                  step={0.25}
+                  minValue={minVal}
+                  maxValue={maxVal}
+                  onminchange={(val) => onminfontsizechange?.(val)}
+                  onmaxchange={(val) => onmaxfontsizechange?.(val)}
+                />
+              </div>
+            </div>
+          {/if}
+        </div>
       </div>
 
       <!-- Voice Synthesis (TTS) Section -->
