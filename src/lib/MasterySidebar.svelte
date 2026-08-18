@@ -199,7 +199,7 @@
                   <div class="flex flex-col min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-1">
                       <span class="text-xs font-bold text-gray-800 dark:text-gray-200 truncate">
-                        💬 {cp.title}
+                        <span class="text-gray-500 dark:text-gray-400 font-medium">Milestone:</span> {cp.title}
                       </span>
                       <span
                         class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded shrink-0 {cpMastered

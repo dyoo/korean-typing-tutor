@@ -10,7 +10,7 @@
 </script>
 
 <div
-  class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-300 dark:border-gray-700"
+  class="flex items-center bg-gray-200 dark:bg-gray-800 p-0.5 rounded-lg border border-gray-300 dark:border-gray-700 whitespace-nowrap shrink-0"
 >
   <button
     type="button"
@@ -19,7 +19,7 @@
         ontogglemode();
       }
     }}
-    class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode ===
+    class="px-2 sm:px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer whitespace-nowrap {mode ===
     'curriculum'
       ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-xs'
       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"
@@ -33,7 +33,7 @@
         ontogglemode();
       }
     }}
-    class="px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer {mode ===
+    class="px-2 sm:px-2.5 py-1 text-xs font-bold rounded-md transition-colors cursor-pointer whitespace-nowrap {mode ===
     'mastery'
       ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-xs'
       : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"

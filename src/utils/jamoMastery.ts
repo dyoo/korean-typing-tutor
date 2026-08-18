@@ -173,7 +173,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     id: 'cp_home_row',
     stage: 2,
     stageName: 'Home Row',
-    title: 'Home Row Sentences',
+    title: 'Home',
     afterJamoIndex: 11, // 'ㅡ'
     requiredCompletions: 15,
   },
@@ -181,7 +181,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     id: 'cp_top_row',
     stage: 3,
     stageName: 'Top Row',
-    title: 'Top + Home Row Sentences',
+    title: 'Top',
     afterJamoIndex: 21, // 'ㅔ'
     requiredCompletions: 15,
   },
@@ -189,7 +189,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     id: 'cp_bottom_row',
     stage: 4,
     stageName: 'Bottom Row',
-    title: 'Full Alphabet Sentences',
+    title: 'Alphabet',
     afterJamoIndex: 26, // 'ㅠ'
     requiredCompletions: 15,
   },
@@ -197,7 +197,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     id: 'cp_shift_keys',
     stage: 5,
     stageName: 'Shift Keys',
-    title: 'Shift Key Sentences',
+    title: 'Shift',
     afterJamoIndex: 33, // 'ㅖ'
     requiredCompletions: 15,
   },
@@ -205,7 +205,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     id: 'cp_master',
     stage: 6,
     stageName: 'Compound Batchim',
-    title: 'Master Review Passages',
+    title: 'Mastery',
     afterJamoIndex: 44, // 'ㄽ'
     requiredCompletions: 15,
   },

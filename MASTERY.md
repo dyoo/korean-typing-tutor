@@ -33,7 +33,7 @@ flowchart TD
     end
 
     subgraph CP1 ["Sentence Milestone 1"]
-      S_HR["Home Row Sentences (15 completions)"]
+      S_HR["Milestone: Home (15 completions)"]
     end
 
     subgraph Stage3 ["Stage 3: Top Row Keys"]
@@ -42,7 +42,7 @@ flowchart TD
     end
 
     subgraph CP2 ["Sentence Milestone 2"]
-      S_TH["Top + Home Row Sentences (15 completions)"]
+      S_TH["Milestone: Top (15 completions)"]
     end
 
     subgraph Stage4 ["Stage 4: Bottom Row Keys"]
@@ -50,7 +50,7 @@ flowchart TD
     end
 
     subgraph CP3 ["Sentence Milestone 3"]
-      S_FA["Full Alphabet Sentences (15 completions)"]
+      S_FA["Milestone: Alphabet (15 completions)"]
     end
 
     subgraph Stage5 ["Stage 5: Shift Keys"]
@@ -58,7 +58,7 @@ flowchart TD
     end
 
     subgraph CP4 ["Sentence Milestone 4"]
-      S_SK["Shift Key Sentences (15 completions)"]
+      S_SK["Milestone: Shift (15 completions)"]
     end
 
     subgraph Stage6 ["Stage 6: Compound Final Consonants (겹받침)"]
@@ -67,7 +67,7 @@ flowchart TD
     end
 
     subgraph CP5 ["Sentence Milestone 5"]
-      S_MA["Master Review & Complex Passages (15 completions)"]
+      S_MA["Milestone: Mastery (15 completions)"]
     end
 
     Stage1 --> Stage2

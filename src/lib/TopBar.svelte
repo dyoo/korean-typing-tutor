@@ -75,18 +75,18 @@
   }: Props = $props();
 </script>
 
-<div class="w-full max-w-7xl flex items-center justify-between gap-4 shrink-0">
-  <div class="relative flex items-center gap-3">
+<div class="w-full max-w-7xl flex items-center justify-between gap-2 sm:gap-4 shrink-0">
+  <div class="relative flex items-center gap-2 sm:gap-3 shrink-0 min-w-0">
     {#if mode === 'curriculum'}
       <button
         type="button"
         onclick={ontogglecurriculum}
         onmousedown={(e) => e.stopPropagation()}
-        class="flex items-center gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
+        class="flex items-center gap-1.5 sm:gap-2 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-2.5 sm:px-3 py-1 sm:py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer whitespace-nowrap shrink-0"
         aria-label="Open Free-form Modules Sidebar"
       >
         <svg
-          class="w-5 h-5 text-gray-600 dark:text-gray-300 shrink-0"
+          class="w-4 h-4 sm:w-5 sm:h-5 text-gray-600 dark:text-gray-300 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -95,12 +95,12 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
         <span
-          class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline"
+          class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline whitespace-nowrap"
         >
           Modules
         </span>
         <span
-          class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+          class="text-xs font-mono font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800 whitespace-nowrap shrink-0"
         >
           {enabledModuleCount}/{totalModuleCount}
         </span>
@@ -111,11 +111,11 @@
         type="button"
         onclick={ontogglemastery}
         onmousedown={(e) => e.stopPropagation()}
-        class="flex items-center gap-2.5 bg-white dark:bg-gray-800 border-2 border-amber-300 dark:border-amber-700/60 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-amber-600 dark:hover:border-amber-500 focus:outline-none shadow-sm text-sm cursor-pointer"
+        class="flex items-center gap-1.5 sm:gap-2.5 bg-white dark:bg-gray-800 border-2 border-amber-300 dark:border-amber-700/60 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-2 sm:px-3 py-1 sm:py-1.5 hover:border-amber-600 dark:hover:border-amber-500 focus:outline-none shadow-sm text-sm cursor-pointer whitespace-nowrap shrink-0"
         aria-label="Open Mastery Progress Sidebar"
       >
         <svg
-          class="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0"
+          class="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 dark:text-amber-400 shrink-0"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -124,31 +124,31 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
         <span
-          class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline"
+          class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden sm:inline whitespace-nowrap"
         >
-          Jamos Unlocked
+          Jamos
         </span>
         <span
-          class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800"
+          class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800 whitespace-nowrap shrink-0"
         >
           {masteryUnlockedCount}/{masteryTotalCount}
         </span>
         {#if activeCheckpointTitle}
           <div
-            class="flex items-center gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80"
+            class="flex items-center gap-1 sm:gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80 shrink-0 whitespace-nowrap"
           >
             <span
-              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:inline"
+              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:inline whitespace-nowrap"
             >
               Milestone:
             </span>
             <span
-              class="relative overflow-hidden text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center gap-1.5 shadow-2xs"
+              class="relative overflow-hidden text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 px-1.5 sm:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center gap-1 sm:gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
             >
-              <span>💬 {activeCheckpointTitle}</span>
+              <span class="whitespace-nowrap">{activeCheckpointTitle}</span>
               {#if activeCheckpointProgress}
                 <span
-                  class="text-[10px] font-mono font-bold bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-amber-900 dark:text-amber-200"
+                  class="text-[10px] font-mono font-bold bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-amber-900 dark:text-amber-200 whitespace-nowrap"
                 >
                   {activeCheckpointProgress.completed}/{activeCheckpointProgress.total}
                 </span>
@@ -157,15 +157,15 @@
           </div>
         {:else if activeJamoChar}
           <div
-            class="flex items-center gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80"
+            class="flex items-center gap-1 sm:gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80 shrink-0 whitespace-nowrap"
           >
             <span
-              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:inline"
+              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:inline whitespace-nowrap"
             >
               Focus:
             </span>
             <span
-              class="relative overflow-hidden text-base sm:text-lg font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[28px] shadow-2xs gap-1"
+              class="relative overflow-hidden text-sm sm:text-base font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-1.5 sm:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[24px] sm:min-w-[28px] shadow-2xs gap-1 whitespace-nowrap shrink-0"
             >
               {#if activeJamoProgress > 0}
                 <div
@@ -175,10 +175,10 @@
                   style="height: {activeJamoProgress}%;"
                 ></div>
               {/if}
-              <span class="relative z-10">{activeJamoChar}</span>
+              <span class="relative z-10 whitespace-nowrap">{activeJamoChar}</span>
               {#if activeLearningCombination}
                 <span
-                  class="relative z-10 text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90"
+                  class="relative z-10 text-[10px] sm:text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90 whitespace-nowrap"
                 >
                   ({activeLearningCombination[0]}+{activeLearningCombination[1]})
                 </span>
@@ -190,7 +190,7 @@
     {/if}
   </div>
 
-  <div class="flex items-center gap-2">
+  <div class="flex items-center gap-1.5 sm:gap-2 shrink-0 whitespace-nowrap">
     <GitHubLink />
 
     <ModeSwitcher {mode} {ontogglemode} />

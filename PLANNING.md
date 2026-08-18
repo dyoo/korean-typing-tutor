@@ -118,25 +118,26 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 
 ---
 
-### Phase 6: Mastery Mode Experience Improvements (Curated Jamo Banks & Interleaved Sentence Checkpoints) — CURRENT PRIORITY
+### Phase 6: Mastery Mode Experience Improvements (Curated Jamo Banks & Interleaved Sentence Checkpoints) — COMPLETED
 
-- [ ] **Curated Stage-Specific Jamo Word Banks (`src/content/masteryVocabulary.ts`):** Ensure every Jamo
-      in the progression sequence has 10–25 authentic Korean words/short expressions constructed
-      strictly from cumulative unlocked keys.
-- [ ] **Length-Restricted Jamo Introduction:** Avoid long, intimidating sentences while introducing
-      new letter keys by restricting the exercise pool during Jamo stages to short words ($\le 12$
-      characters / 1–3 words).
-- [ ] **Interleaved Sentence Milestone Checkpoints:** Add dedicated Sentence Checkpoints between major
-      keyboard sections (after Home Row, Top Row, Bottom Row, Shift Keys, and Compound Batchim)
-      featuring medium-to-long sentences.
-- [ ] **Sentence Mastery Completion Tracking:** Implement a 15-completed-sentence requirement to
+- [x] **Curated Stage-Specific Jamo Word Banks (`src/content/masteryVocabulary.ts`):** Ensure every Jamo
+      in the progression sequence has authentic Korean words/short expressions constructed strictly
+      from cumulative unlocked keys.
+- [x] **Length-Restricted Jamo Introduction:** Avoid long sentences while introducing new letter keys
+      by restricting the exercise pool during Jamo stages to short words ($\le 12$ characters / 1–3
+      words).
+- [x] **Interleaved Sentence Milestone Checkpoints:** Add dedicated Sentence Checkpoints (`Home`,
+      `Top`, `Alphabet`, `Shift`, `Mastery`) between major keyboard sections featuring authentic
+      sentences.
+- [x] **Sentence Mastery Completion Tracking:** Implement a 15-completed-sentence requirement to
       graduate each sentence checkpoint and advance to the next keyboard section.
-- [ ] **Mastery Sidebar & TopBar Milestone Updates:** Render sentence checkpoints in the sidebar with
-      completion counters (`X/15`) and update the top bar focus badge accordingly.
+- [x] **Mastery Sidebar & TopBar Milestone Updates:** Render sentence checkpoints with `Milestone:`
+      prefix in the sidebar, live completion counters (`X/15`), single-line responsive layouts, and
+      dedicated TopBar milestone pills.
 
 ---
 
-### Phase 7: Speed & Accuracy Analytics Panel
+### Phase 7: Speed & Accuracy Analytics Panel — CURRENT PRIORITY
 
 - [ ] **Real-Time WPM / SPM Calculation:** Character-per-minute (CPM) / Syllables-per-minute (SPM)
       and Words-per-minute (WPM) calculation.

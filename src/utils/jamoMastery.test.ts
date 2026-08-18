@@ -351,7 +351,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     expect(target.type).toBe('checkpoint');
     if (target.type === 'checkpoint') {
       expect(target.checkpoint.id).toBe('cp_home_row');
-      expect(target.checkpoint.title).toBe('Home Row Sentences');
+      expect(target.checkpoint.title).toBe('Home');
     }
 
     // Completing 14 sentences (not yet 15) keeps checkpoint active
