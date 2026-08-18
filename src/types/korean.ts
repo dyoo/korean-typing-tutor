@@ -26,6 +26,7 @@ export interface LessonItem {
   target: string;
   pronunciation?: string | null;
   translation?: string | null;
+  attribution?: string | null;
 }
 
 /** Structure of the imported content dataset containing modules and lesson items. */

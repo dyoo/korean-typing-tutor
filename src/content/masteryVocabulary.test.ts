@@ -1,13 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import {
-  MASTERY_JAMO_VOCABULARY,
-  MASTERY_CHECKPOINT_SENTENCES,
-} from './masteryVocabulary';
-import {
-  JAMO_PROGRESSION_ORDER,
-  SENTENCE_CHECKPOINTS,
-  isItemEligible,
-} from '../utils/jamoMastery';
+import { MASTERY_JAMO_VOCABULARY, MASTERY_CHECKPOINT_SENTENCES } from './masteryVocabulary';
+import { JAMO_PROGRESSION_ORDER, SENTENCE_CHECKPOINTS, isItemEligible } from '../utils/jamoMastery';
 import { decomposeStringToJamos } from '../utils/hangulDecompose';
 
 describe('Mastery Vocabulary Bank Verification', () => {
@@ -65,7 +58,10 @@ describe('Mastery Vocabulary Bank Verification', () => {
         ).toBe(true);
 
         // Sentence should be multi-word / medium-to-long
-        expect(sent.target.length, `Sentence "${sent.target}" should be at least 5 characters`).toBeGreaterThanOrEqual(5);
+        expect(
+          sent.target.length,
+          `Sentence "${sent.target}" should be at least 5 characters`,
+        ).toBeGreaterThanOrEqual(5);
       }
     }
   });
@@ -90,5 +86,23 @@ describe('Mastery Vocabulary Bank Verification', () => {
         `Expected at least 10 vocabulary items for Shift key "${sk}", got ${vocab.length}`,
       ).toBeGreaterThanOrEqual(10);
     }
+  });
+
+  it('contains valid author and work attributions for iconic literature and poetry items', () => {
+    let attributedCount = 0;
+    for (const checkpointId in MASTERY_CHECKPOINT_SENTENCES) {
+      const list = MASTERY_CHECKPOINT_SENTENCES[checkpointId] || [];
+      for (const item of list) {
+        if (item.attribution) {
+          attributedCount++;
+          expect(typeof item.attribution).toBe('string');
+          expect(item.attribution.length).toBeGreaterThan(3);
+        }
+      }
+    }
+    expect(
+      attributedCount,
+      'Expected at least 25 attributed poetry and literature items',
+    ).toBeGreaterThanOrEqual(25);
   });
 });

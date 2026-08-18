@@ -188,7 +188,9 @@ describe('TTSController Unit Tests', () => {
 
     const synthPromise = controller.synthesize('한글', 'jf_nezumi', 1.0);
 
-    const synthMsg = postedMessages.find((m) => m.type === 'SYNTHESIZE' && m.payload.text === '한글');
+    const synthMsg = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '한글',
+    );
     expect(synthMsg).toBeDefined();
 
     if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
@@ -216,7 +218,9 @@ describe('TTSController Unit Tests', () => {
     await loadPromise;
 
     void controller.synthesize('테스트');
-    const synthMsg = postedMessages.find((m) => m.type === 'SYNTHESIZE' && m.payload.text === '테스트');
+    const synthMsg = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '테스트',
+    );
     expect(synthMsg).toBeDefined();
     if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
       expect(synthMsg.payload.voice).toBe('jm_kumo');

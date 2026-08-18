@@ -12,10 +12,7 @@
   } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
-  import {
-    JAMO_PROGRESSION_ORDER,
-    calculateJamoProgress,
-  } from './utils/jamoMastery';
+  import { JAMO_PROGRESSION_ORDER, calculateJamoProgress } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import MasterySidebar from './lib/MasterySidebar.svelte';

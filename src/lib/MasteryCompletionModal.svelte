@@ -89,8 +89,8 @@
             </span>
           </div>
           <p class="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-normal">
-            Practice our complete 26-module library of authentic vocabulary, TOPIK levels, idioms,
-            and literature without progression locks.
+            Practice the complete 26-module library of vocabulary, TOPIK levels, idioms, and
+            literature without progression locks.
           </p>
         </button>
 
@@ -104,8 +104,8 @@
             Review or Reset Progress
           </div>
           <p class="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-normal">
-            Open the Mastery Drawer to jump to any previous Jamo stage or Sentence Milestone to
-            hone your muscle memory.
+            Open the Mastery Drawer to jump to any previous Jamo stage or Sentence Milestone to hone
+            your muscle memory.
           </p>
         </button>
       </div>

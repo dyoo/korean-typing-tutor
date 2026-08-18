@@ -116,7 +116,9 @@
         </div>
       {/if}
 
-      <div class="flex items-center justify-end gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+      <div
+        class="flex items-center justify-end gap-2 pt-2 border-t border-gray-200 dark:border-gray-700"
+      >
         <button
           type="button"
           onclick={onCancel}

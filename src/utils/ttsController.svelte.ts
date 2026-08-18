@@ -310,11 +310,7 @@ export class TTSController {
     this.isSpeaking = false;
   }
 
-  public async speak(
-    text: string,
-    voice: string = 'jm_kumo',
-    speed: number = 1.0,
-  ): Promise<void> {
+  public async speak(text: string, voice: string = 'jm_kumo', speed: number = 1.0): Promise<void> {
     if (!text || text.trim().length === 0) {
       return;
     }

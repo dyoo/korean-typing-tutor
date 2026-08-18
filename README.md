@@ -19,9 +19,12 @@ Korean through focused typing practice.
   - Displays Romanized English pronunciation alongside Hangul characters.
   - Displays English translations for words, sentences, reading passages, and proverbs.
 - **On-Device Neural Voice Synthesis (TTS)**:
-  - High-fidelity Korean speech pronunciation powered by [Kokoro-82M ONNX](https://github.com/dannyyoo/korean-kokoro) and WebAssembly multi-threading.
-  - Generates speech 100% locally in the browser with no external network calls or cloud dependencies after one-time offline weight caching.
-  - Instant on-demand playback via the audio play icon and optional automatic pronunciation upon exercise completion.
+  - High-fidelity Korean speech pronunciation powered by
+    [Kokoro-82M ONNX](https://github.com/dannyyoo/korean-kokoro) and WebAssembly multi-threading.
+  - Generates speech 100% locally in the browser with no external network calls or cloud
+    dependencies after one-time offline weight caching.
+  - Instant on-demand playback via the audio play icon and optional automatic pronunciation upon
+    exercise completion.
 - **Dual Typing Modes**:
   - **Free-form**: Practice specific modules or the entire curriculum with randomized order.
   - **Mastery**: A structured progression system that unlocks new Jamos as you improve,
@@ -90,14 +93,16 @@ how to type Korean:
 
 - **Framework**: [Svelte 5](https://svelte.dev/)
 - **Build Tool**: [Vite](https://vitejs.dev/)
-- **Voice Synthesis**: [korean-kokoro](https://github.com/dyoo/korean-tts) & [Kokoro-82M ONNX](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX)
+- **Voice Synthesis**: [korean-kokoro](https://github.com/dyoo/korean-tts) &
+  [Kokoro-82M ONNX](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
 - **Testing**: [Vitest](https://vitest.dev/)
 - **Type Checking**:
   [svelte-check](https://github.com/sveltejs/language-tools/tree/master/packages/svelte-check)
 - **PWA Support**: [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
-- **Architecture**: Client-side only (Dedicated Web Worker, WebAssembly SIMD, LocalStorage & CacheStorage)
+- **Architecture**: Client-side only (Dedicated Web Worker, WebAssembly SIMD, LocalStorage &
+  CacheStorage)
 
 ---
 

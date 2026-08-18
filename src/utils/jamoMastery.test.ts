@@ -392,7 +392,12 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     const dummyCurriculum: LessonItem[] = [
       { id: 'short1', moduleId: 'm1', target: '나무', translation: 'Tree' },
       { id: 'short2', moduleId: 'm1', target: '우리나라', translation: 'Our country' },
-      { id: 'long1', moduleId: 'm1', target: '어머니와 함께 나무 아래로 걸어요', translation: 'Walk under tree with mother' },
+      {
+        id: 'long1',
+        moduleId: 'm1',
+        target: '어머니와 함께 나무 아래로 걸어요',
+        translation: 'Walk under tree with mother',
+      },
     ];
     const unlocked = new Set(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ', 'ㅗ', 'ㅣ', 'ㅁ', 'ㄴ', 'ㅎ', 'ㅜ', 'ㅡ']);
 

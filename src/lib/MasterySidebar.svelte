@@ -128,7 +128,8 @@
             <span
               class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0"
             >
-              {stage.items.length} {stage.items.length === 1 ? 'key' : 'keys'}
+              {stage.items.length}
+              {stage.items.length === 1 ? 'key' : 'keys'}
             </span>
           </div>
 
@@ -183,7 +184,10 @@
                 {@const isCpSelected = activeCheckpointId === cp.id}
                 {@const cpCompleted = cpStats?.completedCount ?? 0}
                 {@const cpMastered = cpStats?.isMastered ?? false}
-                {@const cpPercent = Math.min(100, Math.round((cpCompleted / cp.requiredCompletions) * 100))}
+                {@const cpPercent = Math.min(
+                  100,
+                  Math.round((cpCompleted / cp.requiredCompletions) * 100),
+                )}
                 <label
                   class="flex items-center gap-2.5 p-1.5 mt-1 rounded-lg border border-dashed border-amber-300 dark:border-amber-700/60 hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isCpSelected
                     ? 'bg-amber-100/70 dark:bg-amber-950/60 border-amber-500 dark:border-amber-400'
@@ -199,7 +203,8 @@
                   <div class="flex flex-col min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-1">
                       <span class="text-xs font-bold text-gray-800 dark:text-gray-200 truncate">
-                        <span class="text-gray-500 dark:text-gray-400 font-medium">Milestone:</span> {cp.title}
+                        <span class="text-gray-500 dark:text-gray-400 font-medium">Milestone:</span>
+                        {cp.title}
                       </span>
                       <span
                         class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded shrink-0 {cpMastered
@@ -210,9 +215,13 @@
                       </span>
                     </div>
                     {#if cpPercent > 0}
-                      <div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full mt-1 overflow-hidden">
+                      <div
+                        class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full mt-1 overflow-hidden"
+                      >
                         <div
-                          class="h-full {cpMastered ? 'bg-emerald-500' : 'bg-amber-500'} transition-all"
+                          class="h-full {cpMastered
+                            ? 'bg-emerald-500'
+                            : 'bg-amber-500'} transition-all"
                           style="width: {cpPercent}%;"
                         ></div>
                       </div>

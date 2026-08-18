@@ -205,10 +205,10 @@
       {ontoggletranslation}
       {ontogglevirtualkeyboard}
       {ontogglekeyboardhint}
-      onminfontsizechange={onminfontsizechange}
-      onmaxfontsizechange={onmaxfontsizechange}
-      ontogglelockfontsize={ontogglelockfontsize}
-      oncursorcolorchange={oncursorcolorchange}
+      {onminfontsizechange}
+      {onmaxfontsizechange}
+      {ontogglelockfontsize}
+      {oncursorcolorchange}
       {ontoggletts}
       {ontogglespeakoncompletion}
       {onvoicechange}
