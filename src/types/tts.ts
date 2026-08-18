@@ -25,7 +25,7 @@ export type TTSWorkerRequest =
 export type TTSWorkerResponse =
   | { type: 'CACHE_STATUS'; payload: { isCached: boolean; modelSizeFormatted?: string } }
   | { type: 'LOAD_PROGRESS'; payload: { file: string; progress: number; status: string } }
-  | { type: 'LOAD_SUCCESS'; payload: { voices: VoiceMetadata[] } }
+  | { type: 'LOAD_SUCCESS'; payload: { voices: VoiceMetadata[]; modelSizeFormatted?: string } }
   | { type: 'LOAD_ERROR'; payload: { error: string } }
   | {
       type: 'SYNTHESIS_SUCCESS';

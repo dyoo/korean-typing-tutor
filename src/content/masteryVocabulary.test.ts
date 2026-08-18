@@ -42,14 +42,14 @@ describe('Mastery Vocabulary Bank Verification', () => {
     }
   });
 
-  it('ensures each Sentence Checkpoint contains at least 15 valid sentences matching unlocked Jamos and section Jamos', () => {
+  it('ensures each Sentence Checkpoint contains at least the required completions of valid sentences matching unlocked Jamos and section Jamos', () => {
     for (const cp of SENTENCE_CHECKPOINTS) {
       const sentences = MASTERY_CHECKPOINT_SENTENCES[cp.id];
       expect(sentences, `Missing sentences for checkpoint: ${cp.id}`).toBeDefined();
       expect(
         sentences.length,
-        `Expected at least 15 sentences for ${cp.id}, got ${sentences?.length}`,
-      ).toBeGreaterThanOrEqual(15);
+        `Expected at least ${cp.requiredCompletions} sentences for ${cp.id}, got ${sentences?.length}`,
+      ).toBeGreaterThanOrEqual(cp.requiredCompletions);
 
       const unlockedJamos = new Set(
         JAMO_PROGRESSION_ORDER.slice(0, cp.afterJamoIndex).map((i) => i.jamo),

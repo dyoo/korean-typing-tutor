@@ -357,17 +357,17 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(target.checkpoint.title).toBe('Home');
     }
 
-    // Completing 14 sentences (not yet 15) keeps checkpoint active
-    for (let i = 0; i < 14; i++) {
+    // Completing 9 sentences (not yet 10) keeps checkpoint active
+    for (let i = 0; i < 9; i++) {
       const res = recordSentenceCompletion(state, 'cp_home_row');
       expect(res.newlyMastered).toBe(false);
     }
     expect(state.sentenceCheckpointStats['cp_home_row'].isMastered).toBe(false);
 
-    // 15th sentence completes the checkpoint and unlocks 12th Jamo 'ㄱ' (Top Row)
-    const res15 = recordSentenceCompletion(state, 'cp_home_row');
-    expect(res15.newlyMastered).toBe(true);
-    expect(res15.newlyUnlockedJamo).toBe('ㄱ');
+    // 10th sentence completes the checkpoint and unlocks 12th Jamo 'ㄱ' (Top Row)
+    const res10 = recordSentenceCompletion(state, 'cp_home_row');
+    expect(res10.newlyMastered).toBe(true);
+    expect(res10.newlyUnlockedJamo).toBe('ㄱ');
     expect(state.unlockedCount).toBe(12);
 
     target = getActiveMasteryTarget(state);
@@ -422,15 +422,15 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     state.unlockedCount = JAMO_PROGRESSION_ORDER.length; // 44
     expect(isAllMasteryComplete(state)).toBe(false);
 
-    // Complete 14 sentences for cp_master
-    for (let i = 0; i < 14; i++) {
+    // Complete 9 sentences for cp_master
+    for (let i = 0; i < 9; i++) {
       const res = recordSentenceCompletion(state, 'cp_master');
       expect(res.newlyMastered).toBe(false);
       expect(res.isAllMasteryComplete).toBe(false);
     }
     expect(isAllMasteryComplete(state)).toBe(false);
 
-    // 15th sentence completes cp_master and full mastery path
+    // 10th sentence completes cp_master and full mastery path
     const finalRes = recordSentenceCompletion(state, 'cp_master');
     expect(finalRes.newlyMastered).toBe(true);
     expect(finalRes.isAllMasteryComplete).toBe(true);

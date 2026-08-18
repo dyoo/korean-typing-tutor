@@ -19,7 +19,7 @@ export interface JamoStats {
 export interface SentenceCheckpointStats {
   /** Number of completed sentences during this milestone. */
   completedCount: number;
-  /** Whether the user has achieved the required sentence completions (e.g. 15). */
+  /** Whether the user has achieved the required sentence completions (e.g. 10). */
   isMastered: boolean;
 }
 

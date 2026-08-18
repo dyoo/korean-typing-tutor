@@ -175,7 +175,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     stageName: 'Home Row',
     title: 'Home',
     afterJamoIndex: 11, // 'ㅡ'
-    requiredCompletions: 15,
+    requiredCompletions: 10,
   },
   {
     id: 'cp_top_row',
@@ -183,7 +183,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     stageName: 'Top Row',
     title: 'Top',
     afterJamoIndex: 21, // 'ㅔ'
-    requiredCompletions: 15,
+    requiredCompletions: 10,
   },
   {
     id: 'cp_bottom_row',
@@ -191,7 +191,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     stageName: 'Bottom Row',
     title: 'Alphabet',
     afterJamoIndex: 26, // 'ㅠ'
-    requiredCompletions: 15,
+    requiredCompletions: 10,
   },
   {
     id: 'cp_shift_keys',
@@ -199,7 +199,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     stageName: 'Shift Keys',
     title: 'Shift',
     afterJamoIndex: 33, // 'ㅖ'
-    requiredCompletions: 15,
+    requiredCompletions: 10,
   },
   {
     id: 'cp_master',
@@ -207,7 +207,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     stageName: 'Compound Batchim',
     title: 'Mastery',
     afterJamoIndex: 44, // 'ㄽ'
-    requiredCompletions: 15,
+    requiredCompletions: 10,
   },
 ];
 
@@ -588,7 +588,7 @@ export function recordSentenceCompletion(
 
   stats.completedCount += 1;
   const cp = SENTENCE_CHECKPOINTS.find((c) => c.id === checkpointId);
-  const targetCount = cp?.requiredCompletions ?? 15;
+  const targetCount = cp?.requiredCompletions ?? 10;
 
   let newlyMastered = false;
   let newlyUnlockedJamo: string | undefined = undefined;
