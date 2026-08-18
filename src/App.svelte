@@ -101,6 +101,7 @@
   }
 
   onMount(() => {
+    ttsController.checkCache();
     session.setFilter(enabledModuleIds, true);
     applyTheme(settings.theme);
     focusInputElement();

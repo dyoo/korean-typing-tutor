@@ -55,9 +55,20 @@ describe('TTSController Unit Tests', () => {
     expect(controller.preload('   ')).toBeNull();
   });
 
-  it('posts CHECK_CACHE when checkCache is called', () => {
+  it('posts CHECK_CACHE when checkCache is called and updates isCached on CACHE_STATUS response', () => {
     controller.checkCache();
     expect(postedMessages).toContainEqual({ type: 'CHECK_CACHE' });
+    expect(controller.getIsCached()).toBe(false);
+
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'CACHE_STATUS',
+        payload: { isCached: true, modelSizeFormatted: '80 MB' },
+      },
+    } as MessageEvent);
+
+    expect(controller.getIsCached()).toBe(true);
+    expect(controller.getModelSizeFormatted()).toBe('80 MB');
   });
 
   it('separates stopAudio from cancelSynthesis', () => {

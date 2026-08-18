@@ -1,5 +1,7 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import type { TutorSettings } from './settings';
+  import { ttsController } from '../utils/ttsController.svelte';
 
   interface Props {
     settings: TutorSettings;
@@ -20,6 +22,13 @@
   }: Props = $props();
 
   let isConfirmingClear = $state(false);
+  let hasCache = $derived(ttsController.getIsCached() || ttsController.getIsLoaded());
+
+  onMount(() => {
+    if (!ttsController.getIsLoaded()) {
+      ttsController.checkCache();
+    }
+  });
 </script>
 
 <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
@@ -94,7 +103,7 @@
         </div>
       </div>
     </div>
-  {:else}
+  {:else if hasCache}
     <div class="flex flex-col gap-2 mt-1 pl-2">
       <!-- Clear Cache Action & Confirmation -->
       {#if isConfirmingClear}
