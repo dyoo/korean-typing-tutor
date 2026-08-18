@@ -30,226 +30,316 @@
     },
     {
       "id": "mastery_shift_keys_6",
+      "target": "꽃병",
+      "translation": "Flower vase"
+    },
+    {
+      "id": "mastery_shift_keys_7",
+      "target": "꼭",
+      "translation": "Surely / Exactly"
+    },
+    {
+      "id": "mastery_shift_keys_8",
+      "target": "깨",
+      "translation": "Sesame"
+    },
+    {
+      "id": "mastery_shift_keys_9",
+      "target": "껍질",
+      "translation": "Skin / Peel / Bark"
+    },
+    {
+      "id": "mastery_shift_keys_10",
       "target": "쌀",
       "translation": "Uncooked rice"
     },
     {
-      "id": "mastery_shift_keys_7",
+      "id": "mastery_shift_keys_11",
       "target": "싸움",
       "translation": "Fight / Battle"
     },
     {
-      "id": "mastery_shift_keys_8",
+      "id": "mastery_shift_keys_12",
       "target": "씨앗",
       "translation": "Seed"
     },
     {
-      "id": "mastery_shift_keys_9",
+      "id": "mastery_shift_keys_13",
       "target": "쓰기",
       "translation": "Writing"
     },
     {
-      "id": "mastery_shift_keys_10",
+      "id": "mastery_shift_keys_14",
       "target": "쑥",
       "translation": "Mugwort"
     },
     {
-      "id": "mastery_shift_keys_11",
+      "id": "mastery_shift_keys_15",
+      "target": "씨",
+      "translation": "Seed / Mr. / Ms."
+    },
+    {
+      "id": "mastery_shift_keys_16",
+      "target": "쏘다",
+      "translation": "To shoot"
+    },
+    {
+      "id": "mastery_shift_keys_17",
+      "target": "썰매",
+      "translation": "Sled"
+    },
+    {
+      "id": "mastery_shift_keys_18",
+      "target": "쌍둥이",
+      "translation": "Twins"
+    },
+    {
+      "id": "mastery_shift_keys_19",
       "target": "떡",
       "translation": "Rice cake"
     },
     {
-      "id": "mastery_shift_keys_12",
+      "id": "mastery_shift_keys_20",
       "target": "딸기",
       "translation": "Strawberry"
     },
     {
-      "id": "mastery_shift_keys_13",
+      "id": "mastery_shift_keys_21",
       "target": "땅",
       "translation": "Land / Ground"
     },
     {
-      "id": "mastery_shift_keys_14",
+      "id": "mastery_shift_keys_22",
       "target": "땀",
       "translation": "Sweat"
     },
     {
-      "id": "mastery_shift_keys_15",
+      "id": "mastery_shift_keys_23",
       "target": "또",
       "translation": "Again / Also"
     },
     {
-      "id": "mastery_shift_keys_16",
+      "id": "mastery_shift_keys_24",
+      "target": "뚜껑",
+      "translation": "Lid / Cap"
+    },
+    {
+      "id": "mastery_shift_keys_25",
+      "target": "뜻",
+      "translation": "Meaning / Will"
+    },
+    {
+      "id": "mastery_shift_keys_26",
+      "target": "뛰다",
+      "translation": "To run / jump"
+    },
+    {
+      "id": "mastery_shift_keys_27",
       "target": "찌개",
       "translation": "Stew"
     },
     {
-      "id": "mastery_shift_keys_17",
+      "id": "mastery_shift_keys_28",
       "target": "짝",
       "translation": "Pair / Partner"
     },
     {
-      "id": "mastery_shift_keys_18",
+      "id": "mastery_shift_keys_29",
       "target": "쪽",
       "translation": "Side / Page / Direction"
     },
     {
-      "id": "mastery_shift_keys_19",
+      "id": "mastery_shift_keys_30",
       "target": "진짜",
       "translation": "Really / Real"
     },
     {
-      "id": "mastery_shift_keys_20",
+      "id": "mastery_shift_keys_31",
       "target": "짜장면",
       "translation": "Black bean noodles"
     },
     {
-      "id": "mastery_shift_keys_21",
+      "id": "mastery_shift_keys_32",
+      "target": "짜다",
+      "translation": "To be salty / squeeze"
+    },
+    {
+      "id": "mastery_shift_keys_33",
+      "target": "찜",
+      "translation": "Steamed dish"
+    },
+    {
+      "id": "mastery_shift_keys_34",
       "target": "빵",
       "translation": "Bread"
     },
     {
-      "id": "mastery_shift_keys_22",
+      "id": "mastery_shift_keys_35",
       "target": "뼈",
       "translation": "Bone"
     },
     {
-      "id": "mastery_shift_keys_23",
+      "id": "mastery_shift_keys_36",
       "target": "뿌리",
       "translation": "Root"
     },
     {
-      "id": "mastery_shift_keys_24",
+      "id": "mastery_shift_keys_37",
       "target": "뽀뽀",
       "translation": "Peck / Kiss"
     },
     {
-      "id": "mastery_shift_keys_25",
+      "id": "mastery_shift_keys_38",
       "target": "빨래",
       "translation": "Laundry"
     },
     {
-      "id": "mastery_shift_keys_26",
+      "id": "mastery_shift_keys_39",
+      "target": "빠르다",
+      "translation": "To be fast"
+    },
+    {
+      "id": "mastery_shift_keys_40",
+      "target": "뺨",
+      "translation": "Cheek"
+    },
+    {
+      "id": "mastery_shift_keys_41",
       "target": "얘기",
       "translation": "Story / Chat"
     },
     {
-      "id": "mastery_shift_keys_27",
+      "id": "mastery_shift_keys_42",
       "target": "얘들아",
       "translation": "Hey guys / Children"
     },
     {
-      "id": "mastery_shift_keys_28",
+      "id": "mastery_shift_keys_43",
       "target": "얘",
       "translation": "This child / Hey"
     },
     {
-      "id": "mastery_shift_keys_29",
+      "id": "mastery_shift_keys_44",
       "target": "예절",
       "translation": "Manners / Etiquette"
     },
     {
-      "id": "mastery_shift_keys_30",
+      "id": "mastery_shift_keys_45",
       "target": "시계",
       "translation": "Clock / Watch"
     },
     {
-      "id": "mastery_shift_keys_31",
+      "id": "mastery_shift_keys_46",
       "target": "세계",
       "translation": "World / Globe"
     },
     {
-      "id": "mastery_shift_keys_32",
+      "id": "mastery_shift_keys_47",
       "target": "예술",
       "translation": "Art"
     },
     {
-      "id": "mastery_shift_keys_33",
+      "id": "mastery_shift_keys_48",
       "target": "예약",
       "translation": "Reservation"
     },
     {
-      "id": "mastery_shift_keys_34",
+      "id": "mastery_shift_keys_49",
       "target": "예보",
       "translation": "Forecast"
     },
     {
-      "id": "mastery_shift_keys_35",
+      "id": "mastery_shift_keys_50",
+      "target": "예쁘다",
+      "translation": "To be pretty"
+    },
+    {
+      "id": "mastery_shift_keys_51",
+      "target": "예의",
+      "translation": "Politeness / Courtesy"
+    },
+    {
+      "id": "mastery_shift_keys_52",
+      "target": "예배",
+      "translation": "Worship / Service"
+    },
+    {
+      "id": "mastery_shift_keys_53",
       "target": "옛날얘기",
       "translation": "Old folktale"
     },
     {
-      "id": "mastery_shift_keys_36",
+      "id": "mastery_shift_keys_54",
       "target": "꽃집에서 예쁜 꽃을 골라요",
       "translation": "Pick pretty flowers at the florist"
     },
     {
-      "id": "mastery_shift_keys_37",
+      "id": "mastery_shift_keys_55",
       "target": "뚝배기에 보글보글 맛있는 찌개",
       "translation": "Delicious stew boiling bubble-bubble in an earthen pot"
     },
     {
-      "id": "mastery_shift_keys_38",
+      "id": "mastery_shift_keys_56",
       "target": "갓 구운 따끈따끈한 빵 냄새",
       "translation": "Smell of freshly baked warm bread"
     },
     {
-      "id": "mastery_shift_keys_39",
+      "id": "mastery_shift_keys_57",
       "target": "딸기잼을 바른 토스트를 먹어요",
       "translation": "Eat toast spread with strawberry jam"
     },
     {
-      "id": "mastery_shift_keys_40",
+      "id": "mastery_shift_keys_58",
       "target": "진짜 재미있는 옛날이야기",
       "translation": "A truly fascinating old folktale"
     },
     {
-      "id": "mastery_shift_keys_41",
+      "id": "mastery_shift_keys_59",
       "target": "시계를 보며 약속 시간을 지켜요",
       "translation": "Check the clock and keep the appointment on time"
     },
     {
-      "id": "mastery_shift_keys_42",
+      "id": "mastery_shift_keys_60",
       "target": "꿈을 향해 한 걸음씩 나아가요",
       "translation": "Step forward toward your dreams"
     },
     {
-      "id": "mastery_shift_keys_43",
+      "id": "mastery_shift_keys_61",
       "target": "어릴 적 추억이 깃든 골목길",
       "translation": "An alleyway filled with childhood memories"
     },
     {
-      "id": "mastery_shift_keys_44",
+      "id": "mastery_shift_keys_62",
       "target": "날씨 예보를 미리 확인해요",
       "translation": "Check the weather forecast in advance"
     },
     {
-      "id": "mastery_shift_keys_45",
+      "id": "mastery_shift_keys_63",
       "target": "친구와 함께 나누는 즐거운 얘기",
       "translation": "Pleasant conversation shared with a friend"
     },
     {
-      "id": "mastery_shift_keys_46",
+      "id": "mastery_shift_keys_64",
       "target": "빨래를 널고 햇살을 만끽해요",
       "translation": "Hang the laundry and enjoy the sunshine"
     },
     {
-      "id": "mastery_shift_keys_47",
+      "id": "mastery_shift_keys_65",
       "target": "꼬마 아이가 활짝 웃고 있어요",
       "translation": "The little child is smiling brightly"
     },
     {
-      "id": "mastery_shift_keys_48",
+      "id": "mastery_shift_keys_66",
       "target": "식사 예절을 바르게 지켜요",
       "translation": "Observe dining etiquette properly"
     },
     {
-      "id": "mastery_shift_keys_49",
+      "id": "mastery_shift_keys_67",
       "target": "쌀을 씻어서 맛있는 밥을 지어요",
       "translation": "Wash the rice and cook delicious meals"
     },
     {
-      "id": "mastery_shift_keys_50",
+      "id": "mastery_shift_keys_68",
       "target": "짜장면과 탕수육을 주문해요",
       "translation": "Order black bean noodles and sweet and sour pork"
     }

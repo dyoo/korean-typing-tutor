@@ -10,206 +10,656 @@
     },
     {
       "id": "mastery_compound_batchim_2",
+      "target": "많이",
+      "translation": "A lot / Much"
+    },
+    {
+      "id": "mastery_compound_batchim_3",
+      "target": "많음",
+      "translation": "Abundance"
+    },
+    {
+      "id": "mastery_compound_batchim_4",
       "target": "않다",
       "translation": "To not do"
     },
     {
-      "id": "mastery_compound_batchim_3",
+      "id": "mastery_compound_batchim_5",
+      "target": "않아요",
+      "translation": "Do not"
+    },
+    {
+      "id": "mastery_compound_batchim_6",
+      "target": "않음",
+      "translation": "Negation"
+    },
+    {
+      "id": "mastery_compound_batchim_7",
       "target": "괜찮다",
       "translation": "To be okay"
     },
     {
-      "id": "mastery_compound_batchim_4",
+      "id": "mastery_compound_batchim_8",
+      "target": "괜찮아요",
+      "translation": "It is okay"
+    },
+    {
+      "id": "mastery_compound_batchim_9",
+      "target": "귀찮다",
+      "translation": "To be tiresome / bothersome"
+    },
+    {
+      "id": "mastery_compound_batchim_10",
+      "target": "점잖다",
+      "translation": "To be gentle / well-mannered"
+    },
+    {
+      "id": "mastery_compound_batchim_11",
+      "target": "하찮다",
+      "translation": "To be trivial"
+    },
+    {
+      "id": "mastery_compound_batchim_12",
       "target": "앉다",
       "translation": "To sit"
     },
     {
-      "id": "mastery_compound_batchim_5",
+      "id": "mastery_compound_batchim_13",
+      "target": "앉아",
+      "translation": "Sit down"
+    },
+    {
+      "id": "mastery_compound_batchim_14",
+      "target": "앉아요",
+      "translation": "Please sit"
+    },
+    {
+      "id": "mastery_compound_batchim_15",
+      "target": "앉음",
+      "translation": "Sitting"
+    },
+    {
+      "id": "mastery_compound_batchim_16",
+      "target": "앉히다",
+      "translation": "To seat someone"
+    },
+    {
+      "id": "mastery_compound_batchim_17",
+      "target": "걸터앉다",
+      "translation": "To perch / sit astride"
+    },
+    {
+      "id": "mastery_compound_batchim_18",
       "target": "얹다",
       "translation": "To place on top"
     },
     {
-      "id": "mastery_compound_batchim_6",
+      "id": "mastery_compound_batchim_19",
+      "target": "얹어",
+      "translation": "Place on top"
+    },
+    {
+      "id": "mastery_compound_batchim_20",
+      "target": "얹어요",
+      "translation": "Put on top"
+    },
+    {
+      "id": "mastery_compound_batchim_21",
+      "target": "얹히다",
+      "translation": "To be placed on top"
+    },
+    {
+      "id": "mastery_compound_batchim_22",
       "target": "읽다",
       "translation": "To read"
     },
     {
-      "id": "mastery_compound_batchim_7",
+      "id": "mastery_compound_batchim_23",
+      "target": "읽어요",
+      "translation": "Read"
+    },
+    {
+      "id": "mastery_compound_batchim_24",
+      "target": "읽기",
+      "translation": "Reading"
+    },
+    {
+      "id": "mastery_compound_batchim_25",
+      "target": "읽음",
+      "translation": "Read (noun)"
+    },
+    {
+      "id": "mastery_compound_batchim_26",
       "target": "닭",
       "translation": "Chicken"
     },
     {
-      "id": "mastery_compound_batchim_8",
+      "id": "mastery_compound_batchim_27",
+      "target": "닭고기",
+      "translation": "Chicken meat"
+    },
+    {
+      "id": "mastery_compound_batchim_28",
+      "target": "통닭",
+      "translation": "Whole roast chicken"
+    },
+    {
+      "id": "mastery_compound_batchim_29",
       "target": "맑다",
       "translation": "To be clear"
     },
     {
-      "id": "mastery_compound_batchim_9",
+      "id": "mastery_compound_batchim_30",
+      "target": "맑은",
+      "translation": "Clear / Pure"
+    },
+    {
+      "id": "mastery_compound_batchim_31",
+      "target": "맑음",
+      "translation": "Clear weather"
+    },
+    {
+      "id": "mastery_compound_batchim_32",
       "target": "흙",
       "translation": "Soil / Earth"
     },
     {
-      "id": "mastery_compound_batchim_10",
+      "id": "mastery_compound_batchim_33",
+      "target": "흙길",
+      "translation": "Dirt road"
+    },
+    {
+      "id": "mastery_compound_batchim_34",
+      "target": "붉다",
+      "translation": "To be red"
+    },
+    {
+      "id": "mastery_compound_batchim_35",
+      "target": "붉은",
+      "translation": "Red (adj)"
+    },
+    {
+      "id": "mastery_compound_batchim_36",
+      "target": "밝다",
+      "translation": "To be bright"
+    },
+    {
+      "id": "mastery_compound_batchim_37",
+      "target": "밝은",
+      "translation": "Bright (adj)"
+    },
+    {
+      "id": "mastery_compound_batchim_38",
+      "target": "굵다",
+      "translation": "To be thick"
+    },
+    {
+      "id": "mastery_compound_batchim_39",
+      "target": "굵은",
+      "translation": "Thick (adj)"
+    },
+    {
+      "id": "mastery_compound_batchim_40",
+      "target": "긁다",
+      "translation": "To scratch"
+    },
+    {
+      "id": "mastery_compound_batchim_41",
+      "target": "늙다",
+      "translation": "To grow old"
+    },
+    {
+      "id": "mastery_compound_batchim_42",
       "target": "삶",
       "translation": "Life"
     },
     {
-      "id": "mastery_compound_batchim_11",
+      "id": "mastery_compound_batchim_43",
+      "target": "삶다",
+      "translation": "To boil"
+    },
+    {
+      "id": "mastery_compound_batchim_44",
       "target": "젊다",
       "translation": "To be young"
     },
     {
-      "id": "mastery_compound_batchim_12",
+      "id": "mastery_compound_batchim_45",
+      "target": "젊음",
+      "translation": "Youth"
+    },
+    {
+      "id": "mastery_compound_batchim_46",
+      "target": "젊은이",
+      "translation": "Young person"
+    },
+    {
+      "id": "mastery_compound_batchim_47",
       "target": "굶다",
       "translation": "To starve"
     },
     {
-      "id": "mastery_compound_batchim_13",
+      "id": "mastery_compound_batchim_48",
+      "target": "굶주림",
+      "translation": "Starvation"
+    },
+    {
+      "id": "mastery_compound_batchim_49",
       "target": "닮다",
       "translation": "To resemble"
     },
     {
-      "id": "mastery_compound_batchim_14",
+      "id": "mastery_compound_batchim_50",
+      "target": "닮음",
+      "translation": "Resemblance"
+    },
+    {
+      "id": "mastery_compound_batchim_51",
+      "target": "옮다",
+      "translation": "To catch / be infected"
+    },
+    {
+      "id": "mastery_compound_batchim_52",
+      "target": "옮기다",
+      "translation": "To move / transfer"
+    },
+    {
+      "id": "mastery_compound_batchim_53",
+      "target": "앎",
+      "translation": "Knowledge"
+    },
+    {
+      "id": "mastery_compound_batchim_54",
       "target": "넓다",
       "translation": "To be spacious / wide"
     },
     {
-      "id": "mastery_compound_batchim_15",
+      "id": "mastery_compound_batchim_55",
+      "target": "넓은",
+      "translation": "Spacious / Broad"
+    },
+    {
+      "id": "mastery_compound_batchim_56",
+      "target": "넓이",
+      "translation": "Area / Width"
+    },
+    {
+      "id": "mastery_compound_batchim_57",
+      "target": "넓히다",
+      "translation": "To widen"
+    },
+    {
+      "id": "mastery_compound_batchim_58",
       "target": "여덟",
       "translation": "Eight"
     },
     {
-      "id": "mastery_compound_batchim_16",
+      "id": "mastery_compound_batchim_59",
+      "target": "여덟째",
+      "translation": "Eighth"
+    },
+    {
+      "id": "mastery_compound_batchim_60",
       "target": "밟다",
       "translation": "To step on"
     },
     {
-      "id": "mastery_compound_batchim_17",
+      "id": "mastery_compound_batchim_61",
+      "target": "밟아요",
+      "translation": "Step on"
+    },
+    {
+      "id": "mastery_compound_batchim_62",
+      "target": "짧다",
+      "translation": "To be short"
+    },
+    {
+      "id": "mastery_compound_batchim_63",
+      "target": "짧은",
+      "translation": "Short (adj)"
+    },
+    {
+      "id": "mastery_compound_batchim_64",
+      "target": "얇다",
+      "translation": "To be thin"
+    },
+    {
+      "id": "mastery_compound_batchim_65",
+      "target": "얇은",
+      "translation": "Thin (adj)"
+    },
+    {
+      "id": "mastery_compound_batchim_66",
       "target": "없다",
       "translation": "To not exist / lack"
     },
     {
-      "id": "mastery_compound_batchim_18",
+      "id": "mastery_compound_batchim_67",
+      "target": "없어요",
+      "translation": "There is none"
+    },
+    {
+      "id": "mastery_compound_batchim_68",
+      "target": "없음",
+      "translation": "Absence / None"
+    },
+    {
+      "id": "mastery_compound_batchim_69",
       "target": "값",
       "translation": "Price / Value"
     },
     {
-      "id": "mastery_compound_batchim_19",
+      "id": "mastery_compound_batchim_70",
+      "target": "값싸다",
+      "translation": "To be cheap"
+    },
+    {
+      "id": "mastery_compound_batchim_71",
+      "target": "값비싸다",
+      "translation": "To be expensive"
+    },
+    {
+      "id": "mastery_compound_batchim_72",
+      "target": "값진",
+      "translation": "Priceless / Valuable"
+    },
+    {
+      "id": "mastery_compound_batchim_73",
+      "target": "헐값",
+      "translation": "Dirt-cheap price"
+    },
+    {
+      "id": "mastery_compound_batchim_74",
+      "target": "몸값",
+      "translation": "Ransom / Value"
+    },
+    {
+      "id": "mastery_compound_batchim_75",
+      "target": "가없다",
+      "translation": "Boundless / Endless"
+    },
+    {
+      "id": "mastery_compound_batchim_76",
       "target": "잃다",
       "translation": "To lose"
     },
     {
-      "id": "mastery_compound_batchim_20",
+      "id": "mastery_compound_batchim_77",
+      "target": "잃어버리다",
+      "translation": "To lose / misplace"
+    },
+    {
+      "id": "mastery_compound_batchim_78",
+      "target": "잃음",
+      "translation": "Loss"
+    },
+    {
+      "id": "mastery_compound_batchim_79",
       "target": "싫다",
       "translation": "To dislike"
     },
     {
-      "id": "mastery_compound_batchim_21",
+      "id": "mastery_compound_batchim_80",
+      "target": "싫어요",
+      "translation": "I dislike it"
+    },
+    {
+      "id": "mastery_compound_batchim_81",
+      "target": "싫음",
+      "translation": "Dislike"
+    },
+    {
+      "id": "mastery_compound_batchim_82",
       "target": "옳다",
       "translation": "To be right / correct"
     },
     {
-      "id": "mastery_compound_batchim_22",
+      "id": "mastery_compound_batchim_83",
+      "target": "옳은",
+      "translation": "Right / Just"
+    },
+    {
+      "id": "mastery_compound_batchim_84",
+      "target": "옳고 그름",
+      "translation": "Right and wrong"
+    },
+    {
+      "id": "mastery_compound_batchim_85",
+      "target": "끓다",
+      "translation": "To boil"
+    },
+    {
+      "id": "mastery_compound_batchim_86",
+      "target": "끓이다",
+      "translation": "To brew / boil"
+    },
+    {
+      "id": "mastery_compound_batchim_87",
+      "target": "닳다",
+      "translation": "To wear out"
+    },
+    {
+      "id": "mastery_compound_batchim_88",
       "target": "몫",
       "translation": "Share / Portion"
     },
     {
-      "id": "mastery_compound_batchim_23",
+      "id": "mastery_compound_batchim_89",
       "target": "삯",
-      "translation": "Wages"
+      "translation": "Wages / Fare"
     },
     {
-      "id": "mastery_compound_batchim_24",
+      "id": "mastery_compound_batchim_90",
+      "target": "품삯",
+      "translation": "Day-labor wage"
+    },
+    {
+      "id": "mastery_compound_batchim_91",
+      "target": "길삯",
+      "translation": "Travel fare"
+    },
+    {
+      "id": "mastery_compound_batchim_92",
+      "target": "뱃삯",
+      "translation": "Boat fare"
+    },
+    {
+      "id": "mastery_compound_batchim_93",
+      "target": "차삯",
+      "translation": "Vehicle fare"
+    },
+    {
+      "id": "mastery_compound_batchim_94",
+      "target": "넋",
+      "translation": "Soul / Spirit"
+    },
+    {
+      "id": "mastery_compound_batchim_95",
       "target": "핥다",
       "translation": "To lick"
     },
     {
-      "id": "mastery_compound_batchim_25",
+      "id": "mastery_compound_batchim_96",
+      "target": "핥아요",
+      "translation": "Lick"
+    },
+    {
+      "id": "mastery_compound_batchim_97",
       "target": "훑다",
       "translation": "To browse / skim"
     },
     {
-      "id": "mastery_compound_batchim_26",
+      "id": "mastery_compound_batchim_98",
+      "target": "훑어보다",
+      "translation": "To glance over / skim"
+    },
+    {
+      "id": "mastery_compound_batchim_99",
+      "target": "훑기",
+      "translation": "Skimming"
+    },
+    {
+      "id": "mastery_compound_batchim_100",
       "target": "읊다",
       "translation": "To recite poem"
     },
     {
-      "id": "mastery_compound_batchim_27",
+      "id": "mastery_compound_batchim_101",
+      "target": "읊어요",
+      "translation": "Recite"
+    },
+    {
+      "id": "mastery_compound_batchim_102",
+      "target": "읊조리다",
+      "translation": "To murmur a poem"
+    },
+    {
+      "id": "mastery_compound_batchim_103",
+      "target": "시를 읊다",
+      "translation": "Recite a poem"
+    },
+    {
+      "id": "mastery_compound_batchim_104",
       "target": "외곬",
       "translation": "Single-minded path"
     },
     {
-      "id": "mastery_compound_batchim_28",
+      "id": "mastery_compound_batchim_105",
+      "target": "외곬수",
+      "translation": "Single-minded person"
+    },
+    {
+      "id": "mastery_compound_batchim_106",
+      "target": "외곬으로",
+      "translation": "Steadfastly / In a single direction"
+    },
+    {
+      "id": "mastery_compound_batchim_107",
+      "target": "외곬 인생",
+      "translation": "Single-minded devotion in life"
+    },
+    {
+      "id": "mastery_compound_batchim_108",
       "target": "많은 책을 읽으며 지식을 넓혀요",
       "translation": "Expand knowledge by reading many books"
     },
     {
-      "id": "mastery_compound_batchim_29",
+      "id": "mastery_compound_batchim_109",
       "target": "의자에 편안하게 앉아서 쉬어요",
       "translation": "Sit comfortably in the chair and rest"
     },
     {
-      "id": "mastery_compound_batchim_30",
+      "id": "mastery_compound_batchim_110",
       "target": "닭고기로 끓인 따뜻한 삼계탕",
       "translation": "Warm chicken soup cooked with ginseng"
     },
     {
-      "id": "mastery_compound_batchim_31",
+      "id": "mastery_compound_batchim_111",
       "target": "맑은 가을 하늘 아래 넓은 들판",
       "translation": "Wide open field under a clear autumn sky"
     },
     {
-      "id": "mastery_compound_batchim_32",
+      "id": "mastery_compound_batchim_112",
       "target": "젊은 날의 소중한 꿈과 삶",
       "translation": "Precious dreams and life of youth"
     },
     {
-      "id": "mastery_compound_batchim_33",
+      "id": "mastery_compound_batchim_113",
       "target": "어려움이 있어도 희망을 잃지 않아요",
       "translation": "Never lose hope even through hardship"
     },
     {
-      "id": "mastery_compound_batchim_34",
+      "id": "mastery_compound_batchim_114",
       "target": "값진 경험이 인생의 큰 자산이 됩니다",
       "translation": "Valuable experiences become great assets in life"
     },
     {
-      "id": "mastery_compound_batchim_35",
+      "id": "mastery_compound_batchim_115",
       "target": "비 온 뒤에 땅이 굳어진다는 속담",
       "translation": "Proverb that ground hardens after rain"
     },
     {
-      "id": "mastery_compound_batchim_36",
+      "id": "mastery_compound_batchim_116",
       "target": "자신의 몫을 다하는 성실한 태도",
       "translation": "A sincere attitude fulfilling one’s own share"
     },
     {
-      "id": "mastery_compound_batchim_37",
+      "id": "mastery_compound_batchim_117",
       "target": "외곬으로 한 우물을 파는 장인정신",
       "translation": "Craftsmanship devoting oneself to a single pursuit"
     },
     {
-      "id": "mastery_compound_batchim_38",
+      "id": "mastery_compound_batchim_118",
       "target": "밤하늘의 별을 보며 시를 읊어요",
       "translation": "Recite poetry looking up at the night stars"
     },
     {
-      "id": "mastery_compound_batchim_39",
+      "id": "mastery_compound_batchim_119",
       "target": "흙 냄새 가득한 고향의 시골길",
       "translation": "Country road filled with the scent of soil"
     },
     {
-      "id": "mastery_compound_batchim_40",
+      "id": "mastery_compound_batchim_120",
       "target": "서로를 닮아가는 정다운 사람들의 모습",
       "translation": "Loving people growing to resemble one another"
     },
     {
-      "id": "mastery_compound_batchim_41",
+      "id": "mastery_compound_batchim_121",
       "target": "마음이 넓고 너그러운 태도를 가져요",
       "translation": "Have an open-minded and generous attitude"
     },
     {
-      "id": "mastery_compound_batchim_42",
+      "id": "mastery_compound_batchim_122",
+      "target": "많은 경험을 쌓아서 값진 지혜를 얻어요",
+      "translation": "Gain valuable wisdom by accumulating many experiences"
+    },
+    {
+      "id": "mastery_compound_batchim_123",
+      "target": "맑은 강물에서 물고기가 헤엄쳐요",
+      "translation": "Fish swim in the clear river water"
+    },
+    {
+      "id": "mastery_compound_batchim_124",
+      "target": "어려운 이웃을 보면 결코 굶기지 않아요",
+      "translation": "Never let neighbors go hungry when in difficulty"
+    },
+    {
+      "id": "mastery_compound_batchim_125",
+      "target": "젊은 시절의 소중한 추억을 잊지 않아요",
+      "translation": "Never forget precious memories of youth"
+    },
+    {
+      "id": "mastery_compound_batchim_126",
+      "target": "넓은 바다를 바라보며 새로운 꿈을 꿔요",
+      "translation": "Dream new dreams looking out at the wide ocean"
+    },
+    {
+      "id": "mastery_compound_batchim_127",
+      "target": "책을 훑어보고 중요한 내용을 정리해요",
+      "translation": "Skim the book and organize important content"
+    },
+    {
+      "id": "mastery_compound_batchim_128",
+      "target": "시를 읊으며 감미로운 선율을 느껴요",
+      "translation": "Feel the sweet melody while reciting a poem"
+    },
+    {
+      "id": "mastery_compound_batchim_129",
+      "target": "옳은 선택을 하기 위해 깊이 생각해요",
+      "translation": "Think deeply to make the right choice"
+    },
+    {
+      "id": "mastery_compound_batchim_130",
+      "target": "가족과 함께 식탁에 앉아서 닭요리를 먹어요",
+      "translation": "Sit at the table with family and eat chicken dish"
+    },
+    {
+      "id": "mastery_compound_batchim_131",
+      "target": "자신의 삶을 사랑하고 하루를 값지게 살아요",
+      "translation": "Love one’s own life and live each day valuably"
+    },
+    {
+      "id": "mastery_compound_batchim_132",
       "target": "축하합니다! 모든 한글 자모를 마스터하셨습니다.",
       "translation": "Congratulations! You have mastered all Korean Hangul Jamos."
     }

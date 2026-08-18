@@ -35,211 +35,296 @@
     },
     {
       "id": "mastery_bottom_row_7",
+      "target": "퀴즈",
+      "translation": "Quiz"
+    },
+    {
+      "id": "mastery_bottom_row_8",
+      "target": "코너",
+      "translation": "Corner"
+    },
+    {
+      "id": "mastery_bottom_row_9",
       "target": "토마토",
       "translation": "Tomato"
     },
     {
-      "id": "mastery_bottom_row_8",
+      "id": "mastery_bottom_row_10",
       "target": "타이어",
       "translation": "Tire"
     },
     {
-      "id": "mastery_bottom_row_9",
+      "id": "mastery_bottom_row_11",
       "target": "탁자",
       "translation": "Table / Desk"
     },
     {
-      "id": "mastery_bottom_row_10",
+      "id": "mastery_bottom_row_12",
       "target": "턱",
       "translation": "Chin / Jaw"
     },
     {
-      "id": "mastery_bottom_row_11",
+      "id": "mastery_bottom_row_13",
       "target": "태양",
       "translation": "Sun / Solar"
     },
     {
-      "id": "mastery_bottom_row_12",
+      "id": "mastery_bottom_row_14",
       "target": "택시",
       "translation": "Taxi"
     },
     {
-      "id": "mastery_bottom_row_13",
+      "id": "mastery_bottom_row_15",
       "target": "코트",
       "translation": "Coat"
     },
     {
-      "id": "mastery_bottom_row_14",
+      "id": "mastery_bottom_row_16",
+      "target": "티켓",
+      "translation": "Ticket"
+    },
+    {
+      "id": "mastery_bottom_row_17",
+      "target": "탈",
+      "translation": "Mask"
+    },
+    {
+      "id": "mastery_bottom_row_18",
       "target": "친구",
       "translation": "Friend"
     },
     {
-      "id": "mastery_bottom_row_15",
+      "id": "mastery_bottom_row_19",
       "target": "차",
       "translation": "Car / Tea"
     },
     {
-      "id": "mastery_bottom_row_16",
+      "id": "mastery_bottom_row_20",
       "target": "책",
       "translation": "Book"
     },
     {
-      "id": "mastery_bottom_row_17",
+      "id": "mastery_bottom_row_21",
       "target": "창문",
       "translation": "Window"
     },
     {
-      "id": "mastery_bottom_row_18",
+      "id": "mastery_bottom_row_22",
       "target": "치마",
       "translation": "Skirt"
     },
     {
-      "id": "mastery_bottom_row_19",
+      "id": "mastery_bottom_row_23",
       "target": "추억",
       "translation": "Memory / Reminiscence"
     },
     {
-      "id": "mastery_bottom_row_20",
+      "id": "mastery_bottom_row_24",
       "target": "자동차",
       "translation": "Automobile / Car"
     },
     {
-      "id": "mastery_bottom_row_21",
+      "id": "mastery_bottom_row_25",
+      "target": "축구",
+      "translation": "Soccer"
+    },
+    {
+      "id": "mastery_bottom_row_26",
+      "target": "출발",
+      "translation": "Departure"
+    },
+    {
+      "id": "mastery_bottom_row_27",
+      "target": "청춘",
+      "translation": "Youth"
+    },
+    {
+      "id": "mastery_bottom_row_28",
+      "target": "치즈",
+      "translation": "Cheese"
+    },
+    {
+      "id": "mastery_bottom_row_29",
+      "target": "춤",
+      "translation": "Dance"
+    },
+    {
+      "id": "mastery_bottom_row_30",
       "target": "파도",
       "translation": "Wave / Surf"
     },
     {
-      "id": "mastery_bottom_row_22",
+      "id": "mastery_bottom_row_31",
       "target": "우표",
       "translation": "Postage stamp"
     },
     {
-      "id": "mastery_bottom_row_23",
+      "id": "mastery_bottom_row_32",
       "target": "포도",
       "translation": "Grape"
     },
     {
-      "id": "mastery_bottom_row_24",
+      "id": "mastery_bottom_row_33",
       "target": "편지",
       "translation": "Letter"
     },
     {
-      "id": "mastery_bottom_row_25",
+      "id": "mastery_bottom_row_34",
       "target": "피아노",
       "translation": "Piano"
     },
     {
-      "id": "mastery_bottom_row_26",
+      "id": "mastery_bottom_row_35",
       "target": "피부",
       "translation": "Skin"
     },
     {
-      "id": "mastery_bottom_row_27",
+      "id": "mastery_bottom_row_36",
       "target": "커피",
       "translation": "Coffee"
     },
     {
-      "id": "mastery_bottom_row_28",
+      "id": "mastery_bottom_row_37",
+      "target": "풀",
+      "translation": "Grass"
+    },
+    {
+      "id": "mastery_bottom_row_38",
+      "target": "폭포",
+      "translation": "Waterfall"
+    },
+    {
+      "id": "mastery_bottom_row_39",
+      "target": "프로",
+      "translation": "Professional"
+    },
+    {
+      "id": "mastery_bottom_row_40",
+      "target": "캠프",
+      "translation": "Camp"
+    },
+    {
+      "id": "mastery_bottom_row_41",
+      "target": "테이프",
+      "translation": "Tape"
+    },
+    {
+      "id": "mastery_bottom_row_42",
       "target": "휴지",
       "translation": "Tissue / Paper"
     },
     {
-      "id": "mastery_bottom_row_29",
+      "id": "mastery_bottom_row_43",
       "target": "유리",
       "translation": "Glass"
     },
     {
-      "id": "mastery_bottom_row_30",
+      "id": "mastery_bottom_row_44",
       "target": "유학",
       "translation": "Study abroad"
     },
     {
-      "id": "mastery_bottom_row_31",
+      "id": "mastery_bottom_row_45",
       "target": "뉴스",
       "translation": "News"
     },
     {
-      "id": "mastery_bottom_row_32",
+      "id": "mastery_bottom_row_46",
       "target": "휴일",
       "translation": "Holiday"
     },
     {
-      "id": "mastery_bottom_row_33",
+      "id": "mastery_bottom_row_47",
       "target": "우유",
       "translation": "Milk"
     },
     {
-      "id": "mastery_bottom_row_34",
+      "id": "mastery_bottom_row_48",
+      "target": "유명",
+      "translation": "Fame / Famous"
+    },
+    {
+      "id": "mastery_bottom_row_49",
+      "target": "유월",
+      "translation": "June"
+    },
+    {
+      "id": "mastery_bottom_row_50",
+      "target": "유행",
+      "translation": "Trend / Fashion"
+    },
+    {
+      "id": "mastery_bottom_row_51",
       "target": "시원한 커피 한 잔의 여유",
       "translation": "Relaxing with a cup of cool coffee"
     },
     {
-      "id": "mastery_bottom_row_35",
+      "id": "mastery_bottom_row_52",
       "target": "기차를 타고 여행을 가요",
       "translation": "Take a train and go on a trip"
     },
     {
-      "id": "mastery_bottom_row_36",
+      "id": "mastery_bottom_row_53",
       "target": "친구에게 보낼 편지를 적어요",
       "translation": "Write a letter to send to a friend"
     },
     {
-      "id": "mastery_bottom_row_37",
+      "id": "mastery_bottom_row_54",
       "target": "달콤한 포도와 토마토를 먹어요",
       "translation": "Eat sweet grapes and tomatoes"
     },
     {
-      "id": "mastery_bottom_row_38",
+      "id": "mastery_bottom_row_55",
       "target": "창문을 열고 시원한 공기를 마셔요",
       "translation": "Open the window and breathe cool air"
     },
     {
-      "id": "mastery_bottom_row_39",
+      "id": "mastery_bottom_row_56",
       "target": "피아노 소리가 아름답게 울려요",
       "translation": "The piano sound echoes beautifully"
     },
     {
-      "id": "mastery_bottom_row_40",
+      "id": "mastery_bottom_row_57",
       "target": "휴일에 집에서 푹 쉬어요",
       "translation": "Rest comfortably at home on the holiday"
     },
     {
-      "id": "mastery_bottom_row_41",
+      "id": "mastery_bottom_row_58",
       "target": "택시를 타고 공항으로 가요",
       "translation": "Take a taxi to the airport"
     },
     {
-      "id": "mastery_bottom_row_42",
+      "id": "mastery_bottom_row_59",
       "target": "책을 보며 깊은 생각에 잠겨요",
       "translation": "Look at a book and get lost in deep thought"
     },
     {
-      "id": "mastery_bottom_row_43",
+      "id": "mastery_bottom_row_60",
       "target": "카메라로 추억을 사진에 담아요",
       "translation": "Capture memories in photos with a camera"
     },
     {
-      "id": "mastery_bottom_row_44",
+      "id": "mastery_bottom_row_61",
       "target": "파도가 밀려오는 해변을 걸어요",
       "translation": "Walk along the beach where waves roll in"
     },
     {
-      "id": "mastery_bottom_row_45",
+      "id": "mastery_bottom_row_62",
       "target": "우체국에서 편지에 우표를 붙여요",
       "translation": "Stick a postage stamp on the letter at the post office"
     },
     {
-      "id": "mastery_bottom_row_46",
+      "id": "mastery_bottom_row_63",
       "target": "치마를 입고 외출을 준비해요",
       "translation": "Put on a skirt and prepare to go out"
     },
     {
-      "id": "mastery_bottom_row_47",
+      "id": "mastery_bottom_row_64",
       "target": "탁자 위에 커피잔을 놓아요",
       "translation": "Place the coffee cup on top of the table"
     },
     {
-      "id": "mastery_bottom_row_48",
+      "id": "mastery_bottom_row_65",
       "target": "신나는 음악에 맞춰 춤을 춰요",
       "translation": "Dance in rhythm to exciting music"
     }
