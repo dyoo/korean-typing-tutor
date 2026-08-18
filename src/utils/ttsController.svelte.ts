@@ -254,7 +254,7 @@ export class TTSController {
 
   public async speak(
     text: string,
-    voice: string = 'jf_nezumi',
+    voice: string = 'jm_kumo',
     speed: number = 1.0,
   ): Promise<void> {
     if (!text || text.trim().length === 0) {

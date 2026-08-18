@@ -338,10 +338,14 @@
   }
 
   function speakCurrentPrompt() {
+    if (preloadDebounceTimer) {
+      clearTimeout(preloadDebounceTimer);
+      preloadDebounceTimer = null;
+    }
     if (currentItem && currentItem.target) {
       ttsController.speak(
         currentItem.target,
-        settings.ttsVoice ?? 'jf_nezumi',
+        settings.ttsVoice ?? 'jm_kumo',
         settings.ttsSpeed ?? 1.0,
       );
     }
@@ -349,15 +353,22 @@
   }
 
   let lastPromptTarget = '';
+  let preloadDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
   // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
   // so clicking the audio button plays immediately without synthesis delay.
   // Cancels any active synthesis or playback from the previous exercise.
+  // Uses a 250ms debounce to avoid spamming the Web Worker during rapid skipping.
   $effect(() => {
     const targetText = currentItem?.target;
     const isEnabled = settings.enableTTS;
-    const voice = settings.ttsVoice ?? 'jf_nezumi';
+    const voice = settings.ttsVoice ?? 'jm_kumo';
     const speed = settings.ttsSpeed ?? 1.0;
+
+    if (preloadDebounceTimer) {
+      clearTimeout(preloadDebounceTimer);
+      preloadDebounceTimer = null;
+    }
 
     untrack(() => {
       if (targetText !== lastPromptTarget) {
@@ -366,9 +377,19 @@
       }
 
       if (isEnabled && targetText) {
-        ttsController.preload(targetText, voice, speed);
+        preloadDebounceTimer = setTimeout(() => {
+          ttsController.preload(targetText, voice, speed);
+          preloadDebounceTimer = null;
+        }, 250);
       }
     });
+
+    return () => {
+      if (preloadDebounceTimer) {
+        clearTimeout(preloadDebounceTimer);
+        preloadDebounceTimer = null;
+      }
+    };
   });
 
   function togglePronunciation() {

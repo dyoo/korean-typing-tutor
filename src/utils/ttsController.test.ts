@@ -191,4 +191,22 @@ describe('TTSController Unit Tests', () => {
 
     await expect(synthPromise).rejects.toThrow('Synthesis cancelled');
   });
+
+  it('uses default voice jm_kumo consistently across speak and synthesize', async () => {
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    void controller.synthesize('테스트');
+    const synthMsg = postedMessages.find((m) => m.type === 'SYNTHESIZE' && m.payload.text === '테스트');
+    expect(synthMsg).toBeDefined();
+    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
+      expect(synthMsg.payload.voice).toBe('jm_kumo');
+    }
+  });
 });

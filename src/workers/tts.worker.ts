@@ -11,6 +11,16 @@ let speaker: KoreanSpeaker | null = null;
 let isModelLoaded = false;
 const activeTasks = new Map<string, SynthesisTask>();
 
+interface PendingSynthesisRequest {
+  id: string;
+  text: string;
+  voice: string;
+  speed: number;
+}
+
+const synthesisQueue: PendingSynthesisRequest[] = [];
+let isProcessingQueue = false;
+
 // Fallback voice metadata in case speaker.getVoices() is called
 const FALLBACK_VOICES: VoiceMetadata[] = [
   {
@@ -52,6 +62,87 @@ const FALLBACK_VOICES: VoiceMetadata[] = [
 
 function postResponse(response: TTSWorkerResponse): void {
   self.postMessage(response);
+}
+
+/**
+ * Sequentially process pending synthesis requests with cooperative yielding to allow
+ * cancellation messages in the worker event queue to be processed before heavy WASM inference starts.
+ */
+async function processSynthesisQueue(): Promise<void> {
+  if (isProcessingQueue) {
+    return;
+  }
+  isProcessingQueue = true;
+
+  try {
+    while (synthesisQueue.length > 0) {
+      // Cooperative yield to the macro-task event loop so any incoming CANCEL_SYNTHESIS
+      // or other messages queued in the worker event loop are processed before starting heavy WASM compute
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+
+      if (synthesisQueue.length === 0) {
+        break;
+      }
+
+      const req = synthesisQueue.shift()!;
+      const { id, text, voice, speed } = req;
+
+      try {
+        if (!speaker || !isModelLoaded) {
+          throw new Error('TTS Model is not loaded yet');
+        }
+
+        const task = speaker.synthesize({
+          text,
+          voice,
+          speed,
+        });
+        activeTasks.set(id, task);
+
+        const result = await task;
+        activeTasks.delete(id);
+
+        const audioBlob = result.toWavBlob();
+        const audioBlobUrl = URL.createObjectURL(audioBlob);
+
+        postResponse({
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id,
+            audioBlobUrl,
+            genTimeMs: result.genTimeMs,
+            durationSec: result.durationSec,
+            ipa: result.ipa,
+          },
+        });
+      } catch (err: unknown) {
+        activeTasks.delete(id);
+        const isCancelled =
+          (typeof err === 'object' &&
+            err !== null &&
+            'isCancelled' in err &&
+            Boolean((err as { isCancelled?: boolean }).isCancelled)) ||
+          (err instanceof Error &&
+            (err.name === 'AbortError' || err.message.includes('cancelled'))) ||
+          String(err).includes('cancelled');
+
+        if (isCancelled) {
+          postResponse({
+            type: 'SYNTHESIS_CANCELLED',
+            payload: { id },
+          });
+        } else {
+          const errorMsg = err instanceof Error ? err.message : String(err);
+          postResponse({
+            type: 'SYNTHESIS_ERROR',
+            payload: { id, error: errorMsg },
+          });
+        }
+      }
+    }
+  } finally {
+    isProcessingQueue = false;
+  }
 }
 
 /**
@@ -147,70 +238,35 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
 
     case 'SYNTHESIZE': {
       const { id, text, voice = 'jm_kumo', speed = 1.0 } = message.payload;
-      try {
-        if (!speaker || !isModelLoaded) {
-          throw new Error('TTS Model is not loaded yet');
-        }
-
-        const task = speaker.synthesize({
-          text,
-          voice,
-          speed,
-        });
-        activeTasks.set(id, task);
-
-        const result = await task;
-        activeTasks.delete(id);
-
-        const audioBlob = result.toWavBlob();
-        const audioBlobUrl = URL.createObjectURL(audioBlob);
-
-        postResponse({
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id,
-            audioBlobUrl,
-            genTimeMs: result.genTimeMs,
-            durationSec: result.durationSec,
-            ipa: result.ipa,
-          },
-        });
-      } catch (err: unknown) {
-        activeTasks.delete(id);
-        const isCancelled =
-          (typeof err === 'object' &&
-            err !== null &&
-            'isCancelled' in err &&
-            Boolean((err as { isCancelled?: boolean }).isCancelled)) ||
-          (err instanceof Error &&
-            (err.name === 'AbortError' || err.message.includes('cancelled'))) ||
-          String(err).includes('cancelled');
-
-        if (isCancelled) {
-          postResponse({
-            type: 'SYNTHESIS_CANCELLED',
-            payload: { id },
-          });
-        } else {
-          const errorMsg = err instanceof Error ? err.message : String(err);
-          postResponse({
-            type: 'SYNTHESIS_ERROR',
-            payload: { id, error: errorMsg },
-          });
-        }
-      }
+      synthesisQueue.push({ id, text, voice, speed });
+      void processSynthesisQueue();
       break;
     }
 
     case 'CANCEL_SYNTHESIS': {
       const targetId = message.payload?.id;
       if (targetId) {
+        const queueIndex = synthesisQueue.findIndex((req) => req.id === targetId);
+        if (queueIndex !== -1) {
+          synthesisQueue.splice(queueIndex, 1);
+          postResponse({
+            type: 'SYNTHESIS_CANCELLED',
+            payload: { id: targetId },
+          });
+        }
         const task = activeTasks.get(targetId);
         if (task) {
           task.cancel('Cancelled by client');
           activeTasks.delete(targetId);
         }
       } else {
+        while (synthesisQueue.length > 0) {
+          const req = synthesisQueue.shift()!;
+          postResponse({
+            type: 'SYNTHESIS_CANCELLED',
+            payload: { id: req.id },
+          });
+        }
         if (speaker) {
           speaker.cancelAll('Cancelled by client');
         }
@@ -221,6 +277,13 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
 
     case 'CLEAR_CACHE': {
       try {
+        while (synthesisQueue.length > 0) {
+          const req = synthesisQueue.shift()!;
+          postResponse({
+            type: 'SYNTHESIS_CANCELLED',
+            payload: { id: req.id },
+          });
+        }
         activeTasks.clear();
         if (speaker) {
           await speaker.clearStorage();
