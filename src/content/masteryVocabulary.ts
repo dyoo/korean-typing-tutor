@@ -283,6 +283,8 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_kk_7', moduleId: 'mastery', target: '꼭', translation: 'Surely / Exactly' },
     { id: 'mv_kk_8', moduleId: 'mastery', target: '깨', translation: 'Sesame' },
     { id: 'mv_kk_9', moduleId: 'mastery', target: '껍질', translation: 'Skin / Peel / Bark' },
+    { id: 'mv_kk_10', moduleId: 'mastery', target: '꽃길', translation: 'Flower path' },
+    { id: 'mv_kk_11', moduleId: 'mastery', target: '꼬리', translation: 'Tail' },
   ],
   'ㅆ': [
     { id: 'mv_ss_1', moduleId: 'mastery', target: '쌀', translation: 'Uncooked rice' },
@@ -294,6 +296,8 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_ss_7', moduleId: 'mastery', target: '쏘다', translation: 'To shoot' },
     { id: 'mv_ss_8', moduleId: 'mastery', target: '썰매', translation: 'Sled' },
     { id: 'mv_ss_9', moduleId: 'mastery', target: '쌍둥이', translation: 'Twins' },
+    { id: 'mv_ss_10', moduleId: 'mastery', target: '씨름', translation: 'Korean wrestling' },
+    { id: 'mv_ss_11', moduleId: 'mastery', target: '썰다', translation: 'To slice / chop' },
   ],
   'ㄸ': [
     { id: 'mv_tt_1', moduleId: 'mastery', target: '떡', translation: 'Rice cake' },
@@ -304,6 +308,9 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_tt_6', moduleId: 'mastery', target: '뚜껑', translation: 'Lid / Cap' },
     { id: 'mv_tt_7', moduleId: 'mastery', target: '뜻', translation: 'Meaning / Will' },
     { id: 'mv_tt_8', moduleId: 'mastery', target: '뛰다', translation: 'To run / jump' },
+    { id: 'mv_tt_9', moduleId: 'mastery', target: '딸', translation: 'Daughter' },
+    { id: 'mv_tt_10', moduleId: 'mastery', target: '또다시', translation: 'Once again' },
+    { id: 'mv_tt_11', moduleId: 'mastery', target: '떨림', translation: 'Tremor / Vibration' },
   ],
   'ㅉ': [
     { id: 'mv_jj_1', moduleId: 'mastery', target: '찌개', translation: 'Stew' },
@@ -313,6 +320,9 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_jj_5', moduleId: 'mastery', target: '짜장면', translation: 'Black bean noodles' },
     { id: 'mv_jj_6', moduleId: 'mastery', target: '짜다', translation: 'To be salty / squeeze' },
     { id: 'mv_jj_7', moduleId: 'mastery', target: '찜', translation: 'Steamed dish' },
+    { id: 'mv_jj_8', moduleId: 'mastery', target: '쪽지', translation: 'Note / Memo' },
+    { id: 'mv_jj_9', moduleId: 'mastery', target: '찌다', translation: 'To steam / gain weight' },
+    { id: 'mv_jj_10', moduleId: 'mastery', target: '짜릿하다', translation: 'To be thrilling' },
   ],
   'ㅃ': [
     { id: 'mv_bb_1', moduleId: 'mastery', target: '빵', translation: 'Bread' },
@@ -322,11 +332,23 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_bb_5', moduleId: 'mastery', target: '빨래', translation: 'Laundry' },
     { id: 'mv_bb_6', moduleId: 'mastery', target: '빠르다', translation: 'To be fast' },
     { id: 'mv_bb_7', moduleId: 'mastery', target: '뺨', translation: 'Cheek' },
+    { id: 'mv_bb_8', moduleId: 'mastery', target: '빨리', translation: 'Quickly' },
+    { id: 'mv_bb_9', moduleId: 'mastery', target: '빼다', translation: 'To subtract / remove' },
+    { id: 'mv_bb_10', moduleId: 'mastery', target: '뽐내다', translation: 'To show off / boast' },
   ],
   'ㅒ': [
     { id: 'mv_yae_1', moduleId: 'mastery', target: '얘기', translation: 'Story / Chat' },
     { id: 'mv_yae_2', moduleId: 'mastery', target: '얘들아', translation: 'Hey guys / Children' },
     { id: 'mv_yae_3', moduleId: 'mastery', target: '얘', translation: 'This child / Hey' },
+    { id: 'mv_yae_4', moduleId: 'mastery', target: '얘는', translation: 'This one is' },
+    { id: 'mv_yae_5', moduleId: 'mastery', target: '얘기하다', translation: 'To talk / chat' },
+    { id: 'mv_yae_6', moduleId: 'mastery', target: '걔', translation: 'That child' },
+    { id: 'mv_yae_7', moduleId: 'mastery', target: '걔는', translation: 'That child is' },
+    { id: 'mv_yae_8', moduleId: 'mastery', target: '쟤', translation: 'That child over there' },
+    { id: 'mv_yae_9', moduleId: 'mastery', target: '쟤는', translation: 'That one over there is' },
+    { id: 'mv_yae_10', moduleId: 'mastery', target: '얘기책', translation: 'Storybook' },
+    { id: 'mv_yae_11', moduleId: 'mastery', target: '재미난 얘기', translation: 'Fun story' },
+    { id: 'mv_yae_12', moduleId: 'mastery', target: '우리 얘기', translation: 'Our story' },
   ],
   'ㅖ': [
     { id: 'mv_ye_1', moduleId: 'mastery', target: '예절', translation: 'Manners / Etiquette' },
@@ -339,6 +361,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_ye_8', moduleId: 'mastery', target: '예의', translation: 'Politeness / Courtesy' },
     { id: 'mv_ye_9', moduleId: 'mastery', target: '예배', translation: 'Worship / Service' },
     { id: 'mv_ye_10', moduleId: 'mastery', target: '옛날얘기', translation: 'Old folktale' },
+    { id: 'mv_ye_11', moduleId: 'mastery', target: '예감', translation: 'Premonition / Hunch' },
   ],
 
   // --- Stage 6: Compound Final Consonants (겹받침) ---

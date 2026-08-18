@@ -80,4 +80,15 @@ describe('Mastery Vocabulary Bank Verification', () => {
       ).toBeGreaterThanOrEqual(10);
     }
   });
+
+  it('ensures every Shift key Jamo has at least 10 authentic examples', () => {
+    const shiftKeys = ['ㄲ', 'ㅆ', 'ㄸ', 'ㅉ', 'ㅃ', 'ㅒ', 'ㅖ'];
+    for (const sk of shiftKeys) {
+      const vocab = MASTERY_JAMO_VOCABULARY[sk] || [];
+      expect(
+        vocab.length,
+        `Expected at least 10 vocabulary items for Shift key "${sk}", got ${vocab.length}`,
+      ).toBeGreaterThanOrEqual(10);
+    }
+  });
 });
