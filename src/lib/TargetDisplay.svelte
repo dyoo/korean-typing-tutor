@@ -94,14 +94,17 @@
     {/each}
   </div>
 
-  <div
-    class="subtext-display text-gray-500 dark:text-gray-400 font-medium italic mt-3 md:mt-4 text-center tracking-wide flex items-center justify-center gap-1.5 max-w-full px-4 py-1 shrink-0 {subtextClass}"
-  >
-    {#if displayText.trim().length > 0}
-      <span>{displayText}</span>
-    {/if}
-    {#if enableTTS}
+  {#if enableTTS}
+    <div class="audio-control-row mt-2 md:mt-3 flex items-center justify-center">
       <TTSAudioButton isSpeaking={isTTSSpeaking} onclick={onspeak} />
-    {/if}
-  </div>
+    </div>
+  {/if}
+
+  {#if displayText.trim().length > 0}
+    <div
+      class="subtext-display text-gray-500 dark:text-gray-400 font-medium italic mt-2 text-center tracking-wide flex items-center justify-center max-w-full px-4 py-1 shrink-0 {subtextClass}"
+    >
+      <span>{displayText}</span>
+    </div>
+  {/if}
 </div>

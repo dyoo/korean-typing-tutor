@@ -358,7 +358,7 @@
   // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
   // so clicking the audio button plays immediately without synthesis delay.
   // Cancels any active synthesis or playback from the previous exercise.
-  // Uses a 250ms debounce to avoid spamming the Web Worker during rapid skipping.
+  // Uses a 500ms debounce to avoid spamming the Web Worker during rapid skipping.
   $effect(() => {
     const targetText = currentItem?.target;
     const isEnabled = settings.enableTTS;
@@ -380,7 +380,7 @@
         preloadDebounceTimer = setTimeout(() => {
           ttsController.preload(targetText, voice, speed);
           preloadDebounceTimer = null;
-        }, 250);
+        }, 500);
       }
     });
 

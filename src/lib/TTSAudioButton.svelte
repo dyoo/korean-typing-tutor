@@ -20,10 +20,10 @@
   }}
   title="Listen to Korean pronunciation"
   aria-label="Listen to Korean pronunciation"
-  class="inline-flex items-center justify-center p-1 rounded-full text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/60 hover:text-blue-800 dark:hover:text-blue-200 transition-colors cursor-pointer shrink-0 align-middle leading-none my-auto"
+  class="inline-flex items-center justify-center w-8 h-8 rounded-full text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/60 hover:text-blue-800 dark:hover:text-blue-200 transition-colors cursor-pointer shrink-0"
 >
   <svg
-    class="w-[1.15em] h-[1.15em] {isSpeaking ? 'animate-pulse text-blue-500' : ''}"
+    class="w-5 h-5 {isSpeaking ? 'animate-pulse text-blue-500' : ''}"
     fill="none"
     viewBox="0 0 24 24"
     stroke="currentColor"
