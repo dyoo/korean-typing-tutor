@@ -118,7 +118,25 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 
 ---
 
-### Phase 6: Speed & Accuracy Analytics Panel — CURRENT PRIORITY
+### Phase 6: Mastery Mode Experience Improvements (Curated Jamo Banks & Interleaved Sentence Checkpoints) — CURRENT PRIORITY
+
+- [ ] **Curated Stage-Specific Jamo Word Banks (`src/content/masteryVocabulary.ts`):** Ensure every Jamo
+      in the progression sequence has 10–25 authentic Korean words/short expressions constructed
+      strictly from cumulative unlocked keys.
+- [ ] **Length-Restricted Jamo Introduction:** Avoid long, intimidating sentences while introducing
+      new letter keys by restricting the exercise pool during Jamo stages to short words ($\le 12$
+      characters / 1–3 words).
+- [ ] **Interleaved Sentence Milestone Checkpoints:** Add dedicated Sentence Checkpoints between major
+      keyboard sections (after Home Row, Top Row, Bottom Row, Shift Keys, and Compound Batchim)
+      featuring medium-to-long sentences.
+- [ ] **Sentence Mastery Completion Tracking:** Implement a 15-completed-sentence requirement to
+      graduate each sentence checkpoint and advance to the next keyboard section.
+- [ ] **Mastery Sidebar & TopBar Milestone Updates:** Render sentence checkpoints in the sidebar with
+      completion counters (`X/15`) and update the top bar focus badge accordingly.
+
+---
+
+### Phase 7: Speed & Accuracy Analytics Panel
 
 - [ ] **Real-Time WPM / SPM Calculation:** Character-per-minute (CPM) / Syllables-per-minute (SPM)
       and Words-per-minute (WPM) calculation.
@@ -129,7 +147,7 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 
 ---
 
-### Phase 7: Kokoro TTS Voice Synthesis (WebAssembly & Web Worker) — COMPLETED
+### Phase 8: Kokoro TTS Voice Synthesis (WebAssembly & Web Worker) — COMPLETED
 
 Add local, high-fidelity Korean text-to-speech pronunciation support using Kokoro-82M via
 `korean-kokoro` and `kokoro-js`.

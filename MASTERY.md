@@ -1,142 +1,120 @@
-# Mastery Engine
+# Mastery Mode Design Document
 
-The mastery engine is a **spaced-repetition typing tutor** that teaches the entire Dubeolsik Korean
-keyboard layout to English speakers through progressive, one-at-a-time key introduction.
+The **Mastery Mode** engine is an adaptive, spaced-repetition typing tutor designed to guide English-speaking learners from zero Korean typing experience to fluent touch-typing on the standard Dubeolsik (2-set) keyboard layout.
 
-## Goal
+---
 
-Take a learner from **zero Korean typing ability** to **fluent touch-typing of all 44 Dubeolsik Jamo
-targets** (26 basic Jamos, 7 double consonants/shifted vowels, 11 compound batchim) — drilling each
-new finger motion on authentic Korean vocabulary, scaling from single syllables to full sentences.
+## 1. Design Objectives & Principles
 
-## Core Mechanics
+1. **Muscle Memory Isolation:** Introduce new finger reaches one key at a time, moving outward ergonomically from the home-row index fingers.
+2. **Immediate Authenticity:** Practice real Korean words from the very first key combination rather than random gibberish strings.
+3. **Cognitive Load Management:**
+   - **During Jamo Introduction:** Strictly restrict exercises to **short words and concise phrases** ($\le 12$ characters / 1–3 words) containing the target Jamo and previously mastered letters.
+   - **Between Keyboard Sections:** Present dedicated **Sentence Milestone Checkpoints** where learners practice medium-to-long sentences to develop typing rhythm, spacebar timing, and sentence-level muscle memory.
+4. **Graduated Mastery Thresholds:**
+   - **Jamo Mastery:** 20 keystrokes evaluated on a sliding window with $\ge 95\%$ rolling accuracy.
+   - **Sentence Checkpoint Mastery:** 15 completed sentences.
+5. **Deterministic Gating:** Mathematically verify that every single character in an exercise belongs to the learner's unlocked letter set before presenting it.
 
-### 1. Progressive Unlock (6 Stages)
+---
 
-The learner begins with 4 home-row index keys (`ㅓ, ㅏ, ㅇ, ㄹ`) — the minimum set to form real
-Korean syllables. New keys unlock **one at a time**, radiating outward from the home row:
+## 2. Progression Structure & Sequence
 
-| Stage | Stage Name              | Keys                                         | Cumulative Count |
-| :---- | :---------------------- | :------------------------------------------- | :--------------- |
-| 1     | Home Row Index Keys     | `ㅓ, ㅏ, ㅇ, ㄹ`                             | 4                |
-| 2     | Home Row + Basic Vowels | `ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ`                 | 11               |
-| 3     | Top Row                 | `ㄱ, ㅅ, ㄷ, ㅈ, ㅂ, ㅛ, ㅕ, ㅑ, ㅐ, ㅔ`     | 21               |
-| 4     | Bottom Row              | `ㅋ, ㅌ, ㅊ, ㅍ, ㅠ`                         | 26               |
-| 5     | Shift Keys              | `ㄲ, ㅆ, ㄸ, ㅉ, ㅃ, ㅒ, ㅖ`                 | 33               |
-| 6     | Compound Batchim        | `ㄶ, ㄵ, ㄺ, ㄻ, ㄼ, ㅄ, ㅀ, ㄳ, ㄾ, ㄿ, ㄽ` | 44               |
+The progression combines single-Jamo learning stages with interleaved sentence checkpoints:
 
-### 2. Rolling 20-Attempt Accuracy Window
+```mermaid
+flowchart TD
+    subgraph Stage1 ["Stage 1: Home Row Index Keys"]
+      J1["ㅓ (j)"] --> J2["ㅏ (k)"] --> J3["ㅇ (d)"] --> J4["ㄹ (f)"]
+    end
 
-Each Jamo is evaluated on a sliding window of the most recent 20 keystrokes targeting it. Mastery
-requires:
+    subgraph Stage2 ["Stage 2: Home Row Expansion & Vowels"]
+      J5["ㅗ (h)"] --> J6["ㅣ (l)"] --> J7["ㅁ (a)"] --> J8["ㄴ (s)"] --> J9["ㅎ (g)"] --> J10["ㅜ (n)"] --> J11["ㅡ (m)"]
+    end
 
-- **≥ 20 total attempts** on the Jamo.
-- **≥ 95% accuracy** within the rolling window.
+    subgraph CP1 ["Sentence Milestone 1"]
+      S_HR["Home Row Sentences (15 completions)"]
+    end
 
-When a Jamo graduates, the next one in the progression automatically unlocks.
+    subgraph Stage3 ["Stage 3: Top Row Keys"]
+      J12["ㄱ (r)"] --> J13["ㅅ (t)"] --> J14["ㄷ (e)"] --> J15["ㅈ (w)"] --> J16["ㅂ (q)"]
+      J17["ㅛ (y)"] --> J18["ㅕ (u)"] --> J19["ㅑ (i)"] --> J20["ㅐ (o)"] --> J21["ㅔ (p)"]
+    end
 
-### 3. Vocabulary Gating
+    subgraph CP2 ["Sentence Milestone 2"]
+      S_TH["Top + Home Row Sentences (15 completions)"]
+    end
 
-`isItemEligible()` in [`src/utils/jamoMastery.ts`](src/utils/jamoMastery.ts) ensures the learner
-only sees words whose **every constituent Jamo** (including compound batchim like `ㄺ` in `닭`) is
-already unlocked. Eligibility is checked in two passes:
+    subgraph Stage4 ["Stage 4: Bottom Row Keys"]
+      J22["ㅋ (z)"] --> J23["ㅌ (x)"] --> J24["ㅊ (c)"] --> J25["ㅍ (v)"] --> J26["ㅠ (b)"]
+    end
 
-1. **Basic Jamo check** — all decomposed Jamos from `decomposeStringToJamos()` must be in the
-   unlocked set.
-2. **Compound batchim check** — any syllable whose final consonant slot is a member of
-   `COMPOUND_BATCHIM_SET` must have that compound batchim explicitly unlocked.
+    subgraph CP3 ["Sentence Milestone 3"]
+      S_FA["Full Alphabet Sentences (15 completions)"]
+    end
 
-A built-in fallback list of simple syllables (`어, 아, 얼, 라, 알, …`) is used when the curriculum
-contains no eligible multi-character words for the current unlock level, preventing the learner from
-ever getting stuck with an empty practice queue.
+    subgraph Stage5 ["Stage 5: Shift Keys"]
+      J27["ㄲ (R)"] --> J28["ㅆ (T)"] --> J29["ㄸ (E)"] --> J30["ㅉ (W)"] --> J31["ㅃ (Q)"] --> J32["ㅒ (O)"] --> J33["ㅖ (P)"]
+    end
 
-### 4. Adaptive Word Length Ramping
+    subgraph CP4 ["Sentence Milestone 4"]
+      S_SK["Shift Key Sentences (15 completions)"]
+    end
 
-`getAdaptiveLengthMultiplier()` in [`src/utils/jamoMastery.ts`](src/utils/jamoMastery.ts) scales
-target difficulty based on the active Jamo's mastery progress percentage:
+    subgraph Stage6 ["Stage 6: Compound Final Consonants (겹받침)"]
+      J34["ㄶ"] --> J35["ㄵ"] --> J36["ㄺ"] --> J37["ㄻ"] --> J38["ㄼ"]
+      J39["ㅄ"] --> J40["ㅀ"] --> J41["ㄳ"] --> J42["ㄾ"] --> J43["ㄿ"] --> J44["ㄽ"]
+    end
 
-| Progress Band | Bias                                           | Multipliers                                                 |
-| :------------ | :--------------------------------------------- | :---------------------------------------------------------- |
-| 0 – 30%       | Strongly biases 1–2 character words            | ≤2 chars → 4.0×, ≤4 chars → 1.0×, else 0.2×                 |
-| 30 – 70%      | Biases 2–4 character core vocabulary           | 2–4 chars → 3.0×, 1 char → 1.5×, ≤8 chars → 1.0×, else 0.5× |
-| 70 – 100%     | Opens full breadth including phrases/sentences | ≥3 chars → 1.5×, shorter → 1.0×                             |
+    subgraph CP5 ["Sentence Milestone 5"]
+      S_MA["Master Review & Complex Passages (15 completions)"]
+    end
 
-### 5. Two-Pass Item Selection
+    Stage1 --> Stage2
+    Stage2 --> CP1
+    CP1 --> Stage3
+    Stage3 --> CP2
+    CP2 --> Stage4
+    Stage4 --> CP3
+    CP3 --> Stage5
+    Stage5 --> CP4
+    CP4 --> Stage6
+    Stage6 --> CP5
+```
 
-`selectNextMasteryItem()` in [`src/utils/jamoMastery.ts`](src/utils/jamoMastery.ts) picks the next
-exercise via a two-pass approach:
+---
 
-**Pass 1 — Pool decision (40% focus-jamo bias):** A coin flip with `FOCUS_JAMO_PROBABILITY = 0.4`
-decides whether to restrict candidates to words containing the active learning Jamo. When the flip
-lands on "focus" (40% of the time) and a non-empty focus pool exists, only those words enter the
-weighted draw — ensuring the new Jamo appears regularly without dominating every exercise.
+## 3. Vocabulary Bank & Length Rules
 
-**Pass 2 — Weighted random pick:** Within the chosen pool, each item receives a composite weight:
+### Jamo Learning Stages (Short Words & Phrases)
+- Target length: $\le 12$ characters (typically 1–3 words).
+- Each Jamo step has a dedicated curated bank of authentic words constructed strictly from the cumulative set of Jamos unlocked up to that step.
+- Long sentences are explicitly excluded during Jamo introduction to prevent cognitive fatigue.
 
-- **Base weight:** `1`
-- **Struggling-Jamo bonus:** `+2` for each decomposed Jamo in the word that has > 0 attempts and <
-  90% rolling accuracy.
-- **Adaptive length multiplier:** Applied via `getAdaptiveLengthMultiplier()` based on the active
-  Jamo's current progress percentage.
+### Sentence Milestone Checkpoints (Medium-to-Long Sentences)
+- Target length: $\ge 10$ characters (multi-word natural sentences).
+- Focuses on conversational phrasing, honorifics, punctuation, and typing cadence.
+- 15 completed sentences advance the learner to the next keyboard section.
 
-The immediately-prior item is excluded from the candidate pool (when >1 item is available) to
-prevent immediate repetition.
+---
 
-### 6. Manual Override
+## 4. Item Selection Algorithm (Two-Pass Selection)
 
-The **Mastery Sidebar** ([`src/lib/MasterySidebar.svelte`](src/lib/MasterySidebar.svelte)) lets
-learners jump to any specific Jamo in the 44-item progression without waiting for automatic unlock.
-Selecting a new level via the radio list calls `setMasteryProgressionLevel()`, which:
+When picking the next exercise in Mastery mode:
 
-- Sets `unlockedCount` to the chosen position (clamped to 4–44).
-- Marks all preceding Jamos as mastered.
-- Resets the frontier key (and all locked keys beyond it) to zero attempts, so the chosen Jamo is
-  actively drilled as the candidate.
-- If `level === 4` (Stage 1 clean slate), **all** stats are cleared.
+1. **Pass 1 — Focus Coin Flip (40% Focus Pool Bias):**
+   - If the active stage is a Jamo stage with an unmastered frontier key, 40% of draws are restricted strictly to words containing the active Jamo.
+   - 60% of draws draw from the entire cumulative unlocked vocabulary to reinforce previously learned keys.
+2. **Pass 2 — Weighted Random Sampling:**
+   - **Base Weight:** `1.0`
+   - **Struggling Jamo Bonus:** `+2.0` for each constituent Jamo with $< 90\%$ rolling accuracy.
+   - **Adaptive Length Multiplier:** Biases word lengths according to the active Jamo's progress (0–30%, 30–70%, 70–100%).
+   - **No Immediate Repetition:** The item just completed is excluded from candidates whenever multiple eligible choices exist.
 
-## Persistence
+---
 
-Mastery state is serialized to `localStorage` under the key `korean_tutor_mastery` by
-`saveMasteryState()` and rehydrated by `loadMasteryState()`. The schema includes:
+## 5. State Persistence & Manual Override
 
-| Field           | Type                        | Description                                   |
-| :-------------- | :-------------------------- | :-------------------------------------------- |
-| `mode`          | `'mastery' \| 'curriculum'` | Last active tutor mode                        |
-| `unlockedCount` | `number` (4–44)             | Number of unlocked Jamos in progression order |
-| `jamoStats`     | `Record<string, JamoStats>` | Per-Jamo keystroke history and mastery flag   |
-
-Each `JamoStats` entry carries `totalAttempts`, `correctAttempts`, a boolean `recentHistory[]`
-ring-buffer (max 20 entries), `isMastered`, and an optional `lastPracticed` Unix timestamp.
-Corrupted or missing storage gracefully falls back to `createDefaultMasteryState()` (Stage 1
-unlocked, all stats zeroed).
-
-## Key Exports from `jamoMastery.ts`
-
-| Export                          | Purpose                                                                      |
-| :------------------------------ | :--------------------------------------------------------------------------- |
-| `JAMO_PROGRESSION_ORDER`        | Ordered array of 44 `JamoProgressionItem` objects defining the full sequence |
-| `COMPOUND_BATCHIM_SET`          | `Set<string>` of the 11 compound final consonants (겹받침)                   |
-| `createDefaultMasteryState()`   | Constructs a fresh `MasteryState` with Stage 1 unlocked                      |
-| `loadMasteryState()`            | Loads and validates state from LocalStorage                                  |
-| `saveMasteryState()`            | Persists `MasteryState` to LocalStorage                                      |
-| `getUnlockedJamos()`            | Returns a `Set<string>` of currently unlocked Jamo characters                |
-| `getActiveLearningJamo()`       | Returns the newest unlocked `JamoProgressionItem` not yet mastered           |
-| `setMasteryProgressionLevel()`  | Manual-override: jump to a specific unlock level                             |
-| `recordJamoAttempt()`           | Records a keystroke outcome and triggers mastery promotion if criteria met   |
-| `calculateJamoAccuracy()`       | Rolling accuracy ratio from `recentHistory`                                  |
-| `calculateJamoProgress()`       | 0–100% progress score blending attempt ratio and accuracy                    |
-| `isItemEligible()`              | Validates that all of a word's Jamos are unlocked                            |
-| `getEligibleMasteryItems()`     | Filters the full curriculum to unlocked-only items (with fallback)           |
-| `getAdaptiveLengthMultiplier()` | Length-bias multiplier based on active Jamo progress band                    |
-| `selectNextMasteryItem()`       | Two-pass item selector: focus-pool coin flip + weighted random draw          |
-| `isHangulJamo()`                | Tests whether a character is a Unicode Hangul Jamo codepoint                 |
-
-## Design Principles
-
-- **Muscle memory isolation**: One new finger reach at a time prevents motor confusion.
-- **Real words from day one**: Korean's combinatorial syllable system means even 4 Jamos produce
-  dozens of authentic words.
-- **No distractions**: Static UI, no animations, no auto-advance — the learner controls the pace.
-- **Exponential vocabulary growth**: Each unlocked Jamo opens 15–40 new words without any manual
-  configuration.
-- **Robust persistence**: Graceful LocalStorage fallback ensures progress is never lost silently.
+- **Persistence:** Progress is stored in `localStorage` under `korean_tutor_mastery` and debounced (30s inactivity or on page unload) to prevent mobile I/O overhead.
+- **Manual Stage Selection:** The **Mastery Sidebar** allows learners to manually jump to any individual Jamo milestone or Sentence Checkpoint, automatically unlocking preceding keys.
+- **Clean Slate Reset:** A reset option clears all Jamo history and sets progress back to Stage 1.
