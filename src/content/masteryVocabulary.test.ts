@@ -69,4 +69,15 @@ describe('Mastery Vocabulary Bank Verification', () => {
       }
     }
   });
+
+  it('ensures every compound batchim Jamo has at least 10 authentic examples', () => {
+    const compoundBatchims = ['ㄶ', 'ㄵ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㅄ', 'ㅀ', 'ㄳ', 'ㄾ', 'ㄿ', 'ㄽ'];
+    for (const cb of compoundBatchims) {
+      const vocab = MASTERY_JAMO_VOCABULARY[cb] || [];
+      expect(
+        vocab.length,
+        `Expected at least 10 vocabulary items for compound batchim "${cb}", got ${vocab.length}`,
+      ).toBeGreaterThanOrEqual(10);
+    }
+  });
 });
