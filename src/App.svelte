@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, untrack } from 'svelte';
   import contentData from './content';
   import { TutorSession } from './lib/tutorSession.svelte';
   import type { CurriculumData } from './lib/tutorSession.svelte';
@@ -348,20 +348,27 @@
     focusInputElement();
   }
 
+  let lastPromptTarget = '';
+
   // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
   // so clicking the audio button plays immediately without synthesis delay.
   // Cancels any active synthesis or playback from the previous exercise.
   $effect(() => {
-    const targetText = currentItem.target;
-    ttsController.stop();
+    const targetText = currentItem?.target;
+    const isEnabled = settings.enableTTS;
+    const voice = settings.ttsVoice ?? 'jf_nezumi';
+    const speed = settings.ttsSpeed ?? 1.0;
 
-    if (settings.enableTTS && targetText) {
-      ttsController.preload(
-        targetText,
-        settings.ttsVoice ?? 'jf_nezumi',
-        settings.ttsSpeed ?? 1.0,
-      );
-    }
+    untrack(() => {
+      if (targetText !== lastPromptTarget) {
+        lastPromptTarget = targetText || '';
+        ttsController.stop();
+      }
+
+      if (isEnabled && targetText) {
+        ttsController.preload(targetText, voice, speed);
+      }
+    });
   });
 
   function togglePronunciation() {

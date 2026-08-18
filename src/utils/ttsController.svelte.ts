@@ -1,4 +1,3 @@
-import { SvelteMap } from 'svelte/reactivity';
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
 
 /**
@@ -19,15 +18,18 @@ export class TTSController {
   private loadError = $state<string | null>(null);
 
   private currentAudio: HTMLAudioElement | null = null;
-  private pendingSyntheses = new SvelteMap<
+  // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal request tracking map intentionally non-reactive to avoid re-triggering effects
+  private pendingSyntheses = new Map<
     string,
     {
       resolve: (audioUrl: string) => void;
       reject: (err: Error) => void;
     }
   >();
-  private audioCache = new SvelteMap<string, string>(); // text -> blobUrl
-  private inFlightSyntheses = new SvelteMap<string, Promise<string>>(); // cacheKey -> Promise
+  // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal cache map intentionally non-reactive to avoid re-triggering effects
+  private audioCache = new Map<string, string>(); // text -> blobUrl
+  // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal in-flight promise map intentionally non-reactive to avoid re-triggering effects
+  private inFlightSyntheses = new Map<string, Promise<string>>(); // cacheKey -> Promise
   private nextRequestId = 0;
 
   constructor() {
@@ -241,6 +243,15 @@ export class TTSController {
     return synthesisPromise;
   }
 
+  public stopAudio(): void {
+    if (this.currentAudio) {
+      this.currentAudio.pause();
+      this.currentAudio.currentTime = 0;
+      this.currentAudio = null;
+    }
+    this.isSpeaking = false;
+  }
+
   public async speak(
     text: string,
     voice: string = 'jf_nezumi',
@@ -250,7 +261,7 @@ export class TTSController {
       return;
     }
 
-    this.stop();
+    this.stopAudio();
 
     try {
       this.isSpeaking = true;
@@ -304,12 +315,7 @@ export class TTSController {
   }
 
   public stop(): void {
-    if (this.currentAudio) {
-      this.currentAudio.pause();
-      this.currentAudio.currentTime = 0;
-      this.currentAudio = null;
-    }
-    this.isSpeaking = false;
+    this.stopAudio();
     this.cancelSynthesis();
   }
 
