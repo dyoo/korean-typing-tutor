@@ -184,27 +184,36 @@
         />
       </label>
 
-      <!-- Virtual Keyboard Toggle -->
-      <label class="flex items-center justify-between cursor-pointer">
-        <span>Show Virtual Keyboard Helper</span>
-        <input
-          type="checkbox"
-          checked={settings.showVirtualKeyboard}
-          onchange={ontogglevirtualkeyboard}
-          class="w-4 h-4 text-blue-600 rounded cursor-pointer"
-        />
-      </label>
+      <!-- Virtual Keyboard Section -->
+      <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-gray-900 dark:text-gray-100">Virtual Keyboard</span>
+          <label class="flex items-center gap-1.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={settings.showVirtualKeyboard}
+              onchange={ontogglevirtualkeyboard}
+              class="w-4 h-4 text-blue-600 rounded cursor-pointer"
+            />
+            <span>Enable</span>
+          </label>
+        </div>
 
-      <!-- Keyboard Hint Toggle -->
-      <label class="flex items-center justify-between cursor-pointer">
-        <span>Show Keyboard Hint</span>
-        <input
-          type="checkbox"
-          checked={settings.showKeyboardHint}
-          onchange={ontogglekeyboardhint}
-          class="w-4 h-4 text-blue-600 rounded cursor-pointer"
-        />
-      </label>
+        {#if settings.showVirtualKeyboard}
+          <div class="flex flex-col gap-2 mt-1 pl-1">
+            <!-- Keyboard Hint Toggle -->
+            <label class="flex items-center justify-between cursor-pointer">
+              <span class="text-gray-600 dark:text-gray-400">Show keyboard hints</span>
+              <input
+                type="checkbox"
+                checked={settings.showKeyboardHint}
+                onchange={ontogglekeyboardhint}
+                class="w-3.5 h-3.5 text-blue-600 rounded cursor-pointer"
+              />
+            </label>
+          </div>
+        {/if}
+      </div>
 
       <!-- Target Text Size Slider & Lock Toggle -->
       <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
