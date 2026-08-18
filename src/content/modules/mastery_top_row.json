@@ -370,88 +370,103 @@
     },
     {
       "id": "mastery_top_row_74",
+      "target": "별을 노래하는 마음으로",
+      "translation": "With a heart singing to the stars (Yun Dong-ju)"
+    },
+    {
+      "id": "mastery_top_row_75",
+      "target": "엄마야 누나야 강변 살자",
+      "translation": "Mom and sister, let’s live by the riverside (Kim Sowol)"
+    },
+    {
+      "id": "mastery_top_row_76",
+      "target": "나의 별에도 봄이 오면",
+      "translation": "When spring comes to my star too (Yun Dong-ju)"
+    },
+    {
+      "id": "mastery_top_row_77",
+      "target": "가슴 속에 하나 둘 새겨지는 별",
+      "translation": "Stars engraved one by one in my heart (Yun Dong-ju)"
+    },
+    {
+      "id": "mastery_top_row_78",
+      "target": "사랑도 사람의 일이라",
+      "translation": "Love too is a human affair (Han Yong-un)"
+    },
+    {
+      "id": "mastery_top_row_79",
+      "target": "동짓달 기나긴 밤을 한 허리를 베어 내어",
+      "translation": "Cutting out the waist of the long winter night (Hwang Jin-i)"
+    },
+    {
+      "id": "mastery_top_row_80",
       "target": "가을 바람이 시원해요",
       "translation": "Autumn breeze is refreshing"
     },
     {
-      "id": "mastery_top_row_75",
+      "id": "mastery_top_row_81",
       "target": "바다로 여행을 가요",
       "translation": "Let’s go on a trip to the sea"
     },
     {
-      "id": "mastery_top_row_76",
+      "id": "mastery_top_row_82",
       "target": "오늘 저녁에 밥을 먹어요",
       "translation": "Eat dinner tonight"
     },
     {
-      "id": "mastery_top_row_77",
+      "id": "mastery_top_row_83",
       "target": "이웃과 재미난 이야기를 해요",
       "translation": "Chat fun stories with a neighbor"
     },
     {
-      "id": "mastery_top_row_78",
+      "id": "mastery_top_row_84",
       "target": "일어나서 운동을 해요",
       "translation": "Wake up and exercise"
     },
     {
-      "id": "mastery_top_row_79",
+      "id": "mastery_top_row_85",
       "target": "새로운 노래를 들어요",
       "translation": "Listen to a new song"
     },
     {
-      "id": "mastery_top_row_80",
+      "id": "mastery_top_row_86",
       "target": "가게에서 맛난 음식을 사요",
       "translation": "Buy delicious food at the store"
     },
     {
-      "id": "mastery_top_row_81",
+      "id": "mastery_top_row_87",
       "target": "도서관에서 조용히 공부해요",
       "translation": "Study quietly in the library"
     },
     {
-      "id": "mastery_top_row_82",
+      "id": "mastery_top_row_88",
       "target": "사랑하는 가족과 모여 살아요",
       "translation": "Live together with beloved family"
     },
     {
-      "id": "mastery_top_row_83",
+      "id": "mastery_top_row_89",
       "target": "주말에 시원한 바람을 맞아요",
       "translation": "Feel the cool breeze on the weekend"
     },
     {
-      "id": "mastery_top_row_84",
+      "id": "mastery_top_row_90",
       "target": "밤하늘에 아름다운 별을 봐요",
       "translation": "Look at beautiful stars in the night sky"
     },
     {
-      "id": "mastery_top_row_85",
+      "id": "mastery_top_row_91",
       "target": "매일 조금 더 발전하는 나",
       "translation": "Me improving a little more every day"
     },
     {
-      "id": "mastery_top_row_86",
+      "id": "mastery_top_row_92",
       "target": "세상 곳곳을 여행하며 살아요",
       "translation": "Travel all over the world and live"
     },
     {
-      "id": "mastery_top_row_87",
+      "id": "mastery_top_row_93",
       "target": "여름 바닷가에서 수영을 해요",
       "translation": "Swim at the summer beach"
-    },
-    {
-      "id": "mastery_top_row_88",
-      "target": "방 안을 조용하게 정리해요",
-      "translation": "Quietly tidy up the room"
-    },
-    {
-      "id": "mastery_top_row_89",
-      "target": "지갑과 물건을 잘 모아요",
-      "translation": "Collect wallet and items well"
-    },
-    {
-      "id": "mastery_top_row_90",
-      "target": "가을 바람에 노래를 불러요",
-      "translation": "Sing a song in the autumn wind"
     }
   ]
 }

@@ -385,78 +385,103 @@
     },
     {
       "id": "mastery_shift_keys_77",
+      "target": "잎새에 이는 바람에도 나는 괴로워했다",
+      "translation": "Even in the wind stirring the leaves, I felt torment (Yun Dong-ju)"
+    },
+    {
+      "id": "mastery_shift_keys_78",
+      "target": "오늘 밤에도 별이 바람에 스치운다",
+      "translation": "Tonight too, the stars are brushed by the wind (Yun Dong-ju)"
+    },
+    {
+      "id": "mastery_shift_keys_79",
+      "target": "별 하나에 추억과 별 하나에 사랑과",
+      "translation": "Memories in one star, love in another (Yun Dong-ju)"
+    },
+    {
+      "id": "mastery_shift_keys_80",
+      "target": "영변에 약산 진달래꽃, 아름 따다 가실 길에 뿌리우리다",
+      "translation": "Azaleas of Yaksan, I will scatter armfuls along your path (Kim Sowol)"
+    },
+    {
+      "id": "mastery_shift_keys_81",
+      "target": "아아, 님은 갔지마는 나는 님을 보내지 아니하였습니다",
+      "translation": "Ah, my beloved has gone, but I have not let you go (Han Yong-un)"
+    },
+    {
+      "id": "mastery_shift_keys_82",
+      "target": "얼룩백이 황소가 해설피 금빛 게으른 울음을 우는 곳",
+      "translation": "Where the dappled ox moos a lazy golden cry at sunset (Jeong Ji-yong)"
+    },
+    {
+      "id": "mastery_shift_keys_83",
+      "target": "그곳이 차마 꿈엔들 잊힐리야",
+      "translation": "Could that place ever be forgotten, even in dreams (Jeong Ji-yong)"
+    },
+    {
+      "id": "mastery_shift_keys_84",
+      "target": "어린이는 어른보다 더 새로운 사람입니다",
+      "translation": "Children are people newer than adults (Bang Jeong-hwan)"
+    },
+    {
+      "id": "mastery_shift_keys_85",
       "target": "꽃집에서 예쁜 꽃을 골라요",
       "translation": "Pick pretty flowers at the florist"
     },
     {
-      "id": "mastery_shift_keys_78",
+      "id": "mastery_shift_keys_86",
       "target": "뚝배기에 보글보글 맛있는 찌개",
       "translation": "Delicious stew boiling bubble-bubble in an earthen pot"
     },
     {
-      "id": "mastery_shift_keys_79",
+      "id": "mastery_shift_keys_87",
       "target": "갓 구운 따끈따끈한 빵 냄새",
       "translation": "Smell of freshly baked warm bread"
     },
     {
-      "id": "mastery_shift_keys_80",
+      "id": "mastery_shift_keys_88",
       "target": "딸기잼을 바른 토스트를 먹어요",
       "translation": "Eat toast spread with strawberry jam"
     },
     {
-      "id": "mastery_shift_keys_81",
+      "id": "mastery_shift_keys_89",
       "target": "진짜 재미있는 옛날이야기",
       "translation": "A truly fascinating old folktale"
     },
     {
-      "id": "mastery_shift_keys_82",
+      "id": "mastery_shift_keys_90",
       "target": "시계를 보며 약속 시간을 지켜요",
       "translation": "Check the clock and keep the appointment on time"
     },
     {
-      "id": "mastery_shift_keys_83",
+      "id": "mastery_shift_keys_91",
       "target": "꿈을 향해 한 걸음씩 나아가요",
       "translation": "Step forward toward your dreams"
     },
     {
-      "id": "mastery_shift_keys_84",
+      "id": "mastery_shift_keys_92",
       "target": "어릴 적 추억이 깃든 골목길",
       "translation": "An alleyway filled with childhood memories"
     },
     {
-      "id": "mastery_shift_keys_85",
+      "id": "mastery_shift_keys_93",
       "target": "날씨 예보를 미리 확인해요",
       "translation": "Check the weather forecast in advance"
     },
     {
-      "id": "mastery_shift_keys_86",
+      "id": "mastery_shift_keys_94",
       "target": "친구와 함께 나누는 즐거운 얘기",
       "translation": "Pleasant conversation shared with a friend"
     },
     {
-      "id": "mastery_shift_keys_87",
+      "id": "mastery_shift_keys_95",
       "target": "빨래를 널고 햇살을 만끽해요",
       "translation": "Hang the laundry and enjoy the sunshine"
     },
     {
-      "id": "mastery_shift_keys_88",
+      "id": "mastery_shift_keys_96",
       "target": "꼬마 아이가 활짝 웃고 있어요",
       "translation": "The little child is smiling brightly"
-    },
-    {
-      "id": "mastery_shift_keys_89",
-      "target": "식사 예절을 바르게 지켜요",
-      "translation": "Observe dining etiquette properly"
-    },
-    {
-      "id": "mastery_shift_keys_90",
-      "target": "쌀을 씻어서 맛있는 밥을 지어요",
-      "translation": "Wash the rice and cook delicious meals"
-    },
-    {
-      "id": "mastery_shift_keys_91",
-      "target": "짜장면과 탕수육을 주문해요",
-      "translation": "Order black bean noodles and sweet and sour pork"
     }
   ]
 }
