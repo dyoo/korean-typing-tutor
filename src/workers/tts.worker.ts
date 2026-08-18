@@ -145,6 +145,72 @@ async function processSynthesisQueue(): Promise<void> {
   }
 }
 
+function formatBytes(bytes: number, decimals: number = 1): string {
+  if (bytes === 0) {
+    return '0 B';
+  }
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(decimals))} ${sizes[i]}`;
+}
+
+/**
+ * Directly inspects CacheStorage inside the Web Worker context where window is undefined.
+ */
+async function inspectWorkerStorage(): Promise<{ isCached: boolean; modelSizeFormatted: string }> {
+  let isCached = false;
+  let modelSizeBytes = 0;
+
+  if (typeof caches !== 'undefined') {
+    for (const cacheName of ['transformers-cache', 'kokoro-voices']) {
+      try {
+        if (await caches.has(cacheName)) {
+          const cache = await caches.open(cacheName);
+          const keys = await cache.keys();
+          for (const req of keys) {
+            if (
+              req.url.includes('Kokoro-82M') ||
+              req.url.includes('kokoro') ||
+              req.url.includes('.onnx') ||
+              req.url.includes('voices')
+            ) {
+              isCached = true;
+              const res = await cache.match(req);
+              if (res) {
+                const blob = await res.clone().blob();
+                modelSizeBytes += blob.size;
+              }
+            }
+          }
+        }
+      } catch {
+        // Ignore cache inspection errors
+      }
+    }
+  }
+
+  return {
+    isCached,
+    modelSizeFormatted: formatBytes(modelSizeBytes),
+  };
+}
+
+/**
+ * Directly removes cached neural model files from CacheStorage.
+ */
+async function clearWorkerStorage(): Promise<void> {
+  if (typeof caches !== 'undefined') {
+    for (const cacheName of ['transformers-cache', 'kokoro-voices']) {
+      try {
+        await caches.delete(cacheName);
+      } catch {
+        // Ignore cache deletion errors
+      }
+    }
+  }
+}
+
 /**
  * Handle incoming messages from the main thread.
  */
@@ -154,8 +220,7 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
   switch (message.type) {
     case 'CHECK_CACHE': {
       try {
-        const tempSpeaker = speaker ?? new KoreanSpeaker({ dtype: 'q8', device: 'wasm' });
-        const storageInfo = await tempSpeaker.getStorageInfo();
+        const storageInfo = await inspectWorkerStorage();
         postResponse({
           type: 'CACHE_STATUS',
           payload: {
@@ -286,14 +351,11 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
         }
         activeTasks.clear();
         if (speaker) {
-          await speaker.clearStorage();
           speaker.dispose();
           speaker = null;
           isModelLoaded = false;
-        } else {
-          const tempSpeaker = new KoreanSpeaker({ dtype: 'q8', device: 'wasm' });
-          await tempSpeaker.clearStorage();
         }
+        await clearWorkerStorage();
         postResponse({ type: 'CLEAR_CACHE_SUCCESS' });
       } catch (err: unknown) {
         const errorMsg = err instanceof Error ? err.message : String(err);

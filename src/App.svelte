@@ -291,10 +291,14 @@
   let showTTSDownloadModal = $state(false);
   let isTTSSpeaking = $derived(ttsController.getIsSpeaking());
 
-  function toggleTTS() {
+  async function toggleTTS() {
     if (!settings.enableTTS) {
-      // User is enabling TTS; check if model is downloaded
-      if (!ttsController.getIsLoaded() && !ttsController.getIsCached()) {
+      // User is enabling TTS; verify if model is already downloaded to avoid redundant prompts
+      let isCached = ttsController.getIsCached();
+      if (!isCached && !ttsController.getIsLoaded()) {
+        isCached = await ttsController.checkCache();
+      }
+      if (!ttsController.getIsLoaded() && !isCached) {
         showTTSDownloadModal = true;
       } else {
         updateSetting('enableTTS', true);

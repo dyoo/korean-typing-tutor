@@ -33,6 +33,7 @@ export class TTSController {
   private audioCache = new Map<string, string>(); // text -> blobUrl
   // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal in-flight promise map intentionally non-reactive to avoid re-triggering effects
   private inFlightSyntheses = new Map<string, Promise<string>>(); // cacheKey -> Promise
+  private pendingCacheChecks: Array<(cached: boolean) => void> = [];
   private nextRequestId = 0;
 
   constructor() {
@@ -96,6 +97,9 @@ export class TTSController {
           this.isCached = msg.payload.isCached;
           if (msg.payload.modelSizeFormatted) {
             this.modelSizeFormatted = msg.payload.modelSizeFormatted;
+          }
+          while (this.pendingCacheChecks.length > 0) {
+            this.pendingCacheChecks.shift()!(msg.payload.isCached);
           }
           break;
 
@@ -170,9 +174,16 @@ export class TTSController {
     return this.worker;
   }
 
-  public checkCache(): void {
+  public async checkCache(): Promise<boolean> {
+    if (this.isLoaded || this.isCached) {
+      return true;
+    }
     const w = this.initWorker();
+    const promise = new Promise<boolean>((resolve) => {
+      this.pendingCacheChecks.push(resolve);
+    });
     w.postMessage({ type: 'CHECK_CACHE' } satisfies TTSWorkerRequest);
+    return promise;
   }
 
   public async loadModel(): Promise<void> {

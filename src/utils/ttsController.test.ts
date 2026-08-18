@@ -55,8 +55,8 @@ describe('TTSController Unit Tests', () => {
     expect(controller.preload('   ')).toBeNull();
   });
 
-  it('posts CHECK_CACHE when checkCache is called and updates isCached on CACHE_STATUS response', () => {
-    controller.checkCache();
+  it('posts CHECK_CACHE when checkCache is called and updates isCached on CACHE_STATUS response', async () => {
+    const checkPromise = controller.checkCache();
     expect(postedMessages).toContainEqual({ type: 'CHECK_CACHE' });
     expect(controller.getIsCached()).toBe(false);
 
@@ -67,6 +67,8 @@ describe('TTSController Unit Tests', () => {
       },
     } as MessageEvent);
 
+    const isCachedResult = await checkPromise;
+    expect(isCachedResult).toBe(true);
     expect(controller.getIsCached()).toBe(true);
     expect(controller.getModelSizeFormatted()).toBe('80 MB');
   });
