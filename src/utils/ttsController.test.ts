@@ -227,4 +227,116 @@ describe('TTSController Unit Tests', () => {
     const result = await preloadPromise;
     expect(result).toBeNull();
   });
+
+  it('evicts oldest audio from cache and calls URL.revokeObjectURL when reaching capacity', async () => {
+    const revokeObjectURLMock = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
+
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    // Fill the cache up to 50 items
+    for (let i = 1; i <= 50; i++) {
+      const p = controller.synthesize(`word_${i}`);
+      const synthMsg = postedMessages[postedMessages.length - 1];
+      if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
+        latestWorkerInstance?.onmessage?.({
+          data: {
+            type: 'SYNTHESIS_SUCCESS',
+            payload: {
+              id: synthMsg.payload.id,
+              audioBlobUrl: `blob:http://localhost/audio_${i}`,
+              genTimeMs: 10,
+              durationSec: 1.0,
+              ipa: `word-${i}`,
+            },
+          },
+        } as MessageEvent);
+      }
+      await p;
+    }
+
+    expect(revokeObjectURLMock).not.toHaveBeenCalled();
+
+    // Adding 51st item should evict word_1 and revoke blob:http://localhost/audio_1
+    const p51 = controller.synthesize('word_51');
+    const synthMsg51 = postedMessages[postedMessages.length - 1];
+    if (synthMsg51 && synthMsg51.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: synthMsg51.payload.id,
+            audioBlobUrl: 'blob:http://localhost/audio_51',
+            genTimeMs: 10,
+            durationSec: 1.0,
+            ipa: 'word-51',
+          },
+        },
+      } as MessageEvent);
+    }
+    await p51;
+
+    expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/audio_1');
+  });
+
+  it('revokes all cached Blob URLs when clearCache is called', async () => {
+    const revokeObjectURLMock = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
+
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    // Synthesize two items
+    const p1 = controller.synthesize('가');
+    const msg1 = postedMessages[postedMessages.length - 1];
+    if (msg1?.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: msg1.payload.id,
+            audioBlobUrl: 'blob:http://localhost/ga',
+            genTimeMs: 10,
+            durationSec: 1.0,
+            ipa: 'ga',
+          },
+        },
+      } as MessageEvent);
+    }
+    await p1;
+
+    const p2 = controller.synthesize('나');
+    const msg2 = postedMessages[postedMessages.length - 1];
+    if (msg2?.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: msg2.payload.id,
+            audioBlobUrl: 'blob:http://localhost/na',
+            genTimeMs: 10,
+            durationSec: 1.0,
+            ipa: 'na',
+          },
+        },
+      } as MessageEvent);
+    }
+    await p2;
+
+    await controller.clearCache();
+
+    expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/ga');
+    expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/na');
+  });
 });

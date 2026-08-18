@@ -1,5 +1,8 @@
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
 
+/** Maximum number of audio blob URLs retained in memory before LRU eviction. */
+export const MAX_AUDIO_CACHE_SIZE = 50;
+
 /**
  * Controller singleton for interacting with the TTS Web Worker and managing
  * client-side speech synthesis audio playback and pre-generation cache.
@@ -34,6 +37,45 @@ export class TTSController {
 
   constructor() {
     // Lazily initialized when needed
+  }
+
+  /** Safely revokes a Blob URL to free underlying browser audio memory. */
+  private revokeAudioBlobUrl(url?: string): void {
+    if (url && typeof URL !== 'undefined' && typeof URL.revokeObjectURL === 'function') {
+      try {
+        URL.revokeObjectURL(url);
+      } catch {
+        // Ignore revocation errors in headless or mock test environments
+      }
+    }
+  }
+
+  /** Clears the in-memory audio cache and revokes all active Blob URLs. */
+  private clearAudioCache(): void {
+    for (const url of this.audioCache.values()) {
+      this.revokeAudioBlobUrl(url);
+    }
+    this.audioCache.clear();
+    this.inFlightSyntheses.clear();
+  }
+
+  /** Stores a synthesized audio URL in the LRU cache, evicting the oldest entry when at capacity. */
+  private putCachedAudio(key: string, url: string): void {
+    if (this.audioCache.has(key)) {
+      const existingUrl = this.audioCache.get(key);
+      if (existingUrl && existingUrl !== url) {
+        this.revokeAudioBlobUrl(existingUrl);
+      }
+      this.audioCache.delete(key);
+    } else if (this.audioCache.size >= MAX_AUDIO_CACHE_SIZE) {
+      const oldestKey = this.audioCache.keys().next().value;
+      if (oldestKey !== undefined) {
+        const oldestUrl = this.audioCache.get(oldestKey);
+        this.revokeAudioBlobUrl(oldestUrl);
+        this.audioCache.delete(oldestKey);
+      }
+    }
+    this.audioCache.set(key, url);
   }
 
   private initWorker(): Worker {
@@ -108,8 +150,7 @@ export class TTSController {
         case 'CLEAR_CACHE_SUCCESS':
           this.isCached = false;
           this.isLoaded = false;
-          this.audioCache.clear();
-          this.inFlightSyntheses.clear();
+          this.clearAudioCache();
           break;
       }
     };
@@ -204,7 +245,11 @@ export class TTSController {
   ): Promise<string> {
     const cacheKey = `${text}_${voice}_${speed}`;
     if (this.audioCache.has(cacheKey)) {
-      return this.audioCache.get(cacheKey)!;
+      const cachedUrl = this.audioCache.get(cacheKey)!;
+      // Refresh LRU recency on cache hit
+      this.audioCache.delete(cacheKey);
+      this.audioCache.set(cacheKey, cachedUrl);
+      return cachedUrl;
     }
 
     if (this.inFlightSyntheses.has(cacheKey)) {
@@ -222,7 +267,7 @@ export class TTSController {
       return new Promise<string>((resolve, reject) => {
         this.pendingSyntheses.set(id, {
           resolve: (audioBlobUrl: string) => {
-            this.audioCache.set(cacheKey, audioBlobUrl);
+            this.putCachedAudio(cacheKey, audioBlobUrl);
             this.inFlightSyntheses.delete(cacheKey);
             resolve(audioBlobUrl);
           },
@@ -245,6 +290,8 @@ export class TTSController {
 
   public stopAudio(): void {
     if (this.currentAudio) {
+      this.currentAudio.onended = null;
+      this.currentAudio.onerror = null;
       this.currentAudio.pause();
       this.currentAudio.currentTime = 0;
       this.currentAudio = null;
@@ -271,19 +318,25 @@ export class TTSController {
       this.currentAudio = audio;
 
       return new Promise((resolve) => {
-        audio.onended = () => {
+        const cleanup = () => {
+          audio.onended = null;
+          audio.onerror = null;
           this.isSpeaking = false;
-          this.currentAudio = null;
+          if (this.currentAudio === audio) {
+            this.currentAudio = null;
+          }
+        };
+
+        audio.onended = () => {
+          cleanup();
           resolve();
         };
         audio.onerror = () => {
-          this.isSpeaking = false;
-          this.currentAudio = null;
+          cleanup();
           resolve();
         };
         audio.play().catch(() => {
-          this.isSpeaking = false;
-          this.currentAudio = null;
+          cleanup();
           resolve();
         });
       });
@@ -321,6 +374,7 @@ export class TTSController {
 
   public async clearCache(): Promise<void> {
     this.stop();
+    this.clearAudioCache();
     const w = this.initWorker();
     w.postMessage({ type: 'CLEAR_CACHE' } satisfies TTSWorkerRequest);
   }
