@@ -356,4 +356,26 @@ describe('TTSController Unit Tests', () => {
     expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/ga');
     expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/na');
   });
+
+  it('clears modelSizeFormatted on CLEAR_CACHE_SUCCESS', async () => {
+    controller.checkCache();
+    // Set cached size
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'CACHE_STATUS',
+        payload: { isCached: true, modelSizeFormatted: '88.1 MB' },
+      },
+    } as MessageEvent);
+    expect(controller.getModelSizeFormatted()).toBe('88.1 MB');
+
+    await controller.clearCache();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'CLEAR_CACHE_SUCCESS',
+      },
+    } as MessageEvent);
+
+    expect(controller.getModelSizeFormatted()).toBe('');
+    expect(controller.getIsCached()).toBe(false);
+  });
 });

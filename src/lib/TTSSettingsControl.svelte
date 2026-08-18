@@ -23,11 +23,10 @@
 
   let isConfirmingClear = $state(false);
   let hasCache = $derived(ttsController.getIsCached() || ttsController.getIsLoaded());
+  let cacheSizeText = $derived(ttsController.getModelSizeFormatted() || '~100 MB');
 
   onMount(() => {
-    if (!ttsController.getIsLoaded()) {
-      ttsController.checkCache();
-    }
+    ttsController.checkCache(true);
   });
 </script>
 
@@ -104,20 +103,20 @@
       </div>
     </div>
   {:else if hasCache}
-    <div class="flex flex-col gap-2 mt-1 pl-2">
+    <div class="flex flex-col gap-2 mt-1">
       <!-- Clear Cache Action & Confirmation -->
       {#if isConfirmingClear}
         <div
-          class="flex flex-col gap-1.5 mt-1 p-2 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 rounded"
+          class="flex flex-col gap-2 p-2.5 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 rounded-lg text-left"
         >
-          <p class="text-[11px] text-red-700 dark:text-red-300 font-medium leading-tight">
-            Clear ~80MB offline voice model? You will need to download it again to use TTS.
+          <p class="text-[11px] text-red-700 dark:text-red-300 font-medium leading-normal break-words">
+            Delete offline voice cache ({cacheSizeText})?
           </p>
-          <div class="flex justify-end gap-1.5">
+          <div class="flex items-center justify-end gap-2 pt-0.5">
             <button
               type="button"
               onclick={() => (isConfirmingClear = false)}
-              class="px-2 py-0.5 text-[11px] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded cursor-pointer"
+              class="px-2.5 py-1 text-[11px] bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded cursor-pointer transition-colors"
             >
               Cancel
             </button>
@@ -127,20 +126,20 @@
                 isConfirmingClear = false;
                 onclearttscache?.();
               }}
-              class="px-2 py-0.5 text-[11px] bg-red-600 hover:bg-red-700 text-white font-medium rounded cursor-pointer"
+              class="px-2.5 py-1 text-[11px] bg-red-600 hover:bg-red-700 text-white font-medium rounded cursor-pointer transition-colors"
             >
-              Yes, Clear Cache
+              Delete Cache
             </button>
           </div>
         </div>
       {:else}
-        <div class="flex justify-end mt-1">
+        <div class="flex justify-end">
           <button
             type="button"
             onclick={() => (isConfirmingClear = true)}
-            class="text-[11px] text-red-600 dark:text-red-400 hover:underline cursor-pointer"
+            class="text-[11px] text-red-600 dark:text-red-400 hover:underline cursor-pointer text-right leading-tight break-words"
           >
-            Clear Offline TTS Cache (~80MB)
+            Clear Offline Cache ({cacheSizeText})
           </button>
         </div>
       {/if}

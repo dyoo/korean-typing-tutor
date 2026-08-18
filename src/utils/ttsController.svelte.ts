@@ -115,7 +115,12 @@ export class TTSController {
           this.isLoaded = true;
           this.isCached = true;
           this.availableVoices = msg.payload.voices;
+          if (msg.payload.modelSizeFormatted) {
+            this.modelSizeFormatted = msg.payload.modelSizeFormatted;
+          }
           this.loadError = null;
+          // Re-check storage in worker to get exact finalized cached footprint
+          this.checkCache(true);
           break;
 
         case 'LOAD_ERROR':
@@ -154,6 +159,7 @@ export class TTSController {
         case 'CLEAR_CACHE_SUCCESS':
           this.isCached = false;
           this.isLoaded = false;
+          this.modelSizeFormatted = '';
           this.clearAudioCache();
           break;
       }
@@ -174,8 +180,8 @@ export class TTSController {
     return this.worker;
   }
 
-  public async checkCache(): Promise<boolean> {
-    if (this.isLoaded || this.isCached) {
+  public async checkCache(force: boolean = false): Promise<boolean> {
+    if (!force && this.isLoaded && this.isCached && this.modelSizeFormatted) {
       return true;
     }
     const w = this.initWorker();
