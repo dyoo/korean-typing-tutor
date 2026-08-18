@@ -41,13 +41,13 @@ describe('Settings module persistence', () => {
     localStorage.setItem(
       'korean_tutor_settings',
       JSON.stringify({
-        minFontSizeRem: 0.2, // Below 1.0 -> should fallback to 1.25
-        maxFontSizeRem: 12.0, // Above 7.0 -> should fallback to 5.5
+        minFontSizeRem: 0.2, // Below 1.0 -> should fallback to 2.0
+        maxFontSizeRem: 12.0, // Above 7.0 -> should fallback to 6.0
       }),
     );
     const loaded = loadSettings();
-    expect(loaded.minFontSizeRem).toBe(1.25);
-    expect(loaded.maxFontSizeRem).toBe(5.5);
+    expect(loaded.minFontSizeRem).toBe(2.0);
+    expect(loaded.maxFontSizeRem).toBe(6.0);
   });
 
   it('should save and load selected curriculum module preferences and collapsed categories', () => {

@@ -36,8 +36,8 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   showVirtualKeyboard: true,
   showKeyboardHint: true,
   theme: 'system',
-  minFontSizeRem: 1.25,
-  maxFontSizeRem: 5.5,
+  minFontSizeRem: 2.0,
+  maxFontSizeRem: 6.0,
   lockFontSize: false,
   cursorColor: 'amber',
   enableTTS: false,
@@ -83,13 +83,13 @@ export function loadSettings(): TutorSettings {
         parsed.minFontSizeRem >= 1.0 &&
         parsed.minFontSizeRem <= 7.0
           ? parsed.minFontSizeRem
-          : 1.25,
+          : 2.0,
       maxFontSizeRem:
         typeof parsed.maxFontSizeRem === 'number' &&
         parsed.maxFontSizeRem >= 1.0 &&
         parsed.maxFontSizeRem <= 7.0
           ? parsed.maxFontSizeRem
-          : 5.5,
+          : 6.0,
       lockFontSize: typeof parsed.lockFontSize === 'boolean' ? parsed.lockFontSize : false,
       cursorColor: validCursorColors.includes(parsed.cursorColor) ? parsed.cursorColor : 'amber',
       enableTTS: typeof parsed.enableTTS === 'boolean' ? parsed.enableTTS : false,

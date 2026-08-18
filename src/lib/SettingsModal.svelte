@@ -63,8 +63,8 @@
     onminfontsizechange?.(val);
   }
 
-  let minVal = $derived(settings.minFontSizeRem ?? 1.25);
-  let maxVal = $derived(settings.maxFontSizeRem ?? 5.5);
+  let minVal = $derived(settings.minFontSizeRem ?? 2.0);
+  let maxVal = $derived(settings.maxFontSizeRem ?? 6.0);
 </script>
 
 <svelte:window onkeydown={handleKeydown} />
