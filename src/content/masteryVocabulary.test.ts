@@ -1,6 +1,12 @@
 import { describe, it, expect } from 'vitest';
 import { MASTERY_JAMO_VOCABULARY, MASTERY_CHECKPOINT_SENTENCES } from './masteryVocabulary';
-import { JAMO_PROGRESSION_ORDER, SENTENCE_CHECKPOINTS, isItemEligible } from '../utils/jamoMastery';
+import {
+  JAMO_PROGRESSION_ORDER,
+  SENTENCE_CHECKPOINTS,
+  isItemEligible,
+  getSectionJamosForCheckpoint,
+  itemUsesAnyJamo,
+} from '../utils/jamoMastery';
 import { decomposeStringToJamos } from '../utils/hangulDecompose';
 
 describe('Mastery Vocabulary Bank Verification', () => {
@@ -36,7 +42,7 @@ describe('Mastery Vocabulary Bank Verification', () => {
     }
   });
 
-  it('ensures each Sentence Checkpoint contains at least 15 valid sentences matching unlocked Jamos', () => {
+  it('ensures each Sentence Checkpoint contains at least 15 valid sentences matching unlocked Jamos and section Jamos', () => {
     for (const cp of SENTENCE_CHECKPOINTS) {
       const sentences = MASTERY_CHECKPOINT_SENTENCES[cp.id];
       expect(sentences, `Missing sentences for checkpoint: ${cp.id}`).toBeDefined();
@@ -48,6 +54,7 @@ describe('Mastery Vocabulary Bank Verification', () => {
       const unlockedJamos = new Set(
         JAMO_PROGRESSION_ORDER.slice(0, cp.afterJamoIndex).map((i) => i.jamo),
       );
+      const sectionJamos = getSectionJamosForCheckpoint(cp.id);
 
       for (const sent of sentences) {
         // Sentence should only use unlocked letters
@@ -62,6 +69,15 @@ describe('Mastery Vocabulary Bank Verification', () => {
           sent.target.length,
           `Sentence "${sent.target}" should be at least 5 characters`,
         ).toBeGreaterThanOrEqual(5);
+
+        // For milestone challenges (except the last milestone cp_master), sentence must use Jamo used in that section
+        if (sectionJamos && sectionJamos.size > 0) {
+          const usesSectionJamo = itemUsesAnyJamo(sent.target, sectionJamos);
+          expect(
+            usesSectionJamo,
+            `Sentence "${sent.target}" in checkpoint "${cp.id}" must contain at least one Jamo from section: ${Array.from(sectionJamos).join(', ')}`,
+          ).toBe(true);
+        }
       }
     }
   });

@@ -735,7 +735,7 @@ export const COMPOUND_BATCHIM_SET = new Set([
 /**
  * Helper to determine if a character is a Hangul Jamo (compatibility or standard Unicode Jamo).
  */
-export function isHangulJamo(char: string): boolean {
+function isHangulJamo(char: string): boolean {
   if (!char) {
     return false;
   }
@@ -774,9 +774,79 @@ export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): bo
 }
 
 /**
+ * Returns the set of Jamos specifically introduced in the section corresponding to a sentence checkpoint.
+ * - `cp_home_row`: Home row section (combines Stage 1 Home Row Index Keys and Stage 2 Home Row & Basic Vowels).
+ * - `cp_top_row`: Top row section (Stage 3).
+ * - `cp_bottom_row`: Bottom row section (Stage 4).
+ * - `cp_shift_keys`: Shift keys section (Stage 5).
+ * - `cp_master`: Returns null as the final milestone is exempt from section-specific restrictions.
+ */
+export function getSectionJamosForCheckpoint(checkpointId: string): Set<string> | null {
+  if (checkpointId === 'cp_home_row') {
+    return new Set(
+      JAMO_PROGRESSION_ORDER.filter((item) => item.stage === 1 || item.stage === 2).map(
+        (item) => item.jamo,
+      ),
+    );
+  }
+  if (checkpointId === 'cp_top_row') {
+    return new Set(
+      JAMO_PROGRESSION_ORDER.filter((item) => item.stage === 3).map((item) => item.jamo),
+    );
+  }
+  if (checkpointId === 'cp_bottom_row') {
+    return new Set(
+      JAMO_PROGRESSION_ORDER.filter((item) => item.stage === 4).map((item) => item.jamo),
+    );
+  }
+  if (checkpointId === 'cp_shift_keys') {
+    return new Set(
+      JAMO_PROGRESSION_ORDER.filter((item) => item.stage === 5).map((item) => item.jamo),
+    );
+  }
+  return null;
+}
+
+/**
+ * Checks if a Hangul target string contains at least one Jamo from the specified set of Jamos.
+ * Accounts for initial consonants, vowels, and final consonants.
+ */
+export function itemUsesAnyJamo(text: string, targetJamos: Set<string>): boolean {
+  if (!text || targetJamos.size === 0) {
+    return false;
+  }
+  for (const char of text) {
+    const decomp = decomposeSyllable(char);
+    if (decomp) {
+      if (decomp.initialConsonant && targetJamos.has(decomp.initialConsonant)) {
+        return true;
+      }
+      if (decomp.vowel && targetJamos.has(decomp.vowel)) {
+        return true;
+      }
+      if (decomp.finalConsonant && targetJamos.has(decomp.finalConsonant)) {
+        return true;
+      }
+    } else if (targetJamos.has(char)) {
+      return true;
+    }
+  }
+  // Also check decomposed constituent basic Jamos
+  const jamos = decomposeStringToJamos(text);
+  for (const j of jamos) {
+    if (targetJamos.has(j)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
  * Filters and aggregates eligible items for mastery mode.
  * During Jamo stages, strictly restricts the pool to short words/phrases (<= 12 chars).
- * During Sentence checkpoints, serves medium-to-long sentences (>= 8 chars).
+ * During Sentence checkpoints, serves medium-to-long sentences (>= 8 chars) that use
+ * Jamos introduced in that milestone's section (with cp_home_row handling both home row
+ * index keys and home row, and cp_master exempt).
  */
 export function getEligibleMasteryItems(
   allItems: LessonItem[],
@@ -787,11 +857,29 @@ export function getEligibleMasteryItems(
   if (activeTarget && activeTarget.type === 'checkpoint') {
     const cpId = activeTarget.checkpoint.id;
     const curatedSentences = MASTERY_CHECKPOINT_SENTENCES[cpId] ?? [];
-    const matchingCurriculum = allItems.filter(
-      (item) => item.target.length >= 8 && isItemEligible(item, unlockedJamos),
-    );
+    const sectionJamos = getSectionJamosForCheckpoint(cpId);
+
+    const matchingCurriculum = allItems.filter((item) => {
+      if (item.target.length < 8 || !isItemEligible(item, unlockedJamos)) {
+        return false;
+      }
+      // For milestone challenges (except the last milestone), the sentences must use jamo used in that section.
+      if (sectionJamos && sectionJamos.size > 0) {
+        return itemUsesAnyJamo(item.target, sectionJamos);
+      }
+      return true;
+    });
+
     const combined = [...curatedSentences, ...matchingCurriculum];
-    return combined.length > 0 ? combined : curatedSentences;
+    const seenTargets = new Set<string>();
+    const eligible: LessonItem[] = [];
+    for (const item of combined) {
+      if (!seenTargets.has(item.target)) {
+        seenTargets.add(item.target);
+        eligible.push(item);
+      }
+    }
+    return eligible.length > 0 ? eligible : curatedSentences;
   }
 
   // For Jamo stages: RESTRICT TO SHORT WORDS (<= 12 characters)
@@ -871,7 +959,7 @@ const FOCUS_JAMO_PROBABILITY = 0.4;
 /**
  * Checks whether a lesson item contains the specified Jamo character.
  */
-export function itemContainsJamo(item: LessonItem, jamo: string): boolean {
+function itemContainsJamo(item: LessonItem, jamo: string): boolean {
   const jamos = decomposeStringToJamos(item.target);
   if (jamos.includes(jamo)) {
     return true;

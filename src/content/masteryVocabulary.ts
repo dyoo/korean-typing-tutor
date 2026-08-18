@@ -973,15 +973,15 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp4_2',
       moduleId: 'mastery',
-      target: '오늘 밤에도 별이 바람에 스치운다',
-      translation: 'Tonight too, the stars are brushed by the wind',
-      attribution: '윤동주, <서시> (1941)',
+      target: '별 하나에 쓸쓸함과 별 하나에 동경과',
+      translation: 'Loneliness in one star, longing in another',
+      attribution: '윤동주, <별 헤는 밤> (1941)',
     },
     {
       id: 'cp4_3',
       moduleId: 'mastery',
-      target: '별 하나에 추억과 별 하나에 사랑과',
-      translation: 'Memories in one star, love in another',
+      target: '별 하나에 아름다운 말 한마디씩 불러봅니다',
+      translation: 'Calling out beautiful words one by one for each star',
       attribution: '윤동주, <별 헤는 밤> (1941)',
     },
     {
@@ -1001,9 +1001,9 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp4_6',
       moduleId: 'mastery',
-      target: '얼룩백이 황소가 해설피 금빛 게으른 울음을 우는 곳',
-      translation: 'Where the dappled ox moos a lazy golden cry at sunset',
-      attribution: '정지용, <향수> (1927)',
+      target: '뜰에는 반짝이는 금모래빛, 강변의 노래',
+      translation: 'In the courtyard sparkling golden sand, riverside melody',
+      attribution: '김소월, <엄마야 누나야> (1922)',
     },
     {
       id: 'cp4_7',
@@ -1015,9 +1015,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp4_8',
       moduleId: 'mastery',
-      target: '어린이는 어른보다 더 새로운 사람입니다',
-      translation: 'Children are people newer than adults',
-      attribution: '방정환, <어린이 선언> (1923)',
+      target: '언제나 따뜻한 사랑으로 서로를 아껴주세요',
+      translation: 'Always cherish each other with warm love',
     },
     {
       id: 'cp4_9',
@@ -1064,8 +1063,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp4_16',
       moduleId: 'mastery',
-      target: '어릴 적 추억이 깃든 골목길',
-      translation: 'An alleyway filled with childhood memories',
+      target: '손을 깨끗이 씻고 식사할 준비를 해요',
+      translation: 'Wash your hands clean and get ready for the meal',
     },
     {
       id: 'cp4_17',

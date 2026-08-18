@@ -19,9 +19,11 @@ import {
   getActiveMasteryTarget,
   recordSentenceCompletion,
   isAllMasteryComplete,
+  getSectionJamosForCheckpoint,
+  itemUsesAnyJamo,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
-import type { JamoStats } from '../types/mastery';
+import type { JamoStats, MasteryTarget } from '../types/mastery';
 
 describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
   beforeEach(() => {
@@ -433,5 +435,95 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     expect(finalRes.newlyMastered).toBe(true);
     expect(finalRes.isAllMasteryComplete).toBe(true);
     expect(isAllMasteryComplete(state)).toBe(true);
+  });
+
+  describe('Milestone Challenge Section Jamo Requirements', () => {
+    it('returns proper section Jamo sets for all checkpoints', () => {
+      const homeSection = getSectionJamosForCheckpoint('cp_home_row');
+      expect(homeSection).toBeDefined();
+      // Home must handle both Home Row Index Keys (Stage 1) and Home Row & Basic Vowels (Stage 2)
+      expect(homeSection?.has('ㅓ')).toBe(true);
+      expect(homeSection?.has('ㅏ')).toBe(true);
+      expect(homeSection?.has('ㅇ')).toBe(true);
+      expect(homeSection?.has('ㄹ')).toBe(true);
+      expect(homeSection?.has('ㅗ')).toBe(true);
+      expect(homeSection?.has('ㅣ')).toBe(true);
+      expect(homeSection?.has('ㅁ')).toBe(true);
+      expect(homeSection?.has('ㄴ')).toBe(true);
+      expect(homeSection?.has('ㅎ')).toBe(true);
+      expect(homeSection?.has('ㅜ')).toBe(true);
+      expect(homeSection?.has('ㅡ')).toBe(true);
+      expect(homeSection?.size).toBe(11);
+
+      // Top Row section (Stage 3)
+      const topSection = getSectionJamosForCheckpoint('cp_top_row');
+      expect(topSection).toBeDefined();
+      expect(topSection?.has('ㄱ')).toBe(true);
+      expect(topSection?.has('ㅅ')).toBe(true);
+      expect(topSection?.has('ㅔ')).toBe(true);
+      expect(topSection?.size).toBe(10);
+
+      // Bottom Row section (Stage 4)
+      const bottomSection = getSectionJamosForCheckpoint('cp_bottom_row');
+      expect(bottomSection).toBeDefined();
+      expect(bottomSection?.has('ㅋ')).toBe(true);
+      expect(bottomSection?.has('ㅌ')).toBe(true);
+      expect(bottomSection?.has('ㅊ')).toBe(true);
+      expect(bottomSection?.has('ㅍ')).toBe(true);
+      expect(bottomSection?.has('ㅠ')).toBe(true);
+      expect(bottomSection?.size).toBe(5);
+
+      // Shift Keys section (Stage 5)
+      const shiftSection = getSectionJamosForCheckpoint('cp_shift_keys');
+      expect(shiftSection).toBeDefined();
+      expect(shiftSection?.has('ㄲ')).toBe(true);
+      expect(shiftSection?.has('ㅆ')).toBe(true);
+      expect(shiftSection?.has('ㅖ')).toBe(true);
+      expect(shiftSection?.size).toBe(7);
+
+      // Final checkpoint (cp_master) is exempt
+      const masterSection = getSectionJamosForCheckpoint('cp_master');
+      expect(masterSection).toBeNull();
+    });
+
+    it('correctly detects if a sentence contains any Jamo from a section', () => {
+      const topJamos = new Set(['ㄱ', 'ㅅ', 'ㄷ', 'ㅈ', 'ㅂ', 'ㅛ', 'ㅕ', 'ㅑ', 'ㅐ', 'ㅔ']);
+      expect(itemUsesAnyJamo('별을 노래하는 마음으로', topJamos)).toBe(true);
+      expect(itemUsesAnyJamo('어머니와 아이', topJamos)).toBe(false);
+
+      const shiftJamos = new Set(['ㄲ', 'ㅆ', 'ㄸ', 'ㅉ', 'ㅃ', 'ㅒ', 'ㅖ']);
+      expect(itemUsesAnyJamo('꽃집에서 예쁜 꽃을 골라요', shiftJamos)).toBe(true);
+      expect(itemUsesAnyJamo('별을 노래하는 마음으로', shiftJamos)).toBe(false);
+    });
+
+    it('filters out curriculum sentences that do not use the section Jamos for milestone challenges', () => {
+      const dummyCurriculum: LessonItem[] = [
+        {
+          id: 'home_sent',
+          moduleId: 'm1',
+          target: '어머니와 함께 나무 아래로 걸어요',
+          translation: 'Walk under tree with mother',
+        },
+        {
+          id: 'top_sent',
+          moduleId: 'm1',
+          target: '가을 바람이 시원하게 불어요',
+          translation: 'Autumn breeze blows refreshingly',
+        },
+      ];
+
+      // Top Row checkpoint target: only sentences using Top Row Jamos should be matched
+      const topCheckpointTarget: MasteryTarget = {
+        type: 'checkpoint',
+        checkpoint: SENTENCE_CHECKPOINTS[1], // cp_top_row
+      };
+      const topUnlocked = new Set(JAMO_PROGRESSION_ORDER.slice(0, 21).map((i) => i.jamo));
+
+      const items = getEligibleMasteryItems(dummyCurriculum, topUnlocked, topCheckpointTarget);
+      // 'top_sent' contains top row keys ('ㄱ', 'ㅂ', 'ㅅ', etc.)
+      expect(items.some((i) => i.id === 'top_sent')).toBe(true);
+      // 'home_sent' contains NO top row keys, so it must NOT be included from curriculum
+      expect(items.some((i) => i.id === 'home_sent')).toBe(false);
+    });
   });
 });
