@@ -105,20 +105,26 @@ export class TutorSession {
     return arr;
   }
 
+  /** Updates eligible mastery items and sets the current cursor to the next prioritized item. */
+  private updateMasteryItemsAndCursor(excludeItemId?: string): void {
+    const unlocked = getUnlockedJamos(this.masteryState);
+    const activeTarget = getActiveMasteryTarget(this.masteryState);
+    this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
+
+    const nextItem = selectNextMasteryItem(
+      this.activeItems,
+      activeTarget,
+      this.masteryState.jamoStats,
+      excludeItemId,
+    );
+    const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
+    this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
+  }
+
   /** Filters items by active mode / module ID(s) and applies shuffling. */
   private applyFilterAndShuffle(): void {
     if (this.mode === 'mastery') {
-      const unlocked = getUnlockedJamos(this.masteryState);
-      const activeTarget = getActiveMasteryTarget(this.masteryState);
-      this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
-
-      const nextItem = selectNextMasteryItem(
-        this.activeItems,
-        activeTarget,
-        this.masteryState.jamoStats,
-      );
-      const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
-      this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
+      this.updateMasteryItemsAndCursor();
     } else {
       let filtered: LessonItem[];
       if (Array.isArray(this.selectedFilter)) {
@@ -500,18 +506,7 @@ export class TutorSession {
         this.scheduleSave();
       }
 
-      const unlocked = getUnlockedJamos(this.masteryState);
-      const nextActiveTarget = getActiveMasteryTarget(this.masteryState);
-      this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, nextActiveTarget);
-
-      const nextItem = selectNextMasteryItem(
-        this.activeItems,
-        nextActiveTarget,
-        this.masteryState.jamoStats,
-        currentItem.id,
-      );
-      const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
-      this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
+      this.updateMasteryItemsAndCursor(currentItem.id);
     } else {
       this.currentIndex += 1;
       if (this.currentIndex >= this.activeItems.length) {
