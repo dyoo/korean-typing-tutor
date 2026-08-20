@@ -545,4 +545,134 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(items.some((i) => i.id === 'home_sent')).toBe(false);
     });
   });
+
+  describe('Post-game Focus Section & Batchim Practice', () => {
+    it('should define all 27 standard Korean batchim in BATCHIM_FOCUS_LIST', async () => {
+      const { BATCHIM_FOCUS_LIST, BATCHIM_FOCUS_MAP } = await import('./jamoMastery');
+      expect(BATCHIM_FOCUS_LIST.length).toBe(27);
+
+      const expectedBatchim = [
+        'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ',
+        'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+      ];
+      expect(BATCHIM_FOCUS_LIST.map((b) => b.batchim)).toEqual(expectedBatchim);
+
+      for (const b of expectedBatchim) {
+        expect(BATCHIM_FOCUS_MAP[b]).toBeDefined();
+        expect(BATCHIM_FOCUS_MAP[b].batchim).toBe(b);
+        expect(BATCHIM_FOCUS_MAP[b].hand).toBe('left');
+        expect(BATCHIM_FOCUS_MAP[b].key.length).toBeGreaterThan(0);
+      }
+    });
+
+    it('accurately identifies final consonants with hasBatchim', async () => {
+      const { hasBatchim } = await import('./jamoMastery');
+
+      // Single consonants
+      expect(hasBatchim('책', 'ㄱ')).toBe(true);
+      expect(hasBatchim('책', 'ㄴ')).toBe(false);
+      expect(hasBatchim('가방', 'ㅇ')).toBe(true);
+      expect(hasBatchim('가방', 'ㅂ')).toBe(false);
+
+      // Double consonants
+      expect(hasBatchim('밖', 'ㄲ')).toBe(true);
+      expect(hasBatchim('밖', 'ㄱ')).toBe(false);
+      expect(hasBatchim('있다', 'ㅆ')).toBe(true);
+      expect(hasBatchim('있다', 'ㅅ')).toBe(false);
+
+      // Compound batchim
+      expect(hasBatchim('닭', 'ㄺ')).toBe(true);
+      expect(hasBatchim('닭', 'ㄱ')).toBe(false);
+      expect(hasBatchim('닭', 'ㄹ')).toBe(false);
+      expect(hasBatchim('값', 'ㅄ')).toBe(true);
+      expect(hasBatchim('앉다', 'ㄵ')).toBe(true);
+      expect(hasBatchim('외곬', 'ㄽ')).toBe(true);
+
+      // Rare batchim (ㅋ, ㅌ, ㅍ, etc.)
+      expect(hasBatchim('부엌', 'ㅋ')).toBe(true);
+      expect(hasBatchim('새벽녘', 'ㅋ')).toBe(true);
+      expect(hasBatchim('솥', 'ㅌ')).toBe(true);
+      expect(hasBatchim('숲', 'ㅍ')).toBe(true);
+      expect(hasBatchim('좋다', 'ㅎ')).toBe(true);
+
+      // Multi-syllable sentences
+      expect(hasBatchim('어머니가 계시는 따뜻한 부엌', 'ㅋ')).toBe(true);
+      expect(hasBatchim('하늘을 바라보아요', 'ㅋ')).toBe(false);
+    });
+
+    it('sets and clears activeFocusBatchim correctly', async () => {
+      const { setMasteryFocusBatchim, getActiveMasteryTarget, setMasteryProgressionLevel, setMasteryCheckpointLevel } =
+        await import('./jamoMastery');
+
+      const state = createDefaultMasteryState();
+      expect(state.activeFocusBatchim).toBeNull();
+
+      setMasteryFocusBatchim(state, 'ㅋ');
+      expect(state.activeFocusBatchim).toBe('ㅋ');
+      expect(state.activeCheckpointId).toBeNull();
+
+      const target = getActiveMasteryTarget(state);
+      expect(target.type).toBe('focus');
+      if (target.type === 'focus') {
+        expect(target.item.batchim).toBe('ㅋ');
+        expect(target.item.name).toBe('키읔');
+      }
+
+      // Switching level clears focus
+      setMasteryProgressionLevel(state, 10);
+      expect(state.activeFocusBatchim).toBeNull();
+
+      // Focusing again
+      setMasteryFocusBatchim(state, 'ㄺ');
+      expect(state.activeFocusBatchim).toBe('ㄺ');
+
+      // Switching checkpoint clears focus
+      setMasteryCheckpointLevel(state, 'cp_top_row');
+      expect(state.activeFocusBatchim).toBeNull();
+    });
+
+    it('strictly enforces that 100% of eligible items have the focused batchim in Focus mode', async () => {
+      const { getEligibleMasteryItems, hasBatchim, BATCHIM_FOCUS_MAP } =
+        await import('./jamoMastery');
+
+      const dummyItems: LessonItem[] = [
+        { id: 'item1', moduleId: 'm1', target: '부엌', translation: 'Kitchen' },
+        { id: 'item2', moduleId: 'm1', target: '동녘', translation: 'East' },
+        { id: 'item3', moduleId: 'm1', target: '나무', translation: 'Tree' },
+        { id: 'item4', moduleId: 'm1', target: '물', translation: 'Water' },
+        { id: 'item5', moduleId: 'm1', target: '닭고기', translation: 'Chicken meat' },
+      ];
+
+      const allUnlocked = new Set(JAMO_PROGRESSION_ORDER.map((i) => i.jamo));
+
+      // Test across multiple batchim targets
+      const testBatchim = ['ㅋ', 'ㄺ', 'ㄵ', 'ㄲ', 'ㅄ', 'ㅅ', 'ㅇ', 'ㄴ'];
+      for (const batchim of testBatchim) {
+        const focusTarget: MasteryTarget = {
+          type: 'focus',
+          item: BATCHIM_FOCUS_MAP[batchim],
+        };
+
+        const eligible = getEligibleMasteryItems(dummyItems, allUnlocked, focusTarget);
+        expect(eligible.length).toBeGreaterThan(0);
+
+        for (const item of eligible) {
+          const containsBatchim = hasBatchim(item.target, batchim);
+          expect(containsBatchim).toBe(true);
+        }
+      }
+    });
+
+    it('persists and reloads activeFocusBatchim state from LocalStorage', async () => {
+      const { setMasteryFocusBatchim, saveMasteryState, loadMasteryState } =
+        await import('./jamoMastery');
+
+      const state = createDefaultMasteryState();
+      setMasteryFocusBatchim(state, 'ㄶ');
+      saveMasteryState(state);
+
+      const reloaded = loadMasteryState();
+      expect(reloaded.activeFocusBatchim).toBe('ㄶ');
+    });
+  });
 });

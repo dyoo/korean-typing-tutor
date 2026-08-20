@@ -4,9 +4,10 @@
     onClose: () => void;
     onSwitchToFreeForm: () => void;
     onOpenMasterySidebar: () => void;
+    onOpenFocusMode?: () => void;
   }
 
-  let { show, onClose, onSwitchToFreeForm, onOpenMasterySidebar }: Props = $props();
+  let { show, onClose, onSwitchToFreeForm, onOpenMasterySidebar, onOpenFocusMode }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && show) {
@@ -72,7 +73,28 @@
 
       <!-- Action Cards -->
       <div class="mt-6 md:mt-8 space-y-3">
-        <!-- Option 1: Free-form Mode -->
+        <!-- Option 1: Batchim Focus Post-game Mode -->
+        <button
+          type="button"
+          onclick={onOpenFocusMode ?? onOpenMasterySidebar}
+          class="w-full text-left p-4 rounded-xl border border-purple-300 dark:border-purple-800 bg-purple-50/80 dark:bg-purple-950/40 hover:bg-purple-100 dark:hover:bg-purple-950/60 transition-colors group focus:outline-none focus:ring-2 focus:ring-purple-500"
+        >
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-purple-950 dark:text-purple-200 text-base md:text-lg">
+              Post-game: Focus on Any Batchim
+            </span>
+            <span
+              class="text-xs font-semibold px-2 py-0.5 rounded bg-purple-200 dark:bg-purple-900 text-purple-900 dark:text-purple-200"
+            >
+              Focus
+            </span>
+          </div>
+          <p class="mt-1 text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-normal">
+            Choose any of the 27 Korean final consonants (받침) to practice with 100% targeted examples.
+          </p>
+        </button>
+
+        <!-- Option 2: Free-form Mode -->
         <button
           type="button"
           onclick={onSwitchToFreeForm}
@@ -82,11 +104,6 @@
             <span class="font-bold text-amber-950 dark:text-amber-200 text-base md:text-lg">
               Switch to Free-form Mode
             </span>
-            <span
-              class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-200"
-            >
-              Recommended
-            </span>
           </div>
           <p class="mt-1 text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-normal">
             Practice the complete 26-module library of vocabulary, TOPIK levels, idioms, and
@@ -94,7 +111,7 @@
           </p>
         </button>
 
-        <!-- Option 2: Mastery Sidebar Adjust / Reset -->
+        <!-- Option 3: Mastery Sidebar Adjust / Reset -->
         <button
           type="button"
           onclick={onOpenMasterySidebar}

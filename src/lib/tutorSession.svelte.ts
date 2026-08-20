@@ -15,6 +15,7 @@ import {
   selectNextMasteryItem,
   setMasteryProgressionLevel,
   setMasteryCheckpointLevel,
+  setMasteryFocusBatchim,
   JAMO_PROGRESSION_ORDER,
   COMPOUND_BATCHIM_SET,
 } from '../utils/jamoMastery';
@@ -220,6 +221,14 @@ export class TutorSession {
   public setMasteryCheckpointLevel(checkpointId: string): void {
     this.cancelScheduledSave();
     setMasteryCheckpointLevel(this.masteryState, checkpointId);
+    saveMasteryState(this.masteryState);
+    this.applyFilterAndShuffle();
+  }
+
+  /** Manually focuses practice on a specific final consonant (받침) in post-game Focus mode. */
+  public setMasteryFocusBatchim(batchim: string): void {
+    this.cancelScheduledSave();
+    setMasteryFocusBatchim(this.masteryState, batchim);
     saveMasteryState(this.masteryState);
     this.applyFilterAndShuffle();
   }

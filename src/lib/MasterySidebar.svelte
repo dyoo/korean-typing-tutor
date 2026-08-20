@@ -1,27 +1,36 @@
 <script lang="ts">
-  import { JAMO_PROGRESSION_ORDER, JAMO_STAGES, calculateJamoProgress } from '../utils/jamoMastery';
+  import {
+    JAMO_PROGRESSION_ORDER,
+    JAMO_STAGES,
+    BATCHIM_FOCUS_LIST,
+    calculateJamoProgress,
+  } from '../utils/jamoMastery';
   import type { JamoStats, SentenceCheckpointStats } from '../types/mastery';
 
   interface Props {
     isOpen: boolean;
     masteryUnlockedCount: number;
     activeCheckpointId?: string | null;
+    activeFocusBatchim?: string | null;
     jamoStats: Record<string, JamoStats>;
     sentenceCheckpointStats?: Record<string, SentenceCheckpointStats>;
     onclose: () => void;
     onmasterylevelchange: (level: number) => void;
     oncheckpointselect?: (checkpointId: string) => void;
+    onfocusselect?: (batchim: string) => void;
   }
 
   let {
     isOpen,
     masteryUnlockedCount,
     activeCheckpointId = null,
+    activeFocusBatchim = null,
     jamoStats,
     sentenceCheckpointStats = {},
     onclose,
     onmasterylevelchange,
     oncheckpointselect,
+    onfocusselect,
   }: Props = $props();
 
   let collapsedStageIds = $state<string[]>([]);
@@ -40,6 +49,10 @@
 
   function handleCheckpointSelect(cpId: string) {
     oncheckpointselect?.(cpId);
+  }
+
+  function handleFocusSelect(batchim: string) {
+    onfocusselect?.(batchim);
   }
 
   import SidebarDrawer from './SidebarDrawer.svelte';
@@ -188,5 +201,91 @@
           {/if}
         </div>
       {/each}
+
+      <!-- Post-game Focus Section -->
+      <div
+        class="flex flex-col border border-purple-200 dark:border-purple-800/60 rounded-xl p-2.5 bg-purple-50/40 dark:bg-purple-950/20 gap-2"
+      >
+        <div
+          class="flex items-center justify-between p-1 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 transition-colors select-none"
+        >
+          <button
+            type="button"
+            onclick={() => toggleStageCollapse('Focus')}
+            class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide text-purple-900 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer"
+          >
+            <svg
+              class="w-3.5 h-3.5 text-purple-400 transition-transform {collapsedStageIds.includes(
+                'Focus',
+              )
+                ? '-rotate-90'
+                : ''}"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+            <span>Focus</span>
+          </button>
+          <span
+            class="text-[10px] font-mono font-semibold text-purple-700 dark:text-purple-300 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-purple-200 dark:border-purple-800 shrink-0"
+          >
+            {BATCHIM_FOCUS_LIST.length} batchim
+          </span>
+        </div>
+
+        {#if !collapsedStageIds.includes('Focus')}
+          <div
+            class="flex flex-col gap-1.5 pl-3 border-l-2 border-purple-500/30 dark:border-purple-400/30 ml-3 mb-1 mr-1"
+          >
+            {#each BATCHIM_FOCUS_LIST as item}
+              {@const isSelected = activeFocusBatchim === item.batchim}
+              {@const stats = jamoStats[item.batchim]}
+              {@const progress = calculateJamoProgress(stats)}
+              <label
+                class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isSelected
+                  ? 'bg-purple-100/80 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-700'
+                  : ''}"
+              >
+                <input
+                  type="radio"
+                  name="mastery-level"
+                  checked={isSelected}
+                  onchange={() => handleFocusSelect(item.batchim)}
+                  class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
+                />
+                <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="relative overflow-hidden text-base font-bold min-w-[28px] text-center leading-none {progress >=
+                      100
+                        ? 'text-emerald-600 dark:text-emerald-400'
+                        : 'text-purple-700 dark:text-purple-300'}"
+                    >
+                      {#if progress > 0}
+                        <div
+                          class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
+                            ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                            : 'bg-purple-400/30 dark:bg-purple-400/25'}"
+                          style="height: {progress}%;"
+                        ></div>
+                      {/if}
+                      <span class="relative z-10">{item.batchim}</span>
+                    </span>
+                    <span class="text-xs font-semibold text-gray-700 dark:text-gray-300 truncate">
+                      {item.name ?? item.batchim}
+                    </span>
+                  </div>
+                  <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400 uppercase shrink-0">
+                    {item.key}{item.shift ? '+Shift' : ''}
+                  </span>
+                </div>
+              </label>
+            {/each}
+          </div>
+        {/if}
+      </div>
     </div>
 </SidebarDrawer>

@@ -409,4 +409,23 @@ describe('TutorSession controller', () => {
     const savedRaw = localStorage.getItem('korean_tutor_mastery');
     expect(savedRaw).not.toBeNull();
   });
+
+  it('should switch to post-game Batchim Focus mode and serve 100% batchim-matching examples', async () => {
+    const { hasBatchim } = await import('../utils/jamoMastery');
+    session.setMode('mastery');
+    session.setMasteryFocusBatchim('ㅋ');
+
+    const target = session.getActiveMasteryTarget();
+    expect(target.type).toBe('focus');
+    if (target.type === 'focus') {
+      expect(target.item.batchim).toBe('ㅋ');
+    }
+
+    // Every item served must have batchim 'ㅋ'
+    for (let i = 0; i < 5; i++) {
+      const currentItem = session.getCurrentItem();
+      expect(hasBatchim(currentItem.target, 'ㅋ')).toBe(true);
+      session.advanceLevel();
+    }
+  });
 });

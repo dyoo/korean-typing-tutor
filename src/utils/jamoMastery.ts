@@ -8,11 +8,13 @@ import type {
   SentenceCheckpointStats,
   MasteryTarget,
   MasteryAttemptResult,
+  BatchimFocusItem,
 } from '../types/mastery';
 import { decomposeStringToJamos, decomposeSyllable } from './hangulDecompose';
 import {
   MASTERY_JAMO_VOCABULARY,
   MASTERY_CHECKPOINT_SENTENCES,
+  FOCUS_BATCHIM_VOCABULARY,
 } from '../content/masteryVocabulary';
 
 /** Storage key used for persisting Jamo mastery progress in LocalStorage. */
@@ -197,6 +199,61 @@ export const JAMO_STAGES: JamoStageGroup[] = (() => {
     }));
 })();
 
+/**
+ * Complete list of all 27 standard Korean final consonants (받침) in dictionary order.
+ * Used for post-game Batchim Focus mode practice.
+ */
+export const BATCHIM_FOCUS_LIST: BatchimFocusItem[] = [
+  { batchim: 'ㄱ', key: 'r', hand: 'left', name: '기역' },
+  { batchim: 'ㄲ', key: 'r', shift: true, hand: 'left', name: '쌍기역' },
+  { batchim: 'ㄳ', key: 'rt', hand: 'left', name: '기역시옷', combination: ['ㄱ', 'ㅅ'] },
+  { batchim: 'ㄴ', key: 's', hand: 'left', name: '니은' },
+  { batchim: 'ㄵ', key: 'sw', hand: 'left', name: '니은지읒', combination: ['ㄴ', 'ㅈ'] },
+  { batchim: 'ㄶ', key: 'sg', hand: 'left', name: '니은히읗', combination: ['ㄴ', 'ㅎ'] },
+  { batchim: 'ㄷ', key: 'e', hand: 'left', name: '디귿' },
+  { batchim: 'ㄹ', key: 'f', hand: 'left', name: '리을' },
+  { batchim: 'ㄺ', key: 'fr', hand: 'left', name: '리을기역', combination: ['ㄹ', 'ㄱ'] },
+  { batchim: 'ㄻ', key: 'fa', hand: 'left', name: '리을미음', combination: ['ㄹ', 'ㅁ'] },
+  { batchim: 'ㄼ', key: 'fq', hand: 'left', name: '리을비읍', combination: ['ㄹ', 'ㅂ'] },
+  { batchim: 'ㄽ', key: 'ft', hand: 'left', name: '리을시옷', combination: ['ㄹ', 'ㅅ'] },
+  { batchim: 'ㄾ', key: 'fx', hand: 'left', name: '리을티읕', combination: ['ㄹ', 'ㅌ'] },
+  { batchim: 'ㄿ', key: 'fv', hand: 'left', name: '리을피읖', combination: ['ㄹ', 'ㅍ'] },
+  { batchim: 'ㅀ', key: 'fg', hand: 'left', name: '리을히읗', combination: ['ㄹ', 'ㅎ'] },
+  { batchim: 'ㅁ', key: 'a', hand: 'left', name: '미음' },
+  { batchim: 'ㅂ', key: 'q', hand: 'left', name: '비읍' },
+  { batchim: 'ㅄ', key: 'qt', hand: 'left', name: '비읍시옷', combination: ['ㅂ', 'ㅅ'] },
+  { batchim: 'ㅅ', key: 't', hand: 'left', name: '시옷' },
+  { batchim: 'ㅆ', key: 't', shift: true, hand: 'left', name: '쌍시옷' },
+  { batchim: 'ㅇ', key: 'd', hand: 'left', name: '이응' },
+  { batchim: 'ㅈ', key: 'w', hand: 'left', name: '지읒' },
+  { batchim: 'ㅊ', key: 'c', hand: 'left', name: '치읓' },
+  { batchim: 'ㅋ', key: 'z', hand: 'left', name: '키읔' },
+  { batchim: 'ㅌ', key: 'x', hand: 'left', name: '티읕' },
+  { batchim: 'ㅍ', key: 'v', hand: 'left', name: '피읖' },
+  { batchim: 'ㅎ', key: 'g', hand: 'left', name: '히읗' },
+];
+
+/** Lookup map for BatchimFocusItem by batchim character. */
+export const BATCHIM_FOCUS_MAP: Record<string, BatchimFocusItem> = Object.fromEntries(
+  BATCHIM_FOCUS_LIST.map((item) => [item.batchim, item]),
+);
+
+/**
+ * Checks whether a text string contains the specified final consonant (받침) in any syllable.
+ */
+export function hasBatchim(text: string, batchim: string): boolean {
+  if (!text || !batchim) {
+    return false;
+  }
+  for (const char of text) {
+    const finalConsonant = decomposeSyllable(char)?.finalConsonant;
+    if (finalConsonant === batchim) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /** Creates a fresh zeroed JamoStats entry. */
 function createEmptyJamoStats(): JamoStats {
   return {
@@ -293,6 +350,7 @@ export function createDefaultMasteryState(): MasteryState {
     mode: 'mastery',
     unlockedCount: MIN_UNLOCKED_COUNT, // Initial Stage 1 keys: ㅓ, ㅏ, ㅇ, ㄹ
     activeCheckpointId: null,
+    activeFocusBatchim: null,
     jamoStats,
     sentenceCheckpointStats,
   };
@@ -327,6 +385,10 @@ export function loadMasteryState(): MasteryState {
     const mode = parsed.mode === 'curriculum' ? 'curriculum' : 'mastery';
     const activeCheckpointId =
       typeof parsed.activeCheckpointId === 'string' ? parsed.activeCheckpointId : null;
+    const activeFocusBatchim =
+      typeof parsed.activeFocusBatchim === 'string' && BATCHIM_FOCUS_MAP[parsed.activeFocusBatchim]
+        ? parsed.activeFocusBatchim
+        : null;
 
     const jamoStats = { ...defaultState.jamoStats };
     if (parsed.jamoStats && typeof parsed.jamoStats === 'object') {
@@ -364,6 +426,7 @@ export function loadMasteryState(): MasteryState {
       mode,
       unlockedCount,
       activeCheckpointId,
+      activeFocusBatchim,
       jamoStats,
       sentenceCheckpointStats,
     };
@@ -431,9 +494,16 @@ export function getActiveCheckpointForState(state: MasteryState): SentenceCheckp
 }
 
 /**
- * Returns the active learning target (either a specific Jamo or a Sentence Checkpoint).
+ * Returns the active learning target (a specific Jamo, a Sentence Checkpoint, or a Batchim Focus).
  */
 export function getActiveMasteryTarget(state: MasteryState): MasteryTarget {
+  if (state.activeFocusBatchim && BATCHIM_FOCUS_MAP[state.activeFocusBatchim]) {
+    return {
+      type: 'focus',
+      item: BATCHIM_FOCUS_MAP[state.activeFocusBatchim],
+    };
+  }
+
   const checkpoint = getActiveCheckpointForState(state);
   if (checkpoint) {
     return { type: 'checkpoint', checkpoint };
@@ -458,6 +528,7 @@ export function setMasteryProgressionLevel(
   const clamped = clampUnlockedCount(level);
   state.unlockedCount = clamped;
   state.activeCheckpointId = null;
+  state.activeFocusBatchim = null;
 
   if (markPrecedingMastered) {
     for (let i = 0; i < JAMO_PROGRESSION_ORDER.length; i++) {
@@ -507,6 +578,7 @@ export function setMasteryCheckpointLevel(state: MasteryState, checkpointId: str
 
   state.unlockedCount = cp.afterJamoIndex;
   state.activeCheckpointId = checkpointId;
+  state.activeFocusBatchim = null;
 
   if (!state.sentenceCheckpointStats) {
     state.sentenceCheckpointStats = {};
@@ -540,6 +612,17 @@ export function setMasteryCheckpointLevel(state: MasteryState, checkpointId: str
       state.sentenceCheckpointStats[item.id].completedCount = 0;
     }
   }
+}
+
+/**
+ * Focuses practice on a specific final consonant (받침) in post-game Focus mode.
+ */
+export function setMasteryFocusBatchim(state: MasteryState, batchim: string): void {
+  if (!BATCHIM_FOCUS_MAP[batchim]) {
+    return;
+  }
+  state.activeCheckpointId = null;
+  state.activeFocusBatchim = batchim;
 }
 
 /**
@@ -846,6 +929,17 @@ export function getEligibleMasteryItems(
   unlockedJamos: Set<string>,
   activeTarget?: MasteryTarget | null,
 ): LessonItem[] {
+  // If active target is a batchim focus in post-game mode, strictly return items containing that batchim
+  if (activeTarget && activeTarget.type === 'focus') {
+    const focusBatchim = activeTarget.item.batchim;
+    const curatedBatchimWords = FOCUS_BATCHIM_VOCABULARY[focusBatchim] ?? [];
+    const matchingCurriculum = allItems.filter(
+      (item) => hasBatchim(item.target, focusBatchim) && isItemEligible(item, unlockedJamos),
+    );
+    const eligible = dedupeByTarget([...curatedBatchimWords, ...matchingCurriculum]);
+    return eligible.length > 0 ? eligible : curatedBatchimWords;
+  }
+
   // If active target is a sentence checkpoint, return curated sentence bank + matching curriculum sentences
   if (activeTarget && activeTarget.type === 'checkpoint') {
     const cpId = activeTarget.checkpoint.id;
@@ -970,8 +1064,10 @@ export function selectNextMasteryItem(
 
   const isCheckpoint =
     typeof activeTarget === 'object' && activeTarget !== null && activeTarget.type === 'checkpoint';
+  const isFocus =
+    typeof activeTarget === 'object' && activeTarget !== null && activeTarget.type === 'focus';
 
-  if (isCheckpoint) {
+  if (isCheckpoint || isFocus) {
     return pool[Math.floor(Math.random() * pool.length)];
   }
 

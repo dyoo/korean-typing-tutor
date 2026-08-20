@@ -85,8 +85,17 @@
   let activeLearningJamo = $derived(
     activeMasteryTarget.type === 'jamo' ? activeMasteryTarget.item : null,
   );
+  let activeFocusBatchimItem = $derived(
+    activeMasteryTarget.type === 'focus' ? activeMasteryTarget.item : null,
+  );
+  let activeJamoChar = $derived(
+    activeLearningJamo?.jamo ?? activeFocusBatchimItem?.batchim ?? null,
+  );
+  let activeLearningCombination = $derived(
+    activeLearningJamo?.combination ?? activeFocusBatchimItem?.combination,
+  );
   let activeJamoProgress = $derived(
-    activeLearningJamo ? calculateJamoProgress(masteryState.jamoStats[activeLearningJamo.jamo]) : 0,
+    activeJamoChar ? calculateJamoProgress(masteryState.jamoStats[activeJamoChar]) : 0,
   );
   let activeCheckpointTitle = $derived(
     activeMasteryTarget.type === 'checkpoint' ? activeMasteryTarget.checkpoint.title : null,
@@ -176,6 +185,11 @@
 
   function handleMasteryCheckpointChange(checkpointId: string) {
     session.setMasteryCheckpointLevel(checkpointId);
+    focusInputElement();
+  }
+
+  function handleMasteryFocusSelect(batchim: string) {
+    session.setMasteryFocusBatchim(batchim);
     focusInputElement();
   }
 
@@ -322,6 +336,13 @@
 
   function handleCompletionOpenMasterySidebar() {
     showMasteryCompletionModal = false;
+    activePanel = 'mastery';
+    focusInputElement();
+  }
+
+  function handleCompletionOpenFocusMode() {
+    showMasteryCompletionModal = false;
+    session.setMasteryFocusBatchim('ㄱ');
     activePanel = 'mastery';
     focusInputElement();
   }
@@ -531,8 +552,8 @@
     totalModuleCount={modules.length}
     masteryUnlockedCount={masteryState.unlockedCount}
     masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
-    activeJamoChar={activeLearningJamo?.jamo ?? null}
-    activeLearningCombination={activeLearningJamo?.combination}
+    activeJamoChar={activeJamoChar}
+    activeLearningCombination={activeLearningCombination}
     {activeJamoProgress}
     {activeCheckpointTitle}
     {activeCheckpointProgress}
@@ -630,11 +651,13 @@
   isOpen={showMasterySidebar}
   masteryUnlockedCount={masteryState.unlockedCount}
   activeCheckpointId={masteryState.activeCheckpointId ?? activeCheckpoint?.id ?? null}
+  activeFocusBatchim={masteryState.activeFocusBatchim ?? null}
   jamoStats={masteryState.jamoStats}
   sentenceCheckpointStats={masteryState.sentenceCheckpointStats}
   onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}
   oncheckpointselect={handleMasteryCheckpointChange}
+  onfocusselect={handleMasteryFocusSelect}
 />
 
 <TTSDownloadModal
@@ -648,6 +671,7 @@
   onClose={handleCompletionModalClose}
   onSwitchToFreeForm={handleCompletionSwitchToFreeForm}
   onOpenMasterySidebar={handleCompletionOpenMasterySidebar}
+  onOpenFocusMode={handleCompletionOpenFocusMode}
 />
 
 <style>
