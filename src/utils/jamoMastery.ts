@@ -616,6 +616,7 @@ export function setMasteryCheckpointLevel(state: MasteryState, checkpointId: str
 
 /**
  * Focuses practice on a specific final consonant (받침) in post-game Batchim Workshop mode.
+ * Automatically unlocks all keys across all stages if the user hasn't unlocked them yet.
  */
 export function setMasteryFocusBatchim(state: MasteryState, batchim: string): void {
   if (!BATCHIM_FOCUS_MAP[batchim]) {
@@ -623,6 +624,11 @@ export function setMasteryFocusBatchim(state: MasteryState, batchim: string): vo
   }
   state.activeCheckpointId = null;
   state.activeFocusBatchim = batchim;
+
+  // If jumping to post-game and keys are not all unlocked yet, unlock all 44 Jamos without altering mastery history
+  if (state.unlockedCount < JAMO_PROGRESSION_ORDER.length) {
+    state.unlockedCount = JAMO_PROGRESSION_ORDER.length;
+  }
 }
 
 /**

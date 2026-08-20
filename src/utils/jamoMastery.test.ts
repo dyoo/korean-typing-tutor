@@ -631,6 +631,23 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(state.activeFocusBatchim).toBeNull();
     });
 
+    it('unlocks all 44 keys without modifying mastery history when jumping directly to post-game Batchim Workshop', async () => {
+      const { setMasteryFocusBatchim, JAMO_PROGRESSION_ORDER } =
+        await import('./jamoMastery');
+
+      const state = createDefaultMasteryState();
+      expect(state.unlockedCount).toBe(4); // initial Stage 1
+      expect(state.jamoStats['ㅋ']?.isMastered).toBe(false);
+
+      // Jump directly to postgame
+      setMasteryFocusBatchim(state, 'ㅋ');
+      expect(state.unlockedCount).toBe(JAMO_PROGRESSION_ORDER.length);
+      expect(state.unlockedCount).toBe(44);
+
+      // Verify that previously unmastered Jamo remains unmastered (not artificially marked)
+      expect(state.jamoStats['ㅋ']?.isMastered).toBe(false);
+    });
+
     it('strictly enforces that 100% of eligible items have the focused batchim in Focus mode', async () => {
       const { getEligibleMasteryItems, hasBatchim, BATCHIM_FOCUS_MAP } =
         await import('./jamoMastery');
