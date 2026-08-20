@@ -51,6 +51,16 @@ Choseong/Jungseong/Jongseong)** in any code or JSDoc we write.
 - **hangulTables.ts**: `INITIAL_CONSONANT_MAP`, `VOWEL_MAP`, and `FINAL_CONSONANT_MAP` are dynamically derived from `DUBEOLSIK_KEY_DEFINITIONS` and standalone arrays.
 - **jamoMastery.ts**: `key`, `shift`, and `hand` attributes in `JAMO_PROGRESSION_ORDER` are dynamically derived via `JAMO_TO_KEY`.
 
+## Completed in commit `5b248a2d`
+
+- **hangulTables.ts**: Added `isHangulSyllable(charOrCode)` helper; derived `STANDALONE_COMPOUND_MAP` from `COMPOUND_VOWEL_DECOMP` and `COMPOUND_FINAL_CONSONANT_DECOMP`.
+- Replaced manual `0xac00..0xd7a3` checks in `hangulEngine.ts` and `content.test.ts`.
+
+## Completed in commit `5cf4edce`
+
+- **romanizer.ts**: Derived `SINGLE_JAMO_PRONUNCIATION` from `INITIAL_CONSONANT_MAP` and `VOWEL_MAP`; hoisted shared neutralization final consonant arrays (`K_NEUTRALIZATION_FINALS`, `T_NEUTRALIZATION_FINALS`, `P_NEUTRALIZATION_FINALS`).
+- **fontScaler.ts**: Extracted declarative `FONT_TIERS` table with shared `getEffectiveLength` and `getTier` helpers, eliminating repeated length conditional branches across font size, weight, subtext, and style clamping.
+
 ## Deliberate behavior-preservation traps (do NOT "simplify" these)
 
 1. `resetJamoStats()` does **not** clear `lastPracticed` (3 level-setting paths preserve it);
@@ -73,13 +83,14 @@ Component-side batches also need svelte-check (cross-component types).
 
 ## Audit backlog (remaining, ranked)
 
-1. **Hangul tables**: `isHangulSyllable()` (4 sites incl. test), derive `STANDALONE_COMPOUND_MAP` from the two DECOMP maps, derive `COMPOUND_BATCHIM_SET`/stage-6 `combination` from them.
-2. **Data consolidation**: romanizer `SINGLE_JAMO_PRONUNCIATION` = spread of maps + only 2 overridden keys (`ㄹ:'r/l'`, `ㅇ:'ng'`); hoist the two exact neutralization arrays (`['ㄱ','ㄲ','ㅋ','ㄺ']`, `['ㄷ','ㅅ','ㅆ','ㅈ','ㅊ','ㅌ','ㅎ']`); fontScaler single tier table (15/35/75 + 0.35 weight).
-3. **Components**: H1 `MasteryVirtualKey` wrapper (6 exact ~15-line blocks in VirtualKeyboard.svelte), H2 `SidebarDrawer` shell (both sidebars: backdrop/panel/header/Escape), H3 centralized keycap active/base class strings + `SpecialKey` (8 inline buttons; mobile Shift duplicates ShiftKey.svelte); medium: `ProgressFill` ×3, `ModalShell` ×2, accordion chrome ×2, Escape/backdrop ×5+4 (fold into shells if possible), tutorSession `selectMasteryItem(excludeId?)` (tutorSession.svelte.ts:110-121 vs :503-514), settings.ts `pickBool/pickNumberRange/pickEnum` idiom ×15 w/ single `DEFAULT_SETTINGS` source.
-4. Considered & REJECTED as duplication (do not re-flag): engine uppercase-fallback vs `resolveKeyOutput` (inverse ops), romanizer liaison vs normal-final maps (different phonology), `handleTargetCopyEvent` (compat shim), SettingsModal vs centered dialogs (intentional UX), `togglePanel` wrappers, `scheduleSave`/`flushPendingSave`, TargetDisplay vs InputDisplay CharDisplay usage, types/*.ts (no dupes).
+1. **Components**:
+   - **H1 `MasteryVirtualKey`**: Wrapper / helper for the 6 repetitive ~15-line keycap blocks in `VirtualKeyboard.svelte`.
+   - **H2 `SidebarDrawer` shell**: Shared drawer chrome (backdrop, panel transition classes, header, Escape handler) between `CurriculumSidebar.svelte` and `MasterySidebar.svelte`.
+   - **H3 centralized keycap active/base class strings + `SpecialKey`**: Centralize button base styles across virtual keys.
+   - **Medium component cleanups**: `ProgressFill` ×3, `ModalShell` ×2, accordion chrome ×2, `selectMasteryItem` in `tutorSession.svelte.ts`, `settings.ts` `pickBool/pickNumberRange/pickEnum` parsers.
+2. Considered & REJECTED as duplication (do not re-flag): engine uppercase-fallback vs `resolveKeyOutput` (inverse ops), romanizer liaison vs normal-final maps (different phonology), `handleTargetCopyEvent` (compat shim), SettingsModal vs centered dialogs (intentional UX), `togglePanel` wrappers, `scheduleSave`/`flushPendingSave`, TargetDisplay vs InputDisplay CharDisplay usage, types/*.ts (no dupes).
 
 ## Next immediate objective
 
-**Hangul Tables & Combinations**:
-1. Add/export `isHangulSyllable(codeOrChar: string | number): boolean` in `hangulDecompose.ts` / `hangulTables.ts` and replace the 4 manual range checks (`0xac00 <= code && code <= 0xd7a3`).
-2. Derive `STANDALONE_COMPOUND_MAP` directly by mapping entries in `COMPOUND_VOWEL_DECOMP` and `COMPOUND_FINAL_CONSONANT_DECOMP` to their component standalone characters.
+**H1 `MasteryVirtualKey` (in `VirtualKeyboard.svelte`)**:
+Extract the repetitive keycap rendering block (which resolves active character, checks target keys, calculates mastery progress/accuracy, and applies tooltip/progress gauge) to eliminate the 6 duplicate ~15-line markup sections across desktop and mobile rows.
