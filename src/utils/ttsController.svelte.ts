@@ -1,7 +1,7 @@
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
 
 /** Maximum number of audio blob URLs retained in memory before LRU eviction. */
-export const MAX_AUDIO_CACHE_SIZE = 50;
+const MAX_AUDIO_CACHE_SIZE = 50;
 
 /**
  * Controller singleton for interacting with the TTS Web Worker and managing
