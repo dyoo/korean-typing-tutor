@@ -930,12 +930,11 @@ export function getEligibleMasteryItems(
   activeTarget?: MasteryTarget | null,
 ): LessonItem[] {
   // If active target is a batchim in post-game Batchim Workshop mode, strictly return items containing that batchim
+  // (Post-game mode utilizes the full authentic curriculum without Jamo progression restrictions)
   if (activeTarget && activeTarget.type === 'focus') {
     const focusBatchim = activeTarget.item.batchim;
     const curatedBatchimWords = FOCUS_BATCHIM_VOCABULARY[focusBatchim] ?? [];
-    const matchingCurriculum = allItems.filter(
-      (item) => hasBatchim(item.target, focusBatchim) && isItemEligible(item, unlockedJamos),
-    );
+    const matchingCurriculum = allItems.filter((item) => hasBatchim(item.target, focusBatchim));
     const eligible = dedupeByTarget([...curatedBatchimWords, ...matchingCurriculum]);
     return eligible.length > 0 ? eligible : curatedBatchimWords;
   }
