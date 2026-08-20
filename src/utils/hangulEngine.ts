@@ -15,6 +15,7 @@ import {
   DIRECT_VOWEL_MAP,
   DIRECT_FINAL_CONSONANT_MAP,
 } from './hangulTables';
+import { assembleSyllable } from './hangulDecompose';
 
 /**
  * Korean Hangul Composition Engine.
@@ -27,21 +28,11 @@ export class HangulEngine {
   private composedString = '';
 
   /**
-   * Assembles Initial Consonant (Choseong), Vowel (Jungseong), and Final Consonant (Jongseong) indices into a single Unicode Hangul Syllable character.
-   * Unicode Hangul Syllable Math Formula:
-   *   Code = (InitialConsonantIndex * 21 + VowelIndex) * 28 + FinalConsonantIndex + 0xAC00
-   */
-  private assemble(initialConsonant: number, vowel: number, finalConsonant: number): string {
-    const code = (initialConsonant * 21 + vowel) * 28 + finalConsonant + HANGUL_BASE;
-    return String.fromCharCode(code);
-  }
-
-  /**
    * Returns the string representation of the syllable block currently being composed.
    */
   private getCurrentChar(): string {
     if (this.currentInitialConsonant !== null && this.currentVowel !== null) {
-      return this.assemble(
+      return assembleSyllable(
         this.currentInitialConsonant,
         this.currentVowel,
         this.currentFinalConsonant ?? 0,

@@ -11,6 +11,45 @@ import {
 } from './hangulTables';
 
 /**
+ * Returns the constituent Jamo indices (initialConsonant, vowel, finalConsonant)
+ * for a Unicode Hangul Syllable character (U+AC00..U+D7A3), or null if the
+ * character is outside that block.
+ *
+ * Unicode Hangul Syllable Math (single source of truth for the decomposition):
+ *   offset        = code - 0xAC00
+ *   initialIndex  = floor(offset / 588)        (588 = 21 vowels x 28 final consonants)
+ *   vowelIndex    = floor((offset % 588) / 28)
+ *   finalIndex    = offset % 28
+ */
+function getSyllableIndices(
+  char: string,
+): { initialConsonantIndex: number; vowelIndex: number; finalConsonantIndex: number } | null {
+  const offset = char.charCodeAt(0) - HANGUL_BASE;
+  if (offset < 0 || offset > 11171) {
+    return null;
+  }
+  return {
+    initialConsonantIndex: Math.floor(offset / 588),
+    vowelIndex: Math.floor((offset % 588) / 28),
+    finalConsonantIndex: offset % 28,
+  };
+}
+
+/**
+ * Assembles initialConsonant, vowel, and finalConsonant indices into a single
+ * Unicode Hangul Syllable character. The inverse of `getSyllableIndices`.
+ *   code = (initialIndex * 21 + vowelIndex) * 28 + finalIndex + 0xAC00
+ */
+export function assembleSyllable(
+  initialConsonantIndex: number,
+  vowelIndex: number,
+  finalConsonantIndex: number,
+): string {
+  const code = (initialConsonantIndex * 21 + vowelIndex) * 28 + finalConsonantIndex + HANGUL_BASE;
+  return String.fromCharCode(code);
+}
+
+/**
  * Decomposes a single character (Hangul Syllable block or Jamo) into its constituent Jamo sequence string.
  * Example: '화' -> "ㅎㅗㅏ", '홧' -> "ㅎㅗㅏㅈ", '닭' -> "ㄷㅏㄹㄱ".
  */
@@ -19,16 +58,13 @@ export function decomposeCharToJamos(char: string | undefined): string {
     return '';
   }
 
-  const code = char.charCodeAt(0);
-  if (code >= HANGUL_BASE && code <= 0xd7a3) {
-    const offset = code - HANGUL_BASE;
-    const finalConsonantIndex = offset % 28;
-    const vowelIndex = Math.floor(offset / 28) % 21;
-    const initialConsonantIndex = Math.floor(offset / (21 * 28));
+  const indices = getSyllableIndices(char);
+  if (indices) {
+    const { initialConsonantIndex, vowelIndex, finalConsonantIndex } = indices;
 
     let result = INITIAL_CONSONANT_STANDALONE[initialConsonantIndex] ?? '';
 
-    // Decompose Vowel (Jungseong)
+    // Decompose vowel
     if (COMPOUND_VOWEL_DECOMP[vowelIndex]) {
       const [v1, v2] = COMPOUND_VOWEL_DECOMP[vowelIndex];
       result += (VOWEL_STANDALONE[v1] ?? '') + (VOWEL_STANDALONE[v2] ?? '');
@@ -36,7 +72,7 @@ export function decomposeCharToJamos(char: string | undefined): string {
       result += VOWEL_STANDALONE[vowelIndex] ?? '';
     }
 
-    // Decompose Final Consonant (Jongseong)
+    // Decompose finalConsonant
     if (finalConsonantIndex > 0) {
       if (COMPOUND_FINAL_CONSONANT_DECOMP[finalConsonantIndex]) {
         const [f1, f2] = COMPOUND_FINAL_CONSONANT_DECOMP[finalConsonantIndex];
@@ -81,20 +117,19 @@ export function decomposeStringToJamos(str: string | undefined): string[] {
 }
 
 /**
- * Decomposes a single Hangul syllable character into its constituent Jamo (Choseong, Jungseong, Jongseong).
+ * Decomposes a single Hangul syllable character into its constituent Jamo
+ * (initialConsonant, vowel, finalConsonant).
  * Returns null if the character is outside the Unicode Hangul Syllables block (U+AC00..U+D7A3).
  */
 export function decomposeSyllable(char: string | undefined): SyllableDecomposition | null {
   if (!char) {
     return null;
   }
-  const code = char.charCodeAt(0) - HANGUL_BASE;
-  if (code < 0 || code > 11171) {
+  const indices = getSyllableIndices(char);
+  if (!indices) {
     return null;
   }
-  const initialConsonantIndex = Math.floor(code / 588);
-  const vowelIndex = Math.floor((code % 588) / 28);
-  const finalConsonantIndex = code % 28;
+  const { initialConsonantIndex, vowelIndex, finalConsonantIndex } = indices;
   return {
     initialConsonant: INITIAL_CONSONANT_STANDALONE[initialConsonantIndex] ?? '',
     vowel: VOWEL_STANDALONE[vowelIndex] ?? '',
@@ -103,7 +138,7 @@ export function decomposeSyllable(char: string | undefined): SyllableDecompositi
 }
 
 /**
- * Extracts the Initial Consonant (Choseong) Jamo character from a given character.
+ * Extracts the initialConsonant Jamo character from a given character.
  * Example: '장' -> 'ㅈ', 'ㅈ' -> 'ㅈ'.
  */
 export function getInitialConsonantJamo(char: string | undefined): string | null {
