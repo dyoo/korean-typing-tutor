@@ -80,6 +80,9 @@
 
     onkeyselect?.(outputKey);
   }
+
+  const TARGET_KEY_ACTIVE_CLASSES =
+    'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm font-bold';
 </script>
 
 {#snippet masteryKey(cap: (typeof DUBEOLSIK_ROWS)[0][0])}
@@ -94,6 +97,35 @@
     {jamoStats}
     onselect={handleKeyClick}
   />
+{/snippet}
+
+{#snippet specialKeyButton({
+  key,
+  isTarget,
+  ariaLabel,
+  customClass = '',
+  style = '',
+  content,
+}: {
+  key: string;
+  isTarget: boolean;
+  ariaLabel: string;
+  customClass?: string;
+  style?: string;
+  content: import('svelte').Snippet;
+})}
+  <button
+    type="button"
+    tabindex="-1"
+    onmousedown={(e) => handleKeyClick(key, e)}
+    {style}
+    class="rounded-lg border transition-colors cursor-pointer flex items-center justify-center {customClass} {isTarget
+      ? TARGET_KEY_ACTIVE_CLASSES
+      : ''}"
+    aria-label={ariaLabel}
+  >
+    {@render content()}
+  </button>
 {/snippet}
 
 <div
@@ -111,20 +143,20 @@
         {@render masteryKey(cap)}
       {/each}
 
-      <button
-        type="button"
-        tabindex="-1"
-        onmousedown={(e) => handleKeyClick('Backspace', e)}
-        style="grid-column: span 4;"
-        class="flex items-center justify-center gap-1 h-13 rounded-lg border text-xs font-semibold transition-colors cursor-pointer p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700
-          {isBackspaceTarget
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : ''}"
-        aria-label="Backspace"
-      >
+      {#snippet backspaceContent()}
         <span class="text-sm font-bold">⌫</span>
         <span class="text-[10px]">Delete</span>
-      </button>
+      {/snippet}
+
+      {@render specialKeyButton({
+        key: 'Backspace',
+        isTarget: isBackspaceTarget,
+        ariaLabel: 'Backspace',
+        style: 'grid-column: span 4;',
+        customClass:
+          'gap-1 h-13 text-xs font-semibold p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700',
+        content: backspaceContent,
+      })}
     </div>
 
     <!-- Desktop Row 1: A S D F G H J K L -->
@@ -167,18 +199,18 @@
 
     <!-- Desktop Spacebar Row -->
     <div class="flex items-center justify-center w-full mt-0.5">
-      <button
-        type="button"
-        tabindex="-1"
-        onmousedown={(e) => handleKeyClick(' ', e)}
-        class="w-64 md:w-80 h-8 rounded-lg border text-xs font-semibold uppercase tracking-wider flex items-center justify-center transition-colors cursor-pointer shrink-0
-          {isSpaceTarget
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : 'bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'}"
-        aria-label="Spacebar"
-      >
+      {#snippet spaceContent()}
         <span>Space</span>
-      </button>
+      {/snippet}
+
+      {@render specialKeyButton({
+        key: ' ',
+        isTarget: isSpaceTarget,
+        ariaLabel: 'Spacebar',
+        customClass:
+          'w-64 md:w-80 h-8 text-xs font-semibold uppercase tracking-wider shrink-0 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700',
+        content: spaceContent,
+      })}
     </div>
   </div>
 
@@ -211,7 +243,7 @@
           isVirtualShiftActive ||
           isLeftShiftPressed ||
           isRightShiftPressed
-            ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm font-bold'
+            ? TARGET_KEY_ACTIVE_CLASSES
             : ''}"
           aria-label="Shift"
         >
@@ -222,18 +254,18 @@
           {@render masteryKey(cap)}
         {/each}
 
-        <button
-          type="button"
-          tabindex="-1"
-          onmousedown={(e) => handleKeyClick('Backspace', e)}
-          class="h-14 flex-[1.5] min-w-0 rounded-lg border text-lg font-bold transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
-            {isBackspaceTarget
-            ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-            : ''}"
-          aria-label="Backspace"
-        >
+        {#snippet mobileBackspaceContent()}
           ⌫
-        </button>
+        {/snippet}
+
+        {@render specialKeyButton({
+          key: 'Backspace',
+          isTarget: isBackspaceTarget,
+          ariaLabel: 'Backspace',
+          customClass:
+            'h-14 flex-[1.5] min-w-0 text-lg font-bold bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700',
+          content: mobileBackspaceContent,
+        })}
       </div>
     {:else}
       <!-- Mobile Symbol Mode Row 0: 1 2 3 4 5 6 7 8 9 0 (10 keys) -->
@@ -273,18 +305,18 @@
           />
         {/each}
 
-        <button
-          type="button"
-          tabindex="-1"
-          onmousedown={(e) => handleKeyClick('Backspace', e)}
-          class="h-14 flex-[1.5] min-w-0 rounded-lg border text-lg font-bold transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700
-            {isBackspaceTarget
-            ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-            : ''}"
-          aria-label="Backspace"
-        >
+        {#snippet mobileSymbolBackspaceContent()}
           ⌫
-        </button>
+        {/snippet}
+
+        {@render specialKeyButton({
+          key: 'Backspace',
+          isTarget: isBackspaceTarget,
+          ariaLabel: 'Backspace',
+          customClass:
+            'h-14 flex-[1.5] min-w-0 text-lg font-bold bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 active:bg-slate-200 dark:active:bg-slate-700',
+          content: mobileSymbolBackspaceContent,
+        })}
       </div>
     {/if}
 
@@ -292,44 +324,44 @@
     <div class="flex items-center w-full gap-1 mt-0.5">
       <SymbolToggleKey {isSymbolMode} onselect={toggleSymbolMode} />
 
-      <button
-        type="button"
-        tabindex="-1"
-        onmousedown={(e) => handleKeyClick(',', e)}
-        class="h-14 flex-1 max-w-[12%] rounded-lg border text-lg font-bold font-mono transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 active:bg-slate-200 dark:active:bg-slate-700
-          {isCommaTarget
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : ''}"
-        aria-label="Comma"
-      >
+      {#snippet commaContent()}
         ,
-      </button>
+      {/snippet}
 
-      <button
-        type="button"
-        tabindex="-1"
-        onmousedown={(e) => handleKeyClick(' ', e)}
-        class="h-14 flex-[5] rounded-lg border text-sm font-semibold uppercase tracking-wider flex items-center justify-center transition-colors cursor-pointer bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 active:bg-gray-200 dark:active:bg-gray-700
-          {isSpaceTarget
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : ''}"
-        aria-label="Spacebar"
-      >
+      {@render specialKeyButton({
+        key: ',',
+        isTarget: isCommaTarget,
+        ariaLabel: 'Comma',
+        customClass:
+          'h-14 flex-1 max-w-[12%] text-lg font-bold font-mono bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 active:bg-slate-200 dark:active:bg-slate-700',
+        content: commaContent,
+      })}
+
+      {#snippet mobileSpaceContent()}
         <span>Space</span>
-      </button>
+      {/snippet}
 
-      <button
-        type="button"
-        tabindex="-1"
-        onmousedown={(e) => handleKeyClick('.', e)}
-        class="h-14 flex-1 max-w-[12%] rounded-lg border text-lg font-bold font-mono transition-colors cursor-pointer flex items-center justify-center bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 active:bg-slate-200 dark:active:bg-slate-700
-          {isPeriodTarget
-          ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm'
-          : ''}"
-        aria-label="Period"
-      >
+      {@render specialKeyButton({
+        key: ' ',
+        isTarget: isSpaceTarget,
+        ariaLabel: 'Spacebar',
+        customClass:
+          'h-14 flex-[5] text-sm font-semibold uppercase tracking-wider bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 active:bg-gray-200 dark:active:bg-gray-700',
+        content: mobileSpaceContent,
+      })}
+
+      {#snippet periodContent()}
         .
-      </button>
+      {/snippet}
+
+      {@render specialKeyButton({
+        key: '.',
+        isTarget: isPeriodTarget,
+        ariaLabel: 'Period',
+        customClass:
+          'h-14 flex-1 max-w-[12%] text-lg font-bold font-mono bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 active:bg-slate-200 dark:active:bg-slate-700',
+        content: periodContent,
+      })}
 
       <SymbolToggleKey {isSymbolMode} onselect={toggleSymbolMode} />
     </div>
