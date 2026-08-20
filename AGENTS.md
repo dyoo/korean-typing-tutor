@@ -30,8 +30,10 @@ distraction-free, high-performance typing experience for English speakers learni
   user before applying significant code changes.
 - **VCS Workflow**: Use `jj` (Jujutsu) for version control operations. Never combine creating
   commits/revisions with pushing. Always create commits without pushing unless explicitly requested.
-  Do not prefix commit/CL descriptions with conventional commit categories (e.g. avoid `feat:`,
-  `fix:`, `chore:`, `style:` prefixes); write direct, plain descriptive summary messages instead. To
+   Do not prefix commit/CL descriptions with conventional commit categories (e.g. avoid `feat:`,
+   `fix:`, `chore:`, `style:` prefixes); write direct, plain descriptive summary messages instead.
+   Format the description with a succinct first-line summary, followed by a body paragraph (or short
+   bullet list) summarizing the changes made. To
   commit changes, always use the two-step sequence: first `jj describe -m "..."` to set the
   description on the current working copy (which contains the actual changes), then `jj new` to
   start a fresh empty revision. **Do not use `jj new -m "..."`** — that creates a new empty revision
