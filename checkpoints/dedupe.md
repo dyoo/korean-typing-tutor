@@ -61,6 +61,11 @@ Choseong/Jungseong/Jongseong)** in any code or JSDoc we write.
 - **romanizer.ts**: Derived `SINGLE_JAMO_PRONUNCIATION` from `INITIAL_CONSONANT_MAP` and `VOWEL_MAP`; hoisted shared neutralization final consonant arrays (`K_NEUTRALIZATION_FINALS`, `T_NEUTRALIZATION_FINALS`, `P_NEUTRALIZATION_FINALS`).
 - **fontScaler.ts**: Extracted declarative `FONT_TIERS` table with shared `getEffectiveLength` and `getTier` helpers, eliminating repeated length conditional branches across font size, weight, subtext, and style clamping.
 
+## Completed in commit `928a9708` (H1)
+
+- **MasteryVirtualKey.svelte**: Extracted helper component in `src/lib/` to encapsulate active character, lock state, active learning check, mastery status, and progress gauge calculation.
+- **VirtualKeyboard.svelte**: Simplified all 6 desktop and mobile Dubeolsik key loops using a clean snippet/component delegation.
+
 ## Deliberate behavior-preservation traps (do NOT "simplify" these)
 
 1. `resetJamoStats()` does **not** clear `lastPracticed` (3 level-setting paths preserve it);
@@ -84,13 +89,12 @@ Component-side batches also need svelte-check (cross-component types).
 ## Audit backlog (remaining, ranked)
 
 1. **Components**:
-   - **H1 `MasteryVirtualKey`**: Wrapper / helper for the 6 repetitive ~15-line keycap blocks in `VirtualKeyboard.svelte`.
-   - **H2 `SidebarDrawer` shell**: Shared drawer chrome (backdrop, panel transition classes, header, Escape handler) between `CurriculumSidebar.svelte` and `MasterySidebar.svelte`.
-   - **H3 centralized keycap active/base class strings + `SpecialKey`**: Centralize button base styles across virtual keys.
+   - **H2 `SidebarDrawer` shell**: Shared drawer chrome (backdrop, panel transition classes, header with close button, Escape key handler) between `CurriculumSidebar.svelte` and `MasterySidebar.svelte`.
+   - **H3 centralized keycap active/base class strings + `SpecialKey`**: Centralize button base styles across virtual keys and extract special keycap component.
    - **Medium component cleanups**: `ProgressFill` ×3, `ModalShell` ×2, accordion chrome ×2, `selectMasteryItem` in `tutorSession.svelte.ts`, `settings.ts` `pickBool/pickNumberRange/pickEnum` parsers.
 2. Considered & REJECTED as duplication (do not re-flag): engine uppercase-fallback vs `resolveKeyOutput` (inverse ops), romanizer liaison vs normal-final maps (different phonology), `handleTargetCopyEvent` (compat shim), SettingsModal vs centered dialogs (intentional UX), `togglePanel` wrappers, `scheduleSave`/`flushPendingSave`, TargetDisplay vs InputDisplay CharDisplay usage, types/*.ts (no dupes).
 
 ## Next immediate objective
 
-**H1 `MasteryVirtualKey` (in `VirtualKeyboard.svelte`)**:
-Extract the repetitive keycap rendering block (which resolves active character, checks target keys, calculates mastery progress/accuracy, and applies tooltip/progress gauge) to eliminate the 6 duplicate ~15-line markup sections across desktop and mobile rows.
+**H2 `SidebarDrawer` shell**:
+Extract shared sidebar drawer wrapper component (`SidebarDrawer.svelte`) containing backdrop overlay, fixed slide-over container, panel transitions, header bar with close button, and window `keydown` (Escape) listener used identically by `CurriculumSidebar.svelte` and `MasterySidebar.svelte`.
