@@ -71,6 +71,18 @@ Choseong/Jungseong/Jongseong)** in any code or JSDoc we write.
 - **SidebarDrawer.svelte**: Extracted shared drawer shell component handling backdrop overlay, fixed slide-over container, header with close button, and Escape key listener.
 - **CurriculumSidebar.svelte** & **MasterySidebar.svelte**: Refactored to delegate drawer chrome and accessibility bindings to `SidebarDrawer.svelte`.
 
+## Completed in commit `850e7350` (H3)
+
+- **VirtualKeyboard.svelte**: Centralized `specialKeyButton` snippet and `TARGET_KEY_ACTIVE_CLASSES` constant for Space, Backspace, Comma, Period, and Shift button styling.
+
+## Completed in commit `e460f2c5`
+
+- **tutorSession.svelte.ts**: Extracted private `updateMasteryItemsAndCursor()` to eliminate duplicated eligible item derivation and cursor selection between mode initialization and item advancement.
+
+## Completed in commit `619f021e`
+
+- **settings.ts**: Replaced repetitive manual type assertions and range validations in `loadSettings()` with generic helpers (`pickBool`, `pickNumberRange`, `pickEnum`) defaulting directly to `DEFAULT_SETTINGS`.
+
 ## Deliberate behavior-preservation traps (do NOT "simplify" these)
 
 1. `resetJamoStats()` does **not** clear `lastPracticed` (3 level-setting paths preserve it);
@@ -94,11 +106,10 @@ Component-side batches also need svelte-check (cross-component types).
 ## Audit backlog (remaining, ranked)
 
 1. **Components**:
-   - **H3 centralized keycap active/base class strings + `SpecialKey`**: Centralize button base styles across virtual keys and extract special keycap component (Space, Backspace, mobile Shift, Comma, Period).
-   - **Medium component cleanups**: `ProgressFill` ×3, `ModalShell` ×2, accordion chrome ×2, `selectMasteryItem` in `tutorSession.svelte.ts`, `settings.ts` `pickBool/pickNumberRange/pickEnum` parsers.
+   - **ProgressFill / Progress Gauge**: Liquid gauge styling helper between VirtualKey and progress displays.
+   - **ModalShell**: Backdrop & dialog box wrapper for SettingsModal and TTSDownloadModal.
 2. Considered & REJECTED as duplication (do not re-flag): engine uppercase-fallback vs `resolveKeyOutput` (inverse ops), romanizer liaison vs normal-final maps (different phonology), `handleTargetCopyEvent` (compat shim), SettingsModal vs centered dialogs (intentional UX), `togglePanel` wrappers, `scheduleSave`/`flushPendingSave`, TargetDisplay vs InputDisplay CharDisplay usage, types/*.ts (no dupes).
 
-## Next immediate objective
+## Status
 
-**H3 Keycap Active/Base Styles & SpecialKey**:
-Centralize active target styling (blue background, ring, white text, bold font) and special function key buttons (Backspace, Spacebar, Comma, Period) in `VirtualKeyboard.svelte`.
+Major deduplication and dead code refactor is virtually complete across all core domains (Hangul IME & decomposition, Dubeolsik layout tables, Mastery state helpers, Romanization phonology, Font scaler tiers, Virtual keyboard renderers, Sidebar drawer shell, TutorSession item selection, and Settings parsing).
