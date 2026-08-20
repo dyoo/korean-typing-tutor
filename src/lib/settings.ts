@@ -46,6 +46,25 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   ttsSpeed: 1.0,
 };
 
+function pickBool(val: unknown, fallback: boolean): boolean {
+  return typeof val === 'boolean' ? val : fallback;
+}
+
+function pickNumberRange(
+  val: unknown,
+  min: number,
+  max: number,
+  fallback: number | undefined,
+): number | undefined {
+  return typeof val === 'number' && val >= min && val <= max ? val : fallback;
+}
+
+function pickEnum<T extends string>(val: unknown, valid: readonly T[], fallback: T): T {
+  return typeof val === 'string' && (valid as readonly unknown[]).includes(val)
+    ? (val as T)
+    : fallback;
+}
+
 /**
  * Loads user settings from LocalStorage.
  * Falls back to default settings if no settings are saved or parsing fails.
@@ -61,45 +80,35 @@ export function loadSettings(): TutorSettings {
       return DEFAULT_SETTINGS;
     }
     const parsed = JSON.parse(raw);
-    const validThemes: ThemeMode[] = ['light', 'dark', 'system'];
-    const validCursorColors: CursorColorMode[] = ['amber', 'sky', 'emerald', 'blue'];
+    const validThemes: readonly ThemeMode[] = ['light', 'dark', 'system'];
+    const validCursorColors: readonly CursorColorMode[] = ['amber', 'sky', 'emerald', 'blue'];
+
     return {
-      showPronunciation:
-        typeof parsed.showPronunciation === 'boolean' ? parsed.showPronunciation : true,
-      showTranslation: typeof parsed.showTranslation === 'boolean' ? parsed.showTranslation : true,
-      showVirtualKeyboard:
-        typeof parsed.showVirtualKeyboard === 'boolean' ? parsed.showVirtualKeyboard : true,
-      showKeyboardHint:
-        typeof parsed.showKeyboardHint === 'boolean' ? parsed.showKeyboardHint : true,
-      theme: validThemes.includes(parsed.theme) ? parsed.theme : 'system',
+      showPronunciation: pickBool(parsed.showPronunciation, DEFAULT_SETTINGS.showPronunciation),
+      showTranslation: pickBool(parsed.showTranslation, DEFAULT_SETTINGS.showTranslation),
+      showVirtualKeyboard: pickBool(
+        parsed.showVirtualKeyboard,
+        DEFAULT_SETTINGS.showVirtualKeyboard,
+      ),
+      showKeyboardHint: pickBool(parsed.showKeyboardHint, DEFAULT_SETTINGS.showKeyboardHint),
+      theme: pickEnum(parsed.theme, validThemes, DEFAULT_SETTINGS.theme),
       enabledModuleIds: Array.isArray(parsed.enabledModuleIds)
         ? parsed.enabledModuleIds
         : undefined,
       collapsedCategoryIds: Array.isArray(parsed.collapsedCategoryIds)
         ? parsed.collapsedCategoryIds
         : undefined,
-      minFontSizeRem:
-        typeof parsed.minFontSizeRem === 'number' &&
-        parsed.minFontSizeRem >= 1.0 &&
-        parsed.minFontSizeRem <= 7.0
-          ? parsed.minFontSizeRem
-          : 2.0,
-      maxFontSizeRem:
-        typeof parsed.maxFontSizeRem === 'number' &&
-        parsed.maxFontSizeRem >= 1.0 &&
-        parsed.maxFontSizeRem <= 7.0
-          ? parsed.maxFontSizeRem
-          : 6.0,
-      lockFontSize: typeof parsed.lockFontSize === 'boolean' ? parsed.lockFontSize : false,
-      cursorColor: validCursorColors.includes(parsed.cursorColor) ? parsed.cursorColor : 'amber',
-      enableTTS: typeof parsed.enableTTS === 'boolean' ? parsed.enableTTS : false,
-      speakOnCompletion:
-        typeof parsed.speakOnCompletion === 'boolean' ? parsed.speakOnCompletion : true,
-      ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : 'jm_kumo',
-      ttsSpeed:
-        typeof parsed.ttsSpeed === 'number' && parsed.ttsSpeed >= 0.5 && parsed.ttsSpeed <= 2.0
-          ? parsed.ttsSpeed
-          : 1.0,
+      minFontSizeRem: pickNumberRange(parsed.minFontSizeRem, 1.0, 7.0, DEFAULT_SETTINGS.minFontSizeRem),
+      maxFontSizeRem: pickNumberRange(parsed.maxFontSizeRem, 1.0, 7.0, DEFAULT_SETTINGS.maxFontSizeRem),
+      lockFontSize: pickBool(parsed.lockFontSize, DEFAULT_SETTINGS.lockFontSize ?? false),
+      cursorColor: pickEnum(parsed.cursorColor, validCursorColors, DEFAULT_SETTINGS.cursorColor ?? 'amber'),
+      enableTTS: pickBool(parsed.enableTTS, DEFAULT_SETTINGS.enableTTS ?? false),
+      speakOnCompletion: pickBool(
+        parsed.speakOnCompletion,
+        DEFAULT_SETTINGS.speakOnCompletion ?? true,
+      ),
+      ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : DEFAULT_SETTINGS.ttsVoice,
+      ttsSpeed: pickNumberRange(parsed.ttsSpeed, 0.5, 2.0, DEFAULT_SETTINGS.ttsSpeed),
     };
   } catch {
     return DEFAULT_SETTINGS;
