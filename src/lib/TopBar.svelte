@@ -16,6 +16,8 @@
     activeJamoLabel?: string;
     activeLearningCombination?: [string, string];
     activeJamoProgress?: number;
+    activeTargetRemaining?: string | null;
+    isPostGame?: boolean;
     activeCheckpointTitle?: string | null;
     activeCheckpointProgress?: { completed: number; total: number } | null;
     showSettingsModal: boolean;
@@ -51,6 +53,8 @@
     activeJamoLabel = 'Focus:',
     activeLearningCombination,
     activeJamoProgress = 0,
+    activeTargetRemaining = null,
+    isPostGame = false,
     activeCheckpointTitle = null,
     activeCheckpointProgress = null,
     showSettingsModal,
@@ -167,9 +171,9 @@
               {activeJamoLabel}
             </span>
             <span
-              class="relative overflow-hidden text-sm md:text-base font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[24px] md:min-w-[28px] shadow-2xs gap-1 whitespace-nowrap shrink-0"
+              class="relative overflow-hidden text-sm md:text-base font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[24px] md:min-w-[28px] shadow-2xs gap-1 md:gap-1.5 whitespace-nowrap shrink-0"
             >
-              {#if activeJamoProgress > 0}
+              {#if activeJamoProgress > 0 && !isPostGame}
                 <div
                   class="absolute bottom-0 inset-x-0 pointer-events-none {activeJamoProgress >= 100
                     ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
@@ -183,6 +187,15 @@
                   class="relative z-10 text-[10px] md:text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90 whitespace-nowrap"
                 >
                   ({activeLearningCombination[0]}+{activeLearningCombination[1]})
+                </span>
+              {/if}
+              {#if activeTargetRemaining}
+                <span
+                  class="relative z-10 font-mono font-bold leading-none {isPostGame
+                    ? 'text-purple-700 dark:text-purple-300 bg-purple-200/80 dark:bg-purple-900/80 px-1.5 py-0.5 rounded text-xs md:text-sm'
+                    : 'text-amber-900 dark:text-amber-200 bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-[10px]'}"
+                >
+                  {activeTargetRemaining}
                 </span>
               {/if}
             </span>
