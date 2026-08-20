@@ -26,12 +26,6 @@
 
   let collapsedStageIds = $state<string[]>([]);
 
-  function handleKeydown(e: KeyboardEvent) {
-    if (e.key === 'Escape' && isOpen) {
-      onclose();
-    }
-  }
-
   function toggleStageCollapse(stageName: string) {
     if (collapsedStageIds.includes(stageName)) {
       collapsedStageIds = collapsedStageIds.filter((id) => id !== stageName);
@@ -47,57 +41,18 @@
   function handleCheckpointSelect(cpId: string) {
     oncheckpointselect?.(cpId);
   }
+
+  import SidebarDrawer from './SidebarDrawer.svelte';
 </script>
 
-<svelte:window onkeydown={handleKeydown} />
-
-{#if isOpen}
-  <div
-    role="button"
-    tabindex="-1"
-    aria-label="Close sidebar backdrop"
-    onclick={onclose}
-    onkeydown={(e) => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        onclose();
-      }
-    }}
-    class="fixed inset-0 z-40 bg-black/40 dark:bg-black/60 transition-opacity select-none"
-  ></div>
-
-  <div
-    role="dialog"
-    aria-modal="true"
-    aria-label="Mastery Progress Sidebar"
-    class="fixed inset-y-0 left-0 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 border-r-2 border-gray-200 dark:border-gray-700 shadow-2xl flex flex-col"
-  >
-    <div
-      class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-gray-50/80 dark:bg-gray-800/80"
-    >
-      <div class="flex flex-col">
-        <h2
-          class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-gray-100 font-mono"
-        >
-          Jamo Mastery
-        </h2>
-        <span class="text-xs text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
-          Unlocked ({masteryUnlockedCount}/{JAMO_PROGRESSION_ORDER.length})
-        </span>
-      </div>
-
-      <button
-        type="button"
-        onclick={onclose}
-        class="p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors cursor-pointer"
-        aria-label="Close Sidebar"
-      >
-        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
-    </div>
-
-    <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 [scrollbar-width:thin]">
+<SidebarDrawer
+  {isOpen}
+  title="Jamo Mastery"
+  subtitle="Unlocked ({masteryUnlockedCount}/{JAMO_PROGRESSION_ORDER.length})"
+  ariaLabel="Mastery Progress Sidebar"
+  {onclose}
+>
+  <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 [scrollbar-width:thin]">
       {#each JAMO_STAGES as stage}
         <div
           class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-xl p-2.5 bg-gray-50/60 dark:bg-gray-800/40 gap-2"
@@ -234,5 +189,4 @@
         </div>
       {/each}
     </div>
-  </div>
-{/if}
+</SidebarDrawer>
