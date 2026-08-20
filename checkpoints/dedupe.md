@@ -66,6 +66,11 @@ Choseong/Jungseong/Jongseong)** in any code or JSDoc we write.
 - **MasteryVirtualKey.svelte**: Extracted helper component in `src/lib/` to encapsulate active character, lock state, active learning check, mastery status, and progress gauge calculation.
 - **VirtualKeyboard.svelte**: Simplified all 6 desktop and mobile Dubeolsik key loops using a clean snippet/component delegation.
 
+## Completed in commit `fefe0c02` (H2)
+
+- **SidebarDrawer.svelte**: Extracted shared drawer shell component handling backdrop overlay, fixed slide-over container, header with close button, and Escape key listener.
+- **CurriculumSidebar.svelte** & **MasterySidebar.svelte**: Refactored to delegate drawer chrome and accessibility bindings to `SidebarDrawer.svelte`.
+
 ## Deliberate behavior-preservation traps (do NOT "simplify" these)
 
 1. `resetJamoStats()` does **not** clear `lastPracticed` (3 level-setting paths preserve it);
@@ -89,12 +94,11 @@ Component-side batches also need svelte-check (cross-component types).
 ## Audit backlog (remaining, ranked)
 
 1. **Components**:
-   - **H2 `SidebarDrawer` shell**: Shared drawer chrome (backdrop, panel transition classes, header with close button, Escape key handler) between `CurriculumSidebar.svelte` and `MasterySidebar.svelte`.
-   - **H3 centralized keycap active/base class strings + `SpecialKey`**: Centralize button base styles across virtual keys and extract special keycap component.
+   - **H3 centralized keycap active/base class strings + `SpecialKey`**: Centralize button base styles across virtual keys and extract special keycap component (Space, Backspace, mobile Shift, Comma, Period).
    - **Medium component cleanups**: `ProgressFill` ×3, `ModalShell` ×2, accordion chrome ×2, `selectMasteryItem` in `tutorSession.svelte.ts`, `settings.ts` `pickBool/pickNumberRange/pickEnum` parsers.
 2. Considered & REJECTED as duplication (do not re-flag): engine uppercase-fallback vs `resolveKeyOutput` (inverse ops), romanizer liaison vs normal-final maps (different phonology), `handleTargetCopyEvent` (compat shim), SettingsModal vs centered dialogs (intentional UX), `togglePanel` wrappers, `scheduleSave`/`flushPendingSave`, TargetDisplay vs InputDisplay CharDisplay usage, types/*.ts (no dupes).
 
 ## Next immediate objective
 
-**H2 `SidebarDrawer` shell**:
-Extract shared sidebar drawer wrapper component (`SidebarDrawer.svelte`) containing backdrop overlay, fixed slide-over container, panel transitions, header bar with close button, and window `keydown` (Escape) listener used identically by `CurriculumSidebar.svelte` and `MasterySidebar.svelte`.
+**H3 Keycap Active/Base Styles & SpecialKey**:
+Centralize active target styling (blue background, ring, white text, bold font) and special function key buttons (Backspace, Spacebar, Comma, Period) in `VirtualKeyboard.svelte`.
