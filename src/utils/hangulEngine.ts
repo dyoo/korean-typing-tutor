@@ -1,5 +1,5 @@
 import {
-  HANGUL_BASE,
+  isHangulSyllable,
   INITIAL_CONSONANT_MAP,
   VOWEL_MAP,
   FINAL_CONSONANT_MAP,
@@ -93,7 +93,7 @@ export class HangulEngine {
     }
 
     // Direct composed Hangul Syllable (from native OS IME)
-    if (key.length === 1 && key.charCodeAt(0) >= HANGUL_BASE && key.charCodeAt(0) <= 0xd7a3) {
+    if (key.length === 1 && isHangulSyllable(key)) {
       this.flushCurrent();
       this.composedString += key;
       return this.getComposedText();

@@ -6,6 +6,7 @@ import {
   getInitialConsonantJamo,
 } from './hangulDecompose';
 import { compose } from './hangulEngine';
+import { isHangulSyllable, STANDALONE_COMPOUND_MAP } from './hangulTables';
 
 describe('Jamo decomposition helpers (hangulDecompose)', () => {
   it('should decompose Hangul syllables into initial consonant (Choseong), vowel (Jungseong), and final consonant (Jongseong)', () => {
@@ -47,5 +48,24 @@ describe('Jamo decomposition helpers (hangulDecompose)', () => {
     expect(getInitialConsonantJamo('요')).toBe('ㅇ');
     expect(getInitialConsonantJamo('ㄱ')).toBe('ㄱ');
     expect(getInitialConsonantJamo(' ')).toBe(null);
+  });
+
+  it('should correctly identify Hangul syllables with isHangulSyllable', () => {
+    expect(isHangulSyllable('가')).toBe(true);
+    expect(isHangulSyllable('힣')).toBe(true);
+    expect(isHangulSyllable(0xac00)).toBe(true);
+    expect(isHangulSyllable(0xd7a3)).toBe(true);
+    expect(isHangulSyllable('ㄱ')).toBe(false);
+    expect(isHangulSyllable('a')).toBe(false);
+    expect(isHangulSyllable(0xac00 - 1)).toBe(false);
+    expect(isHangulSyllable(0xd7a3 + 1)).toBe(false);
+  });
+
+  it('should have complete standalone compound decompositions', () => {
+    expect(STANDALONE_COMPOUND_MAP['ㅘ']).toBe('ㅗㅏ');
+    expect(STANDALONE_COMPOUND_MAP['ㅢ']).toBe('ㅡㅣ');
+    expect(STANDALONE_COMPOUND_MAP['ㄳ']).toBe('ㄱㅅ');
+    expect(STANDALONE_COMPOUND_MAP['ㅄ']).toBe('ㅂㅅ');
+    expect(Object.keys(STANDALONE_COMPOUND_MAP).length).toBe(18);
   });
 });

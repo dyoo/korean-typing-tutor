@@ -303,25 +303,41 @@ export const FINAL_CONSONANT_SINGLE_JAMO: Record<number, string> = {
 };
 
 /**
- * Map of standalone compound Jamo characters to their decomposed individual Jamo sequence.
+ * Checks whether a given character or character code is within the Unicode Hangul Syllables block (U+AC00..U+D7A3).
  */
-export const STANDALONE_COMPOUND_MAP: Record<string, string> = {
-  ㅘ: 'ㅗㅏ',
-  ㅙ: 'ㅗㅐ',
-  ㅚ: 'ㅗㅣ',
-  ㅝ: 'ㅜㅓ',
-  ㅞ: 'ㅜㅔ',
-  ㅟ: 'ㅜㅣ',
-  ㅢ: 'ㅡㅣ',
-  ㄳ: 'ㄱㅅ',
-  ㄵ: 'ㄴㅈ',
-  ㄶ: 'ㄴㅎ',
-  ㄺ: 'ㄹㄱ',
-  ㄻ: 'ㄹㅁ',
-  ㄼ: 'ㄹㅂ',
-  ㄽ: 'ㄹㅅ',
-  ㄾ: 'ㄹㅌ',
-  ㄿ: 'ㄹㅍ',
-  ㅀ: 'ㄹㅎ',
-  ㅄ: 'ㅂㅅ',
-};
+export function isHangulSyllable(charOrCode: string | number): boolean {
+  const code = typeof charOrCode === 'string' ? charOrCode.charCodeAt(0) : charOrCode;
+  return code >= HANGUL_BASE && code <= 0xd7a3;
+}
+
+function buildStandaloneCompoundMap(): Record<string, string> {
+  const map: Record<string, string> = {};
+
+  for (const [compoundIdx, [firstIdx, secondIdx]] of Object.entries(COMPOUND_VOWEL_DECOMP)) {
+    const compoundChar = VOWEL_STANDALONE[Number(compoundIdx)];
+    const firstChar = VOWEL_STANDALONE[firstIdx];
+    const secondChar = VOWEL_STANDALONE[secondIdx];
+    if (compoundChar && firstChar && secondChar) {
+      map[compoundChar] = `${firstChar}${secondChar}`;
+    }
+  }
+
+  for (const [compoundIdx, [firstIdx, secondIdx]] of Object.entries(
+    COMPOUND_FINAL_CONSONANT_DECOMP,
+  )) {
+    const compoundChar = FINAL_CONSONANT_STANDALONE[Number(compoundIdx)];
+    const firstChar = FINAL_CONSONANT_SINGLE_JAMO[firstIdx];
+    const secondChar = FINAL_CONSONANT_SINGLE_JAMO[secondIdx];
+    if (compoundChar && firstChar && secondChar) {
+      map[compoundChar] = `${firstChar}${secondChar}`;
+    }
+  }
+
+  return map;
+}
+
+/**
+ * Map of standalone compound Jamo characters to their decomposed individual Jamo sequence.
+ * Derived dynamically from COMPOUND_VOWEL_DECOMP and COMPOUND_FINAL_CONSONANT_DECOMP.
+ */
+export const STANDALONE_COMPOUND_MAP: Record<string, string> = buildStandaloneCompoundMap();

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import contentData from './content';
+import { isHangulSyllable } from './utils/hangulTables';
 
 describe('Curriculum Content Dataset Integrity', () => {
   it('contains modules and items', () => {
@@ -13,7 +14,7 @@ describe('Curriculum Content Dataset Integrity', () => {
     for (const item of contentData.items) {
       for (const char of item.target) {
         const code = char.charCodeAt(0);
-        const isKoreanSyllable = code >= 0xac00 && code <= 0xd7a3;
+        const isKoreanSyllable = isHangulSyllable(code);
         const isHangulJamo = code >= 0x3131 && code <= 0x318e;
         const isAsciiPrintable = code >= 32 && code <= 126; // includes space, numbers, punctuation, English letters
 
