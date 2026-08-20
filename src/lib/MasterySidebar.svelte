@@ -278,16 +278,9 @@
                       {item.name ?? item.batchim}
                     </span>
                   </div>
-                  <div class="flex items-center gap-2 shrink-0">
-                    <span
-                      class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-purple-200 dark:border-purple-800 leading-none"
-                    >
-                      ∞
-                    </span>
-                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase">
-                      {item.key}{item.shift ? '+Shift' : ''}
-                    </span>
-                  </div>
+                  <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase shrink-0">
+                    {item.key}{item.shift ? '+Shift' : ''}
+                  </span>
                 </div>
               </label>
             {/each}
