@@ -4,77 +4,180 @@
  */
 export const HANGUL_BASE = 0xac00;
 
+import { DUBEOLSIK_KEY_DEFINITIONS } from './keyboardData';
+
+/** Standalone Compatibility Initial Consonant (Choseong) characters (used when rendering partial syllables). */
+export const INITIAL_CONSONANT_STANDALONE = [
+  'ㄱ',
+  'ㄲ',
+  'ㄴ',
+  'ㄷ',
+  'ㄸ',
+  'ㄹ',
+  'ㅁ',
+  'ㅂ',
+  'ㅃ',
+  'ㅅ',
+  'ㅆ',
+  'ㅇ',
+  'ㅈ',
+  'ㅉ',
+  'ㅊ',
+  'ㅋ',
+  'ㅌ',
+  'ㅍ',
+  'ㅎ',
+];
+
+/** Standalone Compatibility Vowel (Jungseong) characters. */
+export const VOWEL_STANDALONE = [
+  'ㅏ',
+  'ㅐ',
+  'ㅑ',
+  'ㅒ',
+  'ㅓ',
+  'ㅔ',
+  'ㅕ',
+  'ㅖ',
+  'ㅗ',
+  'ㅘ',
+  'ㅙ',
+  'ㅚ',
+  'ㅛ',
+  'ㅜ',
+  'ㅝ',
+  'ㅞ',
+  'ㅟ',
+  'ㅠ',
+  'ㅡ',
+  'ㅢ',
+  'ㅣ',
+];
+
+/** Standalone Compatibility Final Consonant (Jongseong) characters (0..27). */
+export const FINAL_CONSONANT_STANDALONE = [
+  '',
+  'ㄱ',
+  'ㄲ',
+  'ㄳ',
+  'ㄴ',
+  'ㄵ',
+  'ㄶ',
+  'ㄷ',
+  'ㄹ',
+  'ㄺ',
+  'ㄻ',
+  'ㄼ',
+  'ㄽ',
+  'ㄾ',
+  'ㄿ',
+  'ㅀ',
+  'ㅁ',
+  'ㅂ',
+  'ㅄ',
+  'ㅅ',
+  'ㅆ',
+  'ㅇ',
+  'ㅈ',
+  'ㅊ',
+  'ㅋ',
+  'ㅌ',
+  'ㅍ',
+  'ㅎ',
+];
+
+/**
+ * Direct Hangul Initial Consonant (Choseong) Jamo Mapping (derived from INITIAL_CONSONANT_STANDALONE).
+ */
+export const DIRECT_INITIAL_CONSONANT_MAP: Record<string, number> = Object.fromEntries(
+  INITIAL_CONSONANT_STANDALONE.map((jamo, index) => [jamo, index]),
+);
+
+/** Direct Hangul Vowel (Jungseong) Jamo Mapping (derived from VOWEL_STANDALONE). */
+export const DIRECT_VOWEL_MAP: Record<string, number> = Object.fromEntries(
+  VOWEL_STANDALONE.map((jamo, index) => [jamo, index]),
+);
+
+/** Direct Hangul Final Consonant (Jongseong) Jamo Mapping (derived from FINAL_CONSONANT_STANDALONE). */
+export const DIRECT_FINAL_CONSONANT_MAP: Record<string, number> = Object.fromEntries(
+  FINAL_CONSONANT_STANDALONE.map((jamo, index) => [jamo, index]).filter(([jamo]) => jamo !== ''),
+);
+
+function buildQwertyInitialMap(): Record<string, number> {
+  const map: Record<string, number> = {};
+  for (const entry of DUBEOLSIK_KEY_DEFINITIONS) {
+    if (entry.type === 'consonant') {
+      const idx = DIRECT_INITIAL_CONSONANT_MAP[entry.jamo];
+      if (idx !== undefined) {
+        map[entry.key] = idx;
+      }
+      if (entry.shiftJamo) {
+        const shiftIdx = DIRECT_INITIAL_CONSONANT_MAP[entry.shiftJamo];
+        if (shiftIdx !== undefined) {
+          map[entry.key.toUpperCase()] = shiftIdx;
+        }
+      }
+    }
+  }
+  return map;
+}
+
+function buildQwertyVowelMap(): Record<string, number> {
+  const map: Record<string, number> = {};
+  for (const entry of DUBEOLSIK_KEY_DEFINITIONS) {
+    if (entry.type === 'vowel') {
+      const idx = DIRECT_VOWEL_MAP[entry.jamo];
+      if (idx !== undefined) {
+        map[entry.key] = idx;
+      }
+      if (entry.shiftJamo) {
+        const shiftIdx = DIRECT_VOWEL_MAP[entry.shiftJamo];
+        if (shiftIdx !== undefined) {
+          map[entry.key.toUpperCase()] = shiftIdx;
+        }
+      }
+    }
+  }
+  return map;
+}
+
+function buildQwertyFinalMap(): Record<string, number> {
+  const map: Record<string, number> = {};
+  for (const entry of DUBEOLSIK_KEY_DEFINITIONS) {
+    if (entry.type === 'consonant') {
+      const idx = DIRECT_FINAL_CONSONANT_MAP[entry.jamo];
+      if (idx !== undefined) {
+        map[entry.key] = idx;
+      }
+      if (entry.shiftJamo) {
+        const shiftIdx = DIRECT_FINAL_CONSONANT_MAP[entry.shiftJamo];
+        if (shiftIdx !== undefined) {
+          map[entry.key.toUpperCase()] = shiftIdx;
+        }
+      }
+    }
+  }
+  return map;
+}
+
 /**
  * QWERTY to Initial Consonant (Choseong) Index Mapping (0..18).
- * In standard Dubeolsik (2-set) Korean keyboard layout:
- * Left-hand keys correspond to consonants.
+ * Derived from DUBEOLSIK_KEY_DEFINITIONS and DIRECT_INITIAL_CONSONANT_MAP.
  */
-export const INITIAL_CONSONANT_MAP: Record<string, number> = {
-  r: 0, // ㄱ
-  R: 1, // ㄲ
-  s: 2, // ㄴ
-  e: 3, // ㄷ
-  E: 4, // ㄸ
-  f: 5, // ㄹ
-  a: 6, // ㅁ
-  q: 7, // ㅂ
-  Q: 8, // ㅃ
-  t: 9, // ㅅ
-  T: 10, // ㅆ
-  d: 11, // ㅇ
-  w: 12, // ㅈ
-  W: 13, // ㅉ
-  c: 14, // ㅊ
-  z: 15, // ㅋ
-  x: 16, // ㅌ
-  v: 17, // ㅍ
-  g: 18, // ㅎ
-};
+export const INITIAL_CONSONANT_MAP: Record<string, number> = buildQwertyInitialMap();
 
 /**
  * QWERTY to Vowel (Jungseong) Index Mapping (0..20).
- * Right-hand keys correspond to vowels.
+ * Derived from DUBEOLSIK_KEY_DEFINITIONS and DIRECT_VOWEL_MAP.
  */
-export const VOWEL_MAP: Record<string, number> = {
-  k: 0, // ㅏ
-  o: 1, // ㅐ
-  i: 2, // ㅑ
-  O: 3, // ㅒ
-  j: 4, // ㅓ
-  p: 5, // ㅔ
-  u: 6, // ㅕ
-  P: 7, // ㅖ
-  h: 8, // ㅗ
-  y: 12, // ㅛ
-  n: 13, // ㅜ
-  b: 17, // ㅠ
-  m: 18, // ㅡ
-  l: 20, // ㅣ
-};
+export const VOWEL_MAP: Record<string, number> = buildQwertyVowelMap();
 
 /**
  * QWERTY to Final Consonant (Jongseong) Index Mapping (1..27).
  * Note: Index 0 represents NO final consonant.
- * Double consonants ㄸ (E), ㅃ (Q), ㅉ (W) cannot be used as Final Consonant (Jongseong).
+ * Derived from DUBEOLSIK_KEY_DEFINITIONS and DIRECT_FINAL_CONSONANT_MAP.
  */
-export const FINAL_CONSONANT_MAP: Record<string, number> = {
-  r: 1, // ㄱ
-  R: 2, // ㄲ
-  s: 4, // ㄴ
-  e: 7, // ㄷ
-  f: 8, // ㄹ
-  a: 16, // ㅁ
-  q: 17, // ㅂ
-  t: 19, // ㅅ
-  T: 20, // ㅆ
-  d: 21, // ㅇ
-  w: 22, // ㅈ
-  c: 23, // ㅊ
-  z: 24, // ㅋ
-  x: 25, // ㅌ
-  v: 26, // ㅍ
-  g: 27, // ㅎ
-};
+export const FINAL_CONSONANT_MAP: Record<string, number> = buildQwertyFinalMap();
 
 /**
  * Compound Vowel (Jungseong) Combinations.
@@ -172,100 +275,9 @@ export function makeCompoundKey(firstIndex: number, secondIndex: number): string
   return `${firstIndex},${secondIndex}`;
 }
 
-/** Standalone Compatibility Initial Consonant (Choseong) characters (used when rendering partial syllables). */
-export const INITIAL_CONSONANT_STANDALONE = [
-  'ㄱ',
-  'ㄲ',
-  'ㄴ',
-  'ㄷ',
-  'ㄸ',
-  'ㄹ',
-  'ㅁ',
-  'ㅂ',
-  'ㅃ',
-  'ㅅ',
-  'ㅆ',
-  'ㅇ',
-  'ㅈ',
-  'ㅉ',
-  'ㅊ',
-  'ㅋ',
-  'ㅌ',
-  'ㅍ',
-  'ㅎ',
-];
 
-/** Standalone Compatibility Vowel (Jungseong) characters. */
-export const VOWEL_STANDALONE = [
-  'ㅏ',
-  'ㅐ',
-  'ㅑ',
-  'ㅒ',
-  'ㅓ',
-  'ㅔ',
-  'ㅕ',
-  'ㅖ',
-  'ㅗ',
-  'ㅘ',
-  'ㅙ',
-  'ㅚ',
-  'ㅛ',
-  'ㅜ',
-  'ㅝ',
-  'ㅞ',
-  'ㅟ',
-  'ㅠ',
-  'ㅡ',
-  'ㅢ',
-  'ㅣ',
-];
 
-/** Standalone Compatibility Final Consonant (Jongseong) characters (0..27). */
-export const FINAL_CONSONANT_STANDALONE = [
-  '',
-  'ㄱ',
-  'ㄲ',
-  'ㄳ',
-  'ㄴ',
-  'ㄵ',
-  'ㄶ',
-  'ㄷ',
-  'ㄹ',
-  'ㄺ',
-  'ㄻ',
-  'ㄼ',
-  'ㄽ',
-  'ㄾ',
-  'ㄿ',
-  'ㅀ',
-  'ㅁ',
-  'ㅂ',
-  'ㅄ',
-  'ㅅ',
-  'ㅆ',
-  'ㅇ',
-  'ㅈ',
-  'ㅊ',
-  'ㅋ',
-  'ㅌ',
-  'ㅍ',
-  'ㅎ',
-];
 
-/** Direct Hangul Initial Consonant (Choseong) Jamo Mapping (derived from INITIAL_CONSONANT_STANDALONE). */
-export const DIRECT_INITIAL_CONSONANT_MAP: Record<string, number> = Object.fromEntries(
-  INITIAL_CONSONANT_STANDALONE.map((jamo, index) => [jamo, index]),
-);
-
-/** Direct Hangul Vowel (Jungseong) Jamo Mapping (derived from VOWEL_STANDALONE). */
-export const DIRECT_VOWEL_MAP: Record<string, number> = Object.fromEntries(
-  VOWEL_STANDALONE.map((jamo, index) => [jamo, index]),
-);
-
-/** Direct Hangul Final Consonant (Jongseong) Jamo Mapping (derived from FINAL_CONSONANT_STANDALONE). */
-export const DIRECT_FINAL_CONSONANT_MAP: Record<string, number> = Object.fromEntries(
-  FINAL_CONSONANT_STANDALONE.map((jamo, index) => [jamo, index]).filter(([jamo]) => jamo !== ''),
-);
 
 /**
  * Map of single Final Consonant (Jongseong) index to standalone Initial Consonant (Choseong) / Jamo consonant.

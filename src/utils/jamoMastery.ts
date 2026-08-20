@@ -33,144 +33,103 @@ const ROLLING_WINDOW_SIZE = 20;
  */
 const MIN_UNLOCKED_COUNT = 4;
 
-/**
- * Ordered Dubeolsik (2-set) Jamo progression sequence based on ergonomic
- * home-row outward touch-typing principles.
- */
-export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = [
+import { JAMO_TO_KEY } from './keyboardData';
+
+interface RawJamoProgressionEntry {
+  jamo: string;
+  stage: number;
+  stageName: string;
+  combination?: [string, string];
+}
+
+const RAW_JAMO_PROGRESSION_ORDER: RawJamoProgressionEntry[] = [
   // Stage 1: Home Row Index Keys (Immediate feedback with basic vowels/consonants)
-  { jamo: 'ㅓ', key: 'j', hand: 'right', stage: 1, stageName: 'Home Row Index Keys' },
-  { jamo: 'ㅏ', key: 'k', hand: 'right', stage: 1, stageName: 'Home Row Index Keys' },
-  { jamo: 'ㅇ', key: 'd', hand: 'left', stage: 1, stageName: 'Home Row Index Keys' },
-  { jamo: 'ㄹ', key: 'f', hand: 'left', stage: 1, stageName: 'Home Row Index Keys' },
+  { jamo: 'ㅓ', stage: 1, stageName: 'Home Row Index Keys' },
+  { jamo: 'ㅏ', stage: 1, stageName: 'Home Row Index Keys' },
+  { jamo: 'ㅇ', stage: 1, stageName: 'Home Row Index Keys' },
+  { jamo: 'ㄹ', stage: 1, stageName: 'Home Row Index Keys' },
 
   // Stage 2: Remaining Home Row & Fundamental Vowels
-  { jamo: 'ㅗ', key: 'h', hand: 'right', stage: 2, stageName: 'Home Row' },
-  { jamo: 'ㅣ', key: 'l', hand: 'right', stage: 2, stageName: 'Home Row' },
-  { jamo: 'ㅁ', key: 'a', hand: 'left', stage: 2, stageName: 'Home Row' },
-  { jamo: 'ㄴ', key: 's', hand: 'left', stage: 2, stageName: 'Home Row' },
-  { jamo: 'ㅎ', key: 'g', hand: 'left', stage: 2, stageName: 'Home Row' },
-  { jamo: 'ㅜ', key: 'n', hand: 'right', stage: 2, stageName: 'Basic Vowels' },
-  { jamo: 'ㅡ', key: 'm', hand: 'right', stage: 2, stageName: 'Basic Vowels' },
+  { jamo: 'ㅗ', stage: 2, stageName: 'Home Row' },
+  { jamo: 'ㅣ', stage: 2, stageName: 'Home Row' },
+  { jamo: 'ㅁ', stage: 2, stageName: 'Home Row' },
+  { jamo: 'ㄴ', stage: 2, stageName: 'Home Row' },
+  { jamo: 'ㅎ', stage: 2, stageName: 'Home Row' },
+  { jamo: 'ㅜ', stage: 2, stageName: 'Basic Vowels' },
+  { jamo: 'ㅡ', stage: 2, stageName: 'Basic Vowels' },
 
   // Stage 3: Top Row Keys
-  { jamo: 'ㄱ', key: 'r', hand: 'left', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅅ', key: 't', hand: 'left', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㄷ', key: 'e', hand: 'left', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅈ', key: 'w', hand: 'left', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅂ', key: 'q', hand: 'left', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅛ', key: 'y', hand: 'right', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅕ', key: 'u', hand: 'right', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅑ', key: 'i', hand: 'right', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅐ', key: 'o', hand: 'right', stage: 3, stageName: 'Top Row' },
-  { jamo: 'ㅔ', key: 'p', hand: 'right', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㄱ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅅ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㄷ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅈ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅂ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅛ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅕ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅑ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅐ', stage: 3, stageName: 'Top Row' },
+  { jamo: 'ㅔ', stage: 3, stageName: 'Top Row' },
 
   // Stage 4: Bottom Row Keys
-  { jamo: 'ㅋ', key: 'z', hand: 'left', stage: 4, stageName: 'Bottom Row' },
-  { jamo: 'ㅌ', key: 'x', hand: 'left', stage: 4, stageName: 'Bottom Row' },
-  { jamo: 'ㅊ', key: 'c', hand: 'left', stage: 4, stageName: 'Bottom Row' },
-  { jamo: 'ㅍ', key: 'v', hand: 'left', stage: 4, stageName: 'Bottom Row' },
-  { jamo: 'ㅠ', key: 'b', hand: 'right', stage: 4, stageName: 'Bottom Row' },
+  { jamo: 'ㅋ', stage: 4, stageName: 'Bottom Row' },
+  { jamo: 'ㅌ', stage: 4, stageName: 'Bottom Row' },
+  { jamo: 'ㅊ', stage: 4, stageName: 'Bottom Row' },
+  { jamo: 'ㅍ', stage: 4, stageName: 'Bottom Row' },
+  { jamo: 'ㅠ', stage: 4, stageName: 'Bottom Row' },
 
   // Stage 5: Shift Key Double Consonants & Vowels
-  { jamo: 'ㄲ', key: 'r', shift: true, hand: 'left', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅆ', key: 't', shift: true, hand: 'left', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㄸ', key: 'e', shift: true, hand: 'left', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅉ', key: 'w', shift: true, hand: 'left', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅃ', key: 'q', shift: true, hand: 'left', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅒ', key: 'o', shift: true, hand: 'right', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅖ', key: 'p', shift: true, hand: 'right', stage: 5, stageName: 'Shift Keys' },
+  { jamo: 'ㄲ', stage: 5, stageName: 'Shift Keys' },
+  { jamo: 'ㅆ', stage: 5, stageName: 'Shift Keys' },
+  { jamo: 'ㄸ', stage: 5, stageName: 'Shift Keys' },
+  { jamo: 'ㅉ', stage: 5, stageName: 'Shift Keys' },
+  { jamo: 'ㅃ', stage: 5, stageName: 'Shift Keys' },
+  { jamo: 'ㅒ', stage: 5, stageName: 'Shift Keys' },
+  { jamo: 'ㅖ', stage: 5, stageName: 'Shift Keys' },
 
   // Stage 6: Compound Final Consonants (겹받침)
-  {
-    jamo: 'ㄶ',
-    key: 'sg',
-    combination: ['ㄴ', 'ㅎ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㄵ',
-    key: 'sw',
-    combination: ['ㄴ', 'ㅈ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㄺ',
-    key: 'fr',
-    combination: ['ㄹ', 'ㄱ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㄻ',
-    key: 'fa',
-    combination: ['ㄹ', 'ㅁ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㄼ',
-    key: 'fq',
-    combination: ['ㄹ', 'ㅂ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㅄ',
-    key: 'qt',
-    combination: ['ㅂ', 'ㅅ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㅀ',
-    key: 'fg',
-    combination: ['ㄹ', 'ㅎ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㄳ',
-    key: 'rt',
-    combination: ['ㄱ', 'ㅅ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㄾ',
-    key: 'fx',
-    combination: ['ㄹ', 'ㅌ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㄿ',
-    key: 'fv',
-    combination: ['ㄹ', 'ㅍ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
-  {
-    jamo: 'ㄽ',
-    key: 'ft',
-    combination: ['ㄹ', 'ㅅ'],
-    hand: 'left',
-    stage: 6,
-    stageName: 'Compound Batchim',
-  },
+  { jamo: 'ㄶ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄴ', 'ㅎ'] },
+  { jamo: 'ㄵ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄴ', 'ㅈ'] },
+  { jamo: 'ㄺ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㄱ'] },
+  { jamo: 'ㄻ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅁ'] },
+  { jamo: 'ㄼ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅂ'] },
+  { jamo: 'ㅄ', stage: 6, stageName: 'Compound Batchim', combination: ['ㅂ', 'ㅅ'] },
+  { jamo: 'ㅀ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅎ'] },
+  { jamo: 'ㄳ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄱ', 'ㅅ'] },
+  { jamo: 'ㄾ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅌ'] },
+  { jamo: 'ㄿ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅍ'] },
+  { jamo: 'ㄽ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅅ'] },
 ];
+
+/**
+ * Ordered Dubeolsik (2-set) Jamo progression sequence based on ergonomic
+ * home-row outward touch-typing principles. Key metadata derived from JAMO_TO_KEY.
+ */
+export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = RAW_JAMO_PROGRESSION_ORDER.map(
+  (entry) => {
+    if (entry.combination) {
+      const [first, second] = entry.combination;
+      const firstKey = JAMO_TO_KEY[first]?.key ?? '';
+      const secondKey = JAMO_TO_KEY[second]?.key ?? '';
+      return {
+        jamo: entry.jamo,
+        key: `${firstKey}${secondKey}`,
+        combination: entry.combination,
+        hand: 'left', // All Korean compound batchim keys are left-hand consonants
+        stage: entry.stage,
+        stageName: entry.stageName,
+      };
+    }
+    const info = JAMO_TO_KEY[entry.jamo];
+    return {
+      jamo: entry.jamo,
+      key: info?.key ?? '',
+      ...(info?.shift ? { shift: true } : {}),
+      hand: info?.hand ?? 'left',
+      stage: entry.stage,
+      stageName: entry.stageName,
+    };
+  },
+);
 
 /**
  * Interleaved sentence milestone checkpoints between key learning sections.

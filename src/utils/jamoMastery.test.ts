@@ -46,6 +46,25 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     // Does not contain punctuation (mastery focuses on Jamos only)
     expect(jamoChars).not.toContain(',');
     expect(jamoChars).not.toContain('.');
+
+    // Verify key attributes correctly derived
+    expect(JAMO_PROGRESSION_ORDER.find((i) => i.jamo === 'ㅓ')).toMatchObject({
+      key: 'j',
+      hand: 'right',
+      stage: 1,
+    });
+    expect(JAMO_PROGRESSION_ORDER.find((i) => i.jamo === 'ㄲ')).toMatchObject({
+      key: 'r',
+      shift: true,
+      hand: 'left',
+      stage: 5,
+    });
+    expect(JAMO_PROGRESSION_ORDER.find((i) => i.jamo === 'ㄶ')).toMatchObject({
+      key: 'sg',
+      combination: ['ㄴ', 'ㅎ'],
+      hand: 'left',
+      stage: 6,
+    });
   });
 
   it('should initialize with Stage 1 (4 keys) unlocked by default', () => {
