@@ -51,47 +51,15 @@ const VOWEL_MAP: Record<string, string> = {
 
 /** Romanization map for isolated Jamo characters. */
 const SINGLE_JAMO_PRONUNCIATION: Record<string, string> = {
-  ㅏ: 'a',
-  ㅓ: 'eo',
-  ㅗ: 'o',
-  ㅜ: 'u',
-  ㅡ: 'eu',
-  ㅣ: 'i',
-  ㅐ: 'ae',
-  ㅔ: 'e',
-  ㅑ: 'ya',
-  ㅕ: 'yeo',
-  ㅛ: 'yo',
-  ㅠ: 'yu',
-  ㅒ: 'yae',
-  ㅖ: 'ye',
-  ㅘ: 'wa',
-  ㅙ: 'wae',
-  ㅚ: 'oe',
-  ㅝ: 'wo',
-  ㅞ: 'we',
-  ㅟ: 'wi',
-  ㅢ: 'ui',
-  ㄱ: 'g',
-  ㄴ: 'n',
-  ㄷ: 'd',
+  ...INITIAL_CONSONANT_MAP,
+  ...VOWEL_MAP,
   ㄹ: 'r/l',
-  ㅁ: 'm',
-  ㅂ: 'b',
-  ㅅ: 's',
   ㅇ: 'ng',
-  ㅈ: 'j',
-  ㅊ: 'ch',
-  ㅋ: 'k',
-  ㅌ: 't',
-  ㅍ: 'p',
-  ㅎ: 'h',
-  ㄲ: 'kk',
-  ㄸ: 'tt',
-  ㅃ: 'pp',
-  ㅆ: 'ss',
-  ㅉ: 'jj',
 };
+
+const K_NEUTRALIZATION_FINALS = ['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'];
+const T_NEUTRALIZATION_FINALS = ['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'];
+const P_NEUTRALIZATION_FINALS = ['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'];
 
 /**
  * Converts a final consonant (Jongseong) to its default non-liaison Revised Romanization letter.
@@ -100,13 +68,13 @@ function getNormalFinalConsonantStr(finalConsonant: string | null): string {
   if (!finalConsonant) {
     return '';
   }
-  if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(finalConsonant)) {
+  if (K_NEUTRALIZATION_FINALS.includes(finalConsonant)) {
     return 'k';
   }
   if (['ㄴ', 'ㄵ', 'ㄶ'].includes(finalConsonant)) {
     return 'n';
   }
-  if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(finalConsonant)) {
+  if (T_NEUTRALIZATION_FINALS.includes(finalConsonant)) {
     return 't';
   }
   if (['ㄹ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㅀ'].includes(finalConsonant)) {
@@ -115,7 +83,7 @@ function getNormalFinalConsonantStr(finalConsonant: string | null): string {
   if (['ㅁ', 'ㄻ'].includes(finalConsonant)) {
     return 'm';
   }
-  if (['ㅂ', 'ㅍ', 'ㄿ', 'ㅄ'].includes(finalConsonant)) {
+  if (P_NEUTRALIZATION_FINALS.includes(finalConsonant)) {
     return 'p';
   }
   if (finalConsonant === 'ㅇ') {
@@ -271,11 +239,11 @@ function romanizeWord(word: string): string {
         next.initialConsonantStr = 'l';
       } else if (next && (next.initialConsonant === 'ㄴ' || next.initialConsonant === 'ㅁ')) {
         // Nasalization before ㄴ/ㅁ
-        if (['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'].includes(curr.finalConsonant)) {
+        if (K_NEUTRALIZATION_FINALS.includes(curr.finalConsonant)) {
           finalConsonantStr = 'ng';
-        } else if (['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'].includes(curr.finalConsonant)) {
+        } else if (T_NEUTRALIZATION_FINALS.includes(curr.finalConsonant)) {
           finalConsonantStr = 'n';
-        } else if (['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'].includes(curr.finalConsonant)) {
+        } else if (P_NEUTRALIZATION_FINALS.includes(curr.finalConsonant)) {
           finalConsonantStr = 'm';
         } else if (curr.finalConsonant === 'ㄴ') {
           finalConsonantStr = 'n';

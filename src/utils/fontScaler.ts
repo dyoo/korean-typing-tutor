@@ -5,6 +5,63 @@
  * and font-weight classes for the Korean Typing Tutor target display.
  */
 
+interface FontTierConfig {
+  maxEffectiveLength: number;
+  fontSizeClass: string;
+  fontWeightClass: string;
+  subtextFontSizeClass: string;
+  baseMin: number;
+  baseMax: number;
+  vwScale: string;
+}
+
+const FONT_TIERS: FontTierConfig[] = [
+  {
+    maxEffectiveLength: 15,
+    fontSizeClass: 'text-giant',
+    fontWeightClass: 'font-bold',
+    subtextFontSizeClass: 'text-subgiant',
+    baseMin: 2.75,
+    baseMax: 5.5,
+    vwScale: '6vw',
+  },
+  {
+    maxEffectiveLength: 35,
+    fontSizeClass: 'text-longsentence',
+    fontWeightClass: 'font-semibold',
+    subtextFontSizeClass: 'text-base md:text-lg',
+    baseMin: 2.0,
+    baseMax: 3.5,
+    vwScale: '4.5vw',
+  },
+  {
+    maxEffectiveLength: 75,
+    fontSizeClass: 'text-sentence',
+    fontWeightClass: 'font-medium',
+    subtextFontSizeClass: 'text-sm md:text-base',
+    baseMin: 1.5,
+    baseMax: 2.25,
+    vwScale: '3vw',
+  },
+  {
+    maxEffectiveLength: Infinity,
+    fontSizeClass: 'text-paragraph',
+    fontWeightClass: 'font-medium',
+    subtextFontSizeClass: 'text-sm md:text-base',
+    baseMin: 1.25,
+    baseMax: 1.75,
+    vwScale: '2.25vw',
+  },
+];
+
+function getEffectiveLength(targetLength: number, displayTextLength: number = 0): number {
+  return targetLength + (displayTextLength > 0 ? displayTextLength * 0.35 : 0);
+}
+
+function getTier(length: number): FontTierConfig {
+  return FONT_TIERS.find((tier) => length <= tier.maxEffectiveLength) ?? FONT_TIERS[FONT_TIERS.length - 1];
+}
+
 /**
  * Determines the target display CSS font size utility class based on character lengths.
  *
@@ -16,17 +73,7 @@ export function getTargetFontSizeClass(
   targetLength: number,
   displayTextLength: number = 0,
 ): string {
-  const effectiveLength = targetLength + (displayTextLength > 0 ? displayTextLength * 0.35 : 0);
-
-  if (effectiveLength <= 15) {
-    return 'text-giant';
-  } else if (effectiveLength <= 35) {
-    return 'text-longsentence';
-  } else if (effectiveLength <= 75) {
-    return 'text-sentence';
-  } else {
-    return 'text-paragraph';
-  }
+  return getTier(getEffectiveLength(targetLength, displayTextLength)).fontSizeClass;
 }
 
 /**
@@ -36,13 +83,7 @@ export function getTargetFontSizeClass(
  * @returns Tailwind font-weight class string.
  */
 export function getTargetFontWeightClass(targetLength: number): string {
-  if (targetLength <= 15) {
-    return 'font-bold';
-  } else if (targetLength <= 35) {
-    return 'font-semibold';
-  } else {
-    return 'font-medium';
-  }
+  return getTier(targetLength).fontWeightClass;
 }
 
 /**
@@ -52,13 +93,7 @@ export function getTargetFontWeightClass(targetLength: number): string {
  * @returns Subtitle CSS font size class string.
  */
 export function getSubtextFontSizeClass(targetLength: number): string {
-  if (targetLength <= 15) {
-    return 'text-subgiant';
-  } else if (targetLength <= 35) {
-    return 'text-base md:text-lg';
-  } else {
-    return 'text-sm md:text-base';
-  }
+  return getTier(targetLength).subtextFontSizeClass;
 }
 
 /**
@@ -90,35 +125,13 @@ export function getTargetFontSizeStyle(
     return '';
   }
 
-  const effectiveLength = targetLength + (displayTextLength > 0 ? displayTextLength * 0.35 : 0);
-  let baseMin: number;
-  let baseMax: number;
-  let vwScale: string;
-
-  if (effectiveLength <= 15) {
-    baseMin = 2.75;
-    baseMax = 5.5;
-    vwScale = '6vw';
-  } else if (effectiveLength <= 35) {
-    baseMin = 2.0;
-    baseMax = 3.5;
-    vwScale = '4.5vw';
-  } else if (effectiveLength <= 75) {
-    baseMin = 1.5;
-    baseMax = 2.25;
-    vwScale = '3vw';
-  } else {
-    baseMin = 1.25;
-    baseMax = 1.75;
-    vwScale = '2.25vw';
-  }
-
-  const effectiveMin = Math.max(minFontSizeRem, baseMin);
-  const effectiveMax = Math.min(maxFontSizeRem, baseMax);
+  const tier = getTier(getEffectiveLength(targetLength, displayTextLength));
+  const effectiveMin = Math.max(minFontSizeRem, tier.baseMin);
+  const effectiveMax = Math.min(maxFontSizeRem, tier.baseMax);
 
   if (effectiveMin >= effectiveMax) {
     return `font-size: ${effectiveMin}rem;`;
   }
 
-  return `font-size: clamp(${effectiveMin}rem, ${vwScale}, ${effectiveMax}rem);`;
+  return `font-size: clamp(${effectiveMin}rem, ${tier.vwScale}, ${effectiveMax}rem);`;
 }
