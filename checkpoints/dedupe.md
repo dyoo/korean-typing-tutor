@@ -39,6 +39,18 @@ Choseong/Jungseong/Jongseong)** in any code or JSDoc we write.
   ≥5 magic numbers), `createEmptyJamoStats()`, `resetJamoStats()`, `createEmptyCheckpointStats()`,
   `clampUnlockedCount()`, `dedupeByTarget()`, `unlockNextJamo()`, `createStarterItem(id)`.
 
+## Completed in commit `36063cb7`
+
+- **knip dead-code configuration & cleanup**: Configured Knip in `package.json` to ignore static `public/coi-serviceworker.js` and removed unused export from `MAX_AUDIO_CACHE_SIZE` in `ttsController.svelte.ts`. Knip runs with 0 warnings.
+
+## Completed in commit `4e830bd0` (H4)
+
+- **keyboardData.ts**: `DUBEOLSIK_KEY_DEFINITIONS` is the single canonical source of truth for Dubeolsik key metadata (`key`, `jamo`, `shiftJamo`, `type`, `hand`, `row`).
+  - `DUBEOLSIK_ROWS` partitioned directly from `DUBEOLSIK_KEY_DEFINITIONS`.
+  - `JAMO_TO_KEY` derived automatically from `DUBEOLSIK_KEY_DEFINITIONS` and `SYMBOL_ROWS`.
+- **hangulTables.ts**: `INITIAL_CONSONANT_MAP`, `VOWEL_MAP`, and `FINAL_CONSONANT_MAP` are dynamically derived from `DUBEOLSIK_KEY_DEFINITIONS` and standalone arrays.
+- **jamoMastery.ts**: `key`, `shift`, and `hand` attributes in `JAMO_PROGRESSION_ORDER` are dynamically derived via `JAMO_TO_KEY`.
+
 ## Deliberate behavior-preservation traps (do NOT "simplify" these)
 
 1. `resetJamoStats()` does **not** clear `lastPracticed` (3 level-setting paths preserve it);
@@ -61,21 +73,13 @@ Component-side batches also need svelte-check (cross-component types).
 
 ## Audit backlog (remaining, ranked)
 
-1. **H4 — canonical Dubeolsik table** (next, see below)
-2. Hangul tables: `isHangulSyllable()` (4 sites incl. test), derive `STANDALONE_COMPOUND_MAP` from the two DECOMP maps, derive `COMPOUND_BATCHIM_SET`/stage-6 `combination` from them
-3. Data consolidation: romanizer `SINGLE_JAMO_PRONUNCIATION` = spread of maps + only 2 overridden keys (`ㄹ:'r/l'`, `ㅇ:'ng'`); hoist the two exact neutralization arrays (`['ㄱ','ㄲ','ㅋ','ㄺ']`, `['ㄷ','ㅅ','ㅆ','ㅈ','ㅊ','ㅌ','ㅎ']`); fontScaler single tier table (15/35/75 + 0.35 weight)
-4. Components: H1 `MasteryVirtualKey` wrapper (6 exact ~15-line blocks in VirtualKeyboard.svelte), H2 `SidebarDrawer` shell (both sidebars: backdrop/panel/header/Escape), H3 centralized keycap active/base class strings + `SpecialKey` (8 inline buttons; mobile Shift duplicates ShiftKey.svelte); medium: `ProgressFill` ×3, `ModalShell` ×2, accordion chrome ×2, Escape/backdrop ×5+4 (fold into shells if possible), tutorSession `selectMasteryItem(excludeId?)` (tutorSession.svelte.ts:110-121 vs :503-514), settings.ts `pickBool/pickNumberRange/pickEnum` idiom ×15 w/ single `DEFAULT_SETTINGS` source
-5. Considered & REJECTED as duplication (do not re-flag): engine uppercase-fallback vs `resolveKeyOutput` (inverse ops), romanizer liaison vs normal-final maps (different phonology), `handleTargetCopyEvent` (compat shim), SettingsModal vs centered dialogs (intentional UX), `togglePanel` wrappers, `scheduleSave`/`flushPendingSave`, TargetDisplay vs InputDisplay CharDisplay usage, types/*.ts (no dupes)
+1. **Hangul tables**: `isHangulSyllable()` (4 sites incl. test), derive `STANDALONE_COMPOUND_MAP` from the two DECOMP maps, derive `COMPOUND_BATCHIM_SET`/stage-6 `combination` from them.
+2. **Data consolidation**: romanizer `SINGLE_JAMO_PRONUNCIATION` = spread of maps + only 2 overridden keys (`ㄹ:'r/l'`, `ㅇ:'ng'`); hoist the two exact neutralization arrays (`['ㄱ','ㄲ','ㅋ','ㄺ']`, `['ㄷ','ㅅ','ㅆ','ㅈ','ㅊ','ㅌ','ㅎ']`); fontScaler single tier table (15/35/75 + 0.35 weight).
+3. **Components**: H1 `MasteryVirtualKey` wrapper (6 exact ~15-line blocks in VirtualKeyboard.svelte), H2 `SidebarDrawer` shell (both sidebars: backdrop/panel/header/Escape), H3 centralized keycap active/base class strings + `SpecialKey` (8 inline buttons; mobile Shift duplicates ShiftKey.svelte); medium: `ProgressFill` ×3, `ModalShell` ×2, accordion chrome ×2, Escape/backdrop ×5+4 (fold into shells if possible), tutorSession `selectMasteryItem(excludeId?)` (tutorSession.svelte.ts:110-121 vs :503-514), settings.ts `pickBool/pickNumberRange/pickEnum` idiom ×15 w/ single `DEFAULT_SETTINGS` source.
+4. Considered & REJECTED as duplication (do not re-flag): engine uppercase-fallback vs `resolveKeyOutput` (inverse ops), romanizer liaison vs normal-final maps (different phonology), `handleTargetCopyEvent` (compat shim), SettingsModal vs centered dialogs (intentional UX), `togglePanel` wrappers, `scheduleSave`/`flushPendingSave`, TargetDisplay vs InputDisplay CharDisplay usage, types/*.ts (no dupes).
 
 ## Next immediate objective
 
-**H4**: make `DUBEOLSIK_KEY_TO_JAMO` (key → `{ jamo, shiftJamo?, hand }`) in `keyboardData.ts`
-the single canonical layout table, then **derive at module load**: `JAMO_TO_KEY` (invert),
-`INITIAL_CONSONANT_MAP`/`VOWEL_MAP`/`FINAL_CONSONANT_MAP` in hangulTables (via existing
-`*_STANDALONE` arrays), and the `key`/`shift`/`hand` fields of `JAMO_PROGRESSION_ORDER` in
-jamoMastery (keep `stage`/`stageName`/`combination` hand-authored). Add a golden-file unit test
-asserting every derived table equals today's hand-written literals before switching call sites.
-Then run the 4 checks and commit `jj describe` → `jj new`.
-
-(AGENTS.md's listed feature priority — Speed & Accuracy analytics panel + progress charts — is
-on hold while this refactor lands.)
+**Hangul Tables & Combinations**:
+1. Add/export `isHangulSyllable(codeOrChar: string | number): boolean` in `hangulDecompose.ts` / `hangulTables.ts` and replace the 4 manual range checks (`0xac00 <= code && code <= 0xd7a3`).
+2. Derive `STANDALONE_COMPOUND_MAP` directly by mapping entries in `COMPOUND_VOWEL_DECOMP` and `COMPOUND_FINAL_CONSONANT_DECOMP` to their component standalone characters.
