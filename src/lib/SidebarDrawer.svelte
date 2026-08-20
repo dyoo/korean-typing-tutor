@@ -50,7 +50,7 @@
     role="dialog"
     aria-modal="true"
     aria-label={ariaLabel}
-    class="fixed inset-y-0 left-0 z-50 w-80 md:w-96 bg-white dark:bg-gray-800 border-r-2 border-gray-200 dark:border-gray-700 shadow-2xl flex flex-col"
+    class="fixed inset-y-0 left-0 z-50 w-84 md:w-[26rem] bg-white dark:bg-gray-800 border-r-2 border-gray-200 dark:border-gray-700 shadow-2xl flex flex-col"
   >
     <!-- Header -->
     <div
@@ -58,11 +58,11 @@
     >
       <div class="flex flex-col">
         <h2
-          class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-gray-100 font-mono"
+          class="text-base font-bold uppercase tracking-wider text-gray-900 dark:text-gray-100 font-mono"
         >
           {title}
         </h2>
-        <span class="text-xs text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
+        <span class="text-sm text-gray-500 dark:text-gray-400 font-semibold mt-0.5">
           {subtitle}
         </span>
       </div>

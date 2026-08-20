@@ -48,15 +48,15 @@
       <button
         type="button"
         onclick={onselectall}
-        class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
+        class="text-sm text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
       >
         Select All
       </button>
-      <span class="text-xs text-gray-300 dark:text-gray-600">•</span>
+      <span class="text-sm text-gray-300 dark:text-gray-600">•</span>
       <button
         type="button"
         onclick={ondeselectall}
-        class="text-xs text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
+        class="text-sm text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
       >
         Select None
       </button>

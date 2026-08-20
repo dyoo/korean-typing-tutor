@@ -76,7 +76,7 @@
             <button
               type="button"
               onclick={() => toggleStageCollapse(stage.stageName)}
-              class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer"
+              class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer"
             >
               <svg
                 class="w-3.5 h-3.5 text-gray-400 transition-transform {collapsedStageIds.includes(
@@ -94,7 +94,7 @@
               <span>{stage.stageName}</span>
             </button>
             <span
-              class="text-[10px] font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0"
+              class="text-xs font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0"
             >
               {stage.items.length}
               {stage.items.length === 1 ? 'key' : 'keys'}
@@ -124,7 +124,7 @@
                   />
                   <div class="flex items-center gap-2">
                     <span
-                      class="relative overflow-hidden text-base font-bold min-w-[28px] text-center leading-none {progress >=
+                      class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
                       100
                         ? 'text-emerald-600 dark:text-emerald-400'
                         : 'text-amber-600 dark:text-amber-400'}"
@@ -139,7 +139,7 @@
                       {/if}
                       <span class="relative z-10">{item.jamo}</span>
                     </span>
-                    <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400 uppercase">
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase">
                       {item.key}{item.shift ? '+Shift' : ''}
                     </span>
                   </div>
@@ -170,12 +170,12 @@
                   />
                   <div class="flex flex-col min-w-0 flex-1">
                     <div class="flex items-center justify-between gap-1">
-                      <span class="text-xs font-bold text-gray-800 dark:text-gray-200 truncate">
+                      <span class="text-sm font-bold text-gray-800 dark:text-gray-200 truncate">
                         <span class="text-gray-500 dark:text-gray-400 font-medium">Milestone:</span>
                         {cp.title}
                       </span>
                       <span
-                        class="text-[10px] font-mono font-bold px-1.5 py-0.2 rounded shrink-0 {cpMastered
+                        class="text-xs font-mono font-bold px-1.5 py-0.5 rounded shrink-0 {cpMastered
                           ? 'bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300'
                           : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300'}"
                       >
@@ -184,7 +184,7 @@
                     </div>
                     {#if cpPercent > 0}
                       <div
-                        class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full mt-1 overflow-hidden"
+                        class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full mt-1 overflow-hidden"
                       >
                         <div
                           class="h-full {cpMastered
@@ -212,7 +212,7 @@
           <button
             type="button"
             onclick={() => toggleStageCollapse('Batchim Workshop')}
-            class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide text-purple-900 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer"
+            class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-purple-900 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer"
           >
             <svg
               class="w-3.5 h-3.5 text-purple-400 transition-transform {collapsedStageIds.includes(
@@ -230,7 +230,7 @@
             <span>Batchim Workshop</span>
           </button>
           <span
-            class="text-[10px] font-mono font-semibold text-purple-700 dark:text-purple-300 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-purple-200 dark:border-purple-800 shrink-0"
+            class="text-xs font-mono font-semibold text-purple-700 dark:text-purple-300 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-purple-200 dark:border-purple-800 shrink-0"
           >
             {BATCHIM_FOCUS_LIST.length} batchim
           </span>
@@ -259,7 +259,7 @@
                 <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
                   <div class="flex items-center gap-2">
                     <span
-                      class="relative overflow-hidden text-base font-bold min-w-[28px] text-center leading-none {progress >=
+                      class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
                       100
                         ? 'text-emerald-600 dark:text-emerald-400'
                         : 'text-purple-700 dark:text-purple-300'}"
@@ -274,7 +274,7 @@
                       {/if}
                       <span class="relative z-10">{item.batchim}</span>
                     </span>
-                    <span class="text-xs font-semibold text-gray-700 dark:text-gray-300 truncate">
+                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
                       {item.name ?? item.batchim}
                     </span>
                   </div>
@@ -284,7 +284,7 @@
                     >
                       ∞
                     </span>
-                    <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400 uppercase">
+                    <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase">
                       {item.key}{item.shift ? '+Shift' : ''}
                     </span>
                   </div>
