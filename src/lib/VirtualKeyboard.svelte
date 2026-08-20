@@ -1,14 +1,11 @@
 <script lang="ts">
   import { DUBEOLSIK_ROWS, SYMBOL_ROWS } from '../utils/keyboardData';
-  import {
-    calculateJamoProgress,
-    getUnlockedJamos,
-    getActiveLearningJamo,
-  } from '../utils/jamoMastery';
+  import { getUnlockedJamos, getActiveLearningJamo } from '../utils/jamoMastery';
   import { isShiftTarget, resolveKeyOutput } from '../utils/virtualKeyboardShift';
   import ShiftKey from './ShiftKey.svelte';
   import SymbolToggleKey from './SymbolToggleKey.svelte';
   import VirtualKey from './VirtualKey.svelte';
+  import MasteryVirtualKey from './MasteryVirtualKey.svelte';
   import type { TutorMode, MasteryState } from '../types/mastery';
 
   interface Props {
@@ -31,7 +28,7 @@
 
   // Derive values internally so they only trigger re-renders when the underlying masteryState actually changes,
   // preventing the entire keyboard from re-rendering on every keystroke.
-  let unlockedJamos = $derived(masteryState ? getUnlockedJamos(masteryState) : new Set());
+  let unlockedJamos = $derived(masteryState ? getUnlockedJamos(masteryState) : new Set<string>());
   let activeJamo = $derived(masteryState ? getActiveLearningJamo(masteryState) : null);
   let jamoStats = $derived(masteryState ? masteryState.jamoStats : {});
 
@@ -85,6 +82,20 @@
   }
 </script>
 
+{#snippet masteryKey(cap: (typeof DUBEOLSIK_ROWS)[0][0])}
+  <MasteryVirtualKey
+    {cap}
+    {isShiftActive}
+    {isShiftPressed}
+    {activeKeys}
+    {mode}
+    {unlockedJamos}
+    {activeJamo}
+    {jamoStats}
+    onselect={handleKeyClick}
+  />
+{/snippet}
+
 <div
   role="region"
   aria-label="Virtual Korean Keyboard Helper"
@@ -97,24 +108,7 @@
       <div style="grid-column: span 2;"></div>
 
       {#each DUBEOLSIK_ROWS[0] as cap}
-        {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-        {@const isLocked =
-          mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-        {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-        {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-        {@const progressPercent =
-          mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
-
-        <VirtualKey
-          {cap}
-          isTarget={activeKeys.includes(cap.key.toLowerCase())}
-          isShiftActive={isShiftPressed}
-          {isLocked}
-          {isActiveLearning}
-          {isMastered}
-          {progressPercent}
-          onselect={handleKeyClick}
-        />
+        {@render masteryKey(cap)}
       {/each}
 
       <button
@@ -138,24 +132,7 @@
       <div style="grid-column: span 3;"></div>
 
       {#each DUBEOLSIK_ROWS[1] as cap}
-        {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-        {@const isLocked =
-          mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-        {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-        {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-        {@const progressPercent =
-          mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
-
-        <VirtualKey
-          {cap}
-          isTarget={activeKeys.includes(cap.key.toLowerCase())}
-          isShiftActive={isShiftPressed}
-          {isLocked}
-          {isActiveLearning}
-          {isMastered}
-          {progressPercent}
-          onselect={handleKeyClick}
-        />
+        {@render masteryKey(cap)}
       {/each}
 
       <div style="grid-column: span 5;"></div>
@@ -174,24 +151,7 @@
       </div>
 
       {#each DUBEOLSIK_ROWS[2] as cap}
-        {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-        {@const isLocked =
-          mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-        {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-        {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-        {@const progressPercent =
-          mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
-
-        <VirtualKey
-          {cap}
-          isTarget={activeKeys.includes(cap.key.toLowerCase())}
-          isShiftActive={isShiftPressed}
-          {isLocked}
-          {isActiveLearning}
-          {isMastered}
-          {progressPercent}
-          onselect={handleKeyClick}
-        />
+        {@render masteryKey(cap)}
       {/each}
 
       <div style="grid-column: span 4;">
@@ -228,48 +188,14 @@
       <!-- Mobile Row 0: Q W E R T Y U I O P (10 keys) -->
       <div class="flex items-center w-full gap-1">
         {#each DUBEOLSIK_ROWS[0] as cap}
-          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-          {@const isLocked =
-            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-          {@const progressPercent =
-            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
-
-          <VirtualKey
-            {cap}
-            isTarget={activeKeys.includes(cap.key.toLowerCase())}
-            isShiftActive={isShiftPressed}
-            {isLocked}
-            {isActiveLearning}
-            {isMastered}
-            {progressPercent}
-            onselect={handleKeyClick}
-          />
+          {@render masteryKey(cap)}
         {/each}
       </div>
 
       <!-- Mobile Row 1: A S D F G H J K L (9 keys, staggered with 5% offset) -->
       <div class="flex items-center justify-center w-full gap-1 px-[5%]">
         {#each DUBEOLSIK_ROWS[1] as cap}
-          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-          {@const isLocked =
-            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-          {@const progressPercent =
-            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
-
-          <VirtualKey
-            {cap}
-            isTarget={activeKeys.includes(cap.key.toLowerCase())}
-            isShiftActive={isShiftPressed}
-            {isLocked}
-            {isActiveLearning}
-            {isMastered}
-            {progressPercent}
-            onselect={handleKeyClick}
-          />
+          {@render masteryKey(cap)}
         {/each}
       </div>
 
@@ -293,24 +219,7 @@
         </button>
 
         {#each DUBEOLSIK_ROWS[2].slice(0, 7) as cap}
-          {@const activeChar = isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
-          {@const isLocked =
-            mode === 'mastery' && unlockedJamos.size > 0 && !unlockedJamos.has(activeChar)}
-          {@const isActiveLearning = mode === 'mastery' && activeJamo?.jamo === activeChar}
-          {@const isMastered = mode === 'mastery' && (jamoStats[activeChar]?.isMastered ?? false)}
-          {@const progressPercent =
-            mode === 'mastery' ? calculateJamoProgress(jamoStats[activeChar]) : 0}
-
-          <VirtualKey
-            {cap}
-            isTarget={activeKeys.includes(cap.key.toLowerCase())}
-            isShiftActive={isShiftPressed}
-            {isLocked}
-            {isActiveLearning}
-            {isMastered}
-            {progressPercent}
-            onselect={handleKeyClick}
-          />
+          {@render masteryKey(cap)}
         {/each}
 
         <button
