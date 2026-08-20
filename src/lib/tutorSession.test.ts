@@ -364,4 +364,49 @@ describe('TutorSession controller', () => {
     // Item must remain the exact same item
     expect(session.getCurrentItem().id).toBe(initialItem.id);
   });
+
+  it('should immediately save state to LocalStorage when completing an exercise (Issue #28)', () => {
+    session.setMode('mastery');
+    const item = session.getCurrentItem();
+    localStorage.removeItem('korean_tutor_mastery');
+
+    // Type the characters to complete the current item
+    if (item.target === '어') {
+      session.processKey('d'); // ㅇ
+      session.processKey('j'); // ㅓ
+    } else if (item.target === '아') {
+      session.processKey('d'); // ㅇ
+      session.processKey('k'); // ㅏ
+    } else {
+      for (const char of item.target) {
+        if (char === '어') {
+          session.processKey('d');
+          session.processKey('j');
+        } else if (char === '아') {
+          session.processKey('d');
+          session.processKey('k');
+        } else {
+          session.processKey(char);
+        }
+      }
+    }
+
+    expect(session.getIsItemCompleted()).toBe(true);
+    const savedRaw = localStorage.getItem('korean_tutor_mastery');
+    expect(savedRaw).not.toBeNull();
+    const parsed = JSON.parse(savedRaw!);
+    expect(parsed.mode).toBe('mastery');
+  });
+
+  it('should flush pending saves immediately when advancing levels (Issue #28)', () => {
+    session.setMode('mastery');
+    // Simulate typing a key that triggers debounced scheduleSave
+    session.processKey('d');
+    localStorage.removeItem('korean_tutor_mastery');
+
+    // Advancing level must flush immediately
+    session.advanceLevel();
+    const savedRaw = localStorage.getItem('korean_tutor_mastery');
+    expect(savedRaw).not.toBeNull();
+  });
 });

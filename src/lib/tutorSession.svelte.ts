@@ -157,8 +157,17 @@ export class TutorSession {
     return this.mode;
   }
 
+  /** Cancels any scheduled debounced save timer. */
+  private cancelScheduledSave(): void {
+    if (this.saveTimeout !== null) {
+      clearTimeout(this.saveTimeout);
+      this.saveTimeout = null;
+    }
+  }
+
   /** Sets active application mode and refreshes item queue. */
   public setMode(mode: TutorMode): void {
+    this.cancelScheduledSave();
     this.mode = mode;
     this.masteryState.mode = mode;
     saveMasteryState(this.masteryState);
@@ -192,6 +201,7 @@ export class TutorSession {
 
   /** Resets user mastery progress back to default Stage 1 keys. */
   public resetMasteryProgress(): void {
+    this.cancelScheduledSave();
     this.masteryState = createDefaultMasteryState();
     this.masteryState.mode = this.mode;
     saveMasteryState(this.masteryState);
@@ -200,6 +210,7 @@ export class TutorSession {
 
   /** Manually sets the mastery progression level (unlocked count). */
   public setMasteryProgressionLevel(level: number): void {
+    this.cancelScheduledSave();
     setMasteryProgressionLevel(this.masteryState, level, true);
     saveMasteryState(this.masteryState);
     this.applyFilterAndShuffle();
@@ -207,6 +218,7 @@ export class TutorSession {
 
   /** Manually jumps to a specific sentence checkpoint. */
   public setMasteryCheckpointLevel(checkpointId: string): void {
+    this.cancelScheduledSave();
     setMasteryCheckpointLevel(this.masteryState, checkpointId);
     saveMasteryState(this.masteryState);
     this.applyFilterAndShuffle();
@@ -215,6 +227,7 @@ export class TutorSession {
   /** Manually unlocks the next Jamo in the progression sequence. */
   public unlockNextJamoManually(): string | undefined {
     if (this.masteryState.unlockedCount < JAMO_PROGRESSION_ORDER.length) {
+      this.cancelScheduledSave();
       const nextIndex = this.masteryState.unlockedCount;
       this.masteryState.unlockedCount += 1;
       const nextJamo = JAMO_PROGRESSION_ORDER[nextIndex].jamo;
@@ -374,9 +387,7 @@ export class TutorSession {
    * Waits 30 seconds of inactivity before writing to avoid mobile I/O heat and battery drain.
    */
   private scheduleSave(): void {
-    if (this.saveTimeout !== null) {
-      clearTimeout(this.saveTimeout);
-    }
+    this.cancelScheduledSave();
     this.saveTimeout = setTimeout(() => {
       saveMasteryState(this.masteryState);
       this.saveTimeout = null;
@@ -385,10 +396,7 @@ export class TutorSession {
 
   /** Immediately saves any pending mastery state to LocalStorage. */
   public flushPendingSave(): void {
-    if (this.saveTimeout !== null) {
-      clearTimeout(this.saveTimeout);
-      this.saveTimeout = null;
-    }
+    this.cancelScheduledSave();
     saveMasteryState(this.masteryState);
   }
 
@@ -477,6 +485,8 @@ export class TutorSession {
 
     if (currentTarget.length > 0 && this.userInput === currentTarget) {
       this.isItemCompleted = true;
+      // Immediately save progress to LocalStorage upon finishing the exercise, skipping debounce delay.
+      this.flushPendingSave();
       return this.makeResult(true, true, false, false, newlyUnlockedJamo);
     }
 
@@ -503,9 +513,9 @@ export class TutorSession {
           this.isMasteryGraduationPending = true;
           isComplete = true;
         }
-        this.scheduleSave();
       }
 
+      this.flushPendingSave();
       this.updateMasteryItemsAndCursor(currentItem.id);
     } else {
       this.currentIndex += 1;
