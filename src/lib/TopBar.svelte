@@ -13,6 +13,7 @@
     masteryUnlockedCount: number;
     masteryTotalCount: number;
     activeJamoChar?: string | null;
+    activeJamoLabel?: string;
     activeLearningCombination?: [string, string];
     activeJamoProgress?: number;
     activeCheckpointTitle?: string | null;
@@ -47,6 +48,7 @@
     masteryUnlockedCount,
     masteryTotalCount,
     activeJamoChar = null,
+    activeJamoLabel = 'Focus:',
     activeLearningCombination,
     activeJamoProgress = 0,
     activeCheckpointTitle = null,
@@ -162,7 +164,7 @@
             <span
               class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:inline whitespace-nowrap"
             >
-              Focus:
+              {activeJamoLabel}
             </span>
             <span
               class="relative overflow-hidden text-sm md:text-base font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[24px] md:min-w-[28px] shadow-2xs gap-1 whitespace-nowrap shrink-0"

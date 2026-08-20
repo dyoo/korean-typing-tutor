@@ -201,7 +201,7 @@ export const JAMO_STAGES: JamoStageGroup[] = (() => {
 
 /**
  * Complete list of all 27 standard Korean final consonants (받침) in dictionary order.
- * Used for post-game Batchim Focus mode practice.
+ * Used for post-game Batchim Workshop mode practice.
  */
 export const BATCHIM_FOCUS_LIST: BatchimFocusItem[] = [
   { batchim: 'ㄱ', key: 'r', hand: 'left', name: '기역' },
@@ -615,7 +615,7 @@ export function setMasteryCheckpointLevel(state: MasteryState, checkpointId: str
 }
 
 /**
- * Focuses practice on a specific final consonant (받침) in post-game Focus mode.
+ * Focuses practice on a specific final consonant (받침) in post-game Batchim Workshop mode.
  */
 export function setMasteryFocusBatchim(state: MasteryState, batchim: string): void {
   if (!BATCHIM_FOCUS_MAP[batchim]) {
@@ -929,7 +929,7 @@ export function getEligibleMasteryItems(
   unlockedJamos: Set<string>,
   activeTarget?: MasteryTarget | null,
 ): LessonItem[] {
-  // If active target is a batchim focus in post-game mode, strictly return items containing that batchim
+  // If active target is a batchim in post-game Batchim Workshop mode, strictly return items containing that batchim
   if (activeTarget && activeTarget.type === 'focus') {
     const focusBatchim = activeTarget.item.batchim;
     const curatedBatchimWords = FOCUS_BATCHIM_VOCABULARY[focusBatchim] ?? [];

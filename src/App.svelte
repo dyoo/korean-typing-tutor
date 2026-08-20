@@ -94,6 +94,7 @@
   let activeLearningCombination = $derived(
     activeLearningJamo?.combination ?? activeFocusBatchimItem?.combination,
   );
+  let activeJamoLabel = $derived(activeFocusBatchimItem ? 'Batchim:' : 'Focus:');
   let activeJamoProgress = $derived(
     activeJamoChar ? calculateJamoProgress(masteryState.jamoStats[activeJamoChar]) : 0,
   );
@@ -553,6 +554,7 @@
     masteryUnlockedCount={masteryState.unlockedCount}
     masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
     activeJamoChar={activeJamoChar}
+    activeJamoLabel={activeJamoLabel}
     activeLearningCombination={activeLearningCombination}
     {activeJamoProgress}
     {activeCheckpointTitle}

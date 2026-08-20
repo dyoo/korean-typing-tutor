@@ -202,7 +202,7 @@
         </div>
       {/each}
 
-      <!-- Post-game Focus Section -->
+      <!-- Post-game Batchim Workshop Section -->
       <div
         class="flex flex-col border border-purple-200 dark:border-purple-800/60 rounded-xl p-2.5 bg-purple-50/40 dark:bg-purple-950/20 gap-2"
       >
@@ -211,12 +211,12 @@
         >
           <button
             type="button"
-            onclick={() => toggleStageCollapse('Focus')}
+            onclick={() => toggleStageCollapse('Batchim Workshop')}
             class="flex items-center gap-1.5 font-bold text-xs uppercase tracking-wide text-purple-900 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer"
           >
             <svg
               class="w-3.5 h-3.5 text-purple-400 transition-transform {collapsedStageIds.includes(
-                'Focus',
+                'Batchim Workshop',
               )
                 ? '-rotate-90'
                 : ''}"
@@ -227,7 +227,7 @@
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
-            <span>Focus</span>
+            <span>Batchim Workshop</span>
           </button>
           <span
             class="text-[10px] font-mono font-semibold text-purple-700 dark:text-purple-300 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-purple-200 dark:border-purple-800 shrink-0"
@@ -236,7 +236,7 @@
           </span>
         </div>
 
-        {#if !collapsedStageIds.includes('Focus')}
+        {#if !collapsedStageIds.includes('Batchim Workshop')}
           <div
             class="flex flex-col gap-1.5 pl-3 border-l-2 border-purple-500/30 dark:border-purple-400/30 ml-3 mb-1 mr-1"
           >

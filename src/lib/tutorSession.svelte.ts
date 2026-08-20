@@ -225,7 +225,7 @@ export class TutorSession {
     this.applyFilterAndShuffle();
   }
 
-  /** Manually focuses practice on a specific final consonant (받침) in post-game Focus mode. */
+  /** Manually focuses practice on a specific final consonant (받침) in post-game Batchim Workshop mode. */
   public setMasteryFocusBatchim(batchim: string): void {
     this.cancelScheduledSave();
     setMasteryFocusBatchim(this.masteryState, batchim);

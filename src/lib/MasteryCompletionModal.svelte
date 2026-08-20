@@ -73,7 +73,7 @@
 
       <!-- Action Cards -->
       <div class="mt-6 md:mt-8 space-y-3">
-        <!-- Option 1: Batchim Focus Post-game Mode -->
+        <!-- Option 1: Batchim Workshop Post-game Mode -->
         <button
           type="button"
           onclick={onOpenFocusMode ?? onOpenMasterySidebar}
@@ -81,16 +81,16 @@
         >
           <div class="flex items-center justify-between">
             <span class="font-bold text-purple-950 dark:text-purple-200 text-base md:text-lg">
-              Post-game: Focus on Any Batchim
+              Post-game: Batchim Workshop
             </span>
             <span
               class="text-xs font-semibold px-2 py-0.5 rounded bg-purple-200 dark:bg-purple-900 text-purple-900 dark:text-purple-200"
             >
-              Focus
+              Workshop
             </span>
           </div>
           <p class="mt-1 text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-normal">
-            Choose any of the 27 Korean final consonants (받침) to practice with 100% targeted examples.
+            Practice any of the 27 Korean final consonants (받침) in the Batchim Workshop with 100% targeted examples.
           </p>
         </button>
 

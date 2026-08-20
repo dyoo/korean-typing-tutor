@@ -546,7 +546,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     });
   });
 
-  describe('Post-game Focus Section & Batchim Practice', () => {
+  describe('Post-game Batchim Workshop & Final Consonants Practice', () => {
     it('should define all 27 standard Korean batchim in BATCHIM_FOCUS_LIST', async () => {
       const { BATCHIM_FOCUS_LIST, BATCHIM_FOCUS_MAP } = await import('./jamoMastery');
       expect(BATCHIM_FOCUS_LIST.length).toBe(27);

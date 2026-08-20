@@ -410,7 +410,7 @@ describe('TutorSession controller', () => {
     expect(savedRaw).not.toBeNull();
   });
 
-  it('should switch to post-game Batchim Focus mode and serve 100% batchim-matching examples', async () => {
+  it('should switch to post-game Batchim Workshop mode and serve 100% batchim-matching examples', async () => {
     const { hasBatchim } = await import('../utils/jamoMastery');
     session.setMode('mastery');
     session.setMasteryFocusBatchim('ㅋ');
