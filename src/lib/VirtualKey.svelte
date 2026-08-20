@@ -46,7 +46,7 @@
   tabindex="-1"
   onmousedown={(e) => onselect?.(cap.key, e)}
   style="grid-column: span 2;"
-  class="relative overflow-hidden flex flex-col items-center justify-between h-14 sm:h-13 flex-1 min-w-0 sm:flex-initial rounded-lg border text-center transition-colors cursor-pointer p-1 {activeColorClasses}"
+  class="relative overflow-hidden flex flex-col items-center justify-between h-14 md:h-13 flex-1 min-w-0 md:flex-initial rounded-lg border text-center transition-colors cursor-pointer p-1 {activeColorClasses}"
   aria-label="{cap.jamo} (Key {cap.key.toUpperCase()})"
 >
   {#if progressPercent > 0 && !isLocked && !isTarget}
@@ -59,7 +59,7 @@
   {/if}
 
   <div
-    class="relative z-10 flex items-center justify-between w-full text-xs sm:text-[10px] leading-none font-mono"
+    class="relative z-10 flex items-center justify-between w-full text-xs md:text-[10px] leading-none font-mono"
   >
     <span class={isTarget ? 'text-blue-100 font-bold' : 'text-gray-400 dark:text-gray-500'}>
       {cap.type === 'symbol' ? '' : cap.key.toUpperCase()}
@@ -70,7 +70,7 @@
       </span>
     {/if}
   </div>
-  <span class="relative z-10 text-xl sm:text-lg md:text-xl font-semibold leading-none my-auto">
+  <span class="relative z-10 text-xl font-semibold leading-none my-auto">
     {isShiftActive && cap.shiftJamo ? cap.shiftJamo : cap.jamo}
   </span>
 </button>

@@ -8,7 +8,7 @@
   }
 
   let { side, isTarget = false, isPressed = false, widthClass, onselect }: Props = $props();
-  let defaultWidth = 'w-10 sm:w-14 md:w-16';
+  let defaultWidth = 'w-10 md:w-16';
   let width = $derived(widthClass ?? defaultWidth);
 </script>
 
@@ -16,7 +16,7 @@
   type="button"
   tabindex="-1"
   onmousedown={(e) => onselect?.(e)}
-  class="relative flex items-center justify-center {width} h-14 sm:h-13 rounded-lg border text-center transition-colors cursor-pointer shrink-0 text-lg sm:text-xs font-semibold uppercase tracking-wide
+  class="relative flex items-center justify-center {width} h-14 md:h-13 rounded-lg border text-center transition-colors cursor-pointer shrink-0 text-lg md:text-xs font-semibold uppercase tracking-wide
     {isTarget
     ? 'bg-blue-600 text-white border-blue-700 ring-2 ring-blue-500 shadow-sm font-bold'
     : isPressed

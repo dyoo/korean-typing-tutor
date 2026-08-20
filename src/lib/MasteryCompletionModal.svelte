@@ -30,7 +30,7 @@
     <!-- Modal Card Container -->
     <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <div
-      class="relative w-full max-w-lg p-6 sm:p-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl text-gray-900 dark:text-gray-100"
+      class="relative w-full max-w-lg p-6 md:p-8 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-2xl text-gray-900 dark:text-gray-100"
       onclick={(e) => e.stopPropagation()}
       onkeydown={(e) => e.stopPropagation()}
       role="document"
@@ -60,18 +60,18 @@
           Mastery Path Complete
         </div>
 
-        <h2 id="completion-modal-title" class="text-2xl sm:text-3xl font-extrabold tracking-tight">
+        <h2 id="completion-modal-title" class="text-2xl md:text-3xl font-extrabold tracking-tight">
           축하합니다! (Congratulations!)
         </h2>
 
-        <p class="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
+        <p class="text-sm md:text-base text-gray-600 dark:text-gray-300 leading-relaxed">
           You have mastered all 44 Hangul Jamos across Home Row, Top Row, Bottom Row, Shift Keys,
           and Compound Final Consonants (겹받침), along with all 5 Sentence Milestones.
         </p>
       </div>
 
       <!-- Action Cards -->
-      <div class="mt-6 sm:mt-8 space-y-3">
+      <div class="mt-6 md:mt-8 space-y-3">
         <!-- Option 1: Free-form Mode -->
         <button
           type="button"
@@ -79,7 +79,7 @@
           class="w-full text-left p-4 rounded-xl border border-amber-200 dark:border-amber-800/80 bg-amber-50/70 dark:bg-amber-950/30 hover:bg-amber-100 dark:hover:bg-amber-950/50 transition-colors group focus:outline-none focus:ring-2 focus:ring-amber-500"
         >
           <div class="flex items-center justify-between">
-            <span class="font-bold text-amber-950 dark:text-amber-200 text-base sm:text-lg">
+            <span class="font-bold text-amber-950 dark:text-amber-200 text-base md:text-lg">
               Switch to Free-form Mode
             </span>
             <span
@@ -88,7 +88,7 @@
               Recommended
             </span>
           </div>
-          <p class="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-normal">
+          <p class="mt-1 text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-normal">
             Practice the complete 26-module library of vocabulary, TOPIK levels, idioms, and
             literature without progression locks.
           </p>
@@ -100,10 +100,10 @@
           onclick={onOpenMasterySidebar}
           class="w-full text-left p-4 rounded-xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/60 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group focus:outline-none focus:ring-2 focus:ring-gray-400"
         >
-          <div class="font-bold text-gray-900 dark:text-gray-100 text-base sm:text-lg">
+          <div class="font-bold text-gray-900 dark:text-gray-100 text-base md:text-lg">
             Review or Reset Progress
           </div>
-          <p class="mt-1 text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-normal">
+          <p class="mt-1 text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-normal">
             Open the Mastery Drawer to jump to any previous Jamo stage or Sentence Milestone to hone
             your muscle memory.
           </p>
@@ -115,7 +115,7 @@
         <button
           type="button"
           onclick={onClose}
-          class="text-xs sm:text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 font-medium underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded px-2 py-1"
+          class="text-xs md:text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 font-medium underline underline-offset-4 focus:outline-none focus:ring-2 focus:ring-amber-500 rounded px-2 py-1"
         >
           Continue practicing in Master stage
         </button>

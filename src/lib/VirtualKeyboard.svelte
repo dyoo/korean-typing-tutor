@@ -131,10 +131,10 @@
 <div
   role="region"
   aria-label="Virtual Korean Keyboard Helper"
-  class="virtual-keyboard w-screen sm:w-full -mx-[calc((100vw-100%)/2)] sm:mx-0 max-w-none sm:max-w-5xl flex flex-col items-center gap-1.5 p-2 sm:p-3 bg-white/90 dark:bg-gray-800/90 border-2 border-b-0 sm:border-b-2 border-gray-200 dark:border-gray-700 rounded-t-2xl rounded-b-none sm:rounded-2xl shadow-sm select-none"
+  class="virtual-keyboard w-screen md:w-full -mx-[calc((100vw-100%)/2)] md:mx-0 max-w-none md:max-w-5xl flex flex-col items-center gap-1.5 p-2 md:p-3 bg-white/90 dark:bg-gray-800/90 border-2 border-b-0 md:border-b-2 border-gray-200 dark:border-gray-700 rounded-t-2xl rounded-b-none md:rounded-2xl shadow-sm select-none"
 >
-  <!-- ==================== DESKTOP LAYOUT (sm: and above) ==================== -->
-  <div class="hidden sm:flex flex-col items-center w-full gap-1.5">
+  <!-- ==================== DESKTOP LAYOUT (md: and above) ==================== -->
+  <div class="hidden md:flex flex-col items-center w-full gap-1.5">
     {#if !isSymbolMode}
       <!-- Desktop Row 0: Q W E R T Y U I O P + Backspace -->
       <div class="grid w-full gap-1.5 kb-grid">
@@ -264,7 +264,7 @@
     <div class="flex items-center justify-center gap-1.5 w-full mt-0.5">
       <SymbolToggleKey
         {isSymbolMode}
-        customClass="h-8 px-3 w-16 md:w-20 shrink-0"
+        customClass="h-8 px-3 w-20 shrink-0"
         onselect={toggleSymbolMode}
       />
 
@@ -277,20 +277,20 @@
         isTarget: isSpaceTarget,
         ariaLabel: 'Spacebar',
         customClass:
-          'w-64 md:w-80 h-8 text-xs font-semibold uppercase tracking-wider shrink-0 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700',
+          'w-80 h-8 text-xs font-semibold uppercase tracking-wider shrink-0 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700',
         content: spaceContent,
       })}
 
       <SymbolToggleKey
         {isSymbolMode}
-        customClass="h-8 px-3 w-16 md:w-20 shrink-0"
+        customClass="h-8 px-3 w-20 shrink-0"
         onselect={toggleSymbolMode}
       />
     </div>
   </div>
 
-  <!-- ==================== MOBILE LAYOUT (< sm) ==================== -->
-  <div class="flex sm:hidden flex-col items-center w-full gap-1">
+  <!-- ==================== MOBILE LAYOUT (< md) ==================== -->
+  <div class="flex md:hidden flex-col items-center w-full gap-1">
     {#if !isSymbolMode}
       <!-- Mobile Row 0: Q W E R T Y U I O P (10 keys) -->
       <div class="flex items-center w-full gap-1">

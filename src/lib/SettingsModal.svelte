@@ -91,7 +91,7 @@
       />
       <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
     </svg>
-    <span class="hidden sm:inline">Settings</span>
+    <span class="hidden md:inline">Settings</span>
   </button>
 
   {#if isOpen}
@@ -113,7 +113,7 @@
       tabindex="-1"
       role="region"
       aria-label="Display Settings Panel"
-      class="settings-modal absolute right-0 top-full mt-2 w-72 sm:w-84 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 z-50 flex flex-col gap-4 text-xs font-semibold text-gray-700 dark:text-gray-200"
+      class="settings-modal absolute right-0 top-full mt-2 w-72 md:w-84 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 z-50 flex flex-col gap-4 text-xs font-semibold text-gray-700 dark:text-gray-200"
     >
       <div
         class="sticky -top-4 -mx-4 px-4 pt-1 pb-2 bg-white dark:bg-gray-800 flex items-center justify-between border-b border-gray-200 dark:border-gray-700 z-10"

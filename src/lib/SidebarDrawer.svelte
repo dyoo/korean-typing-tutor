@@ -50,7 +50,7 @@
     role="dialog"
     aria-modal="true"
     aria-label={ariaLabel}
-    class="fixed inset-y-0 left-0 z-50 w-80 sm:w-96 bg-white dark:bg-gray-800 border-r-2 border-gray-200 dark:border-gray-700 shadow-2xl flex flex-col"
+    class="fixed inset-y-0 left-0 z-50 w-80 md:w-96 bg-white dark:bg-gray-800 border-r-2 border-gray-200 dark:border-gray-700 shadow-2xl flex flex-col"
   >
     <!-- Header -->
     <div

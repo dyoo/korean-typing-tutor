@@ -522,7 +522,7 @@
 
 <main
   oncopy={handleCopy}
-  class="flex flex-col items-center justify-between h-full h-svh max-h-svh bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[env(safe-area-inset-bottom,0px)] sm:pb-4 md:px-8 md:pt-5 md:pb-5 overflow-hidden transition-colors"
+  class="flex flex-col items-center justify-between h-full h-svh max-h-svh bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-[env(safe-area-inset-bottom,0px)] md:px-8 md:pt-5 md:pb-5 overflow-hidden transition-colors"
 >
   <TopBar
     {mode}
@@ -581,7 +581,7 @@
   </div>
 
   <div
-    class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-0 sm:pb-2 md:pb-4 shrink-0 px-2 md:px-8"
+    class="w-full max-w-5xl md:max-w-6xl lg:max-w-7xl flex flex-col items-center pb-0 md:pb-4 shrink-0 px-2 md:px-8"
   >
     <InputDisplay
       bind:inputElement
