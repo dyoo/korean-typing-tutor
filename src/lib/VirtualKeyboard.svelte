@@ -131,74 +131,143 @@
 <div
   role="region"
   aria-label="Virtual Korean Keyboard Helper"
-  class="virtual-keyboard w-screen sm:w-full -mx-[calc((100vw-100%)/2)] sm:mx-0 max-w-none sm:max-w-5xl flex flex-col items-center gap-1.5 p-2 sm:p-3 bg-white/90 dark:bg-gray-800/90 border-2 border-b-0 border-gray-200 dark:border-gray-700 rounded-t-2xl rounded-b-none shadow-sm select-none"
+  class="virtual-keyboard w-screen sm:w-full -mx-[calc((100vw-100%)/2)] sm:mx-0 max-w-none sm:max-w-5xl flex flex-col items-center gap-1.5 p-2 sm:p-3 bg-white/90 dark:bg-gray-800/90 border-2 border-b-0 sm:border-b-2 border-gray-200 dark:border-gray-700 rounded-t-2xl rounded-b-none sm:rounded-2xl shadow-sm select-none"
 >
   <!-- ==================== DESKTOP LAYOUT (sm: and above) ==================== -->
   <div class="hidden sm:flex flex-col items-center w-full gap-1.5">
-    <!-- Desktop Row 0: Q W E R T Y U I O P + Backspace -->
-    <div class="grid w-full gap-1.5 kb-grid">
-      <div style="grid-column: span 2;"></div>
+    {#if !isSymbolMode}
+      <!-- Desktop Row 0: Q W E R T Y U I O P + Backspace -->
+      <div class="grid w-full gap-1.5 kb-grid">
+        <div style="grid-column: span 2;"></div>
 
-      {#each DUBEOLSIK_ROWS[0] as cap}
-        {@render masteryKey(cap)}
-      {/each}
+        {#each DUBEOLSIK_ROWS[0] as cap}
+          {@render masteryKey(cap)}
+        {/each}
 
-      {#snippet backspaceContent()}
-        <span class="text-sm font-bold">⌫</span>
-        <span class="text-[10px]">Delete</span>
-      {/snippet}
+        {#snippet backspaceContent()}
+          <span class="text-sm font-bold">⌫</span>
+          <span class="text-[10px]">Delete</span>
+        {/snippet}
 
-      {@render specialKeyButton({
-        key: 'Backspace',
-        isTarget: isBackspaceTarget,
-        ariaLabel: 'Backspace',
-        style: 'grid-column: span 4;',
-        customClass:
-          'gap-1 h-13 text-xs font-semibold p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700',
-        content: backspaceContent,
-      })}
-    </div>
-
-    <!-- Desktop Row 1: A S D F G H J K L -->
-    <div class="grid w-full gap-1.5 kb-grid">
-      <div style="grid-column: span 3;"></div>
-
-      {#each DUBEOLSIK_ROWS[1] as cap}
-        {@render masteryKey(cap)}
-      {/each}
-
-      <div style="grid-column: span 5;"></div>
-    </div>
-
-    <!-- Desktop Row 2: Left Shift + Z X C V B N M , . + Right Shift -->
-    <div class="grid w-full gap-1.5 kb-grid">
-      <div style="grid-column: span 4;">
-        <ShiftKey
-          side="Left"
-          isTarget={isLeftShiftTarget}
-          isPressed={isVirtualShiftActive || isLeftShiftPressed}
-          widthClass="w-full"
-          onselect={(e) => handleKeyClick('Shift', e)}
-        />
+        {@render specialKeyButton({
+          key: 'Backspace',
+          isTarget: isBackspaceTarget,
+          ariaLabel: 'Backspace',
+          style: 'grid-column: span 4;',
+          customClass:
+            'gap-1 h-13 text-xs font-semibold p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700',
+          content: backspaceContent,
+        })}
       </div>
 
-      {#each DUBEOLSIK_ROWS[2] as cap}
-        {@render masteryKey(cap)}
-      {/each}
+      <!-- Desktop Row 1: A S D F G H J K L -->
+      <div class="grid w-full gap-1.5 kb-grid">
+        <div style="grid-column: span 3;"></div>
 
-      <div style="grid-column: span 4;">
-        <ShiftKey
-          side="Right"
-          isTarget={isRightShiftTarget}
-          isPressed={isVirtualShiftActive || isRightShiftPressed}
-          widthClass="w-full"
-          onselect={(e) => handleKeyClick('Shift', e)}
-        />
+        {#each DUBEOLSIK_ROWS[1] as cap}
+          {@render masteryKey(cap)}
+        {/each}
+
+        <div style="grid-column: span 5;"></div>
       </div>
-    </div>
+
+      <!-- Desktop Row 2: Left Shift + Z X C V B N M , . + Right Shift -->
+      <div class="grid w-full gap-1.5 kb-grid">
+        <div style="grid-column: span 4;">
+          <ShiftKey
+            side="Left"
+            isTarget={isLeftShiftTarget}
+            isPressed={isVirtualShiftActive || isLeftShiftPressed}
+            widthClass="w-full"
+            onselect={(e) => handleKeyClick('Shift', e)}
+          />
+        </div>
+
+        {#each DUBEOLSIK_ROWS[2] as cap}
+          {@render masteryKey(cap)}
+        {/each}
+
+        <div style="grid-column: span 4;">
+          <ShiftKey
+            side="Right"
+            isTarget={isRightShiftTarget}
+            isPressed={isVirtualShiftActive || isRightShiftPressed}
+            widthClass="w-full"
+            onselect={(e) => handleKeyClick('Shift', e)}
+          />
+        </div>
+      </div>
+    {:else}
+      <!-- Desktop Symbol Mode Row 0: 1 2 3 4 5 6 7 8 9 0 + Backspace -->
+      <div class="grid w-full gap-1.5 kb-grid">
+        <div style="grid-column: span 2;"></div>
+
+        {#each SYMBOL_ROWS[0] as cap}
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key)}
+            isShiftActive={false}
+            onselect={handleKeyClick}
+          />
+        {/each}
+
+        {#snippet symbolBackspaceContent()}
+          <span class="text-sm font-bold">⌫</span>
+          <span class="text-[10px]">Delete</span>
+        {/snippet}
+
+        {@render specialKeyButton({
+          key: 'Backspace',
+          isTarget: isBackspaceTarget,
+          ariaLabel: 'Backspace',
+          style: 'grid-column: span 4;',
+          customClass:
+            'gap-1 h-13 text-xs font-semibold p-1 bg-slate-100 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700',
+          content: symbolBackspaceContent,
+        })}
+      </div>
+
+      <!-- Desktop Symbol Mode Row 1: @ # ₩ _ & - + ( ) / -->
+      <div class="grid w-full gap-1.5 kb-grid">
+        <div style="grid-column: span 3;"></div>
+
+        {#each SYMBOL_ROWS[1] as cap}
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key)}
+            isShiftActive={false}
+            onselect={handleKeyClick}
+          />
+        {/each}
+
+        <div style="grid-column: span 3;"></div>
+      </div>
+
+      <!-- Desktop Symbol Mode Row 2: * " ' : ; ! ? (7 keys) -->
+      <div class="grid w-full gap-1.5 kb-grid">
+        <div style="grid-column: span 6;"></div>
+
+        {#each SYMBOL_ROWS[2] as cap}
+          <VirtualKey
+            {cap}
+            isTarget={activeKeys.includes(cap.key)}
+            isShiftActive={false}
+            onselect={handleKeyClick}
+          />
+        {/each}
+
+        <div style="grid-column: span 6;"></div>
+      </div>
+    {/if}
 
     <!-- Desktop Spacebar Row -->
-    <div class="flex items-center justify-center w-full mt-0.5">
+    <div class="flex items-center justify-center gap-1.5 w-full mt-0.5">
+      <SymbolToggleKey
+        {isSymbolMode}
+        customClass="h-8 px-3 w-16 md:w-20 shrink-0"
+        onselect={toggleSymbolMode}
+      />
+
       {#snippet spaceContent()}
         <span>Space</span>
       {/snippet}
@@ -211,6 +280,12 @@
           'w-64 md:w-80 h-8 text-xs font-semibold uppercase tracking-wider shrink-0 bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700',
         content: spaceContent,
       })}
+
+      <SymbolToggleKey
+        {isSymbolMode}
+        customClass="h-8 px-3 w-16 md:w-20 shrink-0"
+        onselect={toggleSymbolMode}
+      />
     </div>
   </div>
 
