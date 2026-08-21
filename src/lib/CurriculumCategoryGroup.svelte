@@ -38,7 +38,7 @@
   <div
     class="flex items-center justify-between p-1 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 transition-colors select-none"
   >
-    <div class="flex items-center gap-2">
+    <div class="flex items-center gap-2 min-w-0 flex-1">
       <input
         type="checkbox"
         checked={allChecked}
@@ -49,10 +49,10 @@
       <button
         type="button"
         onclick={() => ontogglecategorycollapse(category.id)}
-        class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
+        class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer text-left min-w-0"
       >
         <svg
-          class="w-3.5 h-3.5 text-gray-400 transition-transform {isCollapsed ? '-rotate-90' : ''}"
+          class="w-3.5 h-3.5 text-gray-400 transition-transform shrink-0 {isCollapsed ? '-rotate-90' : ''}"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -60,11 +60,11 @@
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
-        <span>{category.name}</span>
+        <span class="text-left leading-snug">{category.name}</span>
       </button>
     </div>
     <span
-      class="text-xs font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0"
+      class="text-xs font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0 ml-2"
     >
       {count}/{category.moduleIds.length}
     </span>

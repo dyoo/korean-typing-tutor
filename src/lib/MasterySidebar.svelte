@@ -76,10 +76,10 @@
             <button
               type="button"
               onclick={() => toggleStageCollapse(stage.stageName)}
-              class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer"
+              class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer text-left min-w-0"
             >
               <svg
-                class="w-3.5 h-3.5 text-gray-400 transition-transform {collapsedStageIds.includes(
+                class="w-3.5 h-3.5 text-gray-400 transition-transform shrink-0 {collapsedStageIds.includes(
                   stage.stageName,
                 )
                   ? '-rotate-90'
@@ -91,7 +91,7 @@
               >
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
-              <span>{stage.stageName}</span>
+              <span class="text-left leading-snug">{stage.stageName}</span>
             </button>
             <span
               class="text-xs font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0"
