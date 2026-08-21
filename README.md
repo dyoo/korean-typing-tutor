@@ -58,10 +58,11 @@ curated in collaboration with **Antigravity** (Google DeepMind's agentic AI codi
    - Standardized vocabulary and official English translations from the open-access _한국어기초사전_
      (Basic Korean Dictionary for Learners, licensed under CC BY-SA 2.0 KR).
 4. **[King Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) —
-   [Sejonghakdang Online Learning Portal](https://www.sejonghakdang.org/)**:
-   - Practical situational conversation modules (ordering food at cafes/restaurants, taking the
-     subway, asking for directions, shopping, hospital/pharmacy symptoms) and intermediate reading
-     passages.
+   [Sejonghakdang Online Learning Portal (Nuri-Sejong)](https://www.sejonghakdang.org/)**:
+   - Practical situational conversation modules (ordering food at cafes/restaurants, taking public
+     transit, asking for directions, shopping, and hospital/pharmacy symptoms) and introductory dialogues
+     based on the open spoken Korean curriculum published under the
+     **Korea Open Government License (공공누리 / KOGL Type 1: Attribution)**.
 5. **[Korean Proverbs & Sayings (속담 / 사자성어)](https://krdict.korean.go.kr/)**:
    - Classic Korean proverbs and idioms with literal and figurative English translations
      (`식은 죽 먹기`, `티끌 모아 태산`), cross-referenced with the
