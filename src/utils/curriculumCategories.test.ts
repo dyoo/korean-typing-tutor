@@ -6,10 +6,12 @@ import {
   isGroupSomeChecked,
   getGroupCheckedCount,
   toggleCategoryGroupIds,
+  toggleAllModuleIds,
 } from './curriculumCategories';
 
 describe('curriculumCategories helper module', () => {
   const beginnerCategory = CURRICULUM_CATEGORIES[0]; // Beginner Fundamentals
+  const sampleModuleIds = ['mod1', 'mod2', 'mod3'];
 
   it('contains expected categories and category IDs', () => {
     expect(CURRICULUM_CATEGORIES.length).toBeGreaterThan(0);
@@ -54,5 +56,16 @@ describe('curriculumCategories helper module', () => {
 
     const disabledAll = toggleCategoryGroupIds(beginnerCategory, enabledAll);
     expect(disabledAll).toEqual([]);
+  });
+
+  it('correctly toggles all module IDs using tri-state logic', () => {
+    // When none enabled -> selects all
+    expect(toggleAllModuleIds(sampleModuleIds, [])).toEqual(sampleModuleIds);
+
+    // When partially enabled (indeterminate) -> selects all
+    expect(toggleAllModuleIds(sampleModuleIds, ['mod1'])).toEqual(sampleModuleIds);
+
+    // When all enabled -> deselects all
+    expect(toggleAllModuleIds(sampleModuleIds, sampleModuleIds)).toEqual([]);
   });
 });

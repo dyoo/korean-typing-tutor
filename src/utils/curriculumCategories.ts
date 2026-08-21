@@ -101,3 +101,18 @@ export function toggleCategoryGroupIds(
     return Array.from(newSet);
   }
 }
+
+/** Toggles all curriculum modules on or off using tri-state tree logic. */
+export function toggleAllModuleIds(
+  allModuleIds: string[],
+  enabledModuleIds: string[],
+): string[] {
+  const allChecked =
+    allModuleIds.length > 0 && allModuleIds.every((id) => enabledModuleIds.includes(id));
+  if (allChecked) {
+    return [];
+  } else {
+    return [...allModuleIds];
+  }
+}
+

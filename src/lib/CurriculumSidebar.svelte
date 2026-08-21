@@ -30,6 +30,21 @@
     ondeselectall,
   }: Props = $props();
 
+  let isAllChecked = $derived(
+    modules.length > 0 && enabledModuleIds.length === modules.length,
+  );
+  let isSomeChecked = $derived(
+    enabledModuleIds.length > 0 && enabledModuleIds.length < modules.length,
+  );
+
+  function handleToggleRoot() {
+    if (isAllChecked) {
+      ondeselectall();
+    } else {
+      onselectall();
+    }
+  }
+
   import SidebarDrawer from './SidebarDrawer.svelte';
 </script>
 
@@ -41,25 +56,29 @@
   {onclose}
 >
   {#snippet headerActions()}
-    <!-- Quick Actions -->
+    <!-- Root Tree Selector (Tri-state) -->
     <div
-      class="flex items-center justify-between px-4 py-2 bg-gray-100/60 dark:bg-gray-900/40 border-b border-gray-200 dark:border-gray-700/60"
+      class="flex items-center justify-between px-4 py-2.5 bg-gray-100/70 dark:bg-gray-900/50 border-b border-gray-200 dark:border-gray-700/60 select-none"
     >
-      <button
-        type="button"
-        onclick={onselectall}
-        class="text-sm text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
+      <label class="flex items-center gap-2.5 cursor-pointer min-w-0 flex-1">
+        <input
+          type="checkbox"
+          checked={isAllChecked}
+          indeterminate={isSomeChecked}
+          onchange={handleToggleRoot}
+          class="w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
+        />
+        <span
+          class="font-bold text-sm uppercase tracking-wide text-gray-800 dark:text-gray-200 truncate"
+        >
+          All Modules
+        </span>
+      </label>
+      <span
+        class="text-xs font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0 ml-2"
       >
-        Select All
-      </button>
-      <span class="text-sm text-gray-300 dark:text-gray-600">•</span>
-      <button
-        type="button"
-        onclick={ondeselectall}
-        class="text-sm text-blue-600 dark:text-blue-400 hover:underline font-semibold cursor-pointer"
-      >
-        Select None
-      </button>
+        {enabledModuleIds.length}/{modules.length}
+      </span>
     </div>
   {/snippet}
 
