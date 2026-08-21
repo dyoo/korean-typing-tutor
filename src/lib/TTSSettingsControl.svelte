@@ -139,7 +139,7 @@
             onclick={() => (isConfirmingClear = true)}
             class="text-[11px] text-red-600 dark:text-red-400 hover:underline cursor-pointer text-right leading-tight break-words"
           >
-            Clear Offline Cache ({cacheSizeText})
+            Clear Offline Voice Cache ({cacheSizeText})
           </button>
         </div>
       {/if}
