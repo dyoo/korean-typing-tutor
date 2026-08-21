@@ -17,6 +17,7 @@
     "clean:all": "rm -rf dist node_modules"
   },
   "dependencies": {
+    "@huggingface/transformers": "^3.8.1",
     "@tailwindcss/postcss": "^4.3.3",
     "kokoro-js": "^1.2.1",
     "korean-tts": "^1.2.0"

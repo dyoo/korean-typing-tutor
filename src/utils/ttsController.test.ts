@@ -378,4 +378,48 @@ describe('TTSController Unit Tests', () => {
     expect(controller.getModelSizeFormatted()).toBe('');
     expect(controller.getIsCached()).toBe(false);
   });
+
+  it('handles worker.onerror by setting loadError and terminating the worker instance', async () => {
+    const loadPromise = controller.loadModel();
+    const currentWorker = latestWorkerInstance;
+    expect(currentWorker).not.toBeNull();
+
+    // Trigger onerror with empty error message (typical Safari cross-origin / worker failure behavior)
+    currentWorker?.onerror?.({ message: '' } as ErrorEvent);
+
+    await expect(loadPromise).rejects.toThrow('Web Worker failed to initialize or execute');
+    expect(controller.getLoadError()).toBe('Web Worker failed to initialize or execute');
+    expect(controller.getIsLoading()).toBe(false);
+
+    // Retrying loadModel should initialize a fresh worker instance
+    const retryPromise = controller.loadModel();
+    expect(latestWorkerInstance).not.toBe(currentWorker);
+
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+
+    await retryPromise;
+    expect(controller.getIsLoaded()).toBe(true);
+    expect(controller.getLoadError()).toBeNull();
+  });
+
+  it('handles LOAD_ERROR message from worker by setting loadError and resetting isLoading', async () => {
+    const loadPromise = controller.loadModel();
+
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_ERROR',
+        payload: { error: 'Failed to fetch ONNX model' },
+      },
+    } as MessageEvent);
+
+    await expect(loadPromise).rejects.toThrow('Failed to fetch ONNX model');
+    expect(controller.getLoadError()).toBe('Failed to fetch ONNX model');
+    expect(controller.getIsLoading()).toBe(false);
+    expect(controller.getIsLoaded()).toBe(false);
+  });
 });

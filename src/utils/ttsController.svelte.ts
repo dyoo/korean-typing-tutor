@@ -169,6 +169,10 @@ export class TTSController {
       console.error('TTS Web Worker Error:', err);
       this.isLoading = false;
       this.loadError = err.message || 'Web Worker failed to initialize or execute';
+      if (this.worker) {
+        this.worker.terminate();
+        this.worker = null;
+      }
     };
 
     this.worker.onmessageerror = (err: MessageEvent) => {
