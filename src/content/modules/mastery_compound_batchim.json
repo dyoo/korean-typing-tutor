@@ -6,12 +6,12 @@
     {
       "id": "mastery_compound_batchim_1",
       "target": "많다",
-      "translation": "To be many / much"
+      "translation": "To be many / plentiful"
     },
     {
       "id": "mastery_compound_batchim_2",
       "target": "많이",
-      "translation": "A lot / Much"
+      "translation": "A lot / Many"
     },
     {
       "id": "mastery_compound_batchim_3",
@@ -26,22 +26,22 @@
     {
       "id": "mastery_compound_batchim_5",
       "target": "않아요",
-      "translation": "Do not"
+      "translation": "I do not / Does not"
     },
     {
       "id": "mastery_compound_batchim_6",
       "target": "않음",
-      "translation": "Negation"
+      "translation": "Negation / Not doing"
     },
     {
       "id": "mastery_compound_batchim_7",
       "target": "괜찮다",
-      "translation": "To be okay"
+      "translation": "To be okay / To be fine"
     },
     {
       "id": "mastery_compound_batchim_8",
       "target": "괜찮아요",
-      "translation": "It is okay"
+      "translation": "It is okay / No problem"
     },
     {
       "id": "mastery_compound_batchim_9",
@@ -56,7 +56,7 @@
     {
       "id": "mastery_compound_batchim_11",
       "target": "하찮다",
-      "translation": "To be trivial"
+      "translation": "To be trivial / insignificant"
     },
     {
       "id": "mastery_compound_batchim_12",
@@ -71,7 +71,7 @@
     {
       "id": "mastery_compound_batchim_14",
       "target": "앉아요",
-      "translation": "Please sit"
+      "translation": "Please sit down"
     },
     {
       "id": "mastery_compound_batchim_15",
@@ -101,7 +101,7 @@
     {
       "id": "mastery_compound_batchim_20",
       "target": "얹어요",
-      "translation": "Put on top"
+      "translation": "Put on top / Place upon"
     },
     {
       "id": "mastery_compound_batchim_21",
@@ -116,7 +116,7 @@
     {
       "id": "mastery_compound_batchim_23",
       "target": "읽어요",
-      "translation": "Read"
+      "translation": "Reading / Please read"
     },
     {
       "id": "mastery_compound_batchim_24",
@@ -126,7 +126,7 @@
     {
       "id": "mastery_compound_batchim_25",
       "target": "읽음",
-      "translation": "Read (noun)"
+      "translation": "Reading / Having read"
     },
     {
       "id": "mastery_compound_batchim_26",
@@ -176,7 +176,7 @@
     {
       "id": "mastery_compound_batchim_35",
       "target": "붉은",
-      "translation": "Red (adj)"
+      "translation": "Red / Crimson"
     },
     {
       "id": "mastery_compound_batchim_36",
@@ -186,7 +186,7 @@
     {
       "id": "mastery_compound_batchim_37",
       "target": "밝은",
-      "translation": "Bright (adj)"
+      "translation": "Bright / Radiant"
     },
     {
       "id": "mastery_compound_batchim_38",
@@ -196,7 +196,7 @@
     {
       "id": "mastery_compound_batchim_39",
       "target": "굵은",
-      "translation": "Thick (adj)"
+      "translation": "Thick / Stout"
     },
     {
       "id": "mastery_compound_batchim_40",
@@ -256,12 +256,12 @@
     {
       "id": "mastery_compound_batchim_51",
       "target": "옮다",
-      "translation": "To catch / be infected"
+      "translation": "To catch / To be infected"
     },
     {
       "id": "mastery_compound_batchim_52",
       "target": "옮기다",
-      "translation": "To move / transfer"
+      "translation": "To move / To transfer"
     },
     {
       "id": "mastery_compound_batchim_53",
@@ -306,7 +306,7 @@
     {
       "id": "mastery_compound_batchim_61",
       "target": "밟아요",
-      "translation": "Step on"
+      "translation": "Steps on / Step on"
     },
     {
       "id": "mastery_compound_batchim_62",
@@ -316,7 +316,7 @@
     {
       "id": "mastery_compound_batchim_63",
       "target": "짧은",
-      "translation": "Short (adj)"
+      "translation": "Short / Brief"
     },
     {
       "id": "mastery_compound_batchim_64",
@@ -326,17 +326,17 @@
     {
       "id": "mastery_compound_batchim_65",
       "target": "얇은",
-      "translation": "Thin (adj)"
+      "translation": "Thin / Fine"
     },
     {
       "id": "mastery_compound_batchim_66",
       "target": "없다",
-      "translation": "To not exist / lack"
+      "translation": "To not exist / To lack"
     },
     {
       "id": "mastery_compound_batchim_67",
       "target": "없어요",
-      "translation": "There is none"
+      "translation": "There is none / I do not have"
     },
     {
       "id": "mastery_compound_batchim_68",
@@ -361,7 +361,7 @@
     {
       "id": "mastery_compound_batchim_72",
       "target": "값진",
-      "translation": "Priceless / Valuable"
+      "translation": "Valuable / Priceless"
     },
     {
       "id": "mastery_compound_batchim_73",
@@ -371,7 +371,7 @@
     {
       "id": "mastery_compound_batchim_74",
       "target": "몸값",
-      "translation": "Ransom / Value"
+      "translation": "Ransom / Value of a person"
     },
     {
       "id": "mastery_compound_batchim_75",
@@ -386,7 +386,7 @@
     {
       "id": "mastery_compound_batchim_77",
       "target": "잃어버리다",
-      "translation": "To lose / misplace"
+      "translation": "To lose / To misplace"
     },
     {
       "id": "mastery_compound_batchim_78",
@@ -401,12 +401,12 @@
     {
       "id": "mastery_compound_batchim_80",
       "target": "싫어요",
-      "translation": "I dislike it"
+      "translation": "I dislike it / No"
     },
     {
       "id": "mastery_compound_batchim_81",
       "target": "싫음",
-      "translation": "Dislike"
+      "translation": "Dislike / Reluctance"
     },
     {
       "id": "mastery_compound_batchim_82",
@@ -431,7 +431,7 @@
     {
       "id": "mastery_compound_batchim_86",
       "target": "끓이다",
-      "translation": "To brew / boil"
+      "translation": "To boil / To brew"
     },
     {
       "id": "mastery_compound_batchim_87",
@@ -451,12 +451,12 @@
     {
       "id": "mastery_compound_batchim_90",
       "target": "몫을 하다",
-      "translation": "Do one’s part"
+      "translation": "To do one’s part"
     },
     {
       "id": "mastery_compound_batchim_91",
       "target": "삯",
-      "translation": "Wages / Fare"
+      "translation": "Wage / Fare"
     },
     {
       "id": "mastery_compound_batchim_92",
@@ -476,7 +476,7 @@
     {
       "id": "mastery_compound_batchim_95",
       "target": "차삯",
-      "translation": "Vehicle fare"
+      "translation": "Vehicle fare / Bus fare"
     },
     {
       "id": "mastery_compound_batchim_96",
@@ -506,7 +506,7 @@
     {
       "id": "mastery_compound_batchim_101",
       "target": "핥아요",
-      "translation": "Lick / Licks"
+      "translation": "Licking / Licks"
     },
     {
       "id": "mastery_compound_batchim_102",
@@ -521,7 +521,7 @@
     {
       "id": "mastery_compound_batchim_104",
       "target": "핥기",
-      "translation": "Licking action"
+      "translation": "Licking"
     },
     {
       "id": "mastery_compound_batchim_105",
@@ -531,7 +531,7 @@
     {
       "id": "mastery_compound_batchim_106",
       "target": "훑어요",
-      "translation": "Skims / Scans"
+      "translation": "Skimming / Scans"
     },
     {
       "id": "mastery_compound_batchim_107",
@@ -556,22 +556,22 @@
     {
       "id": "mastery_compound_batchim_111",
       "target": "읊다",
-      "translation": "To recite poem"
+      "translation": "To recite poetry"
     },
     {
       "id": "mastery_compound_batchim_112",
       "target": "읊어요",
-      "translation": "Recite / Chants"
+      "translation": "Reciting poetry / Chants"
     },
     {
       "id": "mastery_compound_batchim_113",
       "target": "읊조리다",
-      "translation": "To murmur a poem"
+      "translation": "To recite softly / To murmur poetry"
     },
     {
       "id": "mastery_compound_batchim_114",
       "target": "읊조림",
-      "translation": "Poetic murmuring"
+      "translation": "Soft poetic recitation"
     },
     {
       "id": "mastery_compound_batchim_115",
@@ -601,7 +601,7 @@
     {
       "id": "mastery_compound_batchim_120",
       "target": "읊어보다",
-      "translation": "Try reciting"
+      "translation": "To try reciting poetry"
     },
     {
       "id": "mastery_compound_batchim_121",
@@ -611,12 +611,12 @@
     {
       "id": "mastery_compound_batchim_122",
       "target": "외곬",
-      "translation": "Single-minded path"
+      "translation": "Single-minded path / One direction"
     },
     {
       "id": "mastery_compound_batchim_123",
       "target": "외곬수",
-      "translation": "Single-minded person"
+      "translation": "Single-minded person (colloquial)"
     },
     {
       "id": "mastery_compound_batchim_124",
@@ -690,13 +690,13 @@
     {
       "id": "mastery_compound_batchim_137",
       "target": "가시는 걸음 걸음 놓인 그 꽃을 사뿐히 즈려밟고 가시옵소서",
-      "translation": "Step lightly and gently upon those flowers along your steps",
+      "translation": "Step lightly and gently upon those scattered flowers as you go",
       "attribution": "김소월, <진달래꽃> (1925)"
     },
     {
       "id": "mastery_compound_batchim_138",
       "target": "넓은 벌 동쪽 끝으로 옛이야기 지줄대는 실개천이 휘돌아 나가고",
-      "translation": "At the edge of wide plains, a babbling brook winds round with old tales",
+      "translation": "At the east end of the wide plain, a babbling brook winds round with old tales",
       "attribution": "정지용, <향수> (1927)"
     },
     {
@@ -720,7 +720,7 @@
     {
       "id": "mastery_compound_batchim_142",
       "target": "다시 천고의 뒤에 백마 타고 오는 초인이 있어 이 광야에서 목놓아 부르게 하리라",
-      "translation": "Let a superman on a white horse come to cry aloud in this wilderness",
+      "translation": "Far across countless ages, let a heroic figure on a white horse come to cry aloud in this wilderness",
       "attribution": "이육사, <광야> (1944)"
     },
     {

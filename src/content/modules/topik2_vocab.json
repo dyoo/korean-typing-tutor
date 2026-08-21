@@ -26,7 +26,7 @@
     {
       "id": "t2v-5",
       "target": "가능성",
-      "translation": "possibility"
+      "translation": "possibility / potential"
     },
     {
       "id": "t2v-6",
@@ -41,217 +41,217 @@
     {
       "id": "topik2_vocab-ext-1",
       "target": "경제",
-      "translation": "Economy / Economics"
+      "translation": "economy / economics"
     },
     {
       "id": "topik2_vocab-ext-2",
       "target": "사회",
-      "translation": "Society / Social"
+      "translation": "society"
     },
     {
       "id": "topik2_vocab-ext-3",
       "target": "문화",
-      "translation": "Culture"
+      "translation": "culture"
     },
     {
       "id": "topik2_vocab-ext-4",
       "target": "정치",
-      "translation": "Politics / Government"
+      "translation": "politics"
     },
     {
       "id": "topik2_vocab-ext-5",
       "target": "환경",
-      "translation": "Environment"
+      "translation": "environment"
     },
     {
       "id": "topik2_vocab-ext-6",
       "target": "과학",
-      "translation": "Science"
+      "translation": "science"
     },
     {
       "id": "topik2_vocab-ext-7",
       "target": "기술",
-      "translation": "Technology / Technique"
+      "translation": "technology / skill"
     },
     {
       "id": "topik2_vocab-ext-8",
       "target": "교육",
-      "translation": "Education"
+      "translation": "education"
     },
     {
       "id": "topik2_vocab-ext-9",
       "target": "건강",
-      "translation": "Health / Wellness"
+      "translation": "health / wellness"
     },
     {
       "id": "topik2_vocab-ext-10",
       "target": "역사",
-      "translation": "History"
+      "translation": "history"
     },
     {
       "id": "topik2_vocab-ext-11",
       "target": "예술",
-      "translation": "Art / Arts"
+      "translation": "art / the arts"
     },
     {
       "id": "topik2_vocab-ext-12",
       "target": "언어",
-      "translation": "Language / Linguistics"
+      "translation": "language / linguistics"
     },
     {
       "id": "topik2_vocab-ext-13",
       "target": "법률",
-      "translation": "Law / Legislation"
+      "translation": "law / legislation"
     },
     {
       "id": "topik2_vocab-ext-14",
       "target": "국제",
-      "translation": "International / Global"
+      "translation": "international / global"
     },
     {
       "id": "topik2_vocab-ext-15",
       "target": "산업",
-      "translation": "Industry"
+      "translation": "industry"
     },
     {
       "id": "topik2_vocab-ext-16",
       "target": "외교",
-      "translation": "Diplomacy"
+      "translation": "diplomacy"
     },
     {
       "id": "topik2_vocab-ext-17",
       "target": "교통",
-      "translation": "Transportation / Traffic"
+      "translation": "transportation / traffic"
     },
     {
       "id": "topik2_vocab-ext-18",
       "target": "통신",
-      "translation": "Communications / Telecom"
+      "translation": "communication / telecommunications"
     },
     {
       "id": "topik2_vocab-ext-19",
       "target": "정보",
-      "translation": "Information / Intelligence"
+      "translation": "information / data"
     },
     {
       "id": "topik2_vocab-ext-20",
       "target": "개발",
-      "translation": "Development / R&D"
+      "translation": "development"
     },
     {
       "id": "topik2_vocab-ext-21",
       "target": "연구",
-      "translation": "Research / Study"
+      "translation": "research / study"
     },
     {
       "id": "topik2_vocab-ext-22",
       "target": "변화",
-      "translation": "Change / Transformation"
+      "translation": "change / transformation"
     },
     {
       "id": "topik2_vocab-ext-23",
       "target": "발전",
-      "translation": "Advancement / Growth"
+      "translation": "development / progress"
     },
     {
       "id": "topik2_vocab-ext-24",
       "target": "혁신",
-      "translation": "Innovation"
+      "translation": "innovation"
     },
     {
       "id": "topik2_vocab-ext-25",
       "target": "협력",
-      "translation": "Cooperation / Collaboration"
+      "translation": "cooperation / collaboration"
     },
     {
       "id": "topik2_vocab-ext-26",
       "target": "성장",
-      "translation": "Growth / Expansion"
+      "translation": "growth / expansion"
     },
     {
       "id": "topik2_vocab-ext-27",
       "target": "투자",
-      "translation": "Investment"
+      "translation": "investment"
     },
     {
       "id": "topik2_vocab-ext-28",
       "target": "소비",
-      "translation": "Consumption / Spending"
+      "translation": "consumption / spending"
     },
     {
       "id": "topik2_vocab-ext-29",
       "target": "생산",
-      "translation": "Production / Manufacturing"
+      "translation": "production / manufacturing"
     },
     {
       "id": "topik2_vocab-ext-30",
       "target": "무역",
-      "translation": "Trade / Commerce"
+      "translation": "trade / commerce"
     },
     {
       "id": "topik2_vocab-ext-31",
       "target": "지속",
-      "translation": "Persistence / Sustainability"
+      "translation": "continuation / persistence"
     },
     {
       "id": "topik2_vocab-ext-32",
       "target": "가능",
-      "translation": "Possibility / Feasibility"
+      "translation": "possibility / feasibility"
     },
     {
       "id": "topik2_vocab-ext-33",
       "target": "보호",
-      "translation": "Protection / Conservation"
+      "translation": "protection / preservation"
     },
     {
       "id": "topik2_vocab-ext-34",
       "target": "개선",
-      "translation": "Improvement / Enhancement"
+      "translation": "improvement / enhancement"
     },
     {
       "id": "topik2_vocab-ext-35",
       "target": "해결",
-      "translation": "Solution / Resolution"
+      "translation": "solution / resolution"
     },
     {
       "id": "topik2_vocab-ext-36",
       "target": "방안",
-      "translation": "Measure / Plan"
+      "translation": "measure / plan / scheme"
     },
     {
       "id": "topik2_vocab-ext-37",
       "target": "정책",
-      "translation": "Policy"
+      "translation": "policy"
     },
     {
       "id": "topik2_vocab-ext-38",
       "target": "제도",
-      "translation": "System / Institution"
+      "translation": "system / institution"
     },
     {
       "id": "topik2_vocab-ext-39",
       "target": "효과",
-      "translation": "Effect / Effectiveness"
+      "translation": "effect / effectiveness"
     },
     {
       "id": "topik2_vocab-ext-40",
       "target": "영향",
-      "translation": "Influence / Impact"
+      "translation": "influence / impact"
     },
     {
       "id": "topik2_vocab-ext-41",
       "target": "의미",
-      "translation": "Meaning / Significance"
+      "translation": "meaning / significance"
     },
     {
       "id": "topik2_vocab-ext-42",
       "target": "가치",
-      "translation": "Value / Worth"
+      "translation": "value / worth"
     },
     {
       "id": "topik2_vocab-ext-43",
       "target": "목표",
-      "translation": "Target / Goal"
+      "translation": "goal / target / objective"
     }
   ]
 }

@@ -6,302 +6,302 @@
     {
       "id": "l4-1",
       "target": "먹다",
-      "translation": "to eat"
+      "translation": "To eat"
     },
     {
       "id": "l4-2",
       "target": "마시다",
-      "translation": "to drink"
+      "translation": "To drink"
     },
     {
       "id": "l4-3",
       "target": "가다",
-      "translation": "to go"
+      "translation": "To go"
     },
     {
       "id": "l4-4",
       "target": "오다",
-      "translation": "to come"
+      "translation": "To come"
     },
     {
       "id": "l4-5",
       "target": "자다",
-      "translation": "to sleep"
+      "translation": "To sleep"
     },
     {
       "id": "l4-6",
       "target": "만나다",
-      "translation": "to meet"
+      "translation": "To meet"
     },
     {
       "id": "l4-7",
       "target": "공부하다",
-      "translation": "to study"
+      "translation": "To study"
     },
     {
       "id": "l4-8",
       "target": "운동하다",
-      "translation": "to exercise"
+      "translation": "To exercise"
     },
     {
       "id": "l4-9",
       "target": "예쁘다",
-      "translation": "pretty"
+      "translation": "To be pretty"
     },
     {
       "id": "l4-10",
       "target": "귀엽다",
-      "translation": "cute"
+      "translation": "To be cute"
     },
     {
       "id": "l4-11",
       "target": "크다",
-      "translation": "big / tall"
+      "translation": "To be big / large"
     },
     {
       "id": "l4-12",
       "target": "작다",
-      "translation": "small"
+      "translation": "To be small"
     },
     {
       "id": "l4-13",
       "target": "빠르다",
-      "translation": "fast"
+      "translation": "To be fast"
     },
     {
       "id": "l4-14",
       "target": "느리다",
-      "translation": "slow"
+      "translation": "To be slow"
     },
     {
       "id": "l4-15",
       "target": "기쁘다",
-      "translation": "glad / happy"
+      "translation": "To be glad / happy"
     },
     {
       "id": "l4-16",
       "target": "보다",
-      "translation": "to watch / see"
+      "translation": "To watch / see"
     },
     {
       "id": "l4-17",
       "target": "듣다",
-      "translation": "to listen / hear"
+      "translation": "To listen / hear"
     },
     {
       "id": "l4-18",
       "target": "읽다",
-      "translation": "to read"
+      "translation": "To read"
     },
     {
       "id": "l4-19",
       "target": "쓰다",
-      "translation": "to write / use / bitter"
+      "translation": "To write / use / be bitter"
     },
     {
       "id": "l4-20",
       "target": "말하다",
-      "translation": "to speak / talk"
+      "translation": "To speak / talk"
     },
     {
       "id": "l4-21",
       "target": "하다",
-      "translation": "to do"
+      "translation": "To do"
     },
     {
       "id": "l4-22",
       "target": "살다",
-      "translation": "to live"
+      "translation": "To live"
     },
     {
       "id": "l4-23",
       "target": "걷다",
-      "translation": "to walk"
+      "translation": "To walk"
     },
     {
       "id": "l4-24",
       "target": "달리다",
-      "translation": "to run"
+      "translation": "To run"
     },
     {
       "id": "l4-25",
       "target": "타다",
-      "translation": "to ride / take"
+      "translation": "To ride / take (transit)"
     },
     {
       "id": "l4-26",
       "target": "내리다",
-      "translation": "to get off"
+      "translation": "To get off (transit)"
     },
     {
       "id": "l4-27",
       "target": "사다",
-      "translation": "to buy"
+      "translation": "To buy"
     },
     {
       "id": "l4-28",
       "target": "팔다",
-      "translation": "to sell"
+      "translation": "To sell"
     },
     {
       "id": "l4-29",
       "target": "주다",
-      "translation": "to give"
+      "translation": "To give"
     },
     {
       "id": "l4-30",
       "target": "받다",
-      "translation": "to receive"
+      "translation": "To receive"
     },
     {
       "id": "l4-31",
       "target": "알다",
-      "translation": "to know"
+      "translation": "To know"
     },
     {
       "id": "l4-32",
       "target": "모르다",
-      "translation": "to not know"
+      "translation": "To not know"
     },
     {
       "id": "l4-33",
       "target": "웃다",
-      "translation": "to laugh / smile"
+      "translation": "To laugh / smile"
     },
     {
       "id": "l4-34",
       "target": "울다",
-      "translation": "to cry"
+      "translation": "To cry"
     },
     {
       "id": "l4-35",
       "target": "앉다",
-      "translation": "to sit"
+      "translation": "To sit"
     },
     {
       "id": "l4-36",
       "target": "서다",
-      "translation": "to stand"
+      "translation": "To stand"
     },
     {
       "id": "l4-37",
       "target": "씻다",
-      "translation": "to wash"
+      "translation": "To wash"
     },
     {
       "id": "l4-38",
       "target": "입다",
-      "translation": "to wear (clothes)"
+      "translation": "To wear (clothes)"
     },
     {
       "id": "l4-39",
       "target": "벗다",
-      "translation": "to take off (clothes)"
+      "translation": "To take off (clothes)"
     },
     {
       "id": "l4-40",
       "target": "열다",
-      "translation": "to open"
+      "translation": "To open"
     },
     {
       "id": "l4-41",
       "target": "닫다",
-      "translation": "to close"
+      "translation": "To close"
     },
     {
       "id": "l4-42",
       "target": "찾다",
-      "translation": "to find / search"
+      "translation": "To find / search"
     },
     {
       "id": "l4-43",
       "target": "만들다",
-      "translation": "to make"
+      "translation": "To make"
     },
     {
       "id": "l4-44",
       "target": "돕다",
-      "translation": "to help"
+      "translation": "To help"
     },
     {
       "id": "l4-45",
       "target": "슬프다",
-      "translation": "sad"
+      "translation": "To be sad"
     },
     {
       "id": "l4-46",
       "target": "좋다",
-      "translation": "good / to like"
+      "translation": "To be good / fine"
     },
     {
       "id": "l4-47",
       "target": "나쁘다",
-      "translation": "bad"
+      "translation": "To be bad"
     },
     {
       "id": "l4-48",
       "target": "많다",
-      "translation": "many / much"
+      "translation": "To be many / much"
     },
     {
       "id": "l4-49",
       "target": "적다",
-      "translation": "few / little"
+      "translation": "To be few / little"
     },
     {
       "id": "l4-50",
       "target": "높다",
-      "translation": "high / tall"
+      "translation": "To be high / tall"
     },
     {
       "id": "l4-51",
       "target": "낮다",
-      "translation": "low"
+      "translation": "To be low"
     },
     {
       "id": "l4-52",
       "target": "길다",
-      "translation": "long"
+      "translation": "To be long"
     },
     {
       "id": "l4-53",
       "target": "짧다",
-      "translation": "short"
+      "translation": "To be short"
     },
     {
       "id": "l4-54",
       "target": "춥다",
-      "translation": "cold (weather)"
+      "translation": "To be cold (weather)"
     },
     {
       "id": "l4-55",
       "target": "덥다",
-      "translation": "hot (weather)"
+      "translation": "To be hot (weather)"
     },
     {
       "id": "l4-56",
       "target": "맛있다",
-      "translation": "delicious"
+      "translation": "To be delicious"
     },
     {
       "id": "l4-57",
       "target": "재미있다",
-      "translation": "fun / interesting"
+      "translation": "To be fun / interesting"
     },
     {
       "id": "l4-58",
       "target": "바쁘다",
-      "translation": "busy"
+      "translation": "To be busy"
     },
     {
       "id": "l4-59",
       "target": "피곤하다",
-      "translation": "tired"
+      "translation": "To be tired"
     },
     {
       "id": "l4-60",
       "target": "어렵다",
-      "translation": "difficult"
+      "translation": "To be difficult"
     }
   ]
 }

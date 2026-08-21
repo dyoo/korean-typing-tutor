@@ -6,42 +6,42 @@
     {
       "id": "l2b-1",
       "target": "밖",
-      "translation": "outside (쌍받침 ㄲ)"
+      "translation": "Outside"
     },
     {
       "id": "l2b-2",
       "target": "있",
-      "translation": "to exist / have (쌍받침 ㅆ)"
+      "translation": "To exist / To have"
     },
     {
       "id": "l2b-3",
       "target": "없",
-      "translation": "not exist / lack (겹받침 ㅄ)"
+      "translation": "To not exist / To lack"
     },
     {
       "id": "l2b-4",
       "target": "닭",
-      "translation": "chicken / rooster (겹받침 ㄺ)"
+      "translation": "Chicken"
     },
     {
       "id": "l2b-5",
       "target": "흙",
-      "translation": "soil / earth (겹받침 ㄺ)"
+      "translation": "Soil / Earth"
     },
     {
       "id": "l2b-6",
       "target": "삶",
-      "translation": "life / living (겹받침 ㄻ)"
+      "translation": "Life"
     },
     {
       "id": "l2b-7",
       "target": "앉",
-      "translation": "to sit (겹받침 ㄵ)"
+      "translation": "To sit"
     },
     {
       "id": "l2b-8",
       "target": "넓",
-      "translation": "spacious / wide (겹받침 ㄼ)"
+      "translation": "Spacious / Wide"
     },
     {
       "id": "l2b_complex_batchim-ext-1",
@@ -51,27 +51,27 @@
     {
       "id": "l2b_complex_batchim-ext-2",
       "target": "앎",
-      "translation": "Knowledge / Knowing"
+      "translation": "Knowledge"
     },
     {
       "id": "l2b_complex_batchim-ext-3",
       "target": "굶다",
-      "translation": "To starve / Skip a meal"
+      "translation": "To starve / To skip a meal"
     },
     {
       "id": "l2b_complex_batchim-ext-4",
       "target": "곯다",
-      "translation": "To spoil / Rot"
+      "translation": "To spoil / To rot"
     },
     {
       "id": "l2b_complex_batchim-ext-5",
       "target": "앓다",
-      "translation": "To suffer / Be sick"
+      "translation": "To suffer / To be sick"
     },
     {
       "id": "l2b_complex_batchim-ext-6",
       "target": "뚫다",
-      "translation": "To pierce / Drill"
+      "translation": "To pierce / To drill through"
     },
     {
       "id": "l2b_complex_batchim-ext-7",
@@ -81,7 +81,7 @@
     {
       "id": "l2b_complex_batchim-ext-8",
       "target": "끊다",
-      "translation": "To cut off / Quit"
+      "translation": "To cut off / To quit"
     },
     {
       "id": "l2b_complex_batchim-ext-9",
@@ -101,7 +101,7 @@
     {
       "id": "l2b_complex_batchim-ext-12",
       "target": "읊다",
-      "translation": "To recite (poetry)"
+      "translation": "To recite poetry"
     },
     {
       "id": "l2b_complex_batchim-ext-13",
@@ -136,22 +136,22 @@
     {
       "id": "l2b_complex_batchim-ext-19",
       "target": "앳되다",
-      "translation": "Youthful"
+      "translation": "To look youthful / Baby-faced"
     },
     {
       "id": "l2b_complex_batchim-ext-20",
       "target": "얹어놓다",
-      "translation": "To place upon"
+      "translation": "To place on top"
     },
     {
       "id": "l2b_complex_batchim-ext-21",
       "target": "읊조리다",
-      "translation": "To murmur / Recite"
+      "translation": "To murmur / To recite poetry"
     },
     {
       "id": "l2b_complex_batchim-ext-22",
       "target": "핥아먹다",
-      "translation": "To lick clean"
+      "translation": "To lick up / To eat by licking"
     },
     {
       "id": "l2b_complex_batchim-ext-23",
@@ -161,12 +161,12 @@
     {
       "id": "l2b_complex_batchim-ext-24",
       "target": "잃어버리다",
-      "translation": "To lose completely"
+      "translation": "To lose / To misplace"
     },
     {
       "id": "l2b_complex_batchim-ext-25",
       "target": "끊어지다",
-      "translation": "To snap / Be severed"
+      "translation": "To snap / To be cut off"
     },
     {
       "id": "l2b_complex_batchim-ext-26",
@@ -191,17 +191,17 @@
     {
       "id": "l2b_complex_batchim-ext-30",
       "target": "굵어지다",
-      "translation": "To become thick"
+      "translation": "To become thicker"
     },
     {
       "id": "l2b_complex_batchim-ext-31",
       "target": "짧아지다",
-      "translation": "To shorten"
+      "translation": "To become shorter"
     },
     {
       "id": "l2b_complex_batchim-ext-32",
       "target": "얇아지다",
-      "translation": "To thin out"
+      "translation": "To become thinner"
     },
     {
       "id": "l2b_complex_batchim-ext-33",
@@ -211,7 +211,7 @@
     {
       "id": "l2b_complex_batchim-ext-34",
       "target": "흙냄새",
-      "translation": "Earthy smell"
+      "translation": "Scent of earth"
     },
     {
       "id": "l2b_complex_batchim-ext-35",
@@ -236,7 +236,7 @@
     {
       "id": "l2b_complex_batchim-ext-39",
       "target": "짧은 시간",
-      "translation": "Short time"
+      "translation": "Short time / Brief period"
     },
     {
       "id": "l2b_complex_batchim-ext-40",
@@ -251,22 +251,22 @@
     {
       "id": "l2b_complex_batchim-ext-42",
       "target": "흙먼지",
-      "translation": "Earthy dust"
+      "translation": "Dirt dust / Dust cloud"
     },
     {
       "id": "l2b_complex_batchim-ext-43",
       "target": "몫",
-      "translation": "Share / Portion (겹받침 ㄳ)"
+      "translation": "Share / Portion"
     },
     {
       "id": "l2b_complex_batchim-ext-44",
       "target": "삯",
-      "translation": "Wage / Reward (겹받침 ㄳ)"
+      "translation": "Wage / Reward"
     },
     {
       "id": "l2b_complex_batchim-ext-45",
       "target": "품삯",
-      "translation": "Labor wage"
+      "translation": "Labor wage / Day wage"
     },
     {
       "id": "l2b_complex_batchim-ext-46",
@@ -275,13 +275,13 @@
     },
     {
       "id": "l2b_complex_batchim-ext-47",
-      "target": "외골수",
-      "translation": "Single-minded person (겹받침 ㄽ)"
+      "target": "외곬",
+      "translation": "Single-minded path / One direction"
     },
     {
       "id": "l2b_complex_batchim-ext-48",
       "target": "많다",
-      "translation": "To be many / plentiful (겹받침 ㄶ)"
+      "translation": "To be many / plentiful"
     },
     {
       "id": "l2b_complex_batchim-ext-49",
@@ -291,12 +291,12 @@
     {
       "id": "l2b_complex_batchim-ext-50",
       "target": "않다",
-      "translation": "To not do (겹받침 ㄶ)"
+      "translation": "To not do"
     },
     {
       "id": "l2b_complex_batchim-ext-51",
       "target": "괜찮다",
-      "translation": "To be fine / okay (겹받침 ㄶ)"
+      "translation": "To be fine / okay"
     },
     {
       "id": "l2b_complex_batchim-ext-52",
@@ -306,52 +306,52 @@
     {
       "id": "l2b_complex_batchim-ext-53",
       "target": "앉아요",
-      "translation": "Please sit down (연음: 안자요)"
+      "translation": "Please sit down"
     },
     {
       "id": "l2b_complex_batchim-ext-54",
       "target": "읽다",
-      "translation": "To read (겹받침 ㄺ)"
+      "translation": "To read"
     },
     {
       "id": "l2b_complex_batchim-ext-55",
       "target": "읽어요",
-      "translation": "Reading (연음: 일거요)"
+      "translation": "Reading / Please read"
     },
     {
       "id": "l2b_complex_batchim-ext-56",
       "target": "밝다",
-      "translation": "To be bright (겹받침 ㄺ)"
+      "translation": "To be bright"
     },
     {
       "id": "l2b_complex_batchim-ext-57",
       "target": "젊은이",
-      "translation": "Young person / Youth (겹받침 ㄻ)"
+      "translation": "Young person / Youth"
     },
     {
       "id": "l2b_complex_batchim-ext-58",
       "target": "닮다",
-      "translation": "To resemble / Look like (겹받침 ㄻ)"
+      "translation": "To resemble / To look like"
     },
     {
       "id": "l2b_complex_batchim-ext-59",
       "target": "여덟",
-      "translation": "Eight (number 8) (겹받침 ㄼ)"
+      "translation": "Eight"
     },
     {
       "id": "l2b_complex_batchim-ext-60",
       "target": "없다",
-      "translation": "To not exist / not have (겹받침 ㅄ)"
+      "translation": "To not exist / To not have"
     },
     {
       "id": "l2b_complex_batchim-ext-61",
       "target": "없어요",
-      "translation": "There is none / I don't have"
+      "translation": "There is none / I do not have"
     },
     {
       "id": "l2b_complex_batchim-ext-62",
       "target": "싫다",
-      "translation": "To dislike / Hate (겹받침 ㅀ)"
+      "translation": "To dislike / To hate"
     },
     {
       "id": "l2b_complex_batchim-ext-63",
@@ -361,12 +361,12 @@
     {
       "id": "l2b_complex_batchim-ext-64",
       "target": "끓다",
-      "translation": "To boil (겹받침 ㅀ)"
+      "translation": "To boil"
     },
     {
       "id": "l2b_complex_batchim-ext-65",
       "target": "끓이다",
-      "translation": "To boil water / cook soup"
+      "translation": "To boil / To brew"
     }
   ]
 }

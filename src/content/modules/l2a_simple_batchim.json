@@ -6,102 +6,102 @@
     {
       "id": "l2a-1",
       "target": "산",
-      "translation": "mountain"
+      "translation": "Mountain"
     },
     {
       "id": "l2a-2",
       "target": "달",
-      "translation": "moon"
+      "translation": "Moon"
     },
     {
       "id": "l2a-3",
       "target": "물",
-      "translation": "water"
+      "translation": "Water"
     },
     {
       "id": "l2a-4",
       "target": "집",
-      "translation": "house"
+      "translation": "House"
     },
     {
       "id": "l2a-5",
       "target": "밤",
-      "translation": "night"
+      "translation": "Night / Chestnut"
     },
     {
       "id": "l2a-6",
       "target": "눈",
-      "translation": "eye / snow"
+      "translation": "Eye / Snow"
     },
     {
       "id": "l2a-7",
       "target": "손",
-      "translation": "hand"
+      "translation": "Hand"
     },
     {
       "id": "l2a-8",
       "target": "발",
-      "translation": "foot"
+      "translation": "Foot"
     },
     {
       "id": "l2a-9",
       "target": "책",
-      "translation": "book"
+      "translation": "Book"
     },
     {
       "id": "l2a-10",
       "target": "방",
-      "translation": "room"
+      "translation": "Room"
     },
     {
       "id": "l2a-11",
       "target": "공",
-      "translation": "ball"
+      "translation": "Ball"
     },
     {
       "id": "l2a-12",
       "target": "밥",
-      "translation": "rice / meal"
+      "translation": "Rice / Meal"
     },
     {
       "id": "l2a-13",
       "target": "곰",
-      "translation": "bear"
+      "translation": "Bear"
     },
     {
       "id": "l2a-14",
       "target": "말",
-      "translation": "horse / speech"
+      "translation": "Horse / Speech"
     },
     {
       "id": "l2a-15",
       "target": "땅",
-      "translation": "land / ground"
+      "translation": "Land / Ground"
     },
     {
       "id": "l2a-16",
       "target": "꽃",
-      "translation": "flower"
+      "translation": "Flower"
     },
     {
       "id": "l2a-17",
       "target": "빛",
-      "translation": "light"
+      "translation": "Light"
     },
     {
       "id": "l2a-18",
       "target": "숲",
-      "translation": "forest"
+      "translation": "Forest"
     },
     {
       "id": "l2a-19",
       "target": "밭",
-      "translation": "field"
+      "translation": "Field / Farm"
     },
     {
       "id": "l2a-20",
       "target": "옷",
-      "translation": "clothes"
+      "translation": "Clothes"
     },
     {
       "id": "l2a_simple_batchim-ext-1",
@@ -245,8 +245,8 @@
     },
     {
       "id": "l2a_simple_batchim-ext-29",
-      "target": "해",
-      "translation": "Sun / Year"
+      "target": "별",
+      "translation": "Star"
     },
     {
       "id": "l2a_simple_batchim-ext-30",

@@ -57,202 +57,202 @@
     {
       "id": "topik_grammar-ext-1",
       "target": "-은/는 -입니다",
-      "translation": "Subject Marker & Is/Are (Standard Form)"
+      "translation": "Topic Marker & Polite Copula (It is...)"
     },
     {
       "id": "topik_grammar-ext-2",
       "target": "-이/가 아닙니다",
-      "translation": "Negative Subject Identifier (Is Not)"
+      "translation": "Negative Copula (Is not...)"
     },
     {
       "id": "topik_grammar-ext-3",
       "target": "-을/를 먹습니다",
-      "translation": "Object Marker & Verb Conjugation"
+      "translation": "Object Marker & Eat (Eats something)"
     },
     {
       "id": "topik_grammar-ext-4",
       "target": "-에 갑니다",
-      "translation": "Directional Particle (Go To)"
+      "translation": "Directional Particle (Go to a place)"
     },
     {
       "id": "topik_grammar-ext-5",
       "target": "-에서 공부합니다",
-      "translation": "Location of Action Particle (Study At)"
+      "translation": "Location Particle (Study at a place)"
     },
     {
       "id": "topik_grammar-ext-6",
       "target": "-하고 같이 갑니다",
-      "translation": "Comitative Particle (Go Together With)"
+      "translation": "Comitative Particle (Go together with someone)"
     },
     {
       "id": "topik_grammar-ext-7",
       "target": "-지만 어렵지 않습니다",
-      "translation": "Conversational Contrast (But Not Difficult)"
+      "translation": "Contrast Connector (..., but it is not difficult)"
     },
     {
       "id": "topik_grammar-ext-8",
       "target": "-기 때문에 좋아합니다",
-      "translation": "Causation Connector (Because Of)"
+      "translation": "Causal Connector (Because of..., I like it)"
     },
     {
       "id": "topik_grammar-ext-9",
       "target": "-으러 갑니다",
-      "translation": "Purpose of Movement (Go To Do)"
+      "translation": "Purpose of Movement (Go in order to do)"
     },
     {
       "id": "topik_grammar-ext-10",
       "target": "-으세요",
-      "translation": "Polite Honorific Request"
+      "translation": "Polite Honorific Request (Please do)"
     },
     {
       "id": "topik_grammar-ext-11",
       "target": "-지 마세요",
-      "translation": "Negative Prohibition (Please Do Not)"
+      "translation": "Negative Prohibition (Please do not)"
     },
     {
       "id": "topik_grammar-ext-12",
       "target": "-아/어 주세요",
-      "translation": "Request for Favor (Please Do For Me)"
+      "translation": "Request for Favor (Please do for me)"
     },
     {
       "id": "topik_grammar-ext-13",
       "target": "-아/어 봐야 합니다",
-      "translation": "Experiential Necessity (Should Try Doing)"
+      "translation": "Experiential Obligation (Must try doing)"
     },
     {
       "id": "topik_grammar-ext-14",
       "target": "-ㄹ 수 있습니다",
-      "translation": "Ability / Possibility (Can Do)"
+      "translation": "Potential / Ability (Can do)"
     },
     {
       "id": "topik_grammar-ext-15",
       "target": "-ㄹ 수 없습니다",
-      "translation": "Inability / Impossibility (Cannot Do)"
+      "translation": "Inability / Impossibility (Cannot do)"
     },
     {
       "id": "topik_grammar-ext-16",
-      "target": "-아/어 야 합니다",
-      "translation": "Obligation / Imperative (Must Do)"
+      "target": "-아/어야 합니다",
+      "translation": "Obligation / Imperative (Must do)"
     },
     {
       "id": "topik_grammar-ext-17",
       "target": "-기로 했습니다",
-      "translation": "Decision / Resolution (Decided To Do)"
+      "translation": "Resolution / Decision (Decided to do)"
     },
     {
       "id": "topik_grammar-ext-18",
       "target": "-는 동안에",
-      "translation": "Temporal Duration (While Doing)"
+      "translation": "Temporal Duration (While doing)"
     },
     {
       "id": "topik_grammar-ext-19",
       "target": "-기 전에",
-      "translation": "Preceding Temporal Point (Before Doing)"
+      "translation": "Preceding Temporal Point (Before doing)"
     },
     {
       "id": "topik_grammar-ext-20",
       "target": "-은 후에",
-      "translation": "Subsequent Temporal Point (After Doing)"
+      "translation": "Subsequent Temporal Point (After doing)"
     },
     {
       "id": "topik_grammar-ext-21",
       "target": "-면서 공부합니다",
-      "translation": "Simultaneous Actions (While Studying)"
+      "translation": "Simultaneous Actions (While doing..., study)"
     },
     {
       "id": "topik_grammar-ext-22",
       "target": "-거나 쉬어요",
-      "translation": "Disjunctive Option (Or Rest)"
+      "translation": "Alternative Choice (Either... or rest)"
     },
     {
       "id": "topik_grammar-ext-23",
       "target": "-지만 괜찮아요",
-      "translation": "Concessive Contrast (But It Is Okay)"
+      "translation": "Concessive Contrast (..., but it is okay)"
     },
     {
       "id": "topik_grammar-ext-24",
-      "target": "-아/어 도 됩니다",
-      "translation": "Permission (Allowed To Do)"
+      "target": "-아/어도 됩니다",
+      "translation": "Permission (Allowed to do / may do)"
     },
     {
       "id": "topik_grammar-ext-25",
       "target": "-으면 안 됩니다",
-      "translation": "Prohibition (Not Allowed To Do)"
+      "translation": "Prohibition (Must not do / not allowed)"
     },
     {
       "id": "topik_grammar-ext-26",
       "target": "-ㄹ 것 같습니다",
-      "translation": "Supposition / Conjecture (Seems Like)"
+      "translation": "Conjecture / Guess (It seems like / I think)"
     },
     {
       "id": "topik_grammar-ext-27",
       "target": "-ㄹ 때 기쁩니다",
-      "translation": "Temporal Point (When ... I Am Glad)"
+      "translation": "Temporal Point (When..., I am happy)"
     },
     {
       "id": "topik_grammar-ext-28",
-      "target": "-아/어 지고 있습니다",
-      "translation": "Progressive State Change (Is Becoming)"
+      "target": "-아/어지고 있습니다",
+      "translation": "Progressive State Change (Is becoming / getting...)"
     },
     {
       "id": "topik_grammar-ext-29",
       "target": "-게 되었습니다",
-      "translation": "Resultant State Shift (Turned Out To Be)"
+      "translation": "Resultant State Shift (Turned out to be / became)"
     },
     {
       "id": "topik_grammar-ext-30",
       "target": "-ㄹ 겸 해서",
-      "translation": "Dual Purpose (To Do And Also)"
+      "translation": "Dual Purpose (To do... and also)"
     },
     {
       "id": "topik_grammar-ext-31",
       "target": "-ㄹ 수밖에 없습니다",
-      "translation": "Inevitability (No Choice But To)"
+      "translation": "Inevitability (Have no choice but to)"
     },
     {
       "id": "topik_grammar-ext-32",
       "target": "-기 마련입니다",
-      "translation": "Natural Law / Inevitability (Bound To Happen)"
+      "translation": "Natural Inevitability (Bound to happen / natural)"
     },
     {
       "id": "topik_grammar-ext-33",
       "target": "-ㄹ 뿐만 아니라",
-      "translation": "Additive Emphasis (Not Only ... But Also)"
+      "translation": "Additive Clause (Not only... but also)"
     },
     {
       "id": "topik_grammar-ext-34",
       "target": "-에 비해서",
-      "translation": "Comparative Basis (Compared To)"
+      "translation": "Comparative Basis (Compared to / relative to)"
     },
     {
       "id": "topik_grammar-ext-35",
       "target": "-에 비하여",
-      "translation": "Comparative Reference (In Comparison With)"
+      "translation": "Comparative Reference (In comparison with)"
     },
     {
       "id": "topik_grammar-ext-36",
       "target": "-에 따르면",
-      "translation": "Source Citation (According To)"
+      "translation": "Citation / Source (According to)"
     },
     {
       "id": "topik_grammar-ext-37",
       "target": "-에 의하면",
-      "translation": "Evidential Reporting (According to Information)"
+      "translation": "Evidential Reporting (According to information)"
     },
     {
       "id": "topik_grammar-ext-38",
       "target": "-을/를 위해",
-      "translation": "Benefactive Purpose (For The Sake Of)"
+      "translation": "Benefactive Purpose (For the sake of / in order to)"
     },
     {
       "id": "topik_grammar-ext-39",
       "target": "-에 대해",
-      "translation": "Topical Reference (About / Concerning)"
+      "translation": "Topic Reference (About / regarding)"
     },
     {
       "id": "topik_grammar-ext-40",
       "target": "-에 관해",
-      "translation": "Subject Concern (Regarding)"
+      "translation": "Topic Reference (Concerning / regarding)"
     }
   ]
 }

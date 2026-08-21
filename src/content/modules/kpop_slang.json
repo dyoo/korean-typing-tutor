@@ -6,32 +6,32 @@
     {
       "id": "kp-1",
       "target": "대박",
-      "translation": "Awesome / Jackpot / Amazing"
+      "translation": "Jackpot / Awesome! / Wow!"
     },
     {
       "id": "kp-2",
       "target": "화이팅",
-      "translation": "Fighting! / You can do it!"
+      "translation": "Cheer up! / You can do it! (Fighting!)"
     },
     {
       "id": "kp-3",
       "target": "심쿵",
-      "translation": "Heart-throbbing / Heart attack from cuteness"
+      "translation": "Heart throb / Cute heart attack (심장이 쿵쿵)"
     },
     {
       "id": "kp-4",
       "target": "꿀잼",
-      "translation": "Super fun / Hilarious"
+      "translation": "Super fun / Honey-sweet fun (꿀 + 재미)"
     },
     {
       "id": "kp-5",
       "target": "최애",
-      "translation": "Ultimate bias / Favorite member"
+      "translation": "Ultimate bias / Favorite member (최고로 애정함)"
     },
     {
       "id": "kp-6",
       "target": "레전드",
-      "translation": "Legendary"
+      "translation": "Legend / Legendary"
     },
     {
       "id": "kp-7",
@@ -46,127 +46,127 @@
     {
       "id": "kp-9",
       "target": "덕후",
-      "translation": "Hardcore fan / Otaku"
+      "translation": "Hardcore fan / Geek (from Otaku -> 오덕후)"
     },
     {
       "id": "kp-10",
       "target": "입덕",
-      "translation": "Becoming a fan / Stanning"
+      "translation": "Joining a fandom / Becoming a fan (입문 + 덕후)"
     },
     {
       "id": "kp-11",
       "target": "덕질",
-      "translation": "Fan activity / Stanning"
+      "translation": "Fandom activity / Stanning an idol"
     },
     {
       "id": "kp-12",
       "target": "성덕",
-      "translation": "Successful fan (meets idol)"
+      "translation": "Successful fan (fan who meets or works with their idol; 성공한 덕후)"
     },
     {
       "id": "kp-13",
       "target": "피켓팅",
-      "translation": "Blood-soaked ticket buying"
+      "translation": "Bloodbath ticketing / Fierce ticket race (피 + 티켓팅)"
     },
     {
       "id": "kp-14",
       "target": "막콘",
-      "translation": "Final concert of a tour"
+      "translation": "Final concert of a tour run (마지막 콘서트)"
     },
     {
       "id": "kp-15",
       "target": "응원봉",
-      "translation": "Official lightstick"
+      "translation": "Official fandom light stick"
     },
     {
       "id": "kp-16",
       "target": "포카",
-      "translation": "Photocard"
+      "translation": "Collectible photocard (포토카드)"
     },
     {
       "id": "kp-17",
       "target": "역조공",
-      "translation": "Reverse fan gift from idols"
+      "translation": "Gifts given by idols to their fans (reverse tribute)"
     },
     {
       "id": "kp-18",
       "target": "컴백",
-      "translation": "Comeback / New release"
+      "translation": "Comeback / New album promotional release"
     },
     {
       "id": "kp-19",
       "target": "노잼",
-      "translation": "Not fun / Boring"
+      "translation": "No fun / Boring (No + 재미)"
     },
     {
       "id": "kp-20",
       "target": "핵잼",
-      "translation": "Super hilarious / Extremely fun"
+      "translation": "Nuclear-level fun / Super exciting (핵 + 재미)"
     },
     {
       "id": "kp-21",
       "target": "갓생",
-      "translation": "Productive, diligent life"
+      "translation": "God-tier productive life (God + 인생)"
     },
     {
       "id": "kp-22",
       "target": "억까",
-      "translation": "Unreasonable hate / Forced hate"
+      "translation": "Forced unjust criticism / Baseless hate (억지로 까기)"
     },
     {
       "id": "kp-23",
       "target": "억빠",
-      "translation": "Forced overpraising / Blind bias"
+      "translation": "Blind overpraise / Forced hype (억지로 빠기)"
     },
     {
       "id": "kp-24",
       "target": "뇌절",
-      "translation": "Overdoing it / Pushing joke too far"
+      "translation": "Taking a joke too far / Brain overload (Naruto reference: 뇌절)"
     },
     {
       "id": "kp-25",
       "target": "소확행",
-      "translation": "Small but certain happiness"
+      "translation": "Small but certain happiness (소소하지만 확실한 행복)"
     },
     {
       "id": "kp-26",
       "target": "점메추",
-      "translation": "Lunch menu recommendation"
+      "translation": "Lunch menu recommendation (점심 메뉴 추천)"
     },
     {
       "id": "kp-27",
       "target": "오운완",
-      "translation": "Today's workout completed"
+      "translation": "Today's workout completed (#WorkoutDone, 오늘 운동 완료)"
     },
     {
       "id": "kp-28",
       "target": "중꺾마",
-      "translation": "Unbreakable heart"
+      "translation": "What matters is an unyielding spirit / Unbreakable heart (중요한 것은 꺾이지 않는 마음)"
     },
     {
       "id": "kp-29",
       "target": "폼미쳤다",
-      "translation": "Form is crazy / Skill is insane"
+      "translation": "Form is crazy / In peak form (폼 미쳤다)"
     },
     {
       "id": "kp-30",
       "target": "알잘딱깔센",
-      "translation": "Smart, neat, and flexible"
+      "translation": "Doing things tactfully, neatly, and sensibly on your own (알아서 잘 딱 깔끔하고 센스있게)"
     },
     {
       "id": "kp-31",
       "target": "실화냐",
-      "translation": "Is this real? / For real?"
+      "translation": "Is this for real? / Are you serious? (실화냐)"
     },
     {
       "id": "kp-32",
       "target": "킹받네",
-      "translation": "Super annoying"
+      "translation": "Super annoying / So infuriating (King + 열받네)"
     },
     {
       "id": "kp-33",
       "target": "어쩔티비",
-      "translation": "So what, go watch TV!"
+      "translation": "So what? Go watch TV! (childish retort: 어쩌라고 가서 티비나 봐)"
     },
     {
       "id": "kp-34",
@@ -181,7 +181,7 @@
     {
       "id": "kp-36",
       "target": "최애는 최애고 은우는 은우다",
-      "translation": "Bias is bias, but Cha Eun-woo is Cha Eun-woo."
+      "translation": "A bias is a bias, but Cha Eun-woo is Cha Eun-woo (popular K-pop idiom: 최최차차)."
     },
     {
       "id": "kp-37",
@@ -191,127 +191,127 @@
     {
       "id": "kp-38",
       "target": "스밍 열심히 돌려요!",
-      "translation": "Let's stream the music hard!"
+      "translation": "Let's stream the track hard! (스밍 = 스트리밍)"
     },
     {
       "id": "kp-39",
       "target": "올콘",
-      "translation": "Attending all concert dates"
+      "translation": "Attending all concert dates of a tour (올 + 콘서트)"
     },
     {
       "id": "kp-40",
       "target": "첫콘",
-      "translation": "Opening concert of a tour"
+      "translation": "Opening concert of a tour run (첫 번째 콘서트)"
     },
     {
       "id": "kp-41",
       "target": "탈덕",
-      "translation": "Leaving a fandom"
+      "translation": "Leaving a fandom / Quitting stanning (탈출 + 덕후)"
     },
     {
       "id": "kp-42",
       "target": "차애",
-      "translation": "Second favorite bias"
+      "translation": "Second favorite bias / Bias wrecker (차선으로 애정함)"
     },
     {
       "id": "kp-43",
       "target": "음원차트",
-      "translation": "Music streaming chart"
+      "translation": "Digital music streaming chart"
     },
     {
       "id": "kp-44",
       "target": "실물",
-      "translation": "In-person visual / Real life look"
+      "translation": "Real-life in-person appearance (실물)"
     },
     {
       "id": "kp-45",
       "target": "비주얼",
-      "translation": "Visual / Center appearance"
+      "translation": "Visual / Outstanding appearance in a group"
     },
     {
       "id": "kp-46",
       "target": "음방",
-      "translation": "Music show broadcast"
+      "translation": "Weekly music show broadcast (음악 방송)"
     },
     {
       "id": "kp-47",
       "target": "사녹",
-      "translation": "Pre-recording for music shows"
+      "translation": "Pre-recording session for music shows (사전 녹화)"
     },
     {
       "id": "kp-48",
       "target": "팬싸",
-      "translation": "Fan sign event"
+      "translation": "Fan signing event (팬사인회)"
     },
     {
       "id": "kp-49",
       "target": "하이터치",
-      "translation": "High-touch event"
+      "translation": "High-five fan event (하이터치회)"
     },
     {
       "id": "kp-50",
       "target": "직캠",
-      "translation": "Fan-cam / Focus video"
+      "translation": "Fancam / Single-member focus video (직접 찍은 캠코더)"
     },
     {
       "id": "kp-51",
       "target": "안구정화",
-      "translation": "Eye purification / Eye candy"
+      "translation": "Cleansing for the eyes / Eye candy (안구 정화)"
     },
     {
       "id": "kp-52",
       "target": "뇌피셜",
-      "translation": "Head-canon / Speculating"
+      "translation": "Personal unofficial theory / Headcanon (뇌 + Official)"
     },
     {
       "id": "kp-53",
       "target": "지못미",
-      "translation": "Sorry I couldn't protect you"
+      "translation": "Sorry I couldn't protect your image (지켜주지 못해 미안해)"
     },
     {
       "id": "kp-54",
       "target": "득템",
-      "translation": "Great find / Lucky acquisition"
+      "translation": "Great score / Lucky item acquisition (득 + Item)"
     },
     {
       "id": "kp-55",
       "target": "솔까말",
-      "translation": "Honestly speaking"
+      "translation": "To be completely honest (솔직히 까놓고 말해서)"
     },
     {
       "id": "kp-56",
       "target": "얼죽아",
-      "translation": "Iced Americano even in freezing cold"
+      "translation": "Drinking iced Americano even if freezing to death (얼어 죽어도 아이스 아메리카노)"
     },
     {
       "id": "kp-57",
       "target": "부캐",
-      "translation": "Alternate persona / Alt character"
+      "translation": "Alter ego / Secondary character persona (부캐릭터)"
     },
     {
       "id": "kp-58",
       "target": "본캐",
-      "translation": "Main character / Primary self"
+      "translation": "Primary character / Original self (본캐릭터)"
     },
     {
       "id": "kp-59",
       "target": "삼귀다",
-      "translation": "Pre-relationship talking phase"
+      "translation": "The sweet 'talking' stage before dating (삼귀다, before 사귀다 '4')"
     },
     {
       "id": "kp-60",
       "target": "갓성비",
-      "translation": "God-tier cost effectiveness"
+      "translation": "God-tier value for money (God + 가성비)"
     },
     {
       "id": "kp-61",
       "target": "완내스",
-      "translation": "Totally my style"
+      "translation": "Totally my style (완전 내 스타일)"
     },
     {
       "id": "kp-62",
       "target": "갓막내",
-      "translation": "Golden Maknae (youngest member)"
+      "translation": "God-tier youngest group member (God + 막내)"
     },
     {
       "id": "kp-63",
@@ -326,127 +326,127 @@
     {
       "id": "kp-65",
       "target": "이번 춤 완전 갓벽해요!",
-      "translation": "This dance is totally god-tier perfect!"
+      "translation": "This choreography is totally god-tier perfect! (갓벽 = God + 완벽)"
     },
     {
       "id": "kp-66",
       "target": "팬싸 응모 완료했어요!",
       "pronunciation": "paenssa eungmo wallyeohaesseoyo!",
-      "translation": "I finished entering the fansign raffle!"
+      "translation": "I submitted my entry for the fansign raffle!"
     },
     {
       "id": "kp-67",
       "target": "음방 1위 축하해요!",
       "pronunciation": "eumbang ilwi chukahaeyo!",
-      "translation": "Congratulations on taking #1 on music shows!"
+      "translation": "Congratulations on winning 1st place on the music show!"
     },
     {
       "id": "kp-68",
       "target": "실물이 훨씬 예뻐요!",
       "pronunciation": "silmuri heolssin yeppeoyo!",
-      "translation": "Looks even prettier in person!"
+      "translation": "You look even prettier in real life!"
     },
     {
       "id": "kp-69",
       "target": "엔딩요정",
-      "translation": "Ending Fairy (music show camera pose)"
+      "translation": "Ending Fairy (idol posing for close-up camera at song conclusion)"
     },
     {
       "id": "kp-70",
       "target": "최애돌",
-      "translation": "Favorite idol"
+      "translation": "Ultimate favorite idol group/member"
     },
     {
       "id": "kp-71",
       "target": "칼군무",
-      "translation": "Knife-sharp synchronized dance"
+      "translation": "Knife-sharp synchronized group choreography (칼 + 군무)"
     },
     {
       "id": "kp-72",
       "target": "센터",
-      "translation": "Center position"
+      "translation": "Center member position in stage formations"
     },
     {
       "id": "kp-73",
       "target": "떼창",
-      "translation": "Concert crowd sing-along"
+      "translation": "Concert crowd sing-along (떼 + 창)"
     },
     {
       "id": "kp-74",
       "target": "덕통사고",
-      "translation": "Sudden unexpected obsession with idol"
+      "translation": "Falling hard into a fandom unexpectedly like a traffic accident (덕후 + 교통사고)"
     },
     {
       "id": "kp-75",
       "target": "금손",
-      "translation": "Golden hands / Super talented fan artist"
+      "translation": "Golden hands (super talented creator/artist or lucky ticket buyer)"
     },
     {
       "id": "kp-76",
       "target": "똥손",
-      "translation": "Poop hands / Unlucky ticket buyer"
+      "translation": "Clumsy hands / Unlucky ticket buyer (똥 + 손)"
     },
     {
       "id": "kp-77",
       "target": "총공",
-      "translation": "Coordinated streaming attack"
+      "translation": "Coordinated fan streaming/voting mass effort (총공격)"
     },
     {
       "id": "kp-78",
       "target": "음원강자",
-      "translation": "Digital chart powerhouse artist"
+      "translation": "Digital music chart powerhouse artist"
     },
     {
       "id": "kp-79",
       "target": "꾸안꾸",
-      "translation": "Effortlessly chic style"
+      "translation": "Effortless chic / Dressed up without looking like it (꾸민 듯 안 꾸민 듯)"
     },
     {
       "id": "kp-80",
       "target": "손민수",
-      "translation": "Copying someone's fashion/style"
+      "translation": "Copying someone's style or purchases (from Cheese in the Trap character Son Min-soo)"
     },
     {
       "id": "kp-81",
       "target": "팬사랑",
-      "translation": "Deep love for fans"
+      "translation": "Deep love and appreciation for fans"
     },
     {
       "id": "kp-82",
       "target": "세계관",
-      "translation": "Fictional storyline universe"
+      "translation": "Fictional universe / Concept lore storyline"
     },
     {
       "id": "kp-83",
       "target": "할많하않",
-      "translation": "Lots to say but keeping silent"
+      "translation": "A lot to say, but keeping silent (할 말은 많지만 하지 않겠다)"
     },
     {
       "id": "kp-84",
       "target": "인생샷",
-      "translation": "Once-in-a-lifetime best photo"
+      "translation": "A once-in-a-lifetime best photo (인생 + 샷)"
     },
     {
       "id": "kp-85",
       "target": "최애짤",
-      "translation": "Favorite idol meme/photo"
+      "translation": "Favorite picture or meme of one's bias (최애 + 짤방)"
     },
     {
       "id": "kp-86",
       "target": "댕댕이",
       "pronunciation": "daengdaeng-i",
-      "translation": "Cute puppy"
+      "translation": "Cute puppy / Doggo (visual wordplay on 멍멍이)"
     },
     {
       "id": "kp-87",
       "target": "냥냥이",
       "pronunciation": "nyangnyang-i",
-      "translation": "Cute kitty"
+      "translation": "Cute kitty / Cat (from meow sound 야옹/냥)"
     },
     {
       "id": "kp-88",
       "target": "주접",
-      "translation": "Cheesy over-the-top fan praise"
+      "translation": "Over-the-top flattering fan praise / Simping (주접)"
     },
     {
       "id": "kp-89",
@@ -456,32 +456,32 @@
     {
       "id": "kp-90",
       "target": "주접댓글",
-      "translation": "Cheesy fan praise comments"
+      "translation": "Over-the-top flattering fan comments (주접 댓글)"
     },
     {
       "id": "kp-91",
       "target": "만반잘부",
-      "translation": "Nice to meet you!"
+      "translation": "Nice to meet you and look forward to getting along (만나서 반가워 잘 부탁해)"
     },
     {
       "id": "kp-92",
       "target": "내또속",
-      "translation": "Fooled again!"
+      "translation": "I was fooled again! (내가 또 속았네)"
     },
     {
       "id": "kp-93",
       "target": "음반왕",
-      "translation": "Physical album sales king"
+      "translation": "King of physical album sales"
     },
     {
       "id": "kp-94",
       "target": "빌보드",
-      "translation": "Billboard chart"
+      "translation": "Billboard charts"
     },
     {
       "id": "kp-95",
       "target": "빛선배",
-      "translation": "Shining legendary senior artist"
+      "translation": "Shining respected senior artist (빛 + 선배)"
     },
     {
       "id": "kp-96",
@@ -491,7 +491,7 @@
     {
       "id": "kp-97",
       "target": "이번 칼군무 진짜 대박이에요!",
-      "translation": "This synchronized dance is seriously insane!"
+      "translation": "This knife-sharp synchronized dance is seriously insane!"
     },
     {
       "id": "kp-98",
@@ -506,12 +506,12 @@
     {
       "id": "kp-100",
       "target": "오늘 의상 완전 꾸안꾸 스타일!",
-      "translation": "Today's outfit is total effort-free chic style!"
+      "translation": "Today's outfit is total effortless chic style!"
     },
     {
       "id": "kp-101",
       "target": "주접댓글 진짜 웃겨요!",
-      "translation": "The cheesy fan praise comments are so funny!"
+      "translation": "The over-the-top fan comments are hilarious!"
     },
     {
       "id": "kp-102",
@@ -521,7 +521,7 @@
     {
       "id": "kp-103",
       "target": "오늘 팬사랑 진짜 감동이에요!",
-      "translation": "Today's fan love was so touching!"
+      "translation": "The love shown for the fans today was truly touching!"
     },
     {
       "id": "kp-104",

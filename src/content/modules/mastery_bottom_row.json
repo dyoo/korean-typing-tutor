@@ -111,7 +111,7 @@
     {
       "id": "mastery_bottom_row_22",
       "target": "태양",
-      "translation": "Sun / Solar"
+      "translation": "Sun"
     },
     {
       "id": "mastery_bottom_row_23",
@@ -391,7 +391,7 @@
     {
       "id": "mastery_bottom_row_78",
       "target": "휴지",
-      "translation": "Tissue / Paper"
+      "translation": "Tissue / Toilet paper"
     },
     {
       "id": "mastery_bottom_row_79",
@@ -421,7 +421,7 @@
     {
       "id": "mastery_bottom_row_84",
       "target": "유명",
-      "translation": "Fame / Famous"
+      "translation": "Fame / Renown"
     },
     {
       "id": "mastery_bottom_row_85",
@@ -466,7 +466,7 @@
     {
       "id": "mastery_bottom_row_93",
       "target": "휴식",
-      "translation": "Rest / Break / Relaxation"
+      "translation": "Rest / Relaxation"
     },
     {
       "id": "mastery_bottom_row_94",
@@ -488,7 +488,7 @@
     {
       "id": "mastery_bottom_row_97",
       "target": "향단아 그네 줄을 밀어라, 서으로 가는 달같이",
-      "translation": "Hyangdan, push the swing ropes, like the moon moving west",
+      "translation": "Hyangdan, push the swing ropes, like the moon heading west",
       "attribution": "서정주, <추천사> (1956)"
     },
     {
@@ -539,7 +539,7 @@
     {
       "id": "mastery_bottom_row_107",
       "target": "책을 보며 깊은 생각에 잠겨요",
-      "translation": "Look at a book and get lost in deep thought"
+      "translation": "Read a book and get lost in deep thought"
     },
     {
       "id": "mastery_bottom_row_108",
@@ -564,7 +564,7 @@
     {
       "id": "mastery_bottom_row_112",
       "target": "탁자 위에 커피잔을 놓아요",
-      "translation": "Place the coffee cup on top of the table"
+      "translation": "Place the coffee cup on the table"
     },
     {
       "id": "mastery_bottom_row_113",
@@ -579,7 +579,7 @@
     {
       "id": "mastery_bottom_row_115",
       "target": "탁자 위에 향기로운 커피를 놓아요",
-      "translation": "Place fragrant coffee upon the table"
+      "translation": "Place fragrant coffee on the table"
     },
     {
       "id": "mastery_bottom_row_116",
@@ -589,7 +589,7 @@
     {
       "id": "mastery_bottom_row_117",
       "target": "카메라에 담긴 소중한 추억들",
-      "translation": "Precious memories captured on the camera"
+      "translation": "Precious memories captured on camera"
     },
     {
       "id": "mastery_bottom_row_118",

@@ -41,12 +41,12 @@
     {
       "id": "l5-8",
       "target": "수고하셨습니다.",
-      "translation": "Great job / Thank you for your hard work."
+      "translation": "Thank you for your hard work."
     },
     {
       "id": "l5-9",
       "target": "맛있게 드세요.",
-      "translation": "Bon appétit / Enjoy your meal."
+      "translation": "Enjoy your meal."
     },
     {
       "id": "l5-10",
@@ -96,12 +96,12 @@
     {
       "id": "l5-19",
       "target": "다녀오겠습니다.",
-      "translation": "I will be back."
+      "translation": "I will be back (leaving home)."
     },
     {
       "id": "l5-20",
       "target": "다녀왔습니다.",
-      "translation": "I am back."
+      "translation": "I am back (returning home)."
     },
     {
       "id": "l5-21",
@@ -121,7 +121,7 @@
     {
       "id": "l5-24",
       "target": "걱정하지 마세요.",
-      "translation": "Don't worry."
+      "translation": "Do not worry."
     },
     {
       "id": "l5-25",
@@ -141,12 +141,12 @@
     {
       "id": "l5-28",
       "target": "오늘 너무 추워요.",
-      "translation": "It's so cold today."
+      "translation": "It is so cold today."
     },
     {
       "id": "l5-29",
       "target": "오늘 너무 더워요.",
-      "translation": "It's so hot today."
+      "translation": "It is so hot today."
     },
     {
       "id": "l5-30",
@@ -196,7 +196,7 @@
     {
       "id": "l5-39",
       "target": "잘 모르겠어요.",
-      "translation": "I don't really know."
+      "translation": "I do not really know."
     },
     {
       "id": "l5-40",

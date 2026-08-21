@@ -6,13 +6,13 @@
     {
       "id": "kc-1",
       "target": "추석",
-      "translation": "Chuseok (Korean Thanksgiving)"
+      "translation": "Chuseok (Korean Thanksgiving / Autumn harvest festival)"
     },
     {
       "id": "kc-2",
       "target": "설날",
       "pronunciation": "seollal",
-      "translation": "Seollal (Lunar New Year)"
+      "translation": "Seollal (Korean Lunar New Year)"
     },
     {
       "id": "kc-3",
@@ -22,12 +22,12 @@
     {
       "id": "kc-4",
       "target": "떡국",
-      "translation": "Tteokguk (Rice cake soup)"
+      "translation": "Tteokguk (Sliced rice cake soup eaten on Seollal)"
     },
     {
       "id": "kc-5",
       "target": "송편",
-      "translation": "Songpyeon (Half-moon rice cakes)"
+      "translation": "Songpyeon (Half-moon shaped rice cakes eaten on Chuseok)"
     },
     {
       "id": "kc-6",
@@ -42,17 +42,17 @@
     {
       "id": "kc-8",
       "target": "새해 복 많이 받으세요.",
-      "translation": "Happy Lunar New Year!"
+      "translation": "Happy New Year! (Lit: Please receive a lot of new year blessings.)"
     },
     {
       "id": "korean_culture-ext-1",
       "target": "설날에는 떡국을 먹습니다.",
-      "translation": "On New Year's Day, we eat rice cake soup."
+      "translation": "On Lunar New Year's Day, we eat rice cake soup (tteokguk)."
     },
     {
       "id": "korean_culture-ext-2",
       "target": "추석에는 송편을 만듭니다.",
-      "translation": "On Chuseok, we make half-moon rice cakes."
+      "translation": "On Chuseok, we make half-moon rice cakes (songpyeon)."
     },
     {
       "id": "korean_culture-ext-3",
@@ -67,22 +67,22 @@
     {
       "id": "korean_culture-ext-5",
       "target": "김장 문화는 유네스코 인류무형문화유산입니다.",
-      "translation": "Kimjang culture is a UNESCO Intangible Cultural Heritage."
+      "translation": "Kimjang (kimchi-making culture) is a UNESCO Intangible Cultural Heritage."
     },
     {
       "id": "korean_culture-ext-6",
       "target": "태극기는 한국의 국기입니다.",
-      "translation": "Taegeukgi is the national flag of Korea."
+      "translation": "Taegeukgi is the national flag of South Korea."
     },
     {
       "id": "korean_culture-ext-7",
       "target": "무궁화는 한국의 국화입니다.",
-      "translation": "Rose of Sharon is the national flower of Korea."
+      "translation": "Mugunghwa (Rose of Sharon) is the national flower of Korea."
     },
     {
       "id": "korean_culture-ext-8",
       "target": "경복궁은 조선 시대의 궁궐입니다.",
-      "translation": "Gyeongbokgung is a royal palace of the Joseon Dynasty."
+      "translation": "Gyeongbokgung is the main royal palace of the Joseon Dynasty."
     },
     {
       "id": "korean_culture-ext-9",
@@ -97,22 +97,22 @@
     {
       "id": "korean_culture-ext-11",
       "target": "한라산은 제주도에 있는 높고 아름다운 산입니다.",
-      "translation": "Hallasan is a tall and beautiful mountain on Jeju Island."
+      "translation": "Hallasan is a tall and scenic mountain on Jeju Island."
     },
     {
       "id": "korean_culture-ext-12",
       "target": "한강은 서울 시내를 지나는 아름다운 강입니다.",
-      "translation": "The Han River is a beautiful river running through downtown Seoul."
+      "translation": "The Han River is a scenic river running through downtown Seoul."
     },
     {
       "id": "korean_culture-ext-13",
       "target": "동대문디자인플라자는 현대 건축의 명소입니다.",
-      "translation": "Dongdaemun Design Plaza is a landmark of modern architecture."
+      "translation": "Dongdaemun Design Plaza (DDP) is a landmark of modern architecture."
     },
     {
       "id": "korean_culture-ext-14",
       "target": "홍대는 청춘과 예술의 거리입니다.",
-      "translation": "Hongdae is a street of youth and art."
+      "translation": "Hongdae is an iconic street neighborhood of youth and indie art."
     },
     {
       "id": "korean_culture-ext-15",
@@ -122,7 +122,7 @@
     {
       "id": "korean_culture-ext-16",
       "target": "북촌한옥마을은 전통 한옥이 잘 보존된 곳입니다.",
-      "translation": "Bukchon Hanok Village is a well-preserved traditional hanok area."
+      "translation": "Bukchon Hanok Village is a neighborhood where traditional hanok houses are well preserved."
     },
     {
       "id": "korean_culture-ext-17",
@@ -137,22 +137,22 @@
     {
       "id": "korean_culture-ext-19",
       "target": "불국사와 석굴암은 경주의 대표적인 문화재입니다.",
-      "translation": "Bulguksa and Seokguram are Gyeongju's representative cultural heritage."
+      "translation": "Bulguksa Temple and Seokguram Grotto are representative cultural heritage sites in Gyeongju."
     },
     {
       "id": "korean_culture-ext-20",
       "target": "판소리는 한국의 전통 소리 예술입니다.",
-      "translation": "Pansori is traditional Korean musical storytelling art."
+      "translation": "Pansori is a traditional Korean genre of musical storytelling."
     },
     {
       "id": "korean_culture-ext-21",
       "target": "사물놀이는 4가지 전통 악기 연주입니다.",
-      "translation": "Samulnori is a performance using four traditional percussion instruments."
+      "translation": "Samulnori is a traditional percussion performance using four Korean instruments."
     },
     {
       "id": "korean_culture-ext-22",
       "target": "탈춤은 한국의 전통 가면 무용입니다.",
-      "translation": "Talchum is traditional Korean mask dance."
+      "translation": "Talchum is a traditional Korean mask dance drama."
     },
     {
       "id": "korean_culture-ext-23",
@@ -162,17 +162,17 @@
     {
       "id": "korean_culture-ext-24",
       "target": "한지는 한국의 전통 종이입니다.",
-      "translation": "Hanji is traditional Korean paper."
+      "translation": "Hanji is traditional handmade Korean paper."
     },
     {
       "id": "korean_culture-ext-25",
       "target": "옹기는 한국의 전통 항아리입니다.",
-      "translation": "Onggi is traditional Korean earthenware."
+      "translation": "Onggi is traditional Korean earthenware pottery."
     },
     {
       "id": "korean_culture-ext-26",
       "target": "막걸리는 한국의 전통 쌀막걸리입니다.",
-      "translation": "Makgeolli is traditional Korean rice wine."
+      "translation": "Makgeolli is a traditional Korean unfiltered rice wine."
     },
     {
       "id": "korean_culture-ext-27",
@@ -182,57 +182,57 @@
     {
       "id": "korean_culture-ext-28",
       "target": "치맥은 치킨과 맥주의 조합입니다.",
-      "translation": "Chimaek is the pairing of fried chicken and beer."
+      "translation": "Chimaek is the popular pairing of fried chicken and beer (치킨 + 맥주)."
     },
     {
       "id": "korean_culture-ext-29",
       "target": "길거리 음식으로는 떡볶이와 어묵이 있습니다.",
-      "translation": "Street foods include tteokbokki and fish cakes."
+      "translation": "Popular street foods include spicy rice cakes (tteokbokki) and fish cakes (eomuk)."
     },
     {
       "id": "korean_culture-ext-30",
       "target": "붕어빵은 겨울철 대표 길거리 간식입니다.",
-      "translation": "Bungeoppang is an iconic winter street snack."
+      "translation": "Bungeoppang (fish-shaped red bean pastry) is an iconic winter street snack."
     },
     {
       "id": "korean_culture-ext-31",
       "target": "호떡은 달콤한 쫄깃한 팬케이크입니다.",
-      "translation": "Hotteok is a sweet, chewy filled pancake."
+      "translation": "Hotteok is a sweet and chewy filled pancake."
     },
     {
       "id": "korean_culture-ext-32",
       "target": "포장마차에서 맛있는 밤참을 먹습니다.",
-      "translation": "People eat delicious late-night snacks at street carts (pojangmacha)."
+      "translation": "People eat delicious late-night street food at a pojangmacha (tented food stall)."
     },
     {
       "id": "korean_culture-ext-33",
       "target": "찜질방에서 따뜻하게 휴식을 취합니다.",
-      "translation": "People relax warmly in a Korean bathhouse (jjimjilbang)."
+      "translation": "People relax comfortably in a jjimjilbang (Korean bathhouse and sauna)."
     },
     {
       "id": "korean_culture-ext-34",
       "target": "노래방에서 친구들과 노래를 부릅니다.",
-      "translation": "People sing songs with friends at a noraebang (karaoke)."
+      "translation": "People sing songs with friends at a noraebang (karaoke room)."
     },
     {
       "id": "korean_culture-ext-35",
       "target": "컴퓨터방에서 고사양 게임을 즐깁니다.",
-      "translation": "People enjoy high-spec games at a PC bang."
+      "translation": "People enjoy high-spec PC games at a PC bang."
     },
     {
       "id": "korean_culture-ext-36",
       "target": "배달 문화가 매우 발전되어 있습니다.",
-      "translation": "Food delivery culture is extremely developed in Korea."
+      "translation": "Food delivery culture is exceptionally well-developed in Korea."
     },
     {
       "id": "korean_culture-ext-37",
       "target": "새해 복 많이 받으세요!",
-      "translation": "Happy New Year! (Lit: May you receive much luck in the New Year!)"
+      "translation": "Happy New Year! (Lit: May you receive abundant blessings in the New Year!)"
     },
     {
       "id": "korean_culture-ext-38",
       "target": "즐거운 추석 보내세요!",
-      "translation": "Have a joyful Chuseok holiday!"
+      "translation": "Have a joyful and blessed Chuseok holiday!"
     },
     {
       "id": "korean_culture-ext-39",
@@ -247,12 +247,12 @@
     {
       "id": "korean_culture-ext-41",
       "target": "한국은 전통과 현대가 조화를 이루는 곳입니다.",
-      "translation": "Korea is a place where tradition and modernity harmonize."
+      "translation": "Korea is a place where tradition and modernity harmoniously coexist."
     },
     {
       "id": "korean_culture-ext-42",
       "target": "다양한 한국 문화를 즐겨 보세요!",
-      "translation": "Please enjoy the diverse aspects of Korean culture!"
+      "translation": "Please enjoy experiencing the diverse aspects of Korean culture!"
     }
   ]
 }

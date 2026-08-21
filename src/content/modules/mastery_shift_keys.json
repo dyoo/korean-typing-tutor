@@ -196,7 +196,7 @@
     {
       "id": "mastery_shift_keys_39",
       "target": "짜다",
-      "translation": "To be salty / squeeze"
+      "translation": "To be salty / To squeeze"
     },
     {
       "id": "mastery_shift_keys_40",
@@ -211,7 +211,7 @@
     {
       "id": "mastery_shift_keys_42",
       "target": "찌다",
-      "translation": "To steam / gain weight"
+      "translation": "To steam / To gain weight"
     },
     {
       "id": "mastery_shift_keys_43",
@@ -276,7 +276,7 @@
     {
       "id": "mastery_shift_keys_55",
       "target": "얘들아",
-      "translation": "Hey guys / Children"
+      "translation": "Kids / Hey everyone"
     },
     {
       "id": "mastery_shift_keys_56",
@@ -286,7 +286,7 @@
     {
       "id": "mastery_shift_keys_57",
       "target": "얘는",
-      "translation": "This one is"
+      "translation": "This child is / This one is"
     },
     {
       "id": "mastery_shift_keys_58",
@@ -301,7 +301,7 @@
     {
       "id": "mastery_shift_keys_60",
       "target": "걔는",
-      "translation": "That child is"
+      "translation": "That child is / That one is"
     },
     {
       "id": "mastery_shift_keys_61",
@@ -311,7 +311,7 @@
     {
       "id": "mastery_shift_keys_62",
       "target": "쟤는",
-      "translation": "That one over there is"
+      "translation": "That child over there is"
     },
     {
       "id": "mastery_shift_keys_63",
@@ -371,7 +371,7 @@
     {
       "id": "mastery_shift_keys_74",
       "target": "예배",
-      "translation": "Worship / Service"
+      "translation": "Worship / Church service"
     },
     {
       "id": "mastery_shift_keys_75",
@@ -404,7 +404,7 @@
     {
       "id": "mastery_shift_keys_80",
       "target": "영변에 약산 진달래꽃, 아름 따다 가실 길에 뿌리우리다",
-      "translation": "Azaleas of Yaksan, I will scatter armfuls along your path",
+      "translation": "Azaleas from Yaksan in Yeongbyeon, I will scatter armfuls along your path",
       "attribution": "김소월, <진달래꽃> (1925)"
     },
     {
@@ -438,7 +438,7 @@
     {
       "id": "mastery_shift_keys_86",
       "target": "뚝배기에 보글보글 맛있는 찌개",
-      "translation": "Delicious stew boiling bubble-bubble in an earthen pot"
+      "translation": "Delicious stew bubbling in an earthen pot"
     },
     {
       "id": "mastery_shift_keys_87",

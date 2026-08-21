@@ -116,7 +116,7 @@
     {
       "id": "mastery_top_row_23",
       "target": "들",
-      "translation": "Field / Plural marker"
+      "translation": "Field / Plural marker (-s)"
     },
     {
       "id": "mastery_top_row_24",
@@ -186,7 +186,7 @@
     {
       "id": "mastery_top_row_37",
       "target": "봄",
-      "translation": "Spring season"
+      "translation": "Spring"
     },
     {
       "id": "mastery_top_row_38",
@@ -226,7 +226,7 @@
     {
       "id": "mastery_top_row_45",
       "target": "요일",
-      "translation": "Day of week"
+      "translation": "Day of the week"
     },
     {
       "id": "mastery_top_row_46",
@@ -401,13 +401,13 @@
     {
       "id": "mastery_top_row_79",
       "target": "동짓달 기나긴 밤을 한 허리를 베어 내어",
-      "translation": "Cutting out the waist of the long winter night",
+      "translation": "Cutting out the deep middle of the long winter night",
       "attribution": "황진이, 시조 (16세기)"
     },
     {
       "id": "mastery_top_row_80",
       "target": "가을 바람이 시원해요",
-      "translation": "Autumn breeze is refreshing"
+      "translation": "The autumn breeze is cool and refreshing"
     },
     {
       "id": "mastery_top_row_81",
@@ -417,12 +417,12 @@
     {
       "id": "mastery_top_row_82",
       "target": "오늘 저녁에 밥을 먹어요",
-      "translation": "Eat dinner tonight"
+      "translation": "Eat dinner this evening"
     },
     {
       "id": "mastery_top_row_83",
       "target": "이웃과 재미난 이야기를 해요",
-      "translation": "Chat fun stories with a neighbor"
+      "translation": "Share fun stories with a neighbor"
     },
     {
       "id": "mastery_top_row_84",
@@ -437,7 +437,7 @@
     {
       "id": "mastery_top_row_86",
       "target": "가게에서 맛난 음식을 사요",
-      "translation": "Buy delicious food at the store"
+      "translation": "Buy delicious food at the shop"
     },
     {
       "id": "mastery_top_row_87",
@@ -462,12 +462,12 @@
     {
       "id": "mastery_top_row_91",
       "target": "매일 조금 더 발전하는 나",
-      "translation": "Me improving a little more every day"
+      "translation": "Improving myself a little more every day"
     },
     {
       "id": "mastery_top_row_92",
       "target": "세상 곳곳을 여행하며 살아요",
-      "translation": "Travel all over the world and live"
+      "translation": "Travel all across the world and live fully"
     },
     {
       "id": "mastery_top_row_93",

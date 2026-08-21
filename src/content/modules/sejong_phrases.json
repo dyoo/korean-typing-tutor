@@ -6,7 +6,7 @@
     {
       "id": "sj-1",
       "target": "아메리카노 한 잔 주세요.",
-      "translation": "One Americano please."
+      "translation": "One Americano, please."
     },
     {
       "id": "sj-2",
@@ -41,17 +41,17 @@
     {
       "id": "sj-8",
       "target": "감기약 좀 주세요.",
-      "translation": "Please give me cold medicine."
+      "translation": "Please give me some cold medicine."
     },
     {
       "id": "sj-9",
       "target": "머리가 아파요.",
-      "translation": "My head hurts."
+      "translation": "I have a headache / My head hurts."
     },
     {
       "id": "sj-10",
       "target": "사진 좀 찍어 주시겠어요?",
-      "translation": "Could you take a picture for me?"
+      "translation": "Could you please take a photo for me?"
     },
     {
       "id": "sejong_phrases-ext-1",
@@ -71,7 +71,7 @@
     {
       "id": "sejong_phrases-ext-4",
       "target": "한국어를 왜 배워요?",
-      "translation": "Why do you learn Korean?"
+      "translation": "Why are you learning Korean?"
     },
     {
       "id": "sejong_phrases-ext-5",
@@ -81,7 +81,7 @@
     {
       "id": "sejong_phrases-ext-6",
       "target": "무슨 음식을 제일 좋아해요?",
-      "translation": "What food do you like the most?"
+      "translation": "What is your favorite food?"
     },
     {
       "id": "sejong_phrases-ext-7",
@@ -121,12 +121,12 @@
     {
       "id": "sejong_phrases-ext-14",
       "target": "취직을 준비하고 있어요.",
-      "translation": "I am preparing for job employment."
+      "translation": "I am preparing for job employment / job hunting."
     },
     {
       "id": "sejong_phrases-ext-15",
       "target": "한국 대학에 진학하고 싶어요.",
-      "translation": "I want to enter a Korean university."
+      "translation": "I want to attend a Korean university."
     },
     {
       "id": "sejong_phrases-ext-16",
@@ -136,7 +136,7 @@
     {
       "id": "sejong_phrases-ext-17",
       "target": "한국 노래를 자주 들어요.",
-      "translation": "I listen to Korean songs often."
+      "translation": "I often listen to Korean songs."
     },
     {
       "id": "sejong_phrases-ext-18",
@@ -146,7 +146,7 @@
     {
       "id": "sejong_phrases-ext-19",
       "target": "케이팝을 즐겨 들어요.",
-      "translation": "I enjoy listening to K-POP."
+      "translation": "I enjoy listening to K-pop."
     },
     {
       "id": "sejong_phrases-ext-20",
@@ -176,7 +176,7 @@
     {
       "id": "sejong_phrases-ext-25",
       "target": "마트에서 장을 봐요.",
-      "translation": "I shop for groceries at the market."
+      "translation": "I shop for groceries at the supermarket."
     },
     {
       "id": "sejong_phrases-ext-26",
@@ -196,7 +196,7 @@
     {
       "id": "sejong_phrases-ext-29",
       "target": "버스를 타고 가요.",
-      "translation": "I go by bus."
+      "translation": "I take the bus."
     },
     {
       "id": "sejong_phrases-ext-30",
@@ -221,7 +221,7 @@
     {
       "id": "sejong_phrases-ext-34",
       "target": "길을 잃어버렸어요.",
-      "translation": "I got lost on the road."
+      "translation": "I got lost."
     },
     {
       "id": "sejong_phrases-ext-35",
@@ -231,7 +231,7 @@
     {
       "id": "sejong_phrases-ext-36",
       "target": "영어 할 줄 아세요?",
-      "translation": "Do you know how to speak English?"
+      "translation": "Do you speak English?"
     },
     {
       "id": "sejong_phrases-ext-37",

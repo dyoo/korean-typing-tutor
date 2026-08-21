@@ -41,42 +41,42 @@
     {
       "id": "t1v-8",
       "target": "오늘",
-      "translation": "today"
+      "translation": "Today"
     },
     {
       "id": "t1v-9",
       "target": "내일",
-      "translation": "tomorrow"
+      "translation": "Tomorrow"
     },
     {
       "id": "t1v-10",
       "target": "어제",
-      "translation": "yesterday"
+      "translation": "Yesterday"
     },
     {
       "id": "t1v-11",
       "target": "도서관",
-      "translation": "library"
+      "translation": "Library"
     },
     {
       "id": "t1v-12",
       "target": "병원",
-      "translation": "hospital"
+      "translation": "Hospital"
     },
     {
       "id": "t1v-13",
       "target": "은행",
-      "translation": "bank"
+      "translation": "Bank"
     },
     {
       "id": "t1v-14",
       "target": "약국",
-      "translation": "pharmacy"
+      "translation": "Pharmacy"
     },
     {
       "id": "t1v-15",
       "target": "공항",
-      "translation": "airport"
+      "translation": "Airport"
     },
     {
       "id": "topik1_vocab-ext-1",
@@ -90,13 +90,13 @@
     },
     {
       "id": "topik1_vocab-ext-3",
-      "target": "병원",
-      "translation": "Hospital"
+      "target": "서점",
+      "translation": "Bookstore"
     },
     {
       "id": "topik1_vocab-ext-4",
-      "target": "은행",
-      "translation": "Bank"
+      "target": "카페",
+      "translation": "Café"
     },
     {
       "id": "topik1_vocab-ext-5",
@@ -105,8 +105,8 @@
     },
     {
       "id": "topik1_vocab-ext-6",
-      "target": "도서관",
-      "translation": "Library"
+      "target": "대학교",
+      "translation": "University"
     },
     {
       "id": "topik1_vocab-ext-7",
@@ -115,13 +115,13 @@
     },
     {
       "id": "topik1_vocab-ext-8",
-      "target": "공항",
-      "translation": "Airport"
+      "target": "지하철역",
+      "translation": "Subway station"
     },
     {
       "id": "topik1_vocab-ext-9",
       "target": "역",
-      "translation": "Station"
+      "translation": "Train station"
     },
     {
       "id": "topik1_vocab-ext-10",
@@ -145,8 +145,8 @@
     },
     {
       "id": "topik1_vocab-ext-14",
-      "target": "약국",
-      "translation": "Pharmacy"
+      "target": "영화관",
+      "translation": "Movie theater / Cinema"
     },
     {
       "id": "topik1_vocab-ext-15",
@@ -156,7 +156,7 @@
     {
       "id": "topik1_vocab-ext-16",
       "target": "사무실",
-      "translation": "Office room"
+      "translation": "Office"
     },
     {
       "id": "topik1_vocab-ext-17",
@@ -191,7 +191,7 @@
     {
       "id": "topik1_vocab-ext-23",
       "target": "극장",
-      "translation": "Theater / Movie theater"
+      "translation": "Theater"
     },
     {
       "id": "topik1_vocab-ext-24",

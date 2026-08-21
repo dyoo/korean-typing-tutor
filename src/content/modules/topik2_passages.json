@@ -6,7 +6,7 @@
     {
       "id": "t2p-1-1",
       "target": "한국은 봄, 여름, 가을, 겨울의 사계절이 있습니다.",
-      "translation": "Korea has four seasons: spring, summer, autumn, and winter."
+      "translation": "Korea has four distinct seasons: spring, summer, autumn, and winter."
     },
     {
       "id": "t2p-1-2",
@@ -16,22 +16,22 @@
     {
       "id": "t2p-2-1",
       "target": "한글은 세종대왕이 1443년에 만든 한국의 문자입니다.",
-      "translation": "Hangeul is the Korean alphabet created by King Sejong in 1443."
+      "translation": "Hangeul is the Korean writing system created by King Sejong in 1443."
     },
     {
       "id": "t2p-2-2",
       "target": "한글은 배우기 쉽고 과학적인 글자입니다.",
-      "translation": "Hangeul is easy to learn and scientific."
+      "translation": "Hangeul is an easy-to-learn and scientific writing system."
     },
     {
       "id": "t2p-3-1",
       "target": "지난 주말에 친구와 함께 제주도로 여행을 갔습니다.",
-      "translation": "Last weekend I went on a trip to Jeju Island with my friend."
+      "translation": "Last weekend, I went on a trip to Jeju Island with my friend."
     },
     {
       "id": "t2p-3-2",
       "target": "제주도의 푸른 바다가 참 아름다웠습니다.",
-      "translation": "Jeju Island's blue sea was very beautiful."
+      "translation": "Jeju Island's blue sea was truly beautiful."
     },
     {
       "id": "t2p-4-1",
@@ -61,59 +61,57 @@
     {
       "id": "t2p-8",
       "target": "놀부는 흥부 가족을 집에서 쫓아냈습니다.",
-      "translation": "Nolbu kicked Heungbu's family out of the house."
+      "translation": "Nolbu drove Heungbu's family out of the house."
     },
     {
       "id": "t2p-9",
       "target": "흥부 가족은 아주 가난하게 초가집에 살았습니다.",
-      "translation": "Heungbu's family lived poorly in a thatched-roof house."
+      "translation": "Heungbu's family lived in poverty in a small thatched-roof house."
     },
     {
       "id": "t2p-10",
       "target": "어느 날 흥부는 다리가 부러진 제비를 정성껏 치료해 주었습니다.",
-      "translation": "One day, Heungbu carefully treated a swallow that had a broken leg."
+      "translation": "One day, Heungbu tenderly treated a swallow that had a broken leg."
     },
     {
       "id": "t2p-11",
       "target": "제비는 보답으로 흥부에게 박씨를 가져다주었습니다.",
-      "translation": "As a reward, the swallow brought a gourd seed to Heungbu."
+      "translation": "In return, the swallow brought a gourd seed to Heungbu."
     },
     {
       "id": "t2p-12",
       "target": "흥부가 박을 타자 금과 은이 쏟아져 나왔습니다.",
-      "translation": "When Heungbu opened the gourd, gold and silver poured out."
+      "translation": "When Heungbu sawed open the gourd, gold and silver poured out."
     },
     {
       "id": "t2p-13",
       "target": "욕심꾸러기 놀부는 제비의 다리를 일부러 부러뜨렸습니다.",
-      "translation": "The greedy Nolbu intentionally broke the swallow's leg."
+      "translation": "The greedy Nolbu deliberately broke the swallow's leg."
     },
     {
       "id": "t2p-14",
       "target": "놀부의 박에서는 도깨비들이 나와 재산을 다 빼앗았습니다.",
-      "pronunciation": "nolbuui bageseon dokkaebideuri nawa jaesaneul da ppaeasatseumnida.",
-      "translation": "Goblins came out of Nolbu's gourd and took all his wealth."
+      "translation": "Goblins came out of Nolbu's gourd and took all of his wealth."
     },
     {
       "id": "t2p-16-1",
       "target": "옛날에 아주 배고픈 오누이가 살았습니다.",
-      "translation": "Once upon a time, there lived very hungry siblings."
+      "translation": "Once upon a time, there lived very hungry young siblings."
     },
     {
       "id": "t2p-16-2",
       "target": "오누이는 떡을 가지고 길을 가고 있었습니다.",
-      "translation": "The siblings were walking on the road with rice cakes."
+      "translation": "The siblings were walking along the road carrying rice cakes."
     },
     {
       "id": "t2p-17",
       "target": "그때 무서운 호랑이가 나타나 \"떡 하나 주면 안 잡아먹겠다!\"라고 말했습니다.",
-      "pronunciation": "geuttae museoun horangiga natana \"tteok hana jumyeon an jabameokgetda!\" rago malhaetseumnida.",
-      "translation": "At that time, a scary tiger appeared and said, \"Give me a rice cake, and I won't eat you!\""
+      "translation": "Just then, a terrifying tiger appeared and said, \"Give me a rice cake, and I won't eat you!\""
     },
     {
       "id": "t2p-18-1",
       "target": "오누이는 하늘에 올라가기 위해 하늘에 기도를 했습니다.",
-      "translation": "The siblings prayed to the heavens to ascend to the sky."
+      "translation": "The siblings prayed to the heavens to escape up to the sky."
     },
     {
       "id": "t2p-18-2",
@@ -138,22 +136,22 @@
     {
       "id": "t2p-20-2",
       "target": "결국 심청이의 아버지는 눈을 뜨게 되었고, 모두가 행복하게 살았습니다.",
-      "translation": "In the end, Shim Cheong's father regained his sight, and everyone lived happily."
+      "translation": "In the end, Shim Cheong's father regained his sight, and they all lived happily ever after."
     },
     {
       "id": "t2p-21-1",
       "target": "용왕님이 큰 병에 걸려 몹시 아팠습니다.",
-      "translation": "The Dragon King fell very ill and was in great pain."
+      "translation": "The Dragon King fell gravely ill and was in great pain."
     },
     {
       "id": "t2p-21-2",
       "target": "의사는 토끼의 간을 먹어야 병이 나을 것이라고 했습니다.",
-      "translation": "The doctor said he would only recover if he ate a rabbit's liver."
+      "translation": "The physician said he would only recover if he ate a rabbit's liver."
     },
     {
       "id": "t2p-22-1",
       "target": "거북이는 토끼를 잡기 위해 육지로 나갔습니다.",
-      "translation": "The turtle went onto land to catch a rabbit."
+      "translation": "The turtle went onto land to find a rabbit."
     },
     {
       "id": "t2p-22-2",
@@ -163,17 +161,17 @@
     {
       "id": "t2p-23-1",
       "target": "거북이는 한 나무 아래에서 토끼를 만났습니다.",
-      "translation": "The turtle met the rabbit under a tree."
+      "translation": "The turtle met a rabbit beneath a tree."
     },
     {
       "id": "t2p-23-2",
       "target": "거북이는 토끼에게 용궁에 같이 가자고 말했습니다.",
-      "translation": "The turtle told the rabbit, \"Let's go to the Dragon Palace together.\""
+      "translation": "The turtle invited the rabbit to go together to the Dragon Palace."
     },
     {
       "id": "t2p-24-1",
       "target": "용궁에 도착한 토끼는 깜짝 놀랐습니다.",
-      "translation": "The rabbit was shocked when he arrived at the Dragon Palace."
+      "translation": "Upon arriving at the Dragon Palace, the rabbit was shocked."
     },
     {
       "id": "t2p-24-2",
@@ -183,7 +181,7 @@
     {
       "id": "t2p-25-1",
       "target": "토끼는 재치 있게 \"제 간은 육지에 두고 왔어요\"라고 말했습니다.",
-      "translation": "The rabbit cleverly said, \"I left my liver back on land.\""
+      "translation": "The rabbit cleverly replied, \"I left my liver behind on land.\""
     },
     {
       "id": "t2p-25-2",
@@ -193,7 +191,7 @@
     {
       "id": "t2p-26-1",
       "target": "육지에 도착한 토끼는 아주 빠르게 도망쳤습니다.",
-      "translation": "Once on land, the rabbit ran away very quickly."
+      "translation": "Once on land, the rabbit dashed away swiftly."
     },
     {
       "id": "t2p-26-2",
@@ -223,12 +221,12 @@
     {
       "id": "topik2_passages-ext-5",
       "target": "교육의 변화는 창의적이고 융합적인 인재를 양성하는 데 중점을 두고 있습니다.",
-      "translation": "Changes in education focus on nurturing creative and interdisciplinary talents."
+      "translation": "Changes in education focus on nurturing creative and interdisciplinary talent."
     },
     {
       "id": "topik2_passages-ext-6",
       "target": "건강한 식습관과 규칙적인 운동은 100세 시대를 살아가는 삶의 기본입니다.",
-      "translation": "Healthy eating habits and regular exercise are the foundations of living in an era of 100-year lifespans."
+      "translation": "Healthy eating habits and regular exercise are foundational for living in an era of 100-year lifespans."
     },
     {
       "id": "topik2_passages-ext-7",
@@ -238,7 +236,7 @@
     {
       "id": "topik2_passages-ext-8",
       "target": "세계 문화유산으로 지정된 한국의 전통문화는 보존 가치가 매우 높습니다.",
-      "translation": "Korean traditional culture designated as UNESCO World Heritage holds immense conservation value."
+      "translation": "Korean traditional culture designated as UNESCO World Heritage holds immense preservation value."
     },
     {
       "id": "topik2_passages-ext-9",
@@ -248,7 +246,7 @@
     {
       "id": "topik2_passages-ext-10",
       "target": "독서와 지속적인 배움은 개인의 성장과 인생의 지평을 넓혀 줍니다.",
-      "translation": "Reading and continuous learning expand personal growth and life horizons."
+      "translation": "Reading and continuous learning foster personal growth and broaden one's life horizons."
     },
     {
       "id": "topik2_passages-ext-11",
@@ -263,7 +261,7 @@
     {
       "id": "t2p-ext2-2",
       "target": "이몽룡은 단오날 광한루에서 그네를 타는 춘향이를 보고 첫눈에 반했습니다.",
-      "translation": "Lee Mongryong fell in love at first sight when he saw Chunhyang riding a swing at Gwanghallu on Dano Day."
+      "translation": "Yi Mongryong fell in love at first sight upon seeing Chunhyang riding a swing at Gwanghallu Pavilion on Dano Day."
     },
     {
       "id": "t2p-ext2-3",
@@ -273,22 +271,22 @@
     {
       "id": "t2p-ext2-4",
       "target": "몽룡이 한양으로 과거 시험을 보러 떠나게 되자 춘향이는 눈물로 배웅했습니다.",
-      "translation": "When Mongryong left for Hanyang to take the civil service exam, Chunhyang saw him off with tears."
+      "translation": "When Mongryong left for Hanyang to take the state civil service exam, Chunhyang tearfully saw him off."
     },
     {
       "id": "t2p-ext2-5",
       "target": "새로 부임한 탐욕스러운 변학도는 춘향이에게 수청을 들라고 강요했습니다.",
-      "translation": "The greedy newly appointed magistrate Byeon Hakdo forced Chunhyang to serve him."
+      "translation": "The greedy newly appointed magistrate Byeon Hakdo demanded that Chunhyang serve him."
     },
     {
       "id": "t2p-ext2-6",
       "target": "춘향이는 굳은 절개를 지키며 변학도의 명령을 단호하게 거절했습니다.",
-      "translation": "Chunhyang steadfastly maintained her fidelity and firmly rejected Byeon Hakdo's order."
+      "translation": "Chunhyang steadfastly maintained her fidelity and firmly rejected Magistrate Byeon's command."
     },
     {
       "id": "t2p-ext2-7",
       "target": "화가 난 변학도는 춘향이를 깊은 감옥에 가두고 모진 고문을 했습니다.",
-      "translation": "Enraged, Byeon Hakdo imprisoned Chunhyang in a deep dungeon and subjected her to severe torture."
+      "translation": "Enraged, Magistrate Byeon imprisoned Chunhyang in a deep dungeon and subjected her to severe torture."
     },
     {
       "id": "t2p-ext2-8",
@@ -298,32 +296,32 @@
     {
       "id": "t2p-ext2-9",
       "target": "변학도의 생일 잔치 날에 몽룡은 \"암행어사 출두야!\"를 외치며 나타났습니다.",
-      "translation": "On Byeon Hakdo's birthday banquet, Mongryong appeared shouting, \"The Secret Royal Inspector has arrived!\""
+      "translation": "During Magistrate Byeon's birthday banquet, Mongryong appeared shouting, \"The Secret Royal Inspector has arrived!\""
     },
     {
       "id": "t2p-ext2-10",
       "target": "탐관오리 변학도는 벌을 받았고 몽룡과 춘향이는 다시 만나 행복하게 살았습니다.",
-      "translation": "The corrupt official Byeon Hakdo was punished, and Mongryong and Chunhyang reunited to live happily."
+      "translation": "The corrupt magistrate Byeon Hakdo was punished, and Mongryong and Chunhyang reunited to live happily."
     },
     {
       "id": "t2p-ext2-11",
       "target": "옛날 어느 마을에 착한 콩쥐와 마음씨 고약한 새엄마, 팥쥐가 살고 있었습니다.",
-      "translation": "Once upon a time in a village, there lived kind Kongjwi, her ill-natured stepmother, and her stepsister Patjwi."
+      "translation": "Once upon a time in a village, there lived kind Kongjwi, along with her ill-natured stepmother and stepsister Patjwi."
     },
     {
       "id": "t2p-ext2-12",
       "target": "새엄마는 콩쥐에게만 힘들고 끝없는 집안일을 모두 시켰습니다.",
-      "translation": "The stepmother forced only Kongjwi to do all the difficult and endless housework."
+      "translation": "The stepmother forced only Kongjwi to do all the grueling and endless housework."
     },
     {
       "id": "t2p-ext2-13",
       "target": "자갈밭을 매야 할 때 두꺼비가 나타나 콩쥐를 정성껏 도와주었습니다.",
-      "translation": "When she had to weed a stony field, a toad appeared and diligently helped Kongjwi."
+      "translation": "When Kongjwi had to weed a stony field, a toad appeared and diligently helped her."
     },
     {
       "id": "t2p-ext2-14",
       "target": "밑 빠진 독에 물을 채워야 할 때도 두꺼비가 독의 구멍을 막아 주었습니다.",
-      "translation": "Even when she had to fill a bottomless jar with water, the toad covered the hole in the jar for her."
+      "translation": "Even when she had to fill a bottomless jar with water, the toad blocked the hole in the jar for her."
     },
     {
       "id": "t2p-ext2-15",
@@ -333,12 +331,12 @@
     {
       "id": "t2p-ext2-16",
       "target": "원님의 잔치에 갈 수 있도록 검은 소가 예쁜 옷과 비단신을 선물했습니다.",
-      "translation": "So that she could attend the magistrate's banquet, a black ox gifted her pretty clothes and silk shoes."
+      "translation": "So that she could attend the magistrate's banquet, a black ox gifted her fine clothing and silk shoes."
     },
     {
       "id": "t2p-ext2-17",
       "target": "잔치로 급히 가던 콩쥐는 징검다리에서 실수로 비단신 한 짝을 떨어뜨렸습니다.",
-      "translation": "Hurrying to the party, Kongjwi accidentally dropped one of her silk shoes at a stepping-stone bridge."
+      "translation": "Hurrying to the banquet, Kongjwi accidentally dropped one of her silk shoes at a stepping-stone bridge."
     },
     {
       "id": "t2p-ext2-18",
@@ -348,7 +346,7 @@
     {
       "id": "t2p-ext2-19",
       "target": "원님은 착하고 아름다운 콩쥐를 아내로 맞아 행복한 가정을 이루었습니다.",
-      "translation": "The magistrate took the kind and beautiful Kongjwi as his wife and formed a happy family."
+      "translation": "The magistrate took the kind and beautiful Kongjwi as his wife, and they built a happy family together."
     },
     {
       "id": "t2p-ext2-20",
@@ -368,7 +366,7 @@
     {
       "id": "t2p-ext2-23",
       "target": "이 소문을 들은 욕심쟁이 부자 할아버지가 부채를 빼앗아 코를 크게 늘렸습니다.",
-      "translation": "Hearing this rumor, a greedy rich old man stole the fans and made his nose grow very large."
+      "translation": "Hearing this rumor, a greedy rich old man stole the fans and made his own nose grow very long."
     },
     {
       "id": "t2p-ext2-24",
@@ -378,17 +376,17 @@
     {
       "id": "t2p-ext2-25",
       "target": "옥황상제가 신기한 코를 기둥에 묶어 버리자 부자 할아버지는 하늘로 둥둥 떠올랐습니다.",
-      "translation": "When the Jade Emperor tied the strange nose to a pillar, the rich old man floated up into the sky."
+      "translation": "When the Jade Emperor tied the strange nose to a pillar, the rich old man floated up dangling in the sky."
     },
     {
       "id": "t2p-ext2-26",
       "target": "이순신 장군은 임진왜란 때 나라를 구한 한국의 위대한 명장입니다.",
-      "translation": "Admiral Yi Sun-sin is a great Korean commander who saved the country during the Imjin War."
+      "translation": "Admiral Yi Sun-sin is a legendary Korean commander who saved the country during the Imjin War."
     },
     {
       "id": "t2p-ext2-27",
       "target": "세계 최초의 철갑선으로 알려진 거북선을 건조하여 왜군을 물리쳤습니다.",
-      "translation": "He constructed the Turtle Ship, known as the world's first ironclad warship, and defeated invading forces."
+      "translation": "He built the Turtle Ship, known as an early ironclad warship, and defeated the invading Japanese forces."
     },
     {
       "id": "t2p-ext2-28",
@@ -398,37 +396,37 @@
     {
       "id": "t2p-ext2-29",
       "target": "명량 해전에서는 겨우 열두 척의 배로 133척의 적선을 물리치는 기적을 만들었습니다.",
-      "translation": "In the Battle of Myeongnyang, he achieved a miracle by defeating 133 enemy ships with only twelve vessels."
+      "translation": "In the Battle of Myeongnyang, he achieved a miraculous victory by defeating 133 enemy ships with only twelve vessels."
     },
     {
       "id": "t2p-ext2-30",
       "target": "난중일기는 이순신 장군이 전쟁 중에 기록한 친필 일기로 유네스코 세계기록유산입니다.",
-      "translation": "Nanjung Ilgi is Admiral Yi's personal war diary, designated as a UNESCO Memory of the World."
+      "translation": "Nanjung Ilgi is Admiral Yi's personal war diary, inscribed on the UNESCO Memory of the World Register."
     },
     {
       "id": "t2p-ext2-31",
       "target": "세종대왕은 백성들이 글을 쉽게 배우도록 훈민정음을 창제하셨습니다.",
-      "translation": "King Sejong created Hunminjeongeum so that common people could easily learn to read and write."
+      "translation": "King Sejong created Hunminjeongeum so that ordinary people could easily learn to read and write."
     },
     {
       "id": "t2p-ext2-32",
       "target": "조선 시대의 과학자 장영실은 자격루와 측우기 등 뛰어난 발명품을 만들었습니다.",
-      "translation": "Jang Yeong-sil, a Joseon scientist, created outstanding inventions such as the self-striking water clock and rain gauge."
+      "translation": "Joseon-era scientist Jang Yeong-sil created remarkable inventions, including the self-striking water clock and rain gauge."
     },
     {
       "id": "t2p-ext2-33",
       "target": "경주의 첨성대는 동양에서 가장 오래된 신라 시대의 천문대입니다.",
-      "translation": "Cheomseongdae in Gyeongju is the oldest astronomical observatory in Asia, built during the Silla Dynasty."
+      "translation": "Cheomseongdae in Gyeongju is the oldest surviving astronomical observatory in East Asia, built during the Silla Dynasty."
     },
     {
       "id": "t2p-ext2-34",
       "target": "팔만대장경은 고려 시대에 외세의 침입을 막고자 정성껏 새긴 목판경전입니다.",
-      "translation": "The Tripitaka Koreana is a collection of Buddhist scriptures carved on wooden blocks during the Goryeo Dynasty."
+      "translation": "The Tripitaka Koreana is a collection of Buddhist scriptures carved onto woodblocks during the Goryeo Dynasty to ward off foreign invasions."
     },
     {
       "id": "t2p-ext2-35",
       "target": "인공지능 기술의 급격한 발전은 의료, 교육, 산업 전반에 커다란 변화를 일으키고 있습니다.",
-      "translation": "The rapid development of AI technology is bringing significant changes across medicine, education, and industry."
+      "translation": "The rapid advancement of AI technology is driving significant changes across healthcare, education, and industry."
     },
     {
       "id": "t2p-ext2-36",
@@ -438,32 +436,32 @@
     {
       "id": "t2p-ext2-37",
       "target": "스마트 시티는 정보통신 기술을 접목하여 도시의 에너지 사용을 효율적으로 관리합니다.",
-      "translation": "Smart cities integrate IT to efficiently manage urban energy consumption."
+      "translation": "Smart cities integrate information technology to manage urban energy consumption efficiently."
     },
     {
       "id": "t2p-ext2-38",
       "target": "신재생 에너지는 태양광, 풍력, 수력을 활용하여 환경 오염을 최소화합니다.",
-      "translation": "Renewable energy utilizes solar, wind, and hydro power to minimize environmental pollution."
+      "translation": "Renewable energy harnesses solar, wind, and hydro power to minimize environmental pollution."
     },
     {
       "id": "t2p-ext2-39",
       "target": "플라스틱 쓰레기를 줄이기 위한 다회용 컵 사용과 분리배출이 생활화되고 있습니다.",
-      "translation": "The use of reusable cups and waste sorting to reduce plastic waste are becoming part of daily life."
+      "translation": "Using reusable cups and sorting recyclables to reduce plastic waste are becoming part of daily life."
     },
     {
       "id": "t2p-ext2-40",
       "target": "기후 변화에 대응하기 위해 전 세계 국가들이 탄소 배출 감축을 약속하고 있습니다.",
-      "translation": "Countries worldwide are promising to reduce carbon emissions to respond to climate change."
+      "translation": "Countries worldwide are pledging to reduce carbon emissions in response to climate change."
     },
     {
       "id": "t2p-ext2-41",
       "target": "디지털 리터러시는 정보를 올바르게 탐색하고 분석하는 필수 능력을 뜻합니다.",
-      "translation": "Digital literacy means the essential ability to correctly navigate and analyze information."
+      "translation": "Digital literacy refers to the essential ability to search, evaluate, and analyze information correctly."
     },
     {
       "id": "t2p-ext2-42",
       "target": "빅데이터 분석은 미래의 수요를 예측하고 최적의 의사결정을 내리는 데 도움을 줍니다.",
-      "translation": "Big data analysis helps predict future demand and make optimal decisions."
+      "translation": "Big data analytics helps predict future demand and make optimal decisions."
     },
     {
       "id": "t2p-ext2-43",
@@ -478,82 +476,82 @@
     {
       "id": "t2p-ext2-45",
       "target": "한국의 김치는 유산균이 풍부하여 면역력을 높여 주는 세계적인 발효 식품입니다.",
-      "translation": "Korean kimchi is a world-renowned fermented food rich in lactobacillus that boosts immunity."
+      "translation": "Korean kimchi is a world-renowned fermented food rich in lactic acid bacteria that boosts immunity."
     },
     {
       "id": "t2p-ext2-46",
       "target": "된장과 고추장은 콩을 발효시켜 깊은 감칠맛과 영양을 자랑하는 전통 장류입니다.",
-      "translation": "Doenjang and gochujang are traditional fermented paste products made from soybeans boasting rich flavor and nutrition."
+      "translation": "Doenjang and gochujang are traditional fermented soybean pastes celebrated for rich umami and nutrition."
     },
     {
       "id": "t2p-ext2-47",
       "target": "온돌은 구들과 고래를 통해 집 전체를 따뜻하게 데우는 한국의 고유한 난방 방식입니다.",
-      "translation": "Ondol is Korea's unique heating system that warms the entire house through underfloor flues."
+      "translation": "Ondol is Korea's unique underfloor heating system that warms the entire home through stone flues."
     },
     {
       "id": "t2p-ext2-48",
       "target": "한옥의 처마는 여름에는 햇빛을 막아주고 겨울에는 깊은 햇살을 받아들이도록 설계되었습니다.",
-      "translation": "Hanok eaves are designed to block sunlight in summer and welcome deep sunlight in winter."
+      "translation": "Hanok eaves are designed to block direct sun in summer and welcome deep, warming sunlight in winter."
     },
     {
       "id": "t2p-ext2-49",
       "target": "비빔밥은 다양한 색깔의 채소와 고기가 조화를 이루는 균형 잡힌 건강식입니다.",
-      "translation": "Bibimbap is a well-balanced healthy meal harmonizing colorful vegetables and meat."
+      "translation": "Bibimbap is a well-balanced, nutritious meal harmonizing colorful vegetables and meat."
     },
     {
       "id": "t2p-ext2-50",
       "target": "삼계탕은 여름철 더위를 이겨내기 위해 인삼과 닭을 함께 푹 고아 먹는 보양식입니다.",
-      "translation": "Samgyetang is a stamina-building soup cooked with ginseng and chicken to beat summer heat."
+      "translation": "Samgyetang is a nourishing soup cooked with chicken and ginseng to beat the summer heat."
     },
     {
       "id": "t2p-ext2-51",
-      "target": "녹차는 머리를 맑게 해주고 마음을 안점시켜 주는 한국의 대표적인 전통 차입니다.",
-      "translation": "Green tea is a representative traditional Korean tea that clears the mind and calms the heart."
+      "target": "녹차는 머리를 맑게 해주고 마음을 안정시켜 주는 한국의 대표적인 전통 차입니다.",
+      "translation": "Green tea is a classic Korean traditional tea that clears the mind and calms the spirit."
     },
     {
       "id": "t2p-ext2-52",
-      "target": "전통 시혜와 수정과는 명절이나 잔칫날에 후식으로 즐겨 마시는 달콤한 음료입니다.",
-      "translation": "Traditional sikhye and sujeonggwa are sweet beverages enjoyed as dessert during holidays and banquets."
+      "target": "전통 식혜와 수정과는 명절이나 잔칫날에 후식으로 즐겨 마시는 달콤한 음료입니다.",
+      "translation": "Traditional sikhye (sweet rice punch) and sujeonggwa (cinnamon punch) are sweet beverages enjoyed as dessert on holidays and celebrations."
     },
     {
       "id": "t2p-ext2-53",
       "target": "한국 드라마와 영화는 뛰어난 연출력과 감동적인 스토리로 전 세계 팬들을 사로잡았습니다.",
-      "translation": "K-dramas and movies captivate global fans with outstanding direction and touching storylines."
+      "translation": "Korean dramas and movies have captivated global audiences with exceptional direction and touching storylines."
     },
     {
       "id": "t2p-ext2-54",
       "target": "케이팝 음악은 역동적인 퍼포먼스와 독창적인 음악성으로 큰 사랑을 받고 있습니다.",
-      "translation": "K-POP music receives great love for its dynamic performances and creative musicality."
+      "translation": "K-pop music enjoys immense popularity worldwide for its dynamic performances and creative musicality."
     },
     {
       "id": "t2p-ext2-55",
       "target": "한글날은 세종대왕의 한글 창제와 반포를 기념하는 한국의 뜻깊은 국경일입니다.",
-      "translation": "Hangeul Day is a meaningful Korean national holiday celebrating King Sejong's creation and promulgation of Hangeul."
+      "translation": "Hangeul Day is a meaningful national holiday commemorating King Sejong's creation and promulgation of Hangeul."
     },
     {
       "id": "t2p-ext2-56",
       "target": "강강술래는 한가위 밤에 여성들이 손을 잡고 원을 그리며 노래 부르는 민속놀이입니다.",
-      "translation": "Ganggangsullae is a folk dance where women hold hands in a circle and sing under the Harvest Moon."
+      "translation": "Ganggangsullae is a traditional folk dance where women hold hands in a circle and sing under the harvest moon."
     },
     {
       "id": "t2p-ext2-57",
       "target": "전주 한지축제에서는 1000년의 역사를 자랑하는 전통 한지의 멋을 체험할 수 있습니다.",
-      "translation": "At the Jeonju Hanji Festival, you can experience the elegance of traditional Hanji boasting a 1000-year history."
+      "translation": "At the Jeonju Hanji Festival, you can experience the elegance of traditional mulberry paper boasting a 1,000-year history."
     },
     {
       "id": "t2p-ext2-58",
       "target": "국립중앙박물관에는 한국의 유구한 역사와 수많은 국보급 문화재가 전시되어 있습니다.",
-      "translation": "The National Museum of Korea exhibits Korea's long history and numerous national treasure cultural items."
+      "translation": "The National Museum of Korea exhibits Korea's long history and numerous national treasure cultural artifacts."
     },
     {
       "id": "t2p-ext2-59",
       "target": "배움에는 끝이 없으며 날마다 새로운 지식을 쌓아가는 과정 자체가 행복입니다.",
-      "translation": "Learning has no end, and the process of building new knowledge daily is happiness itself."
+      "translation": "There is no end to learning, and the continuous journey of acquiring new knowledge is itself true happiness."
     },
     {
       "id": "t2p-ext2-60",
       "target": "실패는 성공으로 가는 길목에서 만나는 가장 소중한 스승이자 이정표입니다.",
-      "translation": "Failure is the most precious teacher and signpost encountered on the road to success."
+      "translation": "Failure is the most precious teacher and guidepost encountered on the road to success."
     },
     {
       "id": "t2p-ext2-61",
@@ -563,17 +561,17 @@
     {
       "id": "t2p-ext2-62",
       "target": "작은 습관의 변화가 모여 자신의 삶을 긍정적인 방향으로 크게 다듬어 줍니다.",
-      "translation": "Accumulated small habit changes refine one's life significantly in a positive direction."
+      "translation": "Small habit changes accumulate to shape one's life in profoundly positive ways."
     },
     {
       "id": "t2p-ext2-63",
       "target": "인내와 꾸준함은 어떠한 높은 장벽도 마침내 넘어서게 만드는 강력한 힘입니다.",
-      "translation": "Patience and persistence are powerful forces that eventually enable overcoming any high barrier."
+      "translation": "Patience and perseverance are powerful forces that eventually enable overcoming any high barrier."
     },
     {
       "id": "t2p-ext2-64",
       "target": "자연이 주는 계절의 변화 속에서 우리는 삶의 지혜와 정서적 평온을 배웁니다.",
-      "translation": "In the seasonal changes given by nature, we learn life's wisdom and emotional tranquility."
+      "translation": "In the seasonal rhythm of nature, we learn life's wisdom and emotional tranquility."
     },
     {
       "id": "t2p-ext2-65",
@@ -583,7 +581,7 @@
     {
       "id": "t2p-ext2-66",
       "target": "시간은 누구에게나 평등하게 주어지므로 시간을 지혜롭게 관리하는 것이 중요합니다.",
-      "translation": "Time is given equally to everyone, so managing time wisely is crucial."
+      "translation": "Time is given equally to everyone, making it essential to manage time wisely."
     },
     {
       "id": "t2p-ext2-67",
@@ -593,17 +591,17 @@
     {
       "id": "t2p-ext2-68",
       "target": "감사하는 마음을 가지면 일상의 작고 소소한 일에서도 커다란 기쁨을 느낄 수 있습니다.",
-      "translation": "Having a grateful heart allows one to feel great joy even in small everyday moments."
+      "translation": "Cultivating a grateful heart allows one to feel great joy even in small everyday moments."
     },
     {
       "id": "t2p-ext2-69",
       "target": "긍정적인 사고방식은 역경을 헤쳐 나가는 가장 튼튼한 무기와 방패가 되어 줍니다.",
-      "translation": "A positive mindset serves as the sturdiest weapon and shield in navigating adversity."
+      "translation": "A positive mindset serves as our sturdiest weapon and shield in navigating adversity."
     },
     {
       "id": "t2p-ext2-70",
       "target": "꿈을 향한 도전은 그 자체만으로도 삶을 활기차고 의미 있게 만들어 줍니다.",
-      "translation": "Challenging oneself toward a dream makes life vibrant and meaningful in itself."
+      "translation": "Pursuing a dream makes life vibrant and meaningful in itself."
     },
     {
       "id": "t2p-ext2-71",
@@ -628,122 +626,122 @@
     {
       "id": "t2p-ext2-75",
       "target": "예술과 음악은 지친 마음을 치유하고 삶을 풍요롭게 만들어 주는 선물입니다.",
-      "translation": "Art and music are gifts that heal weary minds and enrich life."
+      "translation": "Art and music are gifts that soothe weary minds and enrich life."
     },
     {
       "id": "t2p-ext2-76",
       "target": "독창적인 아이디어는 끊임없는 호기심과 관찰에서 시작됩니다.",
-      "translation": "Original ideas begin with continuous curiosity and keen observation."
+      "translation": "Original ideas spring from continuous curiosity and keen observation."
     },
     {
       "id": "t2p-ext2-77",
       "target": "협동과 나눔의 가치를 실천할 때 비로소 공동체의 더 나은 미래가 열립니다.",
-      "translation": "When practicing values of cooperation and sharing, a better future for community unfolds."
+      "translation": "When practicing values of cooperation and sharing, a brighter future for the community unfolds."
     },
     {
       "id": "t2p-ext2-78",
       "target": "하루를 보람차게 마감하며 스스로를 뒤돌아보는 시간은 성장의 필수 요소입니다.",
-      "translation": "Taking time to reflect on oneself while finishing a rewarding day is an essential element of growth."
+      "translation": "Taking time to reflect on oneself at the end of a rewarding day is an essential element of growth."
     },
     {
       "id": "t2p-ext2-79",
       "target": "문학 작품을 통해 우리는 다양한 인간의 삶과 비극, 희망을 감상할 수 있습니다.",
-      "translation": "Through literary works, we can appreciate diverse human lives, tragedies, and hopes."
+      "translation": "Through literary works, we can appreciate the diversity of human lives, tragedies, and hopes."
     },
     {
       "id": "t2p-ext2-80",
       "target": "역사를 잊은 민족에게 미래는 없다는 말처럼 과거의 경험은 소중한 자산입니다.",
-      "translation": "As the saying goes that a nation that forgets history has no future, past experience is a precious asset."
+      "translation": "As the saying goes, \"A nation that forgets its history has no future,\" past experience is a precious asset."
     },
     {
       "id": "t2p-ext2-81",
       "target": "창의적인 생각은 기존의 틀에서 벗어나 새로운 시각으로 세상을 바라보는 데서 나옵니다.",
-      "translation": "Creative thinking comes from stepping out of existing frameworks to look at the world with a new perspective."
+      "translation": "Creative thinking comes from stepping out of conventional molds to view the world from a fresh perspective."
     },
     {
       "id": "t2p-ext2-82",
       "target": "지구 온난화 현상으로 인한 극심한 기후 변화가 세계 각지에서 관측되고 있습니다.",
-      "translation": "Extreme climate changes caused by global warming are being observed all over the world."
+      "translation": "Extreme climate disruptions caused by global warming are being observed all over the world."
     },
     {
       "id": "t2p-ext2-83",
       "target": "우수한 과학 기술과 정보 네트워크는 국가 경쟁력을 결정짓는 핵심적인 요소입니다.",
-      "translation": "Superior science technology and information networks are key factors determining national competitiveness."
+      "translation": "Advanced science technology and information networks are key factors determining national competitiveness."
     },
     {
       "id": "t2p-ext2-84",
       "target": "현대인들은 과도한 스트레스를 해소하기 위해 다양한 여가 활동과 힐링을 찾고 있습니다.",
-      "translation": "Modern people seek various leisure activities and healing to relieve excessive stress."
+      "translation": "Modern people seek various leisure and wellness activities to relieve excessive stress."
     },
     {
       "id": "t2p-ext2-85",
       "target": "다문화 사회로 접어들면서 서로의 차이를 이해하고 서로를 포용하는 자세가 더욱 중요해졌습니다.",
-      "translation": "As we enter a multicultural society, understanding differences and embracing one another have become vital."
+      "translation": "As society becomes multicultural, understanding differences and embracing one another have become increasingly important."
     },
     {
       "id": "t2p-ext2-86",
       "target": "글로벌 시대의 경쟁력을 갖추기 위해서는 외국어 능력뿐만 아니라 유연한 사고가 필요합니다.",
-      "translation": "To possess competitiveness in a global era, flexible thinking as well as foreign language ability is required."
+      "translation": "To stay competitive in a global era, flexible thinking is just as necessary as foreign language ability."
     },
     {
       "id": "t2p-ext2-87",
       "target": "정보의 바다 속에서 가짜 뉴스를 가려내고 비판적으로 사고하는 안목이 요구됩니다.",
-      "translation": "In a sea of information, an eye for filtering fake news and thinking critically is demanded."
+      "translation": "In a sea of information, having the discernment to filter fake news and think critically is essential."
     },
     {
       "id": "t2p-ext2-88",
       "target": "청소년들이 올바른 가치관을 형성할 수 있도록 가정과 학교의 따뜻한 관심이 요구됩니다.",
-      "translation": "Warm attention from home and school is required so youth can form healthy values."
+      "translation": "Warm attention from home and school is needed so youth can develop healthy values."
     },
     {
       "id": "t2p-ext2-89",
       "target": "고령화 사회에 대비하여 노후 자금 마련과 사회 복지 제도의 개선이 시급합니다.",
-      "translation": "In preparation for an aging society, securing retirement funds and improving welfare systems are urgent."
+      "translation": "In preparation for an aging society, securing retirement funds and improving social welfare systems are urgent."
     },
     {
       "id": "t2p-ext2-90",
       "target": "신제품 개발 과정에서 소비자들의 피드백을 적극적으로 반영하는 것이 성공의 열쇠입니다.",
-      "translation": "Actively reflecting consumer feedback in the product development process is the key to success."
+      "translation": "Actively incorporating consumer feedback into the product development process is the key to success."
     },
     {
       "id": "t2p-ext2-91",
       "target": "도시 재개발 사업은 기존 주민들의 삶의 터전을 존중하며 추진되어야 합니다.",
-      "translation": "Urban redevelopment projects should be promoted while respecting original residents' livelihoods."
+      "translation": "Urban redevelopment projects should be carried out while respecting the livelihoods of existing residents."
     },
     {
       "id": "t2p-ext2-92",
       "target": "문화재 복원 작업은 고증과 전통 기법을 충실히 살려 신중하게 진행되고 있습니다.",
-      "translation": "Cultural heritage restoration work proceeds carefully while faithfully honoring historical verification and traditional methods."
+      "translation": "Cultural heritage restoration proceeds carefully while faithfully honoring historical evidence and traditional methods."
     },
     {
       "id": "t2p-ext2-93",
       "target": "해외 유학은 넓은 세계를 경험하고 국제적인 감각을 익힐 수 있는 좋은 기회입니다.",
-      "translation": "Studying abroad is a great opportunity to experience a wider world and learn international sensibility."
+      "translation": "Studying abroad is a great opportunity to experience a wider world and develop a global mindset."
     },
     {
       "id": "t2p-ext2-94",
       "target": "성공적인 협상을 위해서는 상대방의 입장을 먼저 진심으로 경청하는 태도가 중요합니다.",
-      "translation": "For successful negotiation, sincerely listening to the opponent's stance first is important."
+      "translation": "For successful negotiations, genuinely listening to the other party's perspective first is essential."
     },
     {
       "id": "t2p-ext2-95",
       "target": "감염병 예방을 위해 개인위생 수칙을 철저히 지키는 생활 방식이 강조되고 있습니다.",
-      "translation": "A lifestyle of thoroughly keeping personal hygiene rules is emphasized to prevent infectious diseases."
+      "translation": "A lifestyle of strictly observing personal hygiene practices is emphasized to prevent infectious diseases."
     },
     {
       "id": "t2p-ext2-96",
       "target": "청년 창업을 지원하기 위한 정책적 혜택과 멘토링 프로그램이 대폭 확대되었습니다.",
-      "translation": "Policy benefits and mentoring programs supporting youth startups have expanded significantly."
+      "translation": "Policy incentives and mentoring programs supporting youth startups have expanded significantly."
     },
     {
       "id": "t2p-ext2-97",
       "target": "스마트폰 사용 시간의 증가로 인한 안구 건조증과 거북목 증후군을 주의해야 합니다.",
-      "translation": "Dry eye syndrome and turtle neck syndrome caused by increased smartphone use require attention."
+      "translation": "We should be mindful of dry eye syndrome and turtle neck syndrome (forward head posture) caused by increased smartphone use."
     },
     {
       "id": "t2p-ext2-98",
       "target": "원격 근무와 화상 회의의 보급으로 일하는 장소와 방식이 더욱 유연해졌습니다.",
-      "translation": "With the spread of remote work and video conferencing, work locations and methods have become more flexible."
+      "translation": "With the spread of remote work and video conferencing, work locations and methods have become far more flexible."
     }
   ]
 }

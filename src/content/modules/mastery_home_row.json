@@ -41,22 +41,22 @@
     {
       "id": "mastery_home_row_8",
       "target": "앙",
-      "translation": "Bite / Ang"
+      "translation": "Bite / Waah (crying sound)"
     },
     {
       "id": "mastery_home_row_9",
       "target": "엉",
-      "translation": "Ung"
+      "translation": "Uh-huh / Sobbing sound"
     },
     {
       "id": "mastery_home_row_10",
       "target": "앙앙",
-      "translation": "Crying sound"
+      "translation": "Crying sound (wah-wah)"
     },
     {
       "id": "mastery_home_row_11",
       "target": "엉엉",
-      "translation": "Sobbing sound"
+      "translation": "Sobbing sound (boo-hoo)"
     },
     {
       "id": "mastery_home_row_12",
@@ -76,7 +76,7 @@
     {
       "id": "mastery_home_row_15",
       "target": "러",
-      "translation": "Reo"
+      "translation": "Syllable 'Reo'"
     },
     {
       "id": "mastery_home_row_16",
@@ -91,12 +91,12 @@
     {
       "id": "mastery_home_row_18",
       "target": "아라",
-      "translation": "Ara (Ancient Sea)"
+      "translation": "Ara (ancient Korean sea)"
     },
     {
       "id": "mastery_home_row_19",
       "target": "얼라",
-      "translation": "Child (dialect)"
+      "translation": "Little child (dialect)"
     },
     {
       "id": "mastery_home_row_20",
@@ -131,7 +131,7 @@
     {
       "id": "mastery_home_row_26",
       "target": "오알",
-      "translation": "O-R"
+      "translation": "Syllable combination 'O-Al'"
     },
     {
       "id": "mastery_home_row_27",
@@ -241,7 +241,7 @@
     {
       "id": "mastery_home_row_48",
       "target": "언니",
-      "translation": "Older sister (for female)"
+      "translation": "Older sister (used by females)"
     },
     {
       "id": "mastery_home_row_49",
@@ -341,7 +341,7 @@
     {
       "id": "mastery_home_row_68",
       "target": "누나",
-      "translation": "Older sister (for male)"
+      "translation": "Older sister (used by males)"
     },
     {
       "id": "mastery_home_row_69",
@@ -361,7 +361,7 @@
     {
       "id": "mastery_home_row_72",
       "target": "우물",
-      "translation": "Well (water source)"
+      "translation": "Water well"
     },
     {
       "id": "mastery_home_row_73",
@@ -381,7 +381,7 @@
     {
       "id": "mastery_home_row_76",
       "target": "우루루",
-      "translation": "In a rush"
+      "translation": "In a rush / In a flock"
     },
     {
       "id": "mastery_home_row_77",
@@ -441,7 +441,7 @@
     {
       "id": "mastery_home_row_88",
       "target": "하늘 위로 흐르는 물",
-      "translation": "Water flowing skyward"
+      "translation": "Water flowing across the sky"
     },
     {
       "id": "mastery_home_row_89",
@@ -456,12 +456,12 @@
     {
       "id": "mastery_home_row_91",
       "target": "너와 나의 마음",
-      "translation": "Heart of you and me"
+      "translation": "The hearts of you and me"
     },
     {
       "id": "mastery_home_row_92",
       "target": "하나 모아 우리 마음",
-      "translation": "Gathering one by one, our hearts"
+      "translation": "Bringing our hearts together as one"
     },
     {
       "id": "mastery_home_row_93",
@@ -486,12 +486,12 @@
     {
       "id": "mastery_home_row_97",
       "target": "머리 위로 오른 은하",
-      "translation": "Milky Way risen above the head"
+      "translation": "The Milky Way rising above our heads"
     },
     {
       "id": "mastery_home_row_98",
       "target": "우리 모아 하나로",
-      "translation": "Bringing us together as one"
+      "translation": "Bringing us all together as one"
     },
     {
       "id": "mastery_home_row_99",
