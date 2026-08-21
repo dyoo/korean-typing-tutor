@@ -111,7 +111,7 @@
     {
       "id": "freq-22",
       "target": "말",
-      "translation": "words,speaking"
+      "translation": "words, speaking"
     },
     {
       "id": "freq-23",
@@ -171,7 +171,7 @@
     {
       "id": "freq-34",
       "target": "사회",
-      "translation": "culture,society"
+      "translation": "culture, society"
     },
     {
       "id": "freq-35",
@@ -221,7 +221,7 @@
     {
       "id": "freq-44",
       "target": "문제",
-      "translation": "question,problem"
+      "translation": "question, problem"
     },
     {
       "id": "freq-45",
@@ -326,7 +326,7 @@
     {
       "id": "freq-65",
       "target": "어떻다",
-      "translation": "how,what.. do you think of"
+      "translation": "how, what.. do you think of"
     },
     {
       "id": "freq-66",
@@ -351,7 +351,7 @@
     {
       "id": "freq-70",
       "target": "소리",
-      "translation": "A sound,noise"
+      "translation": "A sound, noise"
     },
     {
       "id": "freq-71",
@@ -371,7 +371,7 @@
     {
       "id": "freq-74",
       "target": "여자",
-      "translation": "woman,female"
+      "translation": "woman, female"
     },
     {
       "id": "freq-75",
@@ -381,7 +381,7 @@
     {
       "id": "freq-76",
       "target": "정도",
-      "translation": "grade,degree"
+      "translation": "grade, degree"
     },
     {
       "id": "freq-77",
@@ -396,12 +396,12 @@
     {
       "id": "freq-79",
       "target": "싶다",
-      "translation": "want,hope"
+      "translation": "want, hope"
     },
     {
       "id": "freq-80",
       "target": "보이다",
-      "translation": "see,catch sight of"
+      "translation": "see, catch sight of"
     },
     {
       "id": "freq-81",
@@ -421,7 +421,7 @@
     {
       "id": "freq-84",
       "target": "지나다",
-      "translation": "pass,elapse,go on"
+      "translation": "pass, elapse, go on"
     },
     {
       "id": "freq-85",
@@ -486,7 +486,7 @@
     {
       "id": "freq-97",
       "target": "시대",
-      "translation": "An age,period"
+      "translation": "An age, period"
     },
     {
       "id": "freq-98",
@@ -511,7 +511,7 @@
     {
       "id": "freq-102",
       "target": "여러",
-      "translation": "many,various"
+      "translation": "many, various"
     },
     {
       "id": "freq-103",
@@ -576,7 +576,7 @@
     {
       "id": "freq-115",
       "target": "시작하다",
-      "translation": "To start,begin"
+      "translation": "To start, begin"
     },
     {
       "id": "freq-116",
@@ -596,7 +596,7 @@
     {
       "id": "freq-119",
       "target": "무엇",
-      "translation": "That thing,whatever"
+      "translation": "That thing, whatever"
     },
     {
       "id": "freq-120",
@@ -696,7 +696,7 @@
     {
       "id": "freq-139",
       "target": "몸",
-      "translation": "body,physique"
+      "translation": "body, physique"
     },
     {
       "id": "freq-140",
@@ -726,7 +726,7 @@
     {
       "id": "freq-145",
       "target": "모습",
-      "translation": "shape,body"
+      "translation": "shape, body"
     },
     {
       "id": "freq-146",
@@ -746,7 +746,7 @@
     {
       "id": "freq-149",
       "target": "보이다",
-      "translation": "show,let see"
+      "translation": "show, let see"
     },
     {
       "id": "freq-150",
@@ -776,7 +776,7 @@
     {
       "id": "freq-155",
       "target": "생활",
-      "translation": "lifestyle,livelihood"
+      "translation": "lifestyle, livelihood"
     },
     {
       "id": "freq-156",
@@ -786,7 +786,7 @@
     {
       "id": "freq-157",
       "target": "뿐",
-      "translation": "only,alone,merely"
+      "translation": "only, alone, merely"
     },
     {
       "id": "freq-158",
@@ -801,7 +801,7 @@
     {
       "id": "freq-160",
       "target": "새롭다",
-      "translation": "To be new,novel"
+      "translation": "To be new, novel"
     },
     {
       "id": "freq-161",
@@ -851,7 +851,7 @@
     {
       "id": "freq-170",
       "target": "찾다",
-      "translation": "seek,look for"
+      "translation": "seek, look for"
     },
     {
       "id": "freq-171",
@@ -906,7 +906,7 @@
     {
       "id": "freq-181",
       "target": "잡다",
-      "translation": "seize,catch"
+      "translation": "seize, catch"
     },
     {
       "id": "freq-182",
@@ -976,7 +976,7 @@
     {
       "id": "freq-195",
       "target": "시장",
-      "translation": "market,fair"
+      "translation": "market, fair"
     },
     {
       "id": "freq-196",
@@ -986,7 +986,7 @@
     {
       "id": "freq-197",
       "target": "중요하다",
-      "translation": "To be important,weighty"
+      "translation": "To be important, weighty"
     },
     {
       "id": "freq-198",
@@ -1031,7 +1031,7 @@
     {
       "id": "freq-206",
       "target": "자리",
-      "translation": "seat,spot"
+      "translation": "seat, spot"
     },
     {
       "id": "freq-207",
@@ -1041,7 +1041,7 @@
     {
       "id": "freq-208",
       "target": "죽다",
-      "translation": "die,pass away"
+      "translation": "die, pass away"
     },
     {
       "id": "freq-209",
@@ -1106,7 +1106,7 @@
     {
       "id": "freq-221",
       "target": "사건",
-      "translation": "An event,incident"
+      "translation": "An event, incident"
     },
     {
       "id": "freq-222",
@@ -1121,7 +1121,7 @@
     {
       "id": "freq-224",
       "target": "짓다",
-      "translation": "To make, build ; to form a line (a group)"
+      "translation": "To make, build; to form a line (a group)"
     },
     {
       "id": "freq-225",
@@ -1141,7 +1141,7 @@
     {
       "id": "freq-228",
       "target": "생기다",
-      "translation": "arise,occur,happen"
+      "translation": "arise, occur, happen"
     },
     {
       "id": "freq-229",
@@ -1161,7 +1161,7 @@
     {
       "id": "freq-232",
       "target": "세상",
-      "translation": "The world,society"
+      "translation": "The world, society"
     },
     {
       "id": "freq-233",
@@ -1201,12 +1201,12 @@
     {
       "id": "freq-240",
       "target": "즉",
-      "translation": "namely,that is to say"
+      "translation": "namely, that is to say"
     },
     {
       "id": "freq-241",
       "target": "상태",
-      "translation": "condition,state"
+      "translation": "condition, state"
     },
     {
       "id": "freq-242",
@@ -1316,7 +1316,7 @@
     {
       "id": "freq-263",
       "target": "부분",
-      "translation": "part,portion"
+      "translation": "part, portion"
     },
     {
       "id": "freq-264",
@@ -1331,7 +1331,7 @@
     {
       "id": "freq-266",
       "target": "아들",
-      "translation": "son,baby"
+      "translation": "son, baby"
     },
     {
       "id": "freq-267",
@@ -1396,7 +1396,7 @@
     {
       "id": "freq-279",
       "target": "서로",
-      "translation": "mutually,one another"
+      "translation": "mutually, one another"
     },
     {
       "id": "freq-280",
@@ -1436,7 +1436,7 @@
     {
       "id": "freq-287",
       "target": "정신",
-      "translation": "mind,spirit"
+      "translation": "mind, spirit"
     },
     {
       "id": "freq-288",
@@ -1496,7 +1496,7 @@
     {
       "id": "freq-299",
       "target": "민족",
-      "translation": "race,nation,people"
+      "translation": "race, nation, people"
     },
     {
       "id": "freq-300",
@@ -1506,7 +1506,7 @@
     {
       "id": "freq-301",
       "target": "조사",
-      "translation": "investigation,inquiry"
+      "translation": "investigation, inquiry"
     },
     {
       "id": "freq-302",
@@ -1536,12 +1536,12 @@
     {
       "id": "freq-307",
       "target": "필요",
-      "translation": "Need, requirement,necessity"
+      "translation": "Need, requirement, necessity"
     },
     {
       "id": "freq-308",
       "target": "줄",
-      "translation": "way,method"
+      "translation": "way, method"
     },
     {
       "id": "freq-309",
@@ -1591,7 +1591,7 @@
     {
       "id": "freq-318",
       "target": "오히려",
-      "translation": "Rather,preferably"
+      "translation": "Rather, preferably"
     },
     {
       "id": "freq-319",
@@ -1626,7 +1626,7 @@
     {
       "id": "freq-325",
       "target": "적",
-      "translation": "The time,the occasion,when"
+      "translation": "The time, the occasion, when"
     },
     {
       "id": "freq-326",
@@ -1726,7 +1726,7 @@
     {
       "id": "freq-345",
       "target": "바라보다",
-      "translation": "Look at, watch ; to look forward to, hope for"
+      "translation": "Look at, watch; to look forward to, hope for"
     },
     {
       "id": "freq-346",
@@ -1806,7 +1806,7 @@
     {
       "id": "freq-361",
       "target": "성격",
-      "translation": "Personality ; character, nature"
+      "translation": "Personality; character, nature"
     },
     {
       "id": "freq-362",
@@ -1891,7 +1891,7 @@
     {
       "id": "freq-378",
       "target": "분위기",
-      "translation": "atmosphere,surroundings"
+      "translation": "atmosphere, surroundings"
     },
     {
       "id": "freq-379",
@@ -1916,7 +1916,7 @@
     {
       "id": "freq-383",
       "target": "바꾸다",
-      "translation": "change,exchange"
+      "translation": "change, exchange"
     },
     {
       "id": "freq-384",
@@ -1931,7 +1931,7 @@
     {
       "id": "freq-386",
       "target": "정보",
-      "translation": "information,intelligence"
+      "translation": "information, intelligence"
     },
     {
       "id": "freq-387",
@@ -2046,7 +2046,7 @@
     {
       "id": "freq-409",
       "target": "저",
-      "translation": "Uh, well, ..."
+      "translation": "Uh, well..."
     },
     {
       "id": "freq-410",
@@ -2086,7 +2086,7 @@
     {
       "id": "freq-417",
       "target": "조건",
-      "translation": "condition,stipulation"
+      "translation": "condition, stipulation"
     },
     {
       "id": "freq-418",
@@ -2216,7 +2216,7 @@
     {
       "id": "freq-443",
       "target": "전혀",
-      "translation": "entirely,utterly,completely"
+      "translation": "entirely, utterly, completely"
     },
     {
       "id": "freq-444",
@@ -2251,7 +2251,7 @@
     {
       "id": "freq-450",
       "target": "주장하다",
-      "translation": "To assert,maintain"
+      "translation": "To assert, maintain"
     },
     {
       "id": "freq-451",
@@ -2266,17 +2266,17 @@
     {
       "id": "freq-453",
       "target": "주민",
-      "translation": "inhabitants,dwellers"
+      "translation": "inhabitants, dwellers"
     },
     {
       "id": "freq-454",
       "target": "모으다",
-      "translation": "gather,get together"
+      "translation": "gather, get together"
     },
     {
       "id": "freq-455",
       "target": "자료",
-      "translation": "materials,data"
+      "translation": "materials, data"
     },
     {
       "id": "freq-456",
@@ -2356,7 +2356,7 @@
     {
       "id": "freq-471",
       "target": "젊다",
-      "translation": "To be young,youthful"
+      "translation": "To be young, youthful"
     },
     {
       "id": "freq-472",
@@ -2371,7 +2371,7 @@
     {
       "id": "freq-474",
       "target": "순간",
-      "translation": "A moment,a second"
+      "translation": "A moment, a second"
     },
     {
       "id": "freq-475",
@@ -2421,7 +2421,7 @@
     {
       "id": "freq-484",
       "target": "연극",
-      "translation": "drama,a play"
+      "translation": "drama, a play"
     },
     {
       "id": "freq-485",
@@ -2456,7 +2456,7 @@
     {
       "id": "freq-491",
       "target": "시간",
-      "translation": "a Length of time (한시간 동안)"
+      "translation": "Length of time (duration)"
     },
     {
       "id": "freq-492",
@@ -2481,17 +2481,17 @@
     {
       "id": "freq-496",
       "target": "차이",
-      "translation": "difference,disparity"
+      "translation": "difference, disparity"
     },
     {
       "id": "freq-497",
       "target": "풀다",
-      "translation": "Untie, loosen ; to melt into"
+      "translation": "Untie, loosen; to melt into"
     },
     {
       "id": "freq-498",
       "target": "시절",
-      "translation": "season,time,occasion"
+      "translation": "season, time, occasion"
     },
     {
       "id": "freq-499",
@@ -2521,7 +2521,7 @@
     {
       "id": "freq-504",
       "target": "작가",
-      "translation": "writer,author"
+      "translation": "writer, author"
     },
     {
       "id": "freq-505",
@@ -2551,7 +2551,7 @@
     {
       "id": "freq-510",
       "target": "시작되다",
-      "translation": "To begin,start"
+      "translation": "To begin, start"
     },
     {
       "id": "freq-511",
@@ -2571,7 +2571,7 @@
     {
       "id": "freq-514",
       "target": "시기",
-      "translation": "An opportunity,chance"
+      "translation": "An opportunity, chance"
     },
     {
       "id": "freq-515",
@@ -2586,7 +2586,7 @@
     {
       "id": "freq-517",
       "target": "생산",
-      "translation": "1) production 2)birth"
+      "translation": "1) Production, 2) Birth"
     },
     {
       "id": "freq-518",
@@ -2731,7 +2731,7 @@
     {
       "id": "freq-546",
       "target": "아기",
-      "translation": "baby,infant"
+      "translation": "baby, infant"
     },
     {
       "id": "freq-547",
@@ -2766,7 +2766,7 @@
     {
       "id": "freq-553",
       "target": "참",
-      "translation": "really,truly"
+      "translation": "really, truly"
     },
     {
       "id": "freq-554",
@@ -2851,7 +2851,7 @@
     {
       "id": "freq-570",
       "target": "주로",
-      "translation": "principally,mainly"
+      "translation": "principally, mainly"
     },
     {
       "id": "freq-571",
@@ -2886,7 +2886,7 @@
     {
       "id": "freq-577",
       "target": "시설",
-      "translation": "establishment,institution"
+      "translation": "establishment, institution"
     },
     {
       "id": "freq-578",
@@ -2916,7 +2916,7 @@
     {
       "id": "freq-583",
       "target": "원인",
-      "translation": "A cause,a factor"
+      "translation": "A cause, a factor"
     },
     {
       "id": "freq-584",
@@ -2926,7 +2926,7 @@
     {
       "id": "freq-585",
       "target": "차례",
-      "translation": "(1) order,precedence (2) one time, one round"
+      "translation": "(1) order, precedence (2) one time, one round"
     },
     {
       "id": "freq-586",
@@ -2936,7 +2936,7 @@
     {
       "id": "freq-587",
       "target": "열심히",
-      "translation": "Enthusiastically,with zeal"
+      "translation": "Enthusiastically, with zeal"
     },
     {
       "id": "freq-588",
@@ -2946,7 +2946,7 @@
     {
       "id": "freq-589",
       "target": "재산",
-      "translation": "property,fortune, assets, possessions"
+      "translation": "property, fortune, assets, possessions"
     },
     {
       "id": "freq-590",
@@ -2966,12 +2966,12 @@
     {
       "id": "freq-593",
       "target": "언어",
-      "translation": "language,speech"
+      "translation": "language, speech"
     },
     {
       "id": "freq-594",
       "target": "요구하다",
-      "translation": "To demand,claim,request"
+      "translation": "To demand, claim, request"
     },
     {
       "id": "freq-595",
@@ -3066,12 +3066,12 @@
     {
       "id": "freq-613",
       "target": "즐기다",
-      "translation": "Enjoy oneself,take pleasure,delight"
+      "translation": "Enjoy oneself, take pleasure, delight"
     },
     {
       "id": "freq-614",
       "target": "지",
-      "translation": "since,from"
+      "translation": "since, from"
     },
     {
       "id": "freq-615",
@@ -3111,12 +3111,12 @@
     {
       "id": "freq-622",
       "target": "일반",
-      "translation": "universal,common,usual"
+      "translation": "universal, common, usual"
     },
     {
       "id": "freq-623",
       "target": "재미있다",
-      "translation": "interesting,fun"
+      "translation": "interesting, fun"
     },
     {
       "id": "freq-624",
@@ -3156,7 +3156,7 @@
     {
       "id": "freq-631",
       "target": "붙이다",
-      "translation": "affix,put on"
+      "translation": "affix, put on"
     },
     {
       "id": "freq-632",
@@ -3186,7 +3186,7 @@
     {
       "id": "freq-637",
       "target": "전",
-      "translation": "all,every"
+      "translation": "all, every"
     },
     {
       "id": "freq-638",
@@ -3246,12 +3246,12 @@
     {
       "id": "freq-649",
       "target": "식",
-      "translation": "form,style"
+      "translation": "form, style"
     },
     {
       "id": "freq-650",
       "target": "의견",
-      "translation": "An opinion,a suggestion"
+      "translation": "An opinion, a suggestion"
     },
     {
       "id": "freq-651",
@@ -3266,7 +3266,7 @@
     {
       "id": "freq-653",
       "target": "주장",
-      "translation": "assertion,insistance"
+      "translation": "assertion, insistance"
     },
     {
       "id": "freq-654",
@@ -3281,7 +3281,7 @@
     {
       "id": "freq-656",
       "target": "이상하다",
-      "translation": "To be strange,queer"
+      "translation": "To be strange, queer"
     },
     {
       "id": "freq-657",
@@ -3321,12 +3321,12 @@
     {
       "id": "freq-664",
       "target": "목적",
-      "translation": "goal,purpose"
+      "translation": "goal, purpose"
     },
     {
       "id": "freq-665",
       "target": "태도",
-      "translation": "attitude,comportment"
+      "translation": "attitude, comportment"
     },
     {
       "id": "freq-666",
@@ -3336,7 +3336,7 @@
     {
       "id": "freq-667",
       "target": "주위",
-      "translation": "The circumference,the girth"
+      "translation": "The circumference, the girth"
     },
     {
       "id": "freq-668",
@@ -3361,7 +3361,7 @@
     {
       "id": "freq-672",
       "target": "아무",
-      "translation": "anybody,everybody"
+      "translation": "anybody, everybody"
     },
     {
       "id": "freq-673",
@@ -3371,7 +3371,7 @@
     {
       "id": "freq-674",
       "target": "재료",
-      "translation": "stuff,material"
+      "translation": "stuff, material"
     },
     {
       "id": "freq-675",
@@ -3386,7 +3386,7 @@
     {
       "id": "freq-677",
       "target": "옮기다",
-      "translation": "Move, transfer (2)(sickness) communicate, transfer to"
+      "translation": "Move, transfer (2) (sickness) communicate, transfer to"
     },
     {
       "id": "freq-678",
@@ -3426,7 +3426,7 @@
     {
       "id": "freq-685",
       "target": "심하다",
-      "translation": "To be extreme,intense"
+      "translation": "To be extreme, intense"
     },
     {
       "id": "freq-686",
@@ -3446,7 +3446,7 @@
     {
       "id": "freq-689",
       "target": "여름",
-      "translation": "summer,summertime"
+      "translation": "summer, summertime"
     },
     {
       "id": "freq-690",
@@ -3471,7 +3471,7 @@
     {
       "id": "freq-694",
       "target": "실시하다",
-      "translation": "To enforce,put into effect"
+      "translation": "To enforce, put into effect"
     },
     {
       "id": "freq-695",
@@ -3516,7 +3516,7 @@
     {
       "id": "freq-703",
       "target": "셈",
-      "translation": "An intention,design,purpose"
+      "translation": "An intention, design, purpose"
     },
     {
       "id": "freq-704",
@@ -3561,12 +3561,12 @@
     {
       "id": "freq-712",
       "target": "언제나",
-      "translation": "everytime,always"
+      "translation": "everytime, always"
     },
     {
       "id": "freq-713",
       "target": "완전히",
-      "translation": "completely,perfectly"
+      "translation": "completely, perfectly"
     },
     {
       "id": "freq-714",
@@ -3576,7 +3576,7 @@
     {
       "id": "freq-715",
       "target": "전하다",
-      "translation": "To transmit,convey"
+      "translation": "To transmit, convey"
     },
     {
       "id": "freq-716",
@@ -3591,7 +3591,7 @@
     {
       "id": "freq-718",
       "target": "맞다",
-      "translation": "receive,welcome (note, usually this is 맞히다)"
+      "translation": "Receive, welcome"
     },
     {
       "id": "freq-719",
@@ -3606,7 +3606,7 @@
     {
       "id": "freq-721",
       "target": "정하다",
-      "translation": "To set,determine"
+      "translation": "To set, determine"
     },
     {
       "id": "freq-722",
@@ -3681,7 +3681,7 @@
     {
       "id": "freq-736",
       "target": "피하다",
-      "translation": "avoid,keep away"
+      "translation": "avoid, keep away"
     },
     {
       "id": "freq-737",
@@ -3696,7 +3696,7 @@
     {
       "id": "freq-739",
       "target": "야",
-      "translation": "(Word to get somebody’s attention) Hey!! (2) impolite speech for 이다, to be"
+      "translation": "1) Hey! (calling attention), 2) Informal to be / copula"
     },
     {
       "id": "freq-740",
@@ -3706,12 +3706,12 @@
     {
       "id": "freq-741",
       "target": "여전히",
-      "translation": "As it used to be, as before ; still, persistently, even still"
+      "translation": "As it used to be, as before; still, persistently, even still"
     },
     {
       "id": "freq-742",
       "target": "주인",
-      "translation": "The head of a family,the owner"
+      "translation": "The head of a family, the owner"
     },
     {
       "id": "freq-743",
@@ -3766,7 +3766,7 @@
     {
       "id": "freq-753",
       "target": "걸치다",
-      "translation": "1) put a thing over or across 2) to range from A to B"
+      "translation": "1) Put over/across, 2) Span, range from A to B"
     },
     {
       "id": "freq-754",
@@ -3841,7 +3841,7 @@
     {
       "id": "freq-768",
       "target": "구성",
-      "translation": "Organization or constitution , the framework of something"
+      "translation": "Organization or constitution, the framework of something"
     },
     {
       "id": "freq-769",
@@ -3876,12 +3876,12 @@
     {
       "id": "freq-775",
       "target": "보다",
-      "translation": "More than, greater than ...."
+      "translation": "More than, greater than..."
     },
     {
       "id": "freq-776",
       "target": "비롯하다",
-      "translation": "begin,start"
+      "translation": "begin, start"
     },
     {
       "id": "freq-777",
@@ -3906,7 +3906,7 @@
     {
       "id": "freq-781",
       "target": "인정하다",
-      "translation": "To acknowledge,authorize"
+      "translation": "To acknowledge, authorize"
     },
     {
       "id": "freq-782",
@@ -3956,7 +3956,7 @@
     {
       "id": "freq-791",
       "target": "전통",
-      "translation": "tradition,convention"
+      "translation": "tradition, convention"
     },
     {
       "id": "freq-792",
@@ -3971,7 +3971,7 @@
     {
       "id": "freq-794",
       "target": "조사하다",
-      "translation": "To examine,investigate"
+      "translation": "To examine, investigate"
     },
     {
       "id": "freq-795",
@@ -3991,7 +3991,7 @@
     {
       "id": "freq-798",
       "target": "언제",
-      "translation": "when,at what time"
+      "translation": "when, at what time"
     },
     {
       "id": "freq-799",
@@ -4016,7 +4016,7 @@
     {
       "id": "freq-803",
       "target": "줄이다",
-      "translation": "reduce,decrease"
+      "translation": "reduce, decrease"
     },
     {
       "id": "freq-804",
@@ -4051,12 +4051,12 @@
     {
       "id": "freq-810",
       "target": "통신",
-      "translation": "communications,correspondance"
+      "translation": "communications, correspondance"
     },
     {
       "id": "freq-811",
       "target": "확인하다",
-      "translation": "To confirm,corroborate"
+      "translation": "To confirm, corroborate"
     },
     {
       "id": "freq-812",
@@ -4081,12 +4081,12 @@
     {
       "id": "freq-816",
       "target": "모양",
-      "translation": "signs,indications"
+      "translation": "signs, indications"
     },
     {
       "id": "freq-817",
       "target": "물질",
-      "translation": "matter,material"
+      "translation": "matter, material"
     },
     {
       "id": "freq-818",
@@ -4116,7 +4116,7 @@
     {
       "id": "freq-823",
       "target": "수업",
-      "translation": "school,teaching"
+      "translation": "school, teaching"
     },
     {
       "id": "freq-824",
@@ -4126,12 +4126,12 @@
     {
       "id": "freq-825",
       "target": "종교",
-      "translation": "religion,a faith"
+      "translation": "religion, a faith"
     },
     {
       "id": "freq-826",
       "target": "층",
-      "translation": "floor,grade,class"
+      "translation": "floor, grade, class"
     },
     {
       "id": "freq-827",
@@ -4186,7 +4186,7 @@
     {
       "id": "freq-837",
       "target": "엄청나다",
-      "translation": "To be absurd,wild,terribly large"
+      "translation": "To be absurd, wild, terribly large"
     },
     {
       "id": "freq-838",
@@ -4221,12 +4221,12 @@
     {
       "id": "freq-844",
       "target": "보호",
-      "translation": "protection,shelter"
+      "translation": "protection, shelter"
     },
     {
       "id": "freq-845",
       "target": "씻다",
-      "translation": "To wash,cleanse"
+      "translation": "To wash, cleanse"
     },
     {
       "id": "freq-846",
@@ -4291,7 +4291,7 @@
     {
       "id": "freq-858",
       "target": "차",
-      "translation": "order,sequence,degree"
+      "translation": "order, sequence, degree"
     },
     {
       "id": "freq-859",
@@ -4316,7 +4316,7 @@
     {
       "id": "freq-863",
       "target": "새로",
-      "translation": "newly,anew"
+      "translation": "newly, anew"
     },
     {
       "id": "freq-864",
@@ -4341,7 +4341,7 @@
     {
       "id": "freq-868",
       "target": "종류",
-      "translation": "kind,sort,species"
+      "translation": "kind, sort, species"
     },
     {
       "id": "freq-869",
@@ -4456,7 +4456,7 @@
     {
       "id": "freq-891",
       "target": "즐겁다",
-      "translation": "Be pleasant,agreeable"
+      "translation": "Be pleasant, agreeable"
     },
     {
       "id": "freq-892",
@@ -4466,12 +4466,12 @@
     {
       "id": "freq-893",
       "target": "흔히",
-      "translation": "Generally, commonly ; often"
+      "translation": "Generally, commonly; often"
     },
     {
       "id": "freq-894",
       "target": "바탕",
-      "translation": "Natural disposition ; to go all out in a fight, 아주 크게 싸우다 ; the background"
+      "translation": "1) Foundation, basis, 2) Background"
     },
     {
       "id": "freq-895",
@@ -4501,7 +4501,7 @@
     {
       "id": "freq-900",
       "target": "의지",
-      "translation": "will,volition"
+      "translation": "will, volition"
     },
     {
       "id": "freq-901",
@@ -4536,7 +4536,7 @@
     {
       "id": "freq-907",
       "target": "쓴맛",
-      "translation": "bitter taste"
+      "translation": "Bitter taste"
     },
     {
       "id": "freq-908",
@@ -4546,12 +4546,12 @@
     {
       "id": "freq-909",
       "target": "미",
-      "translation": "beauty,grace"
+      "translation": "beauty, grace"
     },
     {
       "id": "freq-910",
       "target": "사용",
-      "translation": "use,emply"
+      "translation": "use, emply"
     },
     {
       "id": "freq-911",
@@ -4591,7 +4591,7 @@
     {
       "id": "freq-918",
       "target": "목표",
-      "translation": "goal,object"
+      "translation": "goal, object"
     },
     {
       "id": "freq-919",
@@ -4626,7 +4626,7 @@
     {
       "id": "freq-925",
       "target": "새벽",
-      "translation": "dawn,daybreak"
+      "translation": "dawn, daybreak"
     },
     {
       "id": "freq-926",
@@ -4656,7 +4656,7 @@
     {
       "id": "freq-931",
       "target": "무섭다",
-      "translation": "fearful,dreadful"
+      "translation": "fearful, dreadful"
     },
     {
       "id": "freq-932",
@@ -4706,7 +4706,7 @@
     {
       "id": "freq-941",
       "target": "부드럽다",
-      "translation": "soft,tender"
+      "translation": "soft, tender"
     },
     {
       "id": "freq-942",
@@ -4716,7 +4716,7 @@
     {
       "id": "freq-943",
       "target": "이",
-      "translation": "this,this thing"
+      "translation": "this, this thing"
     },
     {
       "id": "freq-944",
@@ -4746,7 +4746,7 @@
     {
       "id": "freq-949",
       "target": "심각하다",
-      "translation": "seriousness,gravity"
+      "translation": "seriousness, gravity"
     },
     {
       "id": "freq-950",
@@ -4766,7 +4766,7 @@
     {
       "id": "freq-953",
       "target": "맑다",
-      "translation": "clean,pure"
+      "translation": "clean, pure"
     },
     {
       "id": "freq-954",
@@ -4816,12 +4816,12 @@
     {
       "id": "freq-963",
       "target": "벌다",
-      "translation": "To earn (money) ; (2) to invite, to bring onto oneself"
+      "translation": "To earn (money); (2) to invite, to bring onto oneself"
     },
     {
       "id": "freq-964",
       "target": "살리다",
-      "translation": "1) revive, bring around, restore to life 2) save,spare,rescue"
+      "translation": "1) Revive, bring to life, 2) Save, spare, rescue"
     },
     {
       "id": "freq-965",
@@ -4871,12 +4871,12 @@
     {
       "id": "freq-974",
       "target": "썰다",
-      "translation": "Chip, mince,dice"
+      "translation": "Chip, mince, dice"
     },
     {
       "id": "freq-975",
       "target": "움직임",
-      "translation": "movement,motion,activity"
+      "translation": "movement, motion, activity"
     },
     {
       "id": "freq-976",
@@ -4981,12 +4981,12 @@
     {
       "id": "freq-996",
       "target": "키",
-      "translation": "stature,height"
+      "translation": "stature, height"
     },
     {
       "id": "freq-997",
       "target": "구하다",
-      "translation": "1) To buy or purchase or 2) look for or seek or want"
+      "translation": "1) Buy, purchase, 2) Seek, look for"
     },
     {
       "id": "freq-998",
@@ -5001,7 +5001,7 @@
     {
       "id": "freq-1000",
       "target": "포함하다",
-      "translation": "To include,contain"
+      "translation": "To include, contain"
     }
   ]
 }
