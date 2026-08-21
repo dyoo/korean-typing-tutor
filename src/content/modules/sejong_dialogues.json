@@ -1,0 +1,257 @@
+{
+  "id": "sejong_dialogues",
+  "title": "Sejong — Conversational Q&A Pairs",
+  "description": "Natural question-and-answer pairs for daily spoken interactions",
+  "items": [
+    {
+      "id": "sq-1",
+      "target": "한국에 언제 오셨어요? 지난달에 왔어요.",
+      "translation": "When did you come to Korea? I arrived last month."
+    },
+    {
+      "id": "sq-2",
+      "target": "한국 생활은 어때요? 아주 재미있고 좋아요.",
+      "translation": "How is life in Korea? It is very fun and enjoyable."
+    },
+    {
+      "id": "sq-3",
+      "target": "매운 음식 잘 드세요? 네, 떡볶이를 아주 좋아해요.",
+      "translation": "Can you eat spicy food well? Yes, I love tteokbokki."
+    },
+    {
+      "id": "sq-4",
+      "target": "한국어를 배운 지 얼마나 되었어요? 육 개월 정도 배웠어요.",
+      "translation": "How long have you been learning Korean? I have been learning for about six months."
+    },
+    {
+      "id": "sq-5",
+      "target": "취미가 무엇입니까? 주말마다 등산을 가요.",
+      "translation": "What is your hobby? I go hiking every weekend."
+    },
+    {
+      "id": "sq-6",
+      "target": "오늘 날씨가 어때요? 맑고 따뜻해요.",
+      "translation": "How is the weather today? It is clear and warm."
+    },
+    {
+      "id": "sq-7",
+      "target": "어디에 가고 싶으세요? 제주도에 가 보고 싶어요.",
+      "translation": "Where would you like to go? I would like to visit Jeju Island."
+    },
+    {
+      "id": "sq-8",
+      "target": "주말에 보통 뭐 하세요? 집에서 영화를 보며 쉬어요.",
+      "translation": "What do you usually do on weekends? I rest at home while watching movies."
+    },
+    {
+      "id": "sq-9",
+      "target": "점심 뭐 먹을까요? 시원한 냉면 어때요?",
+      "translation": "What shall we eat for lunch? How about refreshing cold noodles (naengmyeon)?"
+    },
+    {
+      "id": "sq-10",
+      "target": "커피 한 잔 드릴까요? 네, 따뜻한 아메리카노로 부탁해요.",
+      "translation": "Shall I get you a cup of coffee? Yes, a hot Americano, please."
+    },
+    {
+      "id": "sq-11",
+      "target": "이거 입어 봐도 될까요? 네, 탈의실은 안쪽에 있어요.",
+      "translation": "May I try this on? Yes, the fitting room is in the back."
+    },
+    {
+      "id": "sq-12",
+      "target": "신용카드 결제 되나요? 네, 카드와 모바일 페이 모두 가능합니다.",
+      "translation": "Do you accept credit cards? Yes, both cards and mobile payments are accepted."
+    },
+    {
+      "id": "sq-13",
+      "target": "여기서 시청까지 얼마나 걸려요? 지하철로 삼십 분 걸려요.",
+      "translation": "How long does it take from here to City Hall? It takes 30 minutes by subway."
+    },
+    {
+      "id": "sq-14",
+      "target": "약은 언제 먹어야 하나요? 식사 후에 바로 드세요.",
+      "translation": "When should I take the medicine? Take it right after meals."
+    },
+    {
+      "id": "sq-15",
+      "target": "무슨 운동을 좋아하세요? 배드민턴과 수영을 즐겨 해요.",
+      "translation": "What sports do you like? I enjoy playing badminton and swimming."
+    },
+    {
+      "id": "sq-16",
+      "target": "오늘 저녁에 시간 있어요? 미안해요, 선약이 있어요.",
+      "translation": "Are you free this evening? Sorry, I have a previous engagement."
+    },
+    {
+      "id": "sq-17",
+      "target": "내일 몇 시에 만날까요? 오후 두 시에 강남역에서 만나요.",
+      "translation": "What time shall we meet tomorrow? Let's meet at 2:00 PM at Gangnam Station."
+    },
+    {
+      "id": "sq-18",
+      "target": "한국 노래 좋아해요? 네, 케이팝을 자주 들어요.",
+      "translation": "Do you like Korean songs? Yes, I listen to K-pop often."
+    },
+    {
+      "id": "sq-19",
+      "target": "도서관이 어디에 있나요? 건물 삼 층에 있습니다.",
+      "translation": "Where is the library? It is on the 3rd floor of the building."
+    },
+    {
+      "id": "sq-20",
+      "target": "이 단어 뜻이 뭐예요? 사전에서 함께 찾아볼까요?",
+      "translation": "What does this word mean? Shall we look it up in the dictionary together?"
+    },
+    {
+      "id": "sq-21",
+      "target": "사진 한 장 찍어 주실 수 있나요? 네, 김치 하고 웃으세요.",
+      "translation": "Could you please take a photo for me? Yes, say 'Kimchi' and smile."
+    },
+    {
+      "id": "sq-22",
+      "target": "포장해 드릴까요? 아니요, 여기서 먹고 갈게요.",
+      "translation": "Would you like it to go? No, I will eat here."
+    },
+    {
+      "id": "sq-23",
+      "target": "영수증 필요하세요? 아니요, 버려 주세요.",
+      "translation": "Do you need a receipt? No, please discard it."
+    },
+    {
+      "id": "sq-24",
+      "target": "비밀번호를 잊어버렸어요. 본인 인증을 먼저 진행해 주세요.",
+      "translation": "I forgot my password. Please proceed with identity verification first."
+    },
+    {
+      "id": "sq-25",
+      "target": "택시가 언제 도착하나요? 오 분 후에 도착 예정입니다.",
+      "translation": "When will the taxi arrive? It is scheduled to arrive in 5 minutes."
+    },
+    {
+      "id": "sq-26",
+      "target": "선물 포장 가능한가요? 네, 예쁘게 포장해 드리겠습니다.",
+      "translation": "Is gift wrapping available? Yes, I will wrap it nicely for you."
+    },
+    {
+      "id": "sq-27",
+      "target": "어떤 음료를 추천해 주시겠어요? 시그니처 바닐라 라떼를 추천합니다.",
+      "translation": "What drink do you recommend? I recommend our signature vanilla latte."
+    },
+    {
+      "id": "sq-28",
+      "target": "물은 셀프인가요? 네, 저쪽 정수기를 이용해 주세요.",
+      "translation": "Is water self-service? Yes, please use the water dispenser over there."
+    },
+    {
+      "id": "sq-29",
+      "target": "자리 있나요? 죄송하지만 만석이라 대기해 주셔야 합니다.",
+      "translation": "Are there any seats available? Sorry, we are full, so you will need to wait."
+    },
+    {
+      "id": "sq-30",
+      "target": "주문하시겠습니까? 불고기 이 인분 주세요.",
+      "translation": "Are you ready to order? Two servings of bulgogi, please."
+    },
+    {
+      "id": "sq-31",
+      "target": "더 필요한 것 있으세요? 물티슈 좀 더 주세요.",
+      "translation": "Do you need anything else? Please give us some more wet wipes."
+    },
+    {
+      "id": "sq-32",
+      "target": "맵지 않게 해 주실 수 있나요? 네, 덜 맵게 조리해 드릴게요.",
+      "translation": "Could you make it not spicy? Yes, we will prepare it less spicy."
+    },
+    {
+      "id": "sq-33",
+      "target": "예약하셨습니까? 네, 저녁 일곱 시로 예약했습니다.",
+      "translation": "Did you make a reservation? Yes, I made a reservation for 7:00 PM."
+    },
+    {
+      "id": "sq-34",
+      "target": "도움이 필요하세요? 길을 찾고 있었어요.",
+      "translation": "Do you need help? I was looking for the way."
+    },
+    {
+      "id": "sq-35",
+      "target": "이 버스가 공항에 가나요? 네, 공항 리무진 버스입니다.",
+      "translation": "Does this bus go to the airport? Yes, this is the airport limousine bus."
+    },
+    {
+      "id": "sq-36",
+      "target": "창문 좀 닫아도 될까요? 네, 편하게 닫으세요.",
+      "translation": "May I close the window? Yes, feel free to close it."
+    },
+    {
+      "id": "sq-37",
+      "target": "에어컨 좀 틀어 주시겠어요? 네, 바로 켜 드리겠습니다.",
+      "translation": "Could you please turn on the air conditioner? Yes, I will turn it on right away."
+    },
+    {
+      "id": "sq-38",
+      "target": "어제 시험 잘 봤어요? 생각보다 문제가 쉬웠어요.",
+      "translation": "Did you do well on yesterday's exam? The questions were easier than I expected."
+    },
+    {
+      "id": "sq-39",
+      "target": "방학 때 계획이 뭐예요? 가족과 함께 여행을 갈 거예요.",
+      "translation": "What are your plans for vacation? I will travel with my family."
+    },
+    {
+      "id": "sq-40",
+      "target": "졸업 후 무슨 일을 하고 싶어요? 통역사가 되고 싶어요.",
+      "translation": "What do you want to do after graduating? I want to become an interpreter."
+    },
+    {
+      "id": "sq-41",
+      "target": "한국 드라마 자주 보세요? 네, 주말마다 정주행해요.",
+      "translation": "Do you watch Korean dramas often? Yes, I binge-watch them every weekend."
+    },
+    {
+      "id": "sq-42",
+      "target": "제 말 잘 들리시나요? 네, 목소리 깨끗하게 잘 들립니다.",
+      "translation": "Can you hear me well? Yes, your voice is clear."
+    },
+    {
+      "id": "sq-43",
+      "target": "이메일 잘 받으셨나요? 네, 확인 후 곧 답장드리겠습니다.",
+      "translation": "Did you receive the email? Yes, I will check it and reply shortly."
+    },
+    {
+      "id": "sq-44",
+      "target": "오늘 야근하세요? 아니요, 오늘은 정시 퇴근합니다.",
+      "translation": "Are you working overtime today? No, I am leaving on time today."
+    },
+    {
+      "id": "sq-45",
+      "target": "피곤해 보이는데 괜찮아요? 어젯밤에 잠을 잘 못 잤어요.",
+      "translation": "You look tired, are you okay? I could not sleep well last night."
+    },
+    {
+      "id": "sq-46",
+      "target": "커피 마실 줄 아세요? 아니요, 녹차나 과일 주스를 마셔요.",
+      "translation": "Do you drink coffee? No, I drink green tea or fruit juice."
+    },
+    {
+      "id": "sq-47",
+      "target": "강아지 키워 본 적 있어요? 네, 지금 귀여운 강아지를 키우고 있어요.",
+      "translation": "Have you ever raised a dog? Yes, I am raising a cute puppy right now."
+    },
+    {
+      "id": "sq-48",
+      "target": "한국에 사계절이 다 있나요? 네, 봄 여름 가을 겨울이 뚜렷해요.",
+      "translation": "Does Korea have all four seasons? Yes, spring, summer, autumn, and winter are distinct."
+    },
+    {
+      "id": "sq-49",
+      "target": "이거 한국어로 뭐라고 해요? 그것은 지우개라고 해요.",
+      "translation": "What do you call this in Korean? That is called an eraser (jiugae)."
+    },
+    {
+      "id": "sq-50",
+      "target": "한국어 공부가 어렵지 않아요? 어렵지만 배울수록 보람차요.",
+      "translation": "Isn't studying Korean difficult? It is challenging, but the more I learn, the more rewarding it is."
+    }
+  ]
+}

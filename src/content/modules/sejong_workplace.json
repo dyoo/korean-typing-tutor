@@ -1,0 +1,257 @@
+{
+  "id": "sejong_workplace",
+  "title": "Sejong — Workplace & Campus Life",
+  "description": "Office courtesies, meeting schedules, campus navigation, and emails",
+  "items": [
+    {
+      "id": "sw-1",
+      "target": "좋은 아침입니다.",
+      "translation": "Good morning."
+    },
+    {
+      "id": "sw-2",
+      "target": "오늘도 수고 많으셨습니다.",
+      "translation": "Thank you for your hard work today."
+    },
+    {
+      "id": "sw-3",
+      "target": "먼저 퇴근해 보겠습니다.",
+      "translation": "I will head out first / Leaving for the day."
+    },
+    {
+      "id": "sw-4",
+      "target": "내일 뵙겠습니다.",
+      "translation": "See you tomorrow."
+    },
+    {
+      "id": "sw-5",
+      "target": "회의 일정을 잡으려고 합니다.",
+      "translation": "I would like to schedule a meeting."
+    },
+    {
+      "id": "sw-6",
+      "target": "회의실을 미리 예약했습니다.",
+      "translation": "I reserved the conference room in advance."
+    },
+    {
+      "id": "sw-7",
+      "target": "회의 안건을 공유해 드리겠습니다.",
+      "translation": "I will share the meeting agenda with you."
+    },
+    {
+      "id": "sw-8",
+      "target": "화상 회의 링크를 보내 드렸습니다.",
+      "translation": "I have sent you the video conference link."
+    },
+    {
+      "id": "sw-9",
+      "target": "이메일에 파일을 첨부했습니다.",
+      "translation": "I attached the file to the email."
+    },
+    {
+      "id": "sw-10",
+      "target": "첨부 파일을 확인해 주시기 바랍니다.",
+      "translation": "Please check the attached file."
+    },
+    {
+      "id": "sw-11",
+      "target": "검토 후 의견 부탁드립니다.",
+      "translation": "Please review and share your feedback."
+    },
+    {
+      "id": "sw-12",
+      "target": "문의하신 내용에 대해 답변드립니다.",
+      "translation": "I am replying regarding your inquiry."
+    },
+    {
+      "id": "sw-13",
+      "target": "보고서 작성을 마쳤습니다.",
+      "translation": "I have finished writing the report."
+    },
+    {
+      "id": "sw-14",
+      "target": "프로젝트 마감 기한이 언제입니까?",
+      "translation": "When is the project deadline?"
+    },
+    {
+      "id": "sw-15",
+      "target": "금요일까지 제출해 주세요.",
+      "translation": "Please submit it by Friday."
+    },
+    {
+      "id": "sw-16",
+      "target": "자료를 출력해 드리겠습니다.",
+      "translation": "I will print out the materials for you."
+    },
+    {
+      "id": "sw-17",
+      "target": "잠시 통화 가능하십니까?",
+      "translation": "Are you available for a brief phone call?"
+    },
+    {
+      "id": "sw-18",
+      "target": "담당자에게 전달하겠습니다.",
+      "translation": "I will pass this along to the person in charge."
+    },
+    {
+      "id": "sw-19",
+      "target": "출장 일정이 잡혔습니다.",
+      "translation": "A business trip schedule has been arranged."
+    },
+    {
+      "id": "sw-20",
+      "target": "명함을 드리겠습니다.",
+      "translation": "Here is my business card."
+    },
+    {
+      "id": "sw-21",
+      "target": "처음 뵙겠습니다. 잘 부탁드립니다.",
+      "translation": "Nice to meet you. I look forward to working with you."
+    },
+    {
+      "id": "sw-22",
+      "target": "도움이 필요하시면 언제든 말씀하세요.",
+      "translation": "Feel free to let me know anytime you need help."
+    },
+    {
+      "id": "sw-23",
+      "target": "결재를 부탁드립니다.",
+      "translation": "Please approve this document."
+    },
+    {
+      "id": "sw-24",
+      "target": "의견을 적극적으로 반영하겠습니다.",
+      "translation": "I will actively incorporate your feedback."
+    },
+    {
+      "id": "sw-25",
+      "target": "점심 식사 맛있게 하세요.",
+      "translation": "Enjoy your lunch."
+    },
+    {
+      "id": "sw-26",
+      "target": "이번 학기 수강 신청을 완료했습니다.",
+      "translation": "I completed course registration for this semester."
+    },
+    {
+      "id": "sw-27",
+      "target": "교수님 연구실이 몇 호입니까?",
+      "translation": "Which room number is the professor's office?"
+    },
+    {
+      "id": "sw-28",
+      "target": "교수님, 질문이 있어서 찾아왔습니다.",
+      "translation": "Professor, I came by because I have a question."
+    },
+    {
+      "id": "sw-29",
+      "target": "과제 제출 마감은 다음 주 월요일입니다.",
+      "translation": "The assignment submission deadline is next Monday."
+    },
+    {
+      "id": "sw-30",
+      "target": "조별 발표 준비를 위해 모였습니다.",
+      "translation": "We gathered to prepare for the team presentation."
+    },
+    {
+      "id": "sw-31",
+      "target": "학생증을 재발급받아야 해요.",
+      "translation": "I need to get my student ID card reissued."
+    },
+    {
+      "id": "sw-32",
+      "target": "중간고사 시험 일정이 공지되었습니다.",
+      "translation": "The midterm examination schedule has been announced."
+    },
+    {
+      "id": "sw-33",
+      "target": "기말고사 시험 범위가 어디까지인가요?",
+      "translation": "What is the scope covered on the final exam?"
+    },
+    {
+      "id": "sw-34",
+      "target": "도서관 열람실에서 공부하고 있어요.",
+      "translation": "I am studying in the library reading room."
+    },
+    {
+      "id": "sw-35",
+      "target": "동아리에 가입하고 싶습니다.",
+      "translation": "I would like to join a student club."
+    },
+    {
+      "id": "sw-36",
+      "target": "강의 계획서를 확인해 보세요.",
+      "translation": "Please check the course syllabus."
+    },
+    {
+      "id": "sw-37",
+      "target": "장학금을 신청하려고 합니다.",
+      "translation": "I would like to apply for a scholarship."
+    },
+    {
+      "id": "sw-38",
+      "target": "출석을 부르겠습니다.",
+      "translation": "I will take attendance now."
+    },
+    {
+      "id": "sw-39",
+      "target": "발표 자료를 화면에 띄워 주세요.",
+      "translation": "Please display the presentation slides on the screen."
+    },
+    {
+      "id": "sw-40",
+      "target": "학식 먹으러 학생회관에 갈까요?",
+      "translation": "Shall we go to the student union building to eat cafeteria food?"
+    },
+    {
+      "id": "sw-41",
+      "target": "진행 상황을 공유해 주시겠습니까?",
+      "translation": "Could you share the current progress status?"
+    },
+    {
+      "id": "sw-42",
+      "target": "일정을 변경해도 괜찮을까요?",
+      "translation": "Would it be alright to reschedule?"
+    },
+    {
+      "id": "sw-43",
+      "target": "차질 없이 준비하도록 하겠습니다.",
+      "translation": "I will make sure everything is prepared without any setbacks."
+    },
+    {
+      "id": "sw-44",
+      "target": "요청하신 자료를 송부합니다.",
+      "translation": "I am sending the requested documents."
+    },
+    {
+      "id": "sw-45",
+      "target": "협조해 주셔서 진심으로 감사드립니다.",
+      "translation": "Thank you very much for your kind cooperation."
+    },
+    {
+      "id": "sw-46",
+      "target": "명확하게 설명해 주셔서 이해가 잘 됩니다.",
+      "translation": "Your clear explanation makes it easy to understand."
+    },
+    {
+      "id": "sw-47",
+      "target": "추가 질문이 있으시면 언제든지 연락 주세요.",
+      "translation": "If you have any further questions, please contact me anytime."
+    },
+    {
+      "id": "sw-48",
+      "target": "연차 휴가를 신청했습니다.",
+      "translation": "I applied for annual paid leave."
+    },
+    {
+      "id": "sw-49",
+      "target": "퇴근 후 회식이 있습니다.",
+      "translation": "There is a team dinner after work."
+    },
+    {
+      "id": "sw-50",
+      "target": "새로운 프로젝트를 성공적으로 마쳤습니다.",
+      "translation": "We successfully completed the new project."
+    }
+  ]
+}

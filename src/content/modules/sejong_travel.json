@@ -1,0 +1,257 @@
+{
+  "id": "sejong_travel",
+  "title": "Sejong — Travel & Public Services",
+  "description": "Train ticketing, subway navigation, airport, post office, and banking",
+  "items": [
+    {
+      "id": "st-1",
+      "target": "서울행 기차 표 두 장 주세요.",
+      "translation": "Two train tickets to Seoul, please."
+    },
+    {
+      "id": "st-2",
+      "target": "출발 시간이 언제예요?",
+      "translation": "What time is the departure?"
+    },
+    {
+      "id": "st-3",
+      "target": "어느 승강장으로 가야 하나요?",
+      "translation": "Which platform should I go to?"
+    },
+    {
+      "id": "st-4",
+      "target": "창가 쪽 좌석으로 부탁드립니다.",
+      "translation": "A window seat, please."
+    },
+    {
+      "id": "st-5",
+      "target": "복도 쪽 좌석이 남아 있나요?",
+      "translation": "Are there any aisle seats left?"
+    },
+    {
+      "id": "st-6",
+      "target": "왕복 표로 끊어 주세요.",
+      "translation": "Please give me a round-trip ticket."
+    },
+    {
+      "id": "st-7",
+      "target": "다음 기차는 몇 시에 있습니까?",
+      "translation": "What time is the next train?"
+    },
+    {
+      "id": "st-8",
+      "target": "교통카드를 충전하고 싶어요.",
+      "translation": "I would like to recharge my transit card."
+    },
+    {
+      "id": "st-9",
+      "target": "이 호선으로 갈아타려면 어디로 가야 해요?",
+      "translation": "Where do I go to transfer to this line?"
+    },
+    {
+      "id": "st-10",
+      "target": "삼 번 출구는 어디에 있습니까?",
+      "translation": "Where is Exit 3?"
+    },
+    {
+      "id": "st-11",
+      "target": "이번 역에서 내려야 합니다.",
+      "translation": "I need to get off at this station."
+    },
+    {
+      "id": "st-12",
+      "target": "반대 방향 승강장으로 건너갈 수 있나요?",
+      "translation": "Can I cross over to the opposite platform?"
+    },
+    {
+      "id": "st-13",
+      "target": "지하철 막차 시간이 몇 시예요?",
+      "translation": "What time is the last subway train?"
+    },
+    {
+      "id": "st-14",
+      "target": "이 버스 명동 가나요?",
+      "translation": "Does this bus go to Myeongdong?"
+    },
+    {
+      "id": "st-15",
+      "target": "다음 정류장에서 하차해 주세요.",
+      "translation": "Please let me off at the next stop."
+    },
+    {
+      "id": "st-16",
+      "target": "환승 할인이 적용되었어요.",
+      "translation": "The transfer discount has been applied."
+    },
+    {
+      "id": "st-17",
+      "target": "버스가 곧 도착합니다.",
+      "translation": "The bus is arriving soon."
+    },
+    {
+      "id": "st-18",
+      "target": "탑승구가 어디에 있습니까?",
+      "translation": "Where is the boarding gate?"
+    },
+    {
+      "id": "st-19",
+      "target": "짐을 부치려고 합니다.",
+      "translation": "I would like to check my baggage."
+    },
+    {
+      "id": "st-20",
+      "target": "수하물 찾는 곳이 어디예요?",
+      "translation": "Where is the baggage claim?"
+    },
+    {
+      "id": "st-21",
+      "target": "여권과 탑승권을 보여 주세요.",
+      "translation": "Please show your passport and boarding pass."
+    },
+    {
+      "id": "st-22",
+      "target": "기내 수하물 무게 제한이 얼마인가요?",
+      "translation": "What is the weight limit for carry-on baggage?"
+    },
+    {
+      "id": "st-23",
+      "target": "환전소가 어디에 있나요?",
+      "translation": "Where is the currency exchange counter?"
+    },
+    {
+      "id": "st-24",
+      "target": "체크인을 하고 싶습니다.",
+      "translation": "I would like to check in."
+    },
+    {
+      "id": "st-25",
+      "target": "예약자 이름은 김민수입니다.",
+      "translation": "The reservation name is Kim Min-su."
+    },
+    {
+      "id": "st-26",
+      "target": "조식 포함인가요?",
+      "translation": "Is breakfast included?"
+    },
+    {
+      "id": "st-27",
+      "target": "와이파이 비밀번호가 무엇인가요?",
+      "translation": "What is the Wi-Fi password?"
+    },
+    {
+      "id": "st-28",
+      "target": "체크아웃 시간은 몇 시입니까?",
+      "translation": "What time is checkout?"
+    },
+    {
+      "id": "st-29",
+      "target": "짐을 맡길 수 있을까요?",
+      "translation": "Could I store my luggage?"
+    },
+    {
+      "id": "st-30",
+      "target": "지하철에 가방을 두고 내렸어요.",
+      "translation": "I left my bag on the subway."
+    },
+    {
+      "id": "st-31",
+      "target": "분실물 센터가 어디에 있나요?",
+      "translation": "Where is the lost and found center?"
+    },
+    {
+      "id": "st-32",
+      "target": "검은색 배낭을 잃어버렸습니다.",
+      "translation": "I lost a black backpack."
+    },
+    {
+      "id": "st-33",
+      "target": "연락처를 남겨 주시면 연락드리겠습니다.",
+      "translation": "Please leave your contact info and we will call you."
+    },
+    {
+      "id": "st-34",
+      "target": "이 소포를 미국으로 보내고 싶어요.",
+      "translation": "I would like to send this parcel to the United States."
+    },
+    {
+      "id": "st-35",
+      "target": "국제 특급 우편으로 보내 주세요.",
+      "translation": "Please send it by international express mail (EMS)."
+    },
+    {
+      "id": "st-36",
+      "target": "상자 포장 테이프가 어디에 있나요?",
+      "translation": "Where is the box packing tape?"
+    },
+    {
+      "id": "st-37",
+      "target": "도착하는 데 며칠 걸려요?",
+      "translation": "How many days will it take to arrive?"
+    },
+    {
+      "id": "st-38",
+      "target": "달러를 원화로 환전하고 싶습니다.",
+      "translation": "I would like to exchange dollars for Korean won."
+    },
+    {
+      "id": "st-39",
+      "target": "오늘 환율이 어떻게 되나요?",
+      "translation": "What is today's exchange rate?"
+    },
+    {
+      "id": "st-40",
+      "target": "현금 인출기는 어디에 있습니까?",
+      "translation": "Where is the automated teller machine (ATM)?"
+    },
+    {
+      "id": "st-41",
+      "target": "통장을 개설하고 싶어요.",
+      "translation": "I would like to open a bank account."
+    },
+    {
+      "id": "st-42",
+      "target": "비밀번호를 입력해 주세요.",
+      "translation": "Please enter your PIN / password."
+    },
+    {
+      "id": "st-43",
+      "target": "소화제 좀 주세요.",
+      "translation": "Please give me some digestive medicine."
+    },
+    {
+      "id": "st-44",
+      "target": "열이 나고 목이 아파요.",
+      "translation": "I have a fever and a sore throat."
+    },
+    {
+      "id": "st-45",
+      "target": "식후 삼십 분에 드세요.",
+      "translation": "Take it thirty minutes after meals."
+    },
+    {
+      "id": "st-46",
+      "target": "하루에 세 번 복용하세요.",
+      "translation": "Take it three times a day."
+    },
+    {
+      "id": "st-47",
+      "target": "진통제와 해열제를 처방받았습니다.",
+      "translation": "I was prescribed painkillers and fever reducers."
+    },
+    {
+      "id": "st-48",
+      "target": "어디가 불편해서 오셨습니까?",
+      "translation": "What brings you in today? / Where does it hurt?"
+    },
+    {
+      "id": "st-49",
+      "target": "인천공항으로 가 주세요.",
+      "translation": "Please take me to Incheon Airport."
+    },
+    {
+      "id": "st-50",
+      "target": "트렁크를 열어 주실 수 있나요?",
+      "translation": "Could you please open the trunk?"
+    }
+  ]
+}

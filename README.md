@@ -37,8 +37,8 @@ Korean through focused typing practice.
 ## Curriculum & Educational Sources
 
 Our curriculum dataset
-([`src/content/modules/*.json`](file:///Users/dyoo/work/korean-typing-tutor/src/content/modules))
-contains over **7,687+ practice items** across 32 structured modules. Much of the
+([`src/content/modules/*.json`](src/content/modules))
+contains over **7,887+ practice items** across 36 structured modules. Much of the
 curriculum—including beginner row-by-row progression drills, expanded vocabulary, K-Pop slang,
 single-sentence reading passage splits, and Revised Romanization—was generated, structured, and
 curated in collaboration with **Antigravity** (Google DeepMind's agentic AI coding assistant).
@@ -59,9 +59,8 @@ curated in collaboration with **Antigravity** (Google DeepMind's agentic AI codi
      (Basic Korean Dictionary for Learners, licensed under CC BY-SA 2.0 KR).
 4. **[King Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) —
    [Sejonghakdang Online Learning Portal (Nuri-Sejong)](https://www.sejonghakdang.org/)**:
-   - Practical situational conversation modules (ordering food at cafes/restaurants, taking public
-     transit, asking for directions, shopping, and hospital/pharmacy symptoms) and introductory dialogues
-     based on the open spoken Korean curriculum published under the
+   - Practical situational conversation, spoken Q&A dialogues, travel/transit, workplace/campus communication,
+     and cultural lifestyle modules based on the open spoken Korean curriculum published under the
      **Korea Open Government License (공공누리 / KOGL Type 1: Attribution)**.
 5. **[Korean Proverbs & Sayings (속담 / 사자성어)](https://krdict.korean.go.kr/)**:
    - Classic Korean proverbs and idioms with literal and figurative English translations

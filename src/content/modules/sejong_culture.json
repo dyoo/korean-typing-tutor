@@ -1,0 +1,257 @@
+{
+  "id": "sejong_culture",
+  "title": "Sejong — Lifestyle & Cultural Customs",
+  "description": "Seasonal traditions, dining etiquette, social customs, and modern life",
+  "items": [
+    {
+      "id": "sc-1",
+      "target": "설날 아침에는 온 가족이 떡국을 먹습니다.",
+      "translation": "On Seollal morning, the whole family eats rice cake soup (tteokguk)."
+    },
+    {
+      "id": "sc-2",
+      "target": "어르신께 세배를 드리고 덕담을 듣습니다.",
+      "translation": "We bow to elders on New Year's Day (sebae) and receive words of blessing."
+    },
+    {
+      "id": "sc-3",
+      "target": "추석에는 햅쌀과 햇곡식으로 송편을 빚습니다.",
+      "translation": "On Chuseok, we make half-moon rice cakes (songpyeon) with freshly harvested grains."
+    },
+    {
+      "id": "sc-4",
+      "target": "정월 대보름에는 오곡밥과 부럼을 먹습니다.",
+      "translation": "On Jeongwol Daeboreum (First Full Moon), we eat five-grain rice and crack nuts."
+    },
+    {
+      "id": "sc-5",
+      "target": "동지에는 붉은 팥죽을 쑤어 먹습니다.",
+      "translation": "On Dongji (Winter Solstice), we cook and eat red bean porridge (patjuk)."
+    },
+    {
+      "id": "sc-6",
+      "target": "삼복더위에는 삼계탕을 먹으며 원기를 보충합니다.",
+      "translation": "During the peak summer dog days (Sambok), we eat ginseng chicken soup (samgyetang) to restore energy."
+    },
+    {
+      "id": "sc-7",
+      "target": "아기의 첫 번째 생일을 돌잔치라고 합니다.",
+      "translation": "A baby's first birthday celebration is called a doljanchi."
+    },
+    {
+      "id": "sc-8",
+      "target": "돌잡이에서 아기가 잡은 물건으로 미래를 점칩니다.",
+      "translation": "During doljabi, the object a baby picks is said to foresee their future."
+    },
+    {
+      "id": "sc-9",
+      "target": "아기가 태어난 지 백 일이 되면 백일잔치를 엽니다.",
+      "translation": "When a baby reaches one hundred days after birth, a 100-day celebration (baegil) is held."
+    },
+    {
+      "id": "sc-10",
+      "target": "집들이 선물로 휴지와 세제를 주로 선물합니다.",
+      "translation": "Toilet paper and laundry detergent are popular housewarming gifts symbolizing prosperity and smooth success."
+    },
+    {
+      "id": "sc-11",
+      "target": "휴지처럼 일이 술술 풀리기를 바랍니다.",
+      "translation": "May everything unfold smoothly like unrolling toilet paper."
+    },
+    {
+      "id": "sc-12",
+      "target": "어른이 먼저 수저를 드신 후에 식사를 시작합니다.",
+      "translation": "We wait for elders to pick up their utensils before starting to eat."
+    },
+    {
+      "id": "sc-13",
+      "target": "웃어른께 술이나 음료를 따를 때는 두 손으로 따릅니다.",
+      "translation": "When pouring a drink for an elder, we always pour with two hands."
+    },
+    {
+      "id": "sc-14",
+      "target": "식사 전에는 잘 먹겠습니다라고 인사합니다.",
+      "translation": "Before eating, we say 'I will eat well' (thank you for the food)."
+    },
+    {
+      "id": "sc-15",
+      "target": "식사가 끝난 후에는 잘 먹었습니다라고 인사합니다.",
+      "translation": "After finishing a meal, we say 'I ate well' (thank you for the meal)."
+    },
+    {
+      "id": "sc-16",
+      "target": "식당에서 반찬은 무료로 추가할 수 있습니다.",
+      "translation": "At Korean restaurants, side dishes (banchan) can be refilled for free."
+    },
+    {
+      "id": "sc-17",
+      "target": "한국에서는 숟가락으로 국을 먹고 젓가락으로 반찬을 집습니다.",
+      "translation": "In Korea, we use spoons for soup/rice and chopsticks for side dishes."
+    },
+    {
+      "id": "sc-18",
+      "target": "밥그릇을 손에 들고 먹지 않는 것이 전통 예절입니다.",
+      "translation": "In traditional etiquette, rice bowls are left on the table rather than held in hand."
+    },
+    {
+      "id": "sc-19",
+      "target": "한국의 온돌 문화는 바닥을 따뜻하게 데우는 난방 방식입니다.",
+      "translation": "Korea's ondol culture is a traditional heating system that warms the floor from underneath."
+    },
+    {
+      "id": "sc-20",
+      "target": "신발을 벗고 실내에 들어가는 것이 기본 생활 습관입니다.",
+      "translation": "Taking off shoes before entering a home is a fundamental daily habit."
+    },
+    {
+      "id": "sc-21",
+      "target": "한국은 배달 문화가 매우 발달하여 어디서든 음식을 주문할 수 있습니다.",
+      "translation": "Korea has an advanced delivery culture where food can be ordered almost anywhere."
+    },
+    {
+      "id": "sc-22",
+      "target": "카페에서 공부나 일을 하는 사람들을 카공족이라고 부릅니다.",
+      "translation": "People who study or work at cafes are popularly called 'kagongjok'."
+    },
+    {
+      "id": "sc-23",
+      "target": "편의점에서는 도시락과 간편식을 다양하게 즐길 수 있습니다.",
+      "translation": "Convenience stores offer a rich variety of meal boxes (dosirak) and instant foods."
+    },
+    {
+      "id": "sc-24",
+      "target": "쓰레기는 종량제 봉투에 담아 분리수거를 철저히 해야 합니다.",
+      "translation": "Garbage must be placed in designated standard prepaid bags with strict recycling separation."
+    },
+    {
+      "id": "sc-25",
+      "target": "한국의 찜질방에서는 양머리 수건을 쓰고 식혜와 구운 달걀을 먹습니다.",
+      "translation": "At Korean jjimjilbang saunas, people wear sheep-head folded towels and enjoy sweet rice punch (sikhye) with baked eggs."
+    },
+    {
+      "id": "sc-26",
+      "target": "김장철에는 온 가족과 이웃이 모여 겨울 동안 먹을 김치를 담급니다.",
+      "translation": "During the gimjang season, families and neighbors gather to make large batches of kimchi for winter."
+    },
+    {
+      "id": "sc-27",
+      "target": "유네스코 인류무형문화유산에 김장 문화가 등재되어 있습니다.",
+      "translation": "Kimjang (kimchi-making culture) is inscribed on UNESCO's Intangible Cultural Heritage list."
+    },
+    {
+      "id": "sc-28",
+      "target": "명절에는 고향을 찾아가는 귀성 행렬로 고속도로가 붐빕니다.",
+      "translation": "During major holidays, highways become busy with long lines of travelers heading to their hometowns."
+    },
+    {
+      "id": "sc-29",
+      "target": "차례상에는 정성을 담은 다양한 음식을 정갈하게 차립니다.",
+      "translation": "The ancestral ceremonial table (charyesang) is neatly set with respectfully prepared traditional foods."
+    },
+    {
+      "id": "sc-30",
+      "target": "한복의 고운 색과 우아한 곡선미는 한국 전통의 아름다움입니다.",
+      "translation": "The graceful colors and elegant curves of the hanbok represent the beauty of Korean tradition."
+    },
+    {
+      "id": "sc-31",
+      "target": "전통 시장에서는 넉넉한 덤과 정을 느낄 수 있습니다.",
+      "translation": "In traditional markets, you can experience warm community warmth (jeong) and generous extra portions (deom)."
+    },
+    {
+      "id": "sc-32",
+      "target": "치킨과 맥주를 함께 즐기는 문화를 치맥이라고 부릅니다.",
+      "translation": "The culture of enjoying fried chicken and beer together is called 'chimaek'."
+    },
+    {
+      "id": "sc-33",
+      "target": "비 오는 날에는 바삭한 파전과 막걸리를 즐겨 먹습니다.",
+      "translation": "On rainy days, people love eating crispy scallion pancakes (pajeon) paired with makgeolli rice wine."
+    },
+    {
+      "id": "sc-34",
+      "target": "미역국은 생일날 어머니의 은혜를 기리며 먹는 음식입니다.",
+      "translation": "Seaweed soup (miyeokguk) is eaten on birthdays to honor a mother's grace and love."
+    },
+    {
+      "id": "sc-35",
+      "target": "수능 날에는 시험을 잘 보라는 의미로 찹쌀떡과 엿을 선물합니다.",
+      "translation": "On college entrance exam day (Suneung), sticky rice cakes and yeot taffy are given as gifts for good luck."
+    },
+    {
+      "id": "sc-36",
+      "target": "결혼식에 참석할 때는 축의금 봉투를 전달합니다.",
+      "translation": "When attending a wedding, guests present congratulatory gift money in an envelope."
+    },
+    {
+      "id": "sc-37",
+      "target": "장례식장에 방문할 때는 단정한 검은색 옷을 입고 조문합니다.",
+      "translation": "When visiting a funeral hall, guests dress in neat black attire to offer condolences."
+    },
+    {
+      "id": "sc-38",
+      "target": "한국의 젓가락은 주로 쇠로 만들어져 납작한 형태를 띱니다.",
+      "translation": "Korean chopsticks are traditionally made of stainless steel or metal with a flat shape."
+    },
+    {
+      "id": "sc-39",
+      "target": "밤늦게까지 안심하고 다닐 수 있는 치안이 좋은 나라입니다.",
+      "translation": "It is a safe country where people can walk around comfortably even late at night."
+    },
+    {
+      "id": "sc-40",
+      "target": "전국 어디서나 빠른 초고속 무선 인터넷을 이용할 수 있습니다.",
+      "translation": "High-speed wireless internet is accessible almost everywhere across the country."
+    },
+    {
+      "id": "sc-41",
+      "target": "처음 만난 사람과 나이를 물어보며 호칭을 정하기도 합니다.",
+      "translation": "People often ask each other's age upon first meeting to determine polite terms of address."
+    },
+    {
+      "id": "sc-42",
+      "target": "선후배 관계에서 후배는 선배를 깍듯이 예우합니다.",
+      "translation": "In senior-junior relationships (seonbae-hubae), juniors treat seniors with respectful courtesy."
+    },
+    {
+      "id": "sc-43",
+      "target": "동갑내기 친구 사이에는 말을 편하게 놓습니다.",
+      "translation": "Friends of the same age speak to each other in comfortable informal speech (banmal)."
+    },
+    {
+      "id": "sc-44",
+      "target": "인연을 소중히 여기고 정을 나누는 것이 한국인의 따뜻한 미덕입니다.",
+      "translation": "Valuing meaningful connections (inyeon) and sharing deep affection (jeong) is a cherished Korean virtue."
+    },
+    {
+      "id": "sc-45",
+      "target": "한옥 마을에서는 전통 기와집과 골목길의 정취를 느낄 수 있습니다.",
+      "translation": "In Hanok villages, you can enjoy the atmosphere of traditional tiled-roof houses and scenic stone alleys."
+    },
+    {
+      "id": "sc-46",
+      "target": "국립박물관에서는 찬란한 한국의 역사 유물을 감상할 수 있습니다.",
+      "translation": "At the National Museum, you can admire Korea's splendid historical cultural relics."
+    },
+    {
+      "id": "sc-47",
+      "target": "사계절이 뚜렷하여 계절마다 아름다운 풍경이 펼쳐집니다.",
+      "translation": "Korea has four distinct seasons, each showcasing distinct and scenic landscapes."
+    },
+    {
+      "id": "sc-48",
+      "target": "봄에는 벚꽃 놀이를 가고 가을에는 단풍 구경을 떠납니다.",
+      "translation": "People go cherry blossom viewing in spring and autumn foliage sightseeing in the fall."
+    },
+    {
+      "id": "sc-49",
+      "target": "한글은 세종대왕이 백성을 위해 창제한 과학적인 문자입니다.",
+      "translation": "Hangul is a scientific writing system created by King Sejong the Great for the people."
+    },
+    {
+      "id": "sc-50",
+      "target": "시월 구일 한글날은 훈민정음 반포를 기념하는 국경일입니다.",
+      "translation": "October 9th, Hangul Day, is a national holiday commemorating the proclamation of Hunminjeongeum."
+    }
+  ]
+}
