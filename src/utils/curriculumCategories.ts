@@ -54,6 +54,11 @@ export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
     name: 'TOPIK II & Advanced',
     moduleIds: ['topik2_vocab', 'korean_proverbs', 'topik2_passages'],
   },
+  {
+    id: 'frequency_words',
+    name: 'NIKL Top 6,000 Frequency Vocabulary',
+    moduleIds: ['freq_1k', 'freq_2k', 'freq_3k', 'freq_4k', 'freq_5k', 'freq_6k'],
+  },
 ];
 
 export const ALL_CATEGORY_IDS: string[] = CURRICULUM_CATEGORIES.map((c) => c.id);

@@ -38,6 +38,12 @@ const MODULE_ORDER = [
   'korean_proverbs',
   'topik2_passages',
   'korean_tongue_twisters',
+  'freq_1k',
+  'freq_2k',
+  'freq_3k',
+  'freq_4k',
+  'freq_5k',
+  'freq_6k',
 ];
 
 /** Eagerly import all per-module JSON content files. */

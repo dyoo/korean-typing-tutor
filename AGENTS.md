@@ -120,7 +120,7 @@ distraction-free, high-performance typing experience for English speakers learni
   decomposition.
 - `src/types/mastery.ts`: Type definitions for Jamo statistics, progression items, and mastery
   state.
-- `src/content/modules/*.json`: 21 categorized curriculum and beginner lesson datasets (1,451+
+- `src/content/modules/*.json`: 32 categorized curriculum and beginner lesson datasets (7,687+
   authentic items).
 - `src/content/index.ts`: Curriculum dataset aggregator and canonical module order.
 - `vite.config.js`: Configuration for Vite, PWA, COOP/COEP headers, and Workbox precaching support.
