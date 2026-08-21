@@ -10,7 +10,7 @@ import {
 } from './curriculumCategories';
 
 describe('curriculumCategories helper module', () => {
-  const beginnerCategory = CURRICULUM_CATEGORIES[0]; // Beginner Fundamentals
+  const beginnerCategory = CURRICULUM_CATEGORIES.find((c) => c.id === 'beginner')!;
   const sampleModuleIds = ['mod1', 'mod2', 'mod3'];
 
   it('contains expected categories and category IDs', () => {
@@ -20,9 +20,8 @@ describe('curriculumCategories helper module', () => {
     expect(ALL_CATEGORY_IDS).toContain('mastery_banks');
     expect(ALL_CATEGORY_IDS).toContain('topik1');
 
-    const batchimIndex = ALL_CATEGORY_IDS.indexOf('batchim');
     const masteryIndex = ALL_CATEGORY_IDS.indexOf('mastery_banks');
-    expect(masteryIndex).toBe(batchimIndex + 1);
+    expect(masteryIndex).toBe(0);
   });
 
   it('correctly calculates isGroupAllChecked', () => {

@@ -12,6 +12,11 @@ interface ModuleFile {
 
 /** Canonical ordered list of module IDs for curriculum progression. */
 const MODULE_ORDER = [
+  'mastery_home_row',
+  'mastery_top_row',
+  'mastery_bottom_row',
+  'mastery_shift_keys',
+  'mastery_compound_batchim',
   'b1_home_row_vowels',
   'b2_home_row_consonants',
   'b3_home_row_words',
@@ -20,11 +25,6 @@ const MODULE_ORDER = [
   'b6_shift_keys',
   'l2a_simple_batchim',
   'l2b_complex_batchim',
-  'mastery_home_row',
-  'mastery_top_row',
-  'mastery_bottom_row',
-  'mastery_shift_keys',
-  'mastery_compound_batchim',
   'l3',
   'l4',
   'l5',
