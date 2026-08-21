@@ -27,22 +27,12 @@ export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
       'b4_top_row',
       'b5_bottom_row',
       'b6_shift_keys',
+      'l2a_simple_batchim',
+      'l2b_complex_batchim',
+      'l3',
+      'l4',
+      'l5',
     ],
-  },
-  {
-    id: 'batchim',
-    name: 'Final Consonants (받침)',
-    moduleIds: ['l2a_simple_batchim', 'l2b_complex_batchim'],
-  },
-  {
-    id: 'core',
-    name: 'Core Vocabulary & Verbs',
-    moduleIds: ['l3', 'l4', 'l5'],
-  },
-  {
-    id: 'topik1',
-    name: 'TOPIK I (Elementary)',
-    moduleIds: ['topik1_vocab', 'topik1_verbs', 'topik_grammar'],
   },
   {
     id: 'practical',
@@ -57,6 +47,11 @@ export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
       'korean_culture',
       'korean_tongue_twisters',
     ],
+  },
+  {
+    id: 'topik1',
+    name: 'TOPIK I (Elementary)',
+    moduleIds: ['topik1_vocab', 'topik1_verbs', 'topik_grammar'],
   },
   {
     id: 'topik2',

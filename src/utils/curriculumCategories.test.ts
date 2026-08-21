@@ -15,13 +15,22 @@ describe('curriculumCategories helper module', () => {
 
   it('contains expected categories and category IDs', () => {
     expect(CURRICULUM_CATEGORIES.length).toBeGreaterThan(0);
-    expect(ALL_CATEGORY_IDS).toContain('beginner');
-    expect(ALL_CATEGORY_IDS).toContain('batchim');
     expect(ALL_CATEGORY_IDS).toContain('mastery_banks');
+    expect(ALL_CATEGORY_IDS).toContain('beginner');
+    expect(ALL_CATEGORY_IDS).toContain('practical');
     expect(ALL_CATEGORY_IDS).toContain('topik1');
+    expect(ALL_CATEGORY_IDS).toContain('topik2');
+    expect(ALL_CATEGORY_IDS).toContain('frequency_words');
+
+    expect(ALL_CATEGORY_IDS).not.toContain('batchim');
+    expect(ALL_CATEGORY_IDS).not.toContain('core');
 
     const masteryIndex = ALL_CATEGORY_IDS.indexOf('mastery_banks');
     expect(masteryIndex).toBe(0);
+
+    const practicalIndex = ALL_CATEGORY_IDS.indexOf('practical');
+    const topik1Index = ALL_CATEGORY_IDS.indexOf('topik1');
+    expect(practicalIndex).toBeLessThan(topik1Index);
   });
 
   it('correctly calculates isGroupAllChecked', () => {
