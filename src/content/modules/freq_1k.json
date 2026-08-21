@@ -6,7 +6,7 @@
     {
       "id": "freq-1",
       "target": "것",
-      "translation": "A thing or an object"
+      "translation": "Thing, object, fact"
     },
     {
       "id": "freq-2",
@@ -16,12 +16,12 @@
     {
       "id": "freq-3",
       "target": "있다",
-      "translation": "To be"
+      "translation": "To exist, have, be located"
     },
     {
       "id": "freq-4",
       "target": "수",
-      "translation": "way, method, Number"
+      "translation": "Way, means, ability, possibility"
     },
     {
       "id": "freq-5",
@@ -31,32 +31,32 @@
     {
       "id": "freq-6",
       "target": "나",
-      "translation": "I"
+      "translation": "I, me (informal)"
     },
     {
       "id": "freq-7",
       "target": "없다",
-      "translation": "Do not exist, absent"
+      "translation": "To not exist, not have"
     },
     {
       "id": "freq-8",
       "target": "않다",
-      "translation": "To not do"
+      "translation": "To not do, not be"
     },
     {
       "id": "freq-9",
       "target": "사람",
-      "translation": "Person"
+      "translation": "Person, people, human"
     },
     {
       "id": "freq-10",
       "target": "우리",
-      "translation": "we, our"
+      "translation": "We, us, our"
     },
     {
       "id": "freq-11",
       "target": "그",
-      "translation": "He, That"
+      "translation": "He, that, the"
     },
     {
       "id": "freq-12",
@@ -66,32 +66,32 @@
     {
       "id": "freq-13",
       "target": "보다",
-      "translation": "To try"
+      "translation": "To try doing (auxiliary verb); to see"
     },
     {
       "id": "freq-14",
       "target": "거",
-      "translation": "thing"
+      "translation": "Thing, one (spoken/informal)"
     },
     {
       "id": "freq-15",
       "target": "보다",
-      "translation": "To see"
+      "translation": "To see, look at, watch"
     },
     {
       "id": "freq-16",
       "target": "같다",
-      "translation": "To be similar"
+      "translation": "To be the same, similar, like"
     },
     {
       "id": "freq-17",
       "target": "주다",
-      "translation": "To give, to do for a person"
+      "translation": "To give, do for someone"
     },
     {
       "id": "freq-18",
       "target": "대하다",
-      "translation": "Face, confront"
+      "translation": "To treat, face; concerning, regarding"
     },
     {
       "id": "freq-19",
@@ -101,42 +101,42 @@
     {
       "id": "freq-20",
       "target": "년",
-      "translation": "Year"
+      "translation": "Year (counter/noun)"
     },
     {
       "id": "freq-21",
       "target": "한",
-      "translation": "One, a single"
+      "translation": "One, a single, about"
     },
     {
       "id": "freq-22",
       "target": "말",
-      "translation": "words, speaking"
+      "translation": "Word, words, speech, language"
     },
     {
       "id": "freq-23",
       "target": "일",
-      "translation": "Work"
+      "translation": "Work, task, matter, incident"
     },
     {
       "id": "freq-24",
       "target": "이",
-      "translation": "A person, This"
+      "translation": "This; this person; tooth; two"
     },
     {
       "id": "freq-25",
       "target": "말하다",
-      "translation": "Speak"
+      "translation": "To speak, say, talk"
     },
     {
       "id": "freq-26",
       "target": "위하다",
-      "translation": "To do for the sake of"
+      "translation": "To do for the sake of, benefit"
     },
     {
       "id": "freq-27",
       "target": "그러나",
-      "translation": "However or but still"
+      "translation": "However, but, yet"
     },
     {
       "id": "freq-28",
@@ -146,47 +146,47 @@
     {
       "id": "freq-29",
       "target": "알다",
-      "translation": "To know"
+      "translation": "To know, understand"
     },
     {
       "id": "freq-30",
       "target": "씨",
-      "translation": "~ Mr."
+      "translation": "Mr., Ms. (honorific title); seed"
     },
     {
       "id": "freq-31",
       "target": "그렇다",
-      "translation": "That is right or yes."
+      "translation": "To be so, that is right"
     },
     {
       "id": "freq-32",
       "target": "크다",
-      "translation": "To be big, large"
+      "translation": "To be big, large, tall"
     },
     {
       "id": "freq-33",
       "target": "일",
-      "translation": "One day"
+      "translation": "Day (counter); one"
     },
     {
       "id": "freq-34",
       "target": "사회",
-      "translation": "culture, society"
+      "translation": "Society, community"
     },
     {
       "id": "freq-35",
       "target": "많다",
-      "translation": "many, much"
+      "translation": "To be many, much, a lot"
     },
     {
       "id": "freq-36",
       "target": "안",
-      "translation": "~ not ~ + VERB"
+      "translation": "Not (negation adverb)"
     },
     {
       "id": "freq-37",
       "target": "좋다",
-      "translation": "To be good"
+      "translation": "To be good, nice, fine"
     },
     {
       "id": "freq-38",
@@ -196,357 +196,357 @@
     {
       "id": "freq-39",
       "target": "받다",
-      "translation": "Receive"
+      "translation": "To receive, get, accept"
     },
     {
       "id": "freq-40",
       "target": "그것",
-      "translation": "That thing"
+      "translation": "That thing, that, it"
     },
     {
       "id": "freq-41",
       "target": "집",
-      "translation": "House"
+      "translation": "House, home"
     },
     {
       "id": "freq-42",
       "target": "나오다",
-      "translation": "Come out"
+      "translation": "To come out, appear, emerge"
     },
     {
       "id": "freq-43",
       "target": "그리고",
-      "translation": "And or and then"
+      "translation": "And, and then"
     },
     {
       "id": "freq-44",
       "target": "문제",
-      "translation": "question, problem"
+      "translation": "Problem, issue, question"
     },
     {
       "id": "freq-45",
       "target": "그런",
-      "translation": "Such a"
+      "translation": "Such, like that, that kind of"
     },
     {
       "id": "freq-46",
       "target": "살다",
-      "translation": "To live"
+      "translation": "To live, reside"
     },
     {
       "id": "freq-47",
       "target": "저",
-      "translation": "That"
+      "translation": "That (over there); I, me (humble)"
     },
     {
       "id": "freq-48",
       "target": "못하다",
-      "translation": "Be impossible"
+      "translation": "To be unable to do, be poor at"
     },
     {
       "id": "freq-49",
       "target": "생각하다",
-      "translation": "To think"
+      "translation": "To think, consider"
     },
     {
       "id": "freq-50",
       "target": "모르다",
-      "translation": "To not know"
+      "translation": "To not know, be unaware of"
     },
     {
       "id": "freq-51",
       "target": "속",
-      "translation": "The inside"
+      "translation": "Inside, interior, stomach"
     },
     {
       "id": "freq-52",
       "target": "만들다",
-      "translation": "To make"
+      "translation": "To make, build, create"
     },
     {
       "id": "freq-53",
       "target": "데",
-      "translation": "Place, point, instance"
+      "translation": "Place, point, instance (bound noun)"
     },
     {
       "id": "freq-54",
       "target": "앞",
-      "translation": "In front of, before"
+      "translation": "Front, in front of, future"
     },
     {
       "id": "freq-55",
       "target": "경우",
-      "translation": "A case or an instance"
+      "translation": "Case, instance, circumstance"
     },
     {
       "id": "freq-56",
       "target": "중",
-      "translation": "The center, the middle"
+      "translation": "Middle, center; among, during"
     },
     {
       "id": "freq-57",
       "target": "어떤",
-      "translation": "What kind of, what sort of"
+      "translation": "Which, what kind of, a certain"
     },
     {
       "id": "freq-58",
       "target": "잘",
-      "translation": "Well"
+      "translation": "Well, skillfully, often"
     },
     {
       "id": "freq-59",
       "target": "그녀",
-      "translation": "She"
+      "translation": "She, her"
     },
     {
       "id": "freq-60",
       "target": "먹다",
-      "translation": "Eat, chow down on"
+      "translation": "To eat, have (a meal)"
     },
     {
       "id": "freq-61",
       "target": "자신",
-      "translation": "one’s own self, one\\'s own body"
+      "translation": "Oneself, self; confidence"
     },
     {
       "id": "freq-62",
       "target": "문화",
-      "translation": "culture"
+      "translation": "Culture"
     },
     {
       "id": "freq-63",
       "target": "원",
-      "translation": "A unit of south korean money, KRW"
+      "translation": "Won (Korean currency); circle"
     },
     {
       "id": "freq-64",
       "target": "생각",
-      "translation": "Thought"
+      "translation": "Thought, idea, thinking"
     },
     {
       "id": "freq-65",
       "target": "어떻다",
-      "translation": "how, what.. do you think of"
+      "translation": "To be how, be in what state"
     },
     {
       "id": "freq-66",
       "target": "명",
-      "translation": "Person counter"
+      "translation": "Person, people (counter)"
     },
     {
       "id": "freq-67",
       "target": "통하다",
-      "translation": "Run, lead; flow; go through"
+      "translation": "To go through, flow, communicate"
     },
     {
       "id": "freq-68",
       "target": "그러다",
-      "translation": "and so, and then, well"
+      "translation": "To do so, say so"
     },
     {
       "id": "freq-69",
       "target": "그러다",
-      "translation": "and so, and then, well"
+      "translation": "To do so, say so"
     },
     {
       "id": "freq-70",
       "target": "소리",
-      "translation": "A sound, noise"
+      "translation": "Sound, noise, voice"
     },
     {
       "id": "freq-71",
       "target": "다시",
-      "translation": "Again"
+      "translation": "Again, once more"
     },
     {
       "id": "freq-72",
       "target": "다른",
-      "translation": "Different"
+      "translation": "Other, different, another"
     },
     {
       "id": "freq-73",
       "target": "이런",
-      "translation": "Such, like this"
+      "translation": "Such, like this, this kind of"
     },
     {
       "id": "freq-74",
       "target": "여자",
-      "translation": "woman, female"
+      "translation": "Woman, female"
     },
     {
       "id": "freq-75",
       "target": "개",
-      "translation": "Unit or piece"
+      "translation": "Item, piece, thing (counter); dog"
     },
     {
       "id": "freq-76",
       "target": "정도",
-      "translation": "grade, degree"
+      "translation": "Degree, extent, approximately"
     },
     {
       "id": "freq-77",
       "target": "다",
-      "translation": "All, everything"
+      "translation": "All, everything, entirely"
     },
     {
       "id": "freq-78",
       "target": "좀",
-      "translation": "A little"
+      "translation": "A little, please"
     },
     {
       "id": "freq-79",
       "target": "싶다",
-      "translation": "want, hope"
+      "translation": "To want to, wish (auxiliary verb)"
     },
     {
       "id": "freq-80",
       "target": "보이다",
-      "translation": "see, catch sight of"
+      "translation": "To be seen, look, show"
     },
     {
       "id": "freq-81",
       "target": "가지다",
-      "translation": "To have or take or hold"
+      "translation": "To have, hold, possess"
     },
     {
       "id": "freq-82",
       "target": "함께",
-      "translation": "Together, with"
+      "translation": "Together, along with"
     },
     {
       "id": "freq-83",
       "target": "아이",
-      "translation": "Child"
+      "translation": "Child, kid, baby"
     },
     {
       "id": "freq-84",
       "target": "지나다",
-      "translation": "pass, elapse, go on"
+      "translation": "To pass, elapse, go by"
     },
     {
       "id": "freq-85",
       "target": "많이",
-      "translation": "A lot"
+      "translation": "A lot, much, many"
     },
     {
       "id": "freq-86",
       "target": "시간",
-      "translation": "Time"
+      "translation": "Time, hour (duration)"
     },
     {
       "id": "freq-87",
       "target": "너",
-      "translation": "You"
+      "translation": "You (informal)"
     },
     {
       "id": "freq-88",
       "target": "인간",
-      "translation": "A person, a human being"
+      "translation": "Human being, person, mankind"
     },
     {
       "id": "freq-89",
       "target": "사실",
-      "translation": "The truth, a fact"
+      "translation": "Fact, truth; actually"
     },
     {
       "id": "freq-90",
       "target": "나다",
-      "translation": "To be born"
+      "translation": "To occur, arise, sprout, grow"
     },
     {
       "id": "freq-91",
       "target": "이렇다",
-      "translation": "Like this"
+      "translation": "To be like this"
     },
     {
       "id": "freq-92",
       "target": "어머니",
-      "translation": "Mom"
+      "translation": "Mother"
     },
     {
       "id": "freq-93",
       "target": "눈",
-      "translation": "Eyes"
+      "translation": "Eye, eyes; snow"
     },
     {
       "id": "freq-94",
       "target": "뭐",
-      "translation": "Huh? (2) something"
+      "translation": "What, something; well"
     },
     {
       "id": "freq-95",
       "target": "점",
-      "translation": "Store"
+      "translation": "Point, dot, aspect; mark"
     },
     {
       "id": "freq-96",
       "target": "의하다",
-      "translation": "To be due to, owing to"
+      "translation": "To be based on, be due to, by means of"
     },
     {
       "id": "freq-97",
       "target": "시대",
-      "translation": "An age, period"
+      "translation": "Period, epoch, era, age"
     },
     {
       "id": "freq-98",
       "target": "다음",
-      "translation": "Next"
+      "translation": "Next, following, then"
     },
     {
       "id": "freq-99",
       "target": "이러하다",
-      "translation": "Be this way, be like follows"
+      "translation": "To be like this, be as follows"
     },
     {
       "id": "freq-100",
       "target": "누구",
-      "translation": "Who"
+      "translation": "Who, someone, anyone"
     },
     {
       "id": "freq-101",
       "target": "곳",
-      "translation": "Place"
+      "translation": "Place, location, spot"
     },
     {
       "id": "freq-102",
       "target": "여러",
-      "translation": "many, various"
+      "translation": "Many, various, several"
     },
     {
       "id": "freq-103",
       "target": "안",
-      "translation": "Inside"
+      "translation": "Inside, interior, within"
     },
     {
       "id": "freq-104",
       "target": "하나",
-      "translation": "One"
+      "translation": "One, a single"
     },
     {
       "id": "freq-105",
       "target": "세계",
-      "translation": "World"
+      "translation": "World, the globe"
     },
     {
       "id": "freq-106",
       "target": "버리다",
-      "translation": "(following a verb) the verb\\'s action is over, perhaps in a sad way"
+      "translation": "To throw away, discard; to end up doing (auxiliary verb)"
     },
     {
       "id": "freq-107",
       "target": "위",
-      "translation": "The upper part, above"
+      "translation": "Top, above, upper part; stomach"
     },
     {
       "id": "freq-108",
       "target": "운동",
-      "translation": "Motion, movement"
+      "translation": "Exercise, workout, sports; movement"
     },
     {
       "id": "freq-109",
       "target": "퍼센트",
-      "translation": "Percent"
+      "translation": "Percent, percentage"
     },
     {
       "id": "freq-110",
@@ -556,22 +556,22 @@
     {
       "id": "freq-111",
       "target": "자기",
-      "translation": "Oneself, number one, numerouno, self"
+      "translation": "Oneself, self; you (between couples)"
     },
     {
       "id": "freq-112",
       "target": "가장",
-      "translation": "Most"
+      "translation": "Most, best; head of household"
     },
     {
       "id": "freq-113",
       "target": "대통령",
-      "translation": "The president"
+      "translation": "President (of a nation)"
     },
     {
       "id": "freq-114",
       "target": "가지",
-      "translation": "One of the kind or a sort"
+      "translation": "Kind, sort, variety (counter); eggplant; branch"
     },
     {
       "id": "freq-115",
@@ -581,42 +581,42 @@
     {
       "id": "freq-116",
       "target": "바로",
-      "translation": "Right, correctly"
+      "translation": "Directly, right away, precisely"
     },
     {
       "id": "freq-117",
       "target": "어느",
-      "translation": "Some, a certain"
+      "translation": "Which, certain, some"
     },
     {
       "id": "freq-118",
       "target": "그래서",
-      "translation": "And so accordingly"
+      "translation": "So, therefore, and so"
     },
     {
       "id": "freq-119",
       "target": "무엇",
-      "translation": "That thing, whatever"
+      "translation": "What, something"
     },
     {
       "id": "freq-120",
       "target": "정부",
-      "translation": "Government"
+      "translation": "Government, administration"
     },
     {
       "id": "freq-121",
       "target": "모든",
-      "translation": "Every one"
+      "translation": "All, every"
     },
     {
       "id": "freq-122",
       "target": "번",
-      "translation": "Number, how many times"
+      "translation": "Time, turn, number (counter)"
     },
     {
       "id": "freq-123",
       "target": "그거",
-      "translation": "That thing"
+      "translation": "That thing, that (spoken/informal)"
     },
     {
       "id": "freq-124",
@@ -626,57 +626,57 @@
     {
       "id": "freq-125",
       "target": "국가",
-      "translation": "A state or a nation"
+      "translation": "Nation, state, country; national anthem"
     },
     {
       "id": "freq-126",
       "target": "그런데",
-      "translation": "But or however"
+      "translation": "But, however, by the way"
     },
     {
       "id": "freq-127",
       "target": "날",
-      "translation": "Day"
+      "translation": "Day, date; blade"
     },
     {
       "id": "freq-128",
       "target": "여기",
-      "translation": "A hobby"
+      "translation": "Here, this place"
     },
     {
       "id": "freq-129",
       "target": "모두",
-      "translation": "Everybody"
+      "translation": "All, everyone, everything"
     },
     {
       "id": "freq-130",
       "target": "여성",
-      "translation": "Female"
+      "translation": "Woman, female, women"
     },
     {
       "id": "freq-131",
       "target": "친구",
-      "translation": "A friend"
+      "translation": "Friend"
     },
     {
       "id": "freq-132",
       "target": "마음",
-      "translation": "Heart"
+      "translation": "Mind, heart, feelings"
     },
     {
       "id": "freq-133",
       "target": "후",
-      "translation": "After"
+      "translation": "After, later, behind"
     },
     {
       "id": "freq-134",
       "target": "놓다",
-      "translation": "Put, place"
+      "translation": "To put, place, release, let go"
     },
     {
       "id": "freq-135",
       "target": "관계",
-      "translation": "Connection or relation"
+      "translation": "Relationship, connection, relation"
     },
     {
       "id": "freq-136",
@@ -686,77 +686,77 @@
     {
       "id": "freq-137",
       "target": "남자",
-      "translation": "Boy"
+      "translation": "Man, male"
     },
     {
       "id": "freq-138",
       "target": "어디",
-      "translation": "Where?"
+      "translation": "Where, somewhere"
     },
     {
       "id": "freq-139",
       "target": "몸",
-      "translation": "body, physique"
+      "translation": "Body, physique, health"
     },
     {
       "id": "freq-140",
       "target": "얼굴",
-      "translation": "Face"
+      "translation": "Face, look, expression"
     },
     {
       "id": "freq-141",
       "target": "왜",
-      "translation": "Why?"
+      "translation": "Why, for what reason"
     },
     {
       "id": "freq-142",
       "target": "나타나다",
-      "translation": "Come out, appear"
+      "translation": "To appear, show up, emerge"
     },
     {
       "id": "freq-143",
       "target": "지역",
-      "translation": "An area, region"
+      "translation": "Area, region, district"
     },
     {
       "id": "freq-144",
       "target": "다르다",
-      "translation": "Be different"
+      "translation": "To be different, other"
     },
     {
       "id": "freq-145",
       "target": "모습",
-      "translation": "shape, body"
+      "translation": "Appearance, figure, look, image"
     },
     {
       "id": "freq-146",
       "target": "물",
-      "translation": "Water"
+      "translation": "Water, liquid"
     },
     {
       "id": "freq-147",
       "target": "만나다",
-      "translation": "Meet"
+      "translation": "To meet, see (someone)"
     },
     {
       "id": "freq-148",
       "target": "내다",
-      "translation": "produce something"
+      "translation": "To make, produce, pay, submit"
     },
     {
       "id": "freq-149",
       "target": "보이다",
-      "translation": "show, let see"
+      "translation": "To show, let see; to be seen"
     },
     {
       "id": "freq-150",
       "target": "쓰다",
-      "translation": "To write"
+      "translation": "To write, compose"
     },
     {
       "id": "freq-151",
       "target": "이것",
-      "translation": "This thing"
+      "translation": "This thing, this"
     },
     {
       "id": "freq-152",
@@ -771,122 +771,122 @@
     {
       "id": "freq-154",
       "target": "길",
-      "translation": "Road"
+      "translation": "Road, street, way, path"
     },
     {
       "id": "freq-155",
       "target": "생활",
-      "translation": "lifestyle, livelihood"
+      "translation": "Life, living, lifestyle"
     },
     {
       "id": "freq-156",
       "target": "쓰다",
-      "translation": "Take (medicine)"
+      "translation": "To use; to be bitter; to wear (a hat)"
     },
     {
       "id": "freq-157",
       "target": "뿐",
-      "translation": "only, alone, merely"
+      "translation": "Only, just, merely (bound noun/particle)"
     },
     {
       "id": "freq-158",
       "target": "사이",
-      "translation": "space between 2 points; the relationship between 2 people"
+      "translation": "Between, space, relationship, interval"
     },
     {
       "id": "freq-159",
       "target": "방법",
-      "translation": "Way, method"
+      "translation": "Way, method, means"
     },
     {
       "id": "freq-160",
       "target": "새롭다",
-      "translation": "To be new, novel"
+      "translation": "To be new, fresh, novel"
     },
     {
       "id": "freq-161",
       "target": "내다",
-      "translation": "to see through, to make it through sth"
+      "translation": "To achieve, pull off, see through"
     },
     {
       "id": "freq-162",
       "target": "앉다",
-      "translation": "To sit down"
+      "translation": "To sit down, take a seat"
     },
     {
       "id": "freq-163",
       "target": "처음",
-      "translation": "First"
+      "translation": "First time, beginning, initially"
     },
     {
       "id": "freq-164",
       "target": "손",
-      "translation": "The hand"
+      "translation": "Hand; guest"
     },
     {
       "id": "freq-165",
       "target": "몇",
-      "translation": "A few"
+      "translation": "How many, several, a few"
     },
     {
       "id": "freq-166",
       "target": "그때",
-      "translation": "Then or at that time"
+      "translation": "That time, then"
     },
     {
       "id": "freq-167",
       "target": "과정",
-      "translation": "Process or course"
+      "translation": "Process, course, curriculum"
     },
     {
       "id": "freq-168",
       "target": "삶",
-      "translation": "Life"
+      "translation": "Life, living, existence"
     },
     {
       "id": "freq-169",
       "target": "갖다",
-      "translation": "To hold"
+      "translation": "To have, hold, possess"
     },
     {
       "id": "freq-170",
       "target": "찾다",
-      "translation": "seek, look for"
+      "translation": "To find, search for, look for"
     },
     {
       "id": "freq-171",
       "target": "특히",
-      "translation": "Especially"
+      "translation": "Especially, particularly"
     },
     {
       "id": "freq-172",
       "target": "시",
-      "translation": "Time"
+      "translation": "Hour, o'clock, time; poem, city"
     },
     {
       "id": "freq-173",
       "target": "이상",
-      "translation": "More than, above"
+      "translation": "More than, above; abnormal"
     },
     {
       "id": "freq-174",
       "target": "지금",
-      "translation": "Now"
+      "translation": "Now, currently, at present"
     },
     {
       "id": "freq-175",
       "target": "나가다",
-      "translation": "To go out"
+      "translation": "To go out, leave, advance"
     },
     {
       "id": "freq-176",
       "target": "이야기",
-      "translation": "Conversation, talk"
+      "translation": "Story, conversation, talk"
     },
     {
       "id": "freq-177",
       "target": "교육",
-      "translation": "Education"
+      "translation": "Education, training"
     },
     {
       "id": "freq-178",
@@ -896,42 +896,42 @@
     {
       "id": "freq-179",
       "target": "경제",
-      "translation": "Economy"
+      "translation": "Economy, economics"
     },
     {
       "id": "freq-180",
       "target": "아직",
-      "translation": "Still"
+      "translation": "Still, yet"
     },
     {
       "id": "freq-181",
       "target": "잡다",
-      "translation": "seize, catch"
+      "translation": "To hold, grab, catch, seize"
     },
     {
       "id": "freq-182",
       "target": "같이",
-      "translation": "Together"
+      "translation": "Together, along with; like, as"
     },
     {
       "id": "freq-183",
       "target": "선생님",
-      "translation": "Teacher"
+      "translation": "Teacher (honorific), Sir, Ma'am"
     },
     {
       "id": "freq-184",
       "target": "예술",
-      "translation": "Art, an art"
+      "translation": "Art, the arts"
     },
     {
       "id": "freq-185",
       "target": "서다",
-      "translation": "To stand"
+      "translation": "To stand, stop, halt"
     },
     {
       "id": "freq-186",
       "target": "못",
-      "translation": "Cannot"
+      "translation": "Cannot, unable to; nail; pond"
     },
     {
       "id": "freq-187",
@@ -946,47 +946,47 @@
     {
       "id": "freq-189",
       "target": "결과",
-      "translation": "Result"
+      "translation": "Result, outcome, consequence"
     },
     {
       "id": "freq-190",
       "target": "내용",
-      "translation": "Contents"
+      "translation": "Content, contents, substance"
     },
     {
       "id": "freq-191",
       "target": "물론",
-      "translation": "Of course"
+      "translation": "Of course, certainly, naturally"
     },
     {
       "id": "freq-192",
       "target": "책",
-      "translation": "A book"
+      "translation": "Book"
     },
     {
       "id": "freq-193",
       "target": "일어나다",
-      "translation": "To rise, get up"
+      "translation": "To get up, wake up, happen, arise"
     },
     {
       "id": "freq-194",
       "target": "당신",
-      "translation": "Formal you"
+      "translation": "You (formal/polite, or between spouses)"
     },
     {
       "id": "freq-195",
       "target": "시장",
-      "translation": "market, fair"
+      "translation": "Market; mayor"
     },
     {
       "id": "freq-196",
       "target": "넣다",
-      "translation": "Put in, set in"
+      "translation": "To put in, insert, include"
     },
     {
       "id": "freq-197",
       "target": "중요하다",
-      "translation": "To be important, weighty"
+      "translation": "To be important, significant"
     },
     {
       "id": "freq-198",
@@ -996,82 +996,82 @@
     {
       "id": "freq-199",
       "target": "느끼다",
-      "translation": "To feel"
+      "translation": "To feel, sense, experience"
     },
     {
       "id": "freq-200",
       "target": "어렵다",
-      "translation": "To be hard, difficult"
+      "translation": "To be difficult, hard, tough"
     },
     {
       "id": "freq-201",
       "target": "힘",
-      "translation": "Power"
+      "translation": "Power, strength, energy, effort"
     },
     {
       "id": "freq-202",
       "target": "너무",
-      "translation": "Too much"
+      "translation": "Too, very, excessively"
     },
     {
       "id": "freq-203",
       "target": "나라",
-      "translation": "A country"
+      "translation": "Country, nation, kingdom"
     },
     {
       "id": "freq-204",
       "target": "부르다",
-      "translation": "To call"
+      "translation": "To call, sing; to be full (stomach)"
     },
     {
       "id": "freq-205",
       "target": "의미",
-      "translation": "A meaning, a sense"
+      "translation": "Meaning, sense, significance"
     },
     {
       "id": "freq-206",
       "target": "자리",
-      "translation": "seat, spot"
+      "translation": "Seat, spot, place, position"
     },
     {
       "id": "freq-207",
       "target": "밝히다",
-      "translation": "To light up"
+      "translation": "To brighten, reveal, clarify"
     },
     {
       "id": "freq-208",
       "target": "죽다",
-      "translation": "die, pass away"
+      "translation": "To die, pass away"
     },
     {
       "id": "freq-209",
       "target": "이미",
-      "translation": "Already"
+      "translation": "Already, beforehand"
     },
     {
       "id": "freq-210",
       "target": "쪽",
-      "translation": "Way, direction"
+      "translation": "Side, direction; page"
     },
     {
       "id": "freq-211",
       "target": "정치",
-      "translation": "Politics"
+      "translation": "Politics, policy"
     },
     {
       "id": "freq-212",
       "target": "국민",
-      "translation": "The people or a nationality"
+      "translation": "The public, citizens, people of a nation"
     },
     {
       "id": "freq-213",
       "target": "생명",
-      "translation": "Life"
+      "translation": "Life, living being, lifetime"
     },
     {
       "id": "freq-214",
       "target": "얘기",
-      "translation": "Story"
+      "translation": "Story, talk, conversation"
     },
     {
       "id": "freq-215",
@@ -1081,12 +1081,12 @@
     {
       "id": "freq-216",
       "target": "연구",
-      "translation": "Research"
+      "translation": "Research, study, investigation"
     },
     {
       "id": "freq-217",
       "target": "엄마",
-      "translation": "Mamma"
+      "translation": "Mom, mommy"
     },
     {
       "id": "freq-218",
@@ -1096,57 +1096,57 @@
     {
       "id": "freq-219",
       "target": "하나",
-      "translation": "One"
+      "translation": "One, a single unit"
     },
     {
       "id": "freq-220",
       "target": "내리다",
-      "translation": "Descend"
+      "translation": "To descend, get off, fall (rain/snow), lower"
     },
     {
       "id": "freq-221",
       "target": "사건",
-      "translation": "An event, incident"
+      "translation": "Incident, event, case, affair"
     },
     {
       "id": "freq-222",
       "target": "및",
-      "translation": "As well as"
+      "translation": "And, as well as"
     },
     {
       "id": "freq-223",
       "target": "쉽다",
-      "translation": "To be easy"
+      "translation": "To be easy, simple, likely"
     },
     {
       "id": "freq-224",
       "target": "짓다",
-      "translation": "To make, build; to form a line (a group)"
+      "translation": "To build, make, compose, name"
     },
     {
       "id": "freq-225",
       "target": "이유",
-      "translation": "Reason"
+      "translation": "Reason, cause, excuse"
     },
     {
       "id": "freq-226",
       "target": "필요하다",
-      "translation": "To need"
+      "translation": "To be needed, necessary"
     },
     {
       "id": "freq-227",
       "target": "글",
-      "translation": "words, a verse"
+      "translation": "Writing, text, article, piece"
     },
     {
       "id": "freq-228",
       "target": "생기다",
-      "translation": "arise, occur, happen"
+      "translation": "To arise, happen, form, appear"
     },
     {
       "id": "freq-229",
       "target": "사용하다",
-      "translation": "To use"
+      "translation": "To use, utilize, employ"
     },
     {
       "id": "freq-230",
@@ -1156,7 +1156,7 @@
     {
       "id": "freq-231",
       "target": "밖",
-      "translation": "The outside"
+      "translation": "Outside, exterior; besides"
     },
     {
       "id": "freq-232",
@@ -1166,57 +1166,57 @@
     {
       "id": "freq-233",
       "target": "작다",
-      "translation": "Small"
+      "translation": "To be small, little, tiny"
     },
     {
       "id": "freq-234",
       "target": "타다",
-      "translation": "Ride (bus)"
+      "translation": "To ride, get on; to burn; to mix (drinks)"
     },
     {
       "id": "freq-235",
       "target": "대학",
-      "translation": "University"
+      "translation": "College, university"
     },
     {
       "id": "freq-236",
       "target": "작품",
-      "translation": "A work of art"
+      "translation": "Work of art, piece, creation"
     },
     {
       "id": "freq-237",
       "target": "상황",
-      "translation": "State of things"
+      "translation": "Situation, condition, circumstances"
     },
     {
       "id": "freq-238",
       "target": "가운데",
-      "translation": "In the middle"
+      "translation": "Middle, center; among"
     },
     {
       "id": "freq-239",
       "target": "보내다",
-      "translation": "Send"
+      "translation": "To send, mail; to spend (time)"
     },
     {
       "id": "freq-240",
       "target": "즉",
-      "translation": "namely, that is to say"
+      "translation": "Namely, that is to say, in other words"
     },
     {
       "id": "freq-241",
       "target": "상태",
-      "translation": "condition, state"
+      "translation": "Condition, state, situation"
     },
     {
       "id": "freq-242",
       "target": "이후",
-      "translation": "After that"
+      "translation": "After this, from now on, since"
     },
     {
       "id": "freq-243",
       "target": "당시",
-      "translation": "At that time"
+      "translation": "At that time, in those days"
     },
     {
       "id": "freq-244",
@@ -1226,47 +1226,47 @@
     {
       "id": "freq-245",
       "target": "더욱",
-      "translation": "More and more"
+      "translation": "More and more, even more"
     },
     {
       "id": "freq-246",
       "target": "아주",
-      "translation": "Extremely"
+      "translation": "Very, extremely, quite"
     },
     {
       "id": "freq-247",
       "target": "지방",
-      "translation": "A locality, district"
+      "translation": "Region, countryside; fat"
     },
     {
       "id": "freq-248",
       "target": "밤",
-      "translation": "Night"
+      "translation": "Night, evening; chestnut"
     },
     {
       "id": "freq-249",
       "target": "높다",
-      "translation": "High"
+      "translation": "To be high, tall, lofty"
     },
     {
       "id": "freq-250",
       "target": "최근",
-      "translation": "Recently"
+      "translation": "Recently, lately, nowadays"
     },
     {
       "id": "freq-251",
       "target": "채",
-      "translation": "As it is, no change"
+      "translation": "While still, as it is (bound noun)"
     },
     {
       "id": "freq-252",
       "target": "현실",
-      "translation": "Actuality, reality"
+      "translation": "Reality, actuality"
     },
     {
       "id": "freq-253",
       "target": "환경",
-      "translation": "Environment"
+      "translation": "Environment, surroundings"
     },
     {
       "id": "freq-254",
@@ -1276,117 +1276,117 @@
     {
       "id": "freq-255",
       "target": "먼저",
-      "translation": "First"
+      "translation": "First, beforehand, ahead"
     },
     {
       "id": "freq-256",
       "target": "다니다",
-      "translation": "Go to and from a aplace"
+      "translation": "To attend, commute, go back and forth"
     },
     {
       "id": "freq-257",
       "target": "얼마나",
-      "translation": "How many, how much"
+      "translation": "How much, how many"
     },
     {
       "id": "freq-258",
       "target": "자체",
-      "translation": "one’s own body"
+      "translation": "Itself, oneself"
     },
     {
       "id": "freq-259",
       "target": "열다",
-      "translation": "Open"
+      "translation": "To open, unlock; to hold (an event)"
     },
     {
       "id": "freq-260",
       "target": "머리",
-      "translation": "Head"
+      "translation": "Head, hair, brain"
     },
     {
       "id": "freq-261",
       "target": "묻다",
-      "translation": "to Ask"
+      "translation": "To ask, inquire; to bury; to stain"
     },
     {
       "id": "freq-262",
       "target": "남다",
-      "translation": "Remain, be left over"
+      "translation": "To remain, be left over"
     },
     {
       "id": "freq-263",
       "target": "부분",
-      "translation": "part, portion"
+      "translation": "Part, portion, section"
     },
     {
       "id": "freq-264",
       "target": "기업",
-      "translation": "An enterprise or business"
+      "translation": "Enterprise, business, corporation"
     },
     {
       "id": "freq-265",
       "target": "변화",
-      "translation": "Change, transformation"
+      "translation": "Change, transformation, variation"
     },
     {
       "id": "freq-266",
       "target": "아들",
-      "translation": "son, baby"
+      "translation": "Son"
     },
     {
       "id": "freq-267",
       "target": "아",
-      "translation": "Oh dear"
+      "translation": "Ah, oh (exclamation)"
     },
     {
       "id": "freq-268",
       "target": "선거",
-      "translation": "An election"
+      "translation": "Election"
     },
     {
       "id": "freq-269",
       "target": "관하다",
-      "translation": "Refer to or be about"
+      "translation": "To relate to, be concerning, regarding"
     },
     {
       "id": "freq-270",
       "target": "분",
-      "translation": "Minutes"
+      "translation": "Minute (counter); person (honorific); part"
     },
     {
       "id": "freq-271",
       "target": "그냥",
-      "translation": "Just because or in that condition"
+      "translation": "Just, simply, as it is"
     },
     {
       "id": "freq-272",
       "target": "나누다",
-      "translation": "To divide"
+      "translation": "To divide, split, share"
     },
     {
       "id": "freq-273",
       "target": "이용하다",
-      "translation": "To use, make use of"
+      "translation": "To use, utilize, take advantage of"
     },
     {
       "id": "freq-274",
       "target": "거의",
-      "translation": "Almost or nearly"
+      "translation": "Almost, nearly"
     },
     {
       "id": "freq-275",
       "target": "곧",
-      "translation": "Soon"
+      "translation": "Soon, right away, shortly"
     },
     {
       "id": "freq-276",
       "target": "중심",
-      "translation": "The nucleus, the focus, the heart"
+      "translation": "Center, middle, focus, core"
     },
     {
       "id": "freq-277",
       "target": "활동",
-      "translation": "Activity"
+      "translation": "Activity, action, operations"
     },
     {
       "id": "freq-278",
@@ -1396,62 +1396,62 @@
     {
       "id": "freq-279",
       "target": "서로",
-      "translation": "mutually, one another"
+      "translation": "Each other, mutually, one another"
     },
     {
       "id": "freq-280",
       "target": "관심",
-      "translation": "Concern or interest"
+      "translation": "Interest, attention, concern"
     },
     {
       "id": "freq-281",
       "target": "역시",
-      "translation": "As expected, likewise"
+      "translation": "As expected, also, likewise"
     },
     {
       "id": "freq-282",
       "target": "이거",
-      "translation": "This thing"
+      "translation": "This thing, this (spoken/informal)"
     },
     {
       "id": "freq-283",
       "target": "애",
-      "translation": "A baby, or a slightly derogative word for person"
+      "translation": "Child, kid, baby; anxiety"
     },
     {
       "id": "freq-284",
       "target": "광고",
-      "translation": "Advertisement"
+      "translation": "Advertisement, commercial"
     },
     {
       "id": "freq-285",
       "target": "나다",
-      "translation": "To come out, grow, spring up"
+      "translation": "To come out, grow, arise, occur"
     },
     {
       "id": "freq-286",
       "target": "방",
-      "translation": "A room"
+      "translation": "Room; room (counter)"
     },
     {
       "id": "freq-287",
       "target": "정신",
-      "translation": "mind, spirit"
+      "translation": "Mind, spirit, consciousness"
     },
     {
       "id": "freq-288",
       "target": "이르다",
-      "translation": "To reach, arrive, get at"
+      "translation": "To reach, arrive at; to be early; to tell"
     },
     {
       "id": "freq-289",
       "target": "이루다",
-      "translation": "Accomplish, complete"
+      "translation": "To achieve, accomplish, form"
     },
     {
       "id": "freq-290",
       "target": "아침",
-      "translation": "Morning"
+      "translation": "Morning, breakfast"
     },
     {
       "id": "freq-291",
@@ -1461,97 +1461,97 @@
     {
       "id": "freq-292",
       "target": "현상",
-      "translation": "The present situation, state"
+      "translation": "Phenomenon, symptom; current state"
     },
     {
       "id": "freq-293",
       "target": "기술",
-      "translation": "Art or technique or ability"
+      "translation": "Technology, skill, technique"
     },
     {
       "id": "freq-294",
       "target": "전체",
-      "translation": "The whole, the entire section"
+      "translation": "The whole, all, entirety"
     },
     {
       "id": "freq-295",
       "target": "그래",
-      "translation": "So or yes or that’s right"
+      "translation": "Yes, okay, that is right"
     },
     {
       "id": "freq-296",
       "target": "얻다",
-      "translation": "Get, obtain"
+      "translation": "To get, obtain, gain"
     },
     {
       "id": "freq-297",
       "target": "아름답다",
-      "translation": "To be beautiful"
+      "translation": "To be beautiful, lovely"
     },
     {
       "id": "freq-298",
       "target": "끝",
-      "translation": "The end"
+      "translation": "End, edge, finish"
     },
     {
       "id": "freq-299",
       "target": "민족",
-      "translation": "race, nation, people"
+      "translation": "Ethnic group, nation, people"
     },
     {
       "id": "freq-300",
       "target": "간",
-      "translation": "The interval between"
+      "translation": "Between, interval (counter/noun); liver"
     },
     {
       "id": "freq-301",
       "target": "조사",
-      "translation": "investigation, inquiry"
+      "translation": "Investigation, survey, inquiry; particle (grammar)"
     },
     {
       "id": "freq-302",
       "target": "듯",
-      "translation": "To be like something"
+      "translation": "As if, like (bound noun / ending)"
     },
     {
       "id": "freq-303",
       "target": "입",
-      "translation": "Mouth"
+      "translation": "Mouth, lips"
     },
     {
       "id": "freq-304",
       "target": "뭐",
-      "translation": "Huh? (2) something"
+      "translation": "What, something; well"
     },
     {
       "id": "freq-305",
       "target": "그대로",
-      "translation": "Like that"
+      "translation": "As it is, just as, like that"
     },
     {
       "id": "freq-306",
       "target": "영화",
-      "translation": "A movie"
+      "translation": "Movie, film, cinema"
     },
     {
       "id": "freq-307",
       "target": "필요",
-      "translation": "Need, requirement, necessity"
+      "translation": "Need, necessity, requirement"
     },
     {
       "id": "freq-308",
       "target": "줄",
-      "translation": "way, method"
+      "translation": "Method, way, how to; rope, line"
     },
     {
       "id": "freq-309",
       "target": "하늘",
-      "translation": "The sky"
+      "translation": "Sky, heaven"
     },
     {
       "id": "freq-310",
       "target": "년대",
-      "translation": "Year"
+      "translation": "Decade, era, the ...s (e.g. 1990s)"
     },
     {
       "id": "freq-311",
@@ -1561,152 +1561,152 @@
     {
       "id": "freq-312",
       "target": "자연",
-      "translation": "Nature"
+      "translation": "Nature, natural"
     },
     {
       "id": "freq-313",
       "target": "정말",
-      "translation": "Really"
+      "translation": "Really, truly, actually"
     },
     {
       "id": "freq-314",
       "target": "구조",
-      "translation": "Construction or structure"
+      "translation": "Structure, composition, construction; rescue"
     },
     {
       "id": "freq-315",
       "target": "결국",
-      "translation": "After all or in the end"
+      "translation": "In the end, eventually, after all"
     },
     {
       "id": "freq-316",
       "target": "밥",
-      "translation": "Rice, a meal"
+      "translation": "Rice (cooked), meal, food"
     },
     {
       "id": "freq-317",
       "target": "입다",
-      "translation": "To wear"
+      "translation": "To wear, put on (clothes); to suffer (damage)"
     },
     {
       "id": "freq-318",
       "target": "오히려",
-      "translation": "Rather, preferably"
+      "translation": "Rather, on the contrary, instead"
     },
     {
       "id": "freq-319",
       "target": "프로그램",
-      "translation": "Program"
+      "translation": "Program, show, software"
     },
     {
       "id": "freq-320",
       "target": "네",
-      "translation": "Yes"
+      "translation": "Yes, okay, alright; four"
     },
     {
       "id": "freq-321",
       "target": "이루어지다",
-      "translation": "Get accomplished, achieved"
+      "translation": "To be accomplished, achieved; to consist of"
     },
     {
       "id": "freq-322",
       "target": "남",
-      "translation": "Others, other people"
+      "translation": "Others, other people, stranger; south"
     },
     {
       "id": "freq-323",
       "target": "하루",
-      "translation": "A day"
+      "translation": "One day, a day"
     },
     {
       "id": "freq-324",
       "target": "그림",
-      "translation": "A picture"
+      "translation": "Picture, drawing, painting"
     },
     {
       "id": "freq-325",
       "target": "적",
-      "translation": "The time, the occasion, when"
+      "translation": "Time, occasion, past experience; enemy"
     },
     {
       "id": "freq-326",
       "target": "터",
-      "translation": "one’s status, one’s lot"
+      "translation": "Site, lot, ground, place"
     },
     {
       "id": "freq-327",
       "target": "마시다",
-      "translation": "To drink"
+      "translation": "To drink, sip, inhale"
     },
     {
       "id": "freq-328",
       "target": "치다",
-      "translation": "to attack, assault"
+      "translation": "To hit, strike, play (instrument/sports)"
     },
     {
       "id": "freq-329",
       "target": "혼자",
-      "translation": "Alone"
+      "translation": "Alone, by oneself"
     },
     {
       "id": "freq-330",
       "target": "나가다",
-      "translation": "To advance, proceed, go forward"
+      "translation": "To advance, proceed, go out"
     },
     {
       "id": "freq-331",
       "target": "이제",
-      "translation": "Now"
+      "translation": "Now, from now on"
     },
     {
       "id": "freq-332",
       "target": "교수",
-      "translation": "Teaching or instruction"
+      "translation": "Professor, teaching, instruction"
     },
     {
       "id": "freq-333",
       "target": "술",
-      "translation": "Alcohol"
+      "translation": "Alcohol, liquor, alcoholic drink"
     },
     {
       "id": "freq-334",
       "target": "사랑",
-      "translation": "Love"
+      "translation": "Love, affection"
     },
     {
       "id": "freq-335",
       "target": "전화",
-      "translation": "Telephone"
+      "translation": "Telephone, phone call"
     },
     {
       "id": "freq-336",
       "target": "끝나다",
-      "translation": "To draw to a close or to end"
+      "translation": "To end, finish, be over"
     },
     {
       "id": "freq-337",
       "target": "맞다",
-      "translation": "Be right, correct; to match, be fitting for"
+      "translation": "To be correct, right; to match, fit; to be hit"
     },
     {
       "id": "freq-338",
       "target": "아빠",
-      "translation": "Dad"
+      "translation": "Dad, daddy"
     },
     {
       "id": "freq-339",
       "target": "걸리다",
-      "translation": "To be hung up or suspended"
+      "translation": "To take (time); to hang, be caught, catch (a cold)"
     },
     {
       "id": "freq-340",
       "target": "지키다",
-      "translation": "Protect, maintain"
+      "translation": "To protect, guard, keep (a promise)"
     },
     {
       "id": "freq-341",
       "target": "한번",
-      "translation": "Once"
+      "translation": "Once, one time; try doing"
     },
     {
       "id": "freq-342",
@@ -1716,32 +1716,32 @@
     {
       "id": "freq-343",
       "target": "가슴",
-      "translation": "Chest"
+      "translation": "Chest, breast, heart"
     },
     {
       "id": "freq-344",
       "target": "길다",
-      "translation": "To be long"
+      "translation": "To be long, lengthy"
     },
     {
       "id": "freq-345",
       "target": "바라보다",
-      "translation": "Look at, watch; to look forward to, hope for"
+      "translation": "To look at, gaze at, watch"
     },
     {
       "id": "freq-346",
       "target": "알아보다",
-      "translation": "To investigate, examine, search"
+      "translation": "To recognize, find out, inquire, look into"
     },
     {
       "id": "freq-347",
       "target": "맛",
-      "translation": "Flavor"
+      "translation": "Taste, flavor"
     },
     {
       "id": "freq-348",
       "target": "대부분",
-      "translation": "Most"
+      "translation": "Most, majority, mostly"
     },
     {
       "id": "freq-349",
@@ -1751,17 +1751,17 @@
     {
       "id": "freq-350",
       "target": "매우",
-      "translation": "Very"
+      "translation": "Very, extremely, greatly"
     },
     {
       "id": "freq-351",
       "target": "오르다",
-      "translation": "Go up, climb, ascend"
+      "translation": "To go up, climb, ascend, rise"
     },
     {
       "id": "freq-352",
       "target": "음식",
-      "translation": "Food"
+      "translation": "Food, dish, meal"
     },
     {
       "id": "freq-353",
@@ -1771,57 +1771,57 @@
     {
       "id": "freq-354",
       "target": "꼭",
-      "translation": "For sure"
+      "translation": "Surely, certainly, tightly, exactly"
     },
     {
       "id": "freq-355",
       "target": "일부",
-      "translation": "A part, a portion"
+      "translation": "Part, portion, fraction"
     },
     {
       "id": "freq-356",
       "target": "요즘",
-      "translation": "Recently, nowadays"
+      "translation": "Nowadays, these days, lately"
     },
     {
       "id": "freq-357",
       "target": "계획",
-      "translation": "A plan or a project"
+      "translation": "Plan, project, schedule"
     },
     {
       "id": "freq-358",
       "target": "느낌",
-      "translation": "Touch, feel"
+      "translation": "Feeling, impression, sense"
     },
     {
       "id": "freq-359",
       "target": "얼마",
-      "translation": "How many, how much"
+      "translation": "How much, how many; some amount"
     },
     {
       "id": "freq-360",
       "target": "고개",
-      "translation": "The nape of the neck"
+      "translation": "Head, neck; mountain pass, ridge"
     },
     {
       "id": "freq-361",
       "target": "성격",
-      "translation": "Personality; character, nature"
+      "translation": "Personality, character, nature"
     },
     {
       "id": "freq-362",
       "target": "계속",
-      "translation": "Continuously"
+      "translation": "Continuously, consecutively, keep on"
     },
     {
       "id": "freq-363",
       "target": "세기",
-      "translation": "Century"
+      "translation": "Century, age"
     },
     {
       "id": "freq-364",
       "target": "세우다",
-      "translation": "Stand up, erect"
+      "translation": "To establish, set up, build, stand up"
     },
     {
       "id": "freq-365",
@@ -1831,507 +1831,507 @@
     {
       "id": "freq-366",
       "target": "가족",
-      "translation": "Family"
+      "translation": "Family, household"
     },
     {
       "id": "freq-367",
       "target": "현재",
-      "translation": "The present time, now, at present"
+      "translation": "Present, now, currently"
     },
     {
       "id": "freq-368",
       "target": "세",
-      "translation": "Three"
+      "translation": "Three (native Korean prefix)"
     },
     {
       "id": "freq-369",
       "target": "발전",
-      "translation": "Development"
+      "translation": "Development, progress, growth"
     },
     {
       "id": "freq-370",
       "target": "차",
-      "translation": "A vehicle, train/auto car"
+      "translation": "Car, vehicle; tea"
     },
     {
       "id": "freq-371",
       "target": "놀다",
-      "translation": "Play, amuse oneself"
+      "translation": "To play, hang out, have fun"
     },
     {
       "id": "freq-372",
       "target": "향하다",
-      "translation": "To face, look out on"
+      "translation": "To head toward, face, direct to"
     },
     {
       "id": "freq-373",
       "target": "관련",
-      "translation": "Relation or connection or reference"
+      "translation": "Relation, connection, relevance"
     },
     {
       "id": "freq-374",
       "target": "형태",
-      "translation": "Form, shape"
+      "translation": "Form, shape, appearance"
     },
     {
       "id": "freq-375",
       "target": "각",
-      "translation": "Each or every"
+      "translation": "Each, every; angle"
     },
     {
       "id": "freq-376",
       "target": "도시",
-      "translation": "City"
+      "translation": "City, urban area, town"
     },
     {
       "id": "freq-377",
       "target": "작업",
-      "translation": "Work"
+      "translation": "Work, operation, task, job"
     },
     {
       "id": "freq-378",
       "target": "분위기",
-      "translation": "atmosphere, surroundings"
+      "translation": "Atmosphere, mood, vibe, ambiance"
     },
     {
       "id": "freq-379",
       "target": "그러하다",
-      "translation": "To be so or right"
+      "translation": "To be so, be like that"
     },
     {
       "id": "freq-380",
       "target": "나이",
-      "translation": "Age"
+      "translation": "Age, years of age"
     },
     {
       "id": "freq-381",
       "target": "우선",
-      "translation": "First of all, before everything"
+      "translation": "First of all, primarily, for now"
     },
     {
       "id": "freq-382",
       "target": "믿다",
-      "translation": "Believe"
+      "translation": "To believe, trust, have faith in"
     },
     {
       "id": "freq-383",
       "target": "바꾸다",
-      "translation": "change, exchange"
+      "translation": "To change, exchange, switch"
     },
     {
       "id": "freq-384",
       "target": "낳다",
-      "translation": "To give birth"
+      "translation": "To give birth to, bear, produce"
     },
     {
       "id": "freq-385",
       "target": "바",
-      "translation": "A thing, what"
+      "translation": "Thing, what, way (bound noun)"
     },
     {
       "id": "freq-386",
       "target": "정보",
-      "translation": "information, intelligence"
+      "translation": "Information, data, intelligence"
     },
     {
       "id": "freq-387",
       "target": "열리다",
-      "translation": "Open, be opened, be unlocked"
+      "translation": "To open, be opened, be held (an event)"
     },
     {
       "id": "freq-388",
       "target": "좋아하다",
-      "translation": "To like, be fond of"
+      "translation": "To like, be fond of, love"
     },
     {
       "id": "freq-389",
       "target": "그리다",
-      "translation": "Picture or draw a picture"
+      "translation": "To draw, paint, sketch, depict"
     },
     {
       "id": "freq-390",
       "target": "만큼",
-      "translation": "Of that amount"
+      "translation": "As much as, to the extent of"
     },
     {
       "id": "freq-391",
       "target": "배우다",
-      "translation": "To learn"
+      "translation": "To learn, study"
     },
     {
       "id": "freq-392",
       "target": "시",
-      "translation": "Poetry, lines of verse"
+      "translation": "Poem, poetry, verse; hour; city"
     },
     {
       "id": "freq-393",
       "target": "역할",
-      "translation": "A part, a role"
+      "translation": "Role, part"
     },
     {
       "id": "freq-394",
       "target": "옆",
-      "translation": "Next to"
+      "translation": "Beside, next to, side"
     },
     {
       "id": "freq-395",
       "target": "행동",
-      "translation": "Action, behavior"
+      "translation": "Action, behavior, conduct"
     },
     {
       "id": "freq-396",
       "target": "어",
-      "translation": "Oh, well, why"
+      "translation": "Uh, oh (interjection)"
     },
     {
       "id": "freq-397",
       "target": "국내",
-      "translation": "Inside the country"
+      "translation": "Domestic, within the country"
     },
     {
       "id": "freq-398",
       "target": "비하다",
-      "translation": "Compare to"
+      "translation": "To compare with, be compared to, in comparison with"
     },
     {
       "id": "freq-399",
       "target": "기관",
-      "translation": "An engine or a machine"
+      "translation": "Institution, organization, engine, agency"
     },
     {
       "id": "freq-400",
       "target": "입장",
-      "translation": "A position, situation"
+      "translation": "Position, stance, situation; admission"
     },
     {
       "id": "freq-401",
       "target": "만하다",
-      "translation": "Be of the extent of"
+      "translation": "To be worth doing, capable of (auxiliary adjective)"
     },
     {
       "id": "freq-402",
       "target": "예",
-      "translation": "Example"
+      "translation": "Example, instance; yes; old times"
     },
     {
       "id": "freq-403",
       "target": "아래",
-      "translation": "The bottom, the lower part"
+      "translation": "Under, below, bottom, lower part"
     },
     {
       "id": "freq-404",
       "target": "방식",
-      "translation": "A form, method, process"
+      "translation": "Method, way, style, system"
     },
     {
       "id": "freq-405",
       "target": "영향",
-      "translation": "Influence, consequences"
+      "translation": "Influence, effect, impact"
     },
     {
       "id": "freq-406",
       "target": "그럼",
-      "translation": "Certainly or of course."
+      "translation": "Then, in that case; of course, certainly"
     },
     {
       "id": "freq-407",
       "target": "나서다",
-      "translation": "Come out, come forth"
+      "translation": "To step forward, come out, interfere"
     },
     {
       "id": "freq-408",
       "target": "흐르다",
-      "translation": "Flow, stream"
+      "translation": "To flow, run, stream, pass (time)"
     },
     {
       "id": "freq-409",
       "target": "저",
-      "translation": "Uh, well..."
+      "translation": "Um, well; that (over there); I, me (humble)"
     },
     {
       "id": "freq-410",
       "target": "깊다",
-      "translation": "Deep"
+      "translation": "To be deep, profound, thick"
     },
     {
       "id": "freq-411",
       "target": "배",
-      "translation": "A boat (boating)"
+      "translation": "Boat, ship; stomach, belly; pear; times (fold)"
     },
     {
       "id": "freq-412",
       "target": "내",
-      "translation": "Inside"
+      "translation": "Inside, within; my, mine"
     },
     {
       "id": "freq-413",
       "target": "모양",
-      "translation": "A shape, form"
+      "translation": "Shape, form, appearance, pattern"
     },
     {
       "id": "freq-414",
       "target": "산",
-      "translation": "A mountain"
+      "translation": "Mountain, hill"
     },
     {
       "id": "freq-415",
       "target": "새",
-      "translation": "New"
+      "translation": "New; bird; interval, space"
     },
     {
       "id": "freq-416",
       "target": "하지만",
-      "translation": "But, nevertheless"
+      "translation": "But, however, nevertheless"
     },
     {
       "id": "freq-417",
       "target": "조건",
-      "translation": "condition, stipulation"
+      "translation": "Condition, qualification, term"
     },
     {
       "id": "freq-418",
       "target": "문",
-      "translation": "Door"
+      "translation": "Door, gate, entrance"
     },
     {
       "id": "freq-419",
       "target": "꽃",
-      "translation": "Flower"
+      "translation": "Flower, blossom"
     },
     {
       "id": "freq-420",
       "target": "단계",
-      "translation": "A step, phase"
+      "translation": "Step, stage, phase"
     },
     {
       "id": "freq-421",
       "target": "올리다",
-      "translation": "Raise, lift up"
+      "translation": "To raise, lift up, increase, post"
     },
     {
       "id": "freq-422",
       "target": "그동안",
-      "translation": "During that time"
+      "translation": "During that time, meanwhile, in the meantime"
     },
     {
       "id": "freq-423",
       "target": "교사",
-      "translation": "Instructor"
+      "translation": "Teacher, instructor; school building"
     },
     {
       "id": "freq-424",
       "target": "갑자기",
-      "translation": "Suddenly"
+      "translation": "Suddenly, all of a sudden, unexpectedly"
     },
     {
       "id": "freq-425",
       "target": "넘다",
-      "translation": "Cross or go across"
+      "translation": "To cross over, exceed, surpass, pass"
     },
     {
       "id": "freq-426",
       "target": "지니다",
-      "translation": "Carry with, hold, possess"
+      "translation": "To carry, possess, keep, hold"
     },
     {
       "id": "freq-427",
       "target": "바람",
-      "translation": "Wind"
+      "translation": "Wind, breeze; wish, desire"
     },
     {
       "id": "freq-428",
       "target": "잘하다",
-      "translation": "To do well"
+      "translation": "To do well, be good at"
     },
     {
       "id": "freq-429",
       "target": "마을",
-      "translation": "Town"
+      "translation": "Village, town, neighborhood"
     },
     {
       "id": "freq-430",
       "target": "어리다",
-      "translation": "To be very young, juvenile"
+      "translation": "To be young, juvenile, immature"
     },
     {
       "id": "freq-431",
       "target": "대표",
-      "translation": "Representative"
+      "translation": "Representative, delegate, CEO"
     },
     {
       "id": "freq-432",
       "target": "가능성",
-      "translation": "Possibility"
+      "translation": "Possibility, potential, chance"
     },
     {
       "id": "freq-433",
       "target": "방향",
-      "translation": "Direction"
+      "translation": "Direction, way, heading"
     },
     {
       "id": "freq-434",
       "target": "대회",
-      "translation": "A great meeting"
+      "translation": "Competition, contest, tournament, convention"
     },
     {
       "id": "freq-435",
       "target": "목소리",
-      "translation": "Voice"
+      "translation": "Voice, tone of voice"
     },
     {
       "id": "freq-436",
       "target": "노래",
-      "translation": "Song"
+      "translation": "Song, singing"
     },
     {
       "id": "freq-437",
       "target": "바다",
-      "translation": "Sea"
+      "translation": "Sea, ocean"
     },
     {
       "id": "freq-438",
       "target": "힘들다",
-      "translation": "To be hard, difficult"
+      "translation": "To be hard, tough, difficult, tiring"
     },
     {
       "id": "freq-439",
       "target": "공부",
-      "translation": "Study"
+      "translation": "Study, studying, learning"
     },
     {
       "id": "freq-440",
       "target": "움직이다",
-      "translation": "To move, stir"
+      "translation": "To move, shift, operate, stir"
     },
     {
       "id": "freq-441",
       "target": "의원",
-      "translation": "A member"
+      "translation": "Lawmaker, member of assembly; clinic"
     },
     {
       "id": "freq-442",
       "target": "노력",
-      "translation": "Effort"
+      "translation": "Effort, endeavor, exertion"
     },
     {
       "id": "freq-443",
       "target": "전혀",
-      "translation": "entirely, utterly, completely"
+      "translation": "Not at all, completely, entirely"
     },
     {
       "id": "freq-444",
       "target": "언니",
-      "translation": "Older sister"
+      "translation": "Older sister (used by females)"
     },
     {
       "id": "freq-445",
       "target": "단체",
-      "translation": "A corps, a group"
+      "translation": "Organization, group, association"
     },
     {
       "id": "freq-446",
       "target": "분",
-      "translation": "One part"
+      "translation": "Part, portion, share; minute; person (honorific)"
     },
     {
       "id": "freq-447",
       "target": "알려지다",
-      "translation": "To become known"
+      "translation": "To become known, be made known"
     },
     {
       "id": "freq-448",
       "target": "가능하다",
-      "translation": "To be possible"
+      "translation": "To be possible, feasible"
     },
     {
       "id": "freq-449",
       "target": "능력",
-      "translation": "Ability, capability, how much and how well"
+      "translation": "Ability, capability, capacity, skill"
     },
     {
       "id": "freq-450",
       "target": "주장하다",
-      "translation": "To assert, maintain"
+      "translation": "To claim, assert, insist, argue"
     },
     {
       "id": "freq-451",
       "target": "자식",
-      "translation": "one’s children"
+      "translation": "Children, offspring; son/daughter"
     },
     {
       "id": "freq-452",
       "target": "불",
-      "translation": "Fire"
+      "translation": "Fire, light, flame"
     },
     {
       "id": "freq-453",
       "target": "주민",
-      "translation": "inhabitants, dwellers"
+      "translation": "Resident, inhabitant, citizen"
     },
     {
       "id": "freq-454",
       "target": "모으다",
-      "translation": "gather, get together"
+      "translation": "To gather, collect, save, assemble"
     },
     {
       "id": "freq-455",
       "target": "자료",
-      "translation": "materials, data"
+      "translation": "Materials, data, documentation"
     },
     {
       "id": "freq-456",
       "target": "존재",
-      "translation": "Existence"
+      "translation": "Existence, presence, being"
     },
     {
       "id": "freq-457",
       "target": "학년",
-      "translation": "A school year"
+      "translation": "School grade, school year"
     },
     {
       "id": "freq-458",
       "target": "신문",
-      "translation": "A newspaper"
+      "translation": "Newspaper"
     },
     {
       "id": "freq-459",
       "target": "가지다",
-      "translation": "Entertain or hold or have"
+      "translation": "To have, hold, possess, keep"
     },
     {
       "id": "freq-460",
       "target": "이해하다",
-      "translation": "To understand"
+      "translation": "To understand, comprehend"
     },
     {
       "id": "freq-461",
       "target": "제품",
-      "translation": "Manufactured goods"
+      "translation": "Product, manufactured goods"
     },
     {
       "id": "freq-462",
       "target": "분야",
-      "translation": "Field"
+      "translation": "Field, area, branch, realm"
     },
     {
       "id": "freq-463",
       "target": "선생",
-      "translation": "Teacher"
+      "translation": "Teacher, instructor, elder"
     },
     {
       "id": "freq-464",
       "target": "사업",
-      "translation": "Business"
+      "translation": "Business, enterprise, project"
     },
     {
       "id": "freq-465",
       "target": "행위",
-      "translation": "An act, deed, behavior"
+      "translation": "Act, action, deed, conduct"
     },
     {
       "id": "freq-466",
       "target": "수준",
-      "translation": "Level"
+      "translation": "Level, standard, benchmark"
     },
     {
       "id": "freq-467",
@@ -2341,17 +2341,17 @@
     {
       "id": "freq-468",
       "target": "표현",
-      "translation": "Verbal expression, representation, manifestation"
+      "translation": "Expression, representation, phrasing"
     },
     {
       "id": "freq-469",
       "target": "기분",
-      "translation": "Mood"
+      "translation": "Mood, feeling, state of mind"
     },
     {
       "id": "freq-470",
       "target": "대",
-      "translation": "Era, period"
+      "translation": "Era, generation, age; counter for vehicles/machines"
     },
     {
       "id": "freq-471",
@@ -2361,172 +2361,172 @@
     {
       "id": "freq-472",
       "target": "옷",
-      "translation": "Clothes"
+      "translation": "Clothes, clothing, garment"
     },
     {
       "id": "freq-473",
       "target": "기능",
-      "translation": "Function or functionality"
+      "translation": "Function, feature, capability"
     },
     {
       "id": "freq-474",
       "target": "순간",
-      "translation": "A moment, a second"
+      "translation": "Moment, instant, second"
     },
     {
       "id": "freq-475",
       "target": "전쟁",
-      "translation": "War"
+      "translation": "War, warfare, battle"
     },
     {
       "id": "freq-476",
       "target": "전",
-      "translation": "Before"
+      "translation": "Before, ago, previous; whole, entire"
     },
     {
       "id": "freq-477",
       "target": "꿈",
-      "translation": "A Dream"
+      "translation": "Dream, aspiration, vision"
     },
     {
       "id": "freq-478",
       "target": "할머니",
-      "translation": "Grandmother"
+      "translation": "Grandmother, grandma"
     },
     {
       "id": "freq-479",
       "target": "회의",
-      "translation": "A meeting, a conference"
+      "translation": "Meeting, conference; doubt, skepticism"
     },
     {
       "id": "freq-480",
       "target": "방송",
-      "translation": "Broadcast"
+      "translation": "Broadcast, broadcasting, show"
     },
     {
       "id": "freq-481",
       "target": "이야기하다",
-      "translation": "To talk"
+      "translation": "To talk, speak, tell a story"
     },
     {
       "id": "freq-482",
       "target": "나무",
-      "translation": "Tree"
+      "translation": "Tree, wood, lumber"
     },
     {
       "id": "freq-483",
       "target": "자다",
-      "translation": "To sleep"
+      "translation": "To sleep, go to bed"
     },
     {
       "id": "freq-484",
       "target": "연극",
-      "translation": "drama, a play"
+      "translation": "Play, drama, theater"
     },
     {
       "id": "freq-485",
       "target": "마찬가지",
-      "translation": "The same"
+      "translation": "The same, likewise, equally"
     },
     {
       "id": "freq-486",
       "target": "걷다",
-      "translation": "To walk"
+      "translation": "To walk, stroll; to roll up; to collect"
     },
     {
       "id": "freq-487",
       "target": "노동",
-      "translation": "Labor, work"
+      "translation": "Labor, work, manual labor"
     },
     {
       "id": "freq-488",
       "target": "이때",
-      "translation": "At this time, moment"
+      "translation": "At this time, at this moment"
     },
     {
       "id": "freq-489",
       "target": "과거",
-      "translation": "The past"
+      "translation": "The past, history; civil service exam"
     },
     {
       "id": "freq-490",
       "target": "가치",
-      "translation": "Price"
+      "translation": "Value, worth, merit"
     },
     {
       "id": "freq-491",
       "target": "시간",
-      "translation": "Length of time (duration)"
+      "translation": "Time, hour, duration"
     },
     {
       "id": "freq-492",
       "target": "집단",
-      "translation": "A group, a collective body"
+      "translation": "Group, collective, body"
     },
     {
       "id": "freq-493",
       "target": "현대",
-      "translation": "The present age, times"
+      "translation": "Modern times, the present age, contemporary"
     },
     {
       "id": "freq-494",
       "target": "살펴보다",
-      "translation": "Watch closely"
+      "translation": "To examine, inspect, look closely, check"
     },
     {
       "id": "freq-495",
       "target": "장관",
-      "translation": "A government cabinet minister"
+      "translation": "Cabinet minister, secretary; spectacle"
     },
     {
       "id": "freq-496",
       "target": "차이",
-      "translation": "difference, disparity"
+      "translation": "Difference, distinction, disparity"
     },
     {
       "id": "freq-497",
       "target": "풀다",
-      "translation": "Untie, loosen; to melt into"
+      "translation": "To untie, solve, relieve, loosen"
     },
     {
       "id": "freq-498",
       "target": "시절",
-      "translation": "season, time, occasion"
+      "translation": "Days, years, time of life, season"
     },
     {
       "id": "freq-499",
       "target": "물건",
-      "translation": "A thing"
+      "translation": "Thing, item, object, goods"
     },
     {
       "id": "freq-500",
       "target": "직접",
-      "translation": "Directly"
+      "translation": "Directly, personally, in person"
     },
     {
       "id": "freq-501",
       "target": "개인",
-      "translation": "Private or individual"
+      "translation": "Individual, private, personal"
     },
     {
       "id": "freq-502",
       "target": "근데",
-      "translation": "But or however"
+      "translation": "But, however, by the way"
     },
     {
       "id": "freq-503",
       "target": "발",
-      "translation": "Foot"
+      "translation": "Foot, feet, step"
     },
     {
       "id": "freq-504",
       "target": "작가",
-      "translation": "writer, author"
+      "translation": "Writer, author, artist"
     },
     {
       "id": "freq-505",
       "target": "효과",
-      "translation": "Effect, effectiveness"
+      "translation": "Effect, effectiveness, result"
     },
     {
       "id": "freq-506",
@@ -2536,72 +2536,72 @@
     {
       "id": "freq-507",
       "target": "끌다",
-      "translation": "Pull"
+      "translation": "To pull, draw, drag, attract"
     },
     {
       "id": "freq-508",
       "target": "대로",
-      "translation": "Like, according to"
+      "translation": "As, in accordance with (particle/bound noun)"
     },
     {
       "id": "freq-509",
       "target": "빨리",
-      "translation": "Quickly"
+      "translation": "Fast, quickly, rapidly, hurriedly"
     },
     {
       "id": "freq-510",
       "target": "시작되다",
-      "translation": "To begin, start"
+      "translation": "To begin, start, get underway"
     },
     {
       "id": "freq-511",
       "target": "말다",
-      "translation": "Cease"
+      "translation": "To stop, cease, refrain from doing"
     },
     {
       "id": "freq-512",
       "target": "설명하다",
-      "translation": "To explain"
+      "translation": "To explain, describe, account for"
     },
     {
       "id": "freq-513",
       "target": "우주",
-      "translation": "The universe"
+      "translation": "Space, outer space, universe, cosmos"
     },
     {
       "id": "freq-514",
       "target": "시기",
-      "translation": "An opportunity, chance"
+      "translation": "Period, time, season, opportunity"
     },
     {
       "id": "freq-515",
       "target": "마치",
-      "translation": "As though, as if"
+      "translation": "As if, as though, just like"
     },
     {
       "id": "freq-516",
       "target": "살",
-      "translation": "Years old"
+      "translation": "Years of age (counter); flesh"
     },
     {
       "id": "freq-517",
       "target": "생산",
-      "translation": "1) Production, 2) Birth"
+      "translation": "Production, manufacture"
     },
     {
       "id": "freq-518",
       "target": "바라다",
-      "translation": "Wish, hope"
+      "translation": "To wish, hope, desire, want"
     },
     {
       "id": "freq-519",
       "target": "강하다",
-      "translation": "To be strong or powerful"
+      "translation": "To be strong, powerful, robust"
     },
     {
       "id": "freq-520",
       "target": "경험",
-      "translation": "Experience or undergo or suffer"
+      "translation": "Experience"
     },
     {
       "id": "freq-521",
@@ -2611,167 +2611,167 @@
     {
       "id": "freq-522",
       "target": "최고",
-      "translation": "The best"
+      "translation": "The best, highest, top, maximum"
     },
     {
       "id": "freq-523",
       "target": "나타내다",
-      "translation": "Show, display"
+      "translation": "To show, display, express, represent"
     },
     {
       "id": "freq-524",
       "target": "아프다",
-      "translation": "To hurt"
+      "translation": "To be sick, painful, hurt, sore"
     },
     {
       "id": "freq-525",
       "target": "적다",
-      "translation": "To be small, few in number"
+      "translation": "To be few, little, small in quantity; to write down"
     },
     {
       "id": "freq-526",
       "target": "비",
-      "translation": "Rain"
+      "translation": "Rain, rainfall; broom; monument"
     },
     {
       "id": "freq-527",
       "target": "고향",
-      "translation": "Hometown"
+      "translation": "Hometown, birthplace"
     },
     {
       "id": "freq-528",
       "target": "놀라다",
-      "translation": "Be surprised"
+      "translation": "To be surprised, astonished, startled"
     },
     {
       "id": "freq-529",
       "target": "다양하다",
-      "translation": "To be various, diverse"
+      "translation": "To be various, diverse, varied"
     },
     {
       "id": "freq-530",
       "target": "울다",
-      "translation": "To cry, weep"
+      "translation": "To cry, weep; to ring, sound"
     },
     {
       "id": "freq-531",
       "target": "농민",
-      "translation": "A farmer"
+      "translation": "Farmer, peasantry"
     },
     {
       "id": "freq-532",
       "target": "은행",
-      "translation": "A bank"
+      "translation": "Bank (financial); ginkgo nut"
     },
     {
       "id": "freq-533",
       "target": "지내다",
-      "translation": "To pass, spend time"
+      "translation": "To spend time, live, stay, get along"
     },
     {
       "id": "freq-534",
       "target": "결혼",
-      "translation": "Marriage"
+      "translation": "Marriage, wedding"
     },
     {
       "id": "freq-535",
       "target": "법",
-      "translation": "A law, the law"
+      "translation": "Law, rule, regulation; method, way"
     },
     {
       "id": "freq-536",
       "target": "소설",
-      "translation": "A novel, fiction story"
+      "translation": "Novel, fiction"
     },
     {
       "id": "freq-537",
       "target": "예",
-      "translation": "Yes, certainly, right"
+      "translation": "Yes, certainly, right; example"
     },
     {
       "id": "freq-538",
       "target": "오후",
-      "translation": "The afternoon"
+      "translation": "Afternoon, PM"
     },
     {
       "id": "freq-539",
       "target": "질서",
-      "translation": "Order, system"
+      "translation": "Order, public order, system"
     },
     {
       "id": "freq-540",
       "target": "담다",
-      "translation": "Put in a bottle"
+      "translation": "To put in, fill, contain, include"
     },
     {
       "id": "freq-541",
       "target": "모이다",
-      "translation": "Meet, assemble"
+      "translation": "To gather, assemble, meet, come together"
     },
     {
       "id": "freq-542",
       "target": "시민",
-      "translation": "Residents of a city"
+      "translation": "Citizen, public, residents"
     },
     {
       "id": "freq-543",
       "target": "회장",
-      "translation": "Chariman, the president"
+      "translation": "Chairman, president (of an organization)"
     },
     {
       "id": "freq-544",
       "target": "빠르다",
-      "translation": "Be fast, quick"
+      "translation": "To be fast, quick, swift, early"
     },
     {
       "id": "freq-545",
       "target": "스스로",
-      "translation": "On its own, of its own free will"
+      "translation": "By oneself, on one's own, spontaneously"
     },
     {
       "id": "freq-546",
       "target": "아기",
-      "translation": "baby, infant"
+      "translation": "Baby, infant"
     },
     {
       "id": "freq-547",
       "target": "아저씨",
-      "translation": "Sir, calling an unknown male"
+      "translation": "Mister, middle-aged man, uncle"
     },
     {
       "id": "freq-548",
       "target": "옛날",
-      "translation": "Ancient times, antiquity"
+      "translation": "Old days, the past, long ago"
     },
     {
       "id": "freq-549",
       "target": "이날",
-      "translation": "Today, this day"
+      "translation": "This day, that day"
     },
     {
       "id": "freq-550",
       "target": "제대로",
-      "translation": "As properly is suitable"
+      "translation": "Properly, correctly, right"
     },
     {
       "id": "freq-551",
       "target": "달",
-      "translation": "The moon"
+      "translation": "Moon; month"
     },
     {
       "id": "freq-552",
       "target": "던지다",
-      "translation": "To throw"
+      "translation": "To throw, pitch, cast"
     },
     {
       "id": "freq-553",
       "target": "참",
-      "translation": "really, truly"
+      "translation": "Really, truly, very; by the way"
     },
     {
       "id": "freq-554",
       "target": "공간",
-      "translation": "Space or room"
+      "translation": "Space, room, void"
     },
     {
       "id": "freq-555",
@@ -2781,172 +2781,172 @@
     {
       "id": "freq-556",
       "target": "마지막",
-      "translation": "Last, final"
+      "translation": "Last, final, end"
     },
     {
       "id": "freq-557",
       "target": "벌이다",
-      "translation": "(1) to plan to start a job/project (2) to play a table game"
+      "translation": "To start, wage, stage (a project/fight), set up"
     },
     {
       "id": "freq-558",
       "target": "병원",
-      "translation": "Hospital"
+      "translation": "Hospital, clinic, doctor's office"
     },
     {
       "id": "freq-559",
       "target": "자세",
-      "translation": "Position, posture"
+      "translation": "Posture, stance, attitude, position"
     },
     {
       "id": "freq-560",
       "target": "강조하다",
-      "translation": "Place empasis upon"
+      "translation": "To emphasize, stress, underline"
     },
     {
       "id": "freq-561",
       "target": "경찰",
-      "translation": "The police"
+      "translation": "Police, police officer"
     },
     {
       "id": "freq-562",
       "target": "맡다",
-      "translation": "Take charge of"
+      "translation": "To take charge of, handle; to smell"
     },
     {
       "id": "freq-563",
       "target": "저녁",
-      "translation": "Evening"
+      "translation": "Evening, dinner, supper"
     },
     {
       "id": "freq-564",
       "target": "한편",
-      "translation": "One side, one way"
+      "translation": "Meanwhile, on the other hand, one side"
     },
     {
       "id": "freq-565",
       "target": "그러면",
-      "translation": "If so or if that is the case"
+      "translation": "If so, then, in that case"
     },
     {
       "id": "freq-566",
       "target": "기자",
-      "translation": "A journalist"
+      "translation": "Journalist, reporter, press"
     },
     {
       "id": "freq-567",
       "target": "넓다",
-      "translation": "Broad"
+      "translation": "To be wide, broad, spacious"
     },
     {
       "id": "freq-568",
       "target": "시험",
-      "translation": "A test"
+      "translation": "Test, exam, examination, trial"
     },
     {
       "id": "freq-569",
       "target": "잠",
-      "translation": "Sleep"
+      "translation": "Sleep, slumber"
     },
     {
       "id": "freq-570",
       "target": "주로",
-      "translation": "principally, mainly"
+      "translation": "Mostly, mainly, primarily"
     },
     {
       "id": "freq-571",
       "target": "훨씬",
-      "translation": "By far, very much so"
+      "translation": "Much, by far, significantly"
     },
     {
       "id": "freq-572",
       "target": "면",
-      "translation": "Side"
+      "translation": "Side, face, aspect, surface; noodle; cotton"
     },
     {
       "id": "freq-573",
       "target": "통일",
-      "translation": "Unification"
+      "translation": "Unification, unity, standardization"
     },
     {
       "id": "freq-574",
       "target": "건강",
-      "translation": "Health"
+      "translation": "Health, wellness, healthy"
     },
     {
       "id": "freq-575",
       "target": "가깝다",
-      "translation": "Close"
+      "translation": "To be close, near, intimate"
     },
     {
       "id": "freq-576",
       "target": "건물",
-      "translation": "Building"
+      "translation": "Building, structure"
     },
     {
       "id": "freq-577",
       "target": "시설",
-      "translation": "establishment, institution"
+      "translation": "Facility, installation, equipment"
     },
     {
       "id": "freq-578",
       "target": "외국",
-      "translation": "A foreign country"
+      "translation": "Foreign country, abroad"
     },
     {
       "id": "freq-579",
       "target": "밑",
-      "translation": "The bottom"
+      "translation": "Bottom, below, underneath, base"
     },
     {
       "id": "freq-580",
       "target": "어른",
-      "translation": "A man, an adult"
+      "translation": "Adult, elder, grown-up"
     },
     {
       "id": "freq-581",
       "target": "주변",
-      "translation": "A circumference"
+      "translation": "Surroundings, vicinity, nearby"
     },
     {
       "id": "freq-582",
       "target": "대신",
-      "translation": "Instead of"
+      "translation": "Instead, in place of, substitute"
     },
     {
       "id": "freq-583",
       "target": "원인",
-      "translation": "A cause, a factor"
+      "translation": "Cause, reason, origin"
     },
     {
       "id": "freq-584",
       "target": "팔다",
-      "translation": "To sell"
+      "translation": "To sell, vend"
     },
     {
       "id": "freq-585",
       "target": "차례",
-      "translation": "(1) order, precedence (2) one time, one round"
+      "translation": "Order, sequence, turn; ancestral rites"
     },
     {
       "id": "freq-586",
       "target": "군",
-      "translation": "An army"
+      "translation": "Military, army; county; Mr. (suffix)"
     },
     {
       "id": "freq-587",
       "target": "열심히",
-      "translation": "Enthusiastically, with zeal"
+      "translation": "Diligently, hard, with enthusiasm"
     },
     {
       "id": "freq-588",
       "target": "일하다",
-      "translation": "To work, labor"
+      "translation": "To work, labor, operate"
     },
     {
       "id": "freq-589",
       "target": "재산",
-      "translation": "property, fortune, assets, possessions"
+      "translation": "Property, fortune, wealth, assets"
     },
     {
       "id": "freq-590",
@@ -2961,177 +2961,177 @@
     {
       "id": "freq-592",
       "target": "약간",
-      "translation": "Somewhat"
+      "translation": "Slightly, a little, somewhat"
     },
     {
       "id": "freq-593",
       "target": "언어",
-      "translation": "language, speech"
+      "translation": "Language, speech, tongue"
     },
     {
       "id": "freq-594",
       "target": "요구하다",
-      "translation": "To demand, claim, request"
+      "translation": "To demand, request, require, claim"
     },
     {
       "id": "freq-595",
       "target": "올라가다",
-      "translation": "To go up, ascend"
+      "translation": "To go up, climb, ascend, rise"
     },
     {
       "id": "freq-596",
       "target": "첫",
-      "translation": "First"
+      "translation": "First, initial"
     },
     {
       "id": "freq-597",
       "target": "감독",
-      "translation": "The director"
+      "translation": "Director, coach, supervisor, supervision"
     },
     {
       "id": "freq-598",
       "target": "그날",
-      "translation": "That day or that same day"
+      "translation": "That day"
     },
     {
       "id": "freq-599",
       "target": "사실",
-      "translation": "Actually, really"
+      "translation": "Actually, in fact; fact, truth"
     },
     {
       "id": "freq-600",
       "target": "자주",
-      "translation": "Always, constantly"
+      "translation": "Often, frequently"
     },
     {
       "id": "freq-601",
       "target": "당하다",
-      "translation": "Have, encounter"
+      "translation": "To suffer, undergo, endure, encounter"
     },
     {
       "id": "freq-602",
       "target": "삼다",
-      "translation": "Make a thing of"
+      "translation": "To make (something into), adopt, take as"
     },
     {
       "id": "freq-603",
       "target": "약",
-      "translation": "About, approximately"
+      "translation": "About, approximately; medicine, drug"
     },
     {
       "id": "freq-604",
       "target": "기간",
-      "translation": "A period or a time or"
+      "translation": "Period, term, duration"
     },
     {
       "id": "freq-605",
       "target": "담배",
-      "translation": "Tobacco"
+      "translation": "Cigarette, tobacco"
     },
     {
       "id": "freq-606",
       "target": "일으키다",
-      "translation": "Riase, get up; start, commence"
+      "translation": "To raise, cause, start, set up"
     },
     {
       "id": "freq-607",
       "target": "일단",
-      "translation": "Temporarily"
+      "translation": "First, for now, once, for the time being"
     },
     {
       "id": "freq-608",
       "target": "할아버지",
-      "translation": "Grandfather"
+      "translation": "Grandfather, grandpa"
     },
     {
       "id": "freq-609",
       "target": "조직",
-      "translation": "Organization (composition, structure)"
+      "translation": "Organization, structure, tissue"
     },
     {
       "id": "freq-610",
       "target": "태어나다",
-      "translation": "To be born, see the light of day"
+      "translation": "To be born"
     },
     {
       "id": "freq-611",
       "target": "공장",
-      "translation": "Construction site"
+      "translation": "Factory, plant, mill"
     },
     {
       "id": "freq-612",
       "target": "벌써",
-      "translation": "Already"
+      "translation": "Already, before one knows it"
     },
     {
       "id": "freq-613",
       "target": "즐기다",
-      "translation": "Enjoy oneself, take pleasure, delight"
+      "translation": "To enjoy, have fun, relish"
     },
     {
       "id": "freq-614",
       "target": "지",
-      "translation": "since, from"
+      "translation": "Since (time elapsed); whether (ending)"
     },
     {
       "id": "freq-615",
       "target": "환자",
-      "translation": "A patient"
+      "translation": "Patient, sick person"
     },
     {
       "id": "freq-616",
       "target": "변하다",
-      "translation": "Change"
+      "translation": "To change, vary, alter, turn into"
     },
     {
       "id": "freq-617",
       "target": "사고",
-      "translation": "An accident"
+      "translation": "Accident, crash, incident; thought, thinking"
     },
     {
       "id": "freq-618",
       "target": "그래도",
-      "translation": "All the same"
+      "translation": "Still, yet, nevertheless"
     },
     {
       "id": "freq-619",
       "target": "아무리",
-      "translation": "However much"
+      "translation": "No matter how, however much"
     },
     {
       "id": "freq-620",
       "target": "맞추다",
-      "translation": "Adjust, adapt"
+      "translation": "To adjust, match, fit, assemble, tune"
     },
     {
       "id": "freq-621",
       "target": "쌀",
-      "translation": "Uncooked rice"
+      "translation": "Rice (uncooked grain)"
     },
     {
       "id": "freq-622",
       "target": "일반",
-      "translation": "universal, common, usual"
+      "translation": "General, universal, common, ordinary"
     },
     {
       "id": "freq-623",
       "target": "재미있다",
-      "translation": "interesting, fun"
+      "translation": "To be fun, interesting, amusing"
     },
     {
       "id": "freq-624",
       "target": "가르치다",
-      "translation": "To teach"
+      "translation": "To teach, instruct, educate"
     },
     {
       "id": "freq-625",
       "target": "대화",
-      "translation": "Conversation"
+      "translation": "Conversation, dialogue, talk"
     },
     {
       "id": "freq-626",
       "target": "막다",
-      "translation": "Stop, obstruct"
+      "translation": "To block, obstruct, prevent, stop"
     },
     {
       "id": "freq-627",
@@ -3141,82 +3141,82 @@
     {
       "id": "freq-628",
       "target": "형",
-      "translation": "An elder brother"
+      "translation": "Older brother (used by males)"
     },
     {
       "id": "freq-629",
       "target": "달리",
-      "translation": "Differently"
+      "translation": "Differently, unlike"
     },
     {
       "id": "freq-630",
       "target": "버리다",
-      "translation": "Throw away"
+      "translation": "To throw away, abandon, discard"
     },
     {
       "id": "freq-631",
       "target": "붙이다",
-      "translation": "affix, put on"
+      "translation": "To attach, stick, paste, affix"
     },
     {
       "id": "freq-632",
       "target": "인물",
-      "translation": "A man, a person"
+      "translation": "Person, figure, character, personality"
     },
     {
       "id": "freq-633",
       "target": "늘",
-      "translation": "Always"
+      "translation": "Always, all the time, constantly"
     },
     {
       "id": "freq-634",
       "target": "모두",
-      "translation": "everything"
+      "translation": "All, everyone, everything"
     },
     {
       "id": "freq-635",
       "target": "전국",
-      "translation": "The whole country"
+      "translation": "Nationwide, whole country"
     },
     {
       "id": "freq-636",
       "target": "마치다",
-      "translation": "Finish, complete"
+      "translation": "To finish, complete, end"
     },
     {
       "id": "freq-637",
       "target": "전",
-      "translation": "all, every"
+      "translation": "Whole, entire, all; before, ago"
     },
     {
       "id": "freq-638",
       "target": "다만",
-      "translation": "Only, merely"
+      "translation": "Only, merely, just, but"
     },
     {
       "id": "freq-639",
       "target": "도움",
-      "translation": "Help"
+      "translation": "Help, aid, assistance"
     },
     {
       "id": "freq-640",
       "target": "가정",
-      "translation": "Famly"
+      "translation": "Home, family, household; assumption"
     },
     {
       "id": "freq-641",
       "target": "걸다",
-      "translation": "Hang up or suspend"
+      "translation": "To hang, hook; to make a call; to bet"
     },
     {
       "id": "freq-642",
       "target": "빠지다",
-      "translation": "To fall into"
+      "translation": "To fall into, drop; to indulge in; to be missing"
     },
     {
       "id": "freq-643",
       "target": "멀다",
-      "translation": "To be far"
+      "translation": "To be far, distant, remote"
     },
     {
       "id": "freq-644",
@@ -3226,397 +3226,397 @@
     {
       "id": "freq-645",
       "target": "오늘날",
-      "translation": "These days, nowadays"
+      "translation": "Nowadays, today, the present day"
     },
     {
       "id": "freq-646",
       "target": "잠시",
-      "translation": "For a little while"
+      "translation": "For a moment, briefly, for a short time"
     },
     {
       "id": "freq-647",
       "target": "농업",
-      "translation": "Agriculture"
+      "translation": "Agriculture, farming industry"
     },
     {
       "id": "freq-648",
       "target": "대다",
-      "translation": "Put, place up to"
+      "translation": "To touch, put against, apply; to supply"
     },
     {
       "id": "freq-649",
       "target": "식",
-      "translation": "form, style"
+      "translation": "Way, style, type, method; ceremony"
     },
     {
       "id": "freq-650",
       "target": "의견",
-      "translation": "An opinion, a suggestion"
+      "translation": "Opinion, view, suggestion"
     },
     {
       "id": "freq-651",
       "target": "무대",
-      "translation": "Stage"
+      "translation": "Stage, arena, platform"
     },
     {
       "id": "freq-652",
       "target": "사진",
-      "translation": "Picture"
+      "translation": "Photograph, photo, picture"
     },
     {
       "id": "freq-653",
       "target": "주장",
-      "translation": "assertion, insistance"
+      "translation": "Claim, assertion, insistence, argument"
     },
     {
       "id": "freq-654",
       "target": "표현하다",
-      "translation": "To express, make known by saying"
+      "translation": "To express, represent, convey"
     },
     {
       "id": "freq-655",
       "target": "인하다",
-      "translation": "To be due to, caused by"
+      "translation": "To be caused by, result from, due to"
     },
     {
       "id": "freq-656",
       "target": "이상하다",
-      "translation": "To be strange, queer"
+      "translation": "To be strange, odd, weird, unusual"
     },
     {
       "id": "freq-657",
       "target": "제일",
-      "translation": "The first"
+      "translation": "Most, best, number one, first"
     },
     {
       "id": "freq-658",
       "target": "붙다",
-      "translation": "Stick, adhere to"
+      "translation": "To stick, adhere, pass (an exam), catch (fire)"
     },
     {
       "id": "freq-659",
       "target": "아마",
-      "translation": "Probably"
+      "translation": "Probably, perhaps, maybe"
     },
     {
       "id": "freq-660",
       "target": "얘기하다",
-      "translation": "To tell a story"
+      "translation": "To talk, speak, tell"
     },
     {
       "id": "freq-661",
       "target": "잇다",
-      "translation": "Join, connect"
+      "translation": "To connect, join, continue, link"
     },
     {
       "id": "freq-662",
       "target": "조금",
-      "translation": "A little"
+      "translation": "A little, a bit, slightly"
     },
     {
       "id": "freq-663",
       "target": "경기",
-      "translation": "Race or match or contest"
+      "translation": "Game, match; economy, business conditions"
     },
     {
       "id": "freq-664",
       "target": "목적",
-      "translation": "goal, purpose"
+      "translation": "Purpose, goal, objective, aim"
     },
     {
       "id": "freq-665",
       "target": "태도",
-      "translation": "attitude, comportment"
+      "translation": "Attitude, posture, demeanor"
     },
     {
       "id": "freq-666",
       "target": "남성",
-      "translation": "Male"
+      "translation": "Man, male, men"
     },
     {
       "id": "freq-667",
       "target": "주위",
-      "translation": "The circumference, the girth"
+      "translation": "Surroundings, vicinity, perimeter, around"
     },
     {
       "id": "freq-668",
       "target": "대책",
-      "translation": "Countermeasure"
+      "translation": "Measure, countermeasure, solution"
     },
     {
       "id": "freq-669",
       "target": "그만",
-      "translation": "That much or a little amount"
+      "translation": "Just that much, no more; stopping (doing)"
     },
     {
       "id": "freq-670",
       "target": "발생하다",
-      "translation": "Originate, come from"
+      "translation": "To occur, happen, arise, break out"
     },
     {
       "id": "freq-671",
       "target": "다리",
-      "translation": "Leg"
+      "translation": "Leg; bridge"
     },
     {
       "id": "freq-672",
       "target": "아무",
-      "translation": "anybody, everybody"
+      "translation": "Any, anyone, whoever, no one"
     },
     {
       "id": "freq-673",
       "target": "어쩌다",
-      "translation": "By chance, accident"
+      "translation": "By chance, accidentally; somehow"
     },
     {
       "id": "freq-674",
       "target": "재료",
-      "translation": "stuff, material"
+      "translation": "Material, ingredient, substance"
     },
     {
       "id": "freq-675",
       "target": "각각",
-      "translation": "Each and every"
+      "translation": "Each, respectively, individually"
     },
     {
       "id": "freq-676",
       "target": "결코",
-      "translation": "Never or by no means"
+      "translation": "Never, by no means, not at all"
     },
     {
       "id": "freq-677",
       "target": "옮기다",
-      "translation": "Move, transfer (2) (sickness) communicate, transfer to"
+      "translation": "To move, shift, transfer, spread"
     },
     {
       "id": "freq-678",
       "target": "항상",
-      "translation": "Always"
+      "translation": "Always, all the time, constantly"
     },
     {
       "id": "freq-679",
       "target": "해",
-      "translation": "A year"
+      "translation": "Sun; sunlight; year"
     },
     {
       "id": "freq-680",
       "target": "잃다",
-      "translation": "To lose, to miss, to be deprived"
+      "translation": "To lose, be deprived of, miss"
     },
     {
       "id": "freq-681",
       "target": "자유",
-      "translation": "Freedom"
+      "translation": "Freedom, liberty"
     },
     {
       "id": "freq-682",
       "target": "책임",
-      "translation": "Responsibility"
+      "translation": "Responsibility, duty, liability"
     },
     {
       "id": "freq-683",
       "target": "바뀌다",
-      "translation": "Be changed"
+      "translation": "To be changed, turn into, be swapped"
     },
     {
       "id": "freq-684",
       "target": "비슷하다",
-      "translation": "To resemble"
+      "translation": "To be similar, alike, comparable"
     },
     {
       "id": "freq-685",
       "target": "심하다",
-      "translation": "To be extreme, intense"
+      "translation": "To be severe, extreme, intense, harsh"
     },
     {
       "id": "freq-686",
       "target": "경쟁",
-      "translation": "Competition or rivalry"
+      "translation": "Competition, rivalry, contest"
     },
     {
       "id": "freq-687",
       "target": "사랑하다",
-      "translation": "To love"
+      "translation": "To love, care for"
     },
     {
       "id": "freq-688",
       "target": "아니",
-      "translation": "No!"
+      "translation": "No; what, why (exclamation)"
     },
     {
       "id": "freq-689",
       "target": "여름",
-      "translation": "summer, summertime"
+      "translation": "Summer, summertime"
     },
     {
       "id": "freq-690",
       "target": "자라다",
-      "translation": "To grow up"
+      "translation": "To grow, grow up, develop"
     },
     {
       "id": "freq-691",
       "target": "회",
-      "translation": "A time, an inning, a round in a game"
+      "translation": "Round, episode, time (counter); sashimi"
     },
     {
       "id": "freq-692",
       "target": "구체적",
-      "translation": "Concretely"
+      "translation": "Concrete, specific, detailed"
     },
     {
       "id": "freq-693",
       "target": "기회",
-      "translation": "An opportunity"
+      "translation": "Opportunity, chance"
     },
     {
       "id": "freq-694",
       "target": "실시하다",
-      "translation": "To enforce, put into effect"
+      "translation": "To carry out, enforce, implement, conduct"
     },
     {
       "id": "freq-695",
       "target": "지구",
-      "translation": "The earth"
+      "translation": "Earth, the globe; district, zone"
     },
     {
       "id": "freq-696",
       "target": "번째",
-      "translation": "How many times"
+      "translation": "Ordinal counter (e.g. first, second)"
     },
     {
       "id": "freq-697",
       "target": "소비자",
-      "translation": "A consumer"
+      "translation": "Consumer, buyer, customer"
     },
     {
       "id": "freq-698",
       "target": "싫다",
-      "translation": "To not like, to hate"
+      "translation": "To dislike, hate, be reluctant"
     },
     {
       "id": "freq-699",
       "target": "규모",
-      "translation": "Scale or scope or structure"
+      "translation": "Scale, size, scope"
     },
     {
       "id": "freq-700",
       "target": "기준",
-      "translation": "A standard or basis"
+      "translation": "Standard, criteria, benchmark, basis"
     },
     {
       "id": "freq-701",
       "target": "말",
-      "translation": "End"
+      "translation": "End, close; word, speech; horse"
     },
     {
       "id": "freq-702",
       "target": "반드시",
-      "translation": "Most certainly"
+      "translation": "Certainly, without fail, must, definitely"
     },
     {
       "id": "freq-703",
       "target": "셈",
-      "translation": "An intention, design, purpose"
+      "translation": "Calculation, count; intention, as good as"
     },
     {
       "id": "freq-704",
       "target": "갖추다",
-      "translation": "Make or get ready or prepare"
+      "translation": "To equip, prepare, possess, qualify"
     },
     {
       "id": "freq-705",
       "target": "그러니까",
-      "translation": "And so it is that"
+      "translation": "So, therefore, I mean, that is why"
     },
     {
       "id": "freq-706",
       "target": "받아들이다",
-      "translation": "Accept"
+      "translation": "To accept, embrace, adopt, receive"
     },
     {
       "id": "freq-707",
       "target": "값",
-      "translation": "Price"
+      "translation": "Price, cost, value, worth"
     },
     {
       "id": "freq-708",
       "target": "현장",
-      "translation": "on site, on location, at the site in question"
+      "translation": "On-site, scene, field, spot"
     },
     {
       "id": "freq-709",
       "target": "건설",
-      "translation": "Construction"
+      "translation": "Construction, building"
     },
     {
       "id": "freq-710",
       "target": "꺼내다",
-      "translation": "To get out or draw out"
+      "translation": "To take out, draw out, bring up (a topic)"
     },
     {
       "id": "freq-711",
       "target": "노동자",
-      "translation": "Laborer, worker"
+      "translation": "Worker, laborer"
     },
     {
       "id": "freq-712",
       "target": "언제나",
-      "translation": "everytime, always"
+      "translation": "Always, anytime, all the time"
     },
     {
       "id": "freq-713",
       "target": "완전히",
-      "translation": "completely, perfectly"
+      "translation": "Completely, entirely, perfectly"
     },
     {
       "id": "freq-714",
       "target": "자동차",
-      "translation": "Car"
+      "translation": "Car, automobile, vehicle"
     },
     {
       "id": "freq-715",
       "target": "전하다",
-      "translation": "To transmit, convey"
+      "translation": "To convey, pass on, transmit, deliver"
     },
     {
       "id": "freq-716",
       "target": "존재하다",
-      "translation": "To exist"
+      "translation": "To exist, be present"
     },
     {
       "id": "freq-717",
       "target": "개월",
-      "translation": "Each and every month"
+      "translation": "Month(s) (duration counter)"
     },
     {
       "id": "freq-718",
       "target": "맞다",
-      "translation": "Receive, welcome"
+      "translation": "To welcome, greet; to fit, be correct; to be hit"
     },
     {
       "id": "freq-719",
       "target": "별로",
-      "translation": "Especially, particularly"
+      "translation": "Not particularly, not really, barely"
     },
     {
       "id": "freq-720",
       "target": "어린이",
-      "translation": "A youngster, a child"
+      "translation": "Child, youngster, kid"
     },
     {
       "id": "freq-721",
       "target": "정하다",
-      "translation": "To set, determine"
+      "translation": "To decide, set, determine, choose"
     },
     {
       "id": "freq-722",
       "target": "한마디",
-      "translation": "One word"
+      "translation": "A single word, one word"
     },
     {
       "id": "freq-723",
       "target": "유지하다",
-      "translation": "To preserve, maintain"
+      "translation": "To maintain, preserve, keep, sustain"
     },
     {
       "id": "freq-724",
@@ -3626,727 +3626,727 @@
     {
       "id": "freq-725",
       "target": "공부하다",
-      "translation": "To study"
+      "translation": "To study, learn"
     },
     {
       "id": "freq-726",
       "target": "대중",
-      "translation": "The masses"
+      "translation": "The public, the masses, popular"
     },
     {
       "id": "freq-727",
       "target": "늘어나다",
-      "translation": "Grow longer"
+      "translation": "To increase, grow, expand, stretch"
     },
     {
       "id": "freq-728",
       "target": "닦다",
-      "translation": "Wipe clean, polish"
+      "translation": "To wipe, polish, clean, brush (teeth)"
     },
     {
       "id": "freq-729",
       "target": "만",
-      "translation": "As many as, full, complete"
+      "translation": "Only, just; ten thousand; full (e.g. age)"
     },
     {
       "id": "freq-730",
       "target": "말씀",
-      "translation": "Speech"
+      "translation": "Words, speech (honorific/humble)"
     },
     {
       "id": "freq-731",
       "target": "괜찮다",
-      "translation": "To be okay"
+      "translation": "To be okay, alright, fine"
     },
     {
       "id": "freq-732",
       "target": "눈물",
-      "translation": "A tear"
+      "translation": "Tear, tears, weeping"
     },
     {
       "id": "freq-733",
       "target": "각종",
-      "translation": "All sorts or varieties"
+      "translation": "Various kinds, all sorts, variety"
     },
     {
       "id": "freq-734",
       "target": "빛",
-      "translation": "Light"
+      "translation": "Light, ray, gleam, glow"
     },
     {
       "id": "freq-735",
       "target": "아니",
-      "translation": "Not"
+      "translation": "No; what, why (exclamation)"
     },
     {
       "id": "freq-736",
       "target": "피하다",
-      "translation": "avoid, keep away"
+      "translation": "To avoid, dodge, evade, escape"
     },
     {
       "id": "freq-737",
       "target": "거치다",
-      "translation": "Pass or go through"
+      "translation": "To pass through, undergo, go by way of"
     },
     {
       "id": "freq-738",
       "target": "나아가다",
-      "translation": "Advance, go forward"
+      "translation": "To advance, proceed, move forward"
     },
     {
       "id": "freq-739",
       "target": "야",
-      "translation": "1) Hey! (calling attention), 2) Informal to be / copula"
+      "translation": "Hey (informal call); informal copula ending"
     },
     {
       "id": "freq-740",
       "target": "지식",
-      "translation": "Knowledge, information"
+      "translation": "Knowledge, information, understanding"
     },
     {
       "id": "freq-741",
       "target": "여전히",
-      "translation": "As it used to be, as before; still, persistently, even still"
+      "translation": "Still, as ever, as before"
     },
     {
       "id": "freq-742",
       "target": "주인",
-      "translation": "The head of a family, the owner"
+      "translation": "Owner, master, host, landlord"
     },
     {
       "id": "freq-743",
       "target": "발견하다",
-      "translation": "To discover"
+      "translation": "To discover, find, detect"
     },
     {
       "id": "freq-744",
       "target": "선",
-      "translation": "A line, a route"
+      "translation": "Line, route, wire; good, virtue"
     },
     {
       "id": "freq-745",
       "target": "인류",
-      "translation": "The human race"
+      "translation": "Humanity, mankind, human race"
     },
     {
       "id": "freq-746",
       "target": "특징",
-      "translation": "A special feature, a distinguishing feature"
+      "translation": "Feature, characteristic, distinguishing trait"
     },
     {
       "id": "freq-747",
       "target": "선수",
-      "translation": "An athlete"
+      "translation": "Athlete, player; expert"
     },
     {
       "id": "freq-748",
       "target": "형식",
-      "translation": "A form, formality, mold"
+      "translation": "Form, format, formality, style"
     },
     {
       "id": "freq-749",
       "target": "마련하다",
-      "translation": "To plan, arrange"
+      "translation": "To prepare, arrange, provide, set up"
     },
     {
       "id": "freq-750",
       "target": "반",
-      "translation": "Half"
+      "translation": "Half; class, section, group"
     },
     {
       "id": "freq-751",
       "target": "발표하다",
-      "translation": "To announce"
+      "translation": "To announce, present, publish, release"
     },
     {
       "id": "freq-752",
       "target": "주제",
-      "translation": "Subject, theme, topic"
+      "translation": "Topic, theme, subject"
     },
     {
       "id": "freq-753",
       "target": "걸치다",
-      "translation": "1) Put over/across, 2) Span, range from A to B"
+      "translation": "To put across, span, range over, hang"
     },
     {
       "id": "freq-754",
       "target": "겪다",
-      "translation": "Experience or undergo or suffer"
+      "translation": "To experience, undergo, suffer, endure"
     },
     {
       "id": "freq-755",
       "target": "관점",
-      "translation": "A point of view or a standpoint/outlook"
+      "translation": "Perspective, point of view, standpoint"
     },
     {
       "id": "freq-756",
       "target": "귀",
-      "translation": "Ear"
+      "translation": "Ear; corner"
     },
     {
       "id": "freq-757",
       "target": "기본",
-      "translation": "A foundation"
+      "translation": "Basic, foundation, basis, standard"
     },
     {
       "id": "freq-758",
       "target": "미터",
-      "translation": "Meter"
+      "translation": "Meter (unit of length)"
     },
     {
       "id": "freq-759",
       "target": "사라지다",
-      "translation": "To disappear"
+      "translation": "To disappear, vanish, fade away"
     },
     {
       "id": "freq-760",
       "target": "어떠하다",
-      "translation": "To be how"
+      "translation": "To be how, be in what state"
     },
     {
       "id": "freq-761",
       "target": "감정",
-      "translation": "Feelings"
+      "translation": "Emotion, feeling, sentiment; appraisal"
     },
     {
       "id": "freq-762",
       "target": "기억",
-      "translation": "A memory"
+      "translation": "Memory, recollection, remembrance"
     },
     {
       "id": "freq-763",
       "target": "놈",
-      "translation": "A fellow"
+      "translation": "Guy, fellow, bastard (derogatory/casual)"
     },
     {
       "id": "freq-764",
       "target": "인기",
-      "translation": "Popularity"
+      "translation": "Popularity, public interest"
     },
     {
       "id": "freq-765",
       "target": "배",
-      "translation": "Abdomen"
+      "translation": "Stomach, belly; boat, ship; pear; fold"
     },
     {
       "id": "freq-766",
       "target": "아파트",
-      "translation": "Apartment"
+      "translation": "Apartment, flat"
     },
     {
       "id": "freq-767",
       "target": "가끔",
-      "translation": "Sometimes"
+      "translation": "Sometimes, occasionally, now and then"
     },
     {
       "id": "freq-768",
       "target": "구성",
-      "translation": "Organization or constitution, the framework of something"
+      "translation": "Composition, organization, structure"
     },
     {
       "id": "freq-769",
       "target": "술",
-      "translation": "Spoonful"
+      "translation": "Alcohol, liquor; spoonful (counter)"
     },
     {
       "id": "freq-770",
       "target": "실제로",
-      "translation": "In reality"
+      "translation": "Actually, really, in reality, practically"
     },
     {
       "id": "freq-771",
       "target": "짧다",
-      "translation": "Short, brief"
+      "translation": "To be short, brief"
     },
     {
       "id": "freq-772",
       "target": "고맙다",
-      "translation": "To thank"
+      "translation": "To be thankful, grateful"
     },
     {
       "id": "freq-773",
       "target": "관리",
-      "translation": "Management or administration"
+      "translation": "Management, administration, care; official"
     },
     {
       "id": "freq-774",
       "target": "그곳",
-      "translation": "That place"
+      "translation": "That place, there"
     },
     {
       "id": "freq-775",
       "target": "보다",
-      "translation": "More than, greater than..."
+      "translation": "More than (comparison particle); to see"
     },
     {
       "id": "freq-776",
       "target": "비롯하다",
-      "translation": "begin, start"
+      "translation": "To begin, start, originate, including"
     },
     {
       "id": "freq-777",
       "target": "과연",
-      "translation": "Just as one thought"
+      "translation": "Indeed, as expected, really, surely"
     },
     {
       "id": "freq-778",
       "target": "달리다",
-      "translation": "run, make do fast"
+      "translation": "To run, dash; to hang, depend on"
     },
     {
       "id": "freq-779",
       "target": "바쁘다",
-      "translation": "Busy"
+      "translation": "To be busy, occupied"
     },
     {
       "id": "freq-780",
       "target": "이전",
-      "translation": "Former days/times"
+      "translation": "Before, prior to, previously; relocation"
     },
     {
       "id": "freq-781",
       "target": "인정하다",
-      "translation": "To acknowledge, authorize"
+      "translation": "To recognize, acknowledge, admit"
     },
     {
       "id": "freq-782",
       "target": "자",
-      "translation": "A person"
+      "translation": "Person (suffix/noun); ruler; now (interjection)"
     },
     {
       "id": "freq-783",
       "target": "중앙",
-      "translation": "The middle and the heart"
+      "translation": "Center, middle, central"
     },
     {
       "id": "freq-784",
       "target": "나쁘다",
-      "translation": "To be bad"
+      "translation": "To be bad, poor, wicked, harmful"
     },
     {
       "id": "freq-785",
       "target": "불구하다",
-      "translation": "Deformity, malformation"
+      "translation": "To disregard; despite, in spite of"
     },
     {
       "id": "freq-786",
       "target": "시키다",
-      "translation": "To make"
+      "translation": "To order (food), make/have someone do"
     },
     {
       "id": "freq-787",
       "target": "게임",
-      "translation": "Game"
+      "translation": "Game, match"
     },
     {
       "id": "freq-788",
       "target": "국제",
-      "translation": "International"
+      "translation": "International, global"
     },
     {
       "id": "freq-789",
       "target": "그룹",
-      "translation": "Group"
+      "translation": "Group, conglomerate"
     },
     {
       "id": "freq-790",
       "target": "인생",
-      "translation": "Life"
+      "translation": "Life, human life, lifetime"
     },
     {
       "id": "freq-791",
       "target": "전통",
-      "translation": "tradition, convention"
+      "translation": "Tradition, heritage, custom"
     },
     {
       "id": "freq-792",
       "target": "기르다",
-      "translation": "Educate or train or cultivate"
+      "translation": "To raise, rear, cultivate, grow"
     },
     {
       "id": "freq-793",
       "target": "잔",
-      "translation": "A cup, wine glass"
+      "translation": "Cup, glass (counter)"
     },
     {
       "id": "freq-794",
       "target": "조사하다",
-      "translation": "To examine, investigate"
+      "translation": "To investigate, examine, survey, look into"
     },
     {
       "id": "freq-795",
       "target": "커다랗다",
-      "translation": "To be very big/large"
+      "translation": "To be very big, huge, enormous"
     },
     {
       "id": "freq-796",
       "target": "있다",
-      "translation": "To be"
+      "translation": "To exist, have, be located"
     },
     {
       "id": "freq-797",
       "target": "시인",
-      "translation": "A poet"
+      "translation": "Poet; admission, acknowledgment"
     },
     {
       "id": "freq-798",
       "target": "언제",
-      "translation": "when, at what time"
+      "translation": "When, at what time, anytime"
     },
     {
       "id": "freq-799",
       "target": "외",
-      "translation": "Except, save for"
+      "translation": "Besides, except, outside of, other than"
     },
     {
       "id": "freq-800",
       "target": "평가",
-      "translation": "Evaluation, appraisal"
+      "translation": "Evaluation, appraisal, assessment"
     },
     {
       "id": "freq-801",
       "target": "내려오다",
-      "translation": "Come down"
+      "translation": "To come down, descend"
     },
     {
       "id": "freq-802",
       "target": "위치",
-      "translation": "A position, a location"
+      "translation": "Location, position, site, place"
     },
     {
       "id": "freq-803",
       "target": "줄이다",
-      "translation": "reduce, decrease"
+      "translation": "To reduce, decrease, shorten, lessen"
     },
     {
       "id": "freq-804",
       "target": "가격",
-      "translation": "Price"
+      "translation": "Price, cost, value"
     },
     {
       "id": "freq-805",
       "target": "달라지다",
-      "translation": "To change, vary"
+      "translation": "To change, vary, become different"
     },
     {
       "id": "freq-806",
       "target": "비다",
-      "translation": "To be empty, vacant"
+      "translation": "To be empty, vacant, hollow"
     },
     {
       "id": "freq-807",
       "target": "삼국",
-      "translation": "Three countries"
+      "translation": "The Three Kingdoms, three countries"
     },
     {
       "id": "freq-808",
       "target": "손님",
-      "translation": "Customer"
+      "translation": "Guest, visitor, customer, client"
     },
     {
       "id": "freq-809",
       "target": "원하다",
-      "translation": "To want"
+      "translation": "To want, desire, wish for"
     },
     {
       "id": "freq-810",
       "target": "통신",
-      "translation": "communications, correspondance"
+      "translation": "Communications, correspondence, telecommunications"
     },
     {
       "id": "freq-811",
       "target": "확인하다",
-      "translation": "To confirm, corroborate"
+      "translation": "To confirm, verify, check"
     },
     {
       "id": "freq-812",
       "target": "모임",
-      "translation": "A group, a party"
+      "translation": "Gathering, meeting, get-together, club"
     },
     {
       "id": "freq-813",
       "target": "수",
-      "translation": "The number of sth"
+      "translation": "Number, count; means, possibility"
     },
     {
       "id": "freq-814",
       "target": "웃음",
-      "translation": "Laughter, a smile"
+      "translation": "Laughter, smile, grin"
     },
     {
       "id": "freq-815",
       "target": "기계",
-      "translation": "An instrument or a machine"
+      "translation": "Machine, machinery, instrument"
     },
     {
       "id": "freq-816",
       "target": "모양",
-      "translation": "signs, indications"
+      "translation": "Appearance, shape, form, look, signs"
     },
     {
       "id": "freq-817",
       "target": "물질",
-      "translation": "matter, material"
+      "translation": "Matter, material, substance"
     },
     {
       "id": "freq-818",
       "target": "아나운서",
-      "translation": "Announcer"
+      "translation": "Announcer, news presenter, anchor"
     },
     {
       "id": "freq-819",
       "target": "뉴스",
-      "translation": "News"
+      "translation": "News, broadcast news"
     },
     {
       "id": "freq-820",
       "target": "살아가다",
-      "translation": "Lead a life, get along"
+      "translation": "To live on, get along, survive, lead a life"
     },
     {
       "id": "freq-821",
       "target": "펴다",
-      "translation": "Spread out, unfold"
+      "translation": "To spread out, unfold, open, straighten"
     },
     {
       "id": "freq-822",
       "target": "배",
-      "translation": "Times, x-fold"
+      "translation": "Times, fold (multiplier); boat; pear; belly"
     },
     {
       "id": "freq-823",
       "target": "수업",
-      "translation": "school, teaching"
+      "translation": "Class, lesson, course, instruction"
     },
     {
       "id": "freq-824",
       "target": "겨울",
-      "translation": "Winter"
+      "translation": "Winter, wintertime"
     },
     {
       "id": "freq-825",
       "target": "종교",
-      "translation": "religion, a faith"
+      "translation": "Religion, faith"
     },
     {
       "id": "freq-826",
       "target": "층",
-      "translation": "floor, grade, class"
+      "translation": "Floor, story (of a building); layer, tier, class"
     },
     {
       "id": "freq-827",
       "target": "자연스럽다",
-      "translation": "To be natural"
+      "translation": "To be natural, unforced, smooth"
     },
     {
       "id": "freq-828",
       "target": "장",
-      "translation": "One piece of sth flat"
+      "translation": "Sheet, piece, page (counter); chapter; market"
     },
     {
       "id": "freq-829",
       "target": "식사",
-      "translation": "A meal"
+      "translation": "Meal, dining"
     },
     {
       "id": "freq-830",
       "target": "안다",
-      "translation": "To hold, embrace"
+      "translation": "To hold, hug, embrace; to take on"
     },
     {
       "id": "freq-831",
       "target": "이해",
-      "translation": "Understanding"
+      "translation": "Understanding, comprehension; interest/benefit"
     },
     {
       "id": "freq-832",
       "target": "잊다",
-      "translation": "To forget"
+      "translation": "To forget, leave behind"
     },
     {
       "id": "freq-833",
       "target": "제시하다",
-      "translation": "To present"
+      "translation": "To suggest, present, propose, show"
     },
     {
       "id": "freq-834",
       "target": "반",
-      "translation": "Group, company, party"
+      "translation": "Class, team; half; group"
     },
     {
       "id": "freq-835",
       "target": "불과하다",
-      "translation": "Nothing more than"
+      "translation": "To be merely, be nothing more than"
     },
     {
       "id": "freq-836",
       "target": "혹은",
-      "translation": "If that’s not the case"
+      "translation": "Or, alternatively, if not"
     },
     {
       "id": "freq-837",
       "target": "엄청나다",
-      "translation": "To be absurd, wild, terribly large"
+      "translation": "To be enormous, tremendous, immense, huge"
     },
     {
       "id": "freq-838",
       "target": "편",
-      "translation": "Direction, way (the wind is blowing that ~)"
+      "translation": "Side, direction; compilation; side (e.g. on my side)"
     },
     {
       "id": "freq-839",
       "target": "텔레비전",
-      "translation": "Television"
+      "translation": "Television, TV"
     },
     {
       "id": "freq-840",
       "target": "파악하다",
-      "translation": "Grasp, seize, understand"
+      "translation": "To grasp, figure out, understand, identify"
     },
     {
       "id": "freq-841",
       "target": "편",
-      "translation": "Compilation, editing"
+      "translation": "Volume, edition, piece, side (counter)"
     },
     {
       "id": "freq-842",
       "target": "실천",
-      "translation": "Practice"
+      "translation": "Practice, action, implementation"
     },
     {
       "id": "freq-843",
       "target": "노력하다",
-      "translation": "To try hard, strive"
+      "translation": "To make an effort, strive, try hard"
     },
     {
       "id": "freq-844",
       "target": "보호",
-      "translation": "protection, shelter"
+      "translation": "Protection, shelter, preservation"
     },
     {
       "id": "freq-845",
       "target": "씻다",
-      "translation": "To wash, cleanse"
+      "translation": "To wash, cleanse, rinse"
     },
     {
       "id": "freq-846",
       "target": "늦다",
-      "translation": "To be late (time)"
+      "translation": "To be late, delayed; to be tardy"
     },
     {
       "id": "freq-847",
       "target": "이웃",
-      "translation": "The neighborhood"
+      "translation": "Neighbor, neighborhood"
     },
     {
       "id": "freq-848",
       "target": "편지",
-      "translation": "Letter"
+      "translation": "Letter, mail, note"
     },
     {
       "id": "freq-849",
       "target": "공동",
-      "translation": "Association or union or collaboration"
+      "translation": "Joint, communal, shared, collective"
     },
     {
       "id": "freq-850",
       "target": "까닭",
-      "translation": "Reason"
+      "translation": "Reason, cause, grounds"
     },
     {
       "id": "freq-851",
       "target": "방안",
-      "translation": "A plan, scheme"
+      "translation": "Plan, measure, scheme, proposal"
     },
     {
       "id": "freq-852",
       "target": "센티미터",
-      "translation": "Centimeter"
+      "translation": "Centimeter (cm)"
     },
     {
       "id": "freq-853",
       "target": "팔",
-      "translation": "An arm"
+      "translation": "Arm; eight"
     },
     {
       "id": "freq-854",
       "target": "분명하다",
-      "translation": "To be clear/obvious"
+      "translation": "To be clear, obvious, distinct, certain"
     },
     {
       "id": "freq-855",
       "target": "분석",
-      "translation": "Analysis"
+      "translation": "Analysis, breakdown"
     },
     {
       "id": "freq-856",
       "target": "소녀",
-      "translation": "A young girl"
+      "translation": "Young girl, girl"
     },
     {
       "id": "freq-857",
       "target": "지나가다",
-      "translation": "To pass, elapse"
+      "translation": "To pass by, go by, elapse"
     },
     {
       "id": "freq-858",
       "target": "차",
-      "translation": "order, sequence, degree"
+      "translation": "Round, order, degree (counter); car; tea"
     },
     {
       "id": "freq-859",
       "target": "상품",
-      "translation": "Product"
+      "translation": "Product, merchandise, commodity, prize"
     },
     {
       "id": "freq-860",
       "target": "설명",
-      "translation": "Explanation"
+      "translation": "Explanation, description, account"
     },
     {
       "id": "freq-861",
       "target": "훌륭하다",
-      "translation": "To be excellent"
+      "translation": "To be excellent, superb, magnificent, great"
     },
     {
       "id": "freq-862",
       "target": "관계자",
-      "translation": "The interested or affected parties"
+      "translation": "Officials, people concerned, interested parties"
     },
     {
       "id": "freq-863",
       "target": "새로",
-      "translation": "newly, anew"
+      "translation": "Newly, anew, freshly"
     },
     {
       "id": "freq-864",
       "target": "세",
-      "translation": "Age in years"
+      "translation": "Years of age (counter); three"
     },
     {
       "id": "freq-865",
       "target": "이어지다",
-      "translation": "Get joined, be connected"
+      "translation": "To continue, lead to, be connected"
     },
     {
       "id": "freq-866",
       "target": "티브이",
-      "translation": "TV"
+      "translation": "TV, television"
     },
     {
       "id": "freq-867",
       "target": "봄",
-      "translation": "Spring"
+      "translation": "Spring, springtime"
     },
     {
       "id": "freq-868",
       "target": "종류",
-      "translation": "kind, sort, species"
+      "translation": "Kind, sort, type, variety, species"
     },
     {
       "id": "freq-869",
       "target": "낮다",
-      "translation": "Be low"
+      "translation": "To be low, lower"
     },
     {
       "id": "freq-870",
@@ -4356,257 +4356,257 @@
     {
       "id": "freq-871",
       "target": "부부",
-      "translation": "Man and wife"
+      "translation": "Married couple, husband and wife"
     },
     {
       "id": "freq-872",
       "target": "오래",
-      "translation": "Long, for a long time"
+      "translation": "For a long time, long"
     },
     {
       "id": "freq-873",
       "target": "요구",
-      "translation": "A demand, claim, request"
+      "translation": "Demand, request, requirement, claim"
     },
     {
       "id": "freq-874",
       "target": "키우다",
-      "translation": "To raise, bring up, rear"
+      "translation": "To raise, bring up, grow, cultivate"
     },
     {
       "id": "freq-875",
       "target": "눕다",
-      "translation": "Lie down"
+      "translation": "To lie down"
     },
     {
       "id": "freq-876",
       "target": "발전하다",
-      "translation": "To develop, grow"
+      "translation": "To develop, advance, grow, progress"
     },
     {
       "id": "freq-877",
       "target": "여행",
-      "translation": "Trip"
+      "translation": "Trip, travel, journey, tour"
     },
     {
       "id": "freq-878",
       "target": "죽음",
-      "translation": "Death"
+      "translation": "Death, passing"
     },
     {
       "id": "freq-879",
       "target": "고통",
-      "translation": "Suffering or agony"
+      "translation": "Pain, suffering, agony, distress"
     },
     {
       "id": "freq-880",
       "target": "공",
-      "translation": "Ball"
+      "translation": "Ball; zero; public; merit"
     },
     {
       "id": "freq-881",
       "target": "어울리다",
-      "translation": "To be becoming, suiting"
+      "translation": "To suit, match, get along with, harmonize"
     },
     {
       "id": "freq-882",
       "target": "오월",
-      "translation": "May"
+      "translation": "May (month)"
     },
     {
       "id": "freq-883",
       "target": "쉬다",
-      "translation": "to relax, take a break"
+      "translation": "To rest, take a break, relax; to be hoarse; to spoil"
     },
     {
       "id": "freq-884",
       "target": "알리다",
-      "translation": "To inform, tell a person"
+      "translation": "To inform, let know, announce, notify"
     },
     {
       "id": "freq-885",
       "target": "차다",
-      "translation": "To be full, to be filled with (PASSIVE)"
+      "translation": "To be full, filled; to kick; to be cold"
     },
     {
       "id": "freq-886",
       "target": "과",
-      "translation": "A lesson or a section or a department"
+      "translation": "Lesson, section, department; and/with"
     },
     {
       "id": "freq-887",
       "target": "멀리",
-      "translation": "Far away"
+      "translation": "Far away, distantly, afar"
     },
     {
       "id": "freq-888",
       "target": "빼다",
-      "translation": "Pull out, extract"
+      "translation": "To pull out, remove, subtract, extract"
     },
     {
       "id": "freq-889",
       "target": "예정",
-      "translation": "A program, schedule"
+      "translation": "Schedule, plan, expectation"
     },
     {
       "id": "freq-890",
       "target": "오빠",
-      "translation": "Older brother"
+      "translation": "Older brother (used by females)"
     },
     {
       "id": "freq-891",
       "target": "즐겁다",
-      "translation": "Be pleasant, agreeable"
+      "translation": "To be joyful, pleasant, delightful, enjoyable"
     },
     {
       "id": "freq-892",
       "target": "한계",
-      "translation": "Boundary, limits"
+      "translation": "Limit, boundary, limitation"
     },
     {
       "id": "freq-893",
       "target": "흔히",
-      "translation": "Generally, commonly; often"
+      "translation": "Commonly, often, frequently, usually"
     },
     {
       "id": "freq-894",
       "target": "바탕",
-      "translation": "1) Foundation, basis, 2) Background"
+      "translation": "Foundation, basis, background, nature"
     },
     {
       "id": "freq-895",
       "target": "사월",
-      "translation": "April"
+      "translation": "April (month)"
     },
     {
       "id": "freq-896",
       "target": "싸우다",
-      "translation": "To fight"
+      "translation": "To fight, argue, quarrel, struggle"
     },
     {
       "id": "freq-897",
       "target": "예쁘다",
-      "translation": "Pretty, lovely"
+      "translation": "To be pretty, lovely, cute"
     },
     {
       "id": "freq-898",
       "target": "갈등",
-      "translation": "Conflict or troubles"
+      "translation": "Conflict, strife, discord"
     },
     {
       "id": "freq-899",
       "target": "느껴지다",
-      "translation": "Feel"
+      "translation": "To be felt, feel, seem"
     },
     {
       "id": "freq-900",
       "target": "의지",
-      "translation": "will, volition"
+      "translation": "Will, volition; reliance, leaning"
     },
     {
       "id": "freq-901",
       "target": "전문",
-      "translation": "A specialty"
+      "translation": "Specialty, profession, major; full text"
     },
     {
       "id": "freq-902",
       "target": "정확하다",
-      "translation": "To be exact"
+      "translation": "To be accurate, exact, precise, correct"
     },
     {
       "id": "freq-903",
       "target": "초기",
-      "translation": "The early days, the initial period"
+      "translation": "Early stage, beginning, initial period"
     },
     {
       "id": "freq-904",
       "target": "나중",
-      "translation": "The last, the latter part"
+      "translation": "Later, afterwards, the end"
     },
     {
       "id": "freq-905",
       "target": "맛있다",
-      "translation": "Delicious"
+      "translation": "To be delicious, tasty, yummy"
     },
     {
       "id": "freq-906",
       "target": "며칠",
-      "translation": "How many days"
+      "translation": "A few days, how many days, what date"
     },
     {
       "id": "freq-907",
       "target": "쓴맛",
-      "translation": "Bitter taste"
+      "translation": "Bitter taste, bitterness"
     },
     {
       "id": "freq-908",
       "target": "찾아오다",
-      "translation": "To go meet somebody, to go get sth"
+      "translation": "To visit, come see, fetch, call on"
     },
     {
       "id": "freq-909",
       "target": "미",
-      "translation": "beauty, grace"
+      "translation": "Beauty, grace; fine; America"
     },
     {
       "id": "freq-910",
       "target": "사용",
-      "translation": "use, emply"
+      "translation": "Use, usage, employment"
     },
     {
       "id": "freq-911",
       "target": "시선",
-      "translation": "one’s line of vision"
+      "translation": "Gaze, glance, line of sight, eyes"
     },
     {
       "id": "freq-912",
       "target": "아무런",
-      "translation": "No sort of"
+      "translation": "Any, any sort of, no (kind of)"
     },
     {
       "id": "freq-913",
       "target": "언론",
-      "translation": "A speech, discussion"
+      "translation": "Media, the press, journalism, speech"
     },
     {
       "id": "freq-914",
       "target": "투자",
-      "translation": "Investment"
+      "translation": "Investment, venture"
     },
     {
       "id": "freq-915",
       "target": "지원",
-      "translation": "helping, supporting, aiding"
+      "translation": "Support, backing, aid; application"
     },
     {
       "id": "freq-916",
       "target": "결정하다",
-      "translation": "To decide"
+      "translation": "To decide, determine, resolve"
     },
     {
       "id": "freq-917",
       "target": "경영",
-      "translation": "Management or administration"
+      "translation": "Management, administration, business operations"
     },
     {
       "id": "freq-918",
       "target": "목표",
-      "translation": "goal, object"
+      "translation": "Goal, target, objective, aim"
     },
     {
       "id": "freq-919",
       "target": "성장",
-      "translation": "Growth"
+      "translation": "Growth, development, progress"
     },
     {
       "id": "freq-920",
       "target": "숲",
-      "translation": "Forest"
+      "translation": "Forest, woods, grove"
     },
     {
       "id": "freq-921",
       "target": "없어지다",
-      "translation": "To lose, get lost"
+      "translation": "To disappear, vanish, go missing"
     },
     {
       "id": "freq-922",
@@ -4616,392 +4616,392 @@
     {
       "id": "freq-923",
       "target": "내려가다",
-      "translation": "To go down"
+      "translation": "To go down, descend, drop"
     },
     {
       "id": "freq-924",
       "target": "미치다",
-      "translation": "To reach"
+      "translation": "To reach, extend to, affect; to go crazy"
     },
     {
       "id": "freq-925",
       "target": "새벽",
-      "translation": "dawn, daybreak"
+      "translation": "Dawn, daybreak, early morning"
     },
     {
       "id": "freq-926",
       "target": "쓰레기",
-      "translation": "Garbage"
+      "translation": "Garbage, trash, waste"
     },
     {
       "id": "freq-927",
       "target": "얼른",
-      "translation": "Fast, quickly, rapidly"
+      "translation": "Quickly, promptly, right away, fast"
     },
     {
       "id": "freq-928",
       "target": "임금",
-      "translation": "Wages, pay"
+      "translation": "Wages, pay, salary; king, monarch"
     },
     {
       "id": "freq-929",
       "target": "피해",
-      "translation": "Damage"
+      "translation": "Damage, harm, injury, loss"
     },
     {
       "id": "freq-930",
       "target": "한",
-      "translation": "A limit"
+      "translation": "Limit, bound; sorrow, deep grief"
     },
     {
       "id": "freq-931",
       "target": "무섭다",
-      "translation": "fearful, dreadful"
+      "translation": "To be scary, frightening, fearful"
     },
     {
       "id": "freq-932",
       "target": "직장",
-      "translation": "one’s work place"
+      "translation": "Workplace, job, office"
     },
     {
       "id": "freq-933",
       "target": "참다",
-      "translation": "Bear, endure"
+      "translation": "To endure, bear, tolerate, hold back"
     },
     {
       "id": "freq-934",
       "target": "크기",
-      "translation": "Size, dimensions"
+      "translation": "Size, dimensions, scale"
     },
     {
       "id": "freq-935",
       "target": "고기",
-      "translation": "Meat"
+      "translation": "Meat, flesh; fish"
     },
     {
       "id": "freq-936",
       "target": "남기다",
-      "translation": "To leave behind"
+      "translation": "To leave behind, save, set aside"
     },
     {
       "id": "freq-937",
       "target": "서양",
-      "translation": "The Western countries"
+      "translation": "The West, Western countries, the Occident"
     },
     {
       "id": "freq-938",
       "target": "주요",
-      "translation": "The major, the chief thing"
+      "translation": "Major, main, chief, primary"
     },
     {
       "id": "freq-939",
       "target": "가져오다",
-      "translation": "To bring or get"
+      "translation": "To bring, fetch, cause"
     },
     {
       "id": "freq-940",
       "target": "냄새",
-      "translation": "Smell"
+      "translation": "Smell, odor, scent"
     },
     {
       "id": "freq-941",
       "target": "부드럽다",
-      "translation": "soft, tender"
+      "translation": "To be soft, tender, gentle, smooth"
     },
     {
       "id": "freq-942",
       "target": "여기다",
-      "translation": "Think, consider as"
+      "translation": "To consider, regard, think of as"
     },
     {
       "id": "freq-943",
       "target": "이",
-      "translation": "this, this thing"
+      "translation": "This, this one; tooth; two; lice"
     },
     {
       "id": "freq-944",
       "target": "공연",
-      "translation": "A public performance"
+      "translation": "Performance, show, concert"
     },
     {
       "id": "freq-945",
       "target": "남녀",
-      "translation": "Man and woman"
+      "translation": "Men and women, both sexes"
     },
     {
       "id": "freq-946",
       "target": "내놓다",
-      "translation": "Put out, take out"
+      "translation": "To put out, take out, release, present"
     },
     {
       "id": "freq-947",
       "target": "만들어지다",
-      "translation": "Make, create"
+      "translation": "To be made, created, formed"
     },
     {
       "id": "freq-948",
       "target": "속도",
-      "translation": "Speed"
+      "translation": "Speed, velocity, pace, rate"
     },
     {
       "id": "freq-949",
       "target": "심각하다",
-      "translation": "seriousness, gravity"
+      "translation": "To be serious, grave, critical, severe"
     },
     {
       "id": "freq-950",
       "target": "준비",
-      "translation": "Preparation"
+      "translation": "Preparation, readiness, arrangement"
     },
     {
       "id": "freq-951",
       "target": "계속되다",
-      "translation": "To continue"
+      "translation": "To continue, go on, last"
     },
     {
       "id": "freq-952",
       "target": "구월",
-      "translation": "September"
+      "translation": "September (month)"
     },
     {
       "id": "freq-953",
       "target": "맑다",
-      "translation": "clean, pure"
+      "translation": "To be clear, clean, sunny, pure"
     },
     {
       "id": "freq-954",
       "target": "소년",
-      "translation": "A boy"
+      "translation": "Boy, youth"
     },
     {
       "id": "freq-955",
       "target": "소식",
-      "translation": "News, information"
+      "translation": "News, word, tidings; eating lightly"
     },
     {
       "id": "freq-956",
       "target": "유월",
-      "translation": "June"
+      "translation": "June (month)"
     },
     {
       "id": "freq-957",
       "target": "작용",
-      "translation": "Application"
+      "translation": "Action, operation, function, effect"
     },
     {
       "id": "freq-958",
       "target": "허리",
-      "translation": "The waist, the small of the back"
+      "translation": "Waist, lower back, middle"
     },
     {
       "id": "freq-959",
       "target": "골",
-      "translation": "Goal"
+      "translation": "Goal; valley; temper"
     },
     {
       "id": "freq-960",
       "target": "공업",
-      "translation": "The industry or manufacturing industry"
+      "translation": "Manufacturing industry, manufacturing"
     },
     {
       "id": "freq-961",
       "target": "그중",
-      "translation": "Among the rest of them"
+      "translation": "Among them, of them, out of those"
     },
     {
       "id": "freq-962",
       "target": "노인",
-      "translation": "Old person"
+      "translation": "Elderly person, senior citizen, the aged"
     },
     {
       "id": "freq-963",
       "target": "벌다",
-      "translation": "To earn (money); (2) to invite, to bring onto oneself"
+      "translation": "To earn (money), make; to widen"
     },
     {
       "id": "freq-964",
       "target": "살리다",
-      "translation": "1) Revive, bring to life, 2) Save, spare, rescue"
+      "translation": "To save, revive, bring to life, spare"
     },
     {
       "id": "freq-965",
       "target": "새",
-      "translation": "A bird"
+      "translation": "Bird; new; interval, space"
     },
     {
       "id": "freq-966",
       "target": "영어",
-      "translation": "The english language"
+      "translation": "English (language)"
     },
     {
       "id": "freq-967",
       "target": "출신",
-      "translation": "A native, place one is from"
+      "translation": "Origin, graduate of, native of"
     },
     {
       "id": "freq-968",
       "target": "결정",
-      "translation": "A decision or determination"
+      "translation": "Decision, determination; crystal"
     },
     {
       "id": "freq-969",
       "target": "경향",
-      "translation": "Tendency or trend"
+      "translation": "Tendency, trend, inclination"
     },
     {
       "id": "freq-970",
       "target": "기록",
-      "translation": "A record or a document"
+      "translation": "Record, document, log, recording"
     },
     {
       "id": "freq-971",
       "target": "나름",
-      "translation": "Depending on"
+      "translation": "Depending on, in one's own way"
     },
     {
       "id": "freq-972",
       "target": "대답하다",
-      "translation": "To answer, reply"
+      "translation": "To answer, reply, respond"
     },
     {
       "id": "freq-973",
       "target": "반면",
-      "translation": "One side"
+      "translation": "On the other hand, whereas; reverse side"
     },
     {
       "id": "freq-974",
       "target": "썰다",
-      "translation": "Chip, mince, dice"
+      "translation": "To slice, chop, mince, cut"
     },
     {
       "id": "freq-975",
       "target": "움직임",
-      "translation": "movement, motion, activity"
+      "translation": "Movement, motion, activity"
     },
     {
       "id": "freq-976",
       "target": "이미지",
-      "translation": "Image"
+      "translation": "Image, impression"
     },
     {
       "id": "freq-977",
       "target": "터지다",
-      "translation": "Break, be torn, get away from"
+      "translation": "To burst, explode, break out, rupture"
     },
     {
       "id": "freq-978",
       "target": "특성",
-      "translation": "A special/unique characteristic (individuality making, peculiarity)"
+      "translation": "Characteristic, distinctive feature, unique trait"
     },
     {
       "id": "freq-979",
       "target": "교장",
-      "translation": "Principal"
+      "translation": "Principal, headmaster (of a school)"
     },
     {
       "id": "freq-980",
       "target": "벗다",
-      "translation": "Take off, remove"
+      "translation": "To take off (clothes/shoes), remove, undress"
     },
     {
       "id": "freq-981",
       "target": "업무",
-      "translation": "Buisness, duty"
+      "translation": "Business, duty, task, operations, work"
     },
     {
       "id": "freq-982",
       "target": "입시",
-      "translation": "An entrance examination"
+      "translation": "Entrance examination"
     },
     {
       "id": "freq-983",
       "target": "준비하다",
-      "translation": "To prepare"
+      "translation": "To prepare, get ready, arrange"
     },
     {
       "id": "freq-984",
       "target": "청소년",
-      "translation": "Young boys and girls, teenagers"
+      "translation": "Youth, adolescents, teenagers"
     },
     {
       "id": "freq-985",
       "target": "응",
-      "translation": "Yes, i see!"
+      "translation": "Yes, yeah, okay (informal/casual)"
     },
     {
       "id": "freq-986",
       "target": "이기다",
-      "translation": "To win"
+      "translation": "To win, defeat, overcome, beat"
     },
     {
       "id": "freq-987",
       "target": "찾아보다",
-      "translation": "To go meet somebody"
+      "translation": "To look for, search, look up, check"
     },
     {
       "id": "freq-988",
       "target": "취하다",
-      "translation": "To adopt, assume, take"
+      "translation": "To take, adopt, assume; to get drunk"
     },
     {
       "id": "freq-989",
       "target": "다루다",
-      "translation": "Treat, deal with"
+      "translation": "To deal with, handle, treat, operate"
     },
     {
       "id": "freq-990",
       "target": "달",
-      "translation": "The moon"
+      "translation": "Moon; month"
     },
     {
       "id": "freq-991",
       "target": "사장",
-      "translation": "Company boss"
+      "translation": "Company president, CEO, boss; burying"
     },
     {
       "id": "freq-992",
       "target": "삼월",
-      "translation": "March"
+      "translation": "March (month)"
     },
     {
       "id": "freq-993",
       "target": "그렇지만",
-      "translation": "But or however"
+      "translation": "But, however, though"
     },
     {
       "id": "freq-994",
       "target": "선배",
-      "translation": "one’s senior"
+      "translation": "Senior (at school or work), mentor"
     },
     {
       "id": "freq-995",
       "target": "업체",
-      "translation": "A business enterprise"
+      "translation": "Business, company, enterprise, firm"
     },
     {
       "id": "freq-996",
       "target": "키",
-      "translation": "stature, height"
+      "translation": "Height, stature; key; rudder"
     },
     {
       "id": "freq-997",
       "target": "구하다",
-      "translation": "1) Buy, purchase, 2) Seek, look for"
+      "translation": "To seek, look for, obtain; to save, rescue"
     },
     {
       "id": "freq-998",
       "target": "국회",
-      "translation": "The National Assembly"
+      "translation": "National Assembly, Parliament, Congress"
     },
     {
       "id": "freq-999",
       "target": "그러므로",
-      "translation": "So or hence or therefore"
+      "translation": "Therefore, hence, thus, consequently"
     },
     {
       "id": "freq-1000",
       "target": "포함하다",
-      "translation": "To include, contain"
+      "translation": "To include, contain, comprise"
     }
   ]
 }
