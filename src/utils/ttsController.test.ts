@@ -561,4 +561,65 @@ describe('TTSController Unit Tests', () => {
     );
     expect(synth3).toBeUndefined();
   });
+
+  it('handles synthesis requests initiated while model loading is in flight without race conditions', async () => {
+    // 1. Trigger synthesis before model is loaded
+    const synthPromise = controller.synthesize('동시합성', 'jm_kumo', 1.0);
+
+    // Verify LOAD_MODEL message was dispatched
+    const loadMsg = postedMessages.find((m) => m.type === 'LOAD_MODEL');
+    expect(loadMsg).toBeDefined();
+
+    // Verify concurrent calls to loadModel return the same in-flight promise
+    const concurrentLoadPromise = controller.loadModel();
+
+    // 2. Simulate progress updates from worker
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_PROGRESS',
+        payload: { file: 'model_q8.onnx', progress: 50, status: 'download' },
+      },
+    } as MessageEvent);
+
+    expect(controller.getDownloadProgress()).toBe(50);
+
+    // 3. Complete model loading
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+
+    await concurrentLoadPromise;
+    expect(controller.getIsLoaded()).toBe(true);
+
+    // Allow the synthesis promise microtask to advance and post SYNTHESIZE message
+    await new Promise((r) => setTimeout(r, 10));
+
+    // 4. Verify the queued synthesis message was posted to worker
+    const synthMsg = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '동시합성',
+    );
+    expect(synthMsg).toBeDefined();
+
+    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: synthMsg.payload.id,
+            audioPcm: new Float32Array(50),
+            sampleRate: 24000,
+            genTimeMs: 45,
+            durationSec: 0.8,
+            ipa: 'dong-si-hap-seong',
+          },
+        },
+      } as MessageEvent);
+    }
+
+    const resolvedUrl = await synthPromise;
+    expect(resolvedUrl).toContain('blob:');
+  });
 });

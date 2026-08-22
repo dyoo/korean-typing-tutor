@@ -54,6 +54,11 @@ distraction-free, high-performance typing experience for English speakers learni
 - **Opposite-Hand Shift Chording**: When guiding Shift key targets (e.g. `ㄲ`, `ㅖ`), always
   recommend the opposite-hand Shift key (`right-shift` for left-hand keys `Q`/`W`/`E`/`R`/`T`,
   `left-shift` for right-hand keys `O`/`P`) to reinforce proper touch-typing ergonomics.
+- **Lifecycle Interleaving & Out-of-Order Testing**: When testing asynchronous subsystems (Web
+  Workers, WASM initialization, audio pipelines, IndexedDB/CacheStorage), never test solely the
+  "happy synchronous sequence" where initialization finishes before operational requests begin.
+  Always write tests simulating operations triggered *before* or *during* in-flight initialization
+  to prevent race conditions and guarantee promise memoization/queue synchronization.
 - **CSS**: Use Tailwind utility classes directly in the markup.
 
 ## Key Files & Modules
