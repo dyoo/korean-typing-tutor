@@ -22,6 +22,7 @@
   import InputDisplay from './lib/InputDisplay.svelte';
   import TTSDownloadModal from './lib/TTSDownloadModal.svelte';
   import MasteryCompletionModal from './lib/MasteryCompletionModal.svelte';
+  import WelcomeModal from './lib/WelcomeModal.svelte';
   import { ttsController } from './utils/ttsController.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
   import type { CurriculumCategory } from './utils/curriculumCategories';
@@ -38,6 +39,7 @@
   let showCurriculumSidebar = $derived(activePanel === 'curriculum');
   let showMasterySidebar = $derived(activePanel === 'mastery');
   let showMasteryCompletionModal = $state(false);
+  let showWelcomeModal = $state(true);
 
   let enabledModuleIds = $state<string[]>(
     Array.isArray(initialSettings.enabledModuleIds)
@@ -145,7 +147,18 @@
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   });
 
+  function handleBeginSession() {
+    ttsController.unlockAudio();
+    session.resetSessionState();
+    showWelcomeModal = false;
+    focusInputElement();
+    if (settings.enableTTS && settings.speakOnAppearance) {
+      speakCurrentPrompt();
+    }
+  }
+
   function handleWindowClick(e: MouseEvent) {
+    ttsController.unlockAudio();
     focusInput(e);
   }
 
@@ -250,6 +263,19 @@
   }
 
   function handleKeydown(e: KeyboardEvent) {
+    if (
+      showWelcomeModal ||
+      activePanel !== 'none' ||
+      showTTSDownloadModal ||
+      showMasteryCompletionModal
+    ) {
+      if (showWelcomeModal && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
+        e.preventDefault();
+        handleBeginSession();
+      }
+      return;
+    }
+
     if (e.key === 'Shift') {
       if (e.code === 'ShiftLeft') {
         isLeftShiftPressed = true;
@@ -290,9 +316,7 @@
   }
 
   function processKeystrokeWithAudio(key: string) {
-    if (settings.enableTTS) {
-      ttsController.unlockAudio();
-    }
+    ttsController.unlockAudio();
     const wasCompleted = session.getIsItemCompleted();
     const result = session.processKey(key);
 
@@ -475,8 +499,8 @@
           void ttsController.preloadBatch(upcomingTargets, voice, speed);
         }
 
-        // If speak on appearance is enabled, pronounce the prompt when it newly appears
-        if (isNewTarget && speakOnAppear) {
+        // If speak on appearance is enabled, pronounce the prompt when it newly appears (once welcome modal is dismissed)
+        if (isNewTarget && speakOnAppear && !showWelcomeModal) {
           speakCurrentPrompt();
         }
       }
@@ -694,6 +718,8 @@
   onOpenMasterySidebar={handleCompletionOpenMasterySidebar}
   onOpenFocusMode={handleCompletionOpenFocusMode}
 />
+
+<WelcomeModal isOpen={showWelcomeModal} onBegin={handleBeginSession} />
 
 <style>
   :global(html, body, #app) {
