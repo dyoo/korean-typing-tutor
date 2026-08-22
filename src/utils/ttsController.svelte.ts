@@ -1,3 +1,4 @@
+import { createWavBlob } from '@dannyyoo/korean-tts';
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
 
 /** Maximum number of audio blob URLs retained in memory before LRU eviction. */
@@ -136,9 +137,18 @@ export class TTSController {
           break;
 
         case 'SYNTHESIS_SUCCESS': {
+          console.log('[TTS] SYNTHESIS_SUCCESS received from worker:', msg.payload.id);
           const pending = this.pendingSyntheses.get(msg.payload.id);
           if (pending) {
-            pending.resolve(msg.payload.audioBlobUrl);
+            let audioBlobUrl: string;
+            if (msg.payload.audioPcm) {
+              const wavBlob = createWavBlob(msg.payload.audioPcm, msg.payload.sampleRate ?? 24000);
+              audioBlobUrl = URL.createObjectURL(wavBlob);
+              console.log('[TTS] Created window Blob URL:', audioBlobUrl);
+            } else {
+              audioBlobUrl = (msg.payload as unknown as { audioBlobUrl: string }).audioBlobUrl || '';
+            }
+            pending.resolve(audioBlobUrl);
             this.pendingSyntheses.delete(msg.payload.id);
           }
           break;
@@ -390,6 +400,7 @@ export class TTSController {
       return;
     }
 
+    console.log('[TTS] speak() called for:', text);
     // Prime the audio subsystem synchronously during the active user gesture
     this.unlockAudio();
     this.stopAudio();
@@ -397,12 +408,14 @@ export class TTSController {
     try {
       this.isSpeaking = true;
       const audioUrl = await this.synthesize(text, voice, speed);
+      console.log('[TTS] synthesize() resolved with audioUrl:', audioUrl);
 
       if (!this.playerAudio) {
         this.playerAudio = new Audio();
       }
       const audio = this.playerAudio;
       audio.src = audioUrl;
+      console.log('[TTS] Invoking audio.play() on HTMLAudioElement');
 
       return new Promise((resolve) => {
         const cleanup = () => {
@@ -412,20 +425,25 @@ export class TTSController {
         };
 
         audio.onended = () => {
+          console.log('[TTS] audio.play() onended triggered');
           cleanup();
           resolve();
         };
-        audio.onerror = () => {
+        audio.onerror = (e) => {
+          console.error('[TTS] audio.play() onerror triggered:', e);
           cleanup();
           resolve();
         };
-        audio.play().catch((err) => {
-          console.warn('TTS audio playback failed or was blocked by autoplay policy:', err);
+        audio.play().then(() => {
+          console.log('[TTS] audio.play() promise resolved successfully');
+        }).catch((err) => {
+          console.warn('[TTS] audio.play() promise rejected:', err);
           cleanup();
           resolve();
         });
       });
-    } catch {
+    } catch (err) {
+      console.error('[TTS] speak() failed with error:', err);
       this.isSpeaking = false;
     }
   }

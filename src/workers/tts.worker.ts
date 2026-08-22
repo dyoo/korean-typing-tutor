@@ -113,6 +113,7 @@ async function processSynthesisQueue(): Promise<void> {
       const { id, text, voice, speed } = req;
 
       try {
+        console.log('[TTS Worker] Synthesizing text:', text, 'id:', id);
         if (!speaker || !isModelLoaded) {
           throw new Error('TTS Model is not loaded yet');
         }
@@ -126,21 +127,21 @@ async function processSynthesisQueue(): Promise<void> {
 
         const result = await task;
         activeTasks.delete(id);
-
-        const audioBlob = result.toWavBlob();
-        const audioBlobUrl = URL.createObjectURL(audioBlob);
+        console.log('[TTS Worker] Synthesis complete for id:', id, 'genTimeMs:', result.genTimeMs);
 
         postResponse({
           type: 'SYNTHESIS_SUCCESS',
           payload: {
             id,
-            audioBlobUrl,
+            audioPcm: result.audio,
+            sampleRate: result.sampleRate ?? 24000,
             genTimeMs: result.genTimeMs,
             durationSec: result.durationSec,
             ipa: result.ipa,
           },
         });
       } catch (err: unknown) {
+        console.error('[TTS Worker] Synthesis error for id:', id, err);
         activeTasks.delete(id);
         const isCancelled =
           (typeof err === 'object' &&

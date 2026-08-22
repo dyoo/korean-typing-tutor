@@ -300,6 +300,7 @@
       settings.enableTTS &&
       settings.speakOnCompletion
     ) {
+      console.log('[App] Exercise completed, triggering speakCurrentPrompt()');
       speakCurrentPrompt();
     }
   }
@@ -422,6 +423,7 @@
   }
 
   function speakCurrentPrompt() {
+    console.log('[App] speakCurrentPrompt called for:', currentItem?.target);
     if (currentItem && currentItem.target) {
       ttsController.speak(
         currentItem.target,
