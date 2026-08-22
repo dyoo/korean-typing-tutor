@@ -57,9 +57,57 @@
   );
   let fontWeightClass = $derived(getTargetFontWeightClass(targetLength));
   let subtextClass = $derived(getSubtextFontSizeClass(targetLength));
+
+  let targetContainerElement = $state<HTMLDivElement | null>(null);
+  let activeCursorElement = $state<HTMLElement | null>(null);
+  let rafId: number | null = null;
+
+  $effect(() => {
+    // Reset scroll when switching items or starting at beginning
+    if (activeTargetCursorIndex === 0 && targetContainerElement) {
+      targetContainerElement.scrollTop = 0;
+    }
+
+    if (
+      activeTargetCursorIndex !== undefined &&
+      activeCursorElement &&
+      targetContainerElement
+    ) {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+
+      rafId = requestAnimationFrame(() => {
+        const container = targetContainerElement;
+        const cursor = activeCursorElement;
+        if (!container || !cursor) {
+          rafId = null;
+          return;
+        }
+
+        const containerRect = container.getBoundingClientRect();
+        const cursorRect = cursor.getBoundingClientRect();
+        const padding = 20;
+
+        if (cursorRect.top < containerRect.top + padding) {
+          container.scrollTop += cursorRect.top - containerRect.top - padding;
+        } else if (cursorRect.bottom > containerRect.bottom - padding) {
+          container.scrollTop += cursorRect.bottom - containerRect.bottom + padding;
+        }
+        rafId = null;
+      });
+    }
+
+    return () => {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+  });
 </script>
 
 <div
+  bind:this={targetContainerElement}
   class="w-full max-w-full flex-1 min-h-0 flex flex-col items-center overflow-y-auto px-2 py-2 select-text"
 >
   <div class="my-auto w-full max-w-full flex flex-col items-center">
@@ -73,7 +121,26 @@
           {@const isError = errorMap.get(i) ?? false}
           {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
 
-          <CharDisplay char=" " {isError} {isCurrent} variant="target" dataIndex={i} {cursorColor} />
+          {#if isCurrent}
+            <CharDisplay
+              bind:elementRef={activeCursorElement}
+              char=" "
+              {isError}
+              {isCurrent}
+              variant="target"
+              dataIndex={i}
+              {cursorColor}
+            />
+          {:else}
+            <CharDisplay
+              char=" "
+              {isError}
+              {isCurrent}
+              variant="target"
+              dataIndex={i}
+              {cursorColor}
+            />
+          {/if}
         {:else}
           <span class="inline-flex flex-wrap max-w-full">
             {#each token.indices as i}
@@ -81,14 +148,26 @@
               {@const isError = errorMap.get(i) ?? false}
               {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
 
-              <CharDisplay
-                {char}
-                {isError}
-                {isCurrent}
-                variant="target"
-                dataIndex={i}
-                {cursorColor}
-              />
+              {#if isCurrent}
+                <CharDisplay
+                  bind:elementRef={activeCursorElement}
+                  {char}
+                  {isError}
+                  {isCurrent}
+                  variant="target"
+                  dataIndex={i}
+                  {cursorColor}
+                />
+              {:else}
+                <CharDisplay
+                  {char}
+                  {isError}
+                  {isCurrent}
+                  variant="target"
+                  dataIndex={i}
+                  {cursorColor}
+                />
+              {/if}
             {/each}
           </span>
         {/if}
