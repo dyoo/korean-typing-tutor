@@ -26,8 +26,10 @@ distraction-free, high-performance typing experience for English speakers learni
 - **TypeScript**: Always use proper types/interfaces (see `src/types/korean.ts`).
 - **Component Structure**: Keep Svelte components focused. Logic for complex operations (like Hangul
   composition) should reside in `src/utils/`.
-- **Explain Before Significant Changes**: Always explain the rationale and technical design to the
-  user before applying significant code changes.
+- **Explain Before Making Changes**: Prioritize educational clarity and collaborative
+  understanding. Always explain the problem analysis, root cause, architectural mechanics, and
+  proposed technical design to the user before editing code files or applying changes, giving the
+  user the opportunity to learn, discuss, and confirm the approach.
 - **VCS Workflow**: Use `jj` (Jujutsu) for version control operations. Never combine creating
   commits/revisions with pushing. Always create commits without pushing unless explicitly requested.
    Do not prefix commit/CL descriptions with conventional commit categories (e.g. avoid `feat:`,
