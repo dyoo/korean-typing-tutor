@@ -65,7 +65,7 @@
   $effect(() => {
     // Reset scroll when switching items or starting at beginning
     if (activeTargetCursorIndex === 0 && targetContainerElement) {
-      targetContainerElement.scrollTop = 0;
+      targetContainerElement.scrollTo({ top: 0, behavior: 'auto' });
     }
 
     if (
@@ -90,9 +90,15 @@
         const padding = 20;
 
         if (cursorRect.top < containerRect.top + padding) {
-          container.scrollTop += cursorRect.top - containerRect.top - padding;
+          container.scrollBy({
+            top: cursorRect.top - containerRect.top - padding,
+            behavior: 'smooth',
+          });
         } else if (cursorRect.bottom > containerRect.bottom - padding) {
-          container.scrollTop += cursorRect.bottom - containerRect.bottom + padding;
+          container.scrollBy({
+            top: cursorRect.bottom - containerRect.bottom + padding,
+            behavior: 'smooth',
+          });
         }
         rafId = null;
       });
