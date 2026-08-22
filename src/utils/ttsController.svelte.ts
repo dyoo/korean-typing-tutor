@@ -26,19 +26,11 @@ export class TTSController {
 
   private playerAudio: HTMLAudioElement | null = null;
   private isAudioUnlocked = false;
-  private audioCtx: AudioContext | null = null;
-  private currentSourceNode: AudioBufferSourceNode | null = null;
-  // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal cache map intentionally non-reactive to avoid re-triggering effects
-  private audioBufferCache = new Map<string, AudioBuffer>();
   // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal request tracking map intentionally non-reactive to avoid re-triggering effects
   private pendingSyntheses = new Map<
     string,
     {
-      resolve: (payload: {
-        audioBlobUrl: string;
-        audioPcm?: Float32Array;
-        sampleRate?: number;
-      }) => void;
+      resolve: (audioBlobUrl: string) => void;
       reject: (err: Error) => void;
     }
   >();
@@ -71,62 +63,26 @@ export class TTSController {
       this.revokeAudioBlobUrl(url);
     }
     this.audioCache.clear();
-    this.audioBufferCache.clear();
     this.inFlightSyntheses.clear();
   }
 
-  private ensureAudioContext(): void {
-    if (typeof window !== 'undefined') {
-      const AudioCtxClass =
-        window.AudioContext ||
-        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      if (AudioCtxClass && !this.audioCtx) {
-        try {
-          this.audioCtx = new AudioCtxClass();
-        } catch {
-          // Fall back to HTMLAudioElement
-        }
-      }
-    }
-  }
-
-  /** Stores a synthesized audio URL and PCM buffer in the LRU cache, evicting the oldest entry when at capacity. */
-  private putCachedAudio(
-    key: string,
-    url: string,
-    pcm?: Float32Array,
-    sampleRate: number = 24000,
-  ): void {
+  /** Stores a synthesized audio URL in the LRU cache, evicting the oldest entry when at capacity. */
+  private putCachedAudio(key: string, url: string): void {
     if (this.audioCache.has(key)) {
       const existingUrl = this.audioCache.get(key);
       if (existingUrl && existingUrl !== url) {
         this.revokeAudioBlobUrl(existingUrl);
       }
       this.audioCache.delete(key);
-      this.audioBufferCache.delete(key);
     } else if (this.audioCache.size >= MAX_AUDIO_CACHE_SIZE) {
       const oldestKey = this.audioCache.keys().next().value;
       if (oldestKey !== undefined) {
         const oldestUrl = this.audioCache.get(oldestKey);
         this.revokeAudioBlobUrl(oldestUrl);
         this.audioCache.delete(oldestKey);
-        this.audioBufferCache.delete(oldestKey);
       }
     }
     this.audioCache.set(key, url);
-
-    if (pcm) {
-      this.ensureAudioContext();
-      if (this.audioCtx) {
-        try {
-          const buffer = this.audioCtx.createBuffer(1, pcm.length, sampleRate);
-          buffer.getChannelData(0).set(pcm);
-          this.audioBufferCache.set(key, buffer);
-        } catch {
-          // Ignore buffer creation errors
-        }
-      }
-    }
   }
 
   private initWorker(): Worker {
@@ -182,7 +138,7 @@ export class TTSController {
         case 'SYNTHESIS_SUCCESS': {
           const pending = this.pendingSyntheses.get(msg.payload.id);
           if (pending) {
-            pending.resolve(msg.payload);
+            pending.resolve(msg.payload.audioBlobUrl);
             this.pendingSyntheses.delete(msg.payload.id);
           }
           break;
@@ -372,15 +328,10 @@ export class TTSController {
 
       return new Promise<string>((resolve, reject) => {
         this.pendingSyntheses.set(id, {
-          resolve: (payload) => {
-            this.putCachedAudio(
-              cacheKey,
-              payload.audioBlobUrl,
-              payload.audioPcm,
-              payload.sampleRate,
-            );
+          resolve: (audioBlobUrl: string) => {
+            this.putCachedAudio(cacheKey, audioBlobUrl);
             this.inFlightSyntheses.delete(cacheKey);
-            resolve(payload.audioBlobUrl);
+            resolve(audioBlobUrl);
           },
           reject: (err: Error) => {
             this.inFlightSyntheses.delete(cacheKey);
@@ -401,15 +352,10 @@ export class TTSController {
 
   /**
    * Prime and unlock the browser audio subsystem within an active user gesture (click/keydown).
-   * Unlocks both the Web Audio API AudioContext and HTMLAudioElement fallback
-   * so subsequent playback is permitted by Safari / WebKit and Chrome autoplay policies.
+   * Unlocks HTMLAudioElement playback so subsequent playback is permitted by
+   * Safari / WebKit and Chrome autoplay policies.
    */
   public unlockAudio(): void {
-    this.ensureAudioContext();
-    if (this.audioCtx && this.audioCtx.state === 'suspended') {
-      this.audioCtx.resume().catch(() => {});
-    }
-
     if (typeof Audio !== 'undefined') {
       if (!this.playerAudio) {
         this.playerAudio = new Audio();
@@ -426,16 +372,6 @@ export class TTSController {
   }
 
   public stopAudio(): void {
-    if (this.currentSourceNode) {
-      try {
-        this.currentSourceNode.onended = null;
-        this.currentSourceNode.stop();
-      } catch {
-        // Ignore stop errors on already settled nodes
-      }
-      this.currentSourceNode = null;
-    }
-
     if (this.playerAudio) {
       this.playerAudio.onended = null;
       this.playerAudio.onerror = null;
@@ -460,37 +396,8 @@ export class TTSController {
 
     try {
       this.isSpeaking = true;
-      const cacheKey = `${text}_${voice}_${speed}`;
       const audioUrl = await this.synthesize(text, voice, speed);
 
-      // 1. High-Performance Web Audio API Path (0ms latency, direct memory buffer)
-      this.ensureAudioContext();
-      if (this.audioCtx && this.audioBufferCache.has(cacheKey)) {
-        if (this.audioCtx.state === 'suspended') {
-          await this.audioCtx.resume().catch(() => {});
-        }
-        const audioBuffer = this.audioBufferCache.get(cacheKey)!;
-        if (audioBuffer && this.isSpeaking) {
-          return new Promise<void>((resolve) => {
-            const source = this.audioCtx!.createBufferSource();
-            source.buffer = audioBuffer;
-            source.connect(this.audioCtx!.destination);
-            this.currentSourceNode = source;
-
-            source.onended = () => {
-              if (this.currentSourceNode === source) {
-                this.currentSourceNode = null;
-                this.isSpeaking = false;
-              }
-              resolve();
-            };
-
-            source.start(0);
-          });
-        }
-      }
-
-      // 2. Fallback to HTMLAudioElement if Web Audio API buffer is unavailable
       if (!this.playerAudio) {
         this.playerAudio = new Audio();
       }

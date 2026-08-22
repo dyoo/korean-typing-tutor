@@ -32,8 +32,6 @@ export type TTSWorkerResponse =
       payload: {
         id: string;
         audioBlobUrl: string;
-        audioPcm?: Float32Array;
-        sampleRate?: number;
         genTimeMs: number;
         durationSec: number;
         ipa: string;

@@ -135,8 +135,6 @@ async function processSynthesisQueue(): Promise<void> {
           payload: {
             id,
             audioBlobUrl,
-            audioPcm: result.audio,
-            sampleRate: result.sampleRate ?? 24000,
             genTimeMs: result.genTimeMs,
             durationSec: result.durationSec,
             ipa: result.ipa,
