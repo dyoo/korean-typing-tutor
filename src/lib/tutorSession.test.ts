@@ -428,4 +428,16 @@ describe('TutorSession controller', () => {
       session.advanceLevel();
     }
   });
+
+  it('should return upcoming lesson items for lookahead prefetching', () => {
+    session.setFilter('all', false);
+    // mockCurriculum has 2 items: '가' (l1) and '사과' (l3)
+    const upcoming = session.getUpcomingItems(5);
+    expect(upcoming.length).toBe(1);
+    expect(upcoming[0].target).toBe('사과');
+
+    // With 0 items (empty filter)
+    session.setFilter([], false);
+    expect(session.getUpcomingItems(5)).toEqual([]);
+  });
 });

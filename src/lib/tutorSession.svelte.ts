@@ -299,6 +299,23 @@ export class TutorSession {
     );
   }
 
+  /**
+   * Returns up to `count` upcoming lesson items after the current exercise.
+   * Useful for lookahead audio prefetching and cache warm-up.
+   */
+  public getUpcomingItems(count: number = 5): LessonItem[] {
+    if (this.activeItems.length <= 1) {
+      return [];
+    }
+    const upcoming: LessonItem[] = [];
+    const limit = Math.min(count, this.activeItems.length - 1);
+    for (let i = 1; i <= limit; i++) {
+      const nextIdx = (this.currentIndex + i) % this.activeItems.length;
+      upcoming.push(this.activeItems[nextIdx]);
+    }
+    return upcoming;
+  }
+
   /** Returns composed user input string. */
   public getUserInput(): string {
     return this.userInput;

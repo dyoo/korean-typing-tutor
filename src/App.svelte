@@ -441,6 +441,31 @@
 
   let lastPromptTarget = '';
   let preloadDebounceTimer: ReturnType<typeof setTimeout> | null = null;
+  let idlePrefetchTimer: ReturnType<typeof setTimeout> | null = null;
+
+  function scheduleIdleLookaheadPrefetch(currentPreloadPromise?: Promise<string | null> | null) {
+    if (idlePrefetchTimer) {
+      clearTimeout(idlePrefetchTimer);
+      idlePrefetchTimer = null;
+    }
+    if (!settings.enableTTS) {
+      return;
+    }
+    const voice = settings.ttsVoice ?? 'jm_kumo';
+    const speed = settings.ttsSpeed ?? 1.0;
+    const upcomingTargets = session.getUpcomingItems(5).map((i) => i.target);
+    if (upcomingTargets.length === 0) {
+      return;
+    }
+
+    idlePrefetchTimer = setTimeout(async () => {
+      idlePrefetchTimer = null;
+      if (currentPreloadPromise) {
+        await currentPreloadPromise.catch(() => null);
+      }
+      ttsController.preloadBatch(upcomingTargets, voice, speed);
+    }, 600);
+  }
 
   function triggerImmediatePreload() {
     if (!settings.enableTTS || !currentItem?.target) {
@@ -450,11 +475,12 @@
       clearTimeout(preloadDebounceTimer);
       preloadDebounceTimer = null;
     }
-    ttsController.preload(
+    const p = ttsController.preload(
       currentItem.target,
       settings.ttsVoice ?? 'jm_kumo',
       settings.ttsSpeed ?? 1.0,
     );
+    scheduleIdleLookaheadPrefetch(p);
   }
 
   // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
@@ -462,6 +488,7 @@
   // Cancels any active synthesis or playback from the previous exercise.
   // Uses a 150ms debounce to avoid spamming the Web Worker during rapid skipping,
   // which is automatically flushed immediately upon the user's first typed keystroke.
+  // Once the active prompt is ready, sequentially pre-computes the next 5 upcoming items on idle.
   $effect(() => {
     const targetText = currentItem?.target;
     const isEnabled = settings.enableTTS;
@@ -472,6 +499,10 @@
       clearTimeout(preloadDebounceTimer);
       preloadDebounceTimer = null;
     }
+    if (idlePrefetchTimer) {
+      clearTimeout(idlePrefetchTimer);
+      idlePrefetchTimer = null;
+    }
 
     untrack(() => {
       if (targetText !== lastPromptTarget) {
@@ -481,8 +512,9 @@
 
       if (isEnabled && targetText) {
         preloadDebounceTimer = setTimeout(() => {
-          ttsController.preload(targetText, voice, speed);
+          const p = ttsController.preload(targetText, voice, speed);
           preloadDebounceTimer = null;
+          scheduleIdleLookaheadPrefetch(p);
         }, 150);
       }
     });
@@ -491,6 +523,10 @@
       if (preloadDebounceTimer) {
         clearTimeout(preloadDebounceTimer);
         preloadDebounceTimer = null;
+      }
+      if (idlePrefetchTimer) {
+        clearTimeout(idlePrefetchTimer);
+        idlePrefetchTimer = null;
       }
     };
   });

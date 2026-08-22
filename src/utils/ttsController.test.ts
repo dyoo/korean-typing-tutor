@@ -508,4 +508,57 @@ describe('TTSController Unit Tests', () => {
     await speakPromise;
     expect(controller.getIsSpeaking()).toBe(false);
   });
+
+  it('sequentially pre-synthesizes upcoming items with preloadBatch and supports cancellation', async () => {
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    const batchPromise = controller.preloadBatch(['단어1', '단어2', '단어3']);
+
+    // First item '단어1' should be requested
+    const synth1 = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '단어1',
+    );
+    expect(synth1).toBeDefined();
+
+    if (synth1 && synth1.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: synth1.payload.id,
+            audioBlobUrl: 'blob:http://localhost/word1',
+            genTimeMs: 15,
+            durationSec: 1.0,
+            ipa: 'dan-eo-1',
+          },
+        },
+      } as MessageEvent);
+    }
+
+    // Allow event loop to progress to second item '단어2'
+    await new Promise((r) => setTimeout(r, 20));
+
+    const synth2 = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '단어2',
+    );
+    expect(synth2).toBeDefined();
+
+    // Calling stop() cancels active batch preloading and in-flight synthesis
+    controller.stop();
+
+    await batchPromise;
+
+    // Remaining item '단어3' should never have been requested
+    const synth3 = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '단어3',
+    );
+    expect(synth3).toBeUndefined();
+  });
 });
