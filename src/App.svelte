@@ -283,6 +283,9 @@
   function processKeystrokeWithAudio(key: string) {
     if (settings.enableTTS) {
       ttsController.unlockAudio();
+      if (preloadDebounceTimer) {
+        triggerImmediatePreload();
+      }
     }
     const wasCompleted = session.getIsItemCompleted();
     const result = session.processKey(key);
@@ -439,10 +442,26 @@
   let lastPromptTarget = '';
   let preloadDebounceTimer: ReturnType<typeof setTimeout> | null = null;
 
+  function triggerImmediatePreload() {
+    if (!settings.enableTTS || !currentItem?.target) {
+      return;
+    }
+    if (preloadDebounceTimer) {
+      clearTimeout(preloadDebounceTimer);
+      preloadDebounceTimer = null;
+    }
+    ttsController.preload(
+      currentItem.target,
+      settings.ttsVoice ?? 'jm_kumo',
+      settings.ttsSpeed ?? 1.0,
+    );
+  }
+
   // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
   // so clicking the audio button plays immediately without synthesis delay.
   // Cancels any active synthesis or playback from the previous exercise.
-  // Uses a 500ms debounce to avoid spamming the Web Worker during rapid skipping.
+  // Uses a 150ms debounce to avoid spamming the Web Worker during rapid skipping,
+  // which is automatically flushed immediately upon the user's first typed keystroke.
   $effect(() => {
     const targetText = currentItem?.target;
     const isEnabled = settings.enableTTS;
@@ -464,7 +483,7 @@
         preloadDebounceTimer = setTimeout(() => {
           ttsController.preload(targetText, voice, speed);
           preloadDebounceTimer = null;
-        }, 500);
+        }, 150);
       }
     });
 
