@@ -64,8 +64,29 @@
 
   $effect(() => {
     // Reset scroll when switching items or starting at beginning
-    if (activeTargetCursorIndex === 0 && targetContainerElement) {
+    if (activeTargetCursorIndex === 0 && !isCompleted && targetContainerElement) {
       targetContainerElement.scrollTo({ top: 0, behavior: 'auto' });
+    }
+
+    // When exercise is completed, smoothly scroll all the way to bottom to show audio button and subtext
+    if (isCompleted && targetContainerElement) {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+      }
+
+      rafId = requestAnimationFrame(() => {
+        const container = targetContainerElement;
+        if (!container) {
+          rafId = null;
+          return;
+        }
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: 'smooth',
+        });
+        rafId = null;
+      });
+      return;
     }
 
     if (
