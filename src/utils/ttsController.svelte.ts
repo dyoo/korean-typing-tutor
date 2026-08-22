@@ -138,14 +138,14 @@ export class TTSController {
           break;
 
         case 'SYNTHESIS_SUCCESS': {
-          console.log('[TTS] SYNTHESIS_SUCCESS received from worker:', msg.payload.id);
+          console.debug('[TTS] SYNTHESIS_SUCCESS received from worker:', msg.payload.id);
           const pending = this.pendingSyntheses.get(msg.payload.id);
           if (pending) {
             let audioBlobUrl: string;
             if (msg.payload.audioPcm) {
               const wavBlob = createWavBlob(msg.payload.audioPcm, msg.payload.sampleRate ?? 24000);
               audioBlobUrl = URL.createObjectURL(wavBlob);
-              console.log('[TTS] Created window Blob URL:', audioBlobUrl);
+              console.debug('[TTS] Created window Blob URL:', audioBlobUrl);
             } else {
               audioBlobUrl = (msg.payload as unknown as { audioBlobUrl: string }).audioBlobUrl || '';
             }
@@ -409,7 +409,7 @@ export class TTSController {
       return;
     }
 
-    console.log('[TTS] speak() called for:', text);
+    console.debug('[TTS] speak() called for:', text);
     // Prime the audio subsystem synchronously during the active user gesture
     this.unlockAudio();
     this.stopAudio();
@@ -417,14 +417,14 @@ export class TTSController {
     try {
       this.isSpeaking = true;
       const audioUrl = await this.synthesize(text, voice, speed);
-      console.log('[TTS] synthesize() resolved with audioUrl:', audioUrl);
+      console.debug('[TTS] synthesize() resolved with audioUrl:', audioUrl);
 
       if (!this.playerAudio) {
         this.playerAudio = new Audio();
       }
       const audio = this.playerAudio;
       audio.src = audioUrl;
-      console.log('[TTS] Invoking audio.play() on HTMLAudioElement');
+      console.debug('[TTS] Invoking audio.play() on HTMLAudioElement');
 
       return new Promise((resolve) => {
         const cleanup = () => {
@@ -434,7 +434,7 @@ export class TTSController {
         };
 
         audio.onended = () => {
-          console.log('[TTS] audio.play() onended triggered');
+          console.debug('[TTS] audio.play() onended triggered');
           cleanup();
           resolve();
         };
@@ -444,7 +444,7 @@ export class TTSController {
           resolve();
         };
         audio.play().then(() => {
-          console.log('[TTS] audio.play() promise resolved successfully');
+          console.debug('[TTS] audio.play() promise resolved successfully');
         }).catch((err) => {
           console.warn('[TTS] audio.play() promise rejected:', err);
           cleanup();

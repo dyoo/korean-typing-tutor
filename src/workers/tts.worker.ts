@@ -106,7 +106,7 @@ async function ensureModelLoaded(
 
   modelLoadingPromise = (async () => {
     try {
-      console.log('[TTS Worker] Loading Kokoro-82M model...');
+      console.debug('[TTS Worker] Loading Kokoro-82M model...');
       speaker = new KoreanSpeaker({ dtype, device });
 
       await speaker.load({
@@ -146,7 +146,7 @@ async function ensureModelLoaded(
         type: 'LOAD_SUCCESS',
         payload: { voices },
       });
-      console.log('[TTS Worker] Kokoro-82M model loaded and ready');
+      console.debug('[TTS Worker] Kokoro-82M model loaded and ready');
     } catch (err: unknown) {
       const errorMsg = err instanceof Error ? err.message : String(err);
       console.error('[TTS Worker] Model loading failed:', errorMsg);
@@ -185,7 +185,7 @@ async function processSynthesisQueue(): Promise<void> {
 
       // If model is currently loading or not yet initialized, wait for it before processing queue
       if (!isModelLoaded || !speaker) {
-        console.log('[TTS Worker] Awaiting model loading before synthesizing queue...');
+        console.debug('[TTS Worker] Awaiting model loading before synthesizing queue...');
         try {
           await ensureModelLoaded();
         } catch {
@@ -205,7 +205,7 @@ async function processSynthesisQueue(): Promise<void> {
       const { id, text, voice, speed } = req;
 
       try {
-        console.log('[TTS Worker] Synthesizing text:', text, 'id:', id);
+        console.debug('[TTS Worker] Synthesizing text:', text, 'id:', id);
         if (!speaker || !isModelLoaded) {
           throw new Error('TTS Model is not loaded yet');
         }
@@ -219,7 +219,7 @@ async function processSynthesisQueue(): Promise<void> {
 
         const result = await task;
         activeTasks.delete(id);
-        console.log('[TTS Worker] Synthesis complete for id:', id, 'genTimeMs:', result.genTimeMs);
+        console.debug('[TTS Worker] Synthesis complete for id:', id, 'genTimeMs:', result.genTimeMs);
 
         postResponse({
           type: 'SYNTHESIS_SUCCESS',
