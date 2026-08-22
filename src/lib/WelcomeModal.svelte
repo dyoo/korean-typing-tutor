@@ -24,7 +24,7 @@
   <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
   <!-- svelte-ignore a11y_click_events_have_key_events -->
   <div
-    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-xs select-none cursor-pointer"
+    class="fixed inset-0 z-50 flex justify-center p-4 bg-black/65 backdrop-blur-xs select-none cursor-pointer overflow-y-auto"
     role="dialog"
     aria-modal="true"
     aria-labelledby="welcome-modal-title"
@@ -35,7 +35,7 @@
     <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <div
-      class="relative w-full max-w-xl p-6 md:p-8 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-3xl shadow-2xl text-gray-900 dark:text-gray-100 flex flex-col gap-6 cursor-default"
+      class="relative w-full max-w-xl my-auto p-6 md:p-8 bg-white dark:bg-gray-900 border-2 border-gray-200 dark:border-gray-800 rounded-3xl shadow-2xl text-gray-900 dark:text-gray-100 flex flex-col gap-6 cursor-default"
       onclick={(e) => e.stopPropagation()}
       role="document"
     >
@@ -101,7 +101,7 @@
           </span>
         </button>
         <span class="text-[11px] text-gray-400 dark:text-gray-500">
-          Press <kbd class="font-mono font-semibold text-gray-500 dark:text-gray-400">Enter</kbd>, <kbd class="font-mono font-semibold text-gray-500 dark:text-gray-400">Space</kbd>, or click anywhere to start
+          Press <kbd class="font-mono font-semibold text-gray-500 dark:text-gray-400">Enter</kbd> or <kbd class="font-mono font-semibold text-gray-500 dark:text-gray-400">Space</kbd> to start
         </span>
       </div>
     </div>

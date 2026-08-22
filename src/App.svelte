@@ -193,27 +193,32 @@
   }
 
   function toggleMode() {
+    ttsController.cancelBatchPreload();
     const newMode = mode === 'curriculum' ? 'mastery' : 'curriculum';
     session.setMode(newMode);
     focusInputElement();
   }
 
   function handleMasteryLevelChange(level: number) {
+    ttsController.cancelBatchPreload();
     session.setMasteryProgressionLevel(level);
     focusInputElement();
   }
 
   function handleMasteryCheckpointChange(checkpointId: string) {
+    ttsController.cancelBatchPreload();
     session.setMasteryCheckpointLevel(checkpointId);
     focusInputElement();
   }
 
   function handleMasteryFocusSelect(batchim: string) {
+    ttsController.cancelBatchPreload();
     session.setMasteryFocusBatchim(batchim);
     focusInputElement();
   }
 
   function toggleModule(modId: string) {
+    ttsController.cancelBatchPreload();
     if (enabledModuleIds.includes(modId)) {
       if (enabledModuleIds.length === 1) {
         return;
@@ -242,6 +247,7 @@
   }
 
   function toggleCategoryGroup(category: CurriculumCategory) {
+    ttsController.cancelBatchPreload();
     enabledModuleIds = toggleCategoryGroupIds(category, enabledModuleIds);
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
@@ -249,6 +255,7 @@
   }
 
   function selectAllModules() {
+    ttsController.cancelBatchPreload();
     enabledModuleIds = modules.map((m) => m.id);
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
@@ -256,6 +263,7 @@
   }
 
   function deselectAllModules() {
+    ttsController.cancelBatchPreload();
     enabledModuleIds = [];
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);

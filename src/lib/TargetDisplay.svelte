@@ -60,51 +60,53 @@
 </script>
 
 <div
-  class="w-full max-w-full flex-1 min-h-0 flex flex-col items-center justify-center overflow-y-auto px-2 py-2 select-text"
+  class="w-full max-w-full flex-1 min-h-0 flex flex-col items-center overflow-y-auto px-2 py-2 select-text"
 >
-  <div
-    class="target-display relative flex flex-wrap break-keep justify-center gap-y-3 md:gap-y-4 tracking-normal text-center w-full max-w-full {fontSizeClass} {fontWeightClass}"
-    style={fontSizeStyle}
-  >
-    {#each wordTokens as token}
-      {#if token.type === 'space'}
-        {@const i = token.indices[0]}
-        {@const isError = errorMap.get(i) ?? false}
-        {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
-
-        <CharDisplay char=" " {isError} {isCurrent} variant="target" dataIndex={i} {cursorColor} />
-      {:else}
-        <span class="inline-flex flex-wrap max-w-full">
-          {#each token.indices as i}
-            {@const char = currentItem.target[i]}
-            {@const isError = errorMap.get(i) ?? false}
-            {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
-
-            <CharDisplay
-              {char}
-              {isError}
-              {isCurrent}
-              variant="target"
-              dataIndex={i}
-              {cursorColor}
-            />
-          {/each}
-        </span>
-      {/if}
-    {/each}
-  </div>
-
-  {#if enableTTS}
-    <div class="audio-control-row mt-2 md:mt-3 flex items-center justify-center">
-      <TTSAudioButton isSpeaking={isTTSSpeaking} onclick={onspeak} />
-    </div>
-  {/if}
-
-  {#if displayText.trim().length > 0}
+  <div class="my-auto w-full max-w-full flex flex-col items-center">
     <div
-      class="subtext-display text-gray-500 dark:text-gray-400 font-medium italic mt-2 text-center tracking-wide flex items-center justify-center max-w-full px-4 py-1 shrink-0 {subtextClass}"
+      class="target-display relative flex flex-wrap break-keep justify-center gap-y-3 md:gap-y-4 tracking-normal text-center w-full max-w-full {fontSizeClass} {fontWeightClass}"
+      style={fontSizeStyle}
     >
-      <span>{displayText}</span>
+      {#each wordTokens as token}
+        {#if token.type === 'space'}
+          {@const i = token.indices[0]}
+          {@const isError = errorMap.get(i) ?? false}
+          {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
+
+          <CharDisplay char=" " {isError} {isCurrent} variant="target" dataIndex={i} {cursorColor} />
+        {:else}
+          <span class="inline-flex flex-wrap max-w-full">
+            {#each token.indices as i}
+              {@const char = currentItem.target[i]}
+              {@const isError = errorMap.get(i) ?? false}
+              {@const isCurrent = i === activeTargetCursorIndex && !isCompleted}
+
+              <CharDisplay
+                {char}
+                {isError}
+                {isCurrent}
+                variant="target"
+                dataIndex={i}
+                {cursorColor}
+              />
+            {/each}
+          </span>
+        {/if}
+      {/each}
     </div>
-  {/if}
+
+    {#if enableTTS}
+      <div class="audio-control-row mt-2 md:mt-3 flex items-center justify-center">
+        <TTSAudioButton isSpeaking={isTTSSpeaking} onclick={onspeak} />
+      </div>
+    {/if}
+
+    {#if displayText.trim().length > 0}
+      <div
+        class="subtext-display text-gray-500 dark:text-gray-400 font-medium italic mt-2 text-center tracking-wide flex items-center justify-center max-w-full px-4 py-1 shrink-0 {subtextClass}"
+      >
+        <span>{displayText}</span>
+      </div>
+    {/if}
+  </div>
 </div>
