@@ -21,6 +21,7 @@
     oncursorcolorchange?: (cursorColor: CursorColorMode) => void;
     ontoggletts?: () => void;
     ontogglespeakoncompletion?: () => void;
+    ontogglespeakonappearance?: () => void;
     onvoicechange?: (voice: string) => void;
     onspeedchange?: (speed: number) => void;
     onclearttscache?: () => void;
@@ -42,6 +43,7 @@
     oncursorcolorchange,
     ontoggletts,
     ontogglespeakoncompletion,
+    ontogglespeakonappearance,
     onvoicechange,
     onspeedchange,
     onclearttscache,
@@ -287,6 +289,7 @@
         {settings}
         {ontoggletts}
         {ontogglespeakoncompletion}
+        {ontogglespeakonappearance}
         {onvoicechange}
         {onspeedchange}
         {onclearttscache}

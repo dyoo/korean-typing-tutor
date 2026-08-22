@@ -418,6 +418,10 @@
     updateSetting('speakOnCompletion', !settings.speakOnCompletion);
   }
 
+  function toggleSpeakOnAppearance() {
+    updateSetting('speakOnAppearance', !settings.speakOnAppearance);
+  }
+
   function handleVoiceChange(voice: string) {
     updateSetting('ttsVoice', voice);
   }
@@ -451,11 +455,13 @@
   $effect(() => {
     const targetText = currentItem?.target;
     const isEnabled = settings.enableTTS;
+    const speakOnAppear = settings.speakOnAppearance;
     const voice = settings.ttsVoice ?? 'jm_kumo';
     const speed = settings.ttsSpeed ?? 1.0;
 
     untrack(() => {
-      if (targetText !== lastPromptTarget) {
+      const isNewTarget = targetText !== lastPromptTarget;
+      if (isNewTarget) {
         lastPromptTarget = targetText || '';
         ttsController.stopAudio();
       }
@@ -467,6 +473,11 @@
         const upcomingTargets = session.getUpcomingItems(5).map((i) => i.target);
         if (upcomingTargets.length > 0) {
           void ttsController.preloadBatch(upcomingTargets, voice, speed);
+        }
+
+        // If speak on appearance is enabled, pronounce the prompt when it newly appears
+        if (isNewTarget && speakOnAppear) {
+          speakCurrentPrompt();
         }
       }
     });
@@ -583,6 +594,7 @@
     oncursorcolorchange={handleCursorColorChange}
     ontoggletts={toggleTTS}
     ontogglespeakoncompletion={toggleSpeakOnCompletion}
+    ontogglespeakonappearance={toggleSpeakOnAppearance}
     onvoicechange={handleVoiceChange}
     onspeedchange={handleSpeedChange}
     onclearttscache={handleClearTTSCache}

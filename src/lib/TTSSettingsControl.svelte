@@ -7,6 +7,7 @@
     settings: TutorSettings;
     ontoggletts?: () => void;
     ontogglespeakoncompletion?: () => void;
+    ontogglespeakonappearance?: () => void;
     onvoicechange?: (voice: string) => void;
     onspeedchange?: (speed: number) => void;
     onclearttscache?: () => void;
@@ -16,6 +17,7 @@
     settings,
     ontoggletts,
     ontogglespeakoncompletion,
+    ontogglespeakonappearance,
     onvoicechange,
     onspeedchange,
     onclearttscache,
@@ -56,6 +58,17 @@
           type="checkbox"
           checked={settings.speakOnCompletion}
           onchange={ontogglespeakoncompletion}
+          class="w-3.5 h-3.5 text-blue-600 rounded cursor-pointer"
+        />
+      </label>
+
+      <!-- Speak On Appearance Toggle -->
+      <label class="flex items-center justify-between cursor-pointer">
+        <span class="text-gray-600 dark:text-gray-400">Speak on appearance</span>
+        <input
+          type="checkbox"
+          checked={settings.speakOnAppearance}
+          onchange={ontogglespeakonappearance}
           class="w-3.5 h-3.5 text-blue-600 rounded cursor-pointer"
         />
       </label>

@@ -145,4 +145,21 @@ describe('Settings module persistence', () => {
     changeHandler({ matches: false });
     expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
+
+  it('should save and load voice synthesis (TTS) settings including speakOnAppearance', () => {
+    saveSettings({
+      ...DEFAULT_SETTINGS,
+      enableTTS: true,
+      speakOnCompletion: false,
+      speakOnAppearance: true,
+      ttsVoice: 'jf_nezumi',
+      ttsSpeed: 0.8,
+    });
+    const loaded = loadSettings();
+    expect(loaded.enableTTS).toBe(true);
+    expect(loaded.speakOnCompletion).toBe(false);
+    expect(loaded.speakOnAppearance).toBe(true);
+    expect(loaded.ttsVoice).toBe('jf_nezumi');
+    expect(loaded.ttsSpeed).toBe(0.8);
+  });
 });

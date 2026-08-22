@@ -22,6 +22,7 @@ export interface TutorSettings {
   cursorColor?: CursorColorMode;
   enableTTS?: boolean;
   speakOnCompletion?: boolean;
+  speakOnAppearance?: boolean;
   ttsVoice?: string;
   ttsSpeed?: number;
 }
@@ -42,6 +43,7 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   cursorColor: 'amber',
   enableTTS: false,
   speakOnCompletion: true,
+  speakOnAppearance: false,
   ttsVoice: 'jm_kumo',
   ttsSpeed: 1.0,
 };
@@ -106,6 +108,10 @@ export function loadSettings(): TutorSettings {
       speakOnCompletion: pickBool(
         parsed.speakOnCompletion,
         DEFAULT_SETTINGS.speakOnCompletion ?? true,
+      ),
+      speakOnAppearance: pickBool(
+        parsed.speakOnAppearance,
+        DEFAULT_SETTINGS.speakOnAppearance ?? false,
       ),
       ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : DEFAULT_SETTINGS.ttsVoice,
       ttsSpeed: pickNumberRange(parsed.ttsSpeed, 0.5, 2.0, DEFAULT_SETTINGS.ttsSpeed),
