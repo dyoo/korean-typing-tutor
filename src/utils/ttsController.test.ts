@@ -422,4 +422,90 @@ describe('TTSController Unit Tests', () => {
     expect(controller.getIsLoading()).toBe(false);
     expect(controller.getIsLoaded()).toBe(false);
   });
+
+  it('safely primes audio via unlockAudio and handles play with persistent player', async () => {
+    let playCalled = false;
+    class MockAudio {
+      public src = '';
+      public onended: (() => void) | null = null;
+      public onerror: (() => void) | null = null;
+      public play() {
+        playCalled = true;
+        return Promise.resolve();
+      }
+      public pause() {}
+    }
+    vi.stubGlobal('Audio', MockAudio);
+
+    // Call unlockAudio
+    controller.unlockAudio();
+    expect(playCalled).toBe(true);
+
+    // Calling unlockAudio second time should not re-trigger silent unlock once unlocked
+    playCalled = false;
+    controller.unlockAudio();
+    expect(playCalled).toBe(false);
+  });
+
+  it('handles speak playback lifecycle and resolves when audio ends', async () => {
+    let mockInstance: MockAudio | null = null;
+    function setMockInstance(instance: MockAudio) {
+      mockInstance = instance;
+    }
+    class MockAudio {
+      public src = '';
+      public onended: (() => void) | null = null;
+      public onerror: (() => void) | null = null;
+      constructor() {
+        setMockInstance(this);
+      }
+      public play() {
+        return Promise.resolve();
+      }
+      public pause() {}
+    }
+    vi.stubGlobal('Audio', MockAudio);
+
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    const speakPromise = controller.speak('안녕하세요');
+    expect(controller.getIsSpeaking()).toBe(true);
+
+    const synthMsg = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '안녕하세요',
+    );
+    expect(synthMsg).toBeDefined();
+
+    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: synthMsg.payload.id,
+            audioBlobUrl: 'blob:http://localhost/annyeong',
+            genTimeMs: 20,
+            durationSec: 1.5,
+            ipa: 'annyeong',
+          },
+        },
+      } as MessageEvent);
+    }
+
+    // Allow promise resolutions in speak() to execute before triggering onended
+    await new Promise((r) => setTimeout(r, 20));
+
+    // Trigger onended on the mock audio instance
+    expect(mockInstance).not.toBeNull();
+    (mockInstance as MockAudio | null)?.onended?.();
+
+    await speakPromise;
+    expect(controller.getIsSpeaking()).toBe(false);
+  });
 });

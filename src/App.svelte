@@ -281,6 +281,9 @@
   }
 
   function processKeystrokeWithAudio(key: string) {
+    if (settings.enableTTS) {
+      ttsController.unlockAudio();
+    }
     const wasCompleted = session.getIsItemCompleted();
     const result = session.processKey(key);
 

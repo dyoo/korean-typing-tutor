@@ -3,6 +3,10 @@ import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../type
 /** Maximum number of audio blob URLs retained in memory before LRU eviction. */
 const MAX_AUDIO_CACHE_SIZE = 50;
 
+/** Silent 1-sample WAV data URI to unlock audio playback on Safari/iOS within user gestures. */
+const SILENT_AUDIO_DATA_URI =
+  'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+
 /**
  * Controller singleton for interacting with the TTS Web Worker and managing
  * client-side speech synthesis audio playback and pre-generation cache.
@@ -20,7 +24,8 @@ export class TTSController {
   private availableVoices = $state<VoiceMetadata[]>([]);
   private loadError = $state<string | null>(null);
 
-  private currentAudio: HTMLAudioElement | null = null;
+  private playerAudio: HTMLAudioElement | null = null;
+  private isAudioUnlocked = false;
   // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal request tracking map intentionally non-reactive to avoid re-triggering effects
   private pendingSyntheses = new Map<
     string,
@@ -309,13 +314,38 @@ export class TTSController {
     return synthesisPromise;
   }
 
+  /**
+   * Prime and unlock the browser audio subsystem within an active user gesture (click/keydown).
+   * This ensures that subsequent asynchronous playback (after model load or neural synthesis)
+   * is permitted by Safari / WebKit autoplay restrictions.
+   */
+  public unlockAudio(): void {
+    if (typeof Audio === 'undefined') {
+      return;
+    }
+    if (!this.playerAudio) {
+      this.playerAudio = new Audio();
+    }
+    if (!this.isAudioUnlocked) {
+      this.isAudioUnlocked = true;
+      this.playerAudio.src = SILENT_AUDIO_DATA_URI;
+      this.playerAudio.play().catch(() => {
+        // Revert unlock state if rejected outside a recognized user gesture
+        this.isAudioUnlocked = false;
+      });
+    }
+  }
+
   public stopAudio(): void {
-    if (this.currentAudio) {
-      this.currentAudio.onended = null;
-      this.currentAudio.onerror = null;
-      this.currentAudio.pause();
-      this.currentAudio.currentTime = 0;
-      this.currentAudio = null;
+    if (this.playerAudio) {
+      this.playerAudio.onended = null;
+      this.playerAudio.onerror = null;
+      this.playerAudio.pause();
+      try {
+        this.playerAudio.currentTime = 0;
+      } catch {
+        // Ignore seek errors on unseekable media
+      }
     }
     this.isSpeaking = false;
   }
@@ -325,23 +355,25 @@ export class TTSController {
       return;
     }
 
+    // Prime the audio element synchronously during the active user gesture
+    this.unlockAudio();
     this.stopAudio();
 
     try {
       this.isSpeaking = true;
       const audioUrl = await this.synthesize(text, voice, speed);
 
-      const audio = new Audio(audioUrl);
-      this.currentAudio = audio;
+      if (!this.playerAudio) {
+        this.playerAudio = new Audio();
+      }
+      const audio = this.playerAudio;
+      audio.src = audioUrl;
 
       return new Promise((resolve) => {
         const cleanup = () => {
           audio.onended = null;
           audio.onerror = null;
           this.isSpeaking = false;
-          if (this.currentAudio === audio) {
-            this.currentAudio = null;
-          }
         };
 
         audio.onended = () => {
@@ -352,7 +384,8 @@ export class TTSController {
           cleanup();
           resolve();
         };
-        audio.play().catch(() => {
+        audio.play().catch((err) => {
+          console.warn('TTS audio playback failed or was blocked by autoplay policy:', err);
           cleanup();
           resolve();
         });
