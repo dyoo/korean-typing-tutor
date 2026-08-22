@@ -17,10 +17,10 @@
     "clean:all": "rm -rf dist node_modules"
   },
   "dependencies": {
+    "@dannyyoo/korean-tts": "^1.2.3",
     "@huggingface/transformers": "^3.8.1",
     "@tailwindcss/postcss": "^4.3.3",
-    "kokoro-js": "^1.2.1",
-    "korean-tts": "^1.2.0"
+    "kokoro-js": "^1.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -42,6 +42,8 @@
     "vitest": "^4.1.10"
   },
   "knip": {
-    "ignore": ["public/coi-serviceworker.js"]
+    "ignore": [
+      "public/coi-serviceworker.js"
+    ]
   }
 }

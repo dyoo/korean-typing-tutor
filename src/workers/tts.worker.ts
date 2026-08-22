@@ -1,5 +1,5 @@
 import { env } from '@huggingface/transformers';
-import { KoreanSpeaker, type SpeakerProgress, type SynthesisTask } from 'korean-tts';
+import { KoreanSpeaker, type SpeakerProgress, type SynthesisTask } from '@dannyyoo/korean-tts';
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
 
 /**
