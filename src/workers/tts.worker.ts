@@ -1,6 +1,13 @@
+import {
+  polyfillReadableStreamAsyncIterator,
+  KoreanSpeaker,
+  type SpeakerProgress,
+  type SynthesisTask,
+} from '@dannyyoo/korean-tts';
 import { env } from '@huggingface/transformers';
-import { KoreanSpeaker, type SpeakerProgress, type SynthesisTask } from '@dannyyoo/korean-tts';
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
+
+polyfillReadableStreamAsyncIterator();
 
 /**
  * Configure ONNX WebAssembly execution backend for Web Worker compatibility across all browsers.
