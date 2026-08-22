@@ -18,8 +18,8 @@
     e.preventDefault();
     e.stopPropagation();
   }}
-  title="Listen to Korean pronunciation"
-  aria-label="Listen to Korean pronunciation"
+  title="Listen to Korean pronunciation (Ctrl+S / ⌘S)"
+  aria-label="Listen to Korean pronunciation (Ctrl+S / ⌘S)"
   class="inline-flex items-center justify-center w-8 h-8 rounded-full text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/60 hover:text-blue-800 dark:hover:text-blue-200 transition-colors cursor-pointer shrink-0"
 >
   <svg

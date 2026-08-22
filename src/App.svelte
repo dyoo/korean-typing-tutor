@@ -261,6 +261,15 @@
       return;
     }
 
+    // Shortcut: Ctrl+S (Windows/Linux) or Cmd+S (macOS) to speak the current prompt
+    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+      e.preventDefault();
+      if (settings.enableTTS) {
+        speakCurrentPrompt();
+      }
+      return;
+    }
+
     if (e.key === 'Tab' || e.key === 'Escape' || e.altKey || e.ctrlKey || e.metaKey) {
       return;
     }
