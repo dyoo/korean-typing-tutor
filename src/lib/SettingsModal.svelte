@@ -115,13 +115,13 @@
       tabindex="-1"
       role="region"
       aria-label="Display Settings Panel"
-      class="settings-modal absolute right-0 top-full mt-2 w-72 md:w-84 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl p-4 z-50 flex flex-col gap-4 text-xs font-semibold text-gray-700 dark:text-gray-200"
+      class="settings-modal absolute right-0 top-full mt-2 w-80 md:w-96 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl pl-4 pr-6 py-4 md:pl-5 md:pr-7 md:py-5 z-50 flex flex-col gap-4 text-sm font-semibold text-gray-700 dark:text-gray-200"
     >
       <div
-        class="sticky -top-4 -mx-4 px-4 pt-1 pb-2 bg-white dark:bg-gray-800 flex items-center justify-between border-b border-gray-200 dark:border-gray-700 z-10"
+        class="sticky -top-4 -ml-4 -mr-6 md:-top-5 md:-ml-5 md:-mr-7 pl-4 pr-6 md:pl-5 md:pr-7 pt-1 pb-2.5 bg-white dark:bg-gray-800 flex items-center justify-between border-b border-gray-200 dark:border-gray-700 z-10"
       >
         <span
-          class="font-bold text-sm text-gray-900 dark:text-gray-100 uppercase tracking-wider font-mono"
+          class="font-bold text-base text-gray-900 dark:text-gray-100 uppercase tracking-wider font-mono"
         >
           Settings
         </span>
@@ -145,12 +145,12 @@
 
       <!-- Theme Selector -->
       <div class="flex items-center justify-between">
-        <label for="theme-select" class="cursor-pointer">Theme</label>
+        <label for="theme-select" class="cursor-pointer font-bold text-gray-900 dark:text-gray-100">Theme</label>
         <select
           id="theme-select"
           value={settings.theme}
           onchange={handleSelectTheme}
-          class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2.5 py-1 text-xs focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+          class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
         >
           <option value="system">System Default</option>
           <option value="light">Light Mode</option>
@@ -166,7 +166,7 @@
 
       <!-- Romanization / Pronunciation Toggle -->
       <label class="flex items-center justify-between cursor-pointer">
-        <span>Show Romanization</span>
+        <span class="font-bold text-gray-900 dark:text-gray-100">Show Romanization</span>
         <input
           type="checkbox"
           checked={settings.showPronunciation}
@@ -177,7 +177,7 @@
 
       <!-- English Translation Toggle -->
       <label class="flex items-center justify-between cursor-pointer">
-        <span>Show English Translation</span>
+        <span class="font-bold text-gray-900 dark:text-gray-100">Show English Translation</span>
         <input
           type="checkbox"
           checked={settings.showTranslation}
@@ -187,7 +187,7 @@
       </label>
 
       <!-- Virtual Keyboard Section -->
-      <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex flex-col gap-2 pt-2.5 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <span class="font-bold text-gray-900 dark:text-gray-100">Virtual Keyboard</span>
           <label class="flex items-center gap-1.5 cursor-pointer">
@@ -205,12 +205,12 @@
           <div class="flex flex-col gap-2 mt-1 pl-2">
             <!-- Keyboard Hint Toggle -->
             <label class="flex items-center justify-between cursor-pointer">
-              <span class="text-gray-600 dark:text-gray-400">Show keyboard hints</span>
+              <span class="text-xs text-gray-600 dark:text-gray-400">Show keyboard hints</span>
               <input
                 type="checkbox"
                 checked={settings.showKeyboardHint}
                 onchange={ontogglekeyboardhint}
-                class="w-3.5 h-3.5 text-blue-600 rounded cursor-pointer"
+                class="w-4 h-4 text-blue-600 rounded cursor-pointer"
               />
             </label>
           </div>
@@ -218,34 +218,34 @@
       </div>
 
       <!-- Target Text Size Slider & Lock Toggle -->
-      <div class="flex flex-col gap-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+      <div class="flex flex-col gap-2 pt-2.5 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between">
           <span class="font-bold text-gray-900 dark:text-gray-100">Typography Sizing</span>
           <label
-            class="flex items-center gap-1.5 cursor-pointer text-[11px] text-gray-500 dark:text-gray-400"
+            class="flex items-center gap-1.5 cursor-pointer text-xs text-gray-500 dark:text-gray-400"
           >
             <input
               type="checkbox"
               checked={settings.lockFontSize}
               onchange={ontogglelockfontsize}
-              class="w-3.5 h-3.5 text-blue-600 rounded cursor-pointer"
+              class="w-4 h-4 text-blue-600 rounded cursor-pointer"
             />
             <span>Lock Size</span>
           </label>
         </div>
 
-        <div class="flex flex-col gap-2 mt-1 pl-2">
+        <div class="flex flex-col gap-2 mt-1">
           {#if settings.lockFontSize}
             <div class="flex flex-col gap-1.5">
               <div class="flex items-center justify-between">
-                <span class="text-gray-600 dark:text-gray-400">Font size</span>
+                <span class="text-xs text-gray-600 dark:text-gray-400">Font size</span>
                 <span
-                  class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+                  class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800"
                 >
                   {minVal}rem
                 </span>
               </div>
-              <div class="pl-2">
+              <div class="pt-1">
                 <input
                   type="range"
                   min="1.0"
@@ -260,15 +260,15 @@
           {:else}
             <div class="flex flex-col gap-1.5">
               <div class="flex items-center justify-between">
-                <span class="text-gray-600 dark:text-gray-400">Min & max font size</span>
+                <span class="text-xs text-gray-600 dark:text-gray-400">Min & max font size</span>
                 <span
-                  class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800"
+                  class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800"
                 >
                   {minVal}rem – {maxVal}rem
                 </span>
               </div>
 
-              <div class="pl-2">
+              <div class="pt-1">
                 <DualRangeSlider
                   min={1.0}
                   max={6.0}

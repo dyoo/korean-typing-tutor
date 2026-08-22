@@ -32,7 +32,12 @@
       return minValue;
     }
     const rect = trackEl.getBoundingClientRect();
-    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    const innerWidth = rect.width - 20; // Inset by 10px thumb radius on each side
+    if (innerWidth <= 0) {
+      return minValue;
+    }
+    const relX = e.clientX - rect.left - 10;
+    const ratio = Math.max(0, Math.min(1, relX / innerWidth));
     return clampAndStep(min + ratio * (max - min));
   }
 
@@ -115,16 +120,16 @@
   role="presentation"
   class="relative w-full h-8 flex items-center select-none cursor-pointer py-1"
 >
-  <!-- Track Background -->
-  <div class="absolute w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+  <!-- Track Background (inset by 10px thumb radius on both sides) -->
+  <div class="absolute left-2.5 right-2.5 h-2 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
 
   <!-- Active Range Highlight -->
   <div
     class="absolute h-2 bg-blue-600 dark:bg-blue-500 rounded-lg pointer-events-none"
-    style="left: {minPercent}%; width: {Math.max(0, maxPercent - minPercent)}%;"
+    style="left: calc(10px + (100% - 20px) * {minPercent / 100}); width: calc((100% - 20px) * {(maxPercent - minPercent) / 100});"
   ></div>
 
-  <!-- Min Thumb Knob -->
+  <!-- Min Thumb Knob (contained strictly within 0% to 100% bounds) -->
   <div
     role="slider"
     aria-label="Minimum Font Size"
@@ -141,10 +146,10 @@
       }
     }}
     class="absolute w-5 h-5 bg-white dark:bg-gray-200 border-2 border-blue-600 dark:border-blue-500 rounded-full shadow cursor-grab active:cursor-grabbing hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-500 z-20"
-    style="left: calc({minPercent}% - 10px);"
+    style="left: calc((100% - 20px) * {minPercent / 100});"
   ></div>
 
-  <!-- Max Thumb Knob -->
+  <!-- Max Thumb Knob (contained strictly within 0% to 100% bounds) -->
   <div
     role="slider"
     aria-label="Maximum Font Size"
@@ -161,6 +166,6 @@
       }
     }}
     class="absolute w-5 h-5 bg-white dark:bg-gray-200 border-2 border-blue-600 dark:border-blue-500 rounded-full shadow cursor-grab active:cursor-grabbing hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-blue-500 z-30"
-    style="left: calc({maxPercent}% - 10px);"
+    style="left: calc((100% - 20px) * {maxPercent / 100});"
   ></div>
 </div>
