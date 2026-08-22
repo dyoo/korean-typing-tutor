@@ -430,6 +430,7 @@ describe('TutorSession controller', () => {
   });
 
   it('should return upcoming lesson items for lookahead prefetching', () => {
+    session.setMode('curriculum');
     session.setFilter('all', false);
     // mockCurriculum has 2 items: '가' (l1) and '사과' (l3)
     const upcoming = session.getUpcomingItems(5);
@@ -439,5 +440,15 @@ describe('TutorSession controller', () => {
     // With 0 items (empty filter)
     session.setFilter([], false);
     expect(session.getUpcomingItems(5)).toEqual([]);
+  });
+
+  it('should serve exact precomputed items from mastery lookahead buffer', () => {
+    session.setMode('mastery');
+    const upcoming = session.getUpcomingItems(5);
+    expect(upcoming.length).toBeGreaterThan(0);
+
+    const nextExpected = upcoming[0];
+    session.advanceLevel();
+    expect(session.getCurrentItem().id).toBe(nextExpected.id);
   });
 });

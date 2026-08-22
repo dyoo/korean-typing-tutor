@@ -336,6 +336,10 @@ export class TTSController {
           resolve: (audioBlobUrl: string) => {
             this.putCachedAudio(cacheKey, audioBlobUrl);
             this.inFlightSyntheses.delete(cacheKey);
+            // Pre-decode PCM waveform in background so speak() is instant
+            if (this.audioCtx) {
+              void this.getDecodedAudioBuffer(cacheKey, audioBlobUrl);
+            }
             resolve(audioBlobUrl);
           },
           reject: (err: Error) => {

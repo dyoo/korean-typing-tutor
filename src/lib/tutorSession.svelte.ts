@@ -64,6 +64,7 @@ export class TutorSession {
   public masteryState: MasteryState = $state(loadMasteryState());
   public isMasteryGraduationPending: boolean = $state(false);
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
+  private masteryQueue: LessonItem[] = [];
 
   constructor(
     data: CurriculumData | LessonItem[],
@@ -106,25 +107,57 @@ export class TutorSession {
     return arr;
   }
 
+  /**
+   * Refills the upcoming Mastery lookahead buffer so upcoming exercises
+   * are known deterministically in advance for 100% audio cache hits.
+   */
+  private refillMasteryQueue(): void {
+    if (this.mode !== 'mastery' || this.activeItems.length === 0) {
+      return;
+    }
+    const activeTarget = getActiveMasteryTarget(this.masteryState);
+    while (this.masteryQueue.length < 5) {
+      const lastItem =
+        this.masteryQueue[this.masteryQueue.length - 1] ??
+        this.activeItems[this.currentIndex];
+      const next = selectNextMasteryItem(
+        this.activeItems,
+        activeTarget,
+        this.masteryState.jamoStats,
+        lastItem?.id,
+      );
+      this.masteryQueue.push(next);
+    }
+  }
+
   /** Updates eligible mastery items and sets the current cursor to the next prioritized item. */
   private updateMasteryItemsAndCursor(excludeItemId?: string): void {
     const unlocked = getUnlockedJamos(this.masteryState);
     const activeTarget = getActiveMasteryTarget(this.masteryState);
     this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
 
-    const nextItem = selectNextMasteryItem(
-      this.activeItems,
-      activeTarget,
-      this.masteryState.jamoStats,
-      excludeItemId,
-    );
-    const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
-    this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
+    if (this.masteryQueue.length === 0) {
+      const nextItem = selectNextMasteryItem(
+        this.activeItems,
+        activeTarget,
+        this.masteryState.jamoStats,
+        excludeItemId,
+      );
+      const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
+      this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
+    } else {
+      const nextItem = this.masteryQueue.shift()!;
+      const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
+      this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
+    }
+
+    this.refillMasteryQueue();
   }
 
   /** Filters items by active mode / module ID(s) and applies shuffling. */
   private applyFilterAndShuffle(): void {
     if (this.mode === 'mastery') {
+      this.masteryQueue = [];
       this.updateMasteryItemsAndCursor();
     } else {
       let filtered: LessonItem[];
@@ -304,6 +337,11 @@ export class TutorSession {
    * Useful for lookahead audio prefetching and cache warm-up.
    */
   public getUpcomingItems(count: number = 5): LessonItem[] {
+    if (this.mode === 'mastery') {
+      this.refillMasteryQueue();
+      return this.masteryQueue.slice(0, count);
+    }
+
     if (this.activeItems.length <= 1) {
       return [];
     }

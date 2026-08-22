@@ -283,9 +283,6 @@
   function processKeystrokeWithAudio(key: string) {
     if (settings.enableTTS) {
       ttsController.unlockAudio();
-      if (preloadDebounceTimer) {
-        triggerImmediatePreload();
-      }
     }
     const wasCompleted = session.getIsItemCompleted();
     const result = session.processKey(key);
@@ -425,10 +422,6 @@
   }
 
   function speakCurrentPrompt() {
-    if (preloadDebounceTimer) {
-      clearTimeout(preloadDebounceTimer);
-      preloadDebounceTimer = null;
-    }
     if (currentItem && currentItem.target) {
       ttsController.speak(
         currentItem.target,
@@ -440,95 +433,32 @@
   }
 
   let lastPromptTarget = '';
-  let preloadDebounceTimer: ReturnType<typeof setTimeout> | null = null;
-  let idlePrefetchTimer: ReturnType<typeof setTimeout> | null = null;
-
-  function scheduleIdleLookaheadPrefetch(currentPreloadPromise?: Promise<string | null> | null) {
-    if (idlePrefetchTimer) {
-      clearTimeout(idlePrefetchTimer);
-      idlePrefetchTimer = null;
-    }
-    if (!settings.enableTTS) {
-      return;
-    }
-    const voice = settings.ttsVoice ?? 'jm_kumo';
-    const speed = settings.ttsSpeed ?? 1.0;
-    const upcomingTargets = session.getUpcomingItems(5).map((i) => i.target);
-    if (upcomingTargets.length === 0) {
-      return;
-    }
-
-    idlePrefetchTimer = setTimeout(async () => {
-      idlePrefetchTimer = null;
-      if (currentPreloadPromise) {
-        await currentPreloadPromise.catch(() => null);
-      }
-      ttsController.preloadBatch(upcomingTargets, voice, speed);
-    }, 600);
-  }
-
-  function triggerImmediatePreload() {
-    if (!settings.enableTTS || !currentItem?.target) {
-      return;
-    }
-    if (preloadDebounceTimer) {
-      clearTimeout(preloadDebounceTimer);
-      preloadDebounceTimer = null;
-    }
-    const p = ttsController.preload(
-      currentItem.target,
-      settings.ttsVoice ?? 'jm_kumo',
-      settings.ttsSpeed ?? 1.0,
-    );
-    scheduleIdleLookaheadPrefetch(p);
-  }
 
   // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
-  // so clicking the audio button plays immediately without synthesis delay.
-  // Cancels any active synthesis or playback from the previous exercise.
-  // Uses a 150ms debounce to avoid spamming the Web Worker during rapid skipping,
-  // which is automatically flushed immediately upon the user's first typed keystroke.
-  // Once the active prompt is ready, sequentially pre-computes the next 5 upcoming items on idle.
+  // so clicking the audio button or completing the word plays immediately with 0ms delay.
+  // Continuously buffers the next 5 upcoming words in the background Web Worker.
   $effect(() => {
     const targetText = currentItem?.target;
     const isEnabled = settings.enableTTS;
     const voice = settings.ttsVoice ?? 'jm_kumo';
     const speed = settings.ttsSpeed ?? 1.0;
 
-    if (preloadDebounceTimer) {
-      clearTimeout(preloadDebounceTimer);
-      preloadDebounceTimer = null;
-    }
-    if (idlePrefetchTimer) {
-      clearTimeout(idlePrefetchTimer);
-      idlePrefetchTimer = null;
-    }
-
     untrack(() => {
       if (targetText !== lastPromptTarget) {
         lastPromptTarget = targetText || '';
-        ttsController.stop();
+        ttsController.stopAudio();
       }
 
       if (isEnabled && targetText) {
-        preloadDebounceTimer = setTimeout(() => {
-          const p = ttsController.preload(targetText, voice, speed);
-          preloadDebounceTimer = null;
-          scheduleIdleLookaheadPrefetch(p);
-        }, 150);
+        // Preload active target immediately
+        ttsController.preload(targetText, voice, speed);
+        // Continuously buffer upcoming 5 exercises in background worker
+        const upcomingTargets = session.getUpcomingItems(5).map((i) => i.target);
+        if (upcomingTargets.length > 0) {
+          void ttsController.preloadBatch(upcomingTargets, voice, speed);
+        }
       }
     });
-
-    return () => {
-      if (preloadDebounceTimer) {
-        clearTimeout(preloadDebounceTimer);
-        preloadDebounceTimer = null;
-      }
-      if (idlePrefetchTimer) {
-        clearTimeout(idlePrefetchTimer);
-        idlePrefetchTimer = null;
-      }
-    };
   });
 
   function togglePronunciation() {
