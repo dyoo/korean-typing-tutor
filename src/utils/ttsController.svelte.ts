@@ -40,6 +40,7 @@ export class TTSController {
   // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal in-flight promise map intentionally non-reactive to avoid re-triggering effects
   private inFlightSyntheses = new Map<string, Promise<string>>(); // cacheKey -> Promise
   private pendingCacheChecks: Array<(cached: boolean) => void> = [];
+  private loadModelPromise: Promise<void> | null = null;
   private nextRequestId = 0;
   private currentBatchToken = 0;
 
@@ -216,12 +217,16 @@ export class TTSController {
     if (this.isLoaded) {
       return;
     }
+    if (this.loadModelPromise) {
+      return this.loadModelPromise;
+    }
     this.isLoading = true;
     this.loadError = null;
     const w = this.initWorker();
 
-    return new Promise((resolve, reject) => {
+    this.loadModelPromise = new Promise<void>((resolve, reject) => {
       const timeout = setTimeout(() => {
+        this.loadModelPromise = null;
         if (this.isLoading) {
           this.isLoading = false;
           reject(new Error('Model loading timed out. Please check network connection.'));
@@ -232,10 +237,12 @@ export class TTSController {
         if (this.isLoaded) {
           clearInterval(checkInterval);
           clearTimeout(timeout);
+          this.loadModelPromise = null;
           resolve();
         } else if (this.loadError) {
           clearInterval(checkInterval);
           clearTimeout(timeout);
+          this.loadModelPromise = null;
           reject(new Error(this.loadError));
         }
       }, 100);
@@ -245,6 +252,8 @@ export class TTSController {
         payload: { dtype: 'q8', device: 'wasm' },
       } satisfies TTSWorkerRequest);
     });
+
+    return this.loadModelPromise;
   }
 
   /**

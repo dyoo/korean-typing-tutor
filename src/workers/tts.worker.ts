@@ -34,6 +34,7 @@ if (env.backends?.onnx?.wasm) {
 
 let speaker: KoreanSpeaker | null = null;
 let isModelLoaded = false;
+let modelLoadingPromise: Promise<void> | null = null;
 const activeTasks = new Map<string, SynthesisTask>();
 
 interface PendingSynthesisRequest {
@@ -90,8 +91,81 @@ function postResponse(response: TTSWorkerResponse): void {
 }
 
 /**
+ * Ensures the Kokoro ONNX model is loaded, deduplicating concurrent initialization calls.
+ */
+async function ensureModelLoaded(
+  dtype: 'q8' | 'fp32' | 'fp16' | 'q4' = 'q8',
+  device: 'wasm' | 'webgpu' = 'wasm',
+): Promise<void> {
+  if (isModelLoaded && speaker) {
+    return;
+  }
+  if (modelLoadingPromise) {
+    return modelLoadingPromise;
+  }
+
+  modelLoadingPromise = (async () => {
+    try {
+      console.log('[TTS Worker] Loading Kokoro-82M model...');
+      speaker = new KoreanSpeaker({ dtype, device });
+
+      await speaker.load({
+        progressCallback: (progress: SpeakerProgress) => {
+          const file = 'file' in progress ? (progress.file ?? '') : '';
+          const percent = 'progress' in progress ? (progress.progress ?? 0) : 0;
+          const status = progress.status;
+
+          postResponse({
+            type: 'LOAD_PROGRESS',
+            payload: {
+              file,
+              progress: percent,
+              status,
+            },
+          });
+        },
+      });
+
+      isModelLoaded = true;
+      const voices = (speaker.getVoices() as VoiceMetadata[]) || FALLBACK_VOICES;
+
+      postResponse({
+        type: 'LOAD_PROGRESS',
+        payload: {
+          file: 'voices',
+          progress: 100,
+          status: 'Preloading voice profiles...',
+        },
+      });
+
+      // Preload and cache all voice vector embeddings so first playback is instant
+      const voiceIds = voices.map((v) => v.id);
+      await speaker.preloadVoices(voiceIds);
+
+      postResponse({
+        type: 'LOAD_SUCCESS',
+        payload: { voices },
+      });
+      console.log('[TTS Worker] Kokoro-82M model loaded and ready');
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : String(err);
+      console.error('[TTS Worker] Model loading failed:', errorMsg);
+      postResponse({
+        type: 'LOAD_ERROR',
+        payload: { error: errorMsg },
+      });
+      throw err;
+    } finally {
+      modelLoadingPromise = null;
+    }
+  })();
+
+  return modelLoadingPromise;
+}
+
+/**
  * Sequentially process pending synthesis requests with cooperative yielding to allow
- * cancellation messages in the worker event queue to be processed before heavy WASM inference starts.
+ * cancellation messages in the worker event queue to be processed before heavy WASM compute starts.
  */
 async function processSynthesisQueue(): Promise<void> {
   if (isProcessingQueue) {
@@ -107,6 +181,24 @@ async function processSynthesisQueue(): Promise<void> {
 
       if (synthesisQueue.length === 0) {
         break;
+      }
+
+      // If model is currently loading or not yet initialized, wait for it before processing queue
+      if (!isModelLoaded || !speaker) {
+        console.log('[TTS Worker] Awaiting model loading before synthesizing queue...');
+        try {
+          await ensureModelLoaded();
+        } catch {
+          // If model load failed, reject all queued synthesis requests gracefully
+          while (synthesisQueue.length > 0) {
+            const failedReq = synthesisQueue.shift()!;
+            postResponse({
+              type: 'SYNTHESIS_ERROR',
+              payload: { id: failedReq.id, error: 'TTS model failed to load' },
+            });
+          }
+          break;
+        }
       }
 
       const req = synthesisQueue.shift()!;
@@ -266,64 +358,11 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
 
     case 'LOAD_MODEL': {
       try {
-        if (isModelLoaded && speaker) {
-          postResponse({
-            type: 'LOAD_SUCCESS',
-            payload: {
-              voices: (speaker.getVoices() as VoiceMetadata[]) || FALLBACK_VOICES,
-            },
-          });
-          return;
-        }
-
         const dtype = message.payload?.dtype ?? 'q8';
         const device = message.payload?.device ?? 'wasm';
-
-        speaker = new KoreanSpeaker({ dtype, device });
-
-        await speaker.load({
-          progressCallback: (progress: SpeakerProgress) => {
-            const file = 'file' in progress ? (progress.file ?? '') : '';
-            const percent = 'progress' in progress ? (progress.progress ?? 0) : 0;
-            const status = progress.status;
-
-            postResponse({
-              type: 'LOAD_PROGRESS',
-              payload: {
-                file,
-                progress: percent,
-                status,
-              },
-            });
-          },
-        });
-
-        isModelLoaded = true;
-        const voices = (speaker.getVoices() as VoiceMetadata[]) || FALLBACK_VOICES;
-
-        postResponse({
-          type: 'LOAD_PROGRESS',
-          payload: {
-            file: 'voices',
-            progress: 100,
-            status: 'Preloading voice profiles...',
-          },
-        });
-
-        // Preload and cache all voice vector embeddings so first playback is instant
-        const voiceIds = voices.map((v) => v.id);
-        await speaker.preloadVoices(voiceIds);
-
-        postResponse({
-          type: 'LOAD_SUCCESS',
-          payload: { voices },
-        });
-      } catch (err: unknown) {
-        const errorMsg = err instanceof Error ? err.message : String(err);
-        postResponse({
-          type: 'LOAD_ERROR',
-          payload: { error: errorMsg },
-        });
+        await ensureModelLoaded(dtype, device);
+      } catch {
+        // Error already handled and posted inside ensureModelLoaded
       }
       break;
     }
