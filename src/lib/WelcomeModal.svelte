@@ -74,18 +74,18 @@
               Free-form Mode
             </span>
             <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              Curriculum explorer across modules of vocabulary, common expressions, idioms, and sentences with customizable multi-module filtering.
+              Curriculum explorer across 32 modules of vocabulary, expressions, and sentences, plus support for importing your own Anki flashcard decks (<span class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200">.apkg</span>, <span class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200">.tsv</span>, <span class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200">.txt</span>).
             </p>
           </div>
           <span class="text-[11px] font-semibold text-blue-700 dark:text-blue-400">
-            Vocabulary practice without restrictions
+            Curriculum & custom deck practice
           </span>
         </div>
       </div>
 
       <!-- Guidance -->
       <p class="text-xs text-center text-gray-500 dark:text-gray-400 -my-1 leading-relaxed">
-        Use the left sidebar to select modules or progress, and the top-right settings to toggle voice, translations, and theme.
+        Use the left sidebar to select modules, import custom Anki decks, or review progress, and top-right settings to toggle voice synthesis, translations, and theme.
       </p>
 
       <!-- Action Button -->
