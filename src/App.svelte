@@ -490,25 +490,44 @@
       ttsController.isAudioLoading(
         currentItem?.target,
         settings.ttsVoice,
+        settings.ttsEngine,
       ),
   );
 
   async function toggleTTS() {
     if (!settings.enableTTS) {
-      // User is enabling TTS; verify if model is already downloaded to avoid redundant prompts
+      if (settings.ttsEngine === 'kokoro') {
+        let isCached = ttsController.isCached;
+        if (!isCached && !ttsController.isLoaded) {
+          isCached = await ttsController.checkCache();
+        }
+        if (!ttsController.isLoaded && !isCached) {
+          showTTSDownloadModal = true;
+          return;
+        }
+      }
+      updateSetting('enableTTS', true);
+    } else {
+      updateSetting('enableTTS', false);
+      ttsController.stopAudio();
+    }
+  }
+
+  async function handleEngineChange(engine: 'native' | 'kokoro') {
+    updateSetting('ttsEngine', engine);
+    if (engine === 'kokoro' && settings.enableTTS) {
       let isCached = ttsController.isCached;
       if (!isCached && !ttsController.isLoaded) {
         isCached = await ttsController.checkCache();
       }
       if (!ttsController.isLoaded && !isCached) {
         showTTSDownloadModal = true;
-      } else {
-        updateSetting('enableTTS', true);
       }
-    } else {
-      updateSetting('enableTTS', false);
-      ttsController.terminate();
     }
+  }
+
+  function handleNativeVoiceChange(voiceURI: string) {
+    updateSetting('ttsNativeVoice', voiceURI);
   }
 
   async function handleConfirmTTSDownload() {
@@ -555,6 +574,8 @@
         currentItem.target,
         settings.ttsVoice ?? 'jm_kumo',
         settings.ttsSpeed ?? 1.0,
+        settings.ttsEngine ?? 'native',
+        settings.ttsNativeVoice,
       );
     }
     focusInputElement();
@@ -564,12 +585,13 @@
 
   // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
   // so clicking the audio button or completing the word plays immediately with 0ms delay.
-  // Continuously buffers the next 5 upcoming words in the background Web Worker.
+  // Continuously buffers the next 5 upcoming words in the background Web Worker when using Kokoro.
   $effect(() => {
     const targetText = currentItem?.target;
     const isEnabled = settings.enableTTS;
     const speakOnAppear = settings.speakOnAppearance;
     const voice = settings.ttsVoice ?? 'jm_kumo';
+    const engine = settings.ttsEngine ?? 'native';
 
     untrack(() => {
       const isNewTarget = targetText !== lastPromptTarget;
@@ -579,12 +601,14 @@
       }
 
       if (isEnabled && targetText) {
-        // Preload active target immediately
-        ttsController.preload(targetText, voice);
-        // Continuously buffer upcoming 5 exercises in background worker
-        const upcomingTargets = session.getUpcomingItems(5).map((i) => i.target);
-        if (upcomingTargets.length > 0) {
-          void ttsController.preloadBatch(upcomingTargets, voice);
+        if (engine === 'kokoro') {
+          // Preload active target immediately
+          ttsController.preload(targetText, voice);
+          // Continuously buffer upcoming 5 exercises in background worker
+          const upcomingTargets = session.getUpcomingItems(5).map((i) => i.target);
+          if (upcomingTargets.length > 0) {
+            void ttsController.preloadBatch(upcomingTargets, voice);
+          }
         }
 
         // If speak on appearance is enabled, pronounce the prompt when it newly appears (once welcome modal is dismissed)
@@ -711,9 +735,11 @@
     ontogglelockfontsize={handleToggleLockFontSize}
     oncursorcolorchange={handleCursorColorChange}
     ontoggletts={toggleTTS}
+    onenginechange={handleEngineChange}
     ontogglespeakoncompletion={toggleSpeakOnCompletion}
     ontogglespeakonappearance={toggleSpeakOnAppearance}
     onvoicechange={handleVoiceChange}
+    onnativevoicechange={handleNativeVoiceChange}
     onspeedchange={handleSpeedChange}
     onclearttscache={handleClearTTSCache}
   />

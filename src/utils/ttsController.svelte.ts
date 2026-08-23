@@ -117,6 +117,14 @@ export async function inspectCacheStorage(): Promise<{ isCached: boolean; modelS
  * Controller singleton for interacting with the TTS Web Worker and managing
  * client-side speech synthesis audio playback and pre-generation cache.
  */
+/** Information about a discovered native browser speech synthesis voice. */
+export interface NativeVoiceInfo {
+  id: string;
+  name: string;
+  lang: string;
+  isDefault: boolean;
+}
+
 export class TTSController {
   private worker: Worker | null = null;
   private _isLoaded = $state(false);
@@ -128,6 +136,7 @@ export class TTSController {
   private _isCached = $state(false);
   private _modelSizeFormatted = $state('');
   private _availableVoices = $state<VoiceMetadata[]>([]);
+  private _nativeVoices = $state<NativeVoiceInfo[]>([]);
   private _loadError = $state<string | null>(null);
   private _generatingKeys = $state<string[]>([]);
 
@@ -153,7 +162,12 @@ export class TTSController {
   private currentPlaybackToken = 0;
 
   constructor() {
-    // Lazily initialized when needed
+    this.refreshNativeVoices();
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      window.speechSynthesis.onvoiceschanged = () => {
+        this.refreshNativeVoices();
+      };
+    }
   }
 
   /** Safely revokes a Blob URL to free underlying browser audio memory. */
@@ -519,8 +533,115 @@ export class TTSController {
     }
   }
 
+  public refreshNativeVoices(): void {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      this._nativeVoices = [];
+      return;
+    }
+    const voices = window.speechSynthesis.getVoices();
+    const koreanVoices = voices.filter(
+      (v) =>
+        v.lang.toLowerCase().startsWith('ko') ||
+        v.lang.toLowerCase().includes('kore') ||
+        v.name.toLowerCase().includes('korean') ||
+        v.name.includes('한국어') ||
+        v.name.includes('Yuna') ||
+        v.name.includes('SunHi') ||
+        v.name.includes('Heami') ||
+        v.name.includes('InJoon'),
+    );
+
+    this._nativeVoices = koreanVoices.map((v) => ({
+      id: v.voiceURI || v.name,
+      name: `${v.name} (${v.lang})`,
+      lang: v.lang,
+      isDefault: v.default,
+    }));
+  }
+
+  public get nativeVoices(): NativeVoiceInfo[] {
+    if (this._nativeVoices.length === 0) {
+      this.refreshNativeVoices();
+    }
+    return this._nativeVoices;
+  }
+
+  public hasNativeVoices(): boolean {
+    return this.nativeVoices.length > 0;
+  }
+
+  public stopNative(): void {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      try {
+        window.speechSynthesis.cancel();
+      } catch {
+        // Ignore cancel errors
+      }
+    }
+  }
+
+  public speakNative(
+    text: string,
+    voiceURI?: string,
+    speed: number = DEFAULT_TTS_SPEED,
+  ): Promise<void> {
+    if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
+      return Promise.resolve();
+    }
+    if (!text || text.trim().length === 0) {
+      return Promise.resolve();
+    }
+
+    this.stopAudio();
+    const playbackToken = this.currentPlaybackToken;
+
+    return new Promise((resolve) => {
+      try {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ko-KR';
+        utterance.rate = Math.max(0.5, Math.min(2.0, speed));
+
+        const allVoices = window.speechSynthesis.getVoices();
+        if (voiceURI) {
+          const selected = allVoices.find((v) => v.voiceURI === voiceURI || v.name === voiceURI);
+          if (selected) {
+            utterance.voice = selected;
+          }
+        }
+        if (!utterance.voice) {
+          const defaultKo = allVoices.find((v) => v.lang.toLowerCase().startsWith('ko'));
+          if (defaultKo) {
+            utterance.voice = defaultKo;
+          }
+        }
+
+        this._isSpeaking = true;
+
+        const cleanup = () => {
+          utterance.onend = null;
+          utterance.onerror = null;
+          if (playbackToken === this.currentPlaybackToken) {
+            this._isSpeaking = false;
+          }
+          resolve();
+        };
+
+        utterance.onend = cleanup;
+        utterance.onerror = cleanup;
+
+        window.speechSynthesis.speak(utterance);
+      } catch {
+        if (playbackToken === this.currentPlaybackToken) {
+          this._isSpeaking = false;
+        }
+        resolve();
+      }
+    });
+  }
+
   public stopAudio(): void {
     this.currentPlaybackToken++;
+    this.stopNative();
     if (this.playerAudio) {
       this.playerAudio.onended = null;
       this.playerAudio.onerror = null;
@@ -538,11 +659,19 @@ export class TTSController {
     text: string,
     voice: string = DEFAULT_TTS_VOICE,
     speed: number = DEFAULT_TTS_SPEED,
+    engine: 'native' | 'kokoro' = 'native',
+    nativeVoiceURI?: string,
   ): Promise<void> {
     if (!text || text.trim().length === 0) {
       return;
     }
 
+    // If native speech engine is selected and available, execute immediately with 0ms latency
+    if (engine === 'native' && typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      return this.speakNative(text, nativeVoiceURI, speed);
+    }
+
+    // Otherwise use Kokoro-82M Web Worker neural synthesis
     // Prime the audio subsystem synchronously during the active user gesture
     this.unlockAudio();
     this.stopAudio();
@@ -664,7 +793,11 @@ export class TTSController {
   public isAudioLoading(
     text?: string,
     voice: string = DEFAULT_TTS_VOICE,
+    engine: 'native' | 'kokoro' = 'kokoro',
   ): boolean {
+    if (engine === 'native') {
+      return false;
+    }
     if (this._isLoading || !this._isLoaded) {
       return true;
     }

@@ -20,9 +20,11 @@
     ontogglelockfontsize?: () => void;
     oncursorcolorchange?: (cursorColor: CursorColorMode) => void;
     ontoggletts?: () => void;
+    onenginechange?: (engine: 'native' | 'kokoro') => void;
     ontogglespeakoncompletion?: () => void;
     ontogglespeakonappearance?: () => void;
     onvoicechange?: (voice: string) => void;
+    onnativevoicechange?: (voiceURI: string) => void;
     onspeedchange?: (speed: number) => void;
     onclearttscache?: () => void;
   }
@@ -42,9 +44,11 @@
     ontogglelockfontsize,
     oncursorcolorchange,
     ontoggletts,
+    onenginechange,
     ontogglespeakoncompletion,
     ontogglespeakonappearance,
     onvoicechange,
+    onnativevoicechange,
     onspeedchange,
     onclearttscache,
   }: Props = $props();
@@ -288,9 +292,11 @@
       <TTSSettingsControl
         {settings}
         {ontoggletts}
+        {onenginechange}
         {ontogglespeakoncompletion}
         {ontogglespeakonappearance}
         {onvoicechange}
+        {onnativevoicechange}
         {onspeedchange}
         {onclearttscache}
       />

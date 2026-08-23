@@ -935,4 +935,70 @@ describe('TTSController Unit Tests', () => {
     const result = await preloadPromise;
     expect(result).toBe('blob:http://localhost/restarted');
   });
+
+  it('discovers and filters native Korean system voices', () => {
+    const mockVoices = [
+      { voiceURI: 'com.apple.speech.synthesis.voice.yuna', name: 'Yuna', lang: 'ko-KR', default: true },
+      { voiceURI: 'com.apple.speech.synthesis.voice.alex', name: 'Alex', lang: 'en-US', default: false },
+      { voiceURI: 'Microsoft SunHi Online (Natural) - Korean', name: 'Microsoft SunHi', lang: 'ko-KR', default: false },
+    ];
+
+    vi.stubGlobal('speechSynthesis', {
+      getVoices: () => mockVoices,
+      speak: vi.fn(),
+      cancel: vi.fn(),
+      onvoiceschanged: null,
+    });
+
+    controller.refreshNativeVoices();
+    expect(controller.hasNativeVoices()).toBe(true);
+    expect(controller.nativeVoices.length).toBe(2);
+    expect(controller.nativeVoices[0].name).toContain('Yuna');
+    expect(controller.nativeVoices[1].name).toContain('Microsoft SunHi');
+  });
+
+  it('speaks using native Web Speech API when engine is native', async () => {
+    let spokenUtterance: SpeechSynthesisUtterance | null = null;
+    const mockSpeak = vi.fn((utterance: SpeechSynthesisUtterance) => {
+      spokenUtterance = utterance;
+      setTimeout(() => {
+        utterance.onend?.(new Event('end') as SpeechSynthesisEvent);
+      }, 5);
+    });
+    const mockCancel = vi.fn();
+
+    vi.stubGlobal('speechSynthesis', {
+      getVoices: () => [
+        { voiceURI: 'com.apple.speech.synthesis.voice.yuna', name: 'Yuna', lang: 'ko-KR', default: true },
+      ],
+      speak: mockSpeak,
+      cancel: mockCancel,
+      onvoiceschanged: null,
+    });
+
+    vi.stubGlobal(
+      'SpeechSynthesisUtterance',
+      class MockUtterance {
+        public text: string;
+        public lang = '';
+        public rate = 1.0;
+        public voice: unknown = null;
+        public onend: ((e: Event) => void) | null = null;
+        public onerror: ((e: Event) => void) | null = null;
+        constructor(text: string) {
+          this.text = text;
+        }
+      },
+    );
+
+    const speakPromise = controller.speak('안녕하세요', undefined, 1.2, 'native', 'com.apple.speech.synthesis.voice.yuna');
+    expect(mockCancel).toHaveBeenCalled();
+    expect(mockSpeak).toHaveBeenCalled();
+    await speakPromise;
+
+    expect(spokenUtterance).not.toBeNull();
+    expect((spokenUtterance as unknown as { text: string }).text).toBe('안녕하세요');
+    expect((spokenUtterance as unknown as { rate: number }).rate).toBe(1.2);
+    expect(controller.isSpeaking).toBe(false);
+  });
 });
