@@ -70,6 +70,7 @@ function appendModule(mod: ModuleFile): void {
     id: mod.id,
     title: mod.title,
     description: mod.description,
+    itemCount: mod.items.length,
   });
   items.push(
     ...mod.items.map((item) => ({

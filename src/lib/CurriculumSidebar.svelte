@@ -189,12 +189,14 @@
                     class="w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
                   />
                   <div class="flex flex-col min-w-0">
-                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
-                      {deck.title}
-                    </span>
-                    <span class="text-xs text-gray-500 dark:text-gray-400 font-mono">
-                      {deck.itemCount} items
-                    </span>
+                    <div class="flex items-baseline gap-1.5 flex-wrap">
+                      <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
+                        {deck.title}
+                      </span>
+                      <span class="text-xs text-gray-400 dark:text-gray-500 font-mono">
+                        ({deck.itemCount} items)
+                      </span>
+                    </div>
                   </div>
                 </label>
                 <button

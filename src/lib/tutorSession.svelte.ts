@@ -108,6 +108,7 @@ export class TutorSession {
       id: deck.id,
       title: deck.title,
       description: `${deck.itemCount} flashcard items imported from ${deck.filename}`,
+      itemCount: deck.itemCount,
       category: 'custom',
     }));
     this.modules = [...this.baseModules, ...customModules];

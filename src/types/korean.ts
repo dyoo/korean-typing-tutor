@@ -17,6 +17,8 @@ export interface ModuleDefinition {
   id: string;
   title: string;
   description: string;
+  itemCount?: number;
+  category?: string;
 }
 
 /** Lesson item domain model for practice exercises. */
