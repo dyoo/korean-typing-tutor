@@ -54,8 +54,8 @@ export interface KeyResult {
 export class TutorSession {
   private baseItems: LessonItem[];
   private baseModules: ModuleDefinition[];
-  private allItems: LessonItem[] = [];
-  private modules: ModuleDefinition[] = [];
+  private allItems: LessonItem[] = $state([]);
+  private modules: ModuleDefinition[] = $state([]);
   public customDecks: CustomDeck[] = $state(loadCustomDecks());
   public activeItems: LessonItem[] = $state([]);
   public selectedFilter: string | string[] = $state('all');
