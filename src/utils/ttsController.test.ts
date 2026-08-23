@@ -691,4 +691,52 @@ describe('TTSController Unit Tests', () => {
     (activeAudioInstance as MockAudioElementForTest | null)?.onended?.();
     await speakPromise;
   });
+
+  it('correctly reports isAudioLoading and isAudioCached during lifecycle', async () => {
+    // Before model is loaded, any request is considered loading
+    expect(controller.isAudioLoading('테스트')).toBe(true);
+    expect(controller.isAudioCached('테스트')).toBe(false);
+
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    // After model is loaded, unrequested text is not loading
+    expect(controller.isAudioLoading('테스트')).toBe(false);
+    expect(controller.isAudioCached('테스트')).toBe(false);
+
+    // Start synthesizing
+    const synthPromise = controller.synthesize('테스트', 'jm_kumo', 1.0);
+    expect(controller.isAudioLoading('테스트')).toBe(true);
+    expect(controller.isAudioCached('테스트')).toBe(false);
+
+    const synthMsg = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '테스트',
+    );
+    expect(synthMsg).toBeDefined();
+
+    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: synthMsg.payload.id,
+            audioBlobUrl: 'blob:http://localhost/test',
+            genTimeMs: 10,
+            durationSec: 0.5,
+            ipa: 'te-seu-teu',
+          },
+        },
+      } as MessageEvent);
+    }
+
+    await synthPromise;
+    expect(controller.isAudioLoading('테스트')).toBe(false);
+    expect(controller.isAudioCached('테스트')).toBe(true);
+  });
 });

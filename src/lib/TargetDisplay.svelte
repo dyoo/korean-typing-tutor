@@ -23,6 +23,7 @@
     cursorColor?: CursorColorMode;
     enableTTS?: boolean;
     isTTSSpeaking?: boolean;
+    isTTSLoading?: boolean;
     onspeak?: () => void;
   }
 
@@ -39,6 +40,7 @@
     cursorColor = 'amber',
     enableTTS = false,
     isTTSSpeaking = false,
+    isTTSLoading = false,
     onspeak,
   }: Props = $props();
 
@@ -218,7 +220,7 @@
 
     {#if enableTTS}
       <div class="audio-control-row mt-2 md:mt-3 flex items-center justify-center">
-        <TTSAudioButton isSpeaking={isTTSSpeaking} onclick={onspeak} />
+        <TTSAudioButton isSpeaking={isTTSSpeaking} isLoading={isTTSLoading} onclick={onspeak} />
       </div>
     {/if}
 

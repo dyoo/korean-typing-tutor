@@ -411,6 +411,14 @@
 
   let showTTSDownloadModal = $state(false);
   let isTTSSpeaking = $derived(ttsController.isSpeaking);
+  let isTTSLoading = $derived(
+    settings.enableTTS &&
+      ttsController.isAudioLoading(
+        currentItem?.target,
+        settings.ttsVoice,
+        settings.ttsSpeed,
+      ),
+  );
 
   async function toggleTTS() {
     if (!settings.enableTTS) {
@@ -648,6 +656,7 @@
       cursorColor={settings.cursorColor}
       enableTTS={settings.enableTTS}
       {isTTSSpeaking}
+      {isTTSLoading}
       onspeak={speakCurrentPrompt}
     />
 

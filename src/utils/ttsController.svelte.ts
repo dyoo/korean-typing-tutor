@@ -39,6 +39,7 @@ export class TTSController {
   private _modelSizeFormatted = $state('');
   private _availableVoices = $state<VoiceMetadata[]>([]);
   private _loadError = $state<string | null>(null);
+  private _generatingKeys = $state<string[]>([]);
 
   private playerAudio: HTMLAudioElement | null = null;
   private isAudioUnlocked = false;
@@ -82,6 +83,7 @@ export class TTSController {
     }
     this.audioCache.clear();
     this.inFlightSyntheses.clear();
+    this._generatingKeys = [];
   }
 
   /** Stores a synthesized audio URL in the LRU cache, evicting the oldest entry when at capacity. */
@@ -299,6 +301,7 @@ export class TTSController {
     this._loadError = null;
     this.inFlightSyntheses.clear();
     this.pendingSyntheses.clear();
+    this._generatingKeys = [];
     this.flushModelLoadResolvers(new Error('Model loading cancelled'));
   }
 
@@ -366,6 +369,10 @@ export class TTSController {
       return this.inFlightSyntheses.get(cacheKey)!;
     }
 
+    if (!this._generatingKeys.includes(cacheKey)) {
+      this._generatingKeys = [...this._generatingKeys, cacheKey];
+    }
+
     const synthesisPromise = (async () => {
       if (!this._isLoaded) {
         await this.loadModel();
@@ -379,10 +386,12 @@ export class TTSController {
           resolve: (audioBlobUrl: string) => {
             this.putCachedAudio(cacheKey, audioBlobUrl);
             this.inFlightSyntheses.delete(cacheKey);
+            this._generatingKeys = this._generatingKeys.filter((k) => k !== cacheKey);
             resolve(audioBlobUrl);
           },
           reject: (err: Error) => {
             this.inFlightSyntheses.delete(cacheKey);
+            this._generatingKeys = this._generatingKeys.filter((k) => k !== cacheKey);
             reject(err);
           },
         });
@@ -500,6 +509,7 @@ export class TTSController {
       }
       this.pendingSyntheses.clear();
       this.inFlightSyntheses.clear();
+      this._generatingKeys = [];
     }
   }
 
@@ -514,6 +524,31 @@ export class TTSController {
     this.clearAudioCache();
     const w = this.initWorker();
     w.postMessage({ type: 'CLEAR_CACHE' } satisfies TTSWorkerRequest);
+  }
+
+  /** Checks if the model or audio synthesis for a given prompt is actively loading. */
+  public isAudioLoading(
+    text?: string,
+    voice: string = DEFAULT_TTS_VOICE,
+    speed: number = DEFAULT_TTS_SPEED,
+  ): boolean {
+    if (this._isLoading || !this._isLoaded) {
+      return true;
+    }
+    if (!text || text.trim().length === 0) {
+      return false;
+    }
+    const key = getTTSCacheKey(text, voice, speed);
+    return !this.audioCache.has(key) && this._generatingKeys.includes(key);
+  }
+
+  /** Checks if synthesized audio for a given prompt is already available in the LRU cache. */
+  public isAudioCached(
+    text: string,
+    voice: string = DEFAULT_TTS_VOICE,
+    speed: number = DEFAULT_TTS_SPEED,
+  ): boolean {
+    return this.audioCache.has(getTTSCacheKey(text, voice, speed));
   }
 
   // Reactive property getters
