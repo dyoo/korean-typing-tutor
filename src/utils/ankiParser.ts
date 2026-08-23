@@ -48,8 +48,10 @@ export function sanitizeFlashcardText(raw: string): string {
   // Collapse multiple whitespace characters into single spaces
   text = text.replace(/[\r\n\t]+/g, ' ').replace(/\s{2,}/g, ' ');
 
+  // Strip non-printable ASCII / SQLite binary noise characters from edges
+  text = text.replace(/^[^\x20-\x7E\uAC00-\uD7A3\u1100-\u11FF\u3130-\u318F\u4E00-\u9FFF]+/, '').trim();
+
   // Strip wrapping quotation marks if present
-  text = text.trim();
   if (
     (text.startsWith('"') && text.endsWith('"') && text.length >= 2) ||
     (text.startsWith("'") && text.endsWith("'") && text.length >= 2)
@@ -58,6 +60,46 @@ export function sanitizeFlashcardText(raw: string): string {
   }
 
   return text;
+}
+
+/**
+ * Validates if a field candidate looks like an English translation or definition,
+ * filtering out URLs, Hangul text, audio IDs, numeric indexes, and bare POS tags.
+ */
+function isUsefulTranslation(text: string): boolean {
+  if (!text || containsHangul(text)) {
+    return false;
+  }
+  if (text.startsWith('http://') || text.startsWith('https://')) {
+    return false;
+  }
+  // Exclude single index/ID codes like "b1_0", "1_0", "ehRb1_0", "123"
+  if (/^[a-zA-Z0-9_.-]{1,15}$/.test(text) && /\d/.test(text)) {
+    return false;
+  }
+  if (/^(noun|verb|adjective|adverb|pronoun|particle|interjection|affix)$/i.test(text)) {
+    return false;
+  }
+  return /[a-zA-Z]/.test(text);
+}
+
+/**
+ * Selects the best English translation from note fields, scanning fields after the target first.
+ */
+function findBestTranslation(fields: string[], targetIndex: number): string | null {
+  // First, check fields after target (where translation usually resides)
+  for (let i = targetIndex + 1; i < fields.length; i++) {
+    if (isUsefulTranslation(fields[i])) {
+      return fields[i];
+    }
+  }
+  // Then check fields before target (for English -> Korean reverse decks)
+  for (let i = 0; i < targetIndex; i++) {
+    if (isUsefulTranslation(fields[i])) {
+      return fields[i];
+    }
+  }
+  return null;
 }
 
 /**
@@ -128,19 +170,7 @@ export function parseTextFlashcards(
     // First Hangul field is target
     const targetIndex = hangulIndices[0];
     const target = fields[targetIndex];
-    let translation: string | null = null;
-    let explicitPronunciation: string | null = null;
-
-    // Find translation among non-Hangul fields
-    for (let f = 0; f < fields.length; f++) {
-      if (f !== targetIndex) {
-        if (!translation && !containsHangul(fields[f])) {
-          translation = fields[f];
-        } else if (!explicitPronunciation && f !== targetIndex) {
-          explicitPronunciation = fields[f];
-        }
-      }
-    }
+    const translation = findBestTranslation(fields, targetIndex);
 
     // Deduplicate by target string
     if (!target || seenTargets.has(target)) {
@@ -148,7 +178,7 @@ export function parseTextFlashcards(
     }
     seenTargets.add(target);
 
-    const pronunciation = explicitPronunciation ?? romanize(target);
+    const pronunciation = romanize(target);
 
     items.push({
       id: `${generatedId}_item_${items.length + 1}`,
@@ -289,25 +319,14 @@ export async function parseAnkiPackage(
       continue;
     }
 
-    let translation: string | null = null;
-    let explicitPronunciation: string | null = null;
-
-    for (let f = 0; f < fields.length; f++) {
-      if (f !== targetIndex) {
-        if (!translation && !containsHangul(fields[f])) {
-          translation = fields[f];
-        } else if (!explicitPronunciation && f !== targetIndex) {
-          explicitPronunciation = fields[f];
-        }
-      }
-    }
+    const translation = findBestTranslation(fields, targetIndex);
 
     if (!target || seenTargets.has(target)) {
       continue;
     }
     seenTargets.add(target);
 
-    const pronunciation = explicitPronunciation ?? romanize(target);
+    const pronunciation = romanize(target);
 
     items.push({
       id: `${generatedId}_item_${items.length + 1}`,

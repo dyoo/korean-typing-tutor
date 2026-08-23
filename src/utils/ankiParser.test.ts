@@ -117,9 +117,11 @@ Level 1\tLesson 3\t죄송합니다\tI am sorry\t늦어서 죄송합니다.\tI am
       const deck = parseTextFlashcards(ttmikExport, 'TTMIK_Level_1_Vocabulary.tsv');
       expect(deck.itemCount).toBe(3);
       expect(deck.items[0].target).toBe('안녕하세요');
-      expect(deck.items[0].translation).toBe('Level 1'); // Non-Hangul field
+      expect(deck.items[0].translation).toBe('Hello / Hi / Good day');
       expect(deck.items[1].target).toBe('감사합니다');
+      expect(deck.items[1].translation).toBe('Thank you');
       expect(deck.items[2].target).toBe('죄송합니다');
+      expect(deck.items[2].translation).toBe('I am sorry');
     });
 
     it('parses Korean Grammar In Use (KGIU) dialogue cards with Hanja and brackets', () => {
@@ -221,6 +223,35 @@ Level 1\tLesson 3\t죄송합니다\tI am sorry\t늦어서 죄송합니다.\tI am
       expect(deck.items[0].translation).toBe('happiness');
       expect(deck.items[1].target).toBe('사랑');
       expect(deck.items[1].translation).toBe('love');
+    });
+
+    it('extracts correct English translation when cards contain index codes, audio tags, and Hanja', async () => {
+      const fileName = 'collection.anki2';
+      const fileNameBytes = new TextEncoder().encode(fileName);
+      // Realistic note chunk matching 2000 Essential format with SQLite binary prefix on field 0
+      const dbContent = new TextEncoder().encode(
+        'HeaderBlock\x00\x00e\x84hR\x92b1_0\x1f가족\x1f\x1ffamily\x1f\x1f[sound:1_0_가족.mp3]\x1f家族\x1fnoun\x00\x00FooterBlock',
+      );
+
+      const zipBuffer = new ArrayBuffer(30 + fileNameBytes.length + dbContent.length);
+      const view = new DataView(zipBuffer);
+      const uint8 = new Uint8Array(zipBuffer);
+
+      view.setUint32(0, 0x04034b50, true);
+      view.setUint16(8, 0, true);
+      view.setUint32(18, dbContent.length, true);
+      view.setUint32(22, dbContent.length, true);
+      view.setUint16(26, fileNameBytes.length, true);
+      view.setUint16(28, 0, true);
+
+      uint8.set(fileNameBytes, 30);
+      uint8.set(dbContent, 30 + fileNameBytes.length);
+
+      const deck = await parseAnkiPackage(zipBuffer, '2000_Essential.apkg');
+      expect(deck.itemCount).toBe(1);
+      expect(deck.items[0].target).toBe('가족');
+      expect(deck.items[0].translation).toBe('family');
+      expect(deck.items[0].pronunciation).toBe('gajok');
     });
 
     it('throws informative error if collection database is missing from ZIP', async () => {
