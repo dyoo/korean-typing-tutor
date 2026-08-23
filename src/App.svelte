@@ -446,7 +446,6 @@
       ttsController.isAudioLoading(
         currentItem?.target,
         settings.ttsVoice,
-        settings.ttsSpeed,
       ),
   );
 
@@ -527,7 +526,6 @@
     const isEnabled = settings.enableTTS;
     const speakOnAppear = settings.speakOnAppearance;
     const voice = settings.ttsVoice ?? 'jm_kumo';
-    const speed = settings.ttsSpeed ?? 1.0;
 
     untrack(() => {
       const isNewTarget = targetText !== lastPromptTarget;
@@ -538,11 +536,11 @@
 
       if (isEnabled && targetText) {
         // Preload active target immediately
-        ttsController.preload(targetText, voice, speed);
+        ttsController.preload(targetText, voice);
         // Continuously buffer upcoming 5 exercises in background worker
         const upcomingTargets = session.getUpcomingItems(5).map((i) => i.target);
         if (upcomingTargets.length > 0) {
-          void ttsController.preloadBatch(upcomingTargets, voice, speed);
+          void ttsController.preloadBatch(upcomingTargets, voice);
         }
 
         // If speak on appearance is enabled, pronounce the prompt when it newly appears (once welcome modal is dismissed)

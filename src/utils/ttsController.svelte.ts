@@ -56,9 +56,8 @@ const SILENT_AUDIO_DATA_URI =
 function getTTSCacheKey(
   text: string,
   voice: string = DEFAULT_TTS_VOICE,
-  speed: number = DEFAULT_TTS_SPEED,
 ): string {
-  return `${text}_${voice}_${speed}`;
+  return `${text}_${voice}`;
 }
 
 /** Helper for converting raw byte counts into human-readable formatted storage units. */
@@ -403,12 +402,11 @@ export class TTSController {
   public preload(
     text: string,
     voice: string = DEFAULT_TTS_VOICE,
-    speed: number = DEFAULT_TTS_SPEED,
   ): Promise<string | null> | null {
     if (!text || text.trim().length === 0) {
       return null;
     }
-    return this.synthesize(text, voice, speed).catch(() => null);
+    return this.synthesize(text, voice).catch(() => null);
   }
 
   /**
@@ -419,7 +417,6 @@ export class TTSController {
   public async preloadBatch(
     texts: string[],
     voice: string = DEFAULT_TTS_VOICE,
-    speed: number = DEFAULT_TTS_SPEED,
   ): Promise<void> {
     const token = ++this.currentBatchToken;
     for (const text of texts) {
@@ -429,12 +426,12 @@ export class TTSController {
       if (!text || text.trim().length === 0) {
         continue;
       }
-      const cacheKey = getTTSCacheKey(text, voice, speed);
+      const cacheKey = getTTSCacheKey(text, voice);
       if (this.audioCache.has(cacheKey) || this.inFlightSyntheses.has(cacheKey)) {
         continue;
       }
       try {
-        await this.synthesize(text, voice, speed);
+        await this.synthesize(text, voice);
       } catch {
         // Silently skip if item failed or was cancelled
       }
@@ -449,9 +446,8 @@ export class TTSController {
   public async synthesize(
     text: string,
     voice: string = DEFAULT_TTS_VOICE,
-    speed: number = DEFAULT_TTS_SPEED,
   ): Promise<string> {
-    const cacheKey = getTTSCacheKey(text, voice, speed);
+    const cacheKey = getTTSCacheKey(text, voice);
     if (this.audioCache.has(cacheKey)) {
       const cachedUrl = this.audioCache.get(cacheKey)!;
       // Refresh LRU recency on cache hit
@@ -493,7 +489,7 @@ export class TTSController {
 
         w.postMessage({
           type: 'SYNTHESIZE',
-          payload: { id, text, voice, speed },
+          payload: { id, text, voice, speed: 1.0 },
         } satisfies TTSWorkerRequest);
       });
     })();
@@ -554,7 +550,7 @@ export class TTSController {
 
     try {
       this._isSpeaking = true;
-      const audioUrl = await this.synthesize(text, voice, speed);
+      const audioUrl = await this.synthesize(text, voice);
 
       // If stopAudio() or another speak() was called while synthesis was in flight, abort playback
       if (playbackToken !== this.currentPlaybackToken) {
@@ -566,6 +562,14 @@ export class TTSController {
       }
       const audio = this.playerAudio;
       audio.src = audioUrl;
+      audio.playbackRate = speed;
+      if ('preservesPitch' in audio) {
+        audio.preservesPitch = true;
+      } else if ('webkitPreservesPitch' in audio) {
+        (audio as unknown as { webkitPreservesPitch: boolean }).webkitPreservesPitch = true;
+      } else if ('mozPreservesPitch' in audio) {
+        (audio as unknown as { mozPreservesPitch: boolean }).mozPreservesPitch = true;
+      }
 
       return new Promise((resolve) => {
         const cleanup = () => {
@@ -660,7 +664,6 @@ export class TTSController {
   public isAudioLoading(
     text?: string,
     voice: string = DEFAULT_TTS_VOICE,
-    speed: number = DEFAULT_TTS_SPEED,
   ): boolean {
     if (this._isLoading || !this._isLoaded) {
       return true;
@@ -668,7 +671,7 @@ export class TTSController {
     if (!text || text.trim().length === 0) {
       return false;
     }
-    const key = getTTSCacheKey(text, voice, speed);
+    const key = getTTSCacheKey(text, voice);
     return !this.audioCache.has(key) && this._generatingKeys.includes(key);
   }
 
@@ -676,9 +679,8 @@ export class TTSController {
   public isAudioCached(
     text: string,
     voice: string = DEFAULT_TTS_VOICE,
-    speed: number = DEFAULT_TTS_SPEED,
   ): boolean {
-    return this.audioCache.has(getTTSCacheKey(text, voice, speed));
+    return this.audioCache.has(getTTSCacheKey(text, voice));
   }
 
   // Reactive property getters

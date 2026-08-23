@@ -136,7 +136,7 @@ describe('TTSController Unit Tests', () => {
     } as MessageEvent);
     await loadPromise;
 
-    const synthPromise = controller.synthesize('안녕하세요', 'jf_nezumi', 1.0);
+    const synthPromise = controller.synthesize('안녕하세요', 'jf_nezumi');
 
     const synthMsg = postedMessages.find((m) => m.type === 'SYNTHESIZE');
     expect(synthMsg).toBeDefined();
@@ -163,7 +163,7 @@ describe('TTSController Unit Tests', () => {
 
     // Second call with same parameters should return cached result without new message
     const msgCountBefore = postedMessages.length;
-    const cachedUrl = await controller.synthesize('안녕하세요', 'jf_nezumi', 1.0);
+    const cachedUrl = await controller.synthesize('안녕하세요', 'jf_nezumi');
     expect(cachedUrl).toBe('blob:http://localhost/sample-audio');
     expect(postedMessages.length).toBe(msgCountBefore);
   });
@@ -178,7 +178,7 @@ describe('TTSController Unit Tests', () => {
     } as MessageEvent);
     await loadPromise;
 
-    const synthPromise = controller.synthesize('한글', 'jf_nezumi', 1.0);
+    const synthPromise = controller.synthesize('한글', 'jf_nezumi');
 
     const synthMsg = postedMessages.find(
       (m) => m.type === 'SYNTHESIZE' && m.payload.text === '한글',
@@ -553,7 +553,7 @@ describe('TTSController Unit Tests', () => {
 
   it('handles synthesis requests initiated while model loading is in flight without race conditions', async () => {
     // 1. Trigger synthesis before model is loaded
-    const synthPromise = controller.synthesize('동시합성', 'jm_kumo', 1.0);
+    const synthPromise = controller.synthesize('동시합성', 'jm_kumo');
 
     // Verify LOAD_MODEL message was dispatched
     const loadMsg = postedMessages.find((m) => m.type === 'LOAD_MODEL');
@@ -624,7 +624,7 @@ describe('TTSController Unit Tests', () => {
     await loadPromise;
 
     // 2. Start preloading an item
-    const preloadPromise = controller.preload('미리생성단어', 'jm_kumo', 1.0);
+    const preloadPromise = controller.preload('미리생성단어', 'jm_kumo');
 
     const synthMessagesFirst = postedMessages.filter(
       (m) => m.type === 'SYNTHESIZE' && m.payload.text === '미리생성단어',
@@ -700,7 +700,7 @@ describe('TTSController Unit Tests', () => {
     expect(controller.isAudioCached('테스트')).toBe(false);
 
     // Start synthesizing
-    const synthPromise = controller.synthesize('테스트', 'jm_kumo', 1.0);
+    const synthPromise = controller.synthesize('테스트', 'jm_kumo');
     expect(controller.isAudioLoading('테스트')).toBe(true);
     expect(controller.isAudioCached('테스트')).toBe(false);
 
@@ -783,6 +783,74 @@ describe('TTSController Unit Tests', () => {
     // Verify audio.play() was NEVER called with the synthesized audio URL for prompt A
     expect(playedUrls).not.toContain('blob:http://localhost/skipped-a');
     expect(controller.isSpeaking).toBe(false);
+  });
+
+  it('adjusts voice speed via audio playbackRate and preserves pitch without re-synthesizing', async () => {
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    let capturedPlaybackRate: number | null = null;
+    let capturedPreservesPitch: boolean | null = null;
+
+    class MockAudioForSpeedTest {
+      public src: string = '';
+      public playbackRate: number = 1.0;
+      public preservesPitch: boolean = false;
+      public onended: (() => void) | null = null;
+      public onerror: (() => void) | null = null;
+      public async play(): Promise<void> {
+        capturedPlaybackRate = this.playbackRate;
+        capturedPreservesPitch = this.preservesPitch;
+        this.onended?.();
+      }
+      public pause(): void {}
+    }
+    vi.stubGlobal('Audio', MockAudioForSpeedTest);
+
+    // 1. First speak call at 0.75x speed
+    const speak075Promise = controller.speak('속도테스트', 'jm_kumo', 0.75);
+
+    const synthMsg = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '속도테스트',
+    );
+    expect(synthMsg).toBeDefined();
+
+    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: synthMsg.payload.id,
+            audioBlobUrl: 'blob:http://localhost/speed-test-audio',
+            genTimeMs: 15,
+            durationSec: 1.0,
+            ipa: 'sok-do-te-seu-teu',
+          },
+        },
+      } as MessageEvent);
+    }
+
+    await speak075Promise;
+    expect(capturedPlaybackRate).toBe(0.75);
+    expect(capturedPreservesPitch).toBe(true);
+
+    const initialSynthCount = postedMessages.filter((m) => m.type === 'SYNTHESIZE').length;
+
+    // 2. Second speak call for the same phrase at 1.25x speed
+    // Should reuse the cached audio immediately with 0 new worker synthesis messages
+    const speak125Promise = controller.speak('속도테스트', 'jm_kumo', 1.25);
+    await speak125Promise;
+
+    const afterSynthCount = postedMessages.filter((m) => m.type === 'SYNTHESIZE').length;
+    expect(afterSynthCount).toBe(initialSynthCount); // Zero new worker synthesis calls!
+    expect(capturedPlaybackRate).toBe(1.25);
+    expect(capturedPreservesPitch).toBe(true);
   });
 
   it('formatBytes converts raw byte counts to human-readable strings', () => {

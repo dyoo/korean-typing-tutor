@@ -41,7 +41,6 @@ interface PendingSynthesisRequest {
   id: string;
   text: string;
   voice: string;
-  speed: number;
 }
 
 const synthesisQueue: PendingSynthesisRequest[] = [];
@@ -202,7 +201,7 @@ async function processSynthesisQueue(): Promise<void> {
       }
 
       const req = synthesisQueue.shift()!;
-      const { id, text, voice, speed } = req;
+      const { id, text, voice } = req;
 
       try {
         console.debug('[TTS Worker] Synthesizing text:', text, 'id:', id);
@@ -213,7 +212,7 @@ async function processSynthesisQueue(): Promise<void> {
         const task = speaker.synthesize({
           text,
           voice,
-          speed,
+          speed: 1.0,
         });
         activeTasks.set(id, task);
 
@@ -368,8 +367,8 @@ self.onmessage = async (event: MessageEvent<TTSWorkerRequest>) => {
     }
 
     case 'SYNTHESIZE': {
-      const { id, text, voice = 'jm_kumo', speed = 1.0 } = message.payload;
-      synthesisQueue.push({ id, text, voice, speed });
+      const { id, text, voice = 'jm_kumo' } = message.payload;
+      synthesisQueue.push({ id, text, voice });
       void processSynthesisQueue();
       break;
     }
