@@ -29,13 +29,16 @@
   import TTSDownloadModal from './lib/TTSDownloadModal.svelte';
   import MasteryCompletionModal from './lib/MasteryCompletionModal.svelte';
   import WelcomeModal from './lib/WelcomeModal.svelte';
+  import ImportDeckModal from './lib/ImportDeckModal.svelte';
   import { ttsController } from './utils/ttsController.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './content/curriculumCategories';
   import type { CurriculumCategory } from './content/curriculumCategories';
   import type { CursorColorMode } from './utils/cursorColor';
+  import type { CustomDeck } from './types/customDecks';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
-  const modules = session.getModules();
+  let modules = $derived(session.getModules());
+  let customDecks = $derived(session.getCustomDecks());
 
   const initialSettings = loadSettings();
   let settings = $state<TutorSettings>(initialSettings);
@@ -46,11 +49,12 @@
   let showMasterySidebar = $derived(activePanel === 'mastery');
   let showMasteryCompletionModal = $state(false);
   let showWelcomeModal = $state(true);
+  let showImportDeckModal = $state(false);
 
   let enabledModuleIds = $state<string[]>(
     Array.isArray(initialSettings.enabledModuleIds)
       ? initialSettings.enabledModuleIds
-      : modules.map((m) => m.id),
+      : session.getModules().map((m) => m.id),
   );
 
   let mode = $derived(session.getMode());
@@ -260,6 +264,33 @@
     session.setFilter(enabledModuleIds, true);
   }
 
+  function handleOpenImportDeckModal() {
+    showImportDeckModal = true;
+  }
+
+  function handleCloseImportDeckModal() {
+    showImportDeckModal = false;
+    focusInputElement();
+  }
+
+  function handleImportDeck(deck: CustomDeck) {
+    session.addCustomDeck(deck);
+    if (!enabledModuleIds.includes(deck.id)) {
+      enabledModuleIds = [...enabledModuleIds, deck.id];
+      settings = { ...settings, enabledModuleIds };
+      saveSettings(settings);
+    }
+    focusInputElement();
+  }
+
+  function handleDeleteCustomDeck(deckId: string) {
+    session.removeCustomDeck(deckId);
+    enabledModuleIds = enabledModuleIds.filter((id) => id !== deckId);
+    settings = { ...settings, enabledModuleIds };
+    saveSettings(settings);
+    focusInputElement();
+  }
+
   let collapsedCategoryIds = $state<string[]>(
     loadSettings().collapsedCategoryIds ?? ALL_CATEGORY_IDS,
   );
@@ -317,7 +348,8 @@
       showWelcomeModal ||
       activePanel !== 'none' ||
       showTTSDownloadModal ||
-      showMasteryCompletionModal
+      showMasteryCompletionModal ||
+      showImportDeckModal
     ) {
       if (showWelcomeModal && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
         e.preventDefault();
@@ -747,12 +779,21 @@
   {enabledModuleIds}
   {collapsedCategoryIds}
   {modules}
+  {customDecks}
   onclose={closePanel}
   ontogglemodule={toggleModule}
   ontogglecategorycollapse={toggleCategoryCollapse}
   ontogglecategorygroup={toggleCategoryGroup}
   onselectall={selectAllModules}
   ondeselectall={deselectAllModules}
+  onopenimportmodal={handleOpenImportDeckModal}
+  ondeletecustomdeck={handleDeleteCustomDeck}
+/>
+
+<ImportDeckModal
+  isOpen={showImportDeckModal}
+  onclose={handleCloseImportDeckModal}
+  onimport={handleImportDeck}
 />
 
 <MasterySidebar

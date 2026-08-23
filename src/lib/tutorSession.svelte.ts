@@ -22,6 +22,7 @@ import {
   COMPOUND_BATCHIM_SET,
 } from '../utils/jamoMastery';
 import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecompose';
+import { loadCustomDecks, saveCustomDeck, deleteCustomDeck } from '../utils/customDecks';
 import type { CurriculumData, ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
 import type {
   TutorMode,
@@ -32,6 +33,7 @@ import type {
   MasteryTarget,
   JamoDueInfo,
 } from '../types/mastery';
+import type { CustomDeck } from '../types/customDecks';
 
 export type { CurriculumData };
 
@@ -50,8 +52,11 @@ export interface KeyResult {
  * randomized item shuffling, and keystroke composition routing from the UI.
  */
 export class TutorSession {
-  private allItems: LessonItem[];
-  private modules: ModuleDefinition[];
+  private baseItems: LessonItem[];
+  private baseModules: ModuleDefinition[];
+  private allItems: LessonItem[] = [];
+  private modules: ModuleDefinition[] = [];
+  public customDecks: CustomDeck[] = $state(loadCustomDecks());
   public activeItems: LessonItem[] = $state([]);
   public selectedFilter: string | string[] = $state('all');
   private shouldShuffle: boolean;
@@ -76,8 +81,8 @@ export class TutorSession {
     shuffle = true,
   ) {
     if (Array.isArray(data)) {
-      this.allItems = data;
-      this.modules = [
+      this.baseItems = data;
+      this.baseModules = [
         {
           id: 'all',
           title: 'All Lessons',
@@ -85,15 +90,30 @@ export class TutorSession {
         },
       ];
     } else {
-      this.allItems = data.items ?? [];
-      this.modules = data.modules ?? [];
+      this.baseItems = data.items ?? [];
+      this.baseModules = data.modules ?? [];
     }
 
+    this.rebuildModulesAndItems();
     this.selectedFilter = defaultFilter;
     this.shouldShuffle = shuffle;
     this.engine = new HangulEngine();
     this.mode = this.masteryState.mode ?? 'mastery';
     this.applyFilterAndShuffle();
+  }
+
+  /** Rebuilds effective modules and allItems by combining built-in curriculum with user custom decks. */
+  private rebuildModulesAndItems(): void {
+    const customModules: ModuleDefinition[] = this.customDecks.map((deck) => ({
+      id: deck.id,
+      title: deck.title,
+      description: `${deck.itemCount} flashcard items imported from ${deck.filename}`,
+      category: 'custom',
+    }));
+    this.modules = [...this.baseModules, ...customModules];
+
+    const customItems: LessonItem[] = this.customDecks.flatMap((deck) => deck.items);
+    this.allItems = [...this.baseItems, ...customItems];
   }
 
   /** Fisher-Yates shuffle algorithm for randomized practice order. */
@@ -332,6 +352,44 @@ export class TutorSession {
   /** Returns all available module definitions. */
   public getModules(): ModuleDefinition[] {
     return this.modules;
+  }
+
+  /** Returns all user-imported custom flashcard decks. */
+  public getCustomDecks(): CustomDeck[] {
+    return this.customDecks;
+  }
+
+  /** Registers and persists a newly imported custom deck. */
+  public addCustomDeck(deck: CustomDeck): void {
+    saveCustomDeck(deck);
+    this.customDecks = loadCustomDecks();
+    this.rebuildModulesAndItems();
+    if (Array.isArray(this.selectedFilter)) {
+      if (!this.selectedFilter.includes(deck.id)) {
+        this.selectedFilter = [...this.selectedFilter, deck.id];
+      }
+    } else if (this.selectedFilter !== 'all') {
+      this.selectedFilter = [this.selectedFilter, deck.id];
+    }
+    this.applyFilterAndShuffle();
+    this.resetSessionState();
+  }
+
+  /** Deletes a custom deck by ID from storage and session. */
+  public removeCustomDeck(deckId: string): void {
+    deleteCustomDeck(deckId);
+    this.customDecks = loadCustomDecks();
+    this.rebuildModulesAndItems();
+    if (Array.isArray(this.selectedFilter)) {
+      this.selectedFilter = this.selectedFilter.filter((id) => id !== deckId);
+      if (this.selectedFilter.length === 0) {
+        this.selectedFilter = 'all';
+      }
+    } else if (this.selectedFilter === deckId) {
+      this.selectedFilter = 'all';
+    }
+    this.applyFilterAndShuffle();
+    this.resetSessionState();
   }
 
   /** Returns total items count in active module. */

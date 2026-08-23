@@ -481,4 +481,38 @@ describe('TutorSession controller', () => {
     session.setMasterySubMode('progression');
     expect(session.getMasterySubMode()).toBe('progression');
   });
+
+  it('should register custom decks dynamically as selectable modules', () => {
+    session.setMode('curriculum');
+    const initialModuleCount = session.getModules().length;
+
+    session.addCustomDeck({
+      id: 'custom_1',
+      title: 'My Custom Deck',
+      filename: 'my_deck.tsv',
+      itemCount: 1,
+      importedAt: Date.now(),
+      items: [
+        {
+          id: 'custom_1_1',
+          moduleId: 'custom_1',
+          target: '하늘',
+          translation: 'sky',
+          pronunciation: 'haneul',
+        },
+      ],
+    });
+
+    expect(session.getModules().length).toBe(initialModuleCount + 1);
+    expect(session.getCustomDecks()).toHaveLength(1);
+
+    // Select the custom deck
+    session.setFilter('custom_1', false);
+    expect(session.getCurrentItem().target).toBe('하늘');
+
+    // Remove the custom deck
+    session.removeCustomDeck('custom_1');
+    expect(session.getModules().length).toBe(initialModuleCount);
+    expect(session.getCustomDecks()).toHaveLength(0);
+  });
 });

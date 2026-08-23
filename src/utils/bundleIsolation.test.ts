@@ -38,6 +38,7 @@ describe('Bundle Code-Splitting & Dependency Isolation Tests', () => {
       'kokoro-js',
       '@dannyyoo/korean-tts',
       'onnxruntime',
+      'ankiParser',
     ];
 
     for (const pkg of forbiddenPackages) {
@@ -46,7 +47,7 @@ describe('Bundle Code-Splitting & Dependency Isolation Tests', () => {
     }
 
     // 3. Verify that heavy neural model and tokenizer symbols are absent from entry code
-    const forbiddenSymbols = ['AutoTokenizer', 'KoreanSpeaker', 'KokoroTTS'];
+    const forbiddenSymbols = ['AutoTokenizer', 'KoreanSpeaker', 'KokoroTTS', 'parseAnkiPackage'];
     for (const sym of forbiddenSymbols) {
       expect(mainEntryChunk.code).not.toContain(sym);
     }
