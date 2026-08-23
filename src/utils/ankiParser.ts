@@ -78,9 +78,24 @@ export function cleanKoreanTarget(raw: string): string {
     return '';
   }
 
-  // Strip trailing or embedded parenthesized / bracketed pure-English explanations like "[Sino-Korean #]", "(to eat)", "[polite]"
-  target = target.replace(/\[\s*[a-zA-Z0-9\s,./#\-_&;:'"]+\s*\]/g, '');
-  target = target.replace(/\(\s*[a-zA-Z0-9\s,./#\-_&;:'"]+\s*\)/g, '');
+  // Strip parenthesized / bracketed glosses containing Hanja (e.g. "(先生님)", "[圖書館]", "(漢字/한자)")
+  target = target.replace(
+    /\[[^[\]]*[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF][^[\]]*\]/g,
+    '',
+  );
+  target = target.replace(
+    /\([^()]*[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF][^()]*\)/g,
+    '',
+  );
+  target = target.replace(
+    /\{[^{}]*[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF][^{}]*\}/g,
+    '',
+  );
+
+  // Strip trailing or embedded parenthesized / bracketed non-Hangul glosses (e.g. "[Sino-Korean #]", "(to eat)", "[polite]")
+  target = target.replace(/\[[^[\]\uAC00-\uD7A3\u3131-\u318E]*\]/g, '');
+  target = target.replace(/\([^()\uAC00-\uD7A3\u3131-\u318E]*\)/g, '');
+  target = target.replace(/\{[^{}\uAC00-\uD7A3\u3131-\u318E]*\}/g, '');
 
   // Strip leading tilde affixes (e.g. "~지 않다" -> "지 않다")
   target = target.replace(/^~+\s*/, '');
@@ -101,6 +116,15 @@ export function isTypeableKoreanTarget(target: string): boolean {
   // Must contain at least one complete composable Hangul syllable
   const hangulSyllables = target.match(/[\uAC00-\uD7A3]/g) || [];
   if (hangulSyllables.length === 0) {
+    return false;
+  }
+
+  // Reject untypeable Hanja (CJK Ideographs) and Japanese Kana
+  if (
+    /[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF\u3040-\u309F\u30A0-\u30FF]/.test(
+      target,
+    )
+  ) {
     return false;
   }
 

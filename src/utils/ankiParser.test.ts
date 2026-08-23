@@ -1,6 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import {
   sanitizeFlashcardText,
+  cleanKoreanTarget,
+  isTypeableKoreanTarget,
   containsHangul,
   parseTextFlashcards,
   parseDeckFromFile,
@@ -27,6 +29,46 @@ describe('Anki and Flashcard Parser Engine', () => {
     it('strips outer wrapping quotes and trims whitespace', () => {
       expect(sanitizeFlashcardText('  " 고양이 " ')).toBe('고양이');
       expect(sanitizeFlashcardText(" '강아지' ")).toBe('강아지');
+    });
+  });
+
+  describe('cleanKoreanTarget', () => {
+    it('strips parenthesized and bracketed Hanja glosses', () => {
+      expect(cleanKoreanTarget('창문 (窓門)')).toBe('창문');
+      expect(cleanKoreanTarget('학교 [學校]')).toBe('학교');
+      expect(cleanKoreanTarget('도서관(圖書館)')).toBe('도서관');
+      expect(cleanKoreanTarget('학생 (學生 / Student)')).toBe('학생');
+    });
+
+    it('strips English glosses and leading tildes', () => {
+      expect(cleanKoreanTarget('(to eat) 먹다')).toBe('먹다');
+      expect(cleanKoreanTarget('[Sino-Korean #12] 도시')).toBe('도시');
+      expect(cleanKoreanTarget('~지 않다')).toBe('지 않다');
+    });
+
+    it('rejects grammar placeholder prefixes', () => {
+      expect(cleanKoreanTarget('(noun)~')).toBe('');
+      expect(cleanKoreanTarget('(V stem)~')).toBe('');
+    });
+  });
+
+  describe('isTypeableKoreanTarget', () => {
+    it('accepts genuine Hangul sentences and vocabulary', () => {
+      expect(isTypeableKoreanTarget('안녕하세요')).toBe(true);
+      expect(isTypeableKoreanTarget('창문')).toBe(true);
+      expect(isTypeableKoreanTarget('밥을 먹었습니다.')).toBe(true);
+    });
+
+    it('rejects targets containing untypeable Hanja or foreign CJK characters', () => {
+      expect(isTypeableKoreanTarget('창문 (窓門)')).toBe(false);
+      expect(isTypeableKoreanTarget('窓門')).toBe(false);
+      expect(isTypeableKoreanTarget('학교 學校')).toBe(false);
+      expect(isTypeableKoreanTarget('日本語と한국어')).toBe(false);
+    });
+
+    it('rejects English quiz instructions and prompts', () => {
+      expect(isTypeableKoreanTarget('Conjugate the verb 먹다')).toBe(false);
+      expect(isTypeableKoreanTarget('(noun) placeholder')).toBe(false);
     });
   });
 
@@ -132,10 +174,12 @@ Level 1\tLesson 3\t죄송합니다\tI am sorry\t늦어서 죄송합니다.\tI am
 `;
       const deck = parseTextFlashcards(kgiuExport, 'KGIU_Beginning_Nouns.csv');
       expect(deck.itemCount).toBe(3);
-      expect(deck.items[0].target).toBe('도서관 (圖書館)');
+      expect(deck.items[0].target).toBe('도서관');
       expect(deck.items[0].translation).toBe('library');
-      expect(deck.items[1].target).toBe('식당 (食堂)');
+      expect(deck.items[1].target).toBe('식당');
       expect(deck.items[1].translation).toBe('restaurant');
+      expect(deck.items[2].target).toBe('선생님');
+      expect(deck.items[2].translation).toBe('teacher');
     });
 
     it('parses Korean Core 5k deck format with dictionary links and example sentences', () => {
