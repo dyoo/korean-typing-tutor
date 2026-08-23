@@ -138,17 +138,43 @@ Level 1\tLesson 3\t죄송합니다\tI am sorry\t늦어서 죄송합니다.\tI am
       expect(deck.items[1].translation).toBe('restaurant');
     });
 
-    it('parses Retro 2000 Essential Korean Words format with cloze deletions', () => {
-      const retroExport = `
-{{c1::약속}}이 있어서 먼저 가볼게요.\tI have an appointment, so I will leave first.\t약속 (約束) [yak-sok]\tnoun
-내일 친구를 {{c1::만나다}}.\tI meet a friend tomorrow.\t만나다 [man-na-da]\tverb
+    it('parses Korean Core 5k deck format with dictionary links and example sentences', () => {
+      const core5kExport = `
+시간\ttime, hour\t[sound:core5k_001.mp3]\t時間\tnoun\thttps://korean.dict.naver.com\t지금 몇 시예요?\tWhat time is it now?
+사람\tperson, human\t[sound:core5k_002.mp3]\t\tnoun\thttps://korean.dict.naver.com\t착한 사람이에요.\tHe is a good person.
 `;
-      const deck = parseTextFlashcards(retroExport, 'Retro_2000_Essential.tsv');
+      const deck = parseTextFlashcards(core5kExport, 'Korean_Core_5000.tsv');
       expect(deck.itemCount).toBe(2);
-      expect(deck.items[0].target).toBe('약속이 있어서 먼저 가볼게요.');
-      expect(deck.items[0].translation).toBe('I have an appointment, so I will leave first.');
-      expect(deck.items[1].target).toBe('내일 친구를 만나다.');
-      expect(deck.items[1].translation).toBe('I meet a friend tomorrow.');
+      expect(deck.items[0].target).toBe('시간');
+      expect(deck.items[0].translation).toBe('time, hour');
+      expect(deck.items[1].target).toBe('사람');
+      expect(deck.items[1].translation).toBe('person, human');
+    });
+
+    it('parses TTMIK First 500 Korean Words format with images and pronunciation fields', () => {
+      const ttmik500Export = `
+물\twater\t[mul]\t[sound:ttmik_water.mp3]\t<img src="water_glass.jpg" />
+밥\trice, meal\t[bap]\t[sound:ttmik_rice.mp3]\t<img src="rice_bowl.jpg" />
+`;
+      const deck = parseTextFlashcards(ttmik500Export, 'TTMIK_First_500_Words.tsv');
+      expect(deck.itemCount).toBe(2);
+      expect(deck.items[0].target).toBe('물');
+      expect(deck.items[0].translation).toBe('water');
+      expect(deck.items[1].target).toBe('밥');
+      expect(deck.items[1].translation).toBe('rice, meal');
+    });
+
+    it('parses Joseph 11K Korean Deck format with frequency rankings and Hanja', () => {
+      const joseph11kExport = `
+기억하다\tto remember\t記憶하다\t142\tverb
+생각하다\tto think\t生覺하다\t85\tverb
+`;
+      const deck = parseTextFlashcards(joseph11kExport, 'Joseph_11k_Korean.tsv');
+      expect(deck.itemCount).toBe(2);
+      expect(deck.items[0].target).toBe('기억하다');
+      expect(deck.items[0].translation).toBe('to remember');
+      expect(deck.items[1].target).toBe('생각하다');
+      expect(deck.items[1].translation).toBe('to think');
     });
   });
 
