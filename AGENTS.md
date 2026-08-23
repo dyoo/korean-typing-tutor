@@ -78,17 +78,24 @@ distraction-free, high-performance typing experience for English speakers learni
   with liquid mastery fill gauges.
 - `src/lib/VirtualKey.svelte`: Individual keycap renderer displaying key symbols, Shift
   representations, and progress gauge overlays.
+- `src/lib/MasteryVirtualKey.svelte`: Virtual keycap renderer for the mastery progress overview.
 - `src/lib/CurriculumSidebar.svelte`: Free-form modules drawer with categorized accordion groups and
   multi-select filters.
 - `src/lib/MasterySidebar.svelte`: Mastery progress drawer with collapsible stage groups and
   per-Jamo radio selection for manual progression override.
+- `src/lib/SidebarDrawer.svelte`: Reusable slide-out drawer wrapper component with overlay backdrop
+  and accessible close bindings.
 - `src/lib/SettingsModal.svelte`: Modal managing theme, Romanization, translation, virtual keyboard,
   font size, cursor color, and Jamo mastery progression adjustments & reset.
+- `src/lib/MasteryCompletionModal.svelte`: Celebration and checkpoint completion modal for mastery
+  stages and full curriculum mastery.
+- `src/lib/WelcomeModal.svelte`: Initial onboarding modal welcoming first-time learners.
 - `src/lib/ModeSwitcher.svelte`: Toggle control for switching between Free-form and Mastery modes.
 - `src/lib/ExercisePrompt.svelte`: Renders the exercise prompt area in the main UI.
 - `src/lib/CurriculumCategoryGroup.svelte`: Accordion group component for categorized curriculum
   module listings in the sidebar.
-- `src/lib/DualRangeSlider.svelte`: Dual-handle range slider for settings controls.
+- `src/lib/CursorColorSelect.svelte`: Interactive color swatch and theme picker for cursor carets.
+- `src/lib/DualRangeSlider.svelte`: Dual-handle range slider for font size range controls.
 - `src/lib/ShiftKey.svelte`: Shift key indicator component for the virtual keyboard.
 - `src/lib/SymbolToggleKey.svelte`: Symbol mode (`?123` / `ㄱㄴㄷ`) toggle keycap used at both ends
   of the mobile bottom row.
@@ -98,6 +105,7 @@ distraction-free, high-performance typing experience for English speakers learni
   download progress bar.
 - `src/lib/TTSSettingsControl.svelte`: Voice synthesis settings controls (enable toggle,
   speak-on-completion, voice, speed, cache purge).
+- `src/lib/GitHubLink.svelte`: Top bar link component rendering the GitHub repository badge.
 - `src/lib/settings.ts`: Settings state management, persistence, and default values.
 - `src/utils/ttsController.svelte.ts`: Reactive singleton managing TTS Web Worker, audio caching,
   and prompt preloading.
@@ -113,8 +121,8 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/utils/hangulTables.ts`: Unicode Hangul tables, Jamo arrays, and compound combination
   dictionaries.
 - `src/utils/romanizer.ts`: Revised Romanization phonetic transliteration for Hangul syllables.
-- `src/utils/cursorHelper.ts`: Active target and input cursor position calculations and word token
-  grouping.
+- `src/utils/cursorHelper.ts`: Active target and input cursor position calculations, single-beam
+  caret ownership logic (`getInputCaretStatus`), and word token grouping.
 - `src/utils/keyboardHelper.ts`: Logic for computing next required target keys and opposite-hand
   Shift chording hints.
 - `src/utils/keyboardData.ts`: Dubeolsik keycap metadata and Jamo-to-key dictionary.
@@ -130,7 +138,31 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/content/modules/*.json`: 32 categorized curriculum and beginner lesson datasets (7,687+
   authentic items).
 - `src/content/index.ts`: Curriculum dataset aggregator and canonical module order.
+- `src/content/masteryVocabulary.ts`: Spaced-repetition vocabulary extraction and Jamo syllable filter indexer.
 - `vite.config.js`: Configuration for Vite, PWA, COOP/COEP headers, and Workbox precaching support.
+
+## Performance & Bundle Architecture
+
+- **Initial Load Profile**: The initial page load payload is ~288 KB gzipped (~995 KB uncompressed).
+  Roughly 80% of the initial JavaScript bundle consists of the 32 offline curriculum JSON datasets
+  (7,687+ authentic Korean items, English translations, and Romanizations), ensuring instant,
+  zero-latency lesson switches with full offline capability.
+- **Zero-Weight Neural TTS Isolation**: Heavy machine learning dependencies (`@dannyyoo/korean-tts`,
+  `@huggingface/transformers`, `kokoro-js`, ONNX Runtime WebAssembly) are strictly code-split into a
+  dedicated Web Worker (`src/workers/tts.worker.ts`) and never bundled into the main client entry
+  chunk. This invariant is enforced by automated build verification tests
+  (`src/utils/bundleIsolation.test.ts`).
+- **Single-Beam Caret Ownership**: The input caret is rendered as a single 2.5px vertical beam at
+  the boundary between adjacent characters. To prevent double-width (5px) overlapping carets,
+  [`getInputCaretStatus`](file:///Users/dyoo/work/korean-typing-tutor/src/utils/cursorHelper.ts) ensures exactly one character owns the beam: the leading character
+  when available, or the trailing character at the very end of the text.
+
+## Maintenance & Verification Tooling
+
+- **Testing**: `npx vitest run` (one-time non-interactive test run across all 19 test suites).
+- **Linting & Type Checking**: `npm run lint` (runs ESLint and `svelte-check --tsconfig ./tsconfig.json`).
+- **Dead Code Audit**: `npx knip` (verifies zero unused exports, unlisted dependencies, or orphaned files).
+- **Production Build**: `npm run build` (generates PWA bundle and service worker precache manifest).
 
 ## Current Priority
 
