@@ -622,4 +622,73 @@ describe('TTSController Unit Tests', () => {
     const resolvedUrl = await synthPromise;
     expect(resolvedUrl).toContain('blob:');
   });
+
+  it('reuses in-flight synthesis promise when speak() is called while preload is actively generating without duplicating synthesis request', async () => {
+    // 1. Initialize model
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    // 2. Start preloading an item
+    const preloadPromise = controller.preload('미리생성단어', 'jm_kumo', 1.0);
+
+    const synthMessagesFirst = postedMessages.filter(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '미리생성단어',
+    );
+    expect(synthMessagesFirst.length).toBe(1);
+    const requestId = (synthMessagesFirst[0] as { payload: { id: string } }).payload.id;
+
+    // 3. While synthesis is in-flight, simulate reaching exercise and calling speak()
+    let mockPlayInvoked = false;
+    class MockAudioElementForTest {
+      public src: string = '';
+      public onended: (() => void) | null = null;
+      public onerror: (() => void) | null = null;
+      constructor() {
+        activeAudioInstance = this; // eslint-disable-line @typescript-eslint/no-this-alias
+      }
+      public async play(): Promise<void> {
+        mockPlayInvoked = true;
+      }
+      public pause(): void {}
+    }
+    let activeAudioInstance: MockAudioElementForTest | null = null;
+    vi.stubGlobal('Audio', MockAudioElementForTest);
+
+    const speakPromise = controller.speak('미리생성단어', 'jm_kumo', 1.0);
+
+    // Verify NO duplicate SYNTHESIZE message was posted
+    const synthMessagesSecond = postedMessages.filter(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '미리생성단어',
+    );
+    expect(synthMessagesSecond.length).toBe(1);
+
+    // 4. Respond with synthesis success from worker
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'SYNTHESIS_SUCCESS',
+        payload: {
+          id: requestId,
+          audioBlobUrl: 'blob:http://localhost/preloaded-audio',
+          genTimeMs: 30,
+          durationSec: 0.5,
+          ipa: 'mi-ri-saeng-seong',
+        },
+      },
+    } as MessageEvent);
+
+    const preloadResult = await preloadPromise;
+    expect(preloadResult).toBe('blob:http://localhost/preloaded-audio');
+
+    await new Promise((r) => setTimeout(r, 10));
+    expect(mockPlayInvoked).toBe(true);
+
+    (activeAudioInstance as MockAudioElementForTest | null)?.onended?.();
+    await speakPromise;
+  });
 });

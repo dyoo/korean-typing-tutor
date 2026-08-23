@@ -451,4 +451,18 @@ describe('TutorSession controller', () => {
     session.advanceLevel();
     expect(session.getCurrentItem().id).toBe(nextExpected.id);
   });
+
+  it('should prune lookahead queue and serve valid items when mastery progression changes', () => {
+    session.setMode('mastery');
+    session.getUpcomingItems(5);
+
+    // Manually jump progression level
+    session.setMasteryProgressionLevel(10);
+    const updatedUpcoming = session.getUpcomingItems(5);
+    expect(updatedUpcoming.length).toBeGreaterThan(0);
+
+    const nextExpected = updatedUpcoming[0];
+    session.advanceLevel();
+    expect(session.getCurrentItem().id).toBe(nextExpected.id);
+  });
 });

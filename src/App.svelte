@@ -370,7 +370,7 @@
 
   function handleSkip(e: MouseEvent) {
     e.stopPropagation();
-    ttsController.stop();
+    ttsController.stopAudio();
     session.advanceLevel();
     if (session.getIsMasteryGraduationPending()) {
       showMasteryCompletionModal = true;

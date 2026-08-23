@@ -116,6 +116,9 @@ export class TutorSession {
       return;
     }
     const activeTarget = getActiveMasteryTarget(this.masteryState);
+    const activeIdSet = new Set(this.activeItems.map((i) => i.id)); // eslint-disable-line svelte/prefer-svelte-reactivity
+    this.masteryQueue = this.masteryQueue.filter((item) => activeIdSet.has(item.id));
+
     while (this.masteryQueue.length < 5) {
       const lastItem =
         this.masteryQueue[this.masteryQueue.length - 1] ??
@@ -135,6 +138,9 @@ export class TutorSession {
     const unlocked = getUnlockedJamos(this.masteryState);
     const activeTarget = getActiveMasteryTarget(this.masteryState);
     this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
+
+    const activeIdSet = new Set(this.activeItems.map((i) => i.id)); // eslint-disable-line svelte/prefer-svelte-reactivity
+    this.masteryQueue = this.masteryQueue.filter((item) => activeIdSet.has(item.id));
 
     if (this.masteryQueue.length === 0) {
       const nextItem = selectNextMasteryItem(
