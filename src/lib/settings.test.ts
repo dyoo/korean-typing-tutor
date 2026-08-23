@@ -50,7 +50,7 @@ describe('Settings module persistence', () => {
     expect(loaded.maxFontSizeRem).toBe(6.0);
   });
 
-  it('should save and load selected curriculum module preferences and collapsed categories', () => {
+  it('should save and load selected curriculum module preferences and collapsed categories/stages', () => {
     saveSettings({
       showPronunciation: true,
       showTranslation: true,
@@ -59,10 +59,12 @@ describe('Settings module persistence', () => {
       theme: 'light',
       enabledModuleIds: ['b1_home_row_vowels', 'l3'],
       collapsedCategoryIds: ['topik2', 'practical'],
+      collapsedMasteryStageIds: ['Stage 1: Home Row', 'Batchim Workshop'],
     });
     const loaded = loadSettings();
     expect(loaded.enabledModuleIds).toEqual(['b1_home_row_vowels', 'l3']);
     expect(loaded.collapsedCategoryIds).toEqual(['topik2', 'practical']);
+    expect(loaded.collapsedMasteryStageIds).toEqual(['Stage 1: Home Row', 'Batchim Workshop']);
 
     saveSettings({
       showPronunciation: true,
@@ -72,10 +74,12 @@ describe('Settings module persistence', () => {
       theme: 'light',
       enabledModuleIds: [],
       collapsedCategoryIds: [],
+      collapsedMasteryStageIds: [],
     });
     const loadedEmpty = loadSettings();
     expect(loadedEmpty.enabledModuleIds).toEqual([]);
     expect(loadedEmpty.collapsedCategoryIds).toEqual([]);
+    expect(loadedEmpty.collapsedMasteryStageIds).toEqual([]);
   });
 
   it('should handle invalid JSON, invalid theme, or invalid cursor color string gracefully', () => {

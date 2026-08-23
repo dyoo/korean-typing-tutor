@@ -16,6 +16,7 @@ export interface TutorSettings {
   theme: ThemeMode;
   enabledModuleIds?: string[];
   collapsedCategoryIds?: string[];
+  collapsedMasteryStageIds?: string[];
   minFontSizeRem?: number;
   maxFontSizeRem?: number;
   lockFontSize?: boolean;
@@ -99,6 +100,9 @@ export function loadSettings(): TutorSettings {
         : undefined,
       collapsedCategoryIds: Array.isArray(parsed.collapsedCategoryIds)
         ? parsed.collapsedCategoryIds
+        : undefined,
+      collapsedMasteryStageIds: Array.isArray(parsed.collapsedMasteryStageIds)
+        ? parsed.collapsedMasteryStageIds
         : undefined,
       minFontSizeRem: pickNumberRange(parsed.minFontSizeRem, 1.0, 7.0, DEFAULT_SETTINGS.minFontSizeRem),
       maxFontSizeRem: pickNumberRange(parsed.maxFontSizeRem, 1.0, 7.0, DEFAULT_SETTINGS.maxFontSizeRem),

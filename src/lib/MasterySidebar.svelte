@@ -14,10 +14,12 @@
     activeFocusBatchim?: string | null;
     jamoStats: Record<string, JamoStats>;
     sentenceCheckpointStats?: Record<string, SentenceCheckpointStats>;
+    collapsedStageIds?: string[];
     onclose: () => void;
     onmasterylevelchange: (level: number) => void;
     oncheckpointselect?: (checkpointId: string) => void;
     onfocusselect?: (batchim: string) => void;
+    ontogglestagecollapse?: (stageName: string) => void;
   }
 
   let {
@@ -27,20 +29,16 @@
     activeFocusBatchim = null,
     jamoStats,
     sentenceCheckpointStats = {},
+    collapsedStageIds = [],
     onclose,
     onmasterylevelchange,
     oncheckpointselect,
     onfocusselect,
+    ontogglestagecollapse,
   }: Props = $props();
 
-  let collapsedStageIds = $state<string[]>([]);
-
   function toggleStageCollapse(stageName: string) {
-    if (collapsedStageIds.includes(stageName)) {
-      collapsedStageIds = collapsedStageIds.filter((id) => id !== stageName);
-    } else {
-      collapsedStageIds = [...collapsedStageIds, stageName];
-    }
+    ontogglestagecollapse?.(stageName);
   }
 
   function handleLevelSelect(level: number) {

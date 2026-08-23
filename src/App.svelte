@@ -236,6 +236,10 @@
     loadSettings().collapsedCategoryIds ?? ALL_CATEGORY_IDS,
   );
 
+  let collapsedMasteryStageIds = $state<string[]>(
+    loadSettings().collapsedMasteryStageIds ?? [],
+  );
+
   function toggleCategoryCollapse(categoryId: string) {
     if (collapsedCategoryIds.includes(categoryId)) {
       collapsedCategoryIds = collapsedCategoryIds.filter((id) => id !== categoryId);
@@ -243,6 +247,16 @@
       collapsedCategoryIds = [...collapsedCategoryIds, categoryId];
     }
     settings = { ...settings, collapsedCategoryIds };
+    saveSettings(settings);
+  }
+
+  function toggleMasteryStageCollapse(stageName: string) {
+    if (collapsedMasteryStageIds.includes(stageName)) {
+      collapsedMasteryStageIds = collapsedMasteryStageIds.filter((id) => id !== stageName);
+    } else {
+      collapsedMasteryStageIds = [...collapsedMasteryStageIds, stageName];
+    }
+    settings = { ...settings, collapsedMasteryStageIds };
     saveSettings(settings);
   }
 
@@ -716,10 +730,12 @@
   activeFocusBatchim={masteryState.activeFocusBatchim ?? null}
   jamoStats={masteryState.jamoStats}
   sentenceCheckpointStats={masteryState.sentenceCheckpointStats}
+  collapsedStageIds={collapsedMasteryStageIds}
   onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}
   oncheckpointselect={handleMasteryCheckpointChange}
   onfocusselect={handleMasteryFocusSelect}
+  ontogglestagecollapse={toggleMasteryStageCollapse}
 />
 
 <TTSDownloadModal
