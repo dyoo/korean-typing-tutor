@@ -260,6 +260,122 @@ async function extractFileFromZip(
 }
 
 /**
+ * Decodes a SQLite 3 variable-length integer (varint) from a Uint8Array buffer.
+ */
+function readVarint(bytes: Uint8Array, offset: number): { value: number; bytesRead: number } {
+  let result = 0;
+  let bytesRead = 0;
+  for (let i = 0; i < 9; i++) {
+    if (offset + i >= bytes.length) {
+      break;
+    }
+    const byte = bytes[offset + i];
+    bytesRead++;
+    if (i === 8) {
+      result = (result << 8) | byte;
+      break;
+    }
+    result = (result << 7) | (byte & 0x7f);
+    if ((byte & 0x80) === 0) {
+      break;
+    }
+  }
+  return { value: result, bytesRead };
+}
+
+/**
+ * Extracts note `flds` strings directly from SQLite 3 B-Tree leaf table pages.
+ */
+function extractSqliteNotes(dbBytes: Uint8Array): string[] {
+  if (dbBytes.length < 100) {
+    return [];
+  }
+  const pageSize = (dbBytes[16] << 8) | dbBytes[17] || 4096;
+  const numPages = Math.floor(dbBytes.length / pageSize);
+  const notesFlds: string[] = [];
+
+  for (let p = 0; p < numPages; p++) {
+    const pageOffset = p * pageSize;
+    const headerOffset = p === 0 ? 100 : 0;
+    if (pageOffset + headerOffset + 8 > dbBytes.length) {
+      continue;
+    }
+    const pageType = dbBytes[pageOffset + headerOffset];
+
+    // Leaf table B-tree page flag is 0x0D (13)
+    if (pageType !== 0x0d) {
+      continue;
+    }
+
+    const cellCount =
+      (dbBytes[pageOffset + headerOffset + 3] << 8) | dbBytes[pageOffset + headerOffset + 4];
+    const cellPointersOffset = pageOffset + headerOffset + 8;
+
+    for (let c = 0; c < cellCount; c++) {
+      if (cellPointersOffset + c * 2 + 1 >= dbBytes.length) {
+        continue;
+      }
+      const cellPtr =
+        (dbBytes[cellPointersOffset + c * 2] << 8) | dbBytes[cellPointersOffset + c * 2 + 1];
+      let cellOffset = pageOffset + cellPtr;
+
+      if (cellOffset >= dbBytes.length) {
+        continue;
+      }
+
+      // 1. Read payload length
+      const vPayload = readVarint(dbBytes, cellOffset);
+      cellOffset += vPayload.bytesRead;
+
+      // 2. Read rowid
+      const vRowId = readVarint(dbBytes, cellOffset);
+      cellOffset += vRowId.bytesRead;
+
+      // 3. Read record header length
+      const recordStart = cellOffset;
+      const vHeaderLen = readVarint(dbBytes, cellOffset);
+      cellOffset += vHeaderLen.bytesRead;
+      const headerEnd = recordStart + vHeaderLen.value;
+
+      // 4. Read serial types for columns
+      const serialTypes: number[] = [];
+      while (cellOffset < headerEnd && cellOffset < dbBytes.length) {
+        const vSerial = readVarint(dbBytes, cellOffset);
+        cellOffset += vSerial.bytesRead;
+        serialTypes.push(vSerial.value);
+      }
+
+      // 5. Read column values
+      let bodyOffset = headerEnd;
+      for (const st of serialTypes) {
+        if (st >= 13 && st % 2 === 1) {
+          const strLen = (st - 13) / 2;
+          if (strLen > 0 && bodyOffset + strLen <= dbBytes.length) {
+            const strBytes = dbBytes.subarray(bodyOffset, bodyOffset + strLen);
+            // In Anki's notes table, the `flds` column contains unit separator 0x1f
+            if (strBytes.includes(0x1f)) {
+              const str = new TextDecoder('utf-8', { fatal: false }).decode(strBytes);
+              notesFlds.push(str);
+            }
+          }
+          bodyOffset += strLen;
+        } else if (st >= 12 && st % 2 === 0) {
+          bodyOffset += (st - 12) / 2;
+        } else if (st >= 1 && st <= 4) {
+          bodyOffset += st;
+        } else if (st === 5) {
+          bodyOffset += 6;
+        } else if (st === 6 || st === 7) {
+          bodyOffset += 8;
+        }
+      }
+    }
+  }
+
+  return notesFlds;
+}
+
+/**
  * Parses an Anki `.apkg` binary package buffer.
  */
 export async function parseAnkiPackage(
@@ -276,17 +392,18 @@ export async function parseAnkiPackage(
     throw new Error('Invalid Anki package (.apkg): collection database not found inside archive.');
   }
 
-  // 2. Scan SQLite database text blocks for note fields separated by 0x1f unit separator
-  // In Anki's SQLite schema, the notes table contains the 'flds' column where fields are delimited by \x1f.
-  const rawText = new TextDecoder('utf-8', { fatal: false }).decode(dbBytes);
+  // 2. Extract note fields directly from SQLite records
+  let noteChunks = extractSqliteNotes(dbBytes);
 
-  // Split by unit separator or extract patterns containing \x1f
+  // Fallback: if database is not structured with standard SQLite B-tree pages, scan by unit separator
+  if (noteChunks.length === 0) {
+    const rawText = new TextDecoder('utf-8', { fatal: false }).decode(dbBytes);
+    // eslint-disable-next-line no-control-regex
+    noteChunks = rawText.split(/(?:[\x00-\x08\x0e-\x1e]+)/).filter((c) => c.includes('\x1f'));
+  }
+
   const items: LessonItem[] = [];
   const seenTargets = new Set<string>();
-
-  // Find strings with \x1f field delimiters
-  // eslint-disable-next-line no-control-regex
-  const noteChunks = rawText.split(/(?:[\x00-\x08\x0e-\x1e]+)/);
 
   for (const chunk of noteChunks) {
     if (!chunk.includes('\x1f')) {
