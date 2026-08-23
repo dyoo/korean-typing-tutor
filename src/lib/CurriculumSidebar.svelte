@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { CURRICULUM_CATEGORIES } from '../utils/curriculumCategories';
-  import type { CurriculumCategory } from '../utils/curriculumCategories';
+  import { CURRICULUM_CATEGORIES } from '../content/curriculumCategories';
+  import type { CurriculumCategory } from '../content/curriculumCategories';
   import type { ModuleDefinition } from '../types/korean';
   import CurriculumCategoryGroup from './CurriculumCategoryGroup.svelte';
 

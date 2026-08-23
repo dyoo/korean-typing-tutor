@@ -3,8 +3,8 @@
     isGroupAllChecked,
     isGroupSomeChecked,
     getGroupCheckedCount,
-  } from '../utils/curriculumCategories';
-  import type { CurriculumCategory } from '../utils/curriculumCategories';
+  } from '../content/curriculumCategories';
+  import type { CurriculumCategory } from '../content/curriculumCategories';
   import type { ModuleDefinition } from '../types/korean';
 
   interface Props {

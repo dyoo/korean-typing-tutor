@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import contentData from './index';
-import { CURRICULUM_CATEGORIES } from '../utils/curriculumCategories';
+import { CURRICULUM_CATEGORIES } from './curriculumCategories';
+import { isHangulSyllable } from '../utils/hangulTables';
 
 describe('Content data validation', () => {
   it('should not contain Latin characters in any target field', () => {
@@ -20,6 +21,29 @@ describe('Content data validation', () => {
     expect(violations, `Found ${violations.length} target(s) with Latin characters`).toEqual([]);
   });
 
+  it('ensures all item targets contain only typeable characters', () => {
+    const nonTypeableItems: Array<{ id: string; target: string; invalidChar: string }> = [];
+
+    for (const item of contentData.items) {
+      for (const char of item.target) {
+        const code = char.charCodeAt(0);
+        const isKoreanSyllable = isHangulSyllable(code);
+        const isHangulJamo = code >= 0x3131 && code <= 0x318e;
+        const isAsciiPrintable = code >= 32 && code <= 126; // includes space, numbers, punctuation, English letters
+
+        if (!isKoreanSyllable && !isHangulJamo && !isAsciiPrintable) {
+          nonTypeableItems.push({
+            id: item.id,
+            target: item.target,
+            invalidChar: char,
+          });
+        }
+      }
+    }
+
+    expect(nonTypeableItems).toEqual([]);
+  });
+
   it('should ensure all category module IDs exist in loaded modules', () => {
     const loadedModuleIds = new Set(contentData.modules.map((m) => m.id));
     for (const category of CURRICULUM_CATEGORIES) {
@@ -33,9 +57,12 @@ describe('Content data validation', () => {
   });
 
   it('should have non-empty targets and translations for all items', () => {
+    const moduleIds = new Set(contentData.modules.map((m) => m.id));
+
     for (const item of contentData.items) {
       expect(item.target.trim().length).toBeGreaterThan(0);
       expect(item.translation?.trim().length ?? 0).toBeGreaterThan(0);
+      expect(moduleIds.has(item.moduleId)).toBe(true);
     }
   });
 
@@ -84,4 +111,5 @@ describe('Content data validation', () => {
     expect(contentData.items.length).toBe(7887);
   });
 });
+
 

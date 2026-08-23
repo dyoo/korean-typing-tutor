@@ -129,7 +129,6 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/utils/fontScaler.ts`: Dynamic font size scaling logic for target display text.
 - `src/utils/clipboard.ts`: Clipboard read/paste utilities for input handling.
 - `src/utils/cursorColor.ts`: Cursor color validation and CSS variable helpers.
-- `src/utils/curriculumCategories.ts`: Curriculum module category grouping and label definitions.
 - `src/utils/virtualKeyboardShift.ts`: Shift-state tracking helpers for the virtual keyboard.
 - `src/types/korean.ts`: Type definitions for the curriculum, lesson items, errors, and IME
   decomposition.
@@ -138,6 +137,7 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/content/modules/*.json`: 32 categorized curriculum and beginner lesson datasets (7,687+
   authentic items).
 - `src/content/index.ts`: Curriculum dataset aggregator and canonical module order.
+- `src/content/curriculumCategories.ts`: Curriculum module category grouping and label definitions.
 - `src/content/masteryVocabulary.ts`: Spaced-repetition vocabulary extraction and Jamo syllable filter indexer.
 - `vite.config.js`: Configuration for Vite, PWA, COOP/COEP headers, and Workbox precaching support.
 

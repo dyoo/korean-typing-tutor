@@ -28,8 +28,8 @@
   import MasteryCompletionModal from './lib/MasteryCompletionModal.svelte';
   import WelcomeModal from './lib/WelcomeModal.svelte';
   import { ttsController } from './utils/ttsController.svelte';
-  import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './utils/curriculumCategories';
-  import type { CurriculumCategory } from './utils/curriculumCategories';
+  import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './content/curriculumCategories';
+  import type { CurriculumCategory } from './content/curriculumCategories';
   import type { CursorColorMode } from './utils/cursorColor';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);

@@ -97,4 +97,6 @@ const contentData: CurriculumData = {
   items,
 };
 
+export * from './curriculumCategories';
 export default contentData;
+
