@@ -8,7 +8,7 @@ function writeAscii(view: DataView, offset: number, string: string): void {
 }
 
 /** Converts raw Float32Array PCM audio samples to a valid WAV Blob. */
-export function createWavBlob(samples: Float32Array, sampleRate: number = 24000): Blob {
+function createWavBlob(samples: Float32Array, sampleRate: number = 24000): Blob {
   const byteRate = sampleRate * 1 * 16 / 8; // 1 channel, 16-bit
   const dataSize = samples.length * 2;
   const buffer = new ArrayBuffer(44 + dataSize);
@@ -53,7 +53,7 @@ const SILENT_AUDIO_DATA_URI =
   'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
 
 /** Computes a consistent composite cache key for preloaded and synthesized audio buffers. */
-export function getTTSCacheKey(
+function getTTSCacheKey(
   text: string,
   voice: string = DEFAULT_TTS_VOICE,
   speed: number = DEFAULT_TTS_SPEED,

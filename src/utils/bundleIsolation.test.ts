@@ -1,7 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { build } from 'vite';
+import { build, type Rollup } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import type { RollupOutput, OutputChunk } from 'rollup';
 import path from 'node:path';
 
 describe('Bundle Code-Splitting & Dependency Isolation Tests', () => {
@@ -20,8 +19,8 @@ describe('Bundle Code-Splitting & Dependency Isolation Tests', () => {
     const allChunks = (
       Array.isArray(result)
         ? result[0].output
-        : (result as unknown as RollupOutput).output
-    ).filter((item): item is OutputChunk => item.type === 'chunk');
+        : (result as unknown as Rollup.RollupOutput).output
+    ).filter((item): item is Rollup.OutputChunk => item.type === 'chunk');
 
     // 1. Strictly enforce that exactly one root entry chunk is produced
     const entryChunks = allChunks.filter((chunk) => chunk.isEntry);
@@ -70,8 +69,8 @@ describe('Bundle Code-Splitting & Dependency Isolation Tests', () => {
     const allChunks = (
       Array.isArray(result)
         ? result[0].output
-        : (result as unknown as RollupOutput).output
-    ).filter((item): item is OutputChunk => item.type === 'chunk');
+        : (result as unknown as Rollup.RollupOutput).output
+    ).filter((item): item is Rollup.OutputChunk => item.type === 'chunk');
 
     expect(allChunks.length).toBeGreaterThan(0);
     const workerChunk = allChunks[0];

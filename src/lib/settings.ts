@@ -1,4 +1,5 @@
 import type { CursorColorMode } from '../utils/cursorColor';
+import { DEFAULT_TTS_VOICE, DEFAULT_TTS_SPEED } from '../utils/ttsController.svelte';
 
 /**
  * Supported theme modes: system (follows OS), light, or dark.
@@ -45,8 +46,8 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   enableTTS: false,
   speakOnCompletion: true,
   speakOnAppearance: false,
-  ttsVoice: 'jm_kumo',
-  ttsSpeed: 1.0,
+  ttsVoice: DEFAULT_TTS_VOICE,
+  ttsSpeed: DEFAULT_TTS_SPEED,
 };
 
 function pickBool(val: unknown, fallback: boolean): boolean {
