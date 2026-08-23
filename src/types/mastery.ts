@@ -1,6 +1,9 @@
 /** Application practice mode: manual curriculum module selection or spaced-repetition Jamo mastery. */
 export type TutorMode = 'curriculum' | 'mastery';
 
+/** Sub-mode within Mastery: linear stage progression or spaced-repetition review. */
+export type MasterySubMode = 'progression' | 'review';
+
 /** Tracking statistics for a single Jamo character. */
 export interface JamoStats {
   /** Total keystroke attempts for this Jamo. */
@@ -11,8 +14,22 @@ export interface JamoStats {
   recentHistory: boolean[];
   /** Whether the user has met the mastery criteria for this Jamo. */
   isMastered: boolean;
-  /** Timestamp of the last practice session. */
+  /** Timestamp (ms) of the last practice keystroke. */
   lastPracticed?: number;
+  /** Current SRS stability interval in days (default 1.0). */
+  intervalDays?: number;
+  /** Number of successful spaced review cycles. */
+  repetitionCount?: number;
+}
+
+/** Information about a Jamo's spaced repetition urgency and review status. */
+export interface JamoDueInfo {
+  jamo: string;
+  urgency: number;
+  daysSinceLastPracticed: number;
+  intervalDays: number;
+  accuracy: number;
+  isDue: boolean;
 }
 
 /** Tracking statistics for a sentence milestone checkpoint. */
@@ -27,6 +44,8 @@ export interface SentenceCheckpointStats {
 export interface MasteryState {
   /** Active application mode ('curriculum' or 'mastery'). */
   mode: TutorMode;
+  /** Active mastery sub-mode ('progression' or 'review'). Defaults to 'progression'. */
+  masterySubMode?: MasterySubMode;
   /** Number of unlocked Jamos from the progression order (starting at 4, max 44). */
   unlockedCount: number;
   /** ID of the currently active sentence milestone checkpoint (if in a sentence stage). */

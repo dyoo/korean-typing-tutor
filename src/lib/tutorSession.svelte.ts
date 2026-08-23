@@ -13,6 +13,8 @@ import {
   recordSentenceCompletion,
   getEligibleMasteryItems,
   selectNextMasteryItem,
+  selectNextSRSItem,
+  getDueJamos,
   setMasteryProgressionLevel,
   setMasteryCheckpointLevel,
   setMasteryFocusBatchim,
@@ -23,10 +25,12 @@ import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecomp
 import type { CurriculumData, ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
 import type {
   TutorMode,
+  MasterySubMode,
   MasteryState,
   JamoProgressionItem,
   SentenceCheckpoint,
   MasteryTarget,
+  JamoDueInfo,
 } from '../types/mastery';
 
 export type { CurriculumData };
@@ -115,7 +119,8 @@ export class TutorSession {
     if (this.mode !== 'mastery' || this.activeItems.length === 0) {
       return;
     }
-    const activeTarget = getActiveMasteryTarget(this.masteryState);
+    const isReview = this.masteryState.masterySubMode === 'review';
+    const activeTarget = isReview ? null : getActiveMasteryTarget(this.masteryState);
     const activeIdSet = new Set(this.activeItems.map((i) => i.id)); // eslint-disable-line svelte/prefer-svelte-reactivity
     this.masteryQueue = this.masteryQueue.filter((item) => activeIdSet.has(item.id));
 
@@ -123,12 +128,14 @@ export class TutorSession {
       const lastItem =
         this.masteryQueue[this.masteryQueue.length - 1] ??
         this.activeItems[this.currentIndex];
-      const next = selectNextMasteryItem(
-        this.activeItems,
-        activeTarget,
-        this.masteryState.jamoStats,
-        lastItem?.id,
-      );
+      const next = isReview
+        ? selectNextSRSItem(this.activeItems, this.masteryState.jamoStats, lastItem?.id)
+        : selectNextMasteryItem(
+            this.activeItems,
+            activeTarget,
+            this.masteryState.jamoStats,
+            lastItem?.id,
+          );
       this.masteryQueue.push(next);
     }
   }
@@ -136,19 +143,22 @@ export class TutorSession {
   /** Updates eligible mastery items and sets the current cursor to the next prioritized item. */
   private updateMasteryItemsAndCursor(excludeItemId?: string): void {
     const unlocked = getUnlockedJamos(this.masteryState);
-    const activeTarget = getActiveMasteryTarget(this.masteryState);
+    const isReview = this.masteryState.masterySubMode === 'review';
+    const activeTarget = isReview ? null : getActiveMasteryTarget(this.masteryState);
     this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
 
     const activeIdSet = new Set(this.activeItems.map((i) => i.id)); // eslint-disable-line svelte/prefer-svelte-reactivity
     this.masteryQueue = this.masteryQueue.filter((item) => activeIdSet.has(item.id));
 
     if (this.masteryQueue.length === 0) {
-      const nextItem = selectNextMasteryItem(
-        this.activeItems,
-        activeTarget,
-        this.masteryState.jamoStats,
-        excludeItemId,
-      );
+      const nextItem = isReview
+        ? selectNextSRSItem(this.activeItems, this.masteryState.jamoStats, excludeItemId)
+        : selectNextMasteryItem(
+            this.activeItems,
+            activeTarget,
+            this.masteryState.jamoStats,
+            excludeItemId,
+          );
       const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
       this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
     } else {
@@ -284,6 +294,27 @@ export class TutorSession {
       return nextJamo;
     }
     return undefined;
+  }
+
+  /** Returns active mastery sub-mode ('progression' or 'review'). */
+  public getMasterySubMode(): MasterySubMode {
+    return this.masteryState.masterySubMode ?? 'progression';
+  }
+
+  /** Sets active mastery sub-mode ('progression' or 'review') and refreshes queue. */
+  public setMasterySubMode(subMode: MasterySubMode): void {
+    this.cancelScheduledSave();
+    this.masteryState.masterySubMode = subMode;
+    saveMasteryState(this.masteryState);
+    if (this.mode === 'mastery') {
+      this.applyFilterAndShuffle();
+      this.resetSessionState();
+    }
+  }
+
+  /** Returns all unlocked Jamos sorted by SRS review urgency. */
+  public getDueJamos(): JamoDueInfo[] {
+    return getDueJamos(this.masteryState);
   }
 
   /** Updates active module filter and reshuffles items. */

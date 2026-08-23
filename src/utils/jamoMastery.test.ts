@@ -22,6 +22,10 @@ import {
   getSectionJamosForCheckpoint,
   itemUsesAnyJamo,
   getItemJamoMetadata,
+  calculateJamoUrgency,
+  getJamoDueInfo,
+  getDueJamos,
+  selectNextSRSItem,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
 import type { JamoStats, MasteryTarget } from '../types/mastery';
@@ -759,6 +763,167 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(emptyMeta.requiredJamos).toEqual([]);
       expect(emptyMeta.allJamos.size).toBe(0);
       expect(emptyMeta.batchims.size).toBe(0);
+    });
+  });
+
+  describe('Spaced Repetition (SRS) Review & Urgency Model', () => {
+    it('calculates maximum urgency (10.0) for unpracticed keys', () => {
+      expect(calculateJamoUrgency(undefined)).toBe(10.0);
+      const emptyStats: JamoStats = {
+        totalAttempts: 0,
+        correctAttempts: 0,
+        recentHistory: [],
+        isMastered: false,
+      };
+      expect(calculateJamoUrgency(emptyStats)).toBe(10.0);
+    });
+
+    it('calculates low urgency for keys recently practiced with high accuracy', () => {
+      const now = 1700000000000;
+      const stats: JamoStats = {
+        totalAttempts: 20,
+        correctAttempts: 20,
+        recentHistory: new Array(20).fill(true),
+        isMastered: true,
+        lastPracticed: now, // Practiced right now
+        intervalDays: 2.0,
+      };
+      const urgency = calculateJamoUrgency(stats, now);
+      expect(urgency).toBe(0);
+    });
+
+    it('increases urgency proportionally with elapsed days and error rate', () => {
+      const baseTime = 1700000000000;
+      const oneDayMs = 24 * 60 * 60 * 1000;
+      const stats: JamoStats = {
+        totalAttempts: 20,
+        correctAttempts: 20,
+        recentHistory: new Array(20).fill(true),
+        isMastered: true,
+        lastPracticed: baseTime,
+        intervalDays: 1.0,
+      };
+
+      // 1 day elapsed on 1-day interval @ 100% acc -> 1.0 urgency (due)
+      const urgency1Day = calculateJamoUrgency(stats, baseTime + oneDayMs);
+      expect(urgency1Day).toBe(1.0);
+
+      // 3 days elapsed -> 3.0 urgency
+      const urgency3Days = calculateJamoUrgency(stats, baseTime + 3 * oneDayMs);
+      expect(urgency3Days).toBe(3.0);
+
+      // Key with poor accuracy (50%) has higher urgency + error penalty
+      const strugglingStats: JamoStats = {
+        totalAttempts: 20,
+        correctAttempts: 10,
+        recentHistory: new Array(10).fill(false).concat(new Array(10).fill(true)),
+        isMastered: false,
+        lastPracticed: baseTime,
+        intervalDays: 1.0,
+      };
+      const strugglingUrgency = calculateJamoUrgency(strugglingStats, baseTime + oneDayMs);
+      expect(strugglingUrgency).toBeGreaterThan(urgency1Day);
+    });
+
+    it('returns due Jamos sorted descending by urgency', () => {
+      const state = createDefaultMasteryState();
+      const now = 1700000000000;
+      const oneDayMs = 24 * 60 * 60 * 1000;
+
+      // State has initial 4 keys unlocked: ㅓ, ㅏ, ㅇ, ㄹ
+      state.jamoStats['ㅓ'].lastPracticed = now - 5 * oneDayMs;
+      state.jamoStats['ㅓ'].totalAttempts = 20;
+      state.jamoStats['ㅓ'].correctAttempts = 20;
+      state.jamoStats['ㅓ'].recentHistory = new Array(20).fill(true);
+
+      state.jamoStats['ㅏ'].lastPracticed = now - 1 * oneDayMs;
+      state.jamoStats['ㅏ'].totalAttempts = 20;
+      state.jamoStats['ㅏ'].correctAttempts = 20;
+      state.jamoStats['ㅏ'].recentHistory = new Array(20).fill(true);
+
+      state.jamoStats['ㅇ'].lastPracticed = now; // Fresh
+      state.jamoStats['ㅇ'].totalAttempts = 20;
+      state.jamoStats['ㅇ'].correctAttempts = 20;
+      state.jamoStats['ㅇ'].recentHistory = new Array(20).fill(true);
+
+      // 'ㄹ' is unpracticed -> urgency 10.0
+      const due = getDueJamos(state, now);
+      expect(due.length).toBe(4);
+      expect(due[0].jamo).toBe('ㄹ'); // Unpracticed is highest
+      expect(due[1].jamo).toBe('ㅓ'); // 5 days elapsed
+      expect(due[2].jamo).toBe('ㅏ'); // 1 day elapsed
+      expect(due[3].jamo).toBe('ㅇ'); // Fresh
+
+      // Verify getJamoDueInfo directly
+      const rInfo = getJamoDueInfo('ㄹ', state.jamoStats['ㄹ'], now);
+      expect(rInfo.isDue).toBe(true);
+      expect(rInfo.urgency).toBe(10.0);
+      expect(rInfo.daysSinceLastPracticed).toBe(Infinity);
+
+      const eoInfo = getJamoDueInfo('ㅓ', state.jamoStats['ㅓ'], now);
+      expect(eoInfo.isDue).toBe(true);
+      expect(eoInfo.daysSinceLastPracticed).toBe(5.0);
+      expect(eoInfo.accuracy).toBe(1.0);
+    });
+
+    it('expands interval on successful mastery and solid recall; resets on mistakes', () => {
+      const state = createDefaultMasteryState();
+      // Record 19 correct attempts
+      for (let i = 0; i < 19; i++) {
+        recordJamoAttempt(state, 'ㅓ', true);
+      }
+      expect(state.jamoStats['ㅓ'].isMastered).toBe(false);
+
+      // 20th correct attempt masters the Jamo and expands interval
+      const res = recordJamoAttempt(state, 'ㅓ', true);
+      expect(res.newlyMastered).toBe(true);
+      expect(state.jamoStats['ㅓ'].isMastered).toBe(true);
+      expect(state.jamoStats['ㅓ'].intervalDays).toBeGreaterThanOrEqual(2.0);
+
+      // Continued solid recall expands interval further
+      const prevInterval = state.jamoStats['ㅓ'].intervalDays!;
+      recordJamoAttempt(state, 'ㅓ', true);
+      expect(state.jamoStats['ㅓ'].intervalDays).toBeGreaterThan(prevInterval);
+
+      // Heavy mistakes reset the interval
+      for (let i = 0; i < 15; i++) {
+        recordJamoAttempt(state, 'ㅓ', false);
+      }
+      expect(state.jamoStats['ㅓ'].intervalDays).toBe(1.0);
+    });
+
+    it('selects vocabulary containing overdue and high-urgency Jamos in SRS mode', () => {
+      const state = createDefaultMasteryState();
+      const items: LessonItem[] = [
+        { id: '1', moduleId: 'm1', target: '아이', translation: 'child' },
+        { id: '2', moduleId: 'm1', target: '오이', translation: 'cucumber' },
+      ];
+
+      // Give '아' high urgency (due)
+      state.jamoStats['ㅏ'].totalAttempts = 0; // Urgency 10.0
+      state.jamoStats['ㅗ'].totalAttempts = 20;
+      state.jamoStats['ㅗ'].correctAttempts = 20;
+      state.jamoStats['ㅗ'].recentHistory = new Array(20).fill(true);
+      state.jamoStats['ㅗ'].lastPracticed = Date.now(); // Urgency 0.0
+
+      const chosen = selectNextSRSItem(items, state.jamoStats);
+      expect(chosen).toBeDefined();
+      expect(items.map((i) => i.id)).toContain(chosen.id);
+    });
+
+    it('persists and recovers masterySubMode correctly', () => {
+      const state = createDefaultMasteryState();
+      state.masterySubMode = 'review';
+      saveMasteryState(state);
+
+      const loaded = loadMasteryState();
+      expect(loaded.masterySubMode).toBe('review');
+
+      state.masterySubMode = 'progression';
+      saveMasteryState(state);
+
+      const reloaded = loadMasteryState();
+      expect(reloaded.masterySubMode).toBe('progression');
     });
   });
 });

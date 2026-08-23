@@ -9,6 +9,7 @@ import type {
   MasteryTarget,
   MasteryAttemptResult,
   BatchimFocusItem,
+  JamoDueInfo,
 } from '../types/mastery';
 import { decomposeStringToJamos, decomposeSyllable } from './hangulDecompose';
 import {
@@ -255,6 +256,8 @@ function createEmptyJamoStats(): JamoStats {
     correctAttempts: 0,
     recentHistory: [],
     isMastered: false,
+    intervalDays: 1.0,
+    repetitionCount: 0,
   };
 }
 
@@ -268,6 +271,8 @@ function resetJamoStats(stats: JamoStats): void {
   stats.totalAttempts = 0;
   stats.correctAttempts = 0;
   stats.recentHistory = [];
+  stats.intervalDays = 1.0;
+  stats.repetitionCount = 0;
 }
 
 /** Creates a fresh zeroed SentenceCheckpointStats entry. */
@@ -342,6 +347,7 @@ export function createDefaultMasteryState(): MasteryState {
 
   return {
     mode: 'mastery',
+    masterySubMode: 'progression',
     unlockedCount: MIN_UNLOCKED_COUNT, // Initial Stage 1 keys: ㅓ, ㅏ, ㅇ, ㄹ
     activeCheckpointId: null,
     activeFocusBatchim: null,
@@ -377,6 +383,7 @@ export function loadMasteryState(): MasteryState {
         : MIN_UNLOCKED_COUNT;
 
     const mode = parsed.mode === 'curriculum' ? 'curriculum' : 'mastery';
+    const masterySubMode = parsed.masterySubMode === 'review' ? 'review' : 'progression';
     const activeCheckpointId =
       typeof parsed.activeCheckpointId === 'string' ? parsed.activeCheckpointId : null;
     const activeFocusBatchim =
@@ -398,6 +405,12 @@ export function loadMasteryState(): MasteryState {
             isMastered: typeof stats.isMastered === 'boolean' ? stats.isMastered : false,
             lastPracticed:
               typeof stats.lastPracticed === 'number' ? stats.lastPracticed : undefined,
+            intervalDays:
+              typeof stats.intervalDays === 'number' && stats.intervalDays > 0
+                ? stats.intervalDays
+                : 1.0,
+            repetitionCount:
+              typeof stats.repetitionCount === 'number' ? stats.repetitionCount : 0,
           };
         }
       }
@@ -418,6 +431,7 @@ export function loadMasteryState(): MasteryState {
 
     return {
       mode,
+      masterySubMode,
       unlockedCount,
       activeCheckpointId,
       activeFocusBatchim,
@@ -765,6 +779,8 @@ export function recordJamoAttempt(
   ) {
     stats.isMastered = true;
     newlyMastered = true;
+    stats.intervalDays = Math.max(stats.intervalDays ?? 1.0, 2.0);
+    stats.repetitionCount = (stats.repetitionCount ?? 0) + 1;
 
     // Check if mastering this Jamo unlocks a Sentence Checkpoint
     const cp = getActiveCheckpointForState(state);
@@ -779,6 +795,17 @@ export function recordJamoAttempt(
       if (allUnlockedMastered) {
         newlyUnlockedJamo = unlockNextJamo(state) ?? undefined;
       }
+    }
+  } else if (stats.isMastered) {
+    if (isCorrect && accuracy >= 0.9) {
+      // Solid recall: expand stability interval
+      const currentInterval = stats.intervalDays ?? 1.0;
+      stats.repetitionCount = (stats.repetitionCount ?? 0) + 1;
+      stats.intervalDays = Math.min(60, Number((currentInterval * 1.5).toFixed(1)));
+    } else if (!isCorrect && accuracy < 0.8) {
+      // Struggling during review: reset stability interval
+      stats.intervalDays = 1.0;
+      stats.repetitionCount = 0;
     }
   }
 
@@ -1196,4 +1223,130 @@ export function selectNextMasteryItem(
   }
 
   return pool[Math.floor(Math.random() * pool.length)];
+}
+
+/**
+ * Calculates the Spaced Repetition urgency score for a single Jamo.
+ * Higher score = higher priority for review.
+ * A score >= 1.0 indicates the key is due for review.
+ */
+export function calculateJamoUrgency(stats?: JamoStats, now: number = Date.now()): number {
+  if (!stats || stats.totalAttempts === 0 || !stats.lastPracticed) {
+    return 10.0; // Never practiced or brand new -> maximum review urgency
+  }
+
+  const daysElapsed = Math.max(0, (now - stats.lastPracticed) / (1000 * 60 * 60 * 24));
+  const interval = Math.max(0.5, stats.intervalDays ?? 1.0);
+  const accuracy = calculateJamoAccuracy(stats);
+
+  // Lapse multiplier: lower accuracy causes faster urgency growth
+  const lapseFactor = 1.5 - 0.5 * accuracy;
+  const timeUrgency = (daysElapsed / interval) * lapseFactor;
+  const errorPenalty = accuracy < 0.9 ? (0.9 - accuracy) * 5.0 : 0;
+
+  return Number((timeUrgency + errorPenalty).toFixed(2));
+}
+
+/**
+ * Returns detailed due info for a single Jamo.
+ */
+export function getJamoDueInfo(
+  jamo: string,
+  stats?: JamoStats,
+  now: number = Date.now(),
+): JamoDueInfo {
+  const safeStats = stats ?? createEmptyJamoStats();
+  const urgency = calculateJamoUrgency(safeStats, now);
+  const daysSinceLastPracticed = safeStats.lastPracticed
+    ? Math.max(0, Number(((now - safeStats.lastPracticed) / (1000 * 60 * 60 * 24)).toFixed(1)))
+    : Infinity;
+  const intervalDays = safeStats.intervalDays ?? 1.0;
+  const accuracy = calculateJamoAccuracy(safeStats);
+  const isDue = urgency >= 1.0 || safeStats.totalAttempts === 0;
+
+  return {
+    jamo,
+    urgency,
+    daysSinceLastPracticed,
+    intervalDays,
+    accuracy,
+    isDue,
+  };
+}
+
+/**
+ * Returns all currently unlocked Jamos sorted by their SRS urgency score in descending order.
+ */
+export function getDueJamos(state: MasteryState, now: number = Date.now()): JamoDueInfo[] {
+  const unlocked = getUnlockedJamos(state);
+  const dueList: JamoDueInfo[] = [];
+
+  for (const jamo of unlocked) {
+    const stats = state.jamoStats[jamo];
+    dueList.push(getJamoDueInfo(jamo, stats, now));
+  }
+
+  // Sort highest urgency first
+  dueList.sort((a, b) => b.urgency - a.urgency);
+  return dueList;
+}
+
+/**
+ * Selects the next exercise item for Spaced Repetition Review mode.
+ * Prioritizes vocabulary containing due and high-urgency Jamos.
+ */
+export function selectNextSRSItem(
+  eligibleItems: LessonItem[],
+  jamoStats: Record<string, JamoStats>,
+  currentItemId?: string,
+  now: number = Date.now(),
+): LessonItem {
+  if (eligibleItems.length === 0) {
+    return createStarterItem('empty-mastery');
+  }
+
+  const candidates =
+    eligibleItems.length > 1 && currentItemId
+      ? eligibleItems.filter((i) => i.id !== currentItemId)
+      : eligibleItems;
+
+  const pool = candidates.length > 0 ? candidates : eligibleItems;
+  if (pool.length === 1) {
+    return pool[0];
+  }
+
+  const weightedList: { item: LessonItem; weight: number }[] = [];
+
+  for (const item of pool) {
+    const jamos = decomposeStringToJamos(item.target);
+    let maxUrgency = 0;
+    let sumUrgency = 0;
+
+    for (const j of jamos) {
+      const stats = jamoStats[j];
+      const urgency = calculateJamoUrgency(stats, now);
+      if (urgency > maxUrgency) {
+        maxUrgency = urgency;
+      }
+      sumUrgency += urgency;
+    }
+
+    const baseWeight = 1.0 + maxUrgency * 3.0 + sumUrgency * 0.5;
+    const lengthMultiplier = getAdaptiveLengthMultiplier(item.target.length, 100);
+    const finalWeight = baseWeight * lengthMultiplier;
+
+    weightedList.push({ item, weight: finalWeight });
+  }
+
+  const totalWeight = weightedList.reduce((sum, w) => sum + w.weight, 0);
+  let random = Math.random() * totalWeight;
+
+  for (const { item, weight } of weightedList) {
+    random -= weight;
+    if (random <= 0) {
+      return item;
+    }
+  }
+
+  return pool[0];
 }
