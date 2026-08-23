@@ -24,9 +24,13 @@ Korean through focused typing practice.
   - Generates speech 100% locally in the browser with no external network calls or cloud
     dependencies after one-time offline weight caching.
   - Instant on-demand playback via the audio play icon and optional automatic pronunciation upon
-    exercise completion.
+- **Custom Anki & Flashcard Deck Import**:
+  - Drag and drop or browse to import your own Anki deck packages (`.apkg`), tab-separated text (`.tsv`), or plain text flashcards (`.txt`, `.csv`) directly from your device.
+  - Zero-dependency client-side parser with native SQLite 3 B-Tree record decoding and ZIP decompression that runs 100% offline in your browser.
+  - Automatically sanitizes HTML/audio tags, cleans metadata placeholders, computes Revised Romanization phonetic subtext, and persists imported decks locally in `LocalStorage`.
+  - Toggle, filter, or delete imported decks directly from the collapsible "Custom / Anki Decks" drawer in the curriculum sidebar.
 - **Dual Typing Modes**:
-  - **Free-form**: Practice specific modules or the entire curriculum with randomized order.
+  - **Free-form**: Practice specific modules, custom imported decks, or the entire curriculum with randomized order.
   - **Mastery**: A structured progression system that unlocks new Jamos as you improve,
     automatically selecting relevant practice items.
 - **Progressive Web App**:
