@@ -255,6 +255,34 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     // Select with active Jamo 'ㅗ'
     const selected = selectNextMasteryItem(eligible, 'ㅗ', state.jamoStats);
     expect(eligible.some((i) => i.id === selected.id)).toBe(true);
+
+    // Over multiple selections with large non-focus pool, focus Jamo should appear ~70%+ of the time
+    const nonFocusItems: LessonItem[] = Array.from({ length: 20 }, (_, idx) => ({
+      id: `non-${idx}`,
+      moduleId: 'test',
+      target: '아이', // contains only 'ㅇ', 'ㅏ', 'ㅣ'
+      translation: 'Child',
+    }));
+    const focusItem: LessonItem = {
+      id: 'focus-1',
+      moduleId: 'test',
+      target: '오이', // contains focus Jamo 'ㅗ'
+      translation: 'Cucumber',
+    };
+    const testPool = [...nonFocusItems, focusItem];
+
+    let focusCount = 0;
+    const trials = 500;
+    for (let i = 0; i < trials; i++) {
+      const item = selectNextMasteryItem(testPool, 'ㅗ', state.jamoStats);
+      if (item.id === 'focus-1') {
+        focusCount++;
+      }
+    }
+    const focusHitRate = focusCount / trials;
+    // With 70% guaranteed focus pool filter, hit rate should be around 0.70 (well above 0.60)
+    expect(focusHitRate).toBeGreaterThan(0.60);
+    expect(focusHitRate).toBeLessThan(0.85);
   });
 
   it('should scale adaptive length multipliers based on mastery progress', () => {

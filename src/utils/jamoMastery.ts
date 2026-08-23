@@ -1089,7 +1089,7 @@ export function getAdaptiveLengthMultiplier(targetLength: number, progressPercen
 /**
  * Probability (0–1) that each exercise will feature the active learning Jamo.
  */
-const FOCUS_JAMO_PROBABILITY = 0.4;
+const FOCUS_JAMO_PROBABILITY = 0.7;
 
 /**
  * Checks whether a lesson item contains the specified Jamo character.

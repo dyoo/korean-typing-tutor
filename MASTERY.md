@@ -114,10 +114,10 @@ flowchart TD
 
 When picking the next exercise in Mastery mode:
 
-1. **Pass 1 — Focus Coin Flip (40% Focus Pool Bias):**
-   - If the active stage is a Jamo stage with an unmastered frontier key, 40% of draws are
+1. **Pass 1 — Focus Coin Flip (70% Focus Pool Bias):**
+   - If the active stage is a Jamo stage with an unmastered frontier key, 70% of draws are
      restricted strictly to words containing the active Jamo.
-   - 60% of draws draw from the entire cumulative unlocked vocabulary to reinforce previously
+   - 30% of draws draw from the entire cumulative unlocked vocabulary to reinforce previously
      learned keys.
 2. **Pass 2 — Weighted Random Sampling:**
    - **Base Weight:** `1.0`
