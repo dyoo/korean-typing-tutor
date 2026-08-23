@@ -37,6 +37,14 @@
   let rafId: number | null = null;
 
   $effect(() => {
+    if (userInput.length === 0 && inputContainerElement) {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      inputContainerElement.scrollLeft = 0;
+    }
+
     if (
       userInput !== undefined &&
       activeInputCursorIndex !== undefined &&

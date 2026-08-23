@@ -60,9 +60,24 @@
 
   let targetContainerElement = $state<HTMLDivElement | null>(null);
   let activeCursorElement = $state<HTMLElement | null>(null);
+  let lastItemId = $state<string>('');
   let rafId: number | null = null;
 
   $effect(() => {
+    const currentId = currentItem?.id;
+    const isNewItem = currentId !== lastItemId;
+
+    if (isNewItem) {
+      lastItemId = currentId || '';
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+      if (targetContainerElement) {
+        targetContainerElement.scrollTo({ top: 0, behavior: 'auto' });
+      }
+    }
+
     // Reset scroll when switching items or starting at beginning
     if (activeTargetCursorIndex === 0 && !isCompleted && targetContainerElement) {
       targetContainerElement.scrollTo({ top: 0, behavior: 'auto' });
