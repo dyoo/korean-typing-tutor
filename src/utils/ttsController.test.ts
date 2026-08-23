@@ -42,12 +42,12 @@ describe('TTSController Unit Tests', () => {
   });
 
   it('initializes with default idle state', () => {
-    expect(controller.getIsLoaded()).toBe(false);
-    expect(controller.getIsLoading()).toBe(false);
-    expect(controller.getIsSpeaking()).toBe(false);
-    expect(controller.getIsCached()).toBe(false);
-    expect(controller.getDownloadProgress()).toBe(0);
-    expect(controller.getVoices()).toEqual([]);
+    expect(controller.isLoaded).toBe(false);
+    expect(controller.isLoading).toBe(false);
+    expect(controller.isSpeaking).toBe(false);
+    expect(controller.isCached).toBe(false);
+    expect(controller.downloadProgress).toBe(0);
+    expect(controller.voices).toEqual([]);
   });
 
   it('returns null on preload with empty or whitespace string', () => {
@@ -58,7 +58,7 @@ describe('TTSController Unit Tests', () => {
   it('posts CHECK_CACHE when checkCache is called and updates isCached on CACHE_STATUS response', async () => {
     const checkPromise = controller.checkCache();
     expect(postedMessages).toContainEqual({ type: 'CHECK_CACHE' });
-    expect(controller.getIsCached()).toBe(false);
+    expect(controller.isCached).toBe(false);
 
     latestWorkerInstance?.onmessage?.({
       data: {
@@ -69,13 +69,13 @@ describe('TTSController Unit Tests', () => {
 
     const isCachedResult = await checkPromise;
     expect(isCachedResult).toBe(true);
-    expect(controller.getIsCached()).toBe(true);
-    expect(controller.getModelSizeFormatted()).toBe('80 MB');
+    expect(controller.isCached).toBe(true);
+    expect(controller.modelSizeFormatted).toBe('80 MB');
   });
 
   it('separates stopAudio from cancelSynthesis', () => {
     controller.stopAudio();
-    expect(controller.getIsSpeaking()).toBe(false);
+    expect(controller.isSpeaking).toBe(false);
     expect(postedMessages.length).toBe(0);
 
     // Initializing worker via checkCache so stop() sends CANCEL_SYNTHESIS
@@ -90,7 +90,7 @@ describe('TTSController Unit Tests', () => {
   it('handles load progress and success messages from worker', async () => {
     const loadPromise = controller.loadModel();
 
-    expect(controller.getIsLoading()).toBe(true);
+    expect(controller.isLoading).toBe(true);
     expect(postedMessages).toContainEqual({
       type: 'LOAD_MODEL',
       payload: { dtype: 'q8', device: 'wasm' },
@@ -104,8 +104,8 @@ describe('TTSController Unit Tests', () => {
       },
     } as MessageEvent);
 
-    expect(controller.getDownloadProgress()).toBe(45);
-    expect(controller.getCurrentFileName()).toBe('model.onnx');
+    expect(controller.downloadProgress).toBe(45);
+    expect(controller.currentFileName).toBe('model.onnx');
 
     // Simulate success event
     latestWorkerInstance?.onmessage?.({
@@ -128,9 +128,9 @@ describe('TTSController Unit Tests', () => {
     } as MessageEvent);
 
     await loadPromise;
-    expect(controller.getIsLoaded()).toBe(true);
-    expect(controller.getIsLoading()).toBe(false);
-    expect(controller.getVoices().length).toBe(1);
+    expect(controller.isLoaded).toBe(true);
+    expect(controller.isLoading).toBe(false);
+    expect(controller.voices.length).toBe(1);
   });
 
   it('handles synthesize success and audio caching', async () => {
@@ -366,7 +366,7 @@ describe('TTSController Unit Tests', () => {
         payload: { isCached: true, modelSizeFormatted: '88.1 MB' },
       },
     } as MessageEvent);
-    expect(controller.getModelSizeFormatted()).toBe('88.1 MB');
+    expect(controller.modelSizeFormatted).toBe('88.1 MB');
 
     await controller.clearCache();
     latestWorkerInstance?.onmessage?.({
@@ -375,8 +375,8 @@ describe('TTSController Unit Tests', () => {
       },
     } as MessageEvent);
 
-    expect(controller.getModelSizeFormatted()).toBe('');
-    expect(controller.getIsCached()).toBe(false);
+    expect(controller.modelSizeFormatted).toBe('');
+    expect(controller.isCached).toBe(false);
   });
 
   it('handles worker.onerror by setting loadError and terminating the worker instance', async () => {
@@ -388,8 +388,8 @@ describe('TTSController Unit Tests', () => {
     currentWorker?.onerror?.({ message: '' } as ErrorEvent);
 
     await expect(loadPromise).rejects.toThrow('Web Worker failed to initialize or execute');
-    expect(controller.getLoadError()).toBe('Web Worker failed to initialize or execute');
-    expect(controller.getIsLoading()).toBe(false);
+    expect(controller.loadError).toBe('Web Worker failed to initialize or execute');
+    expect(controller.isLoading).toBe(false);
 
     // Retrying loadModel should initialize a fresh worker instance
     const retryPromise = controller.loadModel();
@@ -403,8 +403,8 @@ describe('TTSController Unit Tests', () => {
     } as MessageEvent);
 
     await retryPromise;
-    expect(controller.getIsLoaded()).toBe(true);
-    expect(controller.getLoadError()).toBeNull();
+    expect(controller.isLoaded).toBe(true);
+    expect(controller.loadError).toBeNull();
   });
 
   it('handles LOAD_ERROR message from worker by setting loadError and resetting isLoading', async () => {
@@ -418,9 +418,9 @@ describe('TTSController Unit Tests', () => {
     } as MessageEvent);
 
     await expect(loadPromise).rejects.toThrow('Failed to fetch ONNX model');
-    expect(controller.getLoadError()).toBe('Failed to fetch ONNX model');
-    expect(controller.getIsLoading()).toBe(false);
-    expect(controller.getIsLoaded()).toBe(false);
+    expect(controller.loadError).toBe('Failed to fetch ONNX model');
+    expect(controller.isLoading).toBe(false);
+    expect(controller.isLoaded).toBe(false);
   });
 
   it('safely primes audio via unlockAudio and handles play with persistent player', async () => {
@@ -476,7 +476,7 @@ describe('TTSController Unit Tests', () => {
     await loadPromise;
 
     const speakPromise = controller.speak('안녕하세요');
-    expect(controller.getIsSpeaking()).toBe(true);
+    expect(controller.isSpeaking).toBe(true);
 
     const synthMsg = postedMessages.find(
       (m) => m.type === 'SYNTHESIZE' && m.payload.text === '안녕하세요',
@@ -506,7 +506,7 @@ describe('TTSController Unit Tests', () => {
     (mockInstance as MockAudio | null)?.onended?.();
 
     await speakPromise;
-    expect(controller.getIsSpeaking()).toBe(false);
+    expect(controller.isSpeaking).toBe(false);
   });
 
   it('sequentially pre-synthesizes upcoming items with preloadBatch and supports cancellation', async () => {
@@ -581,7 +581,7 @@ describe('TTSController Unit Tests', () => {
       },
     } as MessageEvent);
 
-    expect(controller.getDownloadProgress()).toBe(50);
+    expect(controller.downloadProgress).toBe(50);
 
     // 3. Complete model loading
     latestWorkerInstance?.onmessage?.({
@@ -592,7 +592,7 @@ describe('TTSController Unit Tests', () => {
     } as MessageEvent);
 
     await concurrentLoadPromise;
-    expect(controller.getIsLoaded()).toBe(true);
+    expect(controller.isLoaded).toBe(true);
 
     // Allow the synthesis promise microtask to advance and post SYNTHESIZE message
     await new Promise((r) => setTimeout(r, 10));

@@ -4,9 +4,24 @@ import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../type
 /** Maximum number of audio blob URLs retained in memory before LRU eviction. */
 const MAX_AUDIO_CACHE_SIZE = 50;
 
+/** Default voice profile identifier for Kokoro TTS. */
+export const DEFAULT_TTS_VOICE = 'jm_kumo';
+
+/** Default speech synthesis rate multiplier. */
+export const DEFAULT_TTS_SPEED = 1.0;
+
 /** Silent 1-sample WAV data URI to unlock audio playback on Safari/iOS within user gestures. */
 const SILENT_AUDIO_DATA_URI =
   'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+
+/** Computes a consistent composite cache key for preloaded and synthesized audio buffers. */
+export function getTTSCacheKey(
+  text: string,
+  voice: string = DEFAULT_TTS_VOICE,
+  speed: number = DEFAULT_TTS_SPEED,
+): string {
+  return `${text}_${voice}_${speed}`;
+}
 
 /**
  * Controller singleton for interacting with the TTS Web Worker and managing
@@ -14,16 +29,16 @@ const SILENT_AUDIO_DATA_URI =
  */
 export class TTSController {
   private worker: Worker | null = null;
-  private isLoaded = $state(false);
-  private isLoading = $state(false);
-  private isSpeaking = $state(false);
-  private downloadProgress = $state(0);
-  private downloadStatus = $state('');
-  private currentFileName = $state('');
-  private isCached = $state(false);
-  private modelSizeFormatted = $state('');
-  private availableVoices = $state<VoiceMetadata[]>([]);
-  private loadError = $state<string | null>(null);
+  private _isLoaded = $state(false);
+  private _isLoading = $state(false);
+  private _isSpeaking = $state(false);
+  private _downloadProgress = $state(0);
+  private _downloadStatus = $state('');
+  private _currentFileName = $state('');
+  private _isCached = $state(false);
+  private _modelSizeFormatted = $state('');
+  private _availableVoices = $state<VoiceMetadata[]>([]);
+  private _loadError = $state<string | null>(null);
 
   private playerAudio: HTMLAudioElement | null = null;
   private isAudioUnlocked = false;
@@ -40,6 +55,7 @@ export class TTSController {
   // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal in-flight promise map intentionally non-reactive to avoid re-triggering effects
   private inFlightSyntheses = new Map<string, Promise<string>>(); // cacheKey -> Promise
   private pendingCacheChecks: Array<(cached: boolean) => void> = [];
+  private pendingModelLoadResolvers: Array<{ resolve: () => void; reject: (err: Error) => void }> = [];
   private loadModelPromise: Promise<void> | null = null;
   private nextRequestId = 0;
   private currentBatchToken = 0;
@@ -87,6 +103,19 @@ export class TTSController {
     this.audioCache.set(key, url);
   }
 
+  /** Flushes and notifies all in-flight model loading promise resolvers. */
+  private flushModelLoadResolvers(error: Error | null): void {
+    const resolvers = this.pendingModelLoadResolvers.splice(0, this.pendingModelLoadResolvers.length);
+    for (const r of resolvers) {
+      if (error) {
+        r.reject(error);
+      } else {
+        r.resolve();
+      }
+    }
+    this.loadModelPromise = null;
+  }
+
   private initWorker(): Worker {
     if (this.worker) {
       return this.worker;
@@ -102,9 +131,9 @@ export class TTSController {
 
       switch (msg.type) {
         case 'CACHE_STATUS':
-          this.isCached = msg.payload.isCached;
+          this._isCached = msg.payload.isCached;
           if (msg.payload.modelSizeFormatted) {
-            this.modelSizeFormatted = msg.payload.modelSizeFormatted;
+            this._modelSizeFormatted = msg.payload.modelSizeFormatted;
           }
           while (this.pendingCacheChecks.length > 0) {
             this.pendingCacheChecks.shift()!(msg.payload.isCached);
@@ -112,40 +141,40 @@ export class TTSController {
           break;
 
         case 'LOAD_PROGRESS':
-          this.isLoading = true;
-          this.downloadProgress = Math.round(msg.payload.progress);
-          this.downloadStatus = msg.payload.status;
-          this.currentFileName = msg.payload.file;
+          this._isLoading = true;
+          this._downloadProgress = Math.round(msg.payload.progress);
+          this._downloadStatus = msg.payload.status;
+          this._currentFileName = msg.payload.file;
           break;
 
         case 'LOAD_SUCCESS':
-          this.isLoading = false;
-          this.isLoaded = true;
-          this.isCached = true;
-          this.availableVoices = msg.payload.voices;
+          this._isLoading = false;
+          this._isLoaded = true;
+          this._isCached = true;
+          this._availableVoices = msg.payload.voices;
           if (msg.payload.modelSizeFormatted) {
-            this.modelSizeFormatted = msg.payload.modelSizeFormatted;
+            this._modelSizeFormatted = msg.payload.modelSizeFormatted;
           }
-          this.loadError = null;
+          this._loadError = null;
+          this.flushModelLoadResolvers(null);
           // Re-check storage in worker to get exact finalized cached footprint
           this.checkCache(true);
           break;
 
         case 'LOAD_ERROR':
-          this.isLoading = false;
-          this.isLoaded = false;
-          this.loadError = msg.payload.error;
+          this._isLoading = false;
+          this._isLoaded = false;
+          this._loadError = msg.payload.error;
+          this.flushModelLoadResolvers(new Error(msg.payload.error));
           break;
 
         case 'SYNTHESIS_SUCCESS': {
-          console.debug('[TTS] SYNTHESIS_SUCCESS received from worker:', msg.payload.id);
           const pending = this.pendingSyntheses.get(msg.payload.id);
           if (pending) {
             let audioBlobUrl: string;
             if (msg.payload.audioPcm) {
               const wavBlob = createWavBlob(msg.payload.audioPcm, msg.payload.sampleRate ?? 24000);
               audioBlobUrl = URL.createObjectURL(wavBlob);
-              console.debug('[TTS] Created window Blob URL:', audioBlobUrl);
             } else {
               audioBlobUrl = (msg.payload as unknown as { audioBlobUrl: string }).audioBlobUrl || '';
             }
@@ -174,9 +203,9 @@ export class TTSController {
         }
 
         case 'CLEAR_CACHE_SUCCESS':
-          this.isCached = false;
-          this.isLoaded = false;
-          this.modelSizeFormatted = '';
+          this._isCached = false;
+          this._isLoaded = false;
+          this._modelSizeFormatted = '';
           this.clearAudioCache();
           break;
       }
@@ -184,8 +213,9 @@ export class TTSController {
 
     this.worker.onerror = (err: ErrorEvent) => {
       console.error('TTS Web Worker Error:', err);
-      this.isLoading = false;
-      this.loadError = err.message || 'Web Worker failed to initialize or execute';
+      this._isLoading = false;
+      this._loadError = err.message || 'Web Worker failed to initialize or execute';
+      this.flushModelLoadResolvers(new Error(this._loadError));
       if (this.worker) {
         this.worker.terminate();
         this.worker = null;
@@ -194,15 +224,16 @@ export class TTSController {
 
     this.worker.onmessageerror = (err: MessageEvent) => {
       console.error('TTS Web Worker Message Error:', err);
-      this.isLoading = false;
-      this.loadError = 'Web Worker failed to deserialize message';
+      this._isLoading = false;
+      this._loadError = 'Web Worker failed to deserialize message';
+      this.flushModelLoadResolvers(new Error(this._loadError));
     };
 
     return this.worker;
   }
 
   public async checkCache(force: boolean = false): Promise<boolean> {
-    if (!force && this.isLoaded && this.isCached && this.modelSizeFormatted) {
+    if (!force && this._isLoaded && this._isCached && this._modelSizeFormatted) {
       return true;
     }
     const w = this.initWorker();
@@ -214,38 +245,35 @@ export class TTSController {
   }
 
   public async loadModel(): Promise<void> {
-    if (this.isLoaded) {
+    if (this._isLoaded) {
       return;
     }
     if (this.loadModelPromise) {
       return this.loadModelPromise;
     }
-    this.isLoading = true;
-    this.loadError = null;
+    this._isLoading = true;
+    this._loadError = null;
     const w = this.initWorker();
 
     this.loadModelPromise = new Promise<void>((resolve, reject) => {
       const timeout = setTimeout(() => {
-        this.loadModelPromise = null;
-        if (this.isLoading) {
-          this.isLoading = false;
-          reject(new Error('Model loading timed out. Please check network connection.'));
+        if (this._isLoading) {
+          this._isLoading = false;
+          const timeoutErr = new Error('Model loading timed out. Please check network connection.');
+          this.flushModelLoadResolvers(timeoutErr);
         }
       }, 120000);
 
-      const checkInterval = setInterval(() => {
-        if (this.isLoaded) {
-          clearInterval(checkInterval);
+      this.pendingModelLoadResolvers.push({
+        resolve: () => {
           clearTimeout(timeout);
-          this.loadModelPromise = null;
           resolve();
-        } else if (this.loadError) {
-          clearInterval(checkInterval);
+        },
+        reject: (err: Error) => {
           clearTimeout(timeout);
-          this.loadModelPromise = null;
-          reject(new Error(this.loadError));
-        }
-      }, 100);
+          reject(err);
+        },
+      });
 
       w.postMessage({
         type: 'LOAD_MODEL',
@@ -264,19 +292,20 @@ export class TTSController {
       this.worker.terminate();
       this.worker = null;
     }
-    this.isLoading = false;
-    this.downloadProgress = 0;
-    this.downloadStatus = '';
-    this.currentFileName = '';
-    this.loadError = null;
+    this._isLoading = false;
+    this._downloadProgress = 0;
+    this._downloadStatus = '';
+    this._currentFileName = '';
+    this._loadError = null;
     this.inFlightSyntheses.clear();
     this.pendingSyntheses.clear();
+    this.flushModelLoadResolvers(new Error('Model loading cancelled'));
   }
 
   public preload(
     text: string,
-    voice: string = 'jm_kumo',
-    speed: number = 1.0,
+    voice: string = DEFAULT_TTS_VOICE,
+    speed: number = DEFAULT_TTS_SPEED,
   ): Promise<string | null> | null {
     if (!text || text.trim().length === 0) {
       return null;
@@ -291,8 +320,8 @@ export class TTSController {
    */
   public async preloadBatch(
     texts: string[],
-    voice: string = 'jm_kumo',
-    speed: number = 1.0,
+    voice: string = DEFAULT_TTS_VOICE,
+    speed: number = DEFAULT_TTS_SPEED,
   ): Promise<void> {
     const token = ++this.currentBatchToken;
     for (const text of texts) {
@@ -302,7 +331,7 @@ export class TTSController {
       if (!text || text.trim().length === 0) {
         continue;
       }
-      const cacheKey = `${text}_${voice}_${speed}`;
+      const cacheKey = getTTSCacheKey(text, voice, speed);
       if (this.audioCache.has(cacheKey) || this.inFlightSyntheses.has(cacheKey)) {
         continue;
       }
@@ -321,10 +350,10 @@ export class TTSController {
 
   public async synthesize(
     text: string,
-    voice: string = 'jm_kumo',
-    speed: number = 1.0,
+    voice: string = DEFAULT_TTS_VOICE,
+    speed: number = DEFAULT_TTS_SPEED,
   ): Promise<string> {
-    const cacheKey = `${text}_${voice}_${speed}`;
+    const cacheKey = getTTSCacheKey(text, voice, speed);
     if (this.audioCache.has(cacheKey)) {
       const cachedUrl = this.audioCache.get(cacheKey)!;
       // Refresh LRU recency on cache hit
@@ -338,7 +367,7 @@ export class TTSController {
     }
 
     const synthesisPromise = (async () => {
-      if (!this.isLoaded) {
+      if (!this._isLoaded) {
         await this.loadModel();
       }
 
@@ -401,59 +430,54 @@ export class TTSController {
         // Ignore seek errors on unseekable media
       }
     }
-    this.isSpeaking = false;
+    this._isSpeaking = false;
   }
 
-  public async speak(text: string, voice: string = 'jm_kumo', speed: number = 1.0): Promise<void> {
+  public async speak(
+    text: string,
+    voice: string = DEFAULT_TTS_VOICE,
+    speed: number = DEFAULT_TTS_SPEED,
+  ): Promise<void> {
     if (!text || text.trim().length === 0) {
       return;
     }
 
-    console.debug('[TTS] speak() called for:', text);
     // Prime the audio subsystem synchronously during the active user gesture
     this.unlockAudio();
     this.stopAudio();
 
     try {
-      this.isSpeaking = true;
+      this._isSpeaking = true;
       const audioUrl = await this.synthesize(text, voice, speed);
-      console.debug('[TTS] synthesize() resolved with audioUrl:', audioUrl);
 
       if (!this.playerAudio) {
         this.playerAudio = new Audio();
       }
       const audio = this.playerAudio;
       audio.src = audioUrl;
-      console.debug('[TTS] Invoking audio.play() on HTMLAudioElement');
 
       return new Promise((resolve) => {
         const cleanup = () => {
           audio.onended = null;
           audio.onerror = null;
-          this.isSpeaking = false;
+          this._isSpeaking = false;
         };
 
         audio.onended = () => {
-          console.debug('[TTS] audio.play() onended triggered');
           cleanup();
           resolve();
         };
-        audio.onerror = (e) => {
-          console.error('[TTS] audio.play() onerror triggered:', e);
+        audio.onerror = () => {
           cleanup();
           resolve();
         };
-        audio.play().then(() => {
-          console.debug('[TTS] audio.play() promise resolved successfully');
-        }).catch((err) => {
-          console.warn('[TTS] audio.play() promise rejected:', err);
+        audio.play().catch(() => {
           cleanup();
           resolve();
         });
       });
-    } catch (err) {
-      console.error('[TTS] speak() failed with error:', err);
-      this.isSpeaking = false;
+    } catch {
+      this._isSpeaking = false;
     }
   }
 
@@ -492,45 +516,45 @@ export class TTSController {
     w.postMessage({ type: 'CLEAR_CACHE' } satisfies TTSWorkerRequest);
   }
 
-  // Reactive getters
-  public getIsLoaded(): boolean {
-    return this.isLoaded;
+  // Reactive property getters
+  public get isLoaded(): boolean {
+    return this._isLoaded;
   }
 
-  public getIsLoading(): boolean {
-    return this.isLoading;
+  public get isLoading(): boolean {
+    return this._isLoading;
   }
 
-  public getIsSpeaking(): boolean {
-    return this.isSpeaking;
+  public get isSpeaking(): boolean {
+    return this._isSpeaking;
   }
 
-  public getDownloadProgress(): number {
-    return this.downloadProgress;
+  public get downloadProgress(): number {
+    return this._downloadProgress;
   }
 
-  public getDownloadStatus(): string {
-    return this.downloadStatus;
+  public get downloadStatus(): string {
+    return this._downloadStatus;
   }
 
-  public getCurrentFileName(): string {
-    return this.currentFileName;
+  public get currentFileName(): string {
+    return this._currentFileName;
   }
 
-  public getIsCached(): boolean {
-    return this.isCached;
+  public get isCached(): boolean {
+    return this._isCached;
   }
 
-  public getModelSizeFormatted(): string {
-    return this.modelSizeFormatted;
+  public get modelSizeFormatted(): string {
+    return this._modelSizeFormatted;
   }
 
-  public getVoices(): VoiceMetadata[] {
-    return this.availableVoices;
+  public get voices(): VoiceMetadata[] {
+    return this._availableVoices;
   }
 
-  public getLoadError(): string | null {
-    return this.loadError;
+  public get loadError(): string | null {
+    return this._loadError;
   }
 }
 

@@ -9,11 +9,11 @@
 
   let { isOpen, onConfirm, onCancel }: Props = $props();
 
-  let isLoading = $derived(ttsController.getIsLoading());
-  let downloadProgress = $derived(ttsController.getDownloadProgress());
-  let downloadStatus = $derived(ttsController.getDownloadStatus());
-  let currentFileName = $derived(ttsController.getCurrentFileName());
-  let loadError = $derived(ttsController.getLoadError());
+  let isLoading = $derived(ttsController.isLoading);
+  let downloadProgress = $derived(ttsController.downloadProgress);
+  let downloadStatus = $derived(ttsController.downloadStatus);
+  let currentFileName = $derived(ttsController.currentFileName);
+  let loadError = $derived(ttsController.loadError);
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && isOpen) {

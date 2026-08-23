@@ -24,8 +24,8 @@
   }: Props = $props();
 
   let isConfirmingClear = $state(false);
-  let hasCache = $derived(ttsController.getIsCached() || ttsController.getIsLoaded());
-  let cacheSizeText = $derived(ttsController.getModelSizeFormatted() || '~100 MB');
+  let hasCache = $derived(ttsController.isCached || ttsController.isLoaded);
+  let cacheSizeText = $derived(ttsController.modelSizeFormatted || '~100 MB');
 
   onMount(() => {
     ttsController.checkCache(true);
