@@ -3,16 +3,17 @@ import { TTSController, DEFAULT_TTS_SPEED } from './ttsController.svelte';
 
 describe('TTSController Unit Tests (Native Speech)', () => {
   let controller: TTSController;
-  let mockVoices: Array<{ voiceURI: string; name: string; lang: string; default: boolean }> = [];
+  let mockVoices: Array<{ voiceURI: string; name: string; lang: string; default: boolean; localService: boolean }> = [];
   let spokenUtterances: SpeechSynthesisUtterance[] = [];
   let mockCancel: ReturnType<typeof vi.fn>;
   let mockSpeak: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     mockVoices = [
-      { voiceURI: 'com.apple.speech.synthesis.voice.yuna', name: 'Yuna', lang: 'ko-KR', default: true },
-      { voiceURI: 'com.apple.speech.synthesis.voice.alex', name: 'Alex', lang: 'en-US', default: false },
-      { voiceURI: 'Microsoft SunHi Online (Natural) - Korean', name: 'Microsoft SunHi', lang: 'ko-KR', default: false },
+      { voiceURI: 'com.apple.speech.synthesis.voice.yuna', name: 'Yuna', lang: 'ko-KR', default: true, localService: true },
+      { voiceURI: 'com.apple.speech.synthesis.voice.alex', name: 'Alex', lang: 'en-US', default: false, localService: true },
+      { voiceURI: 'Google 한국어', name: 'Google 한국어', lang: 'ko-KR', default: false, localService: false },
+      { voiceURI: 'Microsoft SunHi Online (Natural) - Korean', name: 'Microsoft SunHi', lang: 'ko-KR', default: false, localService: true },
     ];
     spokenUtterances = [];
     mockCancel = vi.fn();
@@ -58,12 +59,14 @@ describe('TTSController Unit Tests (Native Speech)', () => {
     expect(controller.isAudioLoading()).toBe(false);
   });
 
-  it('discovers and filters native Korean system voices', () => {
+  it('discovers and filters native Korean system voices with offline metadata', () => {
     expect(controller.hasNativeVoices()).toBe(true);
-    expect(controller.nativeVoices.length).toBe(2);
+    expect(controller.hasOfflineVoice()).toBe(true);
+    expect(controller.nativeVoices.length).toBe(3);
     expect(controller.nativeVoices[0].id).toBe('com.apple.speech.synthesis.voice.yuna');
-    expect(controller.nativeVoices[0].name).toContain('Yuna');
-    expect(controller.nativeVoices[1].name).toContain('Microsoft SunHi');
+    expect(controller.nativeVoices[0].localService).toBe(true);
+    expect(controller.isVoiceOffline('com.apple.speech.synthesis.voice.yuna')).toBe(true);
+    expect(controller.isVoiceOffline('Google 한국어')).toBe(false);
   });
 
   it('speaks using native Web Speech API with default voice and rate', async () => {
@@ -92,7 +95,7 @@ describe('TTSController Unit Tests (Native Speech)', () => {
     expect(spokenUtterances.length).toBe(1);
     expect(spokenUtterances[0].text).toBe('감사합니다');
     expect(spokenUtterances[0].rate).toBe(1.3);
-    expect(spokenUtterances[0].voice).toEqual(mockVoices[2]);
+    expect(spokenUtterances[0].voice).toEqual(mockVoices[3]);
   });
 
   it('ignores empty or whitespace-only text', async () => {

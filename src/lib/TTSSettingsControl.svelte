@@ -22,6 +22,7 @@
   }: Props = $props();
 
   let nativeVoices = $derived(ttsController.nativeVoices);
+  let isSelectedVoiceOffline = $derived(ttsController.isVoiceOffline(settings.ttsVoice));
 
   onMount(() => {
     ttsController.refreshNativeVoices();
@@ -70,27 +71,54 @@
       </label>
 
       <!-- Native OS Voice Selection -->
-      <div class="flex items-center justify-between">
-        <label for="tts-voice-select" class="text-xs text-gray-600 dark:text-gray-400 cursor-pointer">
-          Voice
-        </label>
-        {#if nativeVoices.length > 0}
-          <select
-            id="tts-voice-select"
-            value={settings.ttsVoice || nativeVoices[0]?.id || ''}
-            onchange={(e) => onvoicechange?.((e.target as HTMLSelectElement).value)}
-            class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-xs max-w-[200px] truncate focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
-          >
-            {#each nativeVoices as v}
-              <option value={v.id}>{v.name}</option>
-            {/each}
-          </select>
-        {:else}
-          <span class="text-xs text-gray-500 dark:text-gray-400 italic">
-            Default OS Korean Voice
-          </span>
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center justify-between">
+          <label for="tts-voice-select" class="text-xs text-gray-600 dark:text-gray-400 cursor-pointer">
+            Voice
+          </label>
+          {#if nativeVoices.length > 0}
+            <select
+              id="tts-voice-select"
+              value={settings.ttsVoice || nativeVoices[0]?.id || ''}
+              onchange={(e) => onvoicechange?.((e.target as HTMLSelectElement).value)}
+              class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-xs max-w-[210px] truncate focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+            >
+              {#each nativeVoices as v}
+                <option value={v.id}>
+                  {v.name} ({v.localService ? 'Offline' : 'Online'})
+                </option>
+              {/each}
+            </select>
+          {:else}
+            <span class="text-xs text-gray-500 dark:text-gray-400 italic">
+              Default OS Voice
+            </span>
+          {/if}
+        </div>
+
+        {#if nativeVoices.length > 0 && !isSelectedVoiceOffline}
+          <p class="text-[11px] text-amber-600 dark:text-amber-400 italic text-right">
+            Online voice: requires internet connection
+          </p>
         {/if}
       </div>
+
+      {#if nativeVoices.length === 0}
+        <!-- OS Voice Setup Guide Banner -->
+        <div class="p-2.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-lg text-left text-xs">
+          <p class="font-semibold text-amber-800 dark:text-amber-300 mb-1">
+            No Korean voice detected on this device
+          </p>
+          <p class="text-amber-700 dark:text-amber-400 text-[11px] leading-relaxed mb-1.5">
+            To enable free on-device speech, install a Korean voice in your operating system:
+          </p>
+          <ul class="space-y-1 text-[11px] text-amber-700 dark:text-amber-400 list-disc list-inside">
+            <li><strong>Mac/iOS</strong>: System Settings → Accessibility → Spoken Content → Korean (Yuna)</li>
+            <li><strong>Windows</strong>: Settings → Time & Language → Speech → Add voices</li>
+            <li><strong>Android</strong>: Settings → Accessibility → Text-to-speech → Install voice data</li>
+          </ul>
+        </div>
+      {/if}
 
       <!-- Playback Speed Slider -->
       <div class="flex flex-col gap-1.5">

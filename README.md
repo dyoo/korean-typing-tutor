@@ -154,6 +154,38 @@ We use **Vitest** for automated unit testing to ensure the Korean composition en
   npm run test:watch
   ```
 
+---
+
+## Offline Usage & Voice Setup Guide
+
+The Korean Typing Tutor is a 100% offline-capable Progressive Web App (PWA). All typing lessons, Hangul IME composition logic, and Anki parsers run locally in your browser with zero cloud dependencies.
+
+To ensure **100% offline voice synthesis (speech pronunciation)** without an active internet connection, verify that an on-device Korean voice is installed in your operating system:
+
+### macOS / iOS (Safari, Chrome, Edge)
+1. Open **System Settings** $\rightarrow$ **Accessibility** $\rightarrow$ **Spoken Content**.
+2. Click **System Voice** $\rightarrow$ **Manage Voices...**.
+3. Search for **Korean** and download **Yuna (Enhanced)** or **Siri**.
+4. In the app's Voice Synthesis settings, select **`Yuna (ko-KR) (Offline)`**.
+
+### Windows 11 / 10 (Edge, Chrome)
+1. Open **Settings** $\rightarrow$ **Time & Language** $\rightarrow$ **Speech**.
+2. Under **Manage voices**, click **Add voices**.
+3. Search for **Korean** and install the voice pack (e.g. **Microsoft SunHi** or **Microsoft InJoon**).
+4. In the app's Voice Synthesis settings, select **`Microsoft SunHi (Offline)`**.
+
+### Android (Chrome, Samsung Internet)
+1. Open **Settings** $\rightarrow$ **Accessibility** $\rightarrow$ **Text-to-speech output**.
+2. Tap the **gear/settings icon** next to **Preferred engine** (*Google Speech Recognition & Synthesis* or *Samsung TTS*).
+3. Select **Install voice data** $\rightarrow$ **Korean** and download the offline voice pack.
+4. Voice playback will now work seamlessly in Chrome even in airplane mode.
+
+### Linux (Chromium, Firefox)
+Install `speech-dispatcher` and `espeak-ng` via your distribution's package manager:
+```bash
+sudo apt install speech-dispatcher speech-dispatcher-espeak-ng espeak-ng
+```
+
 ## Linting and Type Checking
 
 We use **ESLint** for static analysis and **svelte-check** for cross-component type validation.

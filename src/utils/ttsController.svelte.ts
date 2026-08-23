@@ -10,6 +10,7 @@ export interface NativeVoiceInfo {
   name: string;
   lang: string;
   isDefault: boolean;
+  localService: boolean;
 }
 
 export class TTSController {
@@ -53,6 +54,7 @@ export class TTSController {
       name: `${v.name} (${v.lang})`,
       lang: v.lang,
       isDefault: v.default,
+      localService: v.localService ?? true,
     }));
   }
 
@@ -67,6 +69,20 @@ export class TTSController {
   /** Returns true if at least one native Korean voice is available. */
   public hasNativeVoices(): boolean {
     return this.nativeVoices.length > 0;
+  }
+
+  /** Returns true if at least one on-device offline Korean voice is available. */
+  public hasOfflineVoice(): boolean {
+    return this.nativeVoices.some((v) => v.localService);
+  }
+
+  /** Checks whether a specific voice URI runs locally on-device without internet. */
+  public isVoiceOffline(voiceURI?: string): boolean {
+    if (!voiceURI) {
+      return this.nativeVoices[0]?.localService ?? false;
+    }
+    const match = this.nativeVoices.find((v) => v.id === voiceURI);
+    return match?.localService ?? false;
   }
 
   /** Cancels any active speech utterance immediately. */
