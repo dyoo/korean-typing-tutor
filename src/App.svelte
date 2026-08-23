@@ -26,7 +26,6 @@
   import ExercisePrompt from './lib/ExercisePrompt.svelte';
   import TopBar from './lib/TopBar.svelte';
   import InputDisplay from './lib/InputDisplay.svelte';
-  import TTSDownloadModal from './lib/TTSDownloadModal.svelte';
   import MasteryCompletionModal from './lib/MasteryCompletionModal.svelte';
   import WelcomeModal from './lib/WelcomeModal.svelte';
   import ImportDeckModal from './lib/ImportDeckModal.svelte';
@@ -160,7 +159,6 @@
   }
 
   onMount(() => {
-    ttsController.checkCache();
     session.setFilter(enabledModuleIds, true);
     applyTheme(settings.theme);
     focusInputElement();
@@ -174,7 +172,6 @@
   });
 
   function handleBeginSession() {
-    ttsController.unlockAudio();
     session.resetSessionState();
     showWelcomeModal = false;
     focusInputElement();
@@ -184,7 +181,6 @@
   }
 
   function handleWindowClick(e: MouseEvent) {
-    ttsController.unlockAudio();
     focusInput(e);
   }
 
@@ -219,38 +215,32 @@
   }
 
   function toggleMode() {
-    ttsController.cancelBatchPreload();
     const newMode = mode === 'curriculum' ? 'mastery' : 'curriculum';
     session.setMode(newMode);
     focusInputElement();
   }
 
   function handleMasteryLevelChange(level: number) {
-    ttsController.cancelBatchPreload();
     session.setMasteryProgressionLevel(level);
     focusInputElement();
   }
 
   function handleMasteryCheckpointChange(checkpointId: string) {
-    ttsController.cancelBatchPreload();
     session.setMasteryCheckpointLevel(checkpointId);
     focusInputElement();
   }
 
   function handleMasteryFocusSelect(batchim: string) {
-    ttsController.cancelBatchPreload();
     session.setMasteryFocusBatchim(batchim);
     focusInputElement();
   }
 
   function handleMasterySubModeChange(subMode: MasterySubMode) {
-    ttsController.cancelBatchPreload();
     session.setMasterySubMode(subMode);
     focusInputElement();
   }
 
   function toggleModule(modId: string) {
-    ttsController.cancelBatchPreload();
     if (enabledModuleIds.includes(modId)) {
       if (enabledModuleIds.length === 1) {
         return;
@@ -320,7 +310,6 @@
   }
 
   function toggleCategoryGroup(category: CurriculumCategory) {
-    ttsController.cancelBatchPreload();
     enabledModuleIds = toggleCategoryGroupIds(category, enabledModuleIds);
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
@@ -328,7 +317,6 @@
   }
 
   function selectAllModules() {
-    ttsController.cancelBatchPreload();
     enabledModuleIds = modules.map((m) => m.id);
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
@@ -336,7 +324,6 @@
   }
 
   function deselectAllModules() {
-    ttsController.cancelBatchPreload();
     enabledModuleIds = [];
     settings = { ...settings, enabledModuleIds };
     saveSettings(settings);
@@ -347,7 +334,6 @@
     if (
       showWelcomeModal ||
       activePanel !== 'none' ||
-      showTTSDownloadModal ||
       showMasteryCompletionModal ||
       showImportDeckModal
     ) {
@@ -398,7 +384,6 @@
   }
 
   function processKeystrokeWithAudio(key: string) {
-    ttsController.unlockAudio();
     const wasCompleted = session.getIsItemCompleted();
     const result = session.processKey(key);
 
@@ -483,67 +468,16 @@
     saveSettings(settings);
   }
 
-  let showTTSDownloadModal = $state(false);
   let isTTSSpeaking = $derived(ttsController.isSpeaking);
-  let isTTSLoading = $derived(
-    settings.enableTTS &&
-      ttsController.isAudioLoading(
-        currentItem?.target,
-        settings.ttsVoice,
-        settings.ttsEngine,
-      ),
-  );
+  let isTTSLoading = $derived(false);
 
-  async function toggleTTS() {
+  function toggleTTS() {
     if (!settings.enableTTS) {
-      if (settings.ttsEngine === 'kokoro') {
-        let isCached = ttsController.isCached;
-        if (!isCached && !ttsController.isLoaded) {
-          isCached = await ttsController.checkCache();
-        }
-        if (!ttsController.isLoaded && !isCached) {
-          showTTSDownloadModal = true;
-          return;
-        }
-      }
       updateSetting('enableTTS', true);
     } else {
       updateSetting('enableTTS', false);
       ttsController.stopAudio();
     }
-  }
-
-  async function handleEngineChange(engine: 'native' | 'kokoro') {
-    updateSetting('ttsEngine', engine);
-    if (engine === 'kokoro' && settings.enableTTS) {
-      let isCached = ttsController.isCached;
-      if (!isCached && !ttsController.isLoaded) {
-        isCached = await ttsController.checkCache();
-      }
-      if (!ttsController.isLoaded && !isCached) {
-        showTTSDownloadModal = true;
-      }
-    }
-  }
-
-  function handleNativeVoiceChange(voiceURI: string) {
-    updateSetting('ttsNativeVoice', voiceURI);
-  }
-
-  async function handleConfirmTTSDownload() {
-    try {
-      await ttsController.loadModel();
-      updateSetting('enableTTS', true);
-      showTTSDownloadModal = false;
-    } catch {
-      // Error is displayed inside modal
-    }
-  }
-
-  function handleCancelTTSDownload() {
-    ttsController.cancelLoading();
-    updateSetting('enableTTS', false);
-    showTTSDownloadModal = false;
   }
 
   function toggleSpeakOnCompletion() {
@@ -562,20 +496,12 @@
     updateSetting('ttsSpeed', speed);
   }
 
-  async function handleClearTTSCache() {
-    await ttsController.clearCache();
-    updateSetting('enableTTS', false);
-  }
-
   function speakCurrentPrompt() {
-    console.debug('[App] speakCurrentPrompt called for:', currentItem?.target);
     if (currentItem && currentItem.target) {
       ttsController.speak(
         currentItem.target,
-        settings.ttsVoice ?? 'jm_kumo',
+        settings.ttsVoice,
         settings.ttsSpeed ?? 1.0,
-        settings.ttsEngine ?? 'native',
-        settings.ttsNativeVoice,
       );
     }
     focusInputElement();
@@ -583,15 +509,10 @@
 
   let lastPromptTarget = '';
 
-  // Pre-synthesize and cache audio in the background whenever the exercise prompt changes,
-  // so clicking the audio button or completing the word plays immediately with 0ms delay.
-  // Continuously buffers the next 5 upcoming words in the background Web Worker when using Kokoro.
   $effect(() => {
     const targetText = currentItem?.target;
     const isEnabled = settings.enableTTS;
     const speakOnAppear = settings.speakOnAppearance;
-    const voice = settings.ttsVoice ?? 'jm_kumo';
-    const engine = settings.ttsEngine ?? 'native';
 
     untrack(() => {
       const isNewTarget = targetText !== lastPromptTarget;
@@ -601,16 +522,6 @@
       }
 
       if (isEnabled && targetText) {
-        if (engine === 'kokoro') {
-          // Preload active target immediately
-          ttsController.preload(targetText, voice);
-          // Continuously buffer upcoming 5 exercises in background worker
-          const upcomingTargets = session.getUpcomingItems(5).map((i) => i.target);
-          if (upcomingTargets.length > 0) {
-            void ttsController.preloadBatch(upcomingTargets, voice);
-          }
-        }
-
         // If speak on appearance is enabled, pronounce the prompt when it newly appears (once welcome modal is dismissed)
         if (isNewTarget && speakOnAppear && !showWelcomeModal) {
           speakCurrentPrompt();
@@ -735,13 +646,10 @@
     ontogglelockfontsize={handleToggleLockFontSize}
     oncursorcolorchange={handleCursorColorChange}
     ontoggletts={toggleTTS}
-    onenginechange={handleEngineChange}
     ontogglespeakoncompletion={toggleSpeakOnCompletion}
     ontogglespeakonappearance={toggleSpeakOnAppearance}
     onvoicechange={handleVoiceChange}
-    onnativevoicechange={handleNativeVoiceChange}
     onspeedchange={handleSpeedChange}
-    onclearttscache={handleClearTTSCache}
   />
 
   <div
@@ -839,12 +747,6 @@
   oncheckpointselect={handleMasteryCheckpointChange}
   onfocusselect={handleMasteryFocusSelect}
   ontogglestagecollapse={toggleMasteryStageCollapse}
-/>
-
-<TTSDownloadModal
-  isOpen={showTTSDownloadModal}
-  onConfirm={handleConfirmTTSDownload}
-  onCancel={handleCancelTTSDownload}
 />
 
 <MasteryCompletionModal

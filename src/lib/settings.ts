@@ -23,11 +23,9 @@ export interface TutorSettings {
   lockFontSize?: boolean;
   cursorColor?: CursorColorMode;
   enableTTS?: boolean;
-  ttsEngine?: 'native' | 'kokoro';
   speakOnCompletion?: boolean;
   speakOnAppearance?: boolean;
   ttsVoice?: string;
-  ttsNativeVoice?: string;
   ttsSpeed?: number;
 }
 
@@ -46,11 +44,9 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   lockFontSize: false,
   cursorColor: 'amber',
   enableTTS: false,
-  ttsEngine: 'native',
   speakOnCompletion: true,
   speakOnAppearance: false,
   ttsVoice: DEFAULT_TTS_VOICE,
-  ttsNativeVoice: '',
   ttsSpeed: DEFAULT_TTS_SPEED,
 };
 
@@ -114,11 +110,6 @@ export function loadSettings(): TutorSettings {
       lockFontSize: pickBool(parsed.lockFontSize, DEFAULT_SETTINGS.lockFontSize ?? false),
       cursorColor: pickEnum(parsed.cursorColor, validCursorColors, DEFAULT_SETTINGS.cursorColor ?? 'amber'),
       enableTTS: pickBool(parsed.enableTTS, DEFAULT_SETTINGS.enableTTS ?? false),
-      ttsEngine: pickEnum(
-        parsed.ttsEngine,
-        ['native', 'kokoro'] as const,
-        DEFAULT_SETTINGS.ttsEngine ?? 'native',
-      ),
       speakOnCompletion: pickBool(
         parsed.speakOnCompletion,
         DEFAULT_SETTINGS.speakOnCompletion ?? true,
@@ -128,10 +119,6 @@ export function loadSettings(): TutorSettings {
         DEFAULT_SETTINGS.speakOnAppearance ?? false,
       ),
       ttsVoice: typeof parsed.ttsVoice === 'string' ? parsed.ttsVoice : DEFAULT_SETTINGS.ttsVoice,
-      ttsNativeVoice:
-        typeof parsed.ttsNativeVoice === 'string'
-          ? parsed.ttsNativeVoice
-          : DEFAULT_SETTINGS.ttsNativeVoice,
       ttsSpeed: pickNumberRange(parsed.ttsSpeed, 0.5, 2.0, DEFAULT_SETTINGS.ttsSpeed),
     };
   } catch {

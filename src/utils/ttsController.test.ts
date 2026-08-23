@@ -1,976 +1,30 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { TTSController, formatBytes, inspectCacheStorage } from './ttsController.svelte';
-import type { TTSWorkerRequest } from '../types/tts';
+import { TTSController, DEFAULT_TTS_SPEED } from './ttsController.svelte';
 
-describe('TTSController Unit Tests', () => {
+describe('TTSController Unit Tests (Native Speech)', () => {
   let controller: TTSController;
-  let postedMessages: TTSWorkerRequest[] = [];
-  let latestWorkerInstance: MockWorker | null = null;
-
-  function setLatestWorker(instance: MockWorker) {
-    latestWorkerInstance = instance;
-  }
-
-  class MockWorker {
-    public onmessage: ((event: MessageEvent) => void) | null = null;
-    public onerror: ((event: ErrorEvent) => void) | null = null;
-    public onmessageerror: ((event: MessageEvent) => void) | null = null;
-
-    constructor() {
-      setLatestWorker(this);
-    }
-
-    public postMessage(msg: TTSWorkerRequest) {
-      postedMessages.push(msg);
-    }
-
-    public terminate() {
-      // Mock terminate
-    }
-  }
+  let mockVoices: Array<{ voiceURI: string; name: string; lang: string; default: boolean }> = [];
+  let spokenUtterances: SpeechSynthesisUtterance[] = [];
+  let mockCancel: ReturnType<typeof vi.fn>;
+  let mockSpeak: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
-    postedMessages = [];
-    latestWorkerInstance = null;
-    vi.stubGlobal('Worker', MockWorker);
-    controller = new TTSController();
-  });
-
-  afterEach(() => {
-    vi.unstubAllGlobals();
-    vi.restoreAllMocks();
-  });
-
-  it('initializes with default idle state', () => {
-    expect(controller.isLoaded).toBe(false);
-    expect(controller.isLoading).toBe(false);
-    expect(controller.isSpeaking).toBe(false);
-    expect(controller.isCached).toBe(false);
-    expect(controller.downloadProgress).toBe(0);
-    expect(controller.voices).toEqual([]);
-  });
-
-  it('returns null on preload with empty or whitespace string', () => {
-    expect(controller.preload('')).toBeNull();
-    expect(controller.preload('   ')).toBeNull();
-  });
-
-  it('inspects cache storage directly without spawning a Web Worker', async () => {
-    expect(latestWorkerInstance).toBeNull();
-    const isCachedResult = await controller.checkCache();
-    expect(isCachedResult).toBe(false);
-    expect(controller.isCached).toBe(false);
-    // Verifies Web Worker is NEVER instantiated when checking cache
-    expect(latestWorkerInstance).toBeNull();
-    expect(postedMessages.length).toBe(0);
-  });
-
-  it('separates stopAudio from cancelSynthesis', () => {
-    controller.stopAudio();
-    expect(controller.isSpeaking).toBe(false);
-    expect(postedMessages.length).toBe(0);
-
-    // Initializing worker via loadModel so stop() sends CANCEL_SYNTHESIS
-    void controller.loadModel();
-    controller.stop();
-    expect(postedMessages).toContainEqual({
-      type: 'CANCEL_SYNTHESIS',
-      payload: undefined,
-    });
-  });
-
-  it('handles load progress and success messages from worker', async () => {
-    const loadPromise = controller.loadModel();
-
-    expect(controller.isLoading).toBe(true);
-    expect(postedMessages).toContainEqual({
-      type: 'LOAD_MODEL',
-      payload: { dtype: 'q8', device: 'wasm' },
-    });
-
-    // Simulate progress event
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_PROGRESS',
-        payload: { file: 'model.onnx', progress: 45, status: 'download' },
-      },
-    } as MessageEvent);
-
-    expect(controller.downloadProgress).toBe(45);
-    expect(controller.currentFileName).toBe('model.onnx');
-
-    // Simulate success event
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: {
-          voices: [
-            {
-              id: 'jf_nezumi',
-              name: 'Nezumi',
-              group: 'Japanese Voices',
-              gender: 'Female',
-              lang: 'ja',
-              grade: 'B+',
-              traits: 'Soft',
-            },
-          ],
-        },
-      },
-    } as MessageEvent);
-
-    await loadPromise;
-    expect(controller.isLoaded).toBe(true);
-    expect(controller.isLoading).toBe(false);
-    expect(controller.voices.length).toBe(1);
-  });
-
-  it('handles synthesize success and audio caching', async () => {
-    // First load the model
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    const synthPromise = controller.synthesize('안녕하세요', 'jf_nezumi');
-
-    const synthMsg = postedMessages.find((m) => m.type === 'SYNTHESIZE');
-    expect(synthMsg).toBeDefined();
-    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-      expect(synthMsg.payload.text).toBe('안녕하세요');
-
-      // Simulate worker returning success
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synthMsg.payload.id,
-            audioBlobUrl: 'blob:http://localhost/sample-audio',
-            genTimeMs: 120,
-            durationSec: 1.5,
-            ipa: 'an-nyeong-ha-se-yo',
-          },
-        },
-      } as MessageEvent);
-    }
-
-    const audioUrl = await synthPromise;
-    expect(audioUrl).toBe('blob:http://localhost/sample-audio');
-
-    // Second call with same parameters should return cached result without new message
-    const msgCountBefore = postedMessages.length;
-    const cachedUrl = await controller.synthesize('안녕하세요', 'jf_nezumi');
-    expect(cachedUrl).toBe('blob:http://localhost/sample-audio');
-    expect(postedMessages.length).toBe(msgCountBefore);
-  });
-
-  it('handles synthesis cancellation correctly', async () => {
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    const synthPromise = controller.synthesize('한글', 'jf_nezumi');
-
-    const synthMsg = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '한글',
-    );
-    expect(synthMsg).toBeDefined();
-
-    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-      controller.cancelSynthesis(synthMsg.payload.id);
-
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_CANCELLED',
-          payload: { id: synthMsg.payload.id },
-        },
-      } as MessageEvent);
-    }
-
-    await expect(synthPromise).rejects.toThrow('Synthesis cancelled');
-  });
-
-  it('uses default voice jm_kumo consistently across speak and synthesize', async () => {
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    void controller.synthesize('테스트');
-    const synthMsg = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '테스트',
-    );
-    expect(synthMsg).toBeDefined();
-    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-      expect(synthMsg.payload.voice).toBe('jm_kumo');
-    }
-  });
-
-  it('handles preload cancellation silently by resolving to null', async () => {
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    const preloadPromise = controller.preload('미리듣기');
-    expect(preloadPromise).not.toBeNull();
-
-    controller.stop();
-    const result = await preloadPromise;
-    expect(result).toBeNull();
-  });
-
-  it('evicts oldest audio from cache and calls URL.revokeObjectURL when reaching capacity', async () => {
-    const revokeObjectURLMock = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
-
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    // Fill the cache up to 50 items
-    for (let i = 1; i <= 50; i++) {
-      const p = controller.synthesize(`word_${i}`);
-      const synthMsg = postedMessages[postedMessages.length - 1];
-      if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-        latestWorkerInstance?.onmessage?.({
-          data: {
-            type: 'SYNTHESIS_SUCCESS',
-            payload: {
-              id: synthMsg.payload.id,
-              audioBlobUrl: `blob:http://localhost/audio_${i}`,
-              genTimeMs: 10,
-              durationSec: 1.0,
-              ipa: `word-${i}`,
-            },
-          },
-        } as MessageEvent);
-      }
-      await p;
-    }
-
-    expect(revokeObjectURLMock).not.toHaveBeenCalled();
-
-    // Adding 51st item should evict word_1 and revoke blob:http://localhost/audio_1
-    const p51 = controller.synthesize('word_51');
-    const synthMsg51 = postedMessages[postedMessages.length - 1];
-    if (synthMsg51 && synthMsg51.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synthMsg51.payload.id,
-            audioBlobUrl: 'blob:http://localhost/audio_51',
-            genTimeMs: 10,
-            durationSec: 1.0,
-            ipa: 'word-51',
-          },
-        },
-      } as MessageEvent);
-    }
-    await p51;
-
-    expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/audio_1');
-  });
-
-  it('revokes all cached Blob URLs when clearCache is called', async () => {
-    const revokeObjectURLMock = vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
-
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    // Synthesize two items
-    const p1 = controller.synthesize('가');
-    const msg1 = postedMessages[postedMessages.length - 1];
-    if (msg1?.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: msg1.payload.id,
-            audioBlobUrl: 'blob:http://localhost/ga',
-            genTimeMs: 10,
-            durationSec: 1.0,
-            ipa: 'ga',
-          },
-        },
-      } as MessageEvent);
-    }
-    await p1;
-
-    const p2 = controller.synthesize('나');
-    const msg2 = postedMessages[postedMessages.length - 1];
-    if (msg2?.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: msg2.payload.id,
-            audioBlobUrl: 'blob:http://localhost/na',
-            genTimeMs: 10,
-            durationSec: 1.0,
-            ipa: 'na',
-          },
-        },
-      } as MessageEvent);
-    }
-    await p2;
-
-    await controller.clearCache();
-
-    expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/ga');
-    expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/na');
-  });
-
-  it('clears modelSizeFormatted and terminates worker on clearCache', async () => {
-    // Start worker via loadModel
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [], modelSizeFormatted: '88.1 MB' },
-      },
-    } as MessageEvent);
-    await loadPromise;
-    expect(controller.modelSizeFormatted).toBe('88.1 MB');
-
-    await controller.clearCache();
-
-    expect(controller.modelSizeFormatted).toBe('');
-    expect(controller.isCached).toBe(false);
-    expect(controller.isLoaded).toBe(false);
-  });
-
-  it('handles worker.onerror by setting loadError and terminating the worker instance', async () => {
-    const loadPromise = controller.loadModel();
-    const currentWorker = latestWorkerInstance;
-    expect(currentWorker).not.toBeNull();
-
-    // Trigger onerror with empty error message (typical Safari cross-origin / worker failure behavior)
-    currentWorker?.onerror?.({ message: '' } as ErrorEvent);
-
-    await expect(loadPromise).rejects.toThrow('Web Worker failed to initialize or execute');
-    expect(controller.loadError).toBe('Web Worker failed to initialize or execute');
-    expect(controller.isLoading).toBe(false);
-
-    // Retrying loadModel should initialize a fresh worker instance
-    const retryPromise = controller.loadModel();
-    expect(latestWorkerInstance).not.toBe(currentWorker);
-
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-
-    await retryPromise;
-    expect(controller.isLoaded).toBe(true);
-    expect(controller.loadError).toBeNull();
-  });
-
-  it('handles LOAD_ERROR message from worker by setting loadError and resetting isLoading', async () => {
-    const loadPromise = controller.loadModel();
-
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_ERROR',
-        payload: { error: 'Failed to fetch ONNX model' },
-      },
-    } as MessageEvent);
-
-    await expect(loadPromise).rejects.toThrow('Failed to fetch ONNX model');
-    expect(controller.loadError).toBe('Failed to fetch ONNX model');
-    expect(controller.isLoading).toBe(false);
-    expect(controller.isLoaded).toBe(false);
-  });
-
-  it('safely primes audio via unlockAudio and handles play with persistent player', async () => {
-    let playCalled = false;
-    class MockAudio {
-      public src = '';
-      public onended: (() => void) | null = null;
-      public onerror: (() => void) | null = null;
-      public play() {
-        playCalled = true;
-        return Promise.resolve();
-      }
-      public pause() {}
-    }
-    vi.stubGlobal('Audio', MockAudio);
-
-    // Call unlockAudio
-    controller.unlockAudio();
-    expect(playCalled).toBe(true);
-
-    // Calling unlockAudio second time should not re-trigger silent unlock once unlocked
-    playCalled = false;
-    controller.unlockAudio();
-    expect(playCalled).toBe(false);
-  });
-
-  it('handles speak playback lifecycle and resolves when audio ends', async () => {
-    let mockInstance: MockAudio | null = null;
-    function setMockInstance(instance: MockAudio) {
-      mockInstance = instance;
-    }
-    class MockAudio {
-      public src = '';
-      public onended: (() => void) | null = null;
-      public onerror: (() => void) | null = null;
-      constructor() {
-        setMockInstance(this);
-      }
-      public play() {
-        return Promise.resolve();
-      }
-      public pause() {}
-    }
-    vi.stubGlobal('Audio', MockAudio);
-
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    const speakPromise = controller.speak('안녕하세요');
-    expect(controller.isSpeaking).toBe(true);
-
-    const synthMsg = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '안녕하세요',
-    );
-    expect(synthMsg).toBeDefined();
-
-    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synthMsg.payload.id,
-            audioBlobUrl: 'blob:http://localhost/annyeong',
-            genTimeMs: 20,
-            durationSec: 1.5,
-            ipa: 'annyeong',
-          },
-        },
-      } as MessageEvent);
-    }
-
-    // Allow promise resolutions in speak() to execute before triggering onended
-    await new Promise((r) => setTimeout(r, 20));
-
-    // Trigger onended on the mock audio instance
-    expect(mockInstance).not.toBeNull();
-    (mockInstance as MockAudio | null)?.onended?.();
-
-    await speakPromise;
-    expect(controller.isSpeaking).toBe(false);
-  });
-
-  it('sequentially pre-synthesizes upcoming items with preloadBatch and supports cancellation', async () => {
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    const batchPromise = controller.preloadBatch(['단어1', '단어2', '단어3']);
-
-    // First item '단어1' should be requested
-    const synth1 = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '단어1',
-    );
-    expect(synth1).toBeDefined();
-
-    if (synth1 && synth1.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synth1.payload.id,
-            audioBlobUrl: 'blob:http://localhost/word1',
-            genTimeMs: 15,
-            durationSec: 1.0,
-            ipa: 'dan-eo-1',
-          },
-        },
-      } as MessageEvent);
-    }
-
-    // Allow event loop to progress to second item '단어2'
-    await new Promise((r) => setTimeout(r, 20));
-
-    const synth2 = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '단어2',
-    );
-    expect(synth2).toBeDefined();
-
-    // Calling stop() cancels active batch preloading and in-flight synthesis
-    controller.stop();
-
-    await batchPromise;
-
-    // Remaining item '단어3' should never have been requested
-    const synth3 = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '단어3',
-    );
-    expect(synth3).toBeUndefined();
-  });
-
-  it('handles synthesis requests initiated while model loading is in flight without race conditions', async () => {
-    // 1. Trigger synthesis before model is loaded
-    const synthPromise = controller.synthesize('동시합성', 'jm_kumo');
-
-    // Verify LOAD_MODEL message was dispatched
-    const loadMsg = postedMessages.find((m) => m.type === 'LOAD_MODEL');
-    expect(loadMsg).toBeDefined();
-
-    // Verify concurrent calls to loadModel return the same in-flight promise
-    const concurrentLoadPromise = controller.loadModel();
-
-    // 2. Simulate progress updates from worker
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_PROGRESS',
-        payload: { file: 'model_q8.onnx', progress: 50, status: 'download' },
-      },
-    } as MessageEvent);
-
-    expect(controller.downloadProgress).toBe(50);
-
-    // 3. Complete model loading
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-
-    await concurrentLoadPromise;
-    expect(controller.isLoaded).toBe(true);
-
-    // Allow the synthesis promise microtask to advance and post SYNTHESIZE message
-    await new Promise((r) => setTimeout(r, 10));
-
-    // 4. Verify the queued synthesis message was posted to worker
-    const synthMsg = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '동시합성',
-    );
-    expect(synthMsg).toBeDefined();
-
-    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synthMsg.payload.id,
-            audioPcm: new Float32Array(50),
-            sampleRate: 24000,
-            genTimeMs: 45,
-            durationSec: 0.8,
-            ipa: 'dong-si-hap-seong',
-          },
-        },
-      } as MessageEvent);
-    }
-
-    const resolvedUrl = await synthPromise;
-    expect(resolvedUrl).toContain('blob:');
-  });
-
-  it('reuses in-flight synthesis promise when speak() is called while preload is actively generating without duplicating synthesis request', async () => {
-    // 1. Initialize model
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    // 2. Start preloading an item
-    const preloadPromise = controller.preload('미리생성단어', 'jm_kumo');
-
-    const synthMessagesFirst = postedMessages.filter(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '미리생성단어',
-    );
-    expect(synthMessagesFirst.length).toBe(1);
-    const requestId = (synthMessagesFirst[0] as { payload: { id: string } }).payload.id;
-
-    // 3. While synthesis is in-flight, simulate reaching exercise and calling speak()
-    let mockPlayInvoked = false;
-    class MockAudioElementForTest {
-      public src: string = '';
-      public onended: (() => void) | null = null;
-      public onerror: (() => void) | null = null;
-      constructor() {
-        activeAudioInstance = this; // eslint-disable-line @typescript-eslint/no-this-alias
-      }
-      public async play(): Promise<void> {
-        mockPlayInvoked = true;
-      }
-      public pause(): void {}
-    }
-    let activeAudioInstance: MockAudioElementForTest | null = null;
-    vi.stubGlobal('Audio', MockAudioElementForTest);
-
-    const speakPromise = controller.speak('미리생성단어', 'jm_kumo', 1.0);
-
-    // Verify NO duplicate SYNTHESIZE message was posted
-    const synthMessagesSecond = postedMessages.filter(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '미리생성단어',
-    );
-    expect(synthMessagesSecond.length).toBe(1);
-
-    // 4. Respond with synthesis success from worker
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'SYNTHESIS_SUCCESS',
-        payload: {
-          id: requestId,
-          audioBlobUrl: 'blob:http://localhost/preloaded-audio',
-          genTimeMs: 30,
-          durationSec: 0.5,
-          ipa: 'mi-ri-saeng-seong',
-        },
-      },
-    } as MessageEvent);
-
-    const preloadResult = await preloadPromise;
-    expect(preloadResult).toBe('blob:http://localhost/preloaded-audio');
-
-    await new Promise((r) => setTimeout(r, 10));
-    expect(mockPlayInvoked).toBe(true);
-
-    (activeAudioInstance as MockAudioElementForTest | null)?.onended?.();
-    await speakPromise;
-  });
-
-  it('correctly reports isAudioLoading and isAudioCached during lifecycle', async () => {
-    // Before model is loaded, any request is considered loading
-    expect(controller.isAudioLoading('테스트')).toBe(true);
-    expect(controller.isAudioCached('테스트')).toBe(false);
-
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    // After model is loaded, unrequested text is not loading
-    expect(controller.isAudioLoading('테스트')).toBe(false);
-    expect(controller.isAudioCached('테스트')).toBe(false);
-
-    // Start synthesizing
-    const synthPromise = controller.synthesize('테스트', 'jm_kumo');
-    expect(controller.isAudioLoading('테스트')).toBe(true);
-    expect(controller.isAudioCached('테스트')).toBe(false);
-
-    const synthMsg = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '테스트',
-    );
-    expect(synthMsg).toBeDefined();
-
-    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synthMsg.payload.id,
-            audioBlobUrl: 'blob:http://localhost/test',
-            genTimeMs: 10,
-            durationSec: 0.5,
-            ipa: 'te-seu-teu',
-          },
-        },
-      } as MessageEvent);
-    }
-
-    await synthPromise;
-    expect(controller.isAudioLoading('테스트')).toBe(false);
-    expect(controller.isAudioCached('테스트')).toBe(true);
-  });
-
-  it('discards playback for skipped prompts when stopAudio is called while synthesize is in flight', async () => {
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    const playedUrls: string[] = [];
-    class MockAudioElementForSkipTest {
-      public src: string = '';
-      public onended: (() => void) | null = null;
-      public onerror: (() => void) | null = null;
-      public async play(): Promise<void> {
-        playedUrls.push(this.src);
-      }
-      public pause(): void {}
-    }
-    vi.stubGlobal('Audio', MockAudioElementForSkipTest);
-
-    // Start speaking skipped prompt A
-    const speakAPromise = controller.speak('스킵단어A', 'jm_kumo', 1.0);
-
-    const synthMsgA = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '스킵단어A',
-    );
-    expect(synthMsgA).toBeDefined();
-
-    // User skips exercise -> stopAudio() is called
-    controller.stopAudio();
-
-    // Worker finishes synthesis for prompt A
-    if (synthMsgA && synthMsgA.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synthMsgA.payload.id,
-            audioBlobUrl: 'blob:http://localhost/skipped-a',
-            genTimeMs: 10,
-            durationSec: 0.5,
-            ipa: 'skip-a',
-          },
-        },
-      } as MessageEvent);
-    }
-
-    await speakAPromise;
-
-    // Verify audio.play() was NEVER called with the synthesized audio URL for prompt A
-    expect(playedUrls).not.toContain('blob:http://localhost/skipped-a');
-    expect(controller.isSpeaking).toBe(false);
-  });
-
-  it('adjusts voice speed via audio playbackRate and preserves pitch without re-synthesizing', async () => {
-    const loadPromise = controller.loadModel();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-    await loadPromise;
-
-    let capturedPlaybackRate: number | null = null;
-    let capturedPreservesPitch: boolean | null = null;
-
-    class MockAudioForSpeedTest {
-      public src: string = '';
-      public playbackRate: number = 1.0;
-      public preservesPitch: boolean = false;
-      public onended: (() => void) | null = null;
-      public onerror: (() => void) | null = null;
-      public async play(): Promise<void> {
-        capturedPlaybackRate = this.playbackRate;
-        capturedPreservesPitch = this.preservesPitch;
-        this.onended?.();
-      }
-      public pause(): void {}
-    }
-    vi.stubGlobal('Audio', MockAudioForSpeedTest);
-
-    // 1. First speak call at 0.75x speed
-    const speak075Promise = controller.speak('속도테스트', 'jm_kumo', 0.75);
-
-    const synthMsg = postedMessages.find(
-      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '속도테스트',
-    );
-    expect(synthMsg).toBeDefined();
-
-    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synthMsg.payload.id,
-            audioBlobUrl: 'blob:http://localhost/speed-test-audio',
-            genTimeMs: 15,
-            durationSec: 1.0,
-            ipa: 'sok-do-te-seu-teu',
-          },
-        },
-      } as MessageEvent);
-    }
-
-    await speak075Promise;
-    expect(capturedPlaybackRate).toBe(0.75);
-    expect(capturedPreservesPitch).toBe(true);
-
-    const initialSynthCount = postedMessages.filter((m) => m.type === 'SYNTHESIZE').length;
-
-    // 2. Second speak call for the same phrase at 1.25x speed
-    // Should reuse the cached audio immediately with 0 new worker synthesis messages
-    const speak125Promise = controller.speak('속도테스트', 'jm_kumo', 1.25);
-    await speak125Promise;
-
-    const afterSynthCount = postedMessages.filter((m) => m.type === 'SYNTHESIZE').length;
-    expect(afterSynthCount).toBe(initialSynthCount); // Zero new worker synthesis calls!
-    expect(capturedPlaybackRate).toBe(1.25);
-    expect(capturedPreservesPitch).toBe(true);
-  });
-
-  it('formatBytes converts raw byte counts to human-readable strings', () => {
-    expect(formatBytes(0)).toBe('');
-    expect(formatBytes(1024)).toBe('1 KB');
-    expect(formatBytes(1024 * 1024 * 85)).toBe('85 MB');
-    expect(formatBytes(1024 * 1024 * 1024 * 1.5)).toBe('1.5 GB');
-  });
-
-  it('inspectCacheStorage correctly detects cache entries in CacheStorage API', async () => {
-    const mockCache = {
-      keys: vi.fn().mockResolvedValue([
-        { url: 'https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/model_q8.onnx' },
-        { url: 'https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/voices/jm_kumo.bin' },
-      ]),
-      match: vi.fn().mockResolvedValue({
-        clone: () => ({
-          blob: () => Promise.resolve({ size: 40 * 1024 * 1024 }),
-        }),
-      }),
-    };
-
-    const mockCaches = {
-      has: vi.fn().mockImplementation((name: string) => Promise.resolve(name === 'transformers-cache')),
-      open: vi.fn().mockResolvedValue(mockCache),
-    };
-
-    vi.stubGlobal('caches', mockCaches);
-
-    const info = await inspectCacheStorage();
-    expect(info.isCached).toBe(true);
-    expect(info.modelSizeFormatted).toBe('80 MB');
-  });
-
-  it('terminate() cleanly stops worker, cancels pending load promises, and allows lazy re-initialization', async () => {
-    // 1. Start loading model in background
-    const loadPromise = controller.loadModel();
-    expect(controller.isLoading).toBe(true);
-    expect(latestWorkerInstance).not.toBeNull();
-
-    // 2. Terminate controller while load is in flight
-    controller.terminate();
-
-    expect(controller.isLoading).toBe(false);
-    expect(controller.isLoaded).toBe(false);
-    await expect(loadPromise).rejects.toThrow('TTS Web Worker was terminated');
-
-    // 3. Trigger new preload after termination -> should lazily spawn fresh worker
-    const preloadPromise = controller.preload('재시작');
-    expect(latestWorkerInstance).not.toBeNull();
-
-    // Complete model load on new worker instance
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'LOAD_SUCCESS',
-        payload: { voices: [] },
-      },
-    } as MessageEvent);
-
-    // Allow synthesis promise microtask to advance and post SYNTHESIZE message
-    await new Promise((r) => setTimeout(r, 10));
-
-    // Provide synthesis success
-    const synthMsg = postedMessages.find((m) => m.type === 'SYNTHESIZE' && m.payload.text === '재시작');
-    expect(synthMsg).toBeDefined();
-
-    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
-      latestWorkerInstance?.onmessage?.({
-        data: {
-          type: 'SYNTHESIS_SUCCESS',
-          payload: {
-            id: synthMsg.payload.id,
-            audioBlobUrl: 'blob:http://localhost/restarted',
-            genTimeMs: 10,
-            durationSec: 0.5,
-            ipa: 'restarted',
-          },
-        },
-      } as MessageEvent);
-    }
-
-    const result = await preloadPromise;
-    expect(result).toBe('blob:http://localhost/restarted');
-  });
-
-  it('discovers and filters native Korean system voices', () => {
-    const mockVoices = [
+    mockVoices = [
       { voiceURI: 'com.apple.speech.synthesis.voice.yuna', name: 'Yuna', lang: 'ko-KR', default: true },
       { voiceURI: 'com.apple.speech.synthesis.voice.alex', name: 'Alex', lang: 'en-US', default: false },
       { voiceURI: 'Microsoft SunHi Online (Natural) - Korean', name: 'Microsoft SunHi', lang: 'ko-KR', default: false },
     ];
-
-    vi.stubGlobal('speechSynthesis', {
-      getVoices: () => mockVoices,
-      speak: vi.fn(),
-      cancel: vi.fn(),
-      onvoiceschanged: null,
-    });
-
-    controller.refreshNativeVoices();
-    expect(controller.hasNativeVoices()).toBe(true);
-    expect(controller.nativeVoices.length).toBe(2);
-    expect(controller.nativeVoices[0].name).toContain('Yuna');
-    expect(controller.nativeVoices[1].name).toContain('Microsoft SunHi');
-  });
-
-  it('speaks using native Web Speech API when engine is native', async () => {
-    let spokenUtterance: SpeechSynthesisUtterance | null = null;
-    const mockSpeak = vi.fn((utterance: SpeechSynthesisUtterance) => {
-      spokenUtterance = utterance;
+    spokenUtterances = [];
+    mockCancel = vi.fn();
+    mockSpeak = vi.fn((utterance: SpeechSynthesisUtterance) => {
+      spokenUtterances.push(utterance);
       setTimeout(() => {
         utterance.onend?.(new Event('end') as SpeechSynthesisEvent);
       }, 5);
     });
-    const mockCancel = vi.fn();
 
     vi.stubGlobal('speechSynthesis', {
-      getVoices: () => [
-        { voiceURI: 'com.apple.speech.synthesis.voice.yuna', name: 'Yuna', lang: 'ko-KR', default: true },
-      ],
+      getVoices: () => mockVoices,
       speak: mockSpeak,
       cancel: mockCancel,
       onvoiceschanged: null,
@@ -991,14 +45,86 @@ describe('TTSController Unit Tests', () => {
       },
     );
 
-    const speakPromise = controller.speak('안녕하세요', undefined, 1.2, 'native', 'com.apple.speech.synthesis.voice.yuna');
+    controller = new TTSController();
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    vi.restoreAllMocks();
+  });
+
+  it('initializes with default state', () => {
+    expect(controller.isSpeaking).toBe(false);
+    expect(controller.isAudioLoading()).toBe(false);
+  });
+
+  it('discovers and filters native Korean system voices', () => {
+    expect(controller.hasNativeVoices()).toBe(true);
+    expect(controller.nativeVoices.length).toBe(2);
+    expect(controller.nativeVoices[0].id).toBe('com.apple.speech.synthesis.voice.yuna');
+    expect(controller.nativeVoices[0].name).toContain('Yuna');
+    expect(controller.nativeVoices[1].name).toContain('Microsoft SunHi');
+  });
+
+  it('speaks using native Web Speech API with default voice and rate', async () => {
+    const speakPromise = controller.speak('안녕하세요');
     expect(mockCancel).toHaveBeenCalled();
     expect(mockSpeak).toHaveBeenCalled();
+    expect(controller.isSpeaking).toBe(true);
+
     await speakPromise;
 
-    expect(spokenUtterance).not.toBeNull();
-    expect((spokenUtterance as unknown as { text: string }).text).toBe('안녕하세요');
-    expect((spokenUtterance as unknown as { rate: number }).rate).toBe(1.2);
+    expect(spokenUtterances.length).toBe(1);
+    expect(spokenUtterances[0].text).toBe('안녕하세요');
+    expect(spokenUtterances[0].lang).toBe('ko-KR');
+    expect(spokenUtterances[0].rate).toBe(DEFAULT_TTS_SPEED);
+    expect(controller.isSpeaking).toBe(false);
+  });
+
+  it('speaks with customized rate and specific voice URI', async () => {
+    const speakPromise = controller.speak(
+      '감사합니다',
+      'Microsoft SunHi Online (Natural) - Korean',
+      1.3,
+    );
+    await speakPromise;
+
+    expect(spokenUtterances.length).toBe(1);
+    expect(spokenUtterances[0].text).toBe('감사합니다');
+    expect(spokenUtterances[0].rate).toBe(1.3);
+    expect(spokenUtterances[0].voice).toEqual(mockVoices[2]);
+  });
+
+  it('ignores empty or whitespace-only text', async () => {
+    await controller.speak('');
+    await controller.speak('   ');
+    expect(mockSpeak).not.toHaveBeenCalled();
+  });
+
+  it('cancels active speech when stopAudio or stop is invoked', () => {
+    controller.stopAudio();
+    expect(mockCancel).toHaveBeenCalled();
+    expect(controller.isSpeaking).toBe(false);
+
+    controller.stop();
+    expect(mockCancel).toHaveBeenCalledTimes(2);
+  });
+
+  it('handles speech error gracefully without getting stuck in speaking state', async () => {
+    mockSpeak = vi.fn((utterance: SpeechSynthesisUtterance) => {
+      setTimeout(() => {
+        utterance.onerror?.(new Event('error') as SpeechSynthesisErrorEvent);
+      }, 5);
+    });
+
+    vi.stubGlobal('speechSynthesis', {
+      getVoices: () => mockVoices,
+      speak: mockSpeak,
+      cancel: mockCancel,
+      onvoiceschanged: null,
+    });
+
+    await controller.speak('테스트');
     expect(controller.isSpeaking).toBe(false);
   });
 });

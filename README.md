@@ -18,12 +18,10 @@ Korean through focused typing practice.
 - **Contextual Learning**:
   - Displays Romanized English pronunciation alongside Hangul characters.
   - Displays English translations for words, sentences, reading passages, and proverbs.
-- **On-Device Neural Voice Synthesis (TTS)**:
-  - High-fidelity Korean speech pronunciation powered by
-    [Kokoro-82M ONNX](https://github.com/dannyyoo/korean-kokoro) and WebAssembly multi-threading.
-  - Generates speech 100% locally in the browser with no external network calls or cloud
-    dependencies after one-time offline weight caching.
-  - Instant on-demand playback via the audio play icon and optional automatic pronunciation upon
+- **Native Korean Voice Synthesis (TTS)**:
+  - Instant, zero-latency Korean speech pronunciation powered by your browser and operating system's native speech synthesis engine (Web Speech API).
+  - Uses high-quality on-device OS voices (such as Apple Yuna/Siri, Microsoft SunHi, and Google Korean) with zero download footprint and full offline support.
+  - Instant on-demand playback via the audio play icon and optional automatic pronunciation upon exercise appearance or completion.
 - **Custom Anki & Flashcard Deck Import**:
   - Drag and drop or browse to import your own Anki deck packages (`.apkg`), tab-separated text (`.tsv`), or plain text flashcards (`.txt`, `.csv`) directly from your device.
   - Zero-dependency client-side parser with native SQLite 3 B-Tree record decoding and ZIP decompression that runs 100% offline in your browser.
@@ -99,16 +97,14 @@ how to type Korean:
 
 - **Framework**: [Svelte 5](https://svelte.dev/)
 - **Build Tool**: [Vite](https://vitejs.dev/)
-- **Voice Synthesis**: [korean-kokoro](https://github.com/dyoo/korean-tts) &
-  [Kokoro-82M ONNX](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX)
+- **Voice Synthesis**: [Web Speech API (SpeechSynthesis)](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
 - **Testing**: [Vitest](https://vitest.dev/)
 - **Type Checking**:
   [svelte-check](https://github.com/sveltejs/language-tools/tree/master/packages/svelte-check)
 - **PWA Support**: [vite-plugin-pwa](https://vite-pwa-org.netlify.app/)
-- **Architecture**: Client-side only (Dedicated Web Worker, WebAssembly SIMD, LocalStorage &
-  CacheStorage)
+- **Architecture**: Client-side only (LocalStorage persistence)
 
 ---
 

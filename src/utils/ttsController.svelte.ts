@@ -1,122 +1,9 @@
-import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
-
-/** Helper to write ASCII strings to DataView byte buffers. */
-function writeAscii(view: DataView, offset: number, string: string): void {
-  for (let i = 0; i < string.length; i++) {
-    view.setUint8(offset + i, string.charCodeAt(i));
-  }
-}
-
-/** Converts raw Float32Array PCM audio samples to a valid WAV Blob. */
-function createWavBlob(samples: Float32Array, sampleRate: number = 24000): Blob {
-  const byteRate = sampleRate * 1 * 16 / 8; // 1 channel, 16-bit
-  const dataSize = samples.length * 2;
-  const buffer = new ArrayBuffer(44 + dataSize);
-  const view = new DataView(buffer);
-
-  writeAscii(view, 0, 'RIFF');
-  view.setUint32(4, 36 + dataSize, true);
-  writeAscii(view, 8, 'WAVE');
-  writeAscii(view, 12, 'fmt ');
-  view.setUint32(16, 16, true);
-  view.setUint16(20, 1, true); // PCM format
-  view.setUint16(22, 1, true); // Mono channel
-  view.setUint32(24, sampleRate, true);
-  view.setUint32(28, byteRate, true);
-  view.setUint16(32, 2, true); // Block align (1 * 16 / 8)
-  view.setUint16(34, 16, true); // 16 bits per sample
-  writeAscii(view, 36, 'data');
-  view.setUint32(40, dataSize, true);
-
-  let offset = 44;
-  for (let i = 0; i < samples.length; i++) {
-    const s = Math.max(-1, Math.min(1, samples[i]));
-    const pcm = s < 0 ? s * 0x8000 : s * 0x7fff;
-    view.setInt16(offset, pcm, true);
-    offset += 2;
-  }
-
-  return new Blob([view], { type: 'audio/wav' });
-}
-
-/** Maximum number of audio blob URLs retained in memory before LRU eviction. */
-const MAX_AUDIO_CACHE_SIZE = 50;
-
-/** Default voice profile identifier for Kokoro TTS. */
-export const DEFAULT_TTS_VOICE = 'jm_kumo';
+/** Default voice profile identifier (empty string defaults to system Korean voice). */
+export const DEFAULT_TTS_VOICE = '';
 
 /** Default speech synthesis rate multiplier. */
 export const DEFAULT_TTS_SPEED = 1.0;
 
-/** Silent 1-sample WAV data URI to unlock audio playback on Safari/iOS within user gestures. */
-const SILENT_AUDIO_DATA_URI =
-  'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-
-/** Computes a consistent composite cache key for preloaded and synthesized audio buffers. */
-function getTTSCacheKey(
-  text: string,
-  voice: string = DEFAULT_TTS_VOICE,
-): string {
-  return `${text}_${voice}`;
-}
-
-/** Helper for converting raw byte counts into human-readable formatted storage units. */
-export function formatBytes(bytes: number, decimals: number = 1): string {
-  if (bytes === 0) {
-    return '';
-  }
-  const k = 1024;
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(decimals))} ${sizes[i]}`;
-}
-
-/**
- * Inspects browser CacheStorage directly on the main thread without spawning a Web Worker.
- */
-export async function inspectCacheStorage(): Promise<{ isCached: boolean; modelSizeFormatted: string }> {
-  let isCached = false;
-  let modelSizeBytes = 0;
-
-  if (typeof caches !== 'undefined') {
-    for (const cacheName of ['transformers-cache', 'kokoro-voices', 'onnx-wasm-runtime']) {
-      try {
-        if (await caches.has(cacheName)) {
-          const cache = await caches.open(cacheName);
-          const keys = await cache.keys();
-          for (const req of keys) {
-            if (
-              req.url.includes('Kokoro-82M') ||
-              req.url.includes('kokoro') ||
-              req.url.includes('.onnx') ||
-              req.url.includes('.wasm') ||
-              req.url.includes('voices')
-            ) {
-              isCached = true;
-              const res = await cache.match(req);
-              if (res) {
-                const blob = await res.clone().blob();
-                modelSizeBytes += blob.size;
-              }
-            }
-          }
-        }
-      } catch {
-        // Ignore cache inspection errors
-      }
-    }
-  }
-
-  return {
-    isCached,
-    modelSizeFormatted: formatBytes(modelSizeBytes),
-  };
-}
-
-/**
- * Controller singleton for interacting with the TTS Web Worker and managing
- * client-side speech synthesis audio playback and pre-generation cache.
- */
 /** Information about a discovered native browser speech synthesis voice. */
 export interface NativeVoiceInfo {
   id: string;
@@ -126,39 +13,8 @@ export interface NativeVoiceInfo {
 }
 
 export class TTSController {
-  private worker: Worker | null = null;
-  private _isLoaded = $state(false);
-  private _isLoading = $state(false);
   private _isSpeaking = $state(false);
-  private _downloadProgress = $state(0);
-  private _downloadStatus = $state('');
-  private _currentFileName = $state('');
-  private _isCached = $state(false);
-  private _modelSizeFormatted = $state('');
-  private _availableVoices = $state<VoiceMetadata[]>([]);
   private _nativeVoices = $state<NativeVoiceInfo[]>([]);
-  private _loadError = $state<string | null>(null);
-  private _generatingKeys = $state<string[]>([]);
-
-  private playerAudio: HTMLAudioElement | null = null;
-  private isAudioUnlocked = false;
-  // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal request tracking map intentionally non-reactive to avoid re-triggering effects
-  private pendingSyntheses = new Map<
-    string,
-    {
-      resolve: (audioBlobUrl: string) => void;
-      reject: (err: Error) => void;
-    }
-  >();
-  // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal cache map intentionally non-reactive to avoid re-triggering effects
-  private audioCache = new Map<string, string>(); // text -> blobUrl
-  // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Internal in-flight promise map intentionally non-reactive to avoid re-triggering effects
-  private inFlightSyntheses = new Map<string, Promise<string>>(); // cacheKey -> Promise
-  private pendingCacheChecks: Array<(cached: boolean) => void> = [];
-  private pendingModelLoadResolvers: Array<{ resolve: () => void; reject: (err: Error) => void }> = [];
-  private loadModelPromise: Promise<void> | null = null;
-  private nextRequestId = 0;
-  private currentBatchToken = 0;
   private currentPlaybackToken = 0;
 
   constructor() {
@@ -170,374 +26,15 @@ export class TTSController {
     }
   }
 
-  /** Safely revokes a Blob URL to free underlying browser audio memory. */
-  private revokeAudioBlobUrl(url?: string): void {
-    if (url && typeof URL !== 'undefined' && typeof URL.revokeObjectURL === 'function') {
-      try {
-        URL.revokeObjectURL(url);
-      } catch {
-        // Ignore revocation errors in headless or mock test environments
-      }
-    }
-  }
-
-  /** Clears the in-memory audio cache and revokes all active Blob URLs. */
-  private clearAudioCache(): void {
-    for (const url of this.audioCache.values()) {
-      this.revokeAudioBlobUrl(url);
-    }
-    this.audioCache.clear();
-    this.inFlightSyntheses.clear();
-    this._generatingKeys = [];
-  }
-
-  /** Stores a synthesized audio URL in the LRU cache, evicting the oldest entry when at capacity. */
-  private putCachedAudio(key: string, url: string): void {
-    if (this.audioCache.has(key)) {
-      const existingUrl = this.audioCache.get(key);
-      if (existingUrl && existingUrl !== url) {
-        this.revokeAudioBlobUrl(existingUrl);
-      }
-      this.audioCache.delete(key);
-    } else if (this.audioCache.size >= MAX_AUDIO_CACHE_SIZE) {
-      const oldestKey = this.audioCache.keys().next().value;
-      if (oldestKey !== undefined) {
-        const oldestUrl = this.audioCache.get(oldestKey);
-        this.revokeAudioBlobUrl(oldestUrl);
-        this.audioCache.delete(oldestKey);
-      }
-    }
-    this.audioCache.set(key, url);
-  }
-
-  /** Flushes and notifies all in-flight model loading promise resolvers. */
-  private flushModelLoadResolvers(error: Error | null): void {
-    const resolvers = this.pendingModelLoadResolvers.splice(0, this.pendingModelLoadResolvers.length);
-    for (const r of resolvers) {
-      if (error) {
-        r.reject(error);
-      } else {
-        r.resolve();
-      }
-    }
-    this.loadModelPromise = null;
-  }
-
-  private initWorker(): Worker {
-    if (this.worker) {
-      return this.worker;
-    }
-
-    // eslint-disable-next-line svelte/prefer-svelte-reactivity -- Vite static analysis requires literal new URL(..., import.meta.url)
-    this.worker = new Worker(new URL('../workers/tts.worker.ts', import.meta.url), {
-      type: 'module',
-    });
-
-    this.worker.onmessage = (event: MessageEvent<TTSWorkerResponse>) => {
-      const msg = event.data;
-
-      switch (msg.type) {
-        case 'CACHE_STATUS':
-          this._isCached = msg.payload.isCached;
-          if (msg.payload.modelSizeFormatted) {
-            this._modelSizeFormatted = msg.payload.modelSizeFormatted;
-          }
-          while (this.pendingCacheChecks.length > 0) {
-            this.pendingCacheChecks.shift()!(msg.payload.isCached);
-          }
-          break;
-
-        case 'LOAD_PROGRESS':
-          this._isLoading = true;
-          this._downloadProgress = Math.round(msg.payload.progress);
-          this._downloadStatus = msg.payload.status;
-          this._currentFileName = msg.payload.file;
-          break;
-
-        case 'LOAD_SUCCESS':
-          this._isLoading = false;
-          this._isLoaded = true;
-          this._isCached = true;
-          this._availableVoices = msg.payload.voices;
-          if (msg.payload.modelSizeFormatted) {
-            this._modelSizeFormatted = msg.payload.modelSizeFormatted;
-          }
-          this._loadError = null;
-          this.flushModelLoadResolvers(null);
-          // Re-check storage in worker to get exact finalized cached footprint
-          this.checkCache(true);
-          break;
-
-        case 'LOAD_ERROR':
-          this._isLoading = false;
-          this._isLoaded = false;
-          this._loadError = msg.payload.error;
-          this.flushModelLoadResolvers(new Error(msg.payload.error));
-          break;
-
-        case 'SYNTHESIS_SUCCESS': {
-          const pending = this.pendingSyntheses.get(msg.payload.id);
-          if (pending) {
-            let audioBlobUrl: string;
-            if (msg.payload.audioPcm) {
-              const wavBlob = createWavBlob(msg.payload.audioPcm, msg.payload.sampleRate ?? 24000);
-              audioBlobUrl = URL.createObjectURL(wavBlob);
-            } else {
-              audioBlobUrl = (msg.payload as unknown as { audioBlobUrl: string }).audioBlobUrl || '';
-            }
-            pending.resolve(audioBlobUrl);
-            this.pendingSyntheses.delete(msg.payload.id);
-          }
-          break;
-        }
-
-        case 'SYNTHESIS_CANCELLED': {
-          const pending = this.pendingSyntheses.get(msg.payload.id);
-          if (pending) {
-            pending.reject(new Error('Synthesis cancelled'));
-            this.pendingSyntheses.delete(msg.payload.id);
-          }
-          break;
-        }
-
-        case 'SYNTHESIS_ERROR': {
-          const pending = this.pendingSyntheses.get(msg.payload.id);
-          if (pending) {
-            pending.reject(new Error(msg.payload.error));
-            this.pendingSyntheses.delete(msg.payload.id);
-          }
-          break;
-        }
-
-        case 'CLEAR_CACHE_SUCCESS':
-          this._isCached = false;
-          this._isLoaded = false;
-          this._modelSizeFormatted = '';
-          this.clearAudioCache();
-          break;
-      }
-    };
-
-    this.worker.onerror = (err: ErrorEvent) => {
-      console.error('TTS Web Worker Error:', err);
-      this._isLoading = false;
-      this._loadError = err.message || 'Web Worker failed to initialize or execute';
-      this.flushModelLoadResolvers(new Error(this._loadError));
-      if (this.worker) {
-        this.worker.terminate();
-        this.worker = null;
-      }
-    };
-
-    this.worker.onmessageerror = (err: MessageEvent) => {
-      console.error('TTS Web Worker Message Error:', err);
-      this._isLoading = false;
-      this._loadError = 'Web Worker failed to deserialize message';
-      this.flushModelLoadResolvers(new Error(this._loadError));
-    };
-
-    return this.worker;
-  }
-
-  public async checkCache(force: boolean = false): Promise<boolean> {
-    if (!force && this._isLoaded && this._isCached && this._modelSizeFormatted) {
-      return true;
-    }
-    const storageInfo = await inspectCacheStorage();
-    this._isCached = storageInfo.isCached;
-    if (storageInfo.modelSizeFormatted) {
-      this._modelSizeFormatted = storageInfo.modelSizeFormatted;
-    }
-    while (this.pendingCacheChecks.length > 0) {
-      this.pendingCacheChecks.shift()!(this._isCached);
-    }
-    return this._isCached;
-  }
-
-  public async loadModel(): Promise<void> {
-    if (this._isLoaded) {
-      return;
-    }
-    if (this.loadModelPromise) {
-      return this.loadModelPromise;
-    }
-    this._isLoading = true;
-    this._loadError = null;
-    const w = this.initWorker();
-
-    this.loadModelPromise = new Promise<void>((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        if (this._isLoading) {
-          this._isLoading = false;
-          const timeoutErr = new Error('Model loading timed out. Please check network connection.');
-          this.flushModelLoadResolvers(timeoutErr);
-        }
-      }, 120000);
-
-      this.pendingModelLoadResolvers.push({
-        resolve: () => {
-          clearTimeout(timeout);
-          resolve();
-        },
-        reject: (err: Error) => {
-          clearTimeout(timeout);
-          reject(err);
-        },
-      });
-
-      w.postMessage({
-        type: 'LOAD_MODEL',
-        payload: { dtype: 'q8', device: 'wasm' },
-      } satisfies TTSWorkerRequest);
-    });
-
-    return this.loadModelPromise;
-  }
-
   /**
-   * Aborts model downloading and terminates active worker threads.
+   * Refreshes the list of available Korean voices from the browser's speech synthesis engine.
    */
-  public cancelLoading(): void {
-    if (this.worker) {
-      this.worker.terminate();
-      this.worker = null;
-    }
-    this._isLoading = false;
-    this._downloadProgress = 0;
-    this._downloadStatus = '';
-    this._currentFileName = '';
-    this._loadError = null;
-    this.inFlightSyntheses.clear();
-    this.pendingSyntheses.clear();
-    this._generatingKeys = [];
-    this.flushModelLoadResolvers(new Error('Model loading cancelled'));
-  }
-
-  public preload(
-    text: string,
-    voice: string = DEFAULT_TTS_VOICE,
-  ): Promise<string | null> | null {
-    if (!text || text.trim().length === 0) {
-      return null;
-    }
-    return this.synthesize(text, voice).catch(() => null);
-  }
-
-  /**
-   * Sequentially pre-synthesizes an array of upcoming prompt targets in the background
-   * during browser idle periods.
-   * Cancels any previously active batch if a new batch is scheduled or if stop() is called.
-   */
-  public async preloadBatch(
-    texts: string[],
-    voice: string = DEFAULT_TTS_VOICE,
-  ): Promise<void> {
-    const token = ++this.currentBatchToken;
-    for (const text of texts) {
-      if (token !== this.currentBatchToken) {
-        break; // Batch cancelled by newer batch or stop()
-      }
-      if (!text || text.trim().length === 0) {
-        continue;
-      }
-      const cacheKey = getTTSCacheKey(text, voice);
-      if (this.audioCache.has(cacheKey) || this.inFlightSyntheses.has(cacheKey)) {
-        continue;
-      }
-      try {
-        await this.synthesize(text, voice);
-      } catch {
-        // Silently skip if item failed or was cancelled
-      }
-    }
-  }
-
-  /** Cancels any active in-flight batch preloading sequence. */
-  public cancelBatchPreload(): void {
-    this.currentBatchToken++;
-  }
-
-  public async synthesize(
-    text: string,
-    voice: string = DEFAULT_TTS_VOICE,
-  ): Promise<string> {
-    const cacheKey = getTTSCacheKey(text, voice);
-    if (this.audioCache.has(cacheKey)) {
-      const cachedUrl = this.audioCache.get(cacheKey)!;
-      // Refresh LRU recency on cache hit
-      this.audioCache.delete(cacheKey);
-      this.audioCache.set(cacheKey, cachedUrl);
-      return cachedUrl;
-    }
-
-    if (this.inFlightSyntheses.has(cacheKey)) {
-      return this.inFlightSyntheses.get(cacheKey)!;
-    }
-
-    if (!this._generatingKeys.includes(cacheKey)) {
-      this._generatingKeys = [...this._generatingKeys, cacheKey];
-    }
-
-    const synthesisPromise = (async () => {
-      if (!this._isLoaded) {
-        await this.loadModel();
-      }
-
-      const w = this.initWorker();
-      const id = `syn_${++this.nextRequestId}`;
-
-      return new Promise<string>((resolve, reject) => {
-        this.pendingSyntheses.set(id, {
-          resolve: (audioBlobUrl: string) => {
-            this.putCachedAudio(cacheKey, audioBlobUrl);
-            this.inFlightSyntheses.delete(cacheKey);
-            this._generatingKeys = this._generatingKeys.filter((k) => k !== cacheKey);
-            resolve(audioBlobUrl);
-          },
-          reject: (err: Error) => {
-            this.inFlightSyntheses.delete(cacheKey);
-            this._generatingKeys = this._generatingKeys.filter((k) => k !== cacheKey);
-            reject(err);
-          },
-        });
-
-        w.postMessage({
-          type: 'SYNTHESIZE',
-          payload: { id, text, voice, speed: 1.0 },
-        } satisfies TTSWorkerRequest);
-      });
-    })();
-
-    this.inFlightSyntheses.set(cacheKey, synthesisPromise);
-    return synthesisPromise;
-  }
-
-  /**
-   * Prime and unlock the browser audio subsystem within an active user gesture (click/keydown).
-   * Unlocks HTMLAudioElement playback so subsequent playback is permitted by
-   * Safari / WebKit and Chrome autoplay policies.
-   */
-  public unlockAudio(): void {
-    if (typeof Audio !== 'undefined') {
-      if (!this.playerAudio) {
-        this.playerAudio = new Audio();
-      }
-      if (!this.isAudioUnlocked) {
-        this.isAudioUnlocked = true;
-        this.playerAudio.src = SILENT_AUDIO_DATA_URI;
-        this.playerAudio.play().catch(() => {
-          // Revert unlock state if rejected outside a recognized user gesture
-          this.isAudioUnlocked = false;
-        });
-      }
-    }
-  }
-
   public refreshNativeVoices(): void {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
       this._nativeVoices = [];
       return;
     }
+
     const voices = window.speechSynthesis.getVoices();
     const koreanVoices = voices.filter(
       (v) =>
@@ -559,6 +56,7 @@ export class TTSController {
     }));
   }
 
+  /** Returns all discovered Korean system voices. */
   public get nativeVoices(): NativeVoiceInfo[] {
     if (this._nativeVoices.length === 0) {
       this.refreshNativeVoices();
@@ -566,23 +64,34 @@ export class TTSController {
     return this._nativeVoices;
   }
 
+  /** Returns true if at least one native Korean voice is available. */
   public hasNativeVoices(): boolean {
     return this.nativeVoices.length > 0;
   }
 
-  public stopNative(): void {
+  /** Cancels any active speech utterance immediately. */
+  public stopAudio(): void {
+    this.currentPlaybackToken++;
     if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
       try {
         window.speechSynthesis.cancel();
       } catch {
-        // Ignore cancel errors
+        // Ignore cancellation errors
       }
     }
+    this._isSpeaking = false;
   }
 
-  public speakNative(
+  public stop(): void {
+    this.stopAudio();
+  }
+
+  /**
+   * Speaks the provided Korean text using the browser's native speech synthesis engine.
+   */
+  public speak(
     text: string,
-    voiceURI?: string,
+    voiceURI: string = DEFAULT_TTS_VOICE,
     speed: number = DEFAULT_TTS_SPEED,
   ): Promise<void> {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) {
@@ -639,222 +148,13 @@ export class TTSController {
     });
   }
 
-  public stopAudio(): void {
-    this.currentPlaybackToken++;
-    this.stopNative();
-    if (this.playerAudio) {
-      this.playerAudio.onended = null;
-      this.playerAudio.onerror = null;
-      this.playerAudio.pause();
-      try {
-        this.playerAudio.currentTime = 0;
-      } catch {
-        // Ignore seek errors on unseekable media
-      }
-    }
-    this._isSpeaking = false;
-  }
-
-  public async speak(
-    text: string,
-    voice: string = DEFAULT_TTS_VOICE,
-    speed: number = DEFAULT_TTS_SPEED,
-    engine: 'native' | 'kokoro' = 'native',
-    nativeVoiceURI?: string,
-  ): Promise<void> {
-    if (!text || text.trim().length === 0) {
-      return;
-    }
-
-    // If native speech engine is selected and available, execute immediately with 0ms latency
-    if (engine === 'native' && typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      return this.speakNative(text, nativeVoiceURI, speed);
-    }
-
-    // Otherwise use Kokoro-82M Web Worker neural synthesis
-    // Prime the audio subsystem synchronously during the active user gesture
-    this.unlockAudio();
-    this.stopAudio();
-    const playbackToken = this.currentPlaybackToken;
-
-    try {
-      this._isSpeaking = true;
-      const audioUrl = await this.synthesize(text, voice);
-
-      // If stopAudio() or another speak() was called while synthesis was in flight, abort playback
-      if (playbackToken !== this.currentPlaybackToken) {
-        return;
-      }
-
-      if (!this.playerAudio) {
-        this.playerAudio = new Audio();
-      }
-      const audio = this.playerAudio;
-      audio.src = audioUrl;
-      audio.playbackRate = speed;
-      if ('preservesPitch' in audio) {
-        audio.preservesPitch = true;
-      } else if ('webkitPreservesPitch' in audio) {
-        (audio as unknown as { webkitPreservesPitch: boolean }).webkitPreservesPitch = true;
-      } else if ('mozPreservesPitch' in audio) {
-        (audio as unknown as { mozPreservesPitch: boolean }).mozPreservesPitch = true;
-      }
-
-      return new Promise((resolve) => {
-        const cleanup = () => {
-          audio.onended = null;
-          audio.onerror = null;
-          if (playbackToken === this.currentPlaybackToken) {
-            this._isSpeaking = false;
-          }
-        };
-
-        audio.onended = () => {
-          cleanup();
-          resolve();
-        };
-        audio.onerror = () => {
-          cleanup();
-          resolve();
-        };
-        audio.play().catch(() => {
-          cleanup();
-          resolve();
-        });
-      });
-    } catch {
-      if (playbackToken === this.currentPlaybackToken) {
-        this._isSpeaking = false;
-      }
-    }
-  }
-
-  public cancelSynthesis(id?: string): void {
-    if (this.worker) {
-      this.worker.postMessage({
-        type: 'CANCEL_SYNTHESIS',
-        payload: id ? { id } : undefined,
-      } satisfies TTSWorkerRequest);
-    }
-    if (id) {
-      const pending = this.pendingSyntheses.get(id);
-      if (pending) {
-        pending.reject(new Error('Synthesis cancelled'));
-        this.pendingSyntheses.delete(id);
-      }
-    } else {
-      for (const pending of this.pendingSyntheses.values()) {
-        pending.reject(new Error('Synthesis cancelled'));
-      }
-      this.pendingSyntheses.clear();
-      this.inFlightSyntheses.clear();
-      this._generatingKeys = [];
-    }
-  }
-
-  public stop(): void {
-    this.cancelBatchPreload();
-    this.stopAudio();
-    this.cancelSynthesis();
-  }
-
-  /**
-   * Terminates the active Web Worker thread and frees all cached audio blobs to minimize memory footprint.
-   */
-  public terminate(): void {
-    this.stop();
-    this.clearAudioCache();
-    if (this.worker) {
-      this.worker.terminate();
-      this.worker = null;
-    }
-    this._isLoaded = false;
-    this._isLoading = false;
-    this.flushModelLoadResolvers(new Error('TTS Web Worker was terminated'));
-  }
-
-  public async clearCache(): Promise<void> {
-    this.terminate();
-    if (typeof caches !== 'undefined') {
-      for (const cacheName of ['transformers-cache', 'kokoro-voices', 'onnx-wasm-runtime']) {
-        try {
-          await caches.delete(cacheName);
-        } catch {
-          // Ignore cache deletion errors
-        }
-      }
-    }
-    this._isCached = false;
-    this._isLoaded = false;
-    this._modelSizeFormatted = '';
-  }
-
-  /** Checks if the model or audio synthesis for a given prompt is actively loading. */
-  public isAudioLoading(
-    text?: string,
-    voice: string = DEFAULT_TTS_VOICE,
-    engine: 'native' | 'kokoro' = 'kokoro',
-  ): boolean {
-    if (engine === 'native') {
-      return false;
-    }
-    if (this._isLoading || !this._isLoaded) {
-      return true;
-    }
-    if (!text || text.trim().length === 0) {
-      return false;
-    }
-    const key = getTTSCacheKey(text, voice);
-    return !this.audioCache.has(key) && this._generatingKeys.includes(key);
-  }
-
-  /** Checks if synthesized audio for a given prompt is already available in the LRU cache. */
-  public isAudioCached(
-    text: string,
-    voice: string = DEFAULT_TTS_VOICE,
-  ): boolean {
-    return this.audioCache.has(getTTSCacheKey(text, voice));
-  }
-
-  // Reactive property getters
-  public get isLoaded(): boolean {
-    return this._isLoaded;
-  }
-
-  public get isLoading(): boolean {
-    return this._isLoading;
+  /** Native speech synthesis does not require async model/buffer loading. */
+  public isAudioLoading(): boolean {
+    return false;
   }
 
   public get isSpeaking(): boolean {
     return this._isSpeaking;
-  }
-
-  public get downloadProgress(): number {
-    return this._downloadProgress;
-  }
-
-  public get downloadStatus(): string {
-    return this._downloadStatus;
-  }
-
-  public get currentFileName(): string {
-    return this._currentFileName;
-  }
-
-  public get isCached(): boolean {
-    return this._isCached;
-  }
-
-  public get modelSizeFormatted(): string {
-    return this._modelSizeFormatted;
-  }
-
-  public get voices(): VoiceMetadata[] {
-    return this._availableVoices;
-  }
-
-  public get loadError(): string | null {
-    return this._loadError;
   }
 }
 

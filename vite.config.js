@@ -8,19 +8,6 @@ export default defineConfig({
   base: './',
   server: {
     port: 8080,
-    headers: {
-      'Cross-Origin-Opener-Policy': 'same-origin',
-      'Cross-Origin-Embedder-Policy': 'require-corp',
-    },
-  },
-  preview: {
-    headers: {
-      'Cross-Origin-Opener-Policy': 'same-origin',
-      'Cross-Origin-Embedder-Policy': 'require-corp',
-    },
-  },
-  worker: {
-    format: 'es',
   },
   plugins: [
     svelte(),
@@ -30,33 +17,7 @@ export default defineConfig({
         cleanupOutdatedCaches: true,
         skipWaiting: true,
         clientsClaim: true,
-        maximumFileSizeToCacheInBytes: 5 * 1024 * 1024, // 5 MB — WASM excluded from precache
-        /**
-         * Exclude `.wasm` from precache glob patterns so the 21 MB ONNX Runtime
-         * binary (ort-wasm-simd-threaded.jsep.wasm) is NOT downloaded during
-         * service worker install. Users who never enable TTS avoid this cost
-         * entirely. The WASM is instead runtime-cached on first use below.
-         */
         globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
-        /**
-         * Runtime caching for WASM files: when the TTS worker initializes the
-         * ONNX session and fetches the .wasm binary, the service worker
-         * intercepts the request and caches it with a CacheFirst strategy.
-         * Subsequent loads (including offline) are served from cache.
-         */
-        runtimeCaching: [
-          {
-            urlPattern: /\.wasm$/,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'onnx-wasm-runtime',
-              expiration: {
-                maxEntries: 5,
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
-              },
-            },
-          },
-        ],
       },
       manifest: {
         name: 'Korean Typing Tutor',

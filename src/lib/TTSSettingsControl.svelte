@@ -6,36 +6,25 @@
   interface Props {
     settings: TutorSettings;
     ontoggletts?: () => void;
-    onenginechange?: (engine: 'native' | 'kokoro') => void;
     ontogglespeakoncompletion?: () => void;
     ontogglespeakonappearance?: () => void;
     onvoicechange?: (voice: string) => void;
-    onnativevoicechange?: (voiceURI: string) => void;
     onspeedchange?: (speed: number) => void;
-    onclearttscache?: () => void;
   }
 
   let {
     settings,
     ontoggletts,
-    onenginechange,
     ontogglespeakoncompletion,
     ontogglespeakonappearance,
     onvoicechange,
-    onnativevoicechange,
     onspeedchange,
-    onclearttscache,
   }: Props = $props();
 
-  let isConfirmingClear = $state(false);
-  let hasCache = $derived(ttsController.isCached || ttsController.isLoaded);
-  let cacheSizeText = $derived(ttsController.modelSizeFormatted || '~100 MB');
   let nativeVoices = $derived(ttsController.nativeVoices);
-  let isNative = $derived((settings.ttsEngine ?? 'native') === 'native');
 
   onMount(() => {
     ttsController.refreshNativeVoices();
-    ttsController.checkCache(true);
   });
 </script>
 
@@ -58,29 +47,6 @@
 
   {#if settings.enableTTS}
     <div class="flex flex-col gap-2.5 mt-1 pl-2">
-      <!-- Engine Selection (System vs Neural Kokoro) -->
-      <div class="flex flex-col gap-1.5">
-        <label for="tts-engine-select" class="text-xs font-semibold text-gray-700 dark:text-gray-300">
-          Speech Engine
-        </label>
-        <div class="grid grid-cols-2 gap-1.5 p-0.5 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-          <button
-            type="button"
-            onclick={() => onenginechange?.('native')}
-            class="py-1.5 px-2 text-xs font-medium rounded-md transition-all cursor-pointer {isNative ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-2xs font-bold' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"
-          >
-            System Voice (Instant)
-          </button>
-          <button
-            type="button"
-            onclick={() => onenginechange?.('kokoro')}
-            class="py-1.5 px-2 text-xs font-medium rounded-md transition-all cursor-pointer {!isNative ? 'bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 shadow-2xs font-bold' : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'}"
-          >
-            Neural Kokoro-82M
-          </button>
-        </div>
-      </div>
-
       <!-- Speak On Completion Toggle -->
       <label class="flex items-center justify-between cursor-pointer">
         <span class="text-xs text-gray-600 dark:text-gray-400">Speak on completion</span>
@@ -103,49 +69,28 @@
         />
       </label>
 
-      {#if isNative}
-        <!-- Native OS Voice Selection -->
-        <div class="flex items-center justify-between">
-          <label for="tts-native-voice-select" class="text-xs text-gray-600 dark:text-gray-400 cursor-pointer">
-            System Voice
-          </label>
-          {#if nativeVoices.length > 0}
-            <select
-              id="tts-native-voice-select"
-              value={settings.ttsNativeVoice || nativeVoices[0]?.id || ''}
-              onchange={(e) => onnativevoicechange?.((e.target as HTMLSelectElement).value)}
-              class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-xs max-w-[200px] truncate focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
-            >
-              {#each nativeVoices as v}
-                <option value={v.id}>{v.name}</option>
-              {/each}
-            </select>
-          {:else}
-            <span class="text-xs text-gray-500 dark:text-gray-400 italic">
-              Default OS Korean Voice
-            </span>
-          {/if}
-        </div>
-      {:else}
-        <!-- Kokoro Neural Voice Selection -->
-        <div class="flex items-center justify-between">
-          <label for="tts-voice-select" class="text-xs text-gray-600 dark:text-gray-400 cursor-pointer">
-            Neural Persona
-          </label>
+      <!-- Native OS Voice Selection -->
+      <div class="flex items-center justify-between">
+        <label for="tts-voice-select" class="text-xs text-gray-600 dark:text-gray-400 cursor-pointer">
+          Voice
+        </label>
+        {#if nativeVoices.length > 0}
           <select
             id="tts-voice-select"
-            value={settings.ttsVoice ?? 'jm_kumo'}
+            value={settings.ttsVoice || nativeVoices[0]?.id || ''}
             onchange={(e) => onvoicechange?.((e.target as HTMLSelectElement).value)}
-            class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
+            class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-xs max-w-[200px] truncate focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
           >
-            <option value="jf_nezumi">Nezumi (Female, CJK)</option>
-            <option value="jf_tebukuro">Tebukuro (Female, CJK)</option>
-            <option value="jm_kumo">Kumo (Male, CJK)</option>
-            <option value="zf_xiaobei">Xiaobei (Female, CJK)</option>
-            <option value="zm_yunjian">Yunjian (Male, CJK)</option>
+            {#each nativeVoices as v}
+              <option value={v.id}>{v.name}</option>
+            {/each}
           </select>
-        </div>
-      {/if}
+        {:else}
+          <span class="text-xs text-gray-500 dark:text-gray-400 italic">
+            Default OS Korean Voice
+          </span>
+        {/if}
+      </div>
 
       <!-- Playback Speed Slider -->
       <div class="flex flex-col gap-1.5">
@@ -169,50 +114,6 @@
           />
         </div>
       </div>
-    </div>
-  {/if}
-
-  {#if hasCache}
-    <div class="flex flex-col gap-2 mt-1">
-      <!-- Clear Cache Action & Confirmation -->
-      {#if isConfirmingClear}
-        <div
-          class="flex flex-col gap-2 p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800/60 rounded-lg text-left"
-        >
-          <p class="text-xs text-red-700 dark:text-red-300 font-medium leading-normal break-words">
-            Delete offline voice cache ({cacheSizeText})?
-          </p>
-          <div class="flex items-center justify-end gap-2 pt-1">
-            <button
-              type="button"
-              onclick={() => (isConfirmingClear = false)}
-              class="px-3 py-1.5 text-xs bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded cursor-pointer transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="button"
-              onclick={() => {
-                isConfirmingClear = false;
-                onclearttscache?.();
-              }}
-              class="px-3 py-1.5 text-xs bg-red-600 hover:bg-red-700 text-white font-medium rounded cursor-pointer transition-colors"
-            >
-              Delete Cache
-            </button>
-          </div>
-        </div>
-      {:else}
-        <div class="flex justify-end">
-          <button
-            type="button"
-            onclick={() => (isConfirmingClear = true)}
-            class="text-xs text-red-600 dark:text-red-400 hover:underline cursor-pointer text-right leading-tight break-words"
-          >
-            Clear Offline Neural Voice Cache ({cacheSizeText})
-          </button>
-        </div>
-      {/if}
     </div>
   {/if}
 </div>

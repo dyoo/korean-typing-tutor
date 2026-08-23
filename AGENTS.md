@@ -101,17 +101,12 @@ distraction-free, high-performance typing experience for English speakers learni
   of the mobile bottom row.
 - `src/lib/TTSAudioButton.svelte`: Pronunciation play button component embedded inline with target
   subtext.
-- `src/lib/TTSDownloadModal.svelte`: Modal dialog for ~80MB ONNX model download consent with live
-  download progress bar.
 - `src/lib/TTSSettingsControl.svelte`: Voice synthesis settings controls (enable toggle,
-  speak-on-completion, voice, speed, cache purge).
+  speak-on-completion, speak-on-appearance, voice selection, speed slider).
 - `src/lib/GitHubLink.svelte`: Top bar link component rendering the GitHub repository badge.
 - `src/lib/settings.ts`: Settings state management, persistence, and default values.
-- `src/utils/ttsController.svelte.ts`: Reactive singleton managing TTS Web Worker, audio caching,
-  and prompt preloading.
-- `src/workers/tts.worker.ts`: Dedicated Web Worker for Korean Kokoro-82M WASM synthesis and offline
-  cache management.
-- `src/types/tts.ts`: Type definitions for TTS worker requests/responses and voice metadata.
+- `src/utils/ttsController.svelte.ts`: Lightweight reactive singleton managing browser Web Speech
+  API (SpeechSynthesis) playback and OS Korean voice selection.
 - `src/utils/jamoMastery.ts`: Spaced-repetition mastery state machine, home-row-outward progression
   sequence, rolling 20-attempt accuracy evaluation, and vocabulary filtering.
 - `src/utils/hangulEngine.ts`: The Hangul IME composition state machine and keystroke handler.
@@ -147,11 +142,9 @@ distraction-free, high-performance typing experience for English speakers learni
   Roughly 80% of the initial JavaScript bundle consists of the 32 offline curriculum JSON datasets
   (7,687+ authentic Korean items, English translations, and Romanizations), ensuring instant,
   zero-latency lesson switches with full offline capability.
-- **Zero-Weight Neural TTS Isolation**: Heavy machine learning dependencies (`@dannyyoo/korean-tts`,
-  `@huggingface/transformers`, `kokoro-js`, ONNX Runtime WebAssembly) are strictly code-split into a
-  dedicated Web Worker (`src/workers/tts.worker.ts`) and never bundled into the main client entry
-  chunk. This invariant is enforced by automated build verification tests
-  (`src/utils/bundleIsolation.test.ts`).
+- **Native Web Speech Architecture**: Speech synthesis leverages the standard browser Web
+  Speech API (`window.speechSynthesis`), utilizing the host OS Korean voice models with 0ms synthesis
+  latency, zero binary model weight downloads, and zero runtime worker overhead.
 - **Single-Beam Caret Ownership**: The input caret is rendered as a single 2.5px vertical beam at
   the boundary between adjacent characters. To prevent double-width (5px) overlapping carets,
   [`getInputCaretStatus`](file:///Users/dyoo/work/korean-typing-tutor/src/utils/cursorHelper.ts) ensures exactly one character owns the beam: the leading character
