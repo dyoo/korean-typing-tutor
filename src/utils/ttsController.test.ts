@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { TTSController } from './ttsController.svelte';
+import { TTSController, formatBytes, inspectCacheStorage } from './ttsController.svelte';
 import type { TTSWorkerRequest } from '../types/tts';
 
 describe('TTSController Unit Tests', () => {
@@ -55,22 +55,14 @@ describe('TTSController Unit Tests', () => {
     expect(controller.preload('   ')).toBeNull();
   });
 
-  it('posts CHECK_CACHE when checkCache is called and updates isCached on CACHE_STATUS response', async () => {
-    const checkPromise = controller.checkCache();
-    expect(postedMessages).toContainEqual({ type: 'CHECK_CACHE' });
+  it('inspects cache storage directly without spawning a Web Worker', async () => {
+    expect(latestWorkerInstance).toBeNull();
+    const isCachedResult = await controller.checkCache();
+    expect(isCachedResult).toBe(false);
     expect(controller.isCached).toBe(false);
-
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'CACHE_STATUS',
-        payload: { isCached: true, modelSizeFormatted: '80 MB' },
-      },
-    } as MessageEvent);
-
-    const isCachedResult = await checkPromise;
-    expect(isCachedResult).toBe(true);
-    expect(controller.isCached).toBe(true);
-    expect(controller.modelSizeFormatted).toBe('80 MB');
+    // Verifies Web Worker is NEVER instantiated when checking cache
+    expect(latestWorkerInstance).toBeNull();
+    expect(postedMessages.length).toBe(0);
   });
 
   it('separates stopAudio from cancelSynthesis', () => {
@@ -78,8 +70,8 @@ describe('TTSController Unit Tests', () => {
     expect(controller.isSpeaking).toBe(false);
     expect(postedMessages.length).toBe(0);
 
-    // Initializing worker via checkCache so stop() sends CANCEL_SYNTHESIS
-    controller.checkCache();
+    // Initializing worker via loadModel so stop() sends CANCEL_SYNTHESIS
+    void controller.loadModel();
     controller.stop();
     expect(postedMessages).toContainEqual({
       type: 'CANCEL_SYNTHESIS',
@@ -357,26 +349,23 @@ describe('TTSController Unit Tests', () => {
     expect(revokeObjectURLMock).toHaveBeenCalledWith('blob:http://localhost/na');
   });
 
-  it('clears modelSizeFormatted on CLEAR_CACHE_SUCCESS', async () => {
-    controller.checkCache();
-    // Set cached size
+  it('clears modelSizeFormatted and terminates worker on clearCache', async () => {
+    // Start worker via loadModel
+    const loadPromise = controller.loadModel();
     latestWorkerInstance?.onmessage?.({
       data: {
-        type: 'CACHE_STATUS',
-        payload: { isCached: true, modelSizeFormatted: '88.1 MB' },
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [], modelSizeFormatted: '88.1 MB' },
       },
     } as MessageEvent);
+    await loadPromise;
     expect(controller.modelSizeFormatted).toBe('88.1 MB');
 
     await controller.clearCache();
-    latestWorkerInstance?.onmessage?.({
-      data: {
-        type: 'CLEAR_CACHE_SUCCESS',
-      },
-    } as MessageEvent);
 
     expect(controller.modelSizeFormatted).toBe('');
     expect(controller.isCached).toBe(false);
+    expect(controller.isLoaded).toBe(false);
   });
 
   it('handles worker.onerror by setting loadError and terminating the worker instance', async () => {
@@ -794,5 +783,88 @@ describe('TTSController Unit Tests', () => {
     // Verify audio.play() was NEVER called with the synthesized audio URL for prompt A
     expect(playedUrls).not.toContain('blob:http://localhost/skipped-a');
     expect(controller.isSpeaking).toBe(false);
+  });
+
+  it('formatBytes converts raw byte counts to human-readable strings', () => {
+    expect(formatBytes(0)).toBe('');
+    expect(formatBytes(1024)).toBe('1 KB');
+    expect(formatBytes(1024 * 1024 * 85)).toBe('85 MB');
+    expect(formatBytes(1024 * 1024 * 1024 * 1.5)).toBe('1.5 GB');
+  });
+
+  it('inspectCacheStorage correctly detects cache entries in CacheStorage API', async () => {
+    const mockCache = {
+      keys: vi.fn().mockResolvedValue([
+        { url: 'https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/model_q8.onnx' },
+        { url: 'https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/voices/jm_kumo.bin' },
+      ]),
+      match: vi.fn().mockResolvedValue({
+        clone: () => ({
+          blob: () => Promise.resolve({ size: 40 * 1024 * 1024 }),
+        }),
+      }),
+    };
+
+    const mockCaches = {
+      has: vi.fn().mockImplementation((name: string) => Promise.resolve(name === 'transformers-cache')),
+      open: vi.fn().mockResolvedValue(mockCache),
+    };
+
+    vi.stubGlobal('caches', mockCaches);
+
+    const info = await inspectCacheStorage();
+    expect(info.isCached).toBe(true);
+    expect(info.modelSizeFormatted).toBe('80 MB');
+  });
+
+  it('terminate() cleanly stops worker, cancels pending load promises, and allows lazy re-initialization', async () => {
+    // 1. Start loading model in background
+    const loadPromise = controller.loadModel();
+    expect(controller.isLoading).toBe(true);
+    expect(latestWorkerInstance).not.toBeNull();
+
+    // 2. Terminate controller while load is in flight
+    controller.terminate();
+
+    expect(controller.isLoading).toBe(false);
+    expect(controller.isLoaded).toBe(false);
+    await expect(loadPromise).rejects.toThrow('TTS Web Worker was terminated');
+
+    // 3. Trigger new preload after termination -> should lazily spawn fresh worker
+    const preloadPromise = controller.preload('재시작');
+    expect(latestWorkerInstance).not.toBeNull();
+
+    // Complete model load on new worker instance
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+
+    // Allow synthesis promise microtask to advance and post SYNTHESIZE message
+    await new Promise((r) => setTimeout(r, 10));
+
+    // Provide synthesis success
+    const synthMsg = postedMessages.find((m) => m.type === 'SYNTHESIZE' && m.payload.text === '재시작');
+    expect(synthMsg).toBeDefined();
+
+    if (synthMsg && synthMsg.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: synthMsg.payload.id,
+            audioBlobUrl: 'blob:http://localhost/restarted',
+            genTimeMs: 10,
+            durationSec: 0.5,
+            ipa: 'restarted',
+          },
+        },
+      } as MessageEvent);
+    }
+
+    const result = await preloadPromise;
+    expect(result).toBe('blob:http://localhost/restarted');
   });
 });

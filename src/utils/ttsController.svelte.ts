@@ -23,6 +23,59 @@ export function getTTSCacheKey(
   return `${text}_${voice}_${speed}`;
 }
 
+/** Helper for converting raw byte counts into human-readable formatted storage units. */
+export function formatBytes(bytes: number, decimals: number = 1): string {
+  if (bytes === 0) {
+    return '';
+  }
+  const k = 1024;
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return `${parseFloat((bytes / Math.pow(k, i)).toFixed(decimals))} ${sizes[i]}`;
+}
+
+/**
+ * Inspects browser CacheStorage directly on the main thread without spawning a Web Worker.
+ */
+export async function inspectCacheStorage(): Promise<{ isCached: boolean; modelSizeFormatted: string }> {
+  let isCached = false;
+  let modelSizeBytes = 0;
+
+  if (typeof caches !== 'undefined') {
+    for (const cacheName of ['transformers-cache', 'kokoro-voices', 'onnx-wasm-runtime']) {
+      try {
+        if (await caches.has(cacheName)) {
+          const cache = await caches.open(cacheName);
+          const keys = await cache.keys();
+          for (const req of keys) {
+            if (
+              req.url.includes('Kokoro-82M') ||
+              req.url.includes('kokoro') ||
+              req.url.includes('.onnx') ||
+              req.url.includes('.wasm') ||
+              req.url.includes('voices')
+            ) {
+              isCached = true;
+              const res = await cache.match(req);
+              if (res) {
+                const blob = await res.clone().blob();
+                modelSizeBytes += blob.size;
+              }
+            }
+          }
+        }
+      } catch {
+        // Ignore cache inspection errors
+      }
+    }
+  }
+
+  return {
+    isCached,
+    modelSizeFormatted: formatBytes(modelSizeBytes),
+  };
+}
+
 /**
  * Controller singleton for interacting with the TTS Web Worker and managing
  * client-side speech synthesis audio playback and pre-generation cache.
@@ -239,12 +292,15 @@ export class TTSController {
     if (!force && this._isLoaded && this._isCached && this._modelSizeFormatted) {
       return true;
     }
-    const w = this.initWorker();
-    const promise = new Promise<boolean>((resolve) => {
-      this.pendingCacheChecks.push(resolve);
-    });
-    w.postMessage({ type: 'CHECK_CACHE' } satisfies TTSWorkerRequest);
-    return promise;
+    const storageInfo = await inspectCacheStorage();
+    this._isCached = storageInfo.isCached;
+    if (storageInfo.modelSizeFormatted) {
+      this._modelSizeFormatted = storageInfo.modelSizeFormatted;
+    }
+    while (this.pendingCacheChecks.length > 0) {
+      this.pendingCacheChecks.shift()!(this._isCached);
+    }
+    return this._isCached;
   }
 
   public async loadModel(): Promise<void> {
@@ -531,11 +587,35 @@ export class TTSController {
     this.cancelSynthesis();
   }
 
-  public async clearCache(): Promise<void> {
+  /**
+   * Terminates the active Web Worker thread and frees all cached audio blobs to minimize memory footprint.
+   */
+  public terminate(): void {
     this.stop();
     this.clearAudioCache();
-    const w = this.initWorker();
-    w.postMessage({ type: 'CLEAR_CACHE' } satisfies TTSWorkerRequest);
+    if (this.worker) {
+      this.worker.terminate();
+      this.worker = null;
+    }
+    this._isLoaded = false;
+    this._isLoading = false;
+    this.flushModelLoadResolvers(new Error('TTS Web Worker was terminated'));
+  }
+
+  public async clearCache(): Promise<void> {
+    this.terminate();
+    if (typeof caches !== 'undefined') {
+      for (const cacheName of ['transformers-cache', 'kokoro-voices', 'onnx-wasm-runtime']) {
+        try {
+          await caches.delete(cacheName);
+        } catch {
+          // Ignore cache deletion errors
+        }
+      }
+    }
+    this._isCached = false;
+    this._isLoaded = false;
+    this._modelSizeFormatted = '';
   }
 
   /** Checks if the model or audio synthesis for a given prompt is actively loading. */

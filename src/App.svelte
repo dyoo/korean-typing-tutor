@@ -434,7 +434,7 @@
       }
     } else {
       updateSetting('enableTTS', false);
-      ttsController.stop();
+      ttsController.terminate();
     }
   }
 
