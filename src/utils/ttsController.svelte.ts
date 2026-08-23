@@ -60,6 +60,7 @@ export class TTSController {
   private loadModelPromise: Promise<void> | null = null;
   private nextRequestId = 0;
   private currentBatchToken = 0;
+  private currentPlaybackToken = 0;
 
   constructor() {
     // Lazily initialized when needed
@@ -429,6 +430,7 @@ export class TTSController {
   }
 
   public stopAudio(): void {
+    this.currentPlaybackToken++;
     if (this.playerAudio) {
       this.playerAudio.onended = null;
       this.playerAudio.onerror = null;
@@ -454,10 +456,16 @@ export class TTSController {
     // Prime the audio subsystem synchronously during the active user gesture
     this.unlockAudio();
     this.stopAudio();
+    const playbackToken = this.currentPlaybackToken;
 
     try {
       this._isSpeaking = true;
       const audioUrl = await this.synthesize(text, voice, speed);
+
+      // If stopAudio() or another speak() was called while synthesis was in flight, abort playback
+      if (playbackToken !== this.currentPlaybackToken) {
+        return;
+      }
 
       if (!this.playerAudio) {
         this.playerAudio = new Audio();
@@ -469,7 +477,9 @@ export class TTSController {
         const cleanup = () => {
           audio.onended = null;
           audio.onerror = null;
-          this._isSpeaking = false;
+          if (playbackToken === this.currentPlaybackToken) {
+            this._isSpeaking = false;
+          }
         };
 
         audio.onended = () => {
@@ -486,7 +496,9 @@ export class TTSController {
         });
       });
     } catch {
-      this._isSpeaking = false;
+      if (playbackToken === this.currentPlaybackToken) {
+        this._isSpeaking = false;
+      }
     }
   }
 

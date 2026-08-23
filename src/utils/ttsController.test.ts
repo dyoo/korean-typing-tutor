@@ -739,4 +739,60 @@ describe('TTSController Unit Tests', () => {
     expect(controller.isAudioLoading('테스트')).toBe(false);
     expect(controller.isAudioCached('테스트')).toBe(true);
   });
+
+  it('discards playback for skipped prompts when stopAudio is called while synthesize is in flight', async () => {
+    const loadPromise = controller.loadModel();
+    latestWorkerInstance?.onmessage?.({
+      data: {
+        type: 'LOAD_SUCCESS',
+        payload: { voices: [] },
+      },
+    } as MessageEvent);
+    await loadPromise;
+
+    const playedUrls: string[] = [];
+    class MockAudioElementForSkipTest {
+      public src: string = '';
+      public onended: (() => void) | null = null;
+      public onerror: (() => void) | null = null;
+      public async play(): Promise<void> {
+        playedUrls.push(this.src);
+      }
+      public pause(): void {}
+    }
+    vi.stubGlobal('Audio', MockAudioElementForSkipTest);
+
+    // Start speaking skipped prompt A
+    const speakAPromise = controller.speak('스킵단어A', 'jm_kumo', 1.0);
+
+    const synthMsgA = postedMessages.find(
+      (m) => m.type === 'SYNTHESIZE' && m.payload.text === '스킵단어A',
+    );
+    expect(synthMsgA).toBeDefined();
+
+    // User skips exercise -> stopAudio() is called
+    controller.stopAudio();
+
+    // Worker finishes synthesis for prompt A
+    if (synthMsgA && synthMsgA.type === 'SYNTHESIZE') {
+      latestWorkerInstance?.onmessage?.({
+        data: {
+          type: 'SYNTHESIS_SUCCESS',
+          payload: {
+            id: synthMsgA.payload.id,
+            audioBlobUrl: 'blob:http://localhost/skipped-a',
+            genTimeMs: 10,
+            durationSec: 0.5,
+            ipa: 'skip-a',
+          },
+        },
+      } as MessageEvent);
+    }
+
+    await speakAPromise;
+
+    // Verify audio.play() was NEVER called with the synthesized audio URL for prompt A
+    expect(playedUrls).not.toContain('blob:http://localhost/skipped-a');
+    expect(controller.isSpeaking).toBe(false);
+  });
 });
