@@ -1,5 +1,43 @@
-import { createWavBlob } from '@dannyyoo/korean-tts';
 import type { TTSWorkerRequest, TTSWorkerResponse, VoiceMetadata } from '../types/tts';
+
+/** Helper to write ASCII strings to DataView byte buffers. */
+function writeAscii(view: DataView, offset: number, string: string): void {
+  for (let i = 0; i < string.length; i++) {
+    view.setUint8(offset + i, string.charCodeAt(i));
+  }
+}
+
+/** Converts raw Float32Array PCM audio samples to a valid WAV Blob. */
+export function createWavBlob(samples: Float32Array, sampleRate: number = 24000): Blob {
+  const byteRate = sampleRate * 1 * 16 / 8; // 1 channel, 16-bit
+  const dataSize = samples.length * 2;
+  const buffer = new ArrayBuffer(44 + dataSize);
+  const view = new DataView(buffer);
+
+  writeAscii(view, 0, 'RIFF');
+  view.setUint32(4, 36 + dataSize, true);
+  writeAscii(view, 8, 'WAVE');
+  writeAscii(view, 12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true); // PCM format
+  view.setUint16(22, 1, true); // Mono channel
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, byteRate, true);
+  view.setUint16(32, 2, true); // Block align (1 * 16 / 8)
+  view.setUint16(34, 16, true); // 16 bits per sample
+  writeAscii(view, 36, 'data');
+  view.setUint32(40, dataSize, true);
+
+  let offset = 44;
+  for (let i = 0; i < samples.length; i++) {
+    const s = Math.max(-1, Math.min(1, samples[i]));
+    const pcm = s < 0 ? s * 0x8000 : s * 0x7fff;
+    view.setInt16(offset, pcm, true);
+    offset += 2;
+  }
+
+  return new Blob([view], { type: 'audio/wav' });
+}
 
 /** Maximum number of audio blob URLs retained in memory before LRU eviction. */
 const MAX_AUDIO_CACHE_SIZE = 50;
