@@ -10,6 +10,7 @@
   interface Props {
     isOpen: boolean;
     masteryUnlockedCount: number;
+    currentStageNumber?: number;
     activeCheckpointId?: string | null;
     activeFocusBatchim?: string | null;
     jamoStats: Record<string, JamoStats>;
@@ -25,6 +26,7 @@
   let {
     isOpen,
     masteryUnlockedCount,
+    currentStageNumber = 1,
     activeCheckpointId = null,
     activeFocusBatchim = null,
     jamoStats,
@@ -36,6 +38,8 @@
     onfocusselect,
     ontogglestagecollapse,
   }: Props = $props();
+
+  let isWorkshopActive = $derived(Boolean(activeFocusBatchim));
 
   function toggleStageCollapse(stageName: string) {
     ontogglestagecollapse?.(stageName);
@@ -65,8 +69,11 @@
 >
   <div class="flex-1 overflow-y-auto p-4 flex flex-col gap-3 [scrollbar-width:thin]">
       {#each JAMO_STAGES as stage}
+        {@const isCurrentStage = !activeFocusBatchim && stage.stageNum === currentStageNumber}
         <div
-          class="flex flex-col border border-gray-200 dark:border-gray-700/60 rounded-xl p-2.5 bg-gray-50/60 dark:bg-gray-800/40 gap-2"
+          class="flex flex-col border {isCurrentStage
+            ? 'border-amber-400/90 dark:border-amber-500/90 bg-amber-50/40 dark:bg-amber-950/20 ring-1 ring-amber-400/40 dark:ring-amber-500/30'
+            : 'border-gray-200 dark:border-gray-700/60 bg-gray-50/60 dark:bg-gray-800/40'} rounded-xl p-2.5 gap-2"
         >
           <div
             class="flex items-center justify-between p-1 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 transition-colors select-none"
@@ -74,10 +81,14 @@
             <button
               type="button"
               onclick={() => toggleStageCollapse(stage.stageName)}
-              class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400 cursor-pointer text-left min-w-0"
+              class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide {isCurrentStage
+                ? 'text-amber-700 dark:text-amber-300 font-extrabold'
+                : 'text-gray-800 dark:text-gray-200 hover:text-amber-600 dark:hover:text-amber-400'} cursor-pointer text-left min-w-0"
             >
               <svg
-                class="w-3.5 h-3.5 text-gray-400 transition-transform shrink-0 {collapsedStageIds.includes(
+                class="w-3.5 h-3.5 {isCurrentStage
+                  ? 'text-amber-500 dark:text-amber-400'
+                  : 'text-gray-400'} transition-transform shrink-0 {collapsedStageIds.includes(
                   stage.stageName,
                 )
                   ? '-rotate-90'
@@ -91,12 +102,13 @@
               </svg>
               <span class="text-left leading-snug">{stage.stageName}</span>
             </button>
-            <span
-              class="text-xs font-mono font-semibold text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-gray-200 dark:border-gray-600 shrink-0"
-            >
-              {stage.items.length}
-              {stage.items.length === 1 ? 'key' : 'keys'}
-            </span>
+            {#if isCurrentStage}
+              <span
+                class="text-[10px] font-bold uppercase tracking-wider text-amber-700 dark:text-amber-300 bg-amber-100 dark:bg-amber-900/60 px-1.5 py-0.5 rounded border border-amber-300 dark:border-amber-700 shrink-0"
+              >
+                Current
+              </span>
+            {/if}
           </div>
 
           {#if !collapsedStageIds.includes(stage.stageName)}
@@ -202,7 +214,9 @@
 
       <!-- Post-game Batchim Workshop Section -->
       <div
-        class="flex flex-col border border-purple-200 dark:border-purple-800/60 rounded-xl p-2.5 bg-purple-50/40 dark:bg-purple-950/20 gap-2"
+        class="flex flex-col border {isWorkshopActive
+          ? 'border-purple-400 dark:border-purple-600 bg-purple-50/60 dark:bg-purple-950/30 ring-1 ring-purple-400/40 dark:ring-purple-500/30'
+          : 'border-purple-200 dark:border-purple-800/60 bg-purple-50/40 dark:bg-purple-950/20'} rounded-xl p-2.5 gap-2"
       >
         <div
           class="flex items-center justify-between p-1 rounded-lg hover:bg-white dark:hover:bg-gray-700/70 transition-colors select-none"
@@ -210,10 +224,14 @@
           <button
             type="button"
             onclick={() => toggleStageCollapse('Batchim Workshop')}
-            class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-purple-900 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer"
+            class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide {isWorkshopActive
+              ? 'text-purple-700 dark:text-purple-300 font-extrabold'
+              : 'text-purple-900 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-400'} cursor-pointer"
           >
             <svg
-              class="w-3.5 h-3.5 text-purple-400 transition-transform {collapsedStageIds.includes(
+              class="w-3.5 h-3.5 {isWorkshopActive
+                ? 'text-purple-500 dark:text-purple-400'
+                : 'text-purple-400'} transition-transform {collapsedStageIds.includes(
                 'Batchim Workshop',
               )
                 ? '-rotate-90'
@@ -227,11 +245,13 @@
             </svg>
             <span>Batchim Workshop</span>
           </button>
-          <span
-            class="text-xs font-mono font-semibold text-purple-700 dark:text-purple-300 bg-white dark:bg-gray-700 px-1.5 py-0.5 rounded border border-purple-200 dark:border-purple-800 shrink-0"
-          >
-            {BATCHIM_FOCUS_LIST.length} batchim
-          </span>
+          {#if isWorkshopActive}
+            <span
+              class="text-[10px] font-bold uppercase tracking-wider text-purple-700 dark:text-purple-300 bg-purple-100 dark:bg-purple-900/60 px-1.5 py-0.5 rounded border border-purple-300 dark:border-purple-700 shrink-0"
+            >
+              Current
+            </span>
+          {/if}
         </div>
 
         {#if !collapsedStageIds.includes('Batchim Workshop')}

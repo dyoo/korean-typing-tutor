@@ -745,6 +745,7 @@
 <MasterySidebar
   isOpen={showMasterySidebar}
   masteryUnlockedCount={masteryState.unlockedCount}
+  {currentStageNumber}
   activeCheckpointId={masteryState.activeCheckpointId ?? activeCheckpoint?.id ?? null}
   activeFocusBatchim={masteryState.activeFocusBatchim ?? null}
   jamoStats={masteryState.jamoStats}
