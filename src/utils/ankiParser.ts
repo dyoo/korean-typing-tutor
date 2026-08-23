@@ -63,6 +63,84 @@ export function sanitizeFlashcardText(raw: string): string {
 }
 
 /**
+ * Cleans grammar metadata, English placeholder annotations, bracketed notes, and leading tildes.
+ */
+export function cleanKoreanTarget(raw: string): string {
+  if (!raw) {
+    return '';
+  }
+  let target = raw.trim();
+
+  // If the target starts with a grammar placeholder like (noun)~ or (V stem)~, reject it
+  if (
+    /^\((?:noun|verb|v stem|a\/v|adj|adjective|object|subject|place|v|n|a)\)\s*~?/i.test(target)
+  ) {
+    return '';
+  }
+
+  // Strip trailing or embedded parenthesized / bracketed pure-English explanations like "[Sino-Korean #]", "(to eat)", "[polite]"
+  target = target.replace(/\[\s*[a-zA-Z0-9\s,./#\-_&;:'"]+\s*\]/g, '');
+  target = target.replace(/\(\s*[a-zA-Z0-9\s,./#\-_&;:'"]+\s*\)/g, '');
+
+  // Strip leading tilde affixes (e.g. "~지 않다" -> "지 않다")
+  target = target.replace(/^~+\s*/, '');
+
+  target = target.replace(/\s{2,}/g, ' ').trim();
+  return target;
+}
+
+/**
+ * Validates whether a candidate target string is a genuine, typeable Korean typing exercise.
+ * Filters out English quiz prompts, questions with English instructions, and detached Jamos.
+ */
+export function isTypeableKoreanTarget(target: string): boolean {
+  if (!target || target.length < 1 || target.length > 120) {
+    return false;
+  }
+
+  // Must contain at least one complete composable Hangul syllable
+  const hangulSyllables = target.match(/[\uAC00-\uD7A3]/g) || [];
+  if (hangulSyllables.length === 0) {
+    return false;
+  }
+
+  // Count Latin letters vs Hangul syllables
+  const latinLetters = target.match(/[a-zA-Z]/g) || [];
+  if (latinLetters.length > hangulSyllables.length) {
+    return false;
+  }
+
+  // Reject placeholder grammar patterns like (noun)~, (verb)~, (V stem)~, (A/V)~
+  if (
+    /^\((?:noun|verb|v stem|a\/v|adj|adjective|object|subject|place|v|n|a)\)/i.test(target) ||
+    /\b(?:v stem|noun stem)\b/i.test(target)
+  ) {
+    return false;
+  }
+
+  // Reject English grammar prompt instructions and quiz questions
+  if (
+    /(?:conjugate|tense|verb stem|noun stem|placeholder|marking particle|indicates a placeholder|sample:|sentence structure)/i.test(
+      target,
+    )
+  ) {
+    return false;
+  }
+
+  // Reject bullet prompt lists containing English
+  if (target.includes('•') && latinLetters.length > 0) {
+    return false;
+  }
+
+  // Reject floating Jamo affixes at start (e.g. ~ㄹ, ~ㄴ, ㄹ 수 있다)
+  if (/^[~]?[\u3131-\u318E\u1100-\u11FF]/.test(target)) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
  * Validates if a field candidate looks like an English translation or definition,
  * filtering out URLs, Hangul text, audio IDs, numeric indexes, and bare POS tags.
  */
@@ -169,7 +247,13 @@ export function parseTextFlashcards(
 
     // First Hangul field is target
     const targetIndex = hangulIndices[0];
-    const target = fields[targetIndex];
+    const rawTarget = fields[targetIndex];
+    const target = cleanKoreanTarget(rawTarget);
+
+    if (!isTypeableKoreanTarget(target)) {
+      continue;
+    }
+
     const translation = findBestTranslation(fields, targetIndex);
 
     // Deduplicate by target string
@@ -429,10 +513,16 @@ export async function parseAnkiPackage(
     }
 
     const targetIndex = hangulIndices[0];
-    const target = fields[targetIndex];
+    const rawTarget = fields[targetIndex];
+    const target = cleanKoreanTarget(rawTarget);
 
-    // Filter out long database artifacts / SQL strings
-    if (target.length > 80 || target.includes('CREATE TABLE') || target.includes('INSERT INTO')) {
+    // Filter out long database artifacts / SQL strings or non-typeable targets
+    if (
+      target.length > 80 ||
+      target.includes('CREATE TABLE') ||
+      target.includes('INSERT INTO') ||
+      !isTypeableKoreanTarget(target)
+    ) {
       continue;
     }
 

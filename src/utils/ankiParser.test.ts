@@ -176,6 +176,26 @@ Level 1\tLesson 3\t죄송합니다\tI am sorry\t늦어서 죄송합니다.\tI am
       expect(deck.items[1].target).toBe('생각하다');
       expect(deck.items[1].translation).toBe('to think');
     });
+
+    it('filters out untypeable grammar formulas and English quiz instructions', () => {
+      const grammarTsv = `
+일 [Sino-Korean #]\tone\t[il]
+먹다 (to eat)\tto eat\t[meok-da]
+(noun)~은\t[eun]\ttopic particle
+(V stem)~ㄹ 수 있다 Sample: 볼 수 있다 can\tcan do\tgrammar formula
+Conjugate using which ending? • present tense • verb stem ending in "하다"\t[yeo-yo]\tquiz
+Location marking particle "~에" has two primary roles:\tlocation at/in\tgrammar explanation
+~지 않다\tdo not\tnegative verb ending
+`;
+      const deck = parseTextFlashcards(grammarTsv, 'TTMIK_Grammar_Patterns.tsv');
+      expect(deck.itemCount).toBe(3);
+      expect(deck.items[0].target).toBe('일');
+      expect(deck.items[0].translation).toBe('one');
+      expect(deck.items[1].target).toBe('먹다');
+      expect(deck.items[1].translation).toBe('to eat');
+      expect(deck.items[2].target).toBe('지 않다');
+      expect(deck.items[2].translation).toBe('do not');
+    });
   });
 
   describe('parseAnkiPackage (.apkg)', () => {
