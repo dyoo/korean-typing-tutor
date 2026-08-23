@@ -129,7 +129,48 @@ When picking the next exercise in Mastery mode:
 
 ---
 
-## 5. State Persistence & Manual Override
+## 5. Spaced Repetition (SRS) Review Mode
+
+In addition to linear stage learning (**Progression Mode**), the Mastery engine includes a dedicated **Spaced Repetition (SRS) Review Mode** to maintain touch-typing recall and combat muscle memory decay across all unlocked keys.
+
+Learners can seamlessly toggle between **🎯 Learn Keys** and **★ Spaced Review** via the segmented control at the top of the Mastery Sidebar.
+
+### 5.1 Telemetry & Interval Model
+
+Each Jamo tracks its own memory stability and practice recency:
+
+- **`lastPracticed` (Timestamp):** Unix millisecond timestamp of the last keystroke attempt on that Jamo.
+- **`intervalDays` (Stability Interval):** Current scheduled memory retention interval in days (starts at 1.0 day).
+- **`repetitionCount`:** Number of successful spaced review cycles completed.
+
+### 5.2 Dynamic Urgency Scoring
+
+Each unlocked Jamo is continuously evaluated with an **Urgency Score**:
+
+$$\text{Urgency} = \left(\frac{\Delta \text{Days Elapsed}}{\text{Interval Days}}\right) \times (1.5 - 0.5 \times \text{Accuracy}) + \text{ErrorPenalty}$$
+
+- **Due Criteria:** A Jamo is officially **Due** if $\text{Urgency} \ge 1.0$ or if it has never been practiced (`totalAttempts === 0`).
+- **Lapse Factor:** Typing accuracy below 100% accelerates urgency growth $(1.5 - 0.5 \times \text{Accuracy})$.
+- **Error Penalty:** If recent accuracy drops below 90%, an immediate error penalty $(0.9 - \text{Accuracy}) \times 5.0$ is added.
+
+### 5.3 Review Item Selection (Strict Due Prioritization)
+
+When generating exercises in Review Mode:
+
+1. **Overdue Keys Active:** If any Jamos are due, the candidate pool is **strictly restricted** to words and phrases containing the highest-urgency due Jamos.
+2. **All Caught Up:** If all keys have been practiced recently (`0 Due`), vocabulary is selected across all unlocked keys weighted by forgetting curves and natural length distribution.
+3. **Adaptive Stability Adjustments:**
+   - **Solid Recall ($\ge 90\%$ accuracy):** Stability interval expands by $\times 1.5$ (capped at 60 days).
+   - **Struggle / Errors ($< 80\%$ accuracy):** Stability interval resets back to 1.0 day to re-reinforce the key.
+
+### 5.4 Visual Feedback
+
+- **TopBar Header:** Displays the highest-urgency due character and total due count (e.g. `Due: ㄹ [1 Due]`), transitioning to `Status: Caught Up ✓` once all reviews are completed.
+- **Mastery Sidebar Table:** Displays each unlocked key with its relative practice timestamp (`Practiced today`, `3d ago`, `Never practiced`), interval stability, rolling accuracy gauge, and `Due Now` / `Healthy` badges.
+
+---
+
+## 6. State Persistence & Manual Override
 
 - **Persistence:** Progress is stored in `localStorage` under `korean_tutor_mastery` and debounced
   (30s inactivity or on page unload) to prevent mobile I/O overhead.
@@ -139,7 +180,7 @@ When picking the next exercise in Mastery mode:
 
 ---
 
-## 6. Graduation Celebration & Next Steps
+## 7. Graduation Celebration & Next Steps
 
 Upon graduating the final Milestone (**Sentence Milestone 5 / Compound Batchim**):
 
@@ -148,6 +189,8 @@ Upon graduating the final Milestone (**Sentence Milestone 5 / Compound Batchim**
 2. **Actionable Pathways:**
    - **Switch to Free-form Mode:** Easily transition to practice the full 26-module library of
      authentic vocabulary, TOPIK levels, idioms, and literature without progression locks.
+   - **Spaced Repetition Maintenance:** Switch to Review mode to maintain touch-typing speed and
+     accuracy across the full keyboard.
    - **Review or Reset Progress:** Open the Mastery Progress Drawer to jump to any specific stage or
      milestone to hone speed and accuracy.
    - **Continue in Master Level:** Keep practicing the rich mix of authentic master-level passages
