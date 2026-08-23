@@ -12,7 +12,11 @@
   } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
-  import { JAMO_PROGRESSION_ORDER, calculateJamoProgress } from './utils/jamoMastery';
+  import {
+    JAMO_PROGRESSION_ORDER,
+    JAMO_STAGES,
+    calculateJamoProgress,
+  } from './utils/jamoMastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import MasterySidebar from './lib/MasterySidebar.svelte';
@@ -119,6 +123,18 @@
         }
       : null,
   );
+
+  let currentStageNumber = $derived(
+    activeLearningJamo?.stage ??
+      (activeMasteryTarget.type === 'checkpoint' ? activeMasteryTarget.checkpoint.stage : 1),
+  );
+  let currentStageName = $derived(
+    activeLearningJamo?.stageName ??
+      (activeMasteryTarget.type === 'checkpoint'
+        ? activeMasteryTarget.checkpoint.stageName
+        : 'Home Row'),
+  );
+  let totalStageCount = $derived(JAMO_STAGES.length);
 
   function isTouchDevice(): boolean {
     return (
@@ -623,6 +639,9 @@
     totalModuleCount={modules.length}
     masteryUnlockedCount={masteryState.unlockedCount}
     masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
+    {currentStageNumber}
+    {totalStageCount}
+    {currentStageName}
     activeJamoChar={activeJamoChar}
     activeJamoLabel={activeJamoLabel}
     activeLearningCombination={activeLearningCombination}

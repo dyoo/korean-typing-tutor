@@ -12,6 +12,9 @@
     totalModuleCount: number;
     masteryUnlockedCount: number;
     masteryTotalCount: number;
+    currentStageNumber?: number;
+    totalStageCount?: number;
+    currentStageName?: string;
     activeJamoChar?: string | null;
     activeJamoLabel?: string;
     activeLearningCombination?: [string, string];
@@ -50,6 +53,9 @@
     totalModuleCount,
     masteryUnlockedCount,
     masteryTotalCount,
+    currentStageNumber = 1,
+    totalStageCount = 5,
+    currentStageName = 'Home Row',
     activeJamoChar = null,
     activeJamoLabel = 'Focus:',
     activeLearningCombination,
@@ -120,7 +126,7 @@
         onclick={ontogglemastery}
         onmousedown={(e) => e.stopPropagation()}
         class="flex items-center gap-1.5 md:gap-2.5 bg-white dark:bg-gray-800 border-2 border-amber-300 dark:border-amber-700/60 text-gray-800 dark:text-gray-200 font-semibold rounded-lg px-2 md:px-3 py-1 md:py-1.5 hover:border-amber-600 dark:hover:border-amber-500 focus:outline-none shadow-sm text-sm cursor-pointer whitespace-nowrap shrink-0"
-        aria-label="Open Mastery Progress Sidebar"
+        aria-label="Open Mastery Progress Sidebar ({masteryUnlockedCount}/{masteryTotalCount} Jamos unlocked)"
       >
         <svg
           class="w-4 h-4 md:w-5 md:h-5 text-amber-600 dark:text-amber-400 shrink-0"
@@ -132,14 +138,19 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
         <span
-          class="font-bold text-xs uppercase tracking-wider text-gray-700 dark:text-gray-300 hidden md:inline whitespace-nowrap"
+          class="font-bold text-xs uppercase tracking-wider {isPostGame
+            ? 'text-purple-700 dark:text-purple-300'
+            : 'text-gray-700 dark:text-gray-300'} hidden md:inline whitespace-nowrap"
         >
-          Jamos
+          {isPostGame ? 'Workshop' : 'Stage'}
         </span>
         <span
-          class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 px-1.5 py-0.5 rounded border border-amber-200 dark:border-amber-800 whitespace-nowrap shrink-0"
+          class="text-xs font-mono font-bold {isPostGame
+            ? 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800'
+            : 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800'} px-1.5 py-0.5 rounded whitespace-nowrap shrink-0"
+          title={isPostGame ? 'Batchim Workshop' : `Stage ${currentStageNumber}: ${currentStageName}`}
         >
-          {masteryUnlockedCount}/{masteryTotalCount}
+          {isPostGame ? 'Batchim' : `${currentStageNumber}/${totalStageCount}`}
         </span>
         {#if activeCheckpointTitle}
           <div
