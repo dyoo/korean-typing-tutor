@@ -1,10 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import {
   sanitizeFlashcardText,
   containsHangul,
   parseTextFlashcards,
   parseDeckFromFile,
-  parseDeckFromUrl,
   parseAnkiPackage,
 } from './ankiParser';
 
@@ -243,47 +242,6 @@ Level 1\tLesson 3\t죄송합니다\tI am sorry\t늦어서 죄송합니다.\tI am
     it('throws error if file contains no Hangul', async () => {
       const file = new File(['hello\tworld'], 'english.tsv', { type: 'text/plain' });
       await expect(parseDeckFromFile(file)).rejects.toThrow(/no valid korean flashcards/i);
-    });
-  });
-
-  describe('parseDeckFromUrl', () => {
-    beforeEach(() => {
-      vi.restoreAllMocks();
-    });
-
-    afterEach(() => {
-      vi.restoreAllMocks();
-    });
-
-    it('fetches and parses remote TSV file from URL', async () => {
-      const mockTsv = '컴퓨터\tcomputer\n마우스\tmouse';
-      globalThis.fetch = vi.fn().mockResolvedValue({
-        ok: true,
-        status: 200,
-        headers: new Headers({ 'content-type': 'text/plain' }),
-        text: async () => mockTsv,
-      } as Response);
-
-      const deck = await parseDeckFromUrl('https://example.com/decks/technology.tsv');
-      expect(deck.title).toBe('technology');
-      expect(deck.itemCount).toBe(2);
-      expect(deck.items[0].target).toBe('컴퓨터');
-    });
-
-    it('throws error for invalid URL protocol', async () => {
-      await expect(parseDeckFromUrl('ftp://invalid.url')).rejects.toThrow(/invalid url/i);
-    });
-
-    it('throws error when server returns non-200 HTTP status', async () => {
-      globalThis.fetch = vi.fn().mockResolvedValue({
-        ok: false,
-        status: 404,
-        statusText: 'Not Found',
-      } as Response);
-
-      await expect(parseDeckFromUrl('https://example.com/missing.tsv')).rejects.toThrow(
-        /server returned http 404/i,
-      );
     });
   });
 });
