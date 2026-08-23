@@ -3,6 +3,7 @@ import {
   calculateTargetCursorIndex,
   calculateInputCursorIndex,
   getWordTokens,
+  getInputCaretStatus,
 } from './cursorHelper';
 
 describe('Cursor index calculation helpers (cursorHelper)', () => {
@@ -99,3 +100,50 @@ describe('getWordTokens helper', () => {
     expect(tokens[2].indices.map((i) => text[i]).join('')).toBe('반갑습니다!');
   });
 });
+
+describe('getInputCaretStatus helper', () => {
+  it('assigns the caret to the leading edge of the first character when cursor is at 0', () => {
+    // String "안녕" (length 2), active cursor at 0
+    const char0 = getInputCaretStatus(0, 0, 2);
+    expect(char0).toEqual({ hasCaret: true, isLeading: true });
+
+    const char1 = getInputCaretStatus(1, 0, 2);
+    expect(char1).toEqual({ hasCaret: false, isLeading: false });
+  });
+
+  it('assigns the caret to the leading edge of the character after the cursor when between characters', () => {
+    // String "안녕" (length 2), active cursor at 1 (between '안' and '녕')
+    // Trailing char ('안', index 0) must NOT draw a beam to prevent double-width tiling (issue #14)
+    const char0 = getInputCaretStatus(0, 1, 2);
+    expect(char0).toEqual({ hasCaret: false, isLeading: false });
+
+    // Leading char ('녕', index 1) owns the beam on its leading (left) edge
+    const char1 = getInputCaretStatus(1, 1, 2);
+    expect(char1).toEqual({ hasCaret: true, isLeading: true });
+  });
+
+  it('assigns the caret to the trailing edge of the last character when cursor is at the end of input', () => {
+    // String "안녕" (length 2), active cursor at 2 (after '녕')
+    const char0 = getInputCaretStatus(0, 2, 2);
+    expect(char0).toEqual({ hasCaret: false, isLeading: false });
+
+    // Trailing char ('녕', index 1) owns the beam on its trailing (right) edge
+    const char1 = getInputCaretStatus(1, 2, 2);
+    expect(char1).toEqual({ hasCaret: true, isLeading: false });
+  });
+
+  it('ensures exactly one character owns the caret across all valid cursor positions', () => {
+    const textLength = 5;
+    for (let cursorIndex = 0; cursorIndex <= textLength; cursorIndex++) {
+      let caretCount = 0;
+      for (let charIndex = 0; charIndex < textLength; charIndex++) {
+        const status = getInputCaretStatus(charIndex, cursorIndex, textLength);
+        if (status.hasCaret) {
+          caretCount++;
+        }
+      }
+      expect(caretCount).toBe(1);
+    }
+  });
+});
+

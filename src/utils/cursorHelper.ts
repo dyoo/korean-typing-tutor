@@ -92,3 +92,29 @@ export function getWordTokens(target: string): WordTokenGroup[] {
 
   return tokens;
 }
+
+export interface InputCaretStatus {
+  /** Whether this character unit renders the visual cursor beam */
+  hasCaret: boolean;
+  /** Whether the beam is on the character's leading (left) or trailing (right) edge */
+  isLeading: boolean;
+}
+
+/**
+ * Determines whether a character at `charIndex` renders the input caret beam.
+ * To prevent double-width (5px) overlapping carets, exactly one character owns
+ * the beam: the leading character when available, or the trailing character
+ * at the end of the text.
+ */
+export function getInputCaretStatus(
+  charIndex: number,
+  activeCursorIndex: number,
+  totalLength: number,
+): InputCaretStatus {
+  const isLeading = charIndex === activeCursorIndex;
+  const isTrailing = charIndex === activeCursorIndex - 1;
+  const hasCaret = isLeading || (isTrailing && activeCursorIndex === totalLength);
+
+  return { hasCaret, isLeading };
+}
+

@@ -1,5 +1,6 @@
 <script lang="ts">
   import CharDisplay from './CharDisplay.svelte';
+  import { getInputCaretStatus } from '../utils/cursorHelper';
   import type { CursorColorMode } from '../utils/cursorColor';
 
   interface Props {
@@ -106,17 +107,15 @@
     >
       {#each userInput.split('') as char, i}
         {@const isError = errorMap.get(i) ?? false}
-        {@const isLeading = i === activeInputCursorIndex}
-        {@const isTrailing = i === activeInputCursorIndex - 1}
-        {@const isCurrent = isLeading || isTrailing}
+        {@const caret = getInputCaretStatus(i, activeInputCursorIndex, userInput.length)}
 
-        {#if isCurrent}
+        {#if caret.hasCaret}
           <CharDisplay
             bind:elementRef={activeCursorElement}
             {char}
             {isError}
-            {isCurrent}
-            isLeadingCursor={isLeading}
+            isCurrent={true}
+            isLeadingCursor={caret.isLeading}
             variant="input"
             dataIndex={i}
             {cursorColor}
@@ -126,7 +125,7 @@
           <CharDisplay
             {char}
             {isError}
-            {isCurrent}
+            isCurrent={false}
             variant="input"
             dataIndex={i}
             {cursorColor}
