@@ -245,13 +245,7 @@ export function hasBatchim(text: string, batchim: string): boolean {
   if (!text || !batchim) {
     return false;
   }
-  for (const char of text) {
-    const finalConsonant = decomposeSyllable(char)?.finalConsonant;
-    if (finalConsonant === batchim) {
-      return true;
-    }
-  }
-  return false;
+  return getItemJamoMetadata(text).batchims.has(batchim);
 }
 
 /** Creates a fresh zeroed JamoStats entry. */
@@ -826,6 +820,102 @@ function isHangulJamo(char: string): boolean {
 }
 
 /**
+ * Cached Jamo metadata descriptor for a lesson item or target text string.
+ * Pre-analyzes decomposed basic Jamos, compound batchims, and constituent Jamos
+ * so that filtering and eligibility validation require zero repeated Unicode decomposition math.
+ */
+export interface ItemJamoMetadata {
+  /** All unique basic Jamos and compound batchims strictly required to type this text. */
+  requiredJamos: string[];
+  /** Set of all constituent Jamos (initial consonants, vowels, final consonants, standalone, and basic components). */
+  allJamos: Set<string>;
+  /** Set of all final consonants (받침) in the syllables. */
+  batchims: Set<string>;
+}
+
+const itemMetadataCache = new WeakMap<LessonItem, ItemJamoMetadata>();
+const stringMetadataCache = new Map<string, ItemJamoMetadata>();
+
+/**
+ * Computes and returns the cached Jamo decomposition metadata for a lesson item or string.
+ */
+export function getItemJamoMetadata(target: LessonItem | string): ItemJamoMetadata {
+  if (typeof target !== 'string') {
+    const cached = itemMetadataCache.get(target);
+    if (cached) {
+      return cached;
+    }
+    const computed = computeJamoMetadata(target.target);
+    itemMetadataCache.set(target, computed);
+    return computed;
+  }
+
+  const cached = stringMetadataCache.get(target);
+  if (cached) {
+    return cached;
+  }
+  const computed = computeJamoMetadata(target);
+  stringMetadataCache.set(target, computed);
+  return computed;
+}
+
+/**
+ * Performs one-time decomposition analysis on a Hangul text string.
+ */
+function computeJamoMetadata(text: string): ItemJamoMetadata {
+  const batchims = new Set<string>();
+  const allJamos = new Set<string>();
+  const requiredSet = new Set<string>();
+
+  if (!text || text.trim() === '') {
+    return {
+      requiredJamos: [],
+      allJamos,
+      batchims,
+    };
+  }
+
+  // 1. Analyze decomposed basic Jamos required for keystroke composition
+  const basicJamos = decomposeStringToJamos(text);
+  for (let i = 0; i < basicJamos.length; i++) {
+    const j = basicJamos[i];
+    if (isHangulJamo(j)) {
+      requiredSet.add(j);
+      allJamos.add(j);
+    }
+  }
+
+  // 2. Analyze syllables for initial/vowel/final consonants and compound batchims
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const decomp = decomposeSyllable(char);
+    if (decomp) {
+      if (decomp.initialConsonant) {
+        allJamos.add(decomp.initialConsonant);
+      }
+      if (decomp.vowel) {
+        allJamos.add(decomp.vowel);
+      }
+      if (decomp.finalConsonant) {
+        allJamos.add(decomp.finalConsonant);
+        batchims.add(decomp.finalConsonant);
+        if (COMPOUND_BATCHIM_SET.has(decomp.finalConsonant)) {
+          requiredSet.add(decomp.finalConsonant);
+        }
+      }
+    } else if (isHangulJamo(char)) {
+      allJamos.add(char);
+    }
+  }
+
+  return {
+    requiredJamos: Array.from(requiredSet),
+    allJamos,
+    batchims,
+  };
+}
+
+/**
  * Validates whether all of an item's constituent Hangul Jamos belong to the unlocked Jamo set.
  * Syllables with compound final consonants (겹받침) also require their specific compound
  * batchim to be unlocked in the progression sequence.
@@ -835,19 +925,13 @@ export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): bo
     return false;
   }
 
-  // 1. Verify that all decomposed basic Jamos are unlocked
-  const jamos = decomposeStringToJamos(item.target);
-  if (jamos.length === 0) {
-    return false;
-  }
-  if (!jamos.every((j) => !isHangulJamo(j) || unlockedJamos.has(j))) {
+  const meta = getItemJamoMetadata(item);
+  if (meta.requiredJamos.length === 0) {
     return false;
   }
 
-  // 2. Verify that compound final consonants (겹받침) are unlocked
-  for (const char of item.target) {
-    const finalChar = decomposeSyllable(char)?.finalConsonant;
-    if (finalChar && COMPOUND_BATCHIM_SET.has(finalChar) && !unlockedJamos.has(finalChar)) {
+  for (let i = 0; i < meta.requiredJamos.length; i++) {
+    if (!unlockedJamos.has(meta.requiredJamos[i])) {
       return false;
     }
   }
@@ -897,26 +981,9 @@ export function itemUsesAnyJamo(text: string, targetJamos: Set<string>): boolean
   if (!text || targetJamos.size === 0) {
     return false;
   }
-  for (const char of text) {
-    const decomp = decomposeSyllable(char);
-    if (decomp) {
-      if (decomp.initialConsonant && targetJamos.has(decomp.initialConsonant)) {
-        return true;
-      }
-      if (decomp.vowel && targetJamos.has(decomp.vowel)) {
-        return true;
-      }
-      if (decomp.finalConsonant && targetJamos.has(decomp.finalConsonant)) {
-        return true;
-      }
-    } else if (targetJamos.has(char)) {
-      return true;
-    }
-  }
-  // Also check decomposed constituent basic Jamos
-  const jamos = decomposeStringToJamos(text);
-  for (const j of jamos) {
-    if (targetJamos.has(j)) {
+  const meta = getItemJamoMetadata(text);
+  for (const j of targetJamos) {
+    if (meta.allJamos.has(j)) {
       return true;
     }
   }

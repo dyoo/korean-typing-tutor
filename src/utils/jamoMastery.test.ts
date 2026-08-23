@@ -21,6 +21,7 @@ import {
   isAllMasteryComplete,
   getSectionJamosForCheckpoint,
   itemUsesAnyJamo,
+  getItemJamoMetadata,
 } from './jamoMastery';
 import type { LessonItem } from '../types/korean';
 import type { JamoStats, MasteryTarget } from '../types/mastery';
@@ -690,6 +691,46 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
 
       const reloaded = loadMasteryState();
       expect(reloaded.activeFocusBatchim).toBe('ㄶ');
+    });
+  });
+
+  describe('Item Jamo Decomposition Cache & Metadata', () => {
+    it('accurately computes and memoizes required Jamos, constituent Jamos, and batchims', () => {
+      const item: LessonItem = {
+        id: 'test_chicken',
+        moduleId: 'm1',
+        target: '닭고기',
+        translation: 'Chicken meat',
+      };
+
+      const meta1 = getItemJamoMetadata(item);
+      // '닭' has ㄷ, ㅏ, ㄹ, ㄱ (basic) + ㄺ (compound batchim); '고' has ㄱ, ㅗ; '기' has ㄱ, ㅣ
+      expect(meta1.requiredJamos).toContain('ㄷ');
+      expect(meta1.requiredJamos).toContain('ㅏ');
+      expect(meta1.requiredJamos).toContain('ㄹ');
+      expect(meta1.requiredJamos).toContain('ㄱ');
+      expect(meta1.requiredJamos).toContain('ㄺ');
+      expect(meta1.requiredJamos).toContain('ㅗ');
+      expect(meta1.requiredJamos).toContain('ㅣ');
+      expect(meta1.batchims.has('ㄺ')).toBe(true);
+
+      // Verify reference equality for WeakMap memoization
+      const meta2 = getItemJamoMetadata(item);
+      expect(meta2).toBe(meta1);
+
+      // Verify string-based memoization
+      const stringMeta1 = getItemJamoMetadata('넓다');
+      expect(stringMeta1.batchims.has('ㄼ')).toBe(true);
+      expect(stringMeta1.requiredJamos).toContain('ㄼ');
+      const stringMeta2 = getItemJamoMetadata('넓다');
+      expect(stringMeta2).toBe(stringMeta1);
+    });
+
+    it('returns empty structures gracefully for empty target strings', () => {
+      const emptyMeta = getItemJamoMetadata('');
+      expect(emptyMeta.requiredJamos).toEqual([]);
+      expect(emptyMeta.allJamos.size).toBe(0);
+      expect(emptyMeta.batchims.size).toBe(0);
     });
   });
 });
