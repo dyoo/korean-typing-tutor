@@ -10,6 +10,7 @@
     mode: TutorMode;
     masterySubMode?: MasterySubMode;
     dueCount?: number;
+    dueJamoChar?: string | null;
     enabledModuleCount: number;
     totalModuleCount: number;
     masteryUnlockedCount: number;
@@ -53,6 +54,7 @@
     mode,
     masterySubMode = 'progression',
     dueCount = 0,
+    dueJamoChar = null,
     enabledModuleCount,
     totalModuleCount,
     masteryUnlockedCount,
@@ -158,11 +160,25 @@
             class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80 shrink-0 whitespace-nowrap"
           >
             <span
+              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:inline whitespace-nowrap"
+            >
+              {dueCount > 0 ? 'Due:' : 'Status:'}
+            </span>
+            <span
               class="relative overflow-hidden text-xs md:text-sm font-bold {dueCount > 0
                 ? 'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 border-amber-300 dark:border-amber-700'
                 : 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/80 border-emerald-300 dark:border-emerald-700'} px-1.5 md:px-2 py-0.5 rounded-md border leading-none flex items-center gap-1 md:gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
             >
-              {dueCount > 0 ? `${dueCount} Due` : 'Caught Up ✓'}
+              {#if dueCount > 0 && dueJamoChar}
+                <span class="text-sm md:text-base font-bold whitespace-nowrap text-amber-700 dark:text-amber-300">{dueJamoChar}</span>
+              {/if}
+              <span
+                class="text-[10px] font-mono font-bold {dueCount > 0
+                  ? 'bg-amber-200/60 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200'
+                  : 'bg-emerald-200/60 dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-200'} px-1 py-0.5 rounded whitespace-nowrap"
+              >
+                {dueCount > 0 ? `${dueCount} Due` : 'Caught Up ✓'}
+              </span>
             </span>
           </div>
         {:else}

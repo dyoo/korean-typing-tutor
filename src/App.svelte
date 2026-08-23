@@ -140,6 +140,7 @@
 
   let dueJamos = $derived(getDueJamos(masteryState));
   let dueCount = $derived(dueJamos.filter((d) => d.isDue).length);
+  let dueJamoChar = $derived(dueJamos.find((d) => d.isDue)?.jamo ?? null);
 
   function isTouchDevice(): boolean {
     return (
@@ -645,6 +646,7 @@
     {mode}
     masterySubMode={masteryState.masterySubMode ?? 'progression'}
     {dueCount}
+    {dueJamoChar}
     ontogglemode={toggleMode}
     enabledModuleCount={enabledModuleIds.length}
     totalModuleCount={modules.length}

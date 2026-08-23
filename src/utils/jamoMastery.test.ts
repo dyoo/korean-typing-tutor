@@ -899,16 +899,24 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
         { id: '2', moduleId: 'm1', target: '오이', translation: 'cucumber' },
       ];
 
-      // Give '아' high urgency (due)
-      state.jamoStats['ㅏ'].totalAttempts = 0; // Urgency 10.0
-      state.jamoStats['ㅗ'].totalAttempts = 20;
-      state.jamoStats['ㅗ'].correctAttempts = 20;
-      state.jamoStats['ㅗ'].recentHistory = new Array(20).fill(true);
-      state.jamoStats['ㅗ'].lastPracticed = Date.now(); // Urgency 0.0
+      // Mark all keys as freshly practiced
+      for (const key of Object.keys(state.jamoStats)) {
+        state.jamoStats[key].totalAttempts = 20;
+        state.jamoStats[key].correctAttempts = 20;
+        state.jamoStats[key].recentHistory = new Array(20).fill(true);
+        state.jamoStats[key].lastPracticed = Date.now();
+      }
 
-      const chosen = selectNextSRSItem(items, state.jamoStats);
-      expect(chosen).toBeDefined();
-      expect(items.map((i) => i.id)).toContain(chosen.id);
+      // Make 'ㅏ' the only unpracticed / due key (urgency 10.0)
+      state.jamoStats['ㅏ'].totalAttempts = 0;
+      state.jamoStats['ㅏ'].lastPracticed = undefined;
+
+      // All 100 trials must strictly select the item containing 'ㅏ' ('아이')
+      for (let i = 0; i < 100; i++) {
+        const chosen = selectNextSRSItem(items, state.jamoStats);
+        expect(chosen.id).toBe('1');
+        expect(chosen.target).toBe('아이');
+      }
     });
 
     it('persists and recovers masterySubMode correctly', () => {

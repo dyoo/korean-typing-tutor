@@ -1315,9 +1315,30 @@ export function selectNextSRSItem(
     return pool[0];
   }
 
+  // 1. Identify which Jamos are overdue or unpracticed (urgency >= 1.0 or 0 attempts)
+  const dueList: { jamo: string; urgency: number }[] = [];
+  for (const [jamo, stats] of Object.entries(jamoStats)) {
+    const urgency = calculateJamoUrgency(stats, now);
+    if (urgency >= 1.0 || stats.totalAttempts === 0) {
+      dueList.push({ jamo, urgency });
+    }
+  }
+  dueList.sort((a, b) => b.urgency - a.urgency);
+
+  // 2. If overdue keys exist, strictly restrict the pool to items containing the top due Jamos
+  let selectionPool = pool;
+  if (dueList.length > 0) {
+    // Focus on the highest-urgency due Jamo (or top 3 if available)
+    const topDueJamos = new Set(dueList.slice(0, 3).map((d) => d.jamo));
+    const dueMatchingItems = pool.filter((item) => itemUsesAnyJamo(item.target, topDueJamos));
+    if (dueMatchingItems.length > 0) {
+      selectionPool = dueMatchingItems;
+    }
+  }
+
   const weightedList: { item: LessonItem; weight: number }[] = [];
 
-  for (const item of pool) {
+  for (const item of selectionPool) {
     const jamos = decomposeStringToJamos(item.target);
     let maxUrgency = 0;
     let sumUrgency = 0;
@@ -1331,7 +1352,7 @@ export function selectNextSRSItem(
       sumUrgency += urgency;
     }
 
-    const baseWeight = 1.0 + maxUrgency * 3.0 + sumUrgency * 0.5;
+    const baseWeight = 1.0 + maxUrgency * 5.0 + sumUrgency * 1.0;
     const lengthMultiplier = getAdaptiveLengthMultiplier(item.target.length, 100);
     const finalWeight = baseWeight * lengthMultiplier;
 
@@ -1348,5 +1369,5 @@ export function selectNextSRSItem(
     }
   }
 
-  return pool[0];
+  return selectionPool[0];
 }
