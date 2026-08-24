@@ -339,6 +339,9 @@
     ) {
       if (showWelcomeModal && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
         e.preventDefault();
+        // Stop the event from bubbling to window so WelcomeModal's own
+        // svelte:window keydown handler doesn't invoke begin a second time.
+        e.stopPropagation();
         handleBeginSession();
       }
       return;
