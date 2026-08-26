@@ -147,14 +147,37 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 
 ---
 
-### Phase 7: Speed & Accuracy Analytics Panel — CURRENT PRIORITY
+### Phase 7: Speed & Accuracy Analytics (KPM & IKI Diagnostics) — CURRENT PRIORITY
 
-- [ ] **Real-Time WPM / SPM Calculation:** Character-per-minute (CPM) / Syllables-per-minute (SPM)
-      and Words-per-minute (WPM) calculation.
-- [ ] **Distraction-Free Toggle:** Optional setting to hide typing speed metrics during practice to
-      preserve a minimalist experience.
-- [ ] **Performance Review Summary:** Post-session analytics displaying rolling accuracy, keystroke
-      speed, and trouble keys.
+Implement comprehensive Keys-Per-Minute (KPM / 타수) and Inter-Keystroke Interval (IKI) latency
+tracking adhering to [KPM.md](file:///Users/dyoo/work/korean-typing-tutor/KPM.md).
+
+- [ ] **Stage 1: Core Metrics & Background Engine (Silent Tracking)**
+  - [ ] **Type Definitions (`src/types/kpm.ts`):** Define `KeystrokeEvent`, `JamoLatencyStats`,
+        `JamoLatencyMap`, `ExerciseSpeedRecord`, and `SpeedMetricsStore`.
+  - [ ] **Canonical Stroke Counter (`src/utils/strokeCounter.ts`):** Decompose Korean syllables,
+        compound vowels (`ㅘ` = 2, `ㅙ` = 3), double final consonants (`ㄳ` = 2), shifted consonants
+        (`ㄲ` = 1), and punctuation into standard Korean 타수.
+  - [ ] **KPM & IKI Engine (`src/utils/kpmTracker.ts`):**
+    - First-keystroke timer start (zero reading time penalty).
+    - 2.0s pause clamping (idle threshold filtering).
+    - Net KPM, Gross KPM, Accuracy %, and median IKI calculation.
+    - Outlier filtering ($\ge 3$ strokes for standalone exercise records).
+    - Per-Jamo latency attribution for correct key hits.
+    - `localStorage` versioned store with O(1) lifetime accumulators and bounded FIFO history buffer
+      (max 200 records).
+    - `console.debug` logging on completed prompts (e.g. `[KPM] Completed "..." | X strokes | Y Net KPM | Z% Acc | Wms Median IKI`).
+  - [ ] **Tutor Session Integration (`src/lib/tutorSession.svelte.ts`):**
+    - Record keystroke events in real-time on keydowns.
+    - Finalize metrics and trigger background logging on exercise completion.
+    - Gracefully discard in-memory exercise buffer on module/mode switching.
+  - [ ] **Unit Testing:** Comprehensive tests for `strokeCounter.test.ts` and `kpmTracker.test.ts`.
+
+- [ ] **Stage 2: Visualization & UI Review Panel (Future Step)**
+  - [ ] **Real-Time Speed Display:** Optional minimalist live KPM indicator in `TopBar.svelte` with
+        distraction-free toggle.
+  - [ ] **Analytics Review Panel / Modal:** Visual sparklines for recent exercise speeds, per-Jamo
+        latency heatmap, and historical progress charts.
 
 ---
 
