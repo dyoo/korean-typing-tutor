@@ -196,3 +196,30 @@ export interface SpeedMetricsStore {
 | **300 – 449** | Advanced | Standard native Korean touch-typist speed. |
 | **450 – 599** | Expert | Fast fluent typist with high muscle memory. |
 | **600+** | Master | Professional high-speed transcription level. |
+
+---
+
+## 6. User-Facing Measurements & Future Visualizations
+
+The gathered data enables clear, actionable, and non-distracting educational feedback:
+
+### 6.1 Speed & Accuracy Progress Over Time (Trend Charts)
+- **Moving Average Sparklines**: Plotting the rolling 10-exercise Net KPM and Accuracy % across the 200-item history buffer.
+- **Session Delta**: Indicating progress within the current session (e.g. `+18 KPM vs. session start`).
+- **All-Time Peak vs. Current**: Displaying current rolling speed alongside the user's `bestNetKpm` record.
+
+### 6.2 Key-Specific Diagnostics (Heatmaps & Trouble Keys)
+- **Virtual Keyboard Latency Heatmap**: Color-coding virtual keyboard keycaps from emerald (fast, low IKI $< 200\text{ms}$) to amber/coral (hesitation $> 600\text{ms}$).
+- **"Top 5 Slowest Keys" Spotlight**: Directing user awareness to specific Jamo keys that have the highest average search latency (e.g., `ㅖ`, `ㅉ`, `ㅍ`).
+
+### 6.3 Bigram Friction & Transition Bottlenecks
+- **"Top Trouble Transitions" List**: Surfacing the 5 key pairs with the highest hesitation or error rates (e.g., `ㅅ -> ㄱ`, `ㅗ -> ㅐ`, `ㄹ -> ㄱ`).
+- **Physical Hand Movement Insights**: Categorizing friction into same-hand reach vs. cross-hand coordination.
+
+### 6.4 Lifetime Practice & Effort Milestones
+- **Total Lifetime 타수**: Total canonical strokes completed (e.g. `48,250 타`).
+- **Active Time Spent Typing**: Cumulative focused typing duration (e.g. `3h 42m`).
+- **Typing Efficiency**: Overall lifetime accuracy ratio (`Total Target Strokes / Total Keystrokes`).
+
+### 6.5 Live In-Practice Feedback (Optional / Distraction-Free)
+- **Minimalist Top Bar Badge**: Optional compact indicator (e.g. `245 타/분 · 98%`) toggleable in Settings to ensure typists who prefer pure silence/minimalism can keep it hidden.
