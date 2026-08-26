@@ -154,7 +154,8 @@ tracking adhering to [KPM.md](file:///Users/dyoo/work/korean-typing-tutor/KPM.md
 
 - [ ] **Stage 1: Core Metrics & Background Engine (Silent Tracking)**
   - [ ] **Type Definitions (`src/types/kpm.ts`):** Define `KeystrokeEvent`, `JamoLatencyStats`,
-        `JamoLatencyMap`, `ExerciseSpeedRecord`, and `SpeedMetricsStore`.
+        `JamoLatencyMap`, `BigramTransitionStats`, `BigramTransitionMap`, `ExerciseSpeedRecord`, and
+        `SpeedMetricsStore`.
   - [ ] **Canonical Stroke Counter (`src/utils/strokeCounter.ts`):** Decompose Korean syllables,
         compound vowels (`ㅘ` = 2, `ㅙ` = 3), double final consonants (`ㄳ` = 2), shifted consonants
         (`ㄲ` = 1), and punctuation into standard Korean 타수.
@@ -164,8 +165,9 @@ tracking adhering to [KPM.md](file:///Users/dyoo/work/korean-typing-tutor/KPM.md
     - Net KPM, Gross KPM, Accuracy %, and median IKI calculation.
     - Outlier filtering ($\ge 3$ strokes for standalone exercise records).
     - Per-Jamo latency attribution for correct key hits.
-    - `localStorage` versioned store with O(1) lifetime accumulators and bounded FIFO history buffer
-      (max 200 records).
+    - Bigram transition friction tracking (`fromJamo -> toJamo` latency & error counts).
+    - `localStorage` versioned store with O(1) lifetime accumulators, bounded bigram map, and bounded
+      FIFO history buffer (max 200 records; total footprint $< 55\text{ KB}$).
     - `console.debug` logging on completed prompts (e.g. `[KPM] Completed "..." | X strokes | Y Net KPM | Z% Acc | Wms Median IKI`).
   - [ ] **Tutor Session Integration (`src/lib/tutorSession.svelte.ts`):**
     - Record keystroke events in real-time on keydowns.

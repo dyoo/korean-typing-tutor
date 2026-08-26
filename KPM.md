@@ -2,14 +2,14 @@
 
 ## 1. Overview & Objectives
 
-This document defines the metrics, mathematical formulas, timing mechanics, and data storage structures for tracking typing speed (Keys-Per-Minute / Strokes-Per-Minute / 타수) and **Inter-Keystroke Interval (IKI)** latency diagnostics in the Korean Typing Tutor.
+This document defines the metrics, mathematical formulas, timing mechanics, data storage structures, and **bounded memory guarantees** for tracking typing speed (Keys-Per-Minute / Strokes-Per-Minute / 타수), **Inter-Keystroke Interval (IKI)** latency diagnostics, and **Bigram Transition Friction** in the Korean Typing Tutor.
 
 The goals are:
 - **Traditional Alignment**: Adhere to standard Korean typing benchmarks (Hancom 타자연습 타수 / 타/분 standards).
 - **Educational Fairness**: Measure active typing effort without penalizing reading, preparation, or external interruptions.
 - **Accuracy & Speed Dual-Tracking**: Record both gross motor throughput and effective net production rate.
-- **Inter-Keystroke Latency (IKI)**: Track transition latency between consecutive keystrokes to detect Jamo-specific friction, shifted chord hesitations, and finger coordination bottlenecks.
-- **Bounded Storage**: Maintain lightweight, O(1) lifetime accumulators, a per-Jamo rolling latency map, and a bounded FIFO history buffer for future visualization.
+- **Inter-Keystroke Latency (IKI) & Bigram Diagnostics**: Track transition latency and error rates between consecutive key transitions (e.g. `ㅅ` $\rightarrow$ `ㄱ`, `ㅗ` $\rightarrow$ `ㅐ`, `ㄹ` $\rightarrow$ `ㄱ`) to identify finger travel friction, awkward same-hand stretches, and compound Jamo bottlenecks.
+- **Strict Bounded Memory & Storage**: All persistent metrics and in-memory caches have mathematically provable $O(1)$ upper bounds, ensuring the entire dataset never exceeds **~50 KB** in `localStorage` regardless of lifetime usage.
 
 ---
 
@@ -77,13 +77,13 @@ Korean typing speed is measured in **Canonical Target Strokes (타수)** rather 
    * Minimum Stroke Count: Only prompts with **$\ge 3$ canonical strokes** (e.g., full syllables like `한` or multi-syllable words) generate standalone exercise history records.
    * Cumulative Totals: Keystrokes and active time from all prompts are still accumulated into lifetime aggregate counters.
 2. **Error Latency Attribution**:
-   * When an error occurs, the latency interval is recorded in the exercise buffer, but **only correct target keystrokes** update the `JamoLatencyMap` to ensure wandering mistakes do not distort individual Jamo speed profiles.
+   * When an error occurs, the transition latency is recorded in the exercise buffer, but **only correct target transitions** update the latency maps (`JamoLatencyMap` & `BigramTransitionMap`) to ensure wandering mistakes do not distort authentic key transition profiles. Errors increment the bigram's `errorCount`.
 3. **Prompt Abandonment / Mode Switching**:
    * If a user switches modules or modes midway through typing an incomplete prompt, the active exercise keystroke buffer is discarded without logging a corrupted record or skewing lifetime averages.
 
 ---
 
-## 3. Inter-Keystroke Interval (IKI) Diagnostics
+## 3. Inter-Keystroke Interval (IKI) & Bigram Diagnostics
 
 ### 3.1 Intra-Exercise Keystroke Event Model
 During active typing of an exercise prompt, each keystroke captures a lightweight transition event in memory:
@@ -92,6 +92,7 @@ During active typing of an exercise prompt, each keystroke captures a lightweigh
 export interface KeystrokeEvent {
   key: string;            // Physical/virtual key (e.g. 'r', 'k', 'Backspace', 'Shift')
   jamo?: string;          // Target Jamo resolved (e.g. 'ㄱ', 'ㅏ', 'ㄲ')
+  fromJamo?: string;      // Preceding Jamo in the sequence
   timestamp: number;      // High-precision or Epoch timestamp (ms)
   rawIkiMs: number;       // Raw elapsed ms since prior keystroke
   clampedIkiMs: number;   // min(rawIkiMs, 2000)
@@ -100,7 +101,7 @@ export interface KeystrokeEvent {
 ```
 
 ### 3.2 Per-Jamo Latency Aggregates (O(1) Map)
-A rolling dictionary tracking latency metrics per Jamo character to identify individual keys needing muscle memory practice:
+A rolling dictionary tracking latency metrics per Jamo character:
 
 ```typescript
 export interface JamoLatencyStats {
@@ -108,17 +109,47 @@ export interface JamoLatencyStats {
   totalIkiMs: number;       // Cumulative clamped IKI (ms)
   averageIkiMs: number;     // Mean latency (ms) to reach and type this Jamo
   fastestIkiMs: number;     // Best recorded IKI (ms)
-  recentIki: number[];      // Rolling last 10 attempts for sparklines
+  recentIki: number[];      // Rolling last 10 attempts for sparklines (bounded: length <= 10)
 }
 
 export type JamoLatencyMap = Record<string, JamoLatencyStats>;
 ```
 
+### 3.3 Bigram Transition Friction Map (O(1) Bounded Key Pairs)
+A dictionary tracking transition speed and error frequency between consecutive key pairs (e.g., `"ㅅ->ㄱ"`, `"ㅗ->ㅐ"`, `"ㄹ->ㄱ"`):
+
+```typescript
+export interface BigramTransitionStats {
+  fromJamo: string;         // Preceding Jamo (e.g. 'ㅅ')
+  toJamo: string;           // Target Jamo typed (e.g. 'ㄱ')
+  totalAttempts: number;    // Total times this transition was executed
+  totalIkiMs: number;       // Cumulative clamped transition latency (ms)
+  averageIkiMs: number;     // Mean transition latency (ms)
+  errorCount: number;       // Mistakes made when attempting this transition
+}
+
+export type BigramTransitionMap = Record<string, BigramTransitionStats>;
+```
+
 ---
 
-## 4. Persistent Storage Schema
+## 4. Persistent Storage Schema & Bounded Memory Guarantees
 
-Stored under a versioned `localStorage` key (e.g., `'korean_typing_tutor_speed_metrics_v1'`):
+### 4.1 Bounded Memory Proof & Sizing Limits
+
+| Data Structure | Storage Location | Sizing Bound / Invariant | Worst-Case Max Size |
+|---|---|---|---|
+| **Cumulative Lifetime Totals** (`totalTargetStrokes`, `totalActiveTimeMs`, `totalErrors`, etc.) | `localStorage` | Exactly **8 scalar numbers** | **~100 bytes** ($O(1)$) |
+| **Per-Jamo Latency Map** (`JamoLatencyMap`) | `localStorage` | Capped at the **35 standard Dubeolsik keys**; `recentIki` capped at **max 10 elements** | $35 \times \approx 120\text{ B} \approx \mathbf{4.2\text{ KB}}$ ($O(1)$) |
+| **Bigram Transition Map** (`BigramTransitionMap`) | `localStorage` | Capped at **max 300 natural Korean bigram pairs**; pruned to top frequent/slow pairs if bound exceeded | $300 \times \approx 90\text{ B} \approx \mathbf{27\text{ KB}}$ ($O(1)$) |
+| **Exercise History Buffer** (`recentHistory`) | `localStorage` | Fixed **FIFO ring buffer** strictly capped at **max 200 records** | $200 \times \approx 120\text{ B} \approx \mathbf{24\text{ KB}}$ ($O(N), N=200$) |
+| **Intra-Exercise Keystroke Stream** (`KeystrokeEvent[]`) | RAM only | In-memory only; **flushed and reset to `[]` on every prompt completion or switch** | **< 2 KB** in RAM |
+
+**Total Persistent Footprint:** Never exceeds **~55 KB** ($< 1.1\%$ of the standard 5 MB `localStorage` quota) regardless of years of use.
+
+### 4.2 Storage Schema
+
+Stored under versioned `localStorage` key `'korean_typing_tutor_speed_metrics_v1'`:
 
 ```typescript
 export interface ExerciseSpeedRecord {
@@ -134,7 +165,6 @@ export interface ExerciseSpeedRecord {
   grossKpm: number;        // Gross KPM
   accuracy: number;        // Accuracy percentage (0 - 100)
   medianIkiMs: number;     // Median inter-keystroke interval for this exercise
-  ikiList?: number[];      // Clamped IKI list for detailed chart sparklines
   moduleId?: string;       // Curriculum module ID (Free-form)
   jamoId?: string;         // Focus Jamo ID (Mastery mode)
 }
@@ -149,6 +179,7 @@ export interface SpeedMetricsStore {
   totalExercisesCompleted: number;
   bestNetKpm: number;
   jamoLatency: JamoLatencyMap;
+  bigramLatency: BigramTransitionMap;
   recentHistory: ExerciseSpeedRecord[]; // Max 200 FIFO records
 }
 ```
