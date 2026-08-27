@@ -1,13 +1,10 @@
 <script lang="ts">
   import GitHubLink from './GitHubLink.svelte';
   import ModeSwitcher from './ModeSwitcher.svelte';
-  import type { TutorMode, MasterySubMode } from '../types/mastery';
+  import type { TutorMode } from '../types/mastery';
 
   interface Props {
     mode: TutorMode;
-    masterySubMode?: MasterySubMode;
-    dueCount?: number;
-    dueJamoChar?: string | null;
     enabledModuleCount: number;
     totalModuleCount: number;
     masteryUnlockedCount: number;
@@ -31,9 +28,6 @@
 
   let {
     mode,
-    masterySubMode = 'progression',
-    dueCount = 0,
-    dueJamoChar = null,
     enabledModuleCount,
     totalModuleCount,
     masteryUnlockedCount,
@@ -105,121 +99,82 @@
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
 
-        {#if masterySubMode === 'review'}
-          <span
-            class="font-bold text-xs uppercase tracking-wider text-amber-700 dark:text-amber-300 hidden md:inline whitespace-nowrap"
-          >
-            Review
-          </span>
-          <span
-            class="text-xs font-mono font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800 px-1.5 py-0.5 rounded whitespace-nowrap shrink-0"
-            title="Spaced Repetition Review"
-          >
-            SRS
-          </span>
+        <span
+          class="font-bold text-xs uppercase tracking-wider {isPostGame
+            ? 'text-purple-700 dark:text-purple-300'
+            : 'text-gray-700 dark:text-gray-300'} hidden md:inline whitespace-nowrap"
+        >
+          {isPostGame ? 'Workshop' : 'Stage'}
+        </span>
+        <span
+          class="text-xs font-mono font-bold {isPostGame
+            ? 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800'
+            : 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800'} px-1.5 py-0.5 rounded whitespace-nowrap shrink-0"
+          title={isPostGame ? 'Batchim Workshop' : `Stage ${currentStageNumber}: ${currentStageName}`}
+        >
+          {isPostGame ? 'Batchim' : `${currentStageNumber}/${totalStageCount}`}
+        </span>
+        {#if activeCheckpointTitle}
           <div
             class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80 shrink-0 whitespace-nowrap"
           >
             <span
               class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:inline whitespace-nowrap"
             >
-              {dueCount > 0 ? 'Due:' : 'Status:'}
+              Milestone:
             </span>
             <span
-              class="relative overflow-hidden text-xs md:text-sm font-bold {dueCount > 0
-                ? 'text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 border-amber-300 dark:border-amber-700'
-                : 'text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/80 border-emerald-300 dark:border-emerald-700'} px-1.5 md:px-2 py-0.5 rounded-md border leading-none flex items-center gap-1 md:gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
+              class="relative overflow-hidden text-xs md:text-sm font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center gap-1 md:gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
             >
-              {#if dueCount > 0 && dueJamoChar}
-                <span class="text-sm md:text-base font-bold whitespace-nowrap text-amber-700 dark:text-amber-300">{dueJamoChar}</span>
+              <span class="whitespace-nowrap">{activeCheckpointTitle}</span>
+              {#if activeCheckpointProgress}
+                <span
+                  class="text-[10px] font-mono font-bold bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-amber-900 dark:text-amber-200 whitespace-nowrap"
+                >
+                  {activeCheckpointProgress.completed}/{activeCheckpointProgress.total}
+                </span>
               {/if}
-              <span
-                class="text-[10px] font-mono font-bold {dueCount > 0
-                  ? 'bg-amber-200/60 dark:bg-amber-900/60 text-amber-900 dark:text-amber-200'
-                  : 'bg-emerald-200/60 dark:bg-emerald-900/60 text-emerald-900 dark:text-emerald-200'} px-1 py-0.5 rounded whitespace-nowrap"
-              >
-                {dueCount > 0 ? `${dueCount} Due` : 'Caught Up ✓'}
-              </span>
             </span>
           </div>
-        {:else}
-          <span
-            class="font-bold text-xs uppercase tracking-wider {isPostGame
-              ? 'text-purple-700 dark:text-purple-300'
-              : 'text-gray-700 dark:text-gray-300'} hidden md:inline whitespace-nowrap"
+        {:else if activeJamoChar}
+          <div
+            class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80 shrink-0 whitespace-nowrap"
           >
-            {isPostGame ? 'Workshop' : 'Stage'}
-          </span>
-          <span
-            class="text-xs font-mono font-bold {isPostGame
-              ? 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800'
-              : 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800'} px-1.5 py-0.5 rounded whitespace-nowrap shrink-0"
-            title={isPostGame ? 'Batchim Workshop' : `Stage ${currentStageNumber}: ${currentStageName}`}
-          >
-            {isPostGame ? 'Batchim' : `${currentStageNumber}/${totalStageCount}`}
-          </span>
-          {#if activeCheckpointTitle}
-            <div
-              class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80 shrink-0 whitespace-nowrap"
+            <span
+              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:inline whitespace-nowrap"
             >
-              <span
-                class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:inline whitespace-nowrap"
-              >
-                Milestone:
-              </span>
-              <span
-                class="relative overflow-hidden text-xs md:text-sm font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center gap-1 md:gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
-              >
-                <span class="whitespace-nowrap">{activeCheckpointTitle}</span>
-                {#if activeCheckpointProgress}
-                  <span
-                    class="text-[10px] font-mono font-bold bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-amber-900 dark:text-amber-200 whitespace-nowrap"
-                  >
-                    {activeCheckpointProgress.completed}/{activeCheckpointProgress.total}
-                  </span>
-                {/if}
-              </span>
-            </div>
-          {:else if activeJamoChar}
-            <div
-              class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80 shrink-0 whitespace-nowrap"
+              {activeJamoLabel}
+            </span>
+            <span
+              class="relative overflow-hidden text-sm md:text-base font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[24px] md:min-w-[28px] shadow-2xs gap-1 md:gap-1.5 whitespace-nowrap shrink-0"
             >
-              <span
-                class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:inline whitespace-nowrap"
-              >
-                {activeJamoLabel}
-              </span>
-              <span
-                class="relative overflow-hidden text-sm md:text-base font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[24px] md:min-w-[28px] shadow-2xs gap-1 md:gap-1.5 whitespace-nowrap shrink-0"
-              >
-                {#if activeJamoProgress > 0 && !isPostGame}
-                  <div
-                    class="absolute bottom-0 inset-x-0 pointer-events-none {activeJamoProgress >= 100
-                      ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
-                      : 'bg-amber-400/30 dark:bg-amber-400/25'}"
-                    style="height: {activeJamoProgress}%;"
-                  ></div>
-                {/if}
-                <span class="relative z-10 whitespace-nowrap">{activeJamoChar}</span>
-                {#if activeLearningCombination}
-                  <span
-                    class="relative z-10 text-[10px] md:text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90 whitespace-nowrap"
-                  >
-                    ({activeLearningCombination[0]}+{activeLearningCombination[1]})
-                  </span>
-                {/if}
-                {#if activeTargetRemaining}
-                  <span
-                    class="relative z-10 font-mono font-bold leading-none {isPostGame
-                      ? 'text-purple-700 dark:text-purple-300 bg-purple-200/80 dark:bg-purple-900/80 px-1.5 py-0.5 rounded text-xs md:text-sm'
-                      : 'text-amber-900 dark:text-amber-200 bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-[10px]'}"
-                  >
-                    {activeTargetRemaining}
-                  </span>
-                {/if}
-              </span>
-            </div>
-          {/if}
+              {#if activeJamoProgress > 0 && !isPostGame}
+                <div
+                  class="absolute bottom-0 inset-x-0 pointer-events-none {activeJamoProgress >= 100
+                    ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                    : 'bg-amber-400/30 dark:bg-amber-400/25'}"
+                  style="height: {activeJamoProgress}%;"
+                ></div>
+              {/if}
+              <span class="relative z-10 whitespace-nowrap">{activeJamoChar}</span>
+              {#if activeLearningCombination}
+                <span
+                  class="relative z-10 text-[10px] md:text-[11px] font-medium text-amber-600/90 dark:text-amber-400/90 whitespace-nowrap"
+                >
+                  ({activeLearningCombination[0]}+{activeLearningCombination[1]})
+                </span>
+              {/if}
+              {#if activeTargetRemaining}
+                <span
+                  class="relative z-10 font-mono font-bold leading-none {isPostGame
+                    ? 'text-purple-700 dark:text-purple-300 bg-purple-200/80 dark:bg-purple-900/80 px-1.5 py-0.5 rounded text-xs md:text-sm'
+                    : 'text-amber-900 dark:text-amber-200 bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-[10px]'}"
+                >
+                  {activeTargetRemaining}
+                </span>
+              {/if}
+            </span>
+          </div>
         {/if}
       </button>
     {/if}

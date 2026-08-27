@@ -16,9 +16,7 @@
     JAMO_PROGRESSION_ORDER,
     JAMO_STAGES,
     calculateJamoProgress,
-    getDueJamos,
   } from './utils/jamoMastery';
-  import type { MasterySubMode } from './types/mastery';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import MasterySidebar from './lib/MasterySidebar.svelte';
@@ -142,10 +140,6 @@
   );
   let totalStageCount = $derived(JAMO_STAGES.length);
 
-  let dueJamos = $derived(getDueJamos(masteryState));
-  let dueCount = $derived(dueJamos.filter((d) => d.isDue).length);
-  let dueJamoChar = $derived(dueJamos.find((d) => d.isDue)?.jamo ?? null);
-
   function isTouchDevice(): boolean {
     return (
       typeof window !== 'undefined' &&
@@ -233,11 +227,6 @@
 
   function handleMasteryFocusSelect(batchim: string) {
     session.setMasteryFocusBatchim(batchim);
-    focusInputElement();
-  }
-
-  function handleMasterySubModeChange(subMode: MasterySubMode) {
-    session.setMasterySubMode(subMode);
     focusInputElement();
   }
 
@@ -615,9 +604,6 @@
 >
   <TopBar
     {mode}
-    masterySubMode={masteryState.masterySubMode ?? 'progression'}
-    {dueCount}
-    {dueJamoChar}
     ontogglemode={toggleMode}
     enabledModuleCount={enabledModuleIds.length}
     totalModuleCount={modules.length}
@@ -740,8 +726,6 @@
 <MasterySidebar
   isOpen={showMasterySidebar}
   masteryUnlockedCount={masteryState.unlockedCount}
-  masterySubMode={masteryState.masterySubMode ?? 'progression'}
-  {dueJamos}
   {currentStageNumber}
   activeCheckpointId={masteryState.activeCheckpointId ?? activeCheckpoint?.id ?? null}
   activeFocusBatchim={masteryState.activeFocusBatchim ?? null}
@@ -750,7 +734,6 @@
   collapsedStageIds={collapsedMasteryStageIds}
   onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}
-  onmasterysubmodechange={handleMasterySubModeChange}
   oncheckpointselect={handleMasteryCheckpointChange}
   onfocusselect={handleMasteryFocusSelect}
   ontogglestagecollapse={toggleMasteryStageCollapse}

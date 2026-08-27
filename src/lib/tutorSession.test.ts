@@ -466,22 +466,6 @@ describe('TutorSession controller', () => {
     expect(session.getCurrentItem().id).toBe(nextExpected.id);
   });
 
-  it('should toggle and persist masterySubMode between progression and review', () => {
-    session.setMode('mastery');
-    expect(session.getMasterySubMode()).toBe('progression');
-
-    session.setMasterySubMode('review');
-    expect(session.getMasterySubMode()).toBe('review');
-
-    // Due list is accessible
-    const due = session.getDueJamos();
-    expect(due.length).toBeGreaterThan(0);
-
-    // Reverting back to progression
-    session.setMasterySubMode('progression');
-    expect(session.getMasterySubMode()).toBe('progression');
-  });
-
   it('should register custom decks dynamically as selectable modules', () => {
     session.setMode('curriculum');
     const initialModuleCount = session.getModules().length;

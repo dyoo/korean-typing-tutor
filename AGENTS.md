@@ -107,8 +107,8 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/lib/settings.ts`: Settings state management, persistence, and default values.
 - `src/utils/ttsController.svelte.ts`: Lightweight reactive singleton managing browser Web Speech
   API (SpeechSynthesis) playback and OS Korean voice selection.
-- `src/utils/jamoMastery.ts`: Spaced-repetition mastery state machine, home-row-outward progression
-  sequence, rolling 20-attempt accuracy evaluation, and vocabulary filtering.
+- `src/utils/jamoMastery.ts`: Home-row-outward Jamo mastery progression sequence, rolling
+  20-attempt accuracy evaluation, error-weighted rolling review, and vocabulary filtering.
 - `src/utils/hangulEngine.ts`: The Hangul IME composition state machine and keystroke handler.
 - `src/utils/hangulDecompose.ts`: Unicode Jamo decomposition and extraction utilities.
 - `src/utils/hangulMatch.ts`: Real-time Hangul syllable matching, completion checks, and error
