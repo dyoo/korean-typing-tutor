@@ -8,7 +8,6 @@
   interface Props {
     isOpen: boolean;
     settings: TutorSettings;
-    ontogglesettings: (e?: MouseEvent) => void;
     onclose: () => void;
     onthemechange: (theme: ThemeMode) => void;
     ontogglepronunciation: () => void;
@@ -29,7 +28,6 @@
   let {
     isOpen,
     settings,
-    ontogglesettings,
     onclose,
     onthemechange,
     ontogglepronunciation,
@@ -69,60 +67,35 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<div class="relative flex items-center gap-2">
-  <button
-    type="button"
-    onclick={ontogglesettings}
-    onmousedown={(e) => e.stopPropagation()}
-    class="settings-btn flex items-center gap-1.5 bg-white dark:bg-gray-800 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-200 font-semibold rounded-lg px-3 py-1.5 hover:border-blue-600 dark:hover:border-blue-500 focus:outline-none shadow-sm text-sm cursor-pointer"
-    aria-label="Settings"
+{#if isOpen}
+  <!-- Transparent backdrop overlay for reliable click-outside closing -->
+  <div
+    role="button"
+    tabindex="-1"
+    aria-label="Close settings modal backdrop"
+    onclick={onclose}
+    onkeydown={(e) => {
+      if (e.key === 'Escape') {
+        onclose();
+      }
+    }}
+    class="fixed inset-0 z-40 bg-transparent select-none"
+  ></div>
+
+  <div
+    tabindex="-1"
+    role="region"
+    aria-label="Display Settings Panel"
+    class="settings-modal fixed top-12 md:top-14 right-4 md:right-8 w-80 md:w-96 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl pl-4 pr-6 py-4 md:pl-5 md:pr-7 md:py-5 z-50 flex flex-col gap-4 text-sm font-semibold text-gray-700 dark:text-gray-200"
   >
-    <svg
-      class="w-4 h-4 text-gray-500 dark:text-gray-400"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-    >
-      <path
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-      />
-      <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-    <span class="hidden md:inline">Settings</span>
-  </button>
-
-  {#if isOpen}
-    <!-- Transparent backdrop overlay for reliable click-outside closing -->
     <div
-      role="button"
-      tabindex="-1"
-      aria-label="Close settings modal backdrop"
-      onclick={onclose}
-      onkeydown={(e) => {
-        if (e.key === 'Escape') {
-          onclose();
-        }
-      }}
-      class="fixed inset-0 z-40 bg-transparent select-none"
-    ></div>
-
-    <div
-      tabindex="-1"
-      role="region"
-      aria-label="Display Settings Panel"
-      class="settings-modal absolute right-0 top-full mt-2 w-80 md:w-96 max-h-[calc(100dvh-5rem)] overflow-y-auto overscroll-contain bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-xl pl-4 pr-6 py-4 md:pl-5 md:pr-7 md:py-5 z-50 flex flex-col gap-4 text-sm font-semibold text-gray-700 dark:text-gray-200"
+      class="sticky -top-4 -ml-4 -mr-6 md:-top-5 md:-ml-5 md:-mr-7 pl-4 pr-6 md:pl-5 md:pr-7 pt-1 pb-2.5 bg-white dark:bg-gray-800 flex items-center justify-between border-b border-gray-200 dark:border-gray-700 z-10"
     >
-      <div
-        class="sticky -top-4 -ml-4 -mr-6 md:-top-5 md:-ml-5 md:-mr-7 pl-4 pr-6 md:pl-5 md:pr-7 pt-1 pb-2.5 bg-white dark:bg-gray-800 flex items-center justify-between border-b border-gray-200 dark:border-gray-700 z-10"
+      <span
+        class="font-bold text-base text-gray-900 dark:text-gray-100 uppercase tracking-wider font-mono"
       >
-        <span
-          class="font-bold text-base text-gray-900 dark:text-gray-100 uppercase tracking-wider font-mono"
-        >
-          Settings
-        </span>
+        Settings
+      </span>
         <button
           type="button"
           onclick={onclose}
@@ -293,4 +266,4 @@
       />
     </div>
   {/if}
-</div>
+

@@ -29,6 +29,7 @@
   import MasteryCompletionModal from './lib/MasteryCompletionModal.svelte';
   import WelcomeModal from './lib/WelcomeModal.svelte';
   import ImportDeckModal from './lib/ImportDeckModal.svelte';
+  import SettingsModal from './lib/SettingsModal.svelte';
   import { ttsController } from './utils/ttsController.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './content/curriculumCategories';
   import type { CurriculumCategory } from './content/curriculumCategories';
@@ -633,26 +634,9 @@
     {isPostGame}
     {activeCheckpointTitle}
     {activeCheckpointProgress}
-    {showSettingsModal}
-    {settings}
     ontogglecurriculum={toggleCurriculumSidebar}
     ontogglemastery={toggleMasterySidebar}
     ontogglesettings={toggleSettingsModal}
-    onclosesettings={closePanel}
-    onthemechange={handleThemeChange}
-    ontogglepronunciation={togglePronunciation}
-    ontoggletranslation={toggleTranslation}
-    ontogglevirtualkeyboard={toggleVirtualKeyboard}
-    ontogglekeyboardhint={toggleKeyboardHint}
-    onminfontsizechange={handleMinFontSizeChange}
-    onmaxfontsizechange={handleMaxFontSizeChange}
-    ontogglelockfontsize={handleToggleLockFontSize}
-    oncursorcolorchange={handleCursorColorChange}
-    ontoggletts={toggleTTS}
-    ontogglespeakoncompletion={toggleSpeakOnCompletion}
-    ontogglespeakonappearance={toggleSpeakOnAppearance}
-    onvoicechange={handleVoiceChange}
-    onspeedchange={handleSpeedChange}
   />
 
   <div
@@ -731,6 +715,26 @@
   isOpen={showImportDeckModal}
   onclose={handleCloseImportDeckModal}
   onimport={handleImportDeck}
+/>
+
+<SettingsModal
+  isOpen={showSettingsModal}
+  {settings}
+  onclose={closePanel}
+  onthemechange={handleThemeChange}
+  ontogglepronunciation={togglePronunciation}
+  ontoggletranslation={toggleTranslation}
+  ontogglevirtualkeyboard={toggleVirtualKeyboard}
+  ontogglekeyboardhint={toggleKeyboardHint}
+  onminfontsizechange={handleMinFontSizeChange}
+  onmaxfontsizechange={handleMaxFontSizeChange}
+  ontogglelockfontsize={handleToggleLockFontSize}
+  oncursorcolorchange={handleCursorColorChange}
+  ontoggletts={toggleTTS}
+  ontogglespeakoncompletion={toggleSpeakOnCompletion}
+  ontogglespeakonappearance={toggleSpeakOnAppearance}
+  onvoicechange={handleVoiceChange}
+  onspeedchange={handleSpeedChange}
 />
 
 <MasterySidebar
