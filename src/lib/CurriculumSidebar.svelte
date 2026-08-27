@@ -151,7 +151,7 @@
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
-            <span class="truncate leading-snug">Custom / Anki Decks</span>
+            <span class="text-left leading-snug">Custom / Anki Decks</span>
           </button>
         </div>
 
@@ -179,18 +179,18 @@
             {#each customDecks as deck}
               {@const isChecked = enabledModuleIds.includes(deck.id)}
               <div
-                class="flex items-center justify-between gap-2 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-800 transition-colors group"
+                class="flex items-start justify-between gap-2 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-800 transition-colors group"
               >
-                <label class="flex items-center gap-2.5 cursor-pointer min-w-0 flex-1 select-none">
+                <label class="flex items-start gap-2.5 cursor-pointer min-w-0 flex-1 select-none">
                   <input
                     type="checkbox"
                     checked={isChecked}
                     onchange={() => ontogglemodule(deck.id)}
-                    class="w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
+                    class="mt-0.5 w-4 h-4 text-blue-600 rounded cursor-pointer shrink-0"
                   />
                   <div class="flex flex-col min-w-0">
                     <div class="flex items-baseline gap-1.5 flex-wrap">
-                      <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
+                      <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 leading-tight">
                         {deck.title}
                       </span>
                       <span class="text-xs text-gray-400 dark:text-gray-500 font-mono">
@@ -205,7 +205,7 @@
                     e.stopPropagation();
                     ondeletecustomdeck?.(deck.id);
                   }}
-                  class="text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 p-1 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer transition-colors shrink-0"
+                  class="mt-0.5 text-gray-400 hover:text-rose-600 dark:hover:text-rose-400 p-1 rounded hover:bg-rose-50 dark:hover:bg-rose-950/40 cursor-pointer transition-colors shrink-0"
                   title="Delete custom deck"
                   aria-label={`Delete custom deck ${deck.title}`}
                 >
