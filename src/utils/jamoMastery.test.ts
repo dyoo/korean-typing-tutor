@@ -12,6 +12,7 @@ import {
   getEligibleMasteryItems,
   selectNextMasteryItem,
   calculateJamoProgress,
+  getJamoCorrectAttempts,
   setMasteryProgressionLevel,
   setMasteryCheckpointLevel,
   getAdaptiveLengthMultiplier,
@@ -125,6 +126,46 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     const res20 = recordJamoAttempt(state, 'ㅓ', true);
     expect(res20.newlyMastered).toBe(true);
     expect(state.jamoStats['ㅓ'].isMastered).toBe(true);
+  });
+
+  it('should accurately report getJamoCorrectAttempts within rolling window during error recovery', () => {
+    const state = createDefaultMasteryState();
+    expect(getJamoCorrectAttempts(state.jamoStats['ㅔ'])).toBe(0);
+
+    // Record 18 correct and 2 incorrect attempts (total 20 attempts, 90% accuracy)
+    for (let i = 0; i < 18; i++) {
+      recordJamoAttempt(state, 'ㅔ', true);
+    }
+    recordJamoAttempt(state, 'ㅔ', false);
+    recordJamoAttempt(state, 'ㅔ', false);
+
+    expect(state.jamoStats['ㅔ'].totalAttempts).toBe(20);
+    expect(getJamoCorrectAttempts(state.jamoStats['ㅔ'])).toBe(18);
+    expect(calculateJamoAccuracy(state.jamoStats['ㅔ'])).toBe(0.9);
+    expect(state.jamoStats['ㅔ'].isMastered).toBe(false);
+
+    // 10 more attempts with 1 error (total 30 attempts, window has 17 correct and 3 errors)
+    for (let i = 0; i < 9; i++) {
+      recordJamoAttempt(state, 'ㅔ', true);
+    }
+    recordJamoAttempt(state, 'ㅔ', false);
+    // After 8 more correct attempts (evicting the remaining 8 trues), attempts 39 and 40 evict the 2 falses
+    for (let i = 0; i < 8; i++) {
+      recordJamoAttempt(state, 'ㅔ', true);
+    }
+    // Now the window has 17 correct (attempts 31-38 evicted 8 trues)
+    expect(getJamoCorrectAttempts(state.jamoStats['ㅔ'])).toBe(17);
+
+    // Attempt 39 evicts the first false from attempt 19 -> 18 correct
+    recordJamoAttempt(state, 'ㅔ', true);
+    expect(getJamoCorrectAttempts(state.jamoStats['ㅔ'])).toBe(18);
+
+    // Attempt 40 evicts the second false from attempt 20 -> 19 correct (95% accuracy on 20-item window)
+    const res40 = recordJamoAttempt(state, 'ㅔ', true);
+    expect(state.jamoStats['ㅔ'].totalAttempts).toBe(40);
+    expect(getJamoCorrectAttempts(state.jamoStats['ㅔ'])).toBe(19);
+    expect(res40.newlyMastered).toBe(true);
+    expect(state.jamoStats['ㅔ'].isMastered).toBe(true);
   });
 
   it('should automatically unlock the next Jamo in sequence once all currently unlocked Jamos are mastered', () => {

@@ -68,6 +68,7 @@ export class TutorSession {
   public mode: TutorMode = $state('mastery');
   public masteryState: MasteryState = $state(loadMasteryState());
   public isMasteryGraduationPending: boolean = $state(false);
+  private currentTargetType: 'jamo' | 'checkpoint' | 'focus' = 'jamo';
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
   private masteryQueue: LessonItem[] = [];
 
@@ -158,6 +159,7 @@ export class TutorSession {
   private updateMasteryItemsAndCursor(excludeItemId?: string): void {
     const unlocked = getUnlockedJamos(this.masteryState);
     const activeTarget = getActiveMasteryTarget(this.masteryState);
+    this.currentTargetType = activeTarget.type;
     this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
 
     const activeIdSet = new Set(this.activeItems.map((i) => i.id)); // eslint-disable-line svelte/prefer-svelte-reactivity
@@ -635,8 +637,8 @@ export class TutorSession {
       const currentItem = this.getCurrentItem();
       const activeTarget = getActiveMasteryTarget(this.masteryState);
 
-      // If currently at a sentence checkpoint, record sentence completion
-      if (activeTarget.type === 'checkpoint') {
+      // If the completed item was part of a sentence checkpoint, record sentence completion
+      if (this.currentTargetType === 'checkpoint' && activeTarget.type === 'checkpoint') {
         const compRes = recordSentenceCompletion(this.masteryState, activeTarget.checkpoint.id);
         if (compRes.isAllMasteryComplete) {
           this.isMasteryGraduationPending = true;

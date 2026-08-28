@@ -499,4 +499,46 @@ describe('TutorSession controller', () => {
     expect(session.getModules().length).toBe(initialModuleCount);
     expect(session.getCustomDecks()).toHaveLength(0);
   });
+
+  it('should not award sentence completion credit to the graduating Jamo practice item when unlocking a milestone', () => {
+    session.setMode('mastery');
+    // Set level to 21 (Stage 3, 'ㅔ' active)
+    session.setMasteryProgressionLevel(21);
+
+    const activeTargetBefore = session.getActiveMasteryTarget();
+    expect(activeTargetBefore.type).toBe('jamo');
+    if (activeTargetBefore.type === 'jamo') {
+      expect(activeTargetBefore.item.jamo).toBe('ㅔ');
+    }
+
+    // Simulate 20 correct attempts directly to graduate 'ㅔ'
+    const masteryState = session.getMasteryState();
+    for (let i = 0; i < 20; i++) {
+      masteryState.jamoStats['ㅔ'].totalAttempts += 1;
+      masteryState.jamoStats['ㅔ'].correctAttempts += 1;
+      masteryState.jamoStats['ㅔ'].recentHistory.push(true);
+    }
+    masteryState.jamoStats['ㅔ'].isMastered = true;
+
+    // Active target is now checkpoint cp_top_row
+    const targetAfterGrad = session.getActiveMasteryTarget();
+    expect(targetAfterGrad.type).toBe('checkpoint');
+
+    // Advancing from the current Jamo exercise must not count as a checkpoint completion
+    session.advanceLevel();
+    expect(masteryState.sentenceCheckpointStats?.['cp_top_row']?.completedCount ?? 0).toBe(0);
+
+    // Now current item is a genuine checkpoint item
+    const checkpointItem = session.getCurrentItem();
+    expect(checkpointItem).toBeDefined();
+
+    // Type the checkpoint item completely and advance
+    session.resetSessionState();
+    for (const char of checkpointItem.target) {
+      session.processKey(char);
+    }
+    // Advancing from the completed checkpoint exercise should now record 1 completion
+    session.advanceLevel();
+    expect(masteryState.sentenceCheckpointStats?.['cp_top_row']?.completedCount).toBe(1);
+  });
 });

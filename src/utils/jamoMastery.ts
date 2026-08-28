@@ -652,6 +652,16 @@ export function calculateJamoAccuracy(stats: JamoStats): number {
 }
 
 /**
+ * Returns the number of correct attempts within the rolling history window (0 to 20).
+ */
+export function getJamoCorrectAttempts(stats?: JamoStats): number {
+  if (!stats || !Array.isArray(stats.recentHistory)) {
+    return 0;
+  }
+  return stats.recentHistory.filter(Boolean).length;
+}
+
+/**
  * Calculates percentage progress (0 to 100) towards mastery for a single Jamo.
  */
 export function calculateJamoProgress(stats?: JamoStats): number {

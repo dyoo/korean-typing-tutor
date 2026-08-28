@@ -106,11 +106,7 @@
   );
   let activeJamoLabel = $derived(activeFocusBatchimItem ? 'Batchim:' : 'Focus:');
   let isPostGame = $derived(activeMasteryTarget.type === 'focus');
-  let activeTargetRemaining = $derived(
-    activeLearningJamo
-      ? `${Math.min(20, masteryState.jamoStats[activeLearningJamo.jamo]?.totalAttempts ?? 0)}/20`
-      : null,
-  );
+  let activeTargetRemaining = $derived(activeFocusBatchimItem?.name ?? null);
   let activeJamoProgress = $derived(
     activeJamoChar ? calculateJamoProgress(masteryState.jamoStats[activeJamoChar]) : 0,
   );
