@@ -32,16 +32,16 @@ distraction-free, high-performance typing experience for English speakers learni
   user the opportunity to learn, discuss, and confirm the approach.
 - **VCS Workflow**: Use `jj` (Jujutsu) for version control operations. Never combine creating
   commits/revisions with pushing. Always create commits without pushing unless explicitly requested.
-   Do not prefix commit/CL descriptions with conventional commit categories (e.g. avoid `feat:`,
-   `fix:`, `chore:`, `style:` prefixes); write direct, plain descriptive summary messages instead.
-   Format the description with a succinct first-line summary, followed by a body paragraph (or short
-   bullet list) summarizing the changes made. To
-  commit changes, always use the two-step sequence: first `jj describe -m "..."` to set the
-  description on the current working copy (which contains the actual changes), then `jj new` to
-  start a fresh empty revision. **Do not use `jj new -m "..."`** — that creates a new empty revision
-  with the message while leaving the working copy's changes in the parent revision with no
-  description. When a commit fixes a GitHub issue, include `Fixes #N.` on its own line in the
-  description body.
+  **Always ask for explicit user confirmation before creating any commits or running `jj describe` / `jj new`**.
+  Present the proposed commit description and diff summary to the user first, and only execute commit
+  commands after the user explicitly confirms. Do not prefix commit/CL descriptions with conventional commit
+  categories (e.g. avoid `feat:`, `fix:`, `chore:`, `style:` prefixes); write direct, plain descriptive summary
+  messages instead. Format the description with a succinct first-line summary, followed by a body paragraph (or
+  short bullet list) summarizing the changes made. To commit changes after approval, always use the two-step
+  sequence: first `jj describe -m "..."` to set the description on the current working copy (which contains the
+  actual changes), then `jj new` to start a fresh empty revision. **Do not use `jj new -m "..."`** — that creates
+  a new empty revision with the message while leaving the working copy's changes in the parent revision with no
+  description. When a commit fixes a GitHub issue, include `Fixes #N.` on its own line in the description body.
 - **Testing**: Always use one-time non-interactive test execution (e.g., `npx vitest run` or
   `npm test` configured with `vitest run`) rather than interactive watch mode.
 - **Linting**: Use `npx eslint .` (or `npm run lint`) to perform static analysis and ensure zero
