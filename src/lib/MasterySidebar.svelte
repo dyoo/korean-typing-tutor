@@ -306,14 +306,14 @@
                 <div class="flex flex-col items-end shrink-0 text-right">
                   {#if wordsStats}
                     <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
-                      {wordsStats.kpm} 타/분
+                      {wordsStats.kpm} KPM
                     </span>
                     <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
                       {wordsStats.accuracy}% acc · Best {wordsStats.bestKpm}
                     </span>
                   {:else}
                     <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                      — 타/분
+                      — KPM
                     </span>
                   {/if}
                 </div>
@@ -353,14 +353,14 @@
                 <div class="flex flex-col items-end shrink-0 text-right">
                   {#if sentenceStats}
                     <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
-                      {sentenceStats.kpm} 타/분
+                      {sentenceStats.kpm} KPM
                     </span>
                     <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
                       {sentenceStats.accuracy}% acc · Best {sentenceStats.bestKpm}
                     </span>
                   {:else}
                     <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                      — 타/분
+                      — KPM
                     </span>
                   {/if}
                 </div>
@@ -416,7 +416,7 @@
                   <div class="flex flex-col items-end shrink-0 text-right">
                     {#if jamoKpm}
                       <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
-                        {jamoKpm.kpm} 타/분
+                        {jamoKpm.kpm} KPM
                       </span>
                       <div
                         class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
@@ -433,7 +433,7 @@
                       </span>
                     {:else}
                       <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                        — 타/분
+                        — KPM
                       </span>
                     {/if}
                   </div>
@@ -491,7 +491,7 @@
                   <div class="flex flex-col items-end shrink-0 text-right">
                     {#if jamoKpm}
                       <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
-                        {jamoKpm.kpm} 타/분
+                        {jamoKpm.kpm} KPM
                       </span>
                       <div
                         class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
@@ -508,7 +508,7 @@
                       </span>
                     {:else}
                       <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                        — 타/분
+                        — KPM
                       </span>
                     {/if}
                   </div>
@@ -566,7 +566,7 @@
                   <div class="flex flex-col items-end shrink-0 text-right">
                     {#if jamoKpm}
                       <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
-                        {jamoKpm.kpm} 타/분
+                        {jamoKpm.kpm} KPM
                       </span>
                       <div
                         class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
@@ -583,7 +583,7 @@
                       </span>
                     {:else}
                       <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                        — 타/분
+                        — KPM
                       </span>
                     {/if}
                   </div>
