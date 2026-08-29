@@ -1,28 +1,10 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import type { TutorSettings } from './settings';
+  import { settingsStore } from './settings.svelte';
   import { ttsController } from '../utils/ttsController.svelte';
 
-  interface Props {
-    settings: TutorSettings;
-    ontoggletts?: () => void;
-    ontogglespeakoncompletion?: () => void;
-    ontogglespeakonappearance?: () => void;
-    onvoicechange?: (voice: string) => void;
-    onspeedchange?: (speed: number) => void;
-  }
-
-  let {
-    settings,
-    ontoggletts,
-    ontogglespeakoncompletion,
-    ontogglespeakonappearance,
-    onvoicechange,
-    onspeedchange,
-  }: Props = $props();
-
   let nativeVoices = $derived(ttsController.nativeVoices);
-  let isSelectedVoiceOffline = $derived(ttsController.isVoiceOffline(settings.ttsVoice));
+  let isSelectedVoiceOffline = $derived(ttsController.isVoiceOffline(settingsStore.current.ttsVoice));
 
   onMount(() => {
     ttsController.refreshNativeVoices();
@@ -35,10 +17,12 @@
     <label class="flex items-center gap-1.5 cursor-pointer">
       <input
         type="checkbox"
-        checked={settings.enableTTS}
-        onchange={(e) => {
-          e.currentTarget.checked = !!settings.enableTTS;
-          ontoggletts?.();
+        checked={settingsStore.current.enableTTS}
+        onchange={() => {
+          if (settingsStore.current.enableTTS) {
+            ttsController.stopAudio();
+          }
+          settingsStore.toggle('enableTTS');
         }}
         class="w-4 h-4 text-blue-600 rounded cursor-pointer"
       />
@@ -46,15 +30,15 @@
     </label>
   </div>
 
-  {#if settings.enableTTS}
+  {#if settingsStore.current.enableTTS}
     <div class="flex flex-col gap-2.5 mt-1 pl-2">
       <!-- Speak On Completion Toggle -->
       <label class="flex items-center justify-between cursor-pointer">
         <span class="text-xs text-gray-600 dark:text-gray-400">Speak on completion</span>
         <input
           type="checkbox"
-          checked={settings.speakOnCompletion}
-          onchange={ontogglespeakoncompletion}
+          checked={settingsStore.current.speakOnCompletion}
+          onchange={() => settingsStore.toggle('speakOnCompletion')}
           class="w-4 h-4 text-blue-600 rounded cursor-pointer"
         />
       </label>
@@ -64,8 +48,8 @@
         <span class="text-xs text-gray-600 dark:text-gray-400">Speak on appearance</span>
         <input
           type="checkbox"
-          checked={settings.speakOnAppearance}
-          onchange={ontogglespeakonappearance}
+          checked={settingsStore.current.speakOnAppearance}
+          onchange={() => settingsStore.toggle('speakOnAppearance')}
           class="w-4 h-4 text-blue-600 rounded cursor-pointer"
         />
       </label>
@@ -79,8 +63,8 @@
           {#if nativeVoices.length > 0}
             <select
               id="tts-voice-select"
-              value={settings.ttsVoice || nativeVoices[0]?.id || ''}
-              onchange={(e) => onvoicechange?.((e.target as HTMLSelectElement).value)}
+              value={settingsStore.current.ttsVoice || nativeVoices[0]?.id || ''}
+              onchange={(e) => settingsStore.update('ttsVoice', (e.target as HTMLSelectElement).value)}
               class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-xs max-w-[210px] truncate focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
             >
               {#each nativeVoices as v}
@@ -127,7 +111,7 @@
           <span
             class="text-xs font-mono text-blue-600 dark:text-blue-400 font-bold bg-blue-50 dark:bg-blue-950/60 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800"
           >
-            {settings.ttsSpeed ?? 1.0}x
+            {settingsStore.current.ttsSpeed ?? 1.0}x
           </span>
         </div>
         <div class="pl-1 pt-1">
@@ -136,8 +120,8 @@
             min="0.5"
             max="1.5"
             step="0.1"
-            value={settings.ttsSpeed ?? 1.0}
-            oninput={(e) => onspeedchange?.(parseFloat((e.target as HTMLInputElement).value))}
+            value={settingsStore.current.ttsSpeed ?? 1.0}
+            oninput={(e) => settingsStore.update('ttsSpeed', parseFloat((e.target as HTMLInputElement).value))}
             class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
           />
         </div>

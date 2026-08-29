@@ -3,8 +3,7 @@
   import contentData from './content';
   import { TutorSession } from './lib/tutorSession.svelte';
   import type { CurriculumData } from './lib/tutorSession.svelte';
-  import { loadSettings, saveSettings, applyTheme } from './lib/settings';
-  import type { TutorSettings, ThemeMode } from './lib/settings';
+  import { settingsStore } from './lib/settings.svelte';
   import {
     calculateTargetCursorIndex,
     calculateInputCursorIndex,
@@ -28,15 +27,12 @@
   import { ttsController } from './utils/ttsController.svelte';
   import { ALL_CATEGORY_IDS, toggleCategoryGroupIds } from './content/curriculumCategories';
   import type { CurriculumCategory } from './content/curriculumCategories';
-  import type { CursorColorMode } from './utils/cursorColor';
   import type { CustomDeck } from './types/customDecks';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   let modules = $derived(session.getModules());
   let customDecks = $derived(session.getCustomDecks());
 
-  const initialSettings = loadSettings();
-  let settings = $state<TutorSettings>(initialSettings);
   type ActivePanel = 'none' | 'settings' | 'curriculum' | 'mastery';
   let activePanel = $state<ActivePanel>('none');
   let showSettingsModal = $derived(activePanel === 'settings');
@@ -47,8 +43,8 @@
   let showImportDeckModal = $state(false);
 
   let enabledModuleIds = $state<string[]>(
-    Array.isArray(initialSettings.enabledModuleIds)
-      ? initialSettings.enabledModuleIds
+    Array.isArray(settingsStore.current.enabledModuleIds)
+      ? settingsStore.current.enabledModuleIds
       : session.getModules().map((m) => m.id),
   );
 
@@ -66,7 +62,7 @@
 
   let sessionCursorIndex = $derived(session.getInputCursorIndex());
 
-  let displayText = $derived(session.getDisplayText(currentItem, settings));
+  let displayText = $derived(session.getDisplayText(currentItem, settingsStore.current));
   let wordTokens = $derived(getWordTokens(currentItem.target));
 
   let activeTargetCursorIndex = $derived(
@@ -82,7 +78,7 @@
   );
 
   // Conditionally suppress keyboard hints when the setting is disabled.
-  let hintKeys = $derived(settings.showKeyboardHint ? activeRequiredKeys : []);
+  let hintKeys = $derived(settingsStore.current.showKeyboardHint ? activeRequiredKeys : []);
 
   // Map errors to O(1) lookups by index to avoid O(N^2) .find() calls in child {#each} loops.
   let errorMap = $derived(new Map(errors.map((e) => [e.index, e.isError])));
@@ -95,7 +91,7 @@
       masteryState,
       (cat) => session.getCategoryKpm(cat),
       (jamo) => session.getJamoKpm(jamo),
-      settings.showKpm ?? true,
+      settingsStore.current.showKpm ?? true,
     ),
   );
 
@@ -114,7 +110,6 @@
 
   onMount(() => {
     session.setFilter(enabledModuleIds, true);
-    applyTheme(settings.theme);
     focusInputElement();
 
     // Ensure pending debounced saves are flushed if the user navigates away or closes the tab.
@@ -129,7 +124,7 @@
     session.resetSessionState();
     showWelcomeModal = false;
     focusInputElement();
-    if (settings.enableTTS && settings.speakOnAppearance) {
+    if (settingsStore.current.enableTTS && settingsStore.current.speakOnAppearance) {
       speakCurrentPrompt();
     }
   }
@@ -198,8 +193,7 @@
     } else {
       enabledModuleIds = [...enabledModuleIds, modId];
     }
-    settings = { ...settings, enabledModuleIds };
-    saveSettings(settings);
+    settingsStore.update('enabledModuleIds', enabledModuleIds);
     session.setFilter(enabledModuleIds, true);
   }
 
@@ -216,8 +210,7 @@
     session.addCustomDeck(deck);
     if (!enabledModuleIds.includes(deck.id)) {
       enabledModuleIds = [...enabledModuleIds, deck.id];
-      settings = { ...settings, enabledModuleIds };
-      saveSettings(settings);
+      settingsStore.update('enabledModuleIds', enabledModuleIds);
     }
     focusInputElement();
   }
@@ -225,17 +218,16 @@
   function handleDeleteCustomDeck(deckId: string) {
     session.removeCustomDeck(deckId);
     enabledModuleIds = enabledModuleIds.filter((id) => id !== deckId);
-    settings = { ...settings, enabledModuleIds };
-    saveSettings(settings);
+    settingsStore.update('enabledModuleIds', enabledModuleIds);
     focusInputElement();
   }
 
   let collapsedCategoryIds = $state<string[]>(
-    loadSettings().collapsedCategoryIds ?? ALL_CATEGORY_IDS,
+    settingsStore.current.collapsedCategoryIds ?? ALL_CATEGORY_IDS,
   );
 
   let collapsedMasteryStageIds = $state<string[]>(
-    loadSettings().collapsedMasteryStageIds ?? [],
+    settingsStore.current.collapsedMasteryStageIds ?? [],
   );
 
   function toggleCategoryCollapse(categoryId: string) {
@@ -244,8 +236,7 @@
     } else {
       collapsedCategoryIds = [...collapsedCategoryIds, categoryId];
     }
-    settings = { ...settings, collapsedCategoryIds };
-    saveSettings(settings);
+    settingsStore.update('collapsedCategoryIds', collapsedCategoryIds);
   }
 
   function toggleMasteryStageCollapse(stageName: string) {
@@ -254,28 +245,24 @@
     } else {
       collapsedMasteryStageIds = [...collapsedMasteryStageIds, stageName];
     }
-    settings = { ...settings, collapsedMasteryStageIds };
-    saveSettings(settings);
+    settingsStore.update('collapsedMasteryStageIds', collapsedMasteryStageIds);
   }
 
   function toggleCategoryGroup(category: CurriculumCategory) {
     enabledModuleIds = toggleCategoryGroupIds(category, enabledModuleIds);
-    settings = { ...settings, enabledModuleIds };
-    saveSettings(settings);
+    settingsStore.update('enabledModuleIds', enabledModuleIds);
     session.setFilter(enabledModuleIds, true);
   }
 
   function selectAllModules() {
     enabledModuleIds = modules.map((m) => m.id);
-    settings = { ...settings, enabledModuleIds };
-    saveSettings(settings);
+    settingsStore.update('enabledModuleIds', enabledModuleIds);
     session.setFilter('all', true);
   }
 
   function deselectAllModules() {
     enabledModuleIds = [];
-    settings = { ...settings, enabledModuleIds };
-    saveSettings(settings);
+    settingsStore.update('enabledModuleIds', enabledModuleIds);
     session.setFilter(enabledModuleIds, true);
   }
 
@@ -310,7 +297,7 @@
     // Shortcut: Ctrl+S (Windows/Linux) or Cmd+S (macOS) to speak the current prompt
     if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
       e.preventDefault();
-      if (settings.enableTTS) {
+      if (settingsStore.current.enableTTS) {
         speakCurrentPrompt();
       }
       return;
@@ -349,8 +336,8 @@
     if (
       !wasCompleted &&
       (result.isItemCompleted || session.getIsItemCompleted()) &&
-      settings.enableTTS &&
-      settings.speakOnCompletion
+      settingsStore.current.enableTTS &&
+      settingsStore.current.speakOnCompletion
     ) {
       console.debug('[App] Exercise completed, triggering speakCurrentPrompt()');
       speakCurrentPrompt();
@@ -415,45 +402,15 @@
     focusInputElement();
   }
 
-  function updateSetting<K extends keyof TutorSettings>(key: K, value: TutorSettings[K]) {
-    settings = { ...settings, [key]: value };
-    saveSettings(settings);
-  }
-
   let isTTSSpeaking = $derived(ttsController.isSpeaking);
   let isTTSLoading = $derived(false);
-
-  function toggleTTS() {
-    if (!settings.enableTTS) {
-      updateSetting('enableTTS', true);
-    } else {
-      updateSetting('enableTTS', false);
-      ttsController.stopAudio();
-    }
-  }
-
-  function toggleSpeakOnCompletion() {
-    updateSetting('speakOnCompletion', !settings.speakOnCompletion);
-  }
-
-  function toggleSpeakOnAppearance() {
-    updateSetting('speakOnAppearance', !settings.speakOnAppearance);
-  }
-
-  function handleVoiceChange(voice: string) {
-    updateSetting('ttsVoice', voice);
-  }
-
-  function handleSpeedChange(speed: number) {
-    updateSetting('ttsSpeed', speed);
-  }
 
   function speakCurrentPrompt() {
     if (currentItem && currentItem.target) {
       ttsController.speak(
         currentItem.target,
-        settings.ttsVoice,
-        settings.ttsSpeed ?? 1.0,
+        settingsStore.current.ttsVoice,
+        settingsStore.current.ttsSpeed ?? 1.0,
       );
     }
     focusInputElement();
@@ -463,8 +420,8 @@
 
   $effect(() => {
     const targetText = currentItem?.target;
-    const isEnabled = settings.enableTTS;
-    const speakOnAppear = settings.speakOnAppearance;
+    const isEnabled = settingsStore.current.enableTTS;
+    const speakOnAppear = settingsStore.current.speakOnAppearance;
 
     untrack(() => {
       const isNewTarget = targetText !== lastPromptTarget;
@@ -482,49 +439,8 @@
     });
   });
 
-  function togglePronunciation() {
-    updateSetting('showPronunciation', !settings.showPronunciation);
-  }
-
-  function toggleTranslation() {
-    updateSetting('showTranslation', !settings.showTranslation);
-  }
-
-  function toggleVirtualKeyboard() {
-    updateSetting('showVirtualKeyboard', !settings.showVirtualKeyboard);
-  }
-
-  function toggleKeyboardHint() {
-    updateSetting('showKeyboardHint', !settings.showKeyboardHint);
-  }
-
-  function toggleKpm() {
-    updateSetting('showKpm', !settings.showKpm);
-  }
-
   function handleResetKpm() {
     session.resetSpeedMetrics();
-  }
-
-  function handleThemeChange(theme: ThemeMode) {
-    updateSetting('theme', theme);
-    applyTheme(theme);
-  }
-
-  function handleMinFontSizeChange(minFontSizeRem: number) {
-    updateSetting('minFontSizeRem', minFontSizeRem);
-  }
-
-  function handleMaxFontSizeChange(maxFontSizeRem: number) {
-    updateSetting('maxFontSizeRem', maxFontSizeRem);
-  }
-
-  function handleToggleLockFontSize() {
-    updateSetting('lockFontSize', !settings.lockFontSize);
-  }
-
-  function handleCursorColorChange(cursorColor: CursorColorMode) {
-    updateSetting('cursorColor', cursorColor);
   }
 
   function handleVirtualKeySelect(key: string) {
@@ -577,7 +493,7 @@
     masteryUnlockedCount={masteryState.unlockedCount}
     masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
     {masteryDisplayInfo}
-    showKpm={settings.showKpm ?? true}
+    showKpm={settingsStore.current.showKpm ?? true}
     ontogglecurriculum={toggleCurriculumSidebar}
     ontogglemastery={toggleMasterySidebar}
     ontogglesettings={toggleSettingsModal}
@@ -593,11 +509,11 @@
       {isCompleted}
       {currentItem}
       {displayText}
-      minFontSizeRem={settings.minFontSizeRem}
-      maxFontSizeRem={settings.maxFontSizeRem}
-      lockFontSize={settings.lockFontSize}
-      cursorColor={settings.cursorColor}
-      enableTTS={settings.enableTTS}
+      minFontSizeRem={settingsStore.current.minFontSizeRem}
+      maxFontSizeRem={settingsStore.current.maxFontSizeRem}
+      lockFontSize={settingsStore.current.lockFontSize}
+      cursorColor={settingsStore.current.cursorColor}
+      enableTTS={settingsStore.current.enableTTS}
       {isTTSSpeaking}
       {isTTSLoading}
       onspeak={speakCurrentPrompt}
@@ -616,7 +532,7 @@
       {activeInputCursorIndex}
       {isCompleted}
       hasEnabledModules={mode === 'mastery' || enabledModuleIds.length > 0}
-      cursorColor={settings.cursorColor}
+      cursorColor={settingsStore.current.cursorColor}
       onkeydown={handleKeydown}
       onkeyup={handleKeyup}
       oninputprevent={handleInputPrevent}
@@ -624,7 +540,7 @@
       onfocuscontainer={focusInput}
     />
 
-    {#if settings.showVirtualKeyboard}
+    {#if settingsStore.current.showVirtualKeyboard}
       <div class="w-full flex justify-center">
         <VirtualKeyboard
           activeKeys={hintKeys}
@@ -663,24 +579,8 @@
 
 <SettingsModal
   isOpen={showSettingsModal}
-  {settings}
   onclose={closePanel}
-  onthemechange={handleThemeChange}
-  ontogglepronunciation={togglePronunciation}
-  ontoggletranslation={toggleTranslation}
-  ontogglevirtualkeyboard={toggleVirtualKeyboard}
-  ontogglekeyboardhint={toggleKeyboardHint}
-  ontogglekpm={toggleKpm}
   onresetkpm={handleResetKpm}
-  onminfontsizechange={handleMinFontSizeChange}
-  onmaxfontsizechange={handleMaxFontSizeChange}
-  ontogglelockfontsize={handleToggleLockFontSize}
-  oncursorcolorchange={handleCursorColorChange}
-  ontoggletts={toggleTTS}
-  ontogglespeakoncompletion={toggleSpeakOnCompletion}
-  ontogglespeakonappearance={toggleSpeakOnAppearance}
-  onvoicechange={handleVoiceChange}
-  onspeedchange={handleSpeedChange}
 />
 
 <MasterySidebar
@@ -692,7 +592,7 @@
   jamoStats={masteryState.jamoStats}
   sentenceCheckpointStats={masteryState.sentenceCheckpointStats}
   speedStore={session.speedStore}
-  showKpm={settings.showKpm ?? true}
+  showKpm={settingsStore.current.showKpm ?? true}
   collapsedStageIds={collapsedMasteryStageIds}
   onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}

@@ -1,27 +1,13 @@
 <script lang="ts">
   import DualRangeSlider from './DualRangeSlider.svelte';
-  import type { TutorSettings } from './settings';
+  import { settingsStore } from './settings.svelte';
 
-  interface Props {
-    settings: TutorSettings;
-    ontogglelockfontsize?: () => void;
-    onminfontsizechange?: (minSize: number) => void;
-    onmaxfontsizechange?: (maxSize: number) => void;
-  }
-
-  let {
-    settings,
-    ontogglelockfontsize,
-    onminfontsizechange,
-    onmaxfontsizechange,
-  }: Props = $props();
-
-  let minVal = $derived(settings.minFontSizeRem ?? 2.0);
-  let maxVal = $derived(settings.maxFontSizeRem ?? 6.0);
+  let minVal = $derived(settingsStore.current.minFontSizeRem ?? 2.0);
+  let maxVal = $derived(settingsStore.current.maxFontSizeRem ?? 6.0);
 
   function handleMinFontSizeInput(e: Event) {
     const val = parseFloat((e.target as HTMLInputElement).value);
-    onminfontsizechange?.(val);
+    settingsStore.update('minFontSizeRem', val);
   }
 </script>
 
@@ -33,8 +19,8 @@
     >
       <input
         type="checkbox"
-        checked={settings.lockFontSize}
-        onchange={ontogglelockfontsize}
+        checked={settingsStore.current.lockFontSize}
+        onchange={() => settingsStore.toggle('lockFontSize')}
         class="w-4 h-4 text-blue-600 rounded cursor-pointer"
       />
       <span>Lock Size</span>
@@ -42,7 +28,7 @@
   </div>
 
   <div class="flex flex-col gap-2 mt-1 pl-2">
-    {#if settings.lockFontSize}
+    {#if settingsStore.current.lockFontSize}
       <div class="flex flex-col gap-1.5">
         <div class="flex items-center justify-between">
           <span class="text-xs text-gray-600 dark:text-gray-400">Font size</span>
@@ -82,8 +68,8 @@
             step={0.25}
             minValue={minVal}
             maxValue={maxVal}
-            onminchange={(val) => onminfontsizechange?.(val)}
-            onmaxchange={(val) => onmaxfontsizechange?.(val)}
+            onminchange={(val) => settingsStore.update('minFontSizeRem', val)}
+            onmaxchange={(val) => settingsStore.update('maxFontSizeRem', val)}
           />
         </div>
       </div>

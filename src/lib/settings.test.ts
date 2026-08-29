@@ -1,7 +1,13 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { loadSettings, saveSettings, DEFAULT_SETTINGS, applyTheme } from './settings';
+import {
+  loadSettings,
+  saveSettings,
+  DEFAULT_SETTINGS,
+  applyTheme,
+  SettingsStore,
+} from './settings.svelte';
 
-describe('Settings module persistence', () => {
+describe('Settings module persistence and SettingsStore', () => {
   beforeEach(() => {
     localStorage.clear();
     document.documentElement.classList.remove('dark');
@@ -166,4 +172,31 @@ describe('Settings module persistence', () => {
     expect(loaded.ttsVoice).toBe('jf_nezumi');
     expect(loaded.ttsSpeed).toBe(0.8);
   });
+
+  it('should update, toggle, and persist settings reactively via SettingsStore', () => {
+    const store = new SettingsStore();
+    expect(store.current).toEqual(DEFAULT_SETTINGS);
+
+    // Update property
+    store.update('showPronunciation', false);
+    expect(store.current.showPronunciation).toBe(false);
+    expect(loadSettings().showPronunciation).toBe(false);
+
+    // Toggle boolean property
+    store.toggle('showPronunciation');
+    expect(store.current.showPronunciation).toBe(true);
+    expect(loadSettings().showPronunciation).toBe(true);
+
+    // Theme update triggers DOM update
+    store.update('theme', 'dark');
+    expect(store.current.theme).toBe('dark');
+    expect(document.documentElement.classList.contains('dark')).toBe(true);
+    expect(loadSettings().theme).toBe('dark');
+
+    // Reset settings back to default
+    store.reset();
+    expect(store.current).toEqual(DEFAULT_SETTINGS);
+    expect(loadSettings()).toEqual(DEFAULT_SETTINGS);
+  });
 });
+

@@ -183,3 +183,50 @@ export function applyTheme(themeMode: ThemeMode): void {
     }
   }
 }
+
+/**
+ * Reactive Settings Store managing user configuration preferences across the application.
+ * Utilizes Svelte 5 runes ($state) for fine-grained reactivity and encapsulates LocalStorage
+ * persistence and DOM theme application.
+ */
+export class SettingsStore {
+  current = $state<TutorSettings>(loadSettings());
+
+  constructor() {
+    applyTheme(this.current.theme);
+  }
+
+  /**
+   * Updates a single setting field, saves the updated state to LocalStorage,
+   * and triggers any relevant side-effects (such as updating theme classes).
+   */
+  update<K extends keyof TutorSettings>(key: K, value: TutorSettings[K]): void {
+    this.current[key] = value;
+    saveSettings(this.current);
+    if (key === 'theme') {
+      applyTheme(value as ThemeMode);
+    }
+  }
+
+  /**
+   * Toggles a boolean setting field and saves the change to LocalStorage.
+   */
+  toggle(key: keyof TutorSettings): void {
+    const currentVal = this.current[key];
+    if (typeof currentVal === 'boolean') {
+      this.update(key, (!currentVal) as TutorSettings[keyof TutorSettings]);
+    }
+  }
+
+  /**
+   * Resets all user settings back to their default values.
+   */
+  reset(): void {
+    this.current = { ...DEFAULT_SETTINGS };
+    saveSettings(this.current);
+    applyTheme(this.current.theme);
+  }
+}
+
+/** Global reactive settings store singleton. */
+export const settingsStore = new SettingsStore();

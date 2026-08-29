@@ -1,13 +1,11 @@
 <script lang="ts">
-  import type { TutorSettings } from './settings';
+  import { settingsStore } from './settings.svelte';
 
   interface Props {
-    settings: TutorSettings;
-    ontogglekpm?: () => void;
     onresetkpm?: () => void;
   }
 
-  let { settings, ontogglekpm, onresetkpm }: Props = $props();
+  let { onresetkpm }: Props = $props();
 
   let showConfirmResetKpm = $state(false);
 
@@ -31,15 +29,15 @@
     <label class="flex items-center gap-1.5 cursor-pointer">
       <input
         type="checkbox"
-        checked={settings.showKpm ?? true}
-        onchange={ontogglekpm}
+        checked={settingsStore.current.showKpm ?? true}
+        onchange={() => settingsStore.toggle('showKpm')}
         class="w-4 h-4 text-blue-600 rounded cursor-pointer"
       />
       <span>Enable</span>
     </label>
   </div>
 
-  {#if settings.showKpm ?? true}
+  {#if settingsStore.current.showKpm ?? true}
     <div class="flex flex-col gap-2 mt-1 pl-2">
       <div class="flex items-center justify-between">
         <span class="text-xs text-gray-600 dark:text-gray-400">Speed & accuracy history</span>

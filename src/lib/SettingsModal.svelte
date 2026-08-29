@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { TutorSettings, ThemeMode } from './settings';
-  import type { CursorColorMode } from '../utils/cursorColor';
+  import { settingsStore, type ThemeMode } from './settings.svelte';
   import CursorColorSelect from './CursorColorSelect.svelte';
   import TTSSettingsControl from './TTSSettingsControl.svelte';
   import TypographySettingsControl from './TypographySettingsControl.svelte';
@@ -8,45 +7,13 @@
 
   interface Props {
     isOpen: boolean;
-    settings: TutorSettings;
     onclose: () => void;
-    onthemechange: (theme: ThemeMode) => void;
-    ontogglepronunciation: () => void;
-    ontoggletranslation: () => void;
-    ontogglevirtualkeyboard: () => void;
-    ontogglekeyboardhint: () => void;
-    onminfontsizechange?: (minSize: number) => void;
-    onmaxfontsizechange?: (maxSize: number) => void;
-    ontogglelockfontsize?: () => void;
-    oncursorcolorchange?: (cursorColor: CursorColorMode) => void;
-    ontoggletts?: () => void;
-    ontogglespeakoncompletion?: () => void;
-    ontogglespeakonappearance?: () => void;
-    onvoicechange?: (voice: string) => void;
-    onspeedchange?: (speed: number) => void;
-    ontogglekpm?: () => void;
     onresetkpm?: () => void;
   }
 
   let {
     isOpen,
-    settings,
     onclose,
-    onthemechange,
-    ontogglepronunciation,
-    ontoggletranslation,
-    ontogglevirtualkeyboard,
-    ontogglekeyboardhint,
-    onminfontsizechange,
-    onmaxfontsizechange,
-    ontogglelockfontsize,
-    oncursorcolorchange,
-    ontoggletts,
-    ontogglespeakoncompletion,
-    ontogglespeakonappearance,
-    onvoicechange,
-    onspeedchange,
-    ontogglekpm,
     onresetkpm,
   }: Props = $props();
 
@@ -58,7 +25,7 @@
 
   function handleSelectTheme(e: Event) {
     const val = (e.target as HTMLSelectElement).value as ThemeMode;
-    onthemechange(val);
+    settingsStore.update('theme', val);
   }
 </script>
 
@@ -116,7 +83,7 @@
       <label for="theme-select" class="cursor-pointer font-bold text-gray-900 dark:text-gray-100">Theme</label>
       <select
         id="theme-select"
-        value={settings.theme}
+        value={settingsStore.current.theme}
         onchange={handleSelectTheme}
         class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-3 py-1.5 text-sm focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
       >
@@ -128,8 +95,8 @@
 
     <!-- Cursor Color Accent Selector -->
     <CursorColorSelect
-      value={settings.cursorColor ?? 'amber'}
-      onchange={(color) => oncursorcolorchange?.(color)}
+      value={settingsStore.current.cursorColor ?? 'amber'}
+      onchange={(color) => settingsStore.update('cursorColor', color)}
     />
 
     <!-- Romanization / Pronunciation Toggle -->
@@ -137,8 +104,8 @@
       <span class="font-bold text-gray-900 dark:text-gray-100">Show Romanization</span>
       <input
         type="checkbox"
-        checked={settings.showPronunciation}
-        onchange={ontogglepronunciation}
+        checked={settingsStore.current.showPronunciation}
+        onchange={() => settingsStore.toggle('showPronunciation')}
         class="w-4 h-4 text-blue-600 rounded cursor-pointer"
       />
     </label>
@@ -148,8 +115,8 @@
       <span class="font-bold text-gray-900 dark:text-gray-100">Show English Translation</span>
       <input
         type="checkbox"
-        checked={settings.showTranslation}
-        onchange={ontoggletranslation}
+        checked={settingsStore.current.showTranslation}
+        onchange={() => settingsStore.toggle('showTranslation')}
         class="w-4 h-4 text-blue-600 rounded cursor-pointer"
       />
     </label>
@@ -161,23 +128,23 @@
         <label class="flex items-center gap-1.5 cursor-pointer">
           <input
             type="checkbox"
-            checked={settings.showVirtualKeyboard}
-            onchange={ontogglevirtualkeyboard}
+            checked={settingsStore.current.showVirtualKeyboard}
+            onchange={() => settingsStore.toggle('showVirtualKeyboard')}
             class="w-4 h-4 text-blue-600 rounded cursor-pointer"
           />
           <span>Enable</span>
         </label>
       </div>
 
-      {#if settings.showVirtualKeyboard}
+      {#if settingsStore.current.showVirtualKeyboard}
         <div class="flex flex-col gap-2 mt-1 pl-2">
           <!-- Keyboard Hint Toggle -->
           <label class="flex items-center justify-between cursor-pointer">
             <span class="text-xs text-gray-600 dark:text-gray-400">Show keyboard hints</span>
             <input
               type="checkbox"
-              checked={settings.showKeyboardHint}
-              onchange={ontogglekeyboardhint}
+              checked={settingsStore.current.showKeyboardHint}
+              onchange={() => settingsStore.toggle('showKeyboardHint')}
               class="w-4 h-4 text-blue-600 rounded cursor-pointer"
             />
           </label>
@@ -186,28 +153,12 @@
     </div>
 
     <!-- Target Text Size Slider & Lock Toggle -->
-    <TypographySettingsControl
-      {settings}
-      {ontogglelockfontsize}
-      {onminfontsizechange}
-      {onmaxfontsizechange}
-    />
+    <TypographySettingsControl />
 
     <!-- Voice Synthesis (TTS) Section -->
-    <TTSSettingsControl
-      {settings}
-      {ontoggletts}
-      {ontogglespeakoncompletion}
-      {ontogglespeakonappearance}
-      {onvoicechange}
-      {onspeedchange}
-    />
+    <TTSSettingsControl />
 
     <!-- Speed Analytics (KPM) Section -->
-    <SpeedSettingsControl
-      {settings}
-      {ontogglekpm}
-      {onresetkpm}
-    />
+    <SpeedSettingsControl {onresetkpm} />
   </div>
 {/if}
