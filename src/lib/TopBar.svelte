@@ -21,6 +21,8 @@
     postGameSubtype?: string | null;
     activeCheckpointTitle?: string | null;
     activeCheckpointProgress?: { completed: number; total: number } | null;
+    showKpm?: boolean;
+    activeKpm?: number | null;
     ontogglemode: () => void;
     ontogglecurriculum: (e?: MouseEvent) => void;
     ontogglemastery: (e?: MouseEvent) => void;
@@ -45,6 +47,8 @@
     postGameSubtype = null,
     activeCheckpointTitle = null,
     activeCheckpointProgress = null,
+    showKpm = true,
+    activeKpm = null,
     ontogglemode,
     ontogglecurriculum,
     ontogglemastery,
@@ -138,6 +142,33 @@
               {/if}
             </span>
           </div>
+        {:else if isPostGame && activeJamoChar}
+          <div
+            class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-purple-200 dark:border-purple-800/80 shrink-0 whitespace-nowrap"
+          >
+            <span
+              class="relative overflow-hidden text-sm md:text-base font-bold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-purple-300 dark:border-purple-700 leading-none flex items-center justify-center min-w-[24px] md:min-w-[28px] shadow-2xs gap-1.5 whitespace-nowrap shrink-0"
+            >
+              <span class="relative z-10 whitespace-nowrap">{activeJamoChar}</span>
+              {#if showKpm}
+                <span
+                  class="relative z-10 font-mono font-bold leading-none text-purple-700 dark:text-purple-300 bg-purple-200/80 dark:bg-purple-900/80 px-1.5 py-0.5 rounded text-xs whitespace-nowrap"
+                >
+                  {activeKpm !== null && activeKpm !== undefined ? `${activeKpm} KPM` : '— KPM'}
+                </span>
+              {/if}
+            </span>
+          </div>
+        {:else if isPostGame && showKpm}
+          <div
+            class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-purple-200 dark:border-purple-800/80 shrink-0 whitespace-nowrap"
+          >
+            <span
+              class="relative overflow-hidden text-xs md:text-sm font-bold font-mono text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-purple-300 dark:border-purple-700 leading-none flex items-center gap-1 md:gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
+            >
+              <span class="whitespace-nowrap">{activeKpm !== null && activeKpm !== undefined ? `${activeKpm} KPM` : '— KPM'}</span>
+            </span>
+          </div>
         {:else if activeJamoChar}
           <div
             class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-amber-200 dark:border-amber-800/80 shrink-0 whitespace-nowrap"
@@ -150,7 +181,7 @@
             <span
               class="relative overflow-hidden text-sm md:text-base font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-700 leading-none flex items-center justify-center min-w-[24px] md:min-w-[28px] shadow-2xs gap-1 md:gap-1.5 whitespace-nowrap shrink-0"
             >
-              {#if activeJamoProgress > 0 && !isPostGame}
+              {#if activeJamoProgress > 0}
                 <div
                   class="absolute bottom-0 inset-x-0 pointer-events-none {activeJamoProgress >= 100
                     ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
@@ -168,28 +199,11 @@
               {/if}
               {#if activeTargetRemaining}
                 <span
-                  class="relative z-10 font-mono font-bold leading-none {isPostGame
-                    ? 'text-purple-700 dark:text-purple-300 bg-purple-200/80 dark:bg-purple-900/80 px-1.5 py-0.5 rounded text-xs md:text-sm'
-                    : 'text-amber-900 dark:text-amber-200 bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-[10px]'}"
+                  class="relative z-10 font-mono font-bold leading-none text-amber-900 dark:text-amber-200 bg-amber-200/60 dark:bg-amber-900/60 px-1 py-0.5 rounded text-[10px]"
                 >
                   {activeTargetRemaining}
                 </span>
               {/if}
-            </span>
-          </div>
-        {:else if isPostGame && activeTargetRemaining}
-          <div
-            class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-purple-200 dark:border-purple-800/80 shrink-0 whitespace-nowrap"
-          >
-            <span
-              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:inline whitespace-nowrap"
-            >
-              Target:
-            </span>
-            <span
-              class="relative overflow-hidden text-xs md:text-sm font-bold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-purple-300 dark:border-purple-700 leading-none flex items-center gap-1 md:gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
-            >
-              <span class="whitespace-nowrap">{activeTargetRemaining}</span>
             </span>
           </div>
         {/if}

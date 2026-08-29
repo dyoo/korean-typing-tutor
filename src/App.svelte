@@ -177,6 +177,21 @@
         }
       : null,
   );
+  let activeKpm = $derived.by(() => {
+    if (!settings.showKpm) {
+      return null;
+    }
+    if (activeConsolidationMode === 'words') {
+      return session.getCategoryKpm('words')?.kpm ?? null;
+    }
+    if (activeConsolidationMode === 'sentences') {
+      return session.getCategoryKpm('sentences')?.kpm ?? null;
+    }
+    if (activeJamoChar) {
+      return session.getJamoKpm(activeJamoChar)?.kpm ?? null;
+    }
+    return null;
+  });
 
   let currentStageNumber = $derived(
     activeLearningJamo?.stage ??
@@ -677,8 +692,10 @@
     activeTargetRemaining={activeTargetRemaining}
     {isPostGame}
     {postGameSubtype}
-    {activeCheckpointTitle}
-    {activeCheckpointProgress}
+    activeCheckpointTitle={activeCheckpointTitle}
+    activeCheckpointProgress={activeCheckpointProgress}
+    showKpm={settings.showKpm ?? true}
+    {activeKpm}
     ontogglecurriculum={toggleCurriculumSidebar}
     ontogglemastery={toggleMasterySidebar}
     ontogglesettings={toggleSettingsModal}
