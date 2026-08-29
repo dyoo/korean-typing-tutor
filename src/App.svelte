@@ -12,11 +12,8 @@
   } from './utils/cursorHelper';
   import { getNextRequiredKeys } from './utils/keyboardHelper';
   import { handleCopyEvent } from './utils/clipboard';
-  import {
-    JAMO_PROGRESSION_ORDER,
-    JAMO_STAGES,
-    calculateJamoProgress,
-  } from './utils/jamoMastery';
+  import { JAMO_PROGRESSION_ORDER } from './utils/jamoMastery';
+  import { computeMasteryDisplayInfo } from './utils/masteryDisplayHelper';
   import VirtualKeyboard from './lib/VirtualKeyboard.svelte';
   import CurriculumSidebar from './lib/CurriculumSidebar.svelte';
   import MasterySidebar from './lib/MasterySidebar.svelte';
@@ -92,118 +89,15 @@
 
   let activeMasteryTarget = $derived(session.getActiveMasteryTarget());
   let activeCheckpoint = $derived(session.getActiveCheckpoint());
-  let activeLearningJamo = $derived(
-    activeMasteryTarget.type === 'jamo' ? activeMasteryTarget.item : null,
+  let masteryDisplayInfo = $derived(
+    computeMasteryDisplayInfo(
+      activeMasteryTarget,
+      masteryState,
+      (cat) => session.getCategoryKpm(cat),
+      (jamo) => session.getJamoKpm(jamo),
+      settings.showKpm ?? true,
+    ),
   );
-  let activeFocusBatchimItem = $derived(
-    activeMasteryTarget.type === 'focus' ? activeMasteryTarget.item : null,
-  );
-  let activeFocusVowelItem = $derived(
-    activeMasteryTarget.type === 'consolidation_vowel' ? activeMasteryTarget.item : null,
-  );
-  let activeFocusConsonantItem = $derived(
-    activeMasteryTarget.type === 'consolidation_consonant' ? activeMasteryTarget.item : null,
-  );
-  let activeConsolidationMode = $derived(
-    activeMasteryTarget.type === 'consolidation_words'
-      ? 'words'
-      : activeMasteryTarget.type === 'consolidation_sentences'
-        ? 'sentences'
-        : null,
-  );
-  let activeJamoChar = $derived(
-    activeLearningJamo?.jamo ??
-      activeFocusBatchimItem?.batchim ??
-      activeFocusVowelItem?.jamo ??
-      activeFocusConsonantItem?.jamo ??
-      null,
-  );
-  let activeLearningCombination = $derived(
-    activeLearningJamo?.combination ??
-      activeFocusBatchimItem?.combination ??
-      activeFocusVowelItem?.combination ??
-      activeFocusConsonantItem?.combination,
-  );
-  let isPostGame = $derived(
-    activeMasteryTarget.type === 'focus' ||
-      activeMasteryTarget.type === 'consolidation_words' ||
-      activeMasteryTarget.type === 'consolidation_sentences' ||
-      activeMasteryTarget.type === 'consolidation_vowel' ||
-      activeMasteryTarget.type === 'consolidation_consonant',
-  );
-  let postGameSubtype = $derived(
-    activeConsolidationMode === 'words'
-      ? 'Words'
-      : activeConsolidationMode === 'sentences'
-        ? 'Sentences'
-        : activeFocusVowelItem
-          ? 'Vowel'
-          : activeFocusConsonantItem
-            ? 'Consonant'
-            : activeFocusBatchimItem
-              ? 'Batchim'
-              : null,
-  );
-  let activeJamoLabel = $derived(
-    activeConsolidationMode
-      ? 'Target:'
-      : activeFocusBatchimItem
-        ? 'Batchim:'
-        : 'Focus:',
-  );
-  let activeTargetRemaining = $derived(
-    activeConsolidationMode === 'words'
-      ? 'All Words'
-      : activeConsolidationMode === 'sentences'
-        ? 'All Sentences'
-        : (activeFocusBatchimItem?.name ??
-          activeFocusVowelItem?.name ??
-          activeFocusConsonantItem?.name ??
-          null),
-  );
-  let activeJamoProgress = $derived(
-    activeJamoChar ? calculateJamoProgress(masteryState.jamoStats[activeJamoChar]) : 0,
-  );
-  let activeCheckpointTitle = $derived(
-    activeMasteryTarget.type === 'checkpoint' ? activeMasteryTarget.checkpoint.title : null,
-  );
-  let activeCheckpointProgress = $derived(
-    activeMasteryTarget.type === 'checkpoint'
-      ? {
-          completed:
-            masteryState.sentenceCheckpointStats?.[activeMasteryTarget.checkpoint.id]
-              ?.completedCount ?? 0,
-          total: activeMasteryTarget.checkpoint.requiredCompletions,
-        }
-      : null,
-  );
-  let activeKpm = $derived.by(() => {
-    if (!settings.showKpm) {
-      return null;
-    }
-    if (activeConsolidationMode === 'words') {
-      return session.getCategoryKpm('words')?.kpm ?? null;
-    }
-    if (activeConsolidationMode === 'sentences') {
-      return session.getCategoryKpm('sentences')?.kpm ?? null;
-    }
-    if (activeJamoChar) {
-      return session.getJamoKpm(activeJamoChar)?.kpm ?? null;
-    }
-    return null;
-  });
-
-  let currentStageNumber = $derived(
-    activeLearningJamo?.stage ??
-      (activeMasteryTarget.type === 'checkpoint' ? activeMasteryTarget.checkpoint.stage : 1),
-  );
-  let currentStageName = $derived(
-    activeLearningJamo?.stageName ??
-      (activeMasteryTarget.type === 'checkpoint'
-        ? activeMasteryTarget.checkpoint.stageName
-        : 'Home Row'),
-  );
-  let totalStageCount = $derived(JAMO_STAGES.length);
 
   function isTouchDevice(): boolean {
     return (
@@ -682,20 +576,8 @@
     totalModuleCount={modules.length}
     masteryUnlockedCount={masteryState.unlockedCount}
     masteryTotalCount={JAMO_PROGRESSION_ORDER.length}
-    {currentStageNumber}
-    {totalStageCount}
-    {currentStageName}
-    activeJamoChar={activeJamoChar}
-    activeJamoLabel={activeJamoLabel}
-    activeLearningCombination={activeLearningCombination}
-    activeJamoProgress={activeJamoProgress}
-    activeTargetRemaining={activeTargetRemaining}
-    {isPostGame}
-    {postGameSubtype}
-    activeCheckpointTitle={activeCheckpointTitle}
-    activeCheckpointProgress={activeCheckpointProgress}
+    {masteryDisplayInfo}
     showKpm={settings.showKpm ?? true}
-    {activeKpm}
     ontogglecurriculum={toggleCurriculumSidebar}
     ontogglemastery={toggleMasterySidebar}
     ontogglesettings={toggleSettingsModal}
@@ -804,7 +686,7 @@
 <MasterySidebar
   isOpen={showMasterySidebar}
   masteryUnlockedCount={masteryState.unlockedCount}
-  {currentStageNumber}
+  currentStageNumber={masteryDisplayInfo.currentStageNumber}
   activeCheckpointId={masteryState.activeCheckpointId ?? activeCheckpoint?.id ?? null}
   activeFocusBatchim={masteryState.activeFocusBatchim ?? null}
   jamoStats={masteryState.jamoStats}
