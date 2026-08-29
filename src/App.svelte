@@ -98,15 +98,43 @@
   let activeFocusBatchimItem = $derived(
     activeMasteryTarget.type === 'focus' ? activeMasteryTarget.item : null,
   );
+  let activeConsolidationMode = $derived(
+    activeMasteryTarget.type === 'consolidation_words'
+      ? 'words'
+      : activeMasteryTarget.type === 'consolidation_sentences'
+        ? 'sentences'
+        : null,
+  );
   let activeJamoChar = $derived(
     activeLearningJamo?.jamo ?? activeFocusBatchimItem?.batchim ?? null,
   );
   let activeLearningCombination = $derived(
     activeLearningJamo?.combination ?? activeFocusBatchimItem?.combination,
   );
-  let activeJamoLabel = $derived(activeFocusBatchimItem ? 'Batchim:' : 'Focus:');
-  let isPostGame = $derived(activeMasteryTarget.type === 'focus');
-  let activeTargetRemaining = $derived(activeFocusBatchimItem?.name ?? null);
+  let isPostGame = $derived(
+    activeMasteryTarget.type === 'focus' ||
+      activeMasteryTarget.type === 'consolidation_words' ||
+      activeMasteryTarget.type === 'consolidation_sentences',
+  );
+  let postGameSubtype = $derived(
+    activeConsolidationMode === 'words'
+      ? 'Words'
+      : activeConsolidationMode === 'sentences'
+        ? 'Sentences'
+        : activeFocusBatchimItem
+          ? 'Batchim'
+          : null,
+  );
+  let activeJamoLabel = $derived(
+    activeConsolidationMode ? 'Target:' : activeFocusBatchimItem ? 'Batchim:' : 'Focus:',
+  );
+  let activeTargetRemaining = $derived(
+    activeConsolidationMode === 'words'
+      ? 'All Words'
+      : activeConsolidationMode === 'sentences'
+        ? 'All Sentences'
+        : activeFocusBatchimItem?.name ?? null,
+  );
   let activeJamoProgress = $derived(
     activeJamoChar ? calculateJamoProgress(masteryState.jamoStats[activeJamoChar]) : 0,
   );
@@ -611,9 +639,10 @@
     activeJamoChar={activeJamoChar}
     activeJamoLabel={activeJamoLabel}
     activeLearningCombination={activeLearningCombination}
-    {activeJamoProgress}
-    {activeTargetRemaining}
+    activeJamoProgress={activeJamoProgress}
+    activeTargetRemaining={activeTargetRemaining}
     {isPostGame}
+    {postGameSubtype}
     {activeCheckpointTitle}
     {activeCheckpointProgress}
     ontogglecurriculum={toggleCurriculumSidebar}

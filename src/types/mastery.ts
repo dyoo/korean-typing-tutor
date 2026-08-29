@@ -31,7 +31,7 @@ export interface MasteryState {
   unlockedCount: number;
   /** ID of the currently active sentence milestone checkpoint (if in a sentence stage). */
   activeCheckpointId?: string | null;
-  /** Currently active batchim character in post-game Focus mode (e.g. 'ㄺ', 'ㅋ', etc.). */
+  /** Currently active consolidation mode ('words', 'sentences') or batchim character in post-game Consolidation mode (e.g. 'ㄺ', 'ㅋ', etc.). */
   activeFocusBatchim?: string | null;
   /** Per-Jamo statistics map keyed by Jamo character. */
   jamoStats: Record<string, JamoStats>;
@@ -70,10 +70,12 @@ export interface BatchimFocusItem {
   combination?: [string, string];
 }
 
-/** Active target in mastery mode (either a Jamo key, a Sentence Checkpoint, or a Batchim Focus). */
+/** Active target in mastery mode (either a Jamo key, a Sentence Checkpoint, Word/Sentence Consolidation, or a Batchim Focus). */
 export type MasteryTarget =
   | { type: 'jamo'; item: JamoProgressionItem }
   | { type: 'checkpoint'; checkpoint: SentenceCheckpoint }
+  | { type: 'consolidation_words' }
+  | { type: 'consolidation_sentences' }
   | { type: 'focus'; item: BatchimFocusItem };
 
 /** A grouped stage of the Jamo progression sequence (for sidebar display). */

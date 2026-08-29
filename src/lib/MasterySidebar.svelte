@@ -44,6 +44,10 @@
   }: Props = $props();
 
   let isWorkshopActive = $derived(Boolean(activeFocusBatchim));
+  let isConsolidationCollapsed = $derived(
+    collapsedStageIds.includes('Consolidation') ||
+      collapsedStageIds.includes('Batchim Workshop'),
+  );
 
   function toggleStageCollapse(stageName: string) {
     ontogglestagecollapse?.(stageName);
@@ -215,7 +219,7 @@
         </div>
       {/each}
 
-      <!-- Post-game Batchim Workshop Section -->
+      <!-- Post-game Consolidation Section -->
       <div
         class="flex flex-col border {isWorkshopActive
           ? 'border-purple-400 dark:border-purple-600 bg-purple-50/60 dark:bg-purple-950/30 ring-1 ring-purple-400/40 dark:ring-purple-500/30'
@@ -226,7 +230,7 @@
         >
           <button
             type="button"
-            onclick={() => toggleStageCollapse('Batchim Workshop')}
+            onclick={() => toggleStageCollapse('Consolidation')}
             class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide {isWorkshopActive
               ? 'text-purple-700 dark:text-purple-300 font-extrabold'
               : 'text-purple-900 dark:text-purple-300 hover:text-purple-600 dark:hover:text-purple-400'} cursor-pointer"
@@ -234,9 +238,7 @@
             <svg
               class="w-3.5 h-3.5 {isWorkshopActive
                 ? 'text-purple-500 dark:text-purple-400'
-                : 'text-purple-400'} transition-transform {collapsedStageIds.includes(
-                'Batchim Workshop',
-              )
+                : 'text-purple-400'} transition-transform {isConsolidationCollapsed
                 ? '-rotate-90'
                 : ''}"
               viewBox="0 0 24 24"
@@ -246,7 +248,7 @@
             >
               <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
-            <span>Batchim Workshop</span>
+            <span>Consolidation</span>
           </button>
           {#if isWorkshopActive}
             <span
@@ -257,10 +259,88 @@
           {/if}
         </div>
 
-        {#if !collapsedStageIds.includes('Batchim Workshop')}
+        {#if !isConsolidationCollapsed}
           <div
             class="flex flex-col gap-1.5 pl-3 border-l-2 border-purple-500/30 dark:border-purple-400/30 ml-3 mb-1 mr-1"
           >
+            <!-- All Words Practice Option -->
+            <label
+              class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {activeFocusBatchim ===
+              'words'
+                ? 'bg-purple-100/80 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-700'
+                : ''}"
+            >
+              <input
+                type="radio"
+                name="mastery-level"
+                checked={activeFocusBatchim === 'words'}
+                onchange={() => handleFocusSelect('words')}
+                class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
+              />
+              <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span
+                    class="text-xs font-bold font-mono uppercase bg-purple-200/70 dark:bg-purple-900/70 text-purple-800 dark:text-purple-200 px-1.5 py-0.5 rounded shrink-0"
+                  >
+                    단어
+                  </span>
+                  <div class="flex flex-col min-w-0">
+                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
+                      Word Practice
+                    </span>
+                    <span class="text-[11px] text-gray-500 dark:text-gray-400 truncate">
+                      All vocabulary (≤ 12 chars)
+                    </span>
+                  </div>
+                </div>
+                <span class="text-[11px] font-mono text-purple-600 dark:text-purple-400 shrink-0 font-medium">
+                  All Jamo
+                </span>
+              </div>
+            </label>
+
+            <!-- All Sentences Practice Option -->
+            <label
+              class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {activeFocusBatchim ===
+              'sentences'
+                ? 'bg-purple-100/80 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-700'
+                : ''}"
+            >
+              <input
+                type="radio"
+                name="mastery-level"
+                checked={activeFocusBatchim === 'sentences'}
+                onchange={() => handleFocusSelect('sentences')}
+                class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
+              />
+              <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <span
+                    class="text-xs font-bold font-mono uppercase bg-purple-200/70 dark:bg-purple-900/70 text-purple-800 dark:text-purple-200 px-1.5 py-0.5 rounded shrink-0"
+                  >
+                    문장
+                  </span>
+                  <div class="flex flex-col min-w-0">
+                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
+                      Sentence Practice
+                    </span>
+                    <span class="text-[11px] text-gray-500 dark:text-gray-400 truncate">
+                      Full sentences & punctuation
+                    </span>
+                  </div>
+                </div>
+                <span class="text-[11px] font-mono text-purple-600 dark:text-purple-400 shrink-0 font-medium">
+                  All Jamo
+                </span>
+              </div>
+            </label>
+
+            <div class="border-t border-purple-200/70 dark:border-purple-800/60 my-1 pt-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1">
+                Final Consonants (받침)
+              </span>
+            </div>
+
             {#each BATCHIM_FOCUS_LIST as item}
               {@const isSelected = activeFocusBatchim === item.batchim}
               {@const stats = jamoStats[item.batchim]}

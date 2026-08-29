@@ -616,7 +616,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     });
   });
 
-  describe('Post-game Batchim Workshop & Final Consonants Practice', () => {
+  describe('Post-game Consolidation & Final Consonants Practice', () => {
     it('should define all 27 standard Korean batchim in BATCHIM_FOCUS_LIST', async () => {
       const { BATCHIM_FOCUS_LIST, BATCHIM_FOCUS_MAP } = await import('./jamoMastery');
       expect(BATCHIM_FOCUS_LIST.length).toBe(27);
@@ -670,13 +670,14 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(hasBatchim('하늘을 바라보아요', 'ㅋ')).toBe(false);
     });
 
-    it('sets and clears activeFocusBatchim correctly', async () => {
+    it('sets and clears activeFocusBatchim correctly for batchim, words, and sentences', async () => {
       const { setMasteryFocusBatchim, getActiveMasteryTarget, setMasteryProgressionLevel, setMasteryCheckpointLevel } =
         await import('./jamoMastery');
 
       const state = createDefaultMasteryState();
       expect(state.activeFocusBatchim).toBeNull();
 
+      // Batchim target
       setMasteryFocusBatchim(state, 'ㅋ');
       expect(state.activeFocusBatchim).toBe('ㅋ');
       expect(state.activeCheckpointId).toBeNull();
@@ -687,6 +688,16 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
         expect(target.item.batchim).toBe('ㅋ');
         expect(target.item.name).toBe('키읔');
       }
+
+      // Word practice target
+      setMasteryFocusBatchim(state, 'words');
+      expect(state.activeFocusBatchim).toBe('words');
+      expect(getActiveMasteryTarget(state).type).toBe('consolidation_words');
+
+      // Sentence practice target
+      setMasteryFocusBatchim(state, 'sentences');
+      expect(state.activeFocusBatchim).toBe('sentences');
+      expect(getActiveMasteryTarget(state).type).toBe('consolidation_sentences');
 
       // Switching level clears focus
       setMasteryProgressionLevel(state, 10);
@@ -701,7 +712,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(state.activeFocusBatchim).toBeNull();
     });
 
-    it('unlocks all 44 keys without modifying mastery history when jumping directly to post-game Batchim Workshop', async () => {
+    it('unlocks all 44 keys without modifying mastery history when jumping directly to post-game Consolidation', async () => {
       const { setMasteryFocusBatchim, JAMO_PROGRESSION_ORDER } =
         await import('./jamoMastery');
 
@@ -709,13 +720,23 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(state.unlockedCount).toBe(4); // initial Stage 1
       expect(state.jamoStats['ㅋ']?.isMastered).toBe(false);
 
-      // Jump directly to postgame
+      // Jump directly to postgame batchim
       setMasteryFocusBatchim(state, 'ㅋ');
       expect(state.unlockedCount).toBe(JAMO_PROGRESSION_ORDER.length);
       expect(state.unlockedCount).toBe(44);
 
       // Verify that previously unmastered Jamo remains unmastered (not artificially marked)
       expect(state.jamoStats['ㅋ']?.isMastered).toBe(false);
+
+      // Reset and jump directly to words consolidation
+      const state2 = createDefaultMasteryState();
+      setMasteryFocusBatchim(state2, 'words');
+      expect(state2.unlockedCount).toBe(44);
+
+      // Reset and jump directly to sentences consolidation
+      const state3 = createDefaultMasteryState();
+      setMasteryFocusBatchim(state3, 'sentences');
+      expect(state3.unlockedCount).toBe(44);
     });
 
     it('strictly enforces that 100% of eligible items have the focused batchim in Focus mode', async () => {
@@ -750,6 +771,31 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       }
     });
 
+    it('returns short/medium words for consolidation_words and long sentences for consolidation_sentences', async () => {
+      const { getEligibleMasteryItems } = await import('./jamoMastery');
+
+      const dummyItems: LessonItem[] = [
+        { id: 'short1', moduleId: 'm1', target: '사과', translation: 'Apple' },
+        { id: 'short2', moduleId: 'm1', target: '안녕하세요', translation: 'Hello' },
+        { id: 'long1', moduleId: 'm1', target: '한국어 공부를 시작해 봅시다', translation: 'Let us begin studying Korean' },
+        { id: 'long2', moduleId: 'm1', target: '오늘 날씨가 정말 좋습니다', translation: 'The weather is really nice today' },
+      ];
+
+      const allUnlocked = new Set(JAMO_PROGRESSION_ORDER.map((i) => i.jamo));
+
+      const wordItems = getEligibleMasteryItems(dummyItems, allUnlocked, { type: 'consolidation_words' });
+      expect(wordItems.some((i) => i.id === 'short1')).toBe(true);
+      expect(wordItems.some((i) => i.id === 'short2')).toBe(true);
+      expect(wordItems.some((i) => i.id === 'long1')).toBe(false);
+      expect(wordItems.some((i) => i.id === 'long2')).toBe(false);
+
+      const sentenceItems = getEligibleMasteryItems(dummyItems, allUnlocked, { type: 'consolidation_sentences' });
+      expect(sentenceItems.some((i) => i.id === 'long1')).toBe(true);
+      expect(sentenceItems.some((i) => i.id === 'long2')).toBe(true);
+      expect(sentenceItems.some((i) => i.id === 'short1')).toBe(false);
+      expect(sentenceItems.some((i) => i.id === 'short2')).toBe(false);
+    });
+
     it('persists and reloads activeFocusBatchim state from LocalStorage', async () => {
       const { setMasteryFocusBatchim, saveMasteryState, loadMasteryState } =
         await import('./jamoMastery');
@@ -760,6 +806,16 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
 
       const reloaded = loadMasteryState();
       expect(reloaded.activeFocusBatchim).toBe('ㄶ');
+
+      // Test words persistence
+      setMasteryFocusBatchim(state, 'words');
+      saveMasteryState(state);
+      expect(loadMasteryState().activeFocusBatchim).toBe('words');
+
+      // Test sentences persistence
+      setMasteryFocusBatchim(state, 'sentences');
+      saveMasteryState(state);
+      expect(loadMasteryState().activeFocusBatchim).toBe('sentences');
     });
   });
 

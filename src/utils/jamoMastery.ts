@@ -201,7 +201,7 @@ export const JAMO_STAGES: JamoStageGroup[] = (() => {
 
 /**
  * Complete list of all 27 standard Korean final consonants (받침) in dictionary order.
- * Used for post-game Batchim Workshop mode practice.
+ * Used for post-game Consolidation mode practice.
  */
 export const BATCHIM_FOCUS_LIST: BatchimFocusItem[] = [
   { batchim: 'ㄱ', key: 'r', hand: 'left', name: '기역' },
@@ -380,7 +380,10 @@ export function loadMasteryState(): MasteryState {
     const activeCheckpointId =
       typeof parsed.activeCheckpointId === 'string' ? parsed.activeCheckpointId : null;
     const activeFocusBatchim =
-      typeof parsed.activeFocusBatchim === 'string' && BATCHIM_FOCUS_MAP[parsed.activeFocusBatchim]
+      typeof parsed.activeFocusBatchim === 'string' &&
+      (parsed.activeFocusBatchim === 'words' ||
+        parsed.activeFocusBatchim === 'sentences' ||
+        Boolean(BATCHIM_FOCUS_MAP[parsed.activeFocusBatchim]))
         ? parsed.activeFocusBatchim
         : null;
 
@@ -488,9 +491,15 @@ export function getActiveCheckpointForState(state: MasteryState): SentenceCheckp
 }
 
 /**
- * Returns the active learning target (a specific Jamo, a Sentence Checkpoint, or a Batchim Focus).
+ * Returns the active learning target (a specific Jamo, a Sentence Checkpoint, Word/Sentence Consolidation, or a Batchim Focus).
  */
 export function getActiveMasteryTarget(state: MasteryState): MasteryTarget {
+  if (state.activeFocusBatchim === 'words') {
+    return { type: 'consolidation_words' };
+  }
+  if (state.activeFocusBatchim === 'sentences') {
+    return { type: 'consolidation_sentences' };
+  }
   if (state.activeFocusBatchim && BATCHIM_FOCUS_MAP[state.activeFocusBatchim]) {
     return {
       type: 'focus',
@@ -609,15 +618,17 @@ export function setMasteryCheckpointLevel(state: MasteryState, checkpointId: str
 }
 
 /**
- * Focuses practice on a specific final consonant (받침) in post-game Batchim Workshop mode.
+ * Focuses practice on a specific target ('words', 'sentences', or a final consonant 받침) in post-game Consolidation mode.
  * Automatically unlocks all keys across all stages if the user hasn't unlocked them yet.
  */
-export function setMasteryFocusBatchim(state: MasteryState, batchim: string): void {
-  if (!BATCHIM_FOCUS_MAP[batchim]) {
+export function setMasteryFocusBatchim(state: MasteryState, target: string): void {
+  const isValidTarget =
+    target === 'words' || target === 'sentences' || Boolean(BATCHIM_FOCUS_MAP[target]);
+  if (!isValidTarget) {
     return;
   }
   state.activeCheckpointId = null;
-  state.activeFocusBatchim = batchim;
+  state.activeFocusBatchim = target;
 
   // If jumping to post-game and keys are not all unlocked yet, unlock all 44 Jamos without altering mastery history
   if (state.unlockedCount < JAMO_PROGRESSION_ORDER.length) {
@@ -1012,7 +1023,29 @@ export function getEligibleMasteryItems(
   unlockedJamos: Set<string>,
   activeTarget?: MasteryTarget | null,
 ): LessonItem[] {
-  // If active target is a batchim in post-game Batchim Workshop mode, strictly return items containing that batchim
+  // If active target is Word Consolidation, return all short/medium vocabulary (<= 12 chars) across all datasets
+  if (activeTarget && activeTarget.type === 'consolidation_words') {
+    const curatedJamoWords: LessonItem[] = [];
+    for (const words of Object.values(MASTERY_JAMO_VOCABULARY)) {
+      curatedJamoWords.push(...words);
+    }
+    const shortCurriculum = allItems.filter((item) => item.target.length <= 12);
+    const eligible = dedupeByTarget([...curatedJamoWords, ...shortCurriculum]);
+    return eligible.length > 0 ? eligible : [createStarterItem('mastery-starter')];
+  }
+
+  // If active target is Sentence Consolidation, return all medium/long sentences (>= 8 chars) across all datasets
+  if (activeTarget && activeTarget.type === 'consolidation_sentences') {
+    const curatedSentences: LessonItem[] = [];
+    for (const sentences of Object.values(MASTERY_CHECKPOINT_SENTENCES)) {
+      curatedSentences.push(...sentences);
+    }
+    const longCurriculum = allItems.filter((item) => item.target.length >= 8);
+    const eligible = dedupeByTarget([...curatedSentences, ...longCurriculum]);
+    return eligible.length > 0 ? eligible : curatedSentences;
+  }
+
+  // If active target is a batchim in post-game Consolidation mode, strictly return items containing that batchim
   // (Post-game mode utilizes the full authentic curriculum without Jamo progression restrictions)
   if (activeTarget && activeTarget.type === 'focus') {
     const focusBatchim = activeTarget.item.batchim;

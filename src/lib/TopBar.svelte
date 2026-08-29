@@ -18,6 +18,7 @@
     activeJamoProgress?: number;
     activeTargetRemaining?: string | null;
     isPostGame?: boolean;
+    postGameSubtype?: string | null;
     activeCheckpointTitle?: string | null;
     activeCheckpointProgress?: { completed: number; total: number } | null;
     ontogglemode: () => void;
@@ -41,6 +42,7 @@
     activeJamoProgress = 0,
     activeTargetRemaining = null,
     isPostGame = false,
+    postGameSubtype = null,
     activeCheckpointTitle = null,
     activeCheckpointProgress = null,
     ontogglemode,
@@ -104,15 +106,15 @@
             ? 'text-purple-700 dark:text-purple-300'
             : 'text-gray-700 dark:text-gray-300'} hidden md:inline whitespace-nowrap"
         >
-          {isPostGame ? 'Workshop' : 'Stage'}
+          {isPostGame ? 'Consolidation' : 'Stage'}
         </span>
         <span
           class="text-xs font-mono font-bold {isPostGame
             ? 'text-purple-600 dark:text-purple-400 bg-purple-50 dark:bg-purple-950/60 border border-purple-200 dark:border-purple-800'
             : 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/60 border border-amber-200 dark:border-amber-800'} px-1.5 py-0.5 rounded whitespace-nowrap shrink-0"
-          title={isPostGame ? 'Batchim Workshop' : `Stage ${currentStageNumber}: ${currentStageName}`}
+          title={isPostGame ? `Consolidation: ${postGameSubtype ?? 'Post-game'}` : `Stage ${currentStageNumber}: ${currentStageName}`}
         >
-          {isPostGame ? 'Batchim' : `${currentStageNumber}/${totalStageCount}`}
+          {isPostGame ? (postGameSubtype ?? 'Consolidation') : `${currentStageNumber}/${totalStageCount}`}
         </span>
         {#if activeCheckpointTitle}
           <div
@@ -173,6 +175,21 @@
                   {activeTargetRemaining}
                 </span>
               {/if}
+            </span>
+          </div>
+        {:else if isPostGame && activeTargetRemaining}
+          <div
+            class="flex items-center gap-1 md:gap-1.5 pl-1.5 border-l border-purple-200 dark:border-purple-800/80 shrink-0 whitespace-nowrap"
+          >
+            <span
+              class="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden md:inline whitespace-nowrap"
+            >
+              Target:
+            </span>
+            <span
+              class="relative overflow-hidden text-xs md:text-sm font-bold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/80 px-1.5 md:px-2 py-0.5 rounded-md border border-purple-300 dark:border-purple-700 leading-none flex items-center gap-1 md:gap-1.5 shadow-2xs whitespace-nowrap shrink-0"
+            >
+              <span class="whitespace-nowrap">{activeTargetRemaining}</span>
             </span>
           </div>
         {/if}

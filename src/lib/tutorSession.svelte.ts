@@ -68,7 +68,7 @@ export class TutorSession {
   public mode: TutorMode = $state('mastery');
   public masteryState: MasteryState = $state(loadMasteryState());
   public isMasteryGraduationPending: boolean = $state(false);
-  private currentTargetType: 'jamo' | 'checkpoint' | 'focus' = 'jamo';
+  private currentTargetType: MasteryTarget['type'] = 'jamo';
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
   private masteryQueue: LessonItem[] = [];
 
@@ -287,12 +287,17 @@ export class TutorSession {
     this.applyFilterAndShuffle();
   }
 
-  /** Manually focuses practice on a specific final consonant (받침) in post-game Batchim Workshop mode. */
-  public setMasteryFocusBatchim(batchim: string): void {
+  /** Manually focuses practice on words, sentences, or a specific final consonant (받침) in post-game Consolidation mode. */
+  public setMasteryFocusBatchim(target: string): void {
     this.cancelScheduledSave();
-    setMasteryFocusBatchim(this.masteryState, batchim);
+    setMasteryFocusBatchim(this.masteryState, target);
     saveMasteryState(this.masteryState);
     this.applyFilterAndShuffle();
+  }
+
+  /** Manually focuses practice on a consolidation target in post-game mode. */
+  public setMasteryConsolidationTarget(target: string): void {
+    this.setMasteryFocusBatchim(target);
   }
 
   /** Manually unlocks the next Jamo in the progression sequence. */

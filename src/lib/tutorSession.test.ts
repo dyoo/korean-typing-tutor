@@ -410,7 +410,7 @@ describe('TutorSession controller', () => {
     expect(savedRaw).not.toBeNull();
   });
 
-  it('should switch to post-game Batchim Workshop mode and serve 100% batchim-matching examples', async () => {
+  it('should switch to post-game Consolidation mode and serve 100% batchim-matching examples', async () => {
     const { hasBatchim } = await import('../utils/jamoMastery');
     session.setMode('mastery');
     session.setMasteryFocusBatchim('ㅋ');
@@ -427,6 +427,30 @@ describe('TutorSession controller', () => {
       expect(hasBatchim(currentItem.target, 'ㅋ')).toBe(true);
       session.advanceLevel();
     }
+  });
+
+  it('should switch to Consolidation word practice and serve short/medium words across all Jamo', () => {
+    session.setMode('mastery');
+    session.setMasteryConsolidationTarget('words');
+
+    const target = session.getActiveMasteryTarget();
+    expect(target.type).toBe('consolidation_words');
+
+    const currentItem = session.getCurrentItem();
+    expect(currentItem).toBeDefined();
+    expect(currentItem.target.length).toBeLessThanOrEqual(12);
+  });
+
+  it('should switch to Consolidation sentence practice and serve full sentences', () => {
+    session.setMode('mastery');
+    session.setMasteryConsolidationTarget('sentences');
+
+    const target = session.getActiveMasteryTarget();
+    expect(target.type).toBe('consolidation_sentences');
+
+    const currentItem = session.getCurrentItem();
+    expect(currentItem).toBeDefined();
+    expect(currentItem.target.length).toBeGreaterThanOrEqual(8);
   });
 
   it('should return upcoming lesson items for lookahead prefetching', () => {

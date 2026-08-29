@@ -1345,7 +1345,7 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
 };
 
 /**
- * Curated per-Batchim (final consonant) word and sentence banks for post-game Batchim Workshop practice.
+ * Curated per-Batchim (final consonant) word and sentence banks for post-game Consolidation practice.
  * Every entry under a key strictly contains that batchim in at least one syllable.
  */
 export const FOCUS_BATCHIM_VOCABULARY: Record<string, LessonItem[]> = {
