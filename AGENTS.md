@@ -83,10 +83,16 @@ distraction-free, high-performance typing experience for English speakers learni
   multi-select filters.
 - `src/lib/MasterySidebar.svelte`: Mastery progress drawer with collapsible stage groups and
   per-Jamo radio selection for manual progression override.
+- `src/lib/MasteryStageItem.svelte`: Jamo progression item renderer with liquid progress fill gauges.
+- `src/lib/MasteryMilestoneItem.svelte`: Checkpoint milestone progress row renderer.
+- `src/lib/MasteryFocusItem.svelte`: Modular focus target renderer for vowels, consonants, batchim, and consolidation practice.
+- `src/lib/MasteryTopBadge.svelte`: Header status badge renderer for active stage, milestone, consolidation, or focus target.
 - `src/lib/SidebarDrawer.svelte`: Reusable slide-out drawer wrapper component with overlay backdrop
   and accessible close bindings.
 - `src/lib/SettingsModal.svelte`: Modal managing theme, Romanization, translation, virtual keyboard,
   font size, cursor color, and Jamo mastery progression adjustments & reset.
+- `src/lib/TypographySettingsControl.svelte`: Font size range slider and size-locking settings control.
+- `src/lib/SpeedSettingsControl.svelte`: Typing speed analytics (KPM) enable toggle and reset confirmation controls.
 - `src/lib/MasteryCompletionModal.svelte`: Celebration and checkpoint completion modal for mastery
   stages and full curriculum mastery.
 - `src/lib/WelcomeModal.svelte`: Initial onboarding modal welcoming first-time learners.
@@ -107,6 +113,7 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/lib/settings.ts`: Settings state management, persistence, and default values.
 - `src/utils/ttsController.svelte.ts`: Lightweight reactive singleton managing browser Web Speech
   API (SpeechSynthesis) playback and OS Korean voice selection.
+- `src/utils/masteryDisplayHelper.ts`: Unified presentation metadata helper for mastery mode badges, stages, and milestones.
 - `src/utils/jamoMastery.ts`: Home-row-outward Jamo mastery progression sequence, rolling
   20-attempt accuracy evaluation, error-weighted rolling review, and vocabulary filtering.
 - `src/utils/hangulEngine.ts`: The Hangul IME composition state machine and keystroke handler.
@@ -152,12 +159,11 @@ distraction-free, high-performance typing experience for English speakers learni
 
 ## Maintenance & Verification Tooling
 
-- **Testing**: `npx vitest run` (one-time non-interactive test run across all 19 test suites).
+- **Testing**: `npx vitest run` (one-time non-interactive test run across all 22 test suites).
 - **Linting & Type Checking**: `npm run lint` (runs ESLint and `svelte-check --tsconfig ./tsconfig.json`).
 - **Dead Code Audit**: `npx knip` (verifies zero unused exports, unlisted dependencies, or orphaned files).
 - **Production Build**: `npm run build` (generates PWA bundle and service worker precache manifest).
 
 ## Current Priority
 
-Implement **Speed & Accuracy Analytics Panel** (optional live/session WPM and SPM typing speed
-feedback) and **Progress Review Charts**.
+Implement **Progress Review Charts** and detailed latency breakdown visualizations.
