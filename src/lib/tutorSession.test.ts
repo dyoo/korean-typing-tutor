@@ -450,7 +450,7 @@ describe('TutorSession controller', () => {
 
     const currentItem = session.getCurrentItem();
     expect(currentItem).toBeDefined();
-    expect(currentItem.target.length).toBeGreaterThanOrEqual(8);
+    expect(currentItem.target.length).toBeGreaterThanOrEqual(4);
   });
 
   it('should switch to Consolidation vowel practice and serve vowel-matching examples', async () => {

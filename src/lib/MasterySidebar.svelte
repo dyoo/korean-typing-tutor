@@ -288,21 +288,9 @@
                 class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
               />
               <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span
-                    class="text-xs font-bold font-mono uppercase bg-purple-200/70 dark:bg-purple-900/70 text-purple-800 dark:text-purple-200 px-1.5 py-0.5 rounded shrink-0"
-                  >
-                    단어
-                  </span>
-                  <div class="flex flex-col min-w-0">
-                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
-                      Word Practice
-                    </span>
-                    <span class="text-[11px] text-gray-500 dark:text-gray-400 truncate">
-                      All vocabulary (≤ 12 chars)
-                    </span>
-                  </div>
-                </div>
+                <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
+                  Word Practice
+                </span>
                 <div class="flex flex-col items-end shrink-0 text-right">
                   {#if wordsStats}
                     <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
@@ -335,21 +323,9 @@
                 class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
               />
               <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span
-                    class="text-xs font-bold font-mono uppercase bg-purple-200/70 dark:bg-purple-900/70 text-purple-800 dark:text-purple-200 px-1.5 py-0.5 rounded shrink-0"
-                  >
-                    문장
-                  </span>
-                  <div class="flex flex-col min-w-0">
-                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
-                      Sentence Practice
-                    </span>
-                    <span class="text-[11px] text-gray-500 dark:text-gray-400 truncate">
-                      Full sentences & punctuation
-                    </span>
-                  </div>
-                </div>
+                <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
+                  Sentence Practice
+                </span>
                 <div class="flex flex-col items-end shrink-0 text-right">
                   {#if sentenceStats}
                     <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
