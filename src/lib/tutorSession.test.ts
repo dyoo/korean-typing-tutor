@@ -453,6 +453,38 @@ describe('TutorSession controller', () => {
     expect(currentItem.target.length).toBeGreaterThanOrEqual(8);
   });
 
+  it('should switch to Consolidation vowel practice and serve vowel-matching examples', async () => {
+    const { hasVowel } = await import('../utils/jamoMastery');
+    session.setMode('mastery');
+    session.setMasteryConsolidationTarget('vowel:ㅘ');
+
+    const target = session.getActiveMasteryTarget();
+    expect(target.type).toBe('consolidation_vowel');
+    if (target.type === 'consolidation_vowel') {
+      expect(target.item.jamo).toBe('ㅘ');
+      expect(target.item.combination).toEqual(['ㅗ', 'ㅏ']);
+    }
+
+    const currentItem = session.getCurrentItem();
+    expect(hasVowel(currentItem.target, 'ㅘ')).toBe(true);
+  });
+
+  it('should switch to Consolidation consonant practice and serve consonant-matching examples', async () => {
+    const { hasConsonant } = await import('../utils/jamoMastery');
+    session.setMode('mastery');
+    session.setMasteryConsolidationTarget('consonant:ㄲ');
+
+    const target = session.getActiveMasteryTarget();
+    expect(target.type).toBe('consolidation_consonant');
+    if (target.type === 'consolidation_consonant') {
+      expect(target.item.jamo).toBe('ㄲ');
+      expect(target.item.shift).toBe(true);
+    }
+
+    const currentItem = session.getCurrentItem();
+    expect(hasConsonant(currentItem.target, 'ㄲ')).toBe(true);
+  });
+
   it('should return upcoming lesson items for lookahead prefetching', () => {
     session.setMode('curriculum');
     session.setFilter('all', false);

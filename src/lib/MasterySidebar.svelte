@@ -2,6 +2,8 @@
   import {
     JAMO_PROGRESSION_ORDER,
     JAMO_STAGES,
+    VOWEL_FOCUS_LIST,
+    CONSONANT_FOCUS_LIST,
     BATCHIM_FOCUS_LIST,
     calculateJamoProgress,
   } from '../utils/jamoMastery';
@@ -335,6 +337,121 @@
               </div>
             </label>
 
+            <!-- Vowels (모음) Section -->
+            <div class="border-t border-purple-200/70 dark:border-purple-800/60 my-1 pt-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1">
+                Vowels (모음)
+              </span>
+            </div>
+
+            {#each VOWEL_FOCUS_LIST as item}
+              {@const isSelected =
+                activeFocusBatchim === `vowel:${item.jamo}` || activeFocusBatchim === item.jamo}
+              {@const stats = jamoStats[item.jamo]}
+              {@const progress = calculateJamoProgress(stats)}
+              <label
+                class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isSelected
+                  ? 'bg-purple-100/80 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-700'
+                  : ''}"
+              >
+                <input
+                  type="radio"
+                  name="mastery-level"
+                  checked={isSelected}
+                  onchange={() => handleFocusSelect(`vowel:${item.jamo}`)}
+                  class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
+                />
+                <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
+                      100
+                        ? 'text-emerald-600 dark:text-emerald-400'
+                        : 'text-purple-700 dark:text-purple-300'}"
+                    >
+                      {#if progress > 0}
+                        <div
+                          class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
+                            ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                            : 'bg-purple-400/30 dark:bg-purple-400/25'}"
+                          style="height: {progress}%;"
+                        ></div>
+                      {/if}
+                      <span class="relative z-10">{item.jamo}</span>
+                    </span>
+                    <div class="flex items-center gap-1.5 min-w-0">
+                      <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
+                        {item.name ?? item.jamo}
+                      </span>
+                      {#if item.combination}
+                        <span class="text-xs text-purple-600/80 dark:text-purple-400/80 font-medium">
+                          ({item.combination[0]}+{item.combination[1]})
+                        </span>
+                      {/if}
+                    </div>
+                  </div>
+                  <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase shrink-0">
+                    {item.key}{item.shift ? '+Shift' : ''}
+                  </span>
+                </div>
+              </label>
+            {/each}
+
+            <!-- Consonants (자음) Section -->
+            <div class="border-t border-purple-200/70 dark:border-purple-800/60 my-1 pt-1">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1">
+                Consonants (자음)
+              </span>
+            </div>
+
+            {#each CONSONANT_FOCUS_LIST as item}
+              {@const isSelected =
+                activeFocusBatchim === `consonant:${item.jamo}` ||
+                activeFocusBatchim === item.jamo}
+              {@const stats = jamoStats[item.jamo]}
+              {@const progress = calculateJamoProgress(stats)}
+              <label
+                class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isSelected
+                  ? 'bg-purple-100/80 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-700'
+                  : ''}"
+              >
+                <input
+                  type="radio"
+                  name="mastery-level"
+                  checked={isSelected}
+                  onchange={() => handleFocusSelect(`consonant:${item.jamo}`)}
+                  class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
+                />
+                <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
+                  <div class="flex items-center gap-2">
+                    <span
+                      class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
+                      100
+                        ? 'text-emerald-600 dark:text-emerald-400'
+                        : 'text-purple-700 dark:text-purple-300'}"
+                    >
+                      {#if progress > 0}
+                        <div
+                          class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
+                            ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                            : 'bg-purple-400/30 dark:bg-purple-400/25'}"
+                          style="height: {progress}%;"
+                        ></div>
+                      {/if}
+                      <span class="relative z-10">{item.jamo}</span>
+                    </span>
+                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
+                      {item.name ?? item.jamo}
+                    </span>
+                  </div>
+                  <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase shrink-0">
+                    {item.key}{item.shift ? '+Shift' : ''}
+                  </span>
+                </div>
+              </label>
+            {/each}
+
+            <!-- Final Consonants (받침) Section -->
             <div class="border-t border-purple-200/70 dark:border-purple-800/60 my-1 pt-1">
               <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1">
                 Final Consonants (받침)
@@ -342,7 +459,9 @@
             </div>
 
             {#each BATCHIM_FOCUS_LIST as item}
-              {@const isSelected = activeFocusBatchim === item.batchim}
+              {@const isSelected =
+                activeFocusBatchim === `batchim:${item.batchim}` ||
+                activeFocusBatchim === item.batchim}
               {@const stats = jamoStats[item.batchim]}
               {@const progress = calculateJamoProgress(stats)}
               <label
@@ -354,7 +473,7 @@
                   type="radio"
                   name="mastery-level"
                   checked={isSelected}
-                  onchange={() => handleFocusSelect(item.batchim)}
+                  onchange={() => handleFocusSelect(`batchim:${item.batchim}`)}
                   class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
                 />
                 <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
@@ -375,9 +494,16 @@
                       {/if}
                       <span class="relative z-10">{item.batchim}</span>
                     </span>
-                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
-                      {item.name ?? item.batchim}
-                    </span>
+                    <div class="flex items-center gap-1.5 min-w-0">
+                      <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
+                        {item.name ?? item.batchim}
+                      </span>
+                      {#if item.combination}
+                        <span class="text-xs text-purple-600/80 dark:text-purple-400/80 font-medium">
+                          ({item.combination[0]}+{item.combination[1]})
+                        </span>
+                      {/if}
+                    </div>
                   </div>
                   <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase shrink-0">
                     {item.key}{item.shift ? '+Shift' : ''}

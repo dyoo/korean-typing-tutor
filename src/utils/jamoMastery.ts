@@ -8,6 +8,7 @@ import type {
   SentenceCheckpointStats,
   MasteryTarget,
   MasteryAttemptResult,
+  JamoFocusItem,
   BatchimFocusItem,
 } from '../types/mastery';
 import { decomposeStringToJamos, decomposeSyllable } from './hangulDecompose';
@@ -200,37 +201,109 @@ export const JAMO_STAGES: JamoStageGroup[] = (() => {
 })();
 
 /**
+ * Complete list of all 21 standard Korean vowels (모음) in dictionary/progression order.
+ * Used for post-game Consolidation mode practice.
+ */
+export const VOWEL_FOCUS_LIST: JamoFocusItem[] = [
+  // Basic Vowels (8)
+  { jamo: 'ㅏ', name: '아', key: 'k', hand: 'right' },
+  { jamo: 'ㅓ', name: '어', key: 'j', hand: 'right' },
+  { jamo: 'ㅗ', name: '오', key: 'h', hand: 'right' },
+  { jamo: 'ㅜ', name: '우', key: 'n', hand: 'right' },
+  { jamo: 'ㅡ', name: '으', key: 'm', hand: 'right' },
+  { jamo: 'ㅣ', name: '이', key: 'l', hand: 'right' },
+  { jamo: 'ㅐ', name: '애', key: 'o', hand: 'right' },
+  { jamo: 'ㅔ', name: '에', key: 'p', hand: 'right' },
+
+  // Y-Vowels & Shift (6)
+  { jamo: 'ㅑ', name: '야', key: 'i', hand: 'right' },
+  { jamo: 'ㅕ', name: '여', key: 'u', hand: 'right' },
+  { jamo: 'ㅛ', name: '요', key: 'y', hand: 'right' },
+  { jamo: 'ㅠ', name: '유', key: 'b', hand: 'right' },
+  { jamo: 'ㅒ', name: '얘', key: 'o', shift: true, hand: 'right' },
+  { jamo: 'ㅖ', name: '예', key: 'p', shift: true, hand: 'right' },
+
+  // Compound Vowels (7)
+  { jamo: 'ㅘ', name: '와', key: 'hk', hand: 'right', combination: ['ㅗ', 'ㅏ'] },
+  { jamo: 'ㅙ', name: '왜', key: 'ho', hand: 'right', combination: ['ㅗ', 'ㅐ'] },
+  { jamo: 'ㅚ', name: '외', key: 'hl', hand: 'right', combination: ['ㅗ', 'ㅣ'] },
+  { jamo: 'ㅝ', name: '워', key: 'nj', hand: 'right', combination: ['ㅜ', 'ㅓ'] },
+  { jamo: 'ㅞ', name: '웨', key: 'np', hand: 'right', combination: ['ㅜ', 'ㅔ'] },
+  { jamo: 'ㅟ', name: '위', key: 'nl', hand: 'right', combination: ['ㅜ', 'ㅣ'] },
+  { jamo: 'ㅢ', name: '의', key: 'ml', hand: 'right', combination: ['ㅡ', 'ㅣ'] },
+];
+
+/** Lookup map for Vowel JamoFocusItem by vowel character. */
+export const VOWEL_FOCUS_MAP: Record<string, JamoFocusItem> = Object.fromEntries(
+  VOWEL_FOCUS_LIST.map((item) => [item.jamo, item]),
+);
+
+/**
+ * Complete list of all 19 standard Korean consonants (자음) in dictionary order.
+ * Used for post-game Consolidation mode practice.
+ */
+export const CONSONANT_FOCUS_LIST: JamoFocusItem[] = [
+  // Basic & Aspirated Consonants (14)
+  { jamo: 'ㄱ', name: '기역', key: 'r', hand: 'left' },
+  { jamo: 'ㄴ', name: '니은', key: 's', hand: 'left' },
+  { jamo: 'ㄷ', name: '디귿', key: 'e', hand: 'left' },
+  { jamo: 'ㄹ', name: '리을', key: 'f', hand: 'left' },
+  { jamo: 'ㅁ', name: '미음', key: 'a', hand: 'left' },
+  { jamo: 'ㅂ', name: '비읍', key: 'q', hand: 'left' },
+  { jamo: 'ㅅ', name: '시옷', key: 't', hand: 'left' },
+  { jamo: 'ㅇ', name: '이응', key: 'd', hand: 'left' },
+  { jamo: 'ㅈ', name: '지읒', key: 'w', hand: 'left' },
+  { jamo: 'ㅊ', name: '치읓', key: 'c', hand: 'left' },
+  { jamo: 'ㅋ', name: '키읔', key: 'z', hand: 'left' },
+  { jamo: 'ㅌ', name: '티읕', key: 'x', hand: 'left' },
+  { jamo: 'ㅍ', name: '피읖', key: 'v', hand: 'left' },
+  { jamo: 'ㅎ', name: '히읗', key: 'g', hand: 'left' },
+
+  // Double / Tense Consonants (5)
+  { jamo: 'ㄲ', name: '쌍기역', key: 'r', shift: true, hand: 'left' },
+  { jamo: 'ㄸ', name: '쌍디귿', key: 'e', shift: true, hand: 'left' },
+  { jamo: 'ㅃ', name: '쌍비읍', key: 'q', shift: true, hand: 'left' },
+  { jamo: 'ㅆ', name: '쌍시옷', key: 't', shift: true, hand: 'left' },
+  { jamo: 'ㅉ', name: '쌍지읒', key: 'w', shift: true, hand: 'left' },
+];
+
+/** Lookup map for Consonant JamoFocusItem by consonant character. */
+export const CONSONANT_FOCUS_MAP: Record<string, JamoFocusItem> = Object.fromEntries(
+  CONSONANT_FOCUS_LIST.map((item) => [item.jamo, item]),
+);
+
+/**
  * Complete list of all 27 standard Korean final consonants (받침) in dictionary order.
  * Used for post-game Consolidation mode practice.
  */
 export const BATCHIM_FOCUS_LIST: BatchimFocusItem[] = [
-  { batchim: 'ㄱ', key: 'r', hand: 'left', name: '기역' },
-  { batchim: 'ㄲ', key: 'r', shift: true, hand: 'left', name: '쌍기역' },
-  { batchim: 'ㄳ', key: 'rt', hand: 'left', name: '기역시옷', combination: ['ㄱ', 'ㅅ'] },
-  { batchim: 'ㄴ', key: 's', hand: 'left', name: '니은' },
-  { batchim: 'ㄵ', key: 'sw', hand: 'left', name: '니은지읒', combination: ['ㄴ', 'ㅈ'] },
-  { batchim: 'ㄶ', key: 'sg', hand: 'left', name: '니은히읗', combination: ['ㄴ', 'ㅎ'] },
-  { batchim: 'ㄷ', key: 'e', hand: 'left', name: '디귿' },
-  { batchim: 'ㄹ', key: 'f', hand: 'left', name: '리을' },
-  { batchim: 'ㄺ', key: 'fr', hand: 'left', name: '리을기역', combination: ['ㄹ', 'ㄱ'] },
-  { batchim: 'ㄻ', key: 'fa', hand: 'left', name: '리을미음', combination: ['ㄹ', 'ㅁ'] },
-  { batchim: 'ㄼ', key: 'fq', hand: 'left', name: '리을비읍', combination: ['ㄹ', 'ㅂ'] },
-  { batchim: 'ㄽ', key: 'ft', hand: 'left', name: '리을시옷', combination: ['ㄹ', 'ㅅ'] },
-  { batchim: 'ㄾ', key: 'fx', hand: 'left', name: '리을티읕', combination: ['ㄹ', 'ㅌ'] },
-  { batchim: 'ㄿ', key: 'fv', hand: 'left', name: '리을피읖', combination: ['ㄹ', 'ㅍ'] },
-  { batchim: 'ㅀ', key: 'fg', hand: 'left', name: '리을히읗', combination: ['ㄹ', 'ㅎ'] },
-  { batchim: 'ㅁ', key: 'a', hand: 'left', name: '미음' },
-  { batchim: 'ㅂ', key: 'q', hand: 'left', name: '비읍' },
-  { batchim: 'ㅄ', key: 'qt', hand: 'left', name: '비읍시옷', combination: ['ㅂ', 'ㅅ'] },
-  { batchim: 'ㅅ', key: 't', hand: 'left', name: '시옷' },
-  { batchim: 'ㅆ', key: 't', shift: true, hand: 'left', name: '쌍시옷' },
-  { batchim: 'ㅇ', key: 'd', hand: 'left', name: '이응' },
-  { batchim: 'ㅈ', key: 'w', hand: 'left', name: '지읒' },
-  { batchim: 'ㅊ', key: 'c', hand: 'left', name: '치읓' },
-  { batchim: 'ㅋ', key: 'z', hand: 'left', name: '키읔' },
-  { batchim: 'ㅌ', key: 'x', hand: 'left', name: '티읕' },
-  { batchim: 'ㅍ', key: 'v', hand: 'left', name: '피읖' },
-  { batchim: 'ㅎ', key: 'g', hand: 'left', name: '히읗' },
+  { batchim: 'ㄱ', jamo: 'ㄱ', key: 'r', hand: 'left', name: '기역' },
+  { batchim: 'ㄲ', jamo: 'ㄲ', key: 'r', shift: true, hand: 'left', name: '쌍기역' },
+  { batchim: 'ㄳ', jamo: 'ㄳ', key: 'rt', hand: 'left', name: '기역시옷', combination: ['ㄱ', 'ㅅ'] },
+  { batchim: 'ㄴ', jamo: 'ㄴ', key: 's', hand: 'left', name: '니은' },
+  { batchim: 'ㄵ', jamo: 'ㄵ', key: 'sw', hand: 'left', name: '니은지읒', combination: ['ㄴ', 'ㅈ'] },
+  { batchim: 'ㄶ', jamo: 'ㄶ', key: 'sg', hand: 'left', name: '니은히읗', combination: ['ㄴ', 'ㅎ'] },
+  { batchim: 'ㄷ', jamo: 'ㄷ', key: 'e', hand: 'left', name: '디귿' },
+  { batchim: 'ㄹ', jamo: 'ㄹ', key: 'f', hand: 'left', name: '리을' },
+  { batchim: 'ㄺ', jamo: 'ㄺ', key: 'fr', hand: 'left', name: '리을기역', combination: ['ㄹ', 'ㄱ'] },
+  { batchim: 'ㄻ', jamo: 'ㄻ', key: 'fa', hand: 'left', name: '리을미음', combination: ['ㄹ', 'ㅁ'] },
+  { batchim: 'ㄼ', jamo: 'ㄼ', key: 'fq', hand: 'left', name: '리을비읍', combination: ['ㄹ', 'ㅂ'] },
+  { batchim: 'ㄽ', jamo: 'ㄽ', key: 'ft', hand: 'left', name: '리을시옷', combination: ['ㄹ', 'ㅅ'] },
+  { batchim: 'ㄾ', jamo: 'ㄾ', key: 'fx', hand: 'left', name: '리을티읕', combination: ['ㄹ', 'ㅌ'] },
+  { batchim: 'ㄿ', jamo: 'ㄿ', key: 'fv', hand: 'left', name: '리을피읖', combination: ['ㄹ', 'ㅍ'] },
+  { batchim: 'ㅀ', jamo: 'ㅀ', key: 'fg', hand: 'left', name: '리을히읗', combination: ['ㄹ', 'ㅎ'] },
+  { batchim: 'ㅁ', jamo: 'ㅁ', key: 'a', hand: 'left', name: '미음' },
+  { batchim: 'ㅂ', jamo: 'ㅂ', key: 'q', hand: 'left', name: '비읍' },
+  { batchim: 'ㅄ', jamo: 'ㅄ', key: 'qt', hand: 'left', name: '비읍시옷', combination: ['ㅂ', 'ㅅ'] },
+  { batchim: 'ㅅ', jamo: 'ㅅ', key: 't', hand: 'left', name: '시옷' },
+  { batchim: 'ㅆ', jamo: 'ㅆ', key: 't', shift: true, hand: 'left', name: '쌍시옷' },
+  { batchim: 'ㅇ', jamo: 'ㅇ', key: 'd', hand: 'left', name: '이응' },
+  { batchim: 'ㅈ', jamo: 'ㅈ', key: 'w', hand: 'left', name: '지읒' },
+  { batchim: 'ㅊ', jamo: 'ㅊ', key: 'c', hand: 'left', name: '치읓' },
+  { batchim: 'ㅋ', jamo: 'ㅋ', key: 'z', hand: 'left', name: '키읔' },
+  { batchim: 'ㅌ', jamo: 'ㅌ', key: 'x', hand: 'left', name: '티읕' },
+  { batchim: 'ㅍ', jamo: 'ㅍ', key: 'v', hand: 'left', name: '피읖' },
+  { batchim: 'ㅎ', jamo: 'ㅎ', key: 'g', hand: 'left', name: '히읗' },
 ];
 
 /** Lookup map for BatchimFocusItem by batchim character. */
@@ -246,6 +319,26 @@ export function hasBatchim(text: string, batchim: string): boolean {
     return false;
   }
   return getItemJamoMetadata(text).batchims.has(batchim);
+}
+
+/**
+ * Checks whether a text string contains the specified vowel in any syllable.
+ */
+export function hasVowel(text: string, vowel: string): boolean {
+  if (!text || !vowel) {
+    return false;
+  }
+  return getItemJamoMetadata(text).allJamos.has(vowel);
+}
+
+/**
+ * Checks whether a text string contains the specified consonant in any syllable.
+ */
+export function hasConsonant(text: string, consonant: string): boolean {
+  if (!text || !consonant) {
+    return false;
+  }
+  return getItemJamoMetadata(text).allJamos.has(consonant);
 }
 
 /** Creates a fresh zeroed JamoStats entry. */
@@ -351,6 +444,27 @@ export function createDefaultMasteryState(): MasteryState {
 }
 
 /**
+ * Validates whether a target string corresponds to a valid Consolidation focus target.
+ */
+function isValidFocusTarget(target: string): boolean {
+  if (target === 'words' || target === 'sentences') {
+    return true;
+  }
+  if (target.startsWith('vowel:')) {
+    return Boolean(VOWEL_FOCUS_MAP[target.slice(6)]);
+  }
+  if (target.startsWith('consonant:')) {
+    return Boolean(CONSONANT_FOCUS_MAP[target.slice(10)]);
+  }
+  if (target.startsWith('batchim:')) {
+    return Boolean(BATCHIM_FOCUS_MAP[target.slice(8)]);
+  }
+  return Boolean(
+    VOWEL_FOCUS_MAP[target] || BATCHIM_FOCUS_MAP[target] || CONSONANT_FOCUS_MAP[target],
+  );
+}
+
+/**
  * Loads the user's MasteryState from LocalStorage.
  * Falls back to default state if not found or corrupted.
  */
@@ -381,9 +495,7 @@ export function loadMasteryState(): MasteryState {
       typeof parsed.activeCheckpointId === 'string' ? parsed.activeCheckpointId : null;
     const activeFocusBatchim =
       typeof parsed.activeFocusBatchim === 'string' &&
-      (parsed.activeFocusBatchim === 'words' ||
-        parsed.activeFocusBatchim === 'sentences' ||
-        Boolean(BATCHIM_FOCUS_MAP[parsed.activeFocusBatchim]))
+      isValidFocusTarget(parsed.activeFocusBatchim)
         ? parsed.activeFocusBatchim
         : null;
 
@@ -491,20 +603,44 @@ export function getActiveCheckpointForState(state: MasteryState): SentenceCheckp
 }
 
 /**
- * Returns the active learning target (a specific Jamo, a Sentence Checkpoint, Word/Sentence Consolidation, or a Batchim Focus).
+ * Returns the active learning target (a specific Jamo, a Sentence Checkpoint, Word/Sentence Consolidation, Vowel/Consonant Focus, or a Batchim Focus).
  */
 export function getActiveMasteryTarget(state: MasteryState): MasteryTarget {
-  if (state.activeFocusBatchim === 'words') {
-    return { type: 'consolidation_words' };
-  }
-  if (state.activeFocusBatchim === 'sentences') {
-    return { type: 'consolidation_sentences' };
-  }
-  if (state.activeFocusBatchim && BATCHIM_FOCUS_MAP[state.activeFocusBatchim]) {
-    return {
-      type: 'focus',
-      item: BATCHIM_FOCUS_MAP[state.activeFocusBatchim],
-    };
+  if (state.activeFocusBatchim) {
+    const raw = state.activeFocusBatchim;
+    if (raw === 'words') {
+      return { type: 'consolidation_words' };
+    }
+    if (raw === 'sentences') {
+      return { type: 'consolidation_sentences' };
+    }
+    if (raw.startsWith('vowel:')) {
+      const v = raw.slice(6);
+      if (VOWEL_FOCUS_MAP[v]) {
+        return { type: 'consolidation_vowel', item: VOWEL_FOCUS_MAP[v] };
+      }
+    }
+    if (raw.startsWith('consonant:')) {
+      const c = raw.slice(10);
+      if (CONSONANT_FOCUS_MAP[c]) {
+        return { type: 'consolidation_consonant', item: CONSONANT_FOCUS_MAP[c] };
+      }
+    }
+    if (raw.startsWith('batchim:')) {
+      const b = raw.slice(8);
+      if (BATCHIM_FOCUS_MAP[b]) {
+        return { type: 'focus', item: BATCHIM_FOCUS_MAP[b] };
+      }
+    }
+    if (VOWEL_FOCUS_MAP[raw]) {
+      return { type: 'consolidation_vowel', item: VOWEL_FOCUS_MAP[raw] };
+    }
+    if (BATCHIM_FOCUS_MAP[raw]) {
+      return { type: 'focus', item: BATCHIM_FOCUS_MAP[raw] };
+    }
+    if (CONSONANT_FOCUS_MAP[raw]) {
+      return { type: 'consolidation_consonant', item: CONSONANT_FOCUS_MAP[raw] };
+    }
   }
 
   const checkpoint = getActiveCheckpointForState(state);
@@ -618,13 +754,11 @@ export function setMasteryCheckpointLevel(state: MasteryState, checkpointId: str
 }
 
 /**
- * Focuses practice on a specific target ('words', 'sentences', or a final consonant 받침) in post-game Consolidation mode.
+ * Focuses practice on a specific target ('words', 'sentences', vowel, consonant, or a final consonant 받침) in post-game Consolidation mode.
  * Automatically unlocks all keys across all stages if the user hasn't unlocked them yet.
  */
 export function setMasteryFocusBatchim(state: MasteryState, target: string): void {
-  const isValidTarget =
-    target === 'words' || target === 'sentences' || Boolean(BATCHIM_FOCUS_MAP[target]);
-  if (!isValidTarget) {
+  if (!isValidFocusTarget(target)) {
     return;
   }
   state.activeCheckpointId = null;
@@ -1053,6 +1187,32 @@ export function getEligibleMasteryItems(
     const matchingCurriculum = allItems.filter((item) => hasBatchim(item.target, focusBatchim));
     const eligible = dedupeByTarget([...curatedBatchimWords, ...matchingCurriculum]);
     return eligible.length > 0 ? eligible : curatedBatchimWords;
+  }
+
+  // If active target is a Vowel in post-game Consolidation mode, return words/sentences containing that vowel
+  if (activeTarget && activeTarget.type === 'consolidation_vowel') {
+    const vowel = activeTarget.item.jamo;
+    const curatedVowelWords = MASTERY_JAMO_VOCABULARY[vowel] ?? [];
+    const matchingCurriculum = allItems.filter((item) => hasVowel(item.target, vowel));
+    const eligible = dedupeByTarget([...curatedVowelWords, ...matchingCurriculum]);
+    return eligible.length > 0
+      ? eligible
+      : curatedVowelWords.length > 0
+        ? curatedVowelWords
+        : [createStarterItem('mastery-starter')];
+  }
+
+  // If active target is a Consonant in post-game Consolidation mode, return words/sentences containing that consonant
+  if (activeTarget && activeTarget.type === 'consolidation_consonant') {
+    const consonant = activeTarget.item.jamo;
+    const curatedConsonantWords = MASTERY_JAMO_VOCABULARY[consonant] ?? [];
+    const matchingCurriculum = allItems.filter((item) => hasConsonant(item.target, consonant));
+    const eligible = dedupeByTarget([...curatedConsonantWords, ...matchingCurriculum]);
+    return eligible.length > 0
+      ? eligible
+      : curatedConsonantWords.length > 0
+        ? curatedConsonantWords
+        : [createStarterItem('mastery-starter')];
   }
 
   // If active target is a sentence checkpoint, return curated sentence bank + matching curriculum sentences

@@ -60,9 +60,9 @@ export interface SentenceCheckpoint {
   requiredCompletions: number;
 }
 
-/** Metadata for a final consonant (받침) focus target in the post-game section. */
-export interface BatchimFocusItem {
-  batchim: string;
+/** Metadata for a specific Jamo (vowel, consonant, or batchim) focus target in post-game Consolidation. */
+export interface JamoFocusItem {
+  jamo: string;
   name?: string;
   key: string;
   shift?: boolean;
@@ -70,12 +70,19 @@ export interface BatchimFocusItem {
   combination?: [string, string];
 }
 
-/** Active target in mastery mode (either a Jamo key, a Sentence Checkpoint, Word/Sentence Consolidation, or a Batchim Focus). */
+/** Metadata for a final consonant (받침) focus target in the post-game section. */
+export interface BatchimFocusItem extends JamoFocusItem {
+  batchim: string;
+}
+
+/** Active target in mastery mode (either a Jamo key, a Sentence Checkpoint, Word/Sentence Consolidation, Vowel/Consonant Focus, or a Batchim Focus). */
 export type MasteryTarget =
   | { type: 'jamo'; item: JamoProgressionItem }
   | { type: 'checkpoint'; checkpoint: SentenceCheckpoint }
   | { type: 'consolidation_words' }
   | { type: 'consolidation_sentences' }
+  | { type: 'consolidation_vowel'; item: JamoFocusItem }
+  | { type: 'consolidation_consonant'; item: JamoFocusItem }
   | { type: 'focus'; item: BatchimFocusItem };
 
 /** A grouped stage of the Jamo progression sequence (for sidebar display). */

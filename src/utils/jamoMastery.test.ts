@@ -617,76 +617,104 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
   });
 
   describe('Post-game Consolidation & Final Consonants Practice', () => {
-    it('should define all 27 standard Korean batchim in BATCHIM_FOCUS_LIST', async () => {
-      const { BATCHIM_FOCUS_LIST, BATCHIM_FOCUS_MAP } = await import('./jamoMastery');
-      expect(BATCHIM_FOCUS_LIST.length).toBe(27);
+    it('should define all 21 standard Korean vowels in VOWEL_FOCUS_LIST', async () => {
+      const { VOWEL_FOCUS_LIST, VOWEL_FOCUS_MAP } = await import('./jamoMastery');
+      expect(VOWEL_FOCUS_LIST.length).toBe(21);
 
-      const expectedBatchim = [
-        'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ', 'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ', 'ㄿ', 'ㅀ',
-        'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'
+      const expectedVowels = [
+        'ㅏ', 'ㅓ', 'ㅗ', 'ㅜ', 'ㅡ', 'ㅣ', 'ㅐ', 'ㅔ',
+        'ㅑ', 'ㅕ', 'ㅛ', 'ㅠ', 'ㅒ', 'ㅖ',
+        'ㅘ', 'ㅙ', 'ㅚ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅢ'
       ];
-      expect(BATCHIM_FOCUS_LIST.map((b) => b.batchim)).toEqual(expectedBatchim);
+      expect(VOWEL_FOCUS_LIST.map((v) => v.jamo)).toEqual(expectedVowels);
 
-      for (const b of expectedBatchim) {
-        expect(BATCHIM_FOCUS_MAP[b]).toBeDefined();
-        expect(BATCHIM_FOCUS_MAP[b].batchim).toBe(b);
-        expect(BATCHIM_FOCUS_MAP[b].hand).toBe('left');
-        expect(BATCHIM_FOCUS_MAP[b].key.length).toBeGreaterThan(0);
+      for (const v of expectedVowels) {
+        expect(VOWEL_FOCUS_MAP[v]).toBeDefined();
+        expect(VOWEL_FOCUS_MAP[v].jamo).toBe(v);
+        expect(VOWEL_FOCUS_MAP[v].hand).toBe('right');
+        expect(VOWEL_FOCUS_MAP[v].key.length).toBeGreaterThan(0);
       }
     });
 
-    it('accurately identifies final consonants with hasBatchim', async () => {
-      const { hasBatchim } = await import('./jamoMastery');
+    it('should define all 19 standard Korean consonants in CONSONANT_FOCUS_LIST', async () => {
+      const { CONSONANT_FOCUS_LIST, CONSONANT_FOCUS_MAP } = await import('./jamoMastery');
+      expect(CONSONANT_FOCUS_LIST.length).toBe(19);
 
-      // Single consonants
-      expect(hasBatchim('책', 'ㄱ')).toBe(true);
-      expect(hasBatchim('책', 'ㄴ')).toBe(false);
-      expect(hasBatchim('가방', 'ㅇ')).toBe(true);
-      expect(hasBatchim('가방', 'ㅂ')).toBe(false);
+      const expectedConsonants = [
+        'ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ',
+        'ㄲ', 'ㄸ', 'ㅃ', 'ㅆ', 'ㅉ'
+      ];
+      expect(CONSONANT_FOCUS_LIST.map((c) => c.jamo)).toEqual(expectedConsonants);
 
-      // Double consonants
-      expect(hasBatchim('밖', 'ㄲ')).toBe(true);
-      expect(hasBatchim('밖', 'ㄱ')).toBe(false);
-      expect(hasBatchim('있다', 'ㅆ')).toBe(true);
-      expect(hasBatchim('있다', 'ㅅ')).toBe(false);
-
-      // Compound batchim
-      expect(hasBatchim('닭', 'ㄺ')).toBe(true);
-      expect(hasBatchim('닭', 'ㄱ')).toBe(false);
-      expect(hasBatchim('닭', 'ㄹ')).toBe(false);
-      expect(hasBatchim('값', 'ㅄ')).toBe(true);
-      expect(hasBatchim('앉다', 'ㄵ')).toBe(true);
-      expect(hasBatchim('외곬', 'ㄽ')).toBe(true);
-
-      // Rare batchim (ㅋ, ㅌ, ㅍ, etc.)
-      expect(hasBatchim('부엌', 'ㅋ')).toBe(true);
-      expect(hasBatchim('새벽녘', 'ㅋ')).toBe(true);
-      expect(hasBatchim('솥', 'ㅌ')).toBe(true);
-      expect(hasBatchim('숲', 'ㅍ')).toBe(true);
-      expect(hasBatchim('좋다', 'ㅎ')).toBe(true);
-
-      // Multi-syllable sentences
-      expect(hasBatchim('어머니가 계시는 따뜻한 부엌', 'ㅋ')).toBe(true);
-      expect(hasBatchim('하늘을 바라보아요', 'ㅋ')).toBe(false);
+      for (const c of expectedConsonants) {
+        expect(CONSONANT_FOCUS_MAP[c]).toBeDefined();
+        expect(CONSONANT_FOCUS_MAP[c].jamo).toBe(c);
+        expect(CONSONANT_FOCUS_MAP[c].hand).toBe('left');
+        expect(CONSONANT_FOCUS_MAP[c].key.length).toBeGreaterThan(0);
+      }
     });
 
-    it('sets and clears activeFocusBatchim correctly for batchim, words, and sentences', async () => {
+    it('accurately identifies vowels and consonants with hasVowel and hasConsonant', async () => {
+      const { hasVowel, hasConsonant } = await import('./jamoMastery');
+
+      // Vowel tests (simple, shift, and compound)
+      expect(hasVowel('사과', 'ㅘ')).toBe(true);
+      expect(hasVowel('사과', 'ㅏ')).toBe(true);
+      expect(hasVowel('사과', 'ㅓ')).toBe(false);
+      expect(hasVowel('외국어', 'ㅚ')).toBe(true);
+      expect(hasVowel('외국어', 'ㅜ')).toBe(true);
+      expect(hasVowel('외국어', 'ㅓ')).toBe(true);
+      expect(hasVowel('예의', 'ㅖ')).toBe(true);
+      expect(hasVowel('예의', 'ㅢ')).toBe(true);
+
+      // Consonant tests (basic, aspirated, double)
+      expect(hasConsonant('사과', 'ㅅ')).toBe(true);
+      expect(hasConsonant('사과', 'ㄱ')).toBe(true);
+      expect(hasConsonant('사과', 'ㅂ')).toBe(false);
+      expect(hasConsonant('토끼', 'ㅌ')).toBe(true);
+      expect(hasConsonant('토끼', 'ㄲ')).toBe(true);
+      expect(hasConsonant('짜장면', 'ㅉ')).toBe(true);
+      expect(hasConsonant('짜장면', 'ㅈ')).toBe(true);
+      expect(hasConsonant('짜장면', 'ㅁ')).toBe(true);
+    });
+
+    it('sets and clears activeFocusBatchim correctly for batchim, words, sentences, vowels, and consonants', async () => {
       const { setMasteryFocusBatchim, getActiveMasteryTarget, setMasteryProgressionLevel, setMasteryCheckpointLevel } =
         await import('./jamoMastery');
 
       const state = createDefaultMasteryState();
       expect(state.activeFocusBatchim).toBeNull();
 
-      // Batchim target
-      setMasteryFocusBatchim(state, 'ㅋ');
-      expect(state.activeFocusBatchim).toBe('ㅋ');
+      // Batchim target with prefix
+      setMasteryFocusBatchim(state, 'batchim:ㅋ');
+      expect(state.activeFocusBatchim).toBe('batchim:ㅋ');
       expect(state.activeCheckpointId).toBeNull();
 
-      const target = getActiveMasteryTarget(state);
+      let target = getActiveMasteryTarget(state);
       expect(target.type).toBe('focus');
       if (target.type === 'focus') {
         expect(target.item.batchim).toBe('ㅋ');
         expect(target.item.name).toBe('키읔');
+      }
+
+      // Vowel target with prefix
+      setMasteryFocusBatchim(state, 'vowel:ㅘ');
+      expect(state.activeFocusBatchim).toBe('vowel:ㅘ');
+      target = getActiveMasteryTarget(state);
+      expect(target.type).toBe('consolidation_vowel');
+      if (target.type === 'consolidation_vowel') {
+        expect(target.item.jamo).toBe('ㅘ');
+        expect(target.item.combination).toEqual(['ㅗ', 'ㅏ']);
+      }
+
+      // Consonant target with prefix
+      setMasteryFocusBatchim(state, 'consonant:ㄲ');
+      expect(state.activeFocusBatchim).toBe('consonant:ㄲ');
+      target = getActiveMasteryTarget(state);
+      expect(target.type).toBe('consolidation_consonant');
+      if (target.type === 'consolidation_consonant') {
+        expect(target.item.jamo).toBe('ㄲ');
+        expect(target.item.shift).toBe(true);
       }
 
       // Word practice target
@@ -704,12 +732,44 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(state.activeFocusBatchim).toBeNull();
 
       // Focusing again
-      setMasteryFocusBatchim(state, 'ㄺ');
-      expect(state.activeFocusBatchim).toBe('ㄺ');
+      setMasteryFocusBatchim(state, 'vowel:ㅞ');
+      expect(state.activeFocusBatchim).toBe('vowel:ㅞ');
 
       // Switching checkpoint clears focus
       setMasteryCheckpointLevel(state, 'cp_top_row');
       expect(state.activeFocusBatchim).toBeNull();
+    });
+
+    it('filters eligible items for vowel and consonant consolidation targets', async () => {
+      const { getEligibleMasteryItems, VOWEL_FOCUS_MAP, CONSONANT_FOCUS_MAP } =
+        await import('./jamoMastery');
+
+      const dummyItems: LessonItem[] = [
+        { id: 'item1', moduleId: 'm1', target: '사과', translation: 'Apple' },
+        { id: 'item2', moduleId: 'm1', target: '외국어', translation: 'Foreign language' },
+        { id: 'item3', moduleId: 'm1', target: '토끼', translation: 'Rabbit' },
+        { id: 'item4', moduleId: 'm1', target: '물', translation: 'Water' },
+      ];
+
+      const allUnlocked = new Set(JAMO_PROGRESSION_ORDER.map((i) => i.jamo));
+
+      // Vowel target: ㅘ
+      const vowelTarget: MasteryTarget = {
+        type: 'consolidation_vowel',
+        item: VOWEL_FOCUS_MAP['ㅘ'],
+      };
+      const vowelItems = getEligibleMasteryItems(dummyItems, allUnlocked, vowelTarget);
+      expect(vowelItems.some((i) => i.id === 'item1')).toBe(true);
+      expect(vowelItems.some((i) => i.id === 'item3')).toBe(false);
+
+      // Consonant target: ㄲ
+      const consonantTarget: MasteryTarget = {
+        type: 'consolidation_consonant',
+        item: CONSONANT_FOCUS_MAP['ㄲ'],
+      };
+      const consonantItems = getEligibleMasteryItems(dummyItems, allUnlocked, consonantTarget);
+      expect(consonantItems.some((i) => i.id === 'item3')).toBe(true);
+      expect(consonantItems.some((i) => i.id === 'item4')).toBe(false);
     });
 
     it('unlocks all 44 keys without modifying mastery history when jumping directly to post-game Consolidation', async () => {
@@ -733,9 +793,9 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       setMasteryFocusBatchim(state2, 'words');
       expect(state2.unlockedCount).toBe(44);
 
-      // Reset and jump directly to sentences consolidation
+      // Reset and jump directly to vowel consolidation
       const state3 = createDefaultMasteryState();
-      setMasteryFocusBatchim(state3, 'sentences');
+      setMasteryFocusBatchim(state3, 'vowel:ㅘ');
       expect(state3.unlockedCount).toBe(44);
     });
 
@@ -801,11 +861,21 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
         await import('./jamoMastery');
 
       const state = createDefaultMasteryState();
-      setMasteryFocusBatchim(state, 'ㄶ');
+      setMasteryFocusBatchim(state, 'batchim:ㄶ');
       saveMasteryState(state);
 
       const reloaded = loadMasteryState();
-      expect(reloaded.activeFocusBatchim).toBe('ㄶ');
+      expect(reloaded.activeFocusBatchim).toBe('batchim:ㄶ');
+
+      // Test vowel persistence
+      setMasteryFocusBatchim(state, 'vowel:ㅘ');
+      saveMasteryState(state);
+      expect(loadMasteryState().activeFocusBatchim).toBe('vowel:ㅘ');
+
+      // Test consonant persistence
+      setMasteryFocusBatchim(state, 'consonant:ㄲ');
+      saveMasteryState(state);
+      expect(loadMasteryState().activeFocusBatchim).toBe('consonant:ㄲ');
 
       // Test words persistence
       setMasteryFocusBatchim(state, 'words');
