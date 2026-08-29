@@ -24,6 +24,7 @@
     jamoStats: Record<string, JamoStats>;
     sentenceCheckpointStats?: Record<string, SentenceCheckpointStats>;
     speedStore?: SpeedMetricsStore;
+    showKpm?: boolean;
     collapsedStageIds?: string[];
     onclose: () => void;
     onmasterylevelchange: (level: number) => void;
@@ -41,6 +42,7 @@
     jamoStats,
     sentenceCheckpointStats = {},
     speedStore,
+    showKpm = true,
     collapsedStageIds = [],
     onclose,
     onmasterylevelchange,
@@ -291,20 +293,22 @@
                 <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
                   Word Practice
                 </span>
-                <div class="flex flex-col items-end shrink-0 text-right">
-                  {#if wordsStats}
-                    <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
-                      {wordsStats.kpm} KPM
-                    </span>
-                    <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
-                      {wordsStats.accuracy}% acc · Best {wordsStats.bestKpm}
-                    </span>
-                  {:else}
-                    <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                      — KPM
-                    </span>
-                  {/if}
-                </div>
+                {#if showKpm}
+                  <div class="flex flex-col items-end shrink-0 text-right">
+                    {#if wordsStats}
+                      <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
+                        {wordsStats.kpm} KPM
+                      </span>
+                      <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                        {wordsStats.accuracy}% acc · Best {wordsStats.bestKpm}
+                      </span>
+                    {:else}
+                      <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                        — KPM
+                      </span>
+                    {/if}
+                  </div>
+                {/if}
               </div>
             </label>
 
@@ -326,20 +330,22 @@
                 <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 truncate">
                   Sentence Practice
                 </span>
-                <div class="flex flex-col items-end shrink-0 text-right">
-                  {#if sentenceStats}
-                    <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
-                      {sentenceStats.kpm} KPM
-                    </span>
-                    <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
-                      {sentenceStats.accuracy}% acc · Best {sentenceStats.bestKpm}
-                    </span>
-                  {:else}
-                    <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                      — KPM
-                    </span>
-                  {/if}
-                </div>
+                {#if showKpm}
+                  <div class="flex flex-col items-end shrink-0 text-right">
+                    {#if sentenceStats}
+                      <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
+                        {sentenceStats.kpm} KPM
+                      </span>
+                      <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                        {sentenceStats.accuracy}% acc · Best {sentenceStats.bestKpm}
+                      </span>
+                    {:else}
+                      <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                        — KPM
+                      </span>
+                    {/if}
+                  </div>
+                {/if}
               </div>
             </label>
 
@@ -389,26 +395,28 @@
                     {/if}
                     <span class="relative z-10">{item.jamo}</span>
                   </span>
-                  <div class="flex flex-col items-end shrink-0 text-right">
-                    {#if jamoKpm}
-                      <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
-                        {jamoKpm.kpm} KPM
-                      </span>
-                      {#if accuracy !== null}
-                        <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                  {#if showKpm}
+                    <div class="flex flex-col items-end shrink-0 text-right">
+                      {#if jamoKpm}
+                        <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
+                          {jamoKpm.kpm} KPM
+                        </span>
+                        {#if accuracy !== null}
+                          <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                            {accuracy}% acc
+                          </span>
+                        {/if}
+                      {:else if accuracy !== null}
+                        <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
                           {accuracy}% acc
                         </span>
+                      {:else}
+                        <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                          — KPM
+                        </span>
                       {/if}
-                    {:else if accuracy !== null}
-                      <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
-                        {accuracy}% acc
-                      </span>
-                    {:else}
-                      <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                        — KPM
-                      </span>
-                    {/if}
-                  </div>
+                    </div>
+                  {/if}
                 </div>
               </label>
             {/each}
@@ -460,26 +468,28 @@
                     {/if}
                     <span class="relative z-10">{item.jamo}</span>
                   </span>
-                  <div class="flex flex-col items-end shrink-0 text-right">
-                    {#if jamoKpm}
-                      <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
-                        {jamoKpm.kpm} KPM
-                      </span>
-                      {#if accuracy !== null}
-                        <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                  {#if showKpm}
+                    <div class="flex flex-col items-end shrink-0 text-right">
+                      {#if jamoKpm}
+                        <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
+                          {jamoKpm.kpm} KPM
+                        </span>
+                        {#if accuracy !== null}
+                          <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                            {accuracy}% acc
+                          </span>
+                        {/if}
+                      {:else if accuracy !== null}
+                        <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
                           {accuracy}% acc
                         </span>
+                      {:else}
+                        <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                          — KPM
+                        </span>
                       {/if}
-                    {:else if accuracy !== null}
-                      <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
-                        {accuracy}% acc
-                      </span>
-                    {:else}
-                      <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                        — KPM
-                      </span>
-                    {/if}
-                  </div>
+                    </div>
+                  {/if}
                 </div>
               </label>
             {/each}
@@ -531,26 +541,28 @@
                     {/if}
                     <span class="relative z-10">{item.batchim}</span>
                   </span>
-                  <div class="flex flex-col items-end shrink-0 text-right">
-                    {#if jamoKpm}
-                      <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
-                        {jamoKpm.kpm} KPM
-                      </span>
-                      {#if accuracy !== null}
-                        <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                  {#if showKpm}
+                    <div class="flex flex-col items-end shrink-0 text-right">
+                      {#if jamoKpm}
+                        <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
+                          {jamoKpm.kpm} KPM
+                        </span>
+                        {#if accuracy !== null}
+                          <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                            {accuracy}% acc
+                          </span>
+                        {/if}
+                      {:else if accuracy !== null}
+                        <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
                           {accuracy}% acc
                         </span>
+                      {:else}
+                        <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                          — KPM
+                        </span>
                       {/if}
-                    {:else if accuracy !== null}
-                      <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
-                        {accuracy}% acc
-                      </span>
-                    {:else}
-                      <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-                        — KPM
-                      </span>
-                    {/if}
-                  </div>
+                    </div>
+                  {/if}
                 </div>
               </label>
             {/each}

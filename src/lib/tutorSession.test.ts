@@ -597,4 +597,16 @@ describe('TutorSession controller', () => {
     session.advanceLevel();
     expect(masteryState.sentenceCheckpointStats?.['cp_top_row']?.completedCount).toBe(1);
   });
+
+  it('should track speed and reset speed metrics on resetSpeedMetrics()', () => {
+    const store = session.getSpeedStore();
+    store.totalTargetStrokes = 500;
+    store.bestNetKpm = 280;
+    expect(session.getSpeedStore().totalTargetStrokes).toBe(500);
+
+    session.resetSpeedMetrics();
+    expect(session.getSpeedStore().totalTargetStrokes).toBe(0);
+    expect(session.getSpeedStore().bestNetKpm).toBe(0);
+    expect(session.getSpeedStore().recentHistory).toEqual([]);
+  });
 });

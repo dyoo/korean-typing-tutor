@@ -549,3 +549,20 @@ export function getCategoryKpmStats(
     bestKpm,
   };
 }
+
+/**
+ * Resets all speed statistics and metrics in the store back to initial empty values and persists to storage.
+ */
+export function resetSpeedMetricsStore(store: SpeedMetricsStore): void {
+  store.totalTargetStrokes = 0;
+  store.totalRawKeystrokes = 0;
+  store.totalActiveTimeMs = 0;
+  store.totalErrors = 0;
+  store.totalBackspaces = 0;
+  store.totalExercisesCompleted = 0;
+  store.bestNetKpm = 0;
+  store.recentHistory = [];
+  store.jamoLatency = {};
+  store.bigramLatency = {};
+  saveSpeedMetricsStore(store);
+}

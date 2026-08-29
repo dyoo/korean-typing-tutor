@@ -23,6 +23,7 @@ import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecomp
 import { loadCustomDecks, saveCustomDeck, deleteCustomDeck } from '../utils/customDecks';
 import {
   loadSpeedMetricsStore,
+  resetSpeedMetricsStore,
   ExerciseSpeedTracker,
   getJamoKpmStats,
   getCategoryKpmStats,
@@ -732,5 +733,11 @@ export class TutorSession {
   /** Returns calculated KPM, accuracy, and count for a category ('words' or 'sentences'). */
   public getCategoryKpm(category: 'words' | 'sentences') {
     return getCategoryKpmStats(this.speedStore, category);
+  }
+
+  /** Resets all speed and KPM statistics across all exercises and Jamos. */
+  public resetSpeedMetrics(): void {
+    resetSpeedMetricsStore(this.speedStore);
+    this.speedTracker.reset();
   }
 }

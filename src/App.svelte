@@ -589,6 +589,14 @@
     updateSetting('showKeyboardHint', !settings.showKeyboardHint);
   }
 
+  function toggleKpm() {
+    updateSetting('showKpm', !settings.showKpm);
+  }
+
+  function handleResetKpm() {
+    session.resetSpeedMetrics();
+  }
+
   function handleThemeChange(theme: ThemeMode) {
     updateSetting('theme', theme);
     applyTheme(theme);
@@ -763,6 +771,8 @@
   ontoggletranslation={toggleTranslation}
   ontogglevirtualkeyboard={toggleVirtualKeyboard}
   ontogglekeyboardhint={toggleKeyboardHint}
+  ontogglekpm={toggleKpm}
+  onresetkpm={handleResetKpm}
   onminfontsizechange={handleMinFontSizeChange}
   onmaxfontsizechange={handleMaxFontSizeChange}
   ontogglelockfontsize={handleToggleLockFontSize}
@@ -783,6 +793,7 @@
   jamoStats={masteryState.jamoStats}
   sentenceCheckpointStats={masteryState.sentenceCheckpointStats}
   speedStore={session.speedStore}
+  showKpm={settings.showKpm ?? true}
   collapsedStageIds={collapsedMasteryStageIds}
   onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}

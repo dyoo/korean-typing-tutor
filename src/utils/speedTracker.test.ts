@@ -4,6 +4,7 @@ import {
   createDefaultSpeedMetricsStore,
   loadSpeedMetricsStore,
   saveSpeedMetricsStore,
+  resetSpeedMetricsStore,
   ExerciseSpeedTracker,
   getJamoKpmStats,
   getCategoryKpmStats,
@@ -130,7 +131,7 @@ describe('speedTracker / KPM Engine', () => {
       }
     });
 
-    it('persists and loads speed metrics store from LocalStorage', () => {
+    it('persists, loads, and resets speed metrics store', () => {
       const store = createDefaultSpeedMetricsStore();
       store.bestNetKpm = 350;
       store.totalTargetStrokes = 1200;
@@ -142,6 +143,15 @@ describe('speedTracker / KPM Engine', () => {
 
       const raw = localStorage.getItem(SPEED_STORAGE_KEY);
       expect(raw).not.toBeNull();
+
+      resetSpeedMetricsStore(loaded);
+      expect(loaded.bestNetKpm).toBe(0);
+      expect(loaded.totalTargetStrokes).toBe(0);
+      expect(loaded.recentHistory).toEqual([]);
+
+      const reloaded = loadSpeedMetricsStore();
+      expect(reloaded.bestNetKpm).toBe(0);
+      expect(reloaded.totalTargetStrokes).toBe(0);
     });
   });
 });

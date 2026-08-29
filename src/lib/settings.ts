@@ -14,6 +14,7 @@ export interface TutorSettings {
   showTranslation: boolean;
   showVirtualKeyboard: boolean;
   showKeyboardHint: boolean;
+  showKpm?: boolean;
   theme: ThemeMode;
   enabledModuleIds?: string[];
   collapsedCategoryIds?: string[];
@@ -38,6 +39,7 @@ export const DEFAULT_SETTINGS: TutorSettings = {
   showTranslation: true,
   showVirtualKeyboard: true,
   showKeyboardHint: true,
+  showKpm: true,
   theme: 'system',
   minFontSizeRem: 2.0,
   maxFontSizeRem: 6.0,
@@ -95,6 +97,7 @@ export function loadSettings(): TutorSettings {
         DEFAULT_SETTINGS.showVirtualKeyboard,
       ),
       showKeyboardHint: pickBool(parsed.showKeyboardHint, DEFAULT_SETTINGS.showKeyboardHint),
+      showKpm: pickBool(parsed.showKpm, DEFAULT_SETTINGS.showKpm ?? true),
       theme: pickEnum(parsed.theme, validThemes, DEFAULT_SETTINGS.theme),
       enabledModuleIds: Array.isArray(parsed.enabledModuleIds)
         ? parsed.enabledModuleIds
