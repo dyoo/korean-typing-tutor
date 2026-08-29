@@ -7,6 +7,8 @@
     BATCHIM_FOCUS_LIST,
     calculateJamoProgress,
   } from '../utils/jamoMastery';
+  import { getJamoKpmStats, getCategoryKpmStats } from '../utils/speedTracker';
+  import type { SpeedMetricsStore } from '../utils/speedTracker';
   import type {
     JamoStats,
     SentenceCheckpointStats,
@@ -21,6 +23,7 @@
     activeFocusBatchim?: string | null;
     jamoStats: Record<string, JamoStats>;
     sentenceCheckpointStats?: Record<string, SentenceCheckpointStats>;
+    speedStore?: SpeedMetricsStore;
     collapsedStageIds?: string[];
     onclose: () => void;
     onmasterylevelchange: (level: number) => void;
@@ -37,6 +40,7 @@
     activeFocusBatchim = null,
     jamoStats,
     sentenceCheckpointStats = {},
+    speedStore,
     collapsedStageIds = [],
     onclose,
     onmasterylevelchange,
@@ -49,6 +53,10 @@
   let isConsolidationCollapsed = $derived(
     collapsedStageIds.includes('Consolidation') ||
       collapsedStageIds.includes('Batchim Workshop'),
+  );
+  let wordsStats = $derived(speedStore ? getCategoryKpmStats(speedStore, 'words') : null);
+  let sentenceStats = $derived(
+    speedStore ? getCategoryKpmStats(speedStore, 'sentences') : null,
   );
 
   function toggleStageCollapse(stageName: string) {
@@ -295,9 +303,20 @@
                     </span>
                   </div>
                 </div>
-                <span class="text-[11px] font-mono text-purple-600 dark:text-purple-400 shrink-0 font-medium">
-                  All Jamo
-                </span>
+                <div class="flex flex-col items-end shrink-0 text-right">
+                  {#if wordsStats}
+                    <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
+                      {wordsStats.kpm} 타/분
+                    </span>
+                    <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                      {wordsStats.accuracy}% acc · Best {wordsStats.bestKpm}
+                    </span>
+                  {:else}
+                    <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                      — 타/분
+                    </span>
+                  {/if}
+                </div>
               </div>
             </label>
 
@@ -331,9 +350,20 @@
                     </span>
                   </div>
                 </div>
-                <span class="text-[11px] font-mono text-purple-600 dark:text-purple-400 shrink-0 font-medium">
-                  All Jamo
-                </span>
+                <div class="flex flex-col items-end shrink-0 text-right">
+                  {#if sentenceStats}
+                    <span class="text-xs font-mono font-bold text-purple-700 dark:text-purple-300">
+                      {sentenceStats.kpm} 타/분
+                    </span>
+                    <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                      {sentenceStats.accuracy}% acc · Best {sentenceStats.bestKpm}
+                    </span>
+                  {:else}
+                    <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                      — 타/분
+                    </span>
+                  {/if}
+                </div>
               </div>
             </label>
 
@@ -349,6 +379,11 @@
                 activeFocusBatchim === `vowel:${item.jamo}` || activeFocusBatchim === item.jamo}
               {@const stats = jamoStats[item.jamo]}
               {@const progress = calculateJamoProgress(stats)}
+              {@const jamoKpm = speedStore ? getJamoKpmStats(speedStore, item.jamo) : null}
+              {@const accuracy =
+                stats && stats.totalAttempts > 0
+                  ? Math.round((stats.correctAttempts / stats.totalAttempts) * 100)
+                  : null}
               <label
                 class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isSelected
                   ? 'bg-purple-100/80 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-700'
@@ -362,37 +397,46 @@
                   class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
                 />
                 <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
-                  <div class="flex items-center gap-2">
-                    <span
-                      class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
-                      100
-                        ? 'text-emerald-600 dark:text-emerald-400'
-                        : 'text-purple-700 dark:text-purple-300'}"
-                    >
-                      {#if progress > 0}
-                        <div
-                          class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
-                            ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
-                            : 'bg-purple-400/30 dark:bg-purple-400/25'}"
-                          style="height: {progress}%;"
-                        ></div>
-                      {/if}
-                      <span class="relative z-10">{item.jamo}</span>
-                    </span>
-                    <div class="flex items-center gap-1.5 min-w-0">
-                      <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
-                        {item.name ?? item.jamo}
-                      </span>
-                      {#if item.combination}
-                        <span class="text-xs text-purple-600/80 dark:text-purple-400/80 font-medium">
-                          ({item.combination[0]}+{item.combination[1]})
-                        </span>
-                      {/if}
-                    </div>
-                  </div>
-                  <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase shrink-0">
-                    {item.key}{item.shift ? '+Shift' : ''}
+                  <span
+                    class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
+                    100
+                      ? 'text-emerald-600 dark:text-emerald-400'
+                      : 'text-purple-700 dark:text-purple-300'}"
+                  >
+                    {#if progress > 0}
+                      <div
+                        class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
+                          ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                          : 'bg-purple-400/30 dark:bg-purple-400/25'}"
+                        style="height: {progress}%;"
+                      ></div>
+                    {/if}
+                    <span class="relative z-10">{item.jamo}</span>
                   </span>
+                  <div class="flex flex-col items-end shrink-0 text-right">
+                    {#if jamoKpm}
+                      <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
+                        {jamoKpm.kpm} 타/분
+                      </span>
+                      <div
+                        class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
+                      >
+                        <span>{jamoKpm.averageIkiMs}ms avg</span>
+                        {#if accuracy !== null}
+                          <span>·</span>
+                          <span>{accuracy}%</span>
+                        {/if}
+                      </div>
+                    {:else if accuracy !== null}
+                      <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
+                        {accuracy}% acc
+                      </span>
+                    {:else}
+                      <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                        — 타/분
+                      </span>
+                    {/if}
+                  </div>
                 </div>
               </label>
             {/each}
@@ -410,6 +454,11 @@
                 activeFocusBatchim === item.jamo}
               {@const stats = jamoStats[item.jamo]}
               {@const progress = calculateJamoProgress(stats)}
+              {@const jamoKpm = speedStore ? getJamoKpmStats(speedStore, item.jamo) : null}
+              {@const accuracy =
+                stats && stats.totalAttempts > 0
+                  ? Math.round((stats.correctAttempts / stats.totalAttempts) * 100)
+                  : null}
               <label
                 class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isSelected
                   ? 'bg-purple-100/80 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-700'
@@ -423,30 +472,46 @@
                   class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
                 />
                 <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
-                  <div class="flex items-center gap-2">
-                    <span
-                      class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
-                      100
-                        ? 'text-emerald-600 dark:text-emerald-400'
-                        : 'text-purple-700 dark:text-purple-300'}"
-                    >
-                      {#if progress > 0}
-                        <div
-                          class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
-                            ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
-                            : 'bg-purple-400/30 dark:bg-purple-400/25'}"
-                          style="height: {progress}%;"
-                        ></div>
-                      {/if}
-                      <span class="relative z-10">{item.jamo}</span>
-                    </span>
-                    <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
-                      {item.name ?? item.jamo}
-                    </span>
-                  </div>
-                  <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase shrink-0">
-                    {item.key}{item.shift ? '+Shift' : ''}
+                  <span
+                    class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
+                    100
+                      ? 'text-emerald-600 dark:text-emerald-400'
+                      : 'text-purple-700 dark:text-purple-300'}"
+                  >
+                    {#if progress > 0}
+                      <div
+                        class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
+                          ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                          : 'bg-purple-400/30 dark:bg-purple-400/25'}"
+                        style="height: {progress}%;"
+                      ></div>
+                    {/if}
+                    <span class="relative z-10">{item.jamo}</span>
                   </span>
+                  <div class="flex flex-col items-end shrink-0 text-right">
+                    {#if jamoKpm}
+                      <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
+                        {jamoKpm.kpm} 타/분
+                      </span>
+                      <div
+                        class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
+                      >
+                        <span>{jamoKpm.averageIkiMs}ms avg</span>
+                        {#if accuracy !== null}
+                          <span>·</span>
+                          <span>{accuracy}%</span>
+                        {/if}
+                      </div>
+                    {:else if accuracy !== null}
+                      <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
+                        {accuracy}% acc
+                      </span>
+                    {:else}
+                      <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                        — 타/분
+                      </span>
+                    {/if}
+                  </div>
                 </div>
               </label>
             {/each}
@@ -464,6 +529,11 @@
                 activeFocusBatchim === item.batchim}
               {@const stats = jamoStats[item.batchim]}
               {@const progress = calculateJamoProgress(stats)}
+              {@const jamoKpm = speedStore ? getJamoKpmStats(speedStore, item.batchim) : null}
+              {@const accuracy =
+                stats && stats.totalAttempts > 0
+                  ? Math.round((stats.correctAttempts / stats.totalAttempts) * 100)
+                  : null}
               <label
                 class="flex items-center gap-2.5 p-1.5 rounded-lg hover:bg-white dark:hover:bg-gray-700/60 cursor-pointer transition-colors select-none {isSelected
                   ? 'bg-purple-100/80 dark:bg-purple-950/60 border border-purple-300 dark:border-purple-700'
@@ -477,37 +547,46 @@
                   class="w-4 h-4 text-purple-600 rounded-full cursor-pointer shrink-0 accent-purple-600"
                 />
                 <div class="flex items-center justify-between gap-2 flex-1 min-w-0">
-                  <div class="flex items-center gap-2">
-                    <span
-                      class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
-                      100
-                        ? 'text-emerald-600 dark:text-emerald-400'
-                        : 'text-purple-700 dark:text-purple-300'}"
-                    >
-                      {#if progress > 0}
-                        <div
-                          class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
-                            ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
-                            : 'bg-purple-400/30 dark:bg-purple-400/25'}"
-                          style="height: {progress}%;"
-                        ></div>
-                      {/if}
-                      <span class="relative z-10">{item.batchim}</span>
-                    </span>
-                    <div class="flex items-center gap-1.5 min-w-0">
-                      <span class="text-sm font-semibold text-gray-700 dark:text-gray-300 truncate">
-                        {item.name ?? item.batchim}
-                      </span>
-                      {#if item.combination}
-                        <span class="text-xs text-purple-600/80 dark:text-purple-400/80 font-medium">
-                          ({item.combination[0]}+{item.combination[1]})
-                        </span>
-                      {/if}
-                    </div>
-                  </div>
-                  <span class="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase shrink-0">
-                    {item.key}{item.shift ? '+Shift' : ''}
+                  <span
+                    class="relative overflow-hidden text-lg font-bold min-w-[32px] text-center leading-none {progress >=
+                    100
+                      ? 'text-emerald-600 dark:text-emerald-400'
+                      : 'text-purple-700 dark:text-purple-300'}"
+                  >
+                    {#if progress > 0}
+                      <div
+                        class="absolute bottom-0 inset-x-0 pointer-events-none {progress >= 100
+                          ? 'bg-emerald-500/25 dark:bg-emerald-400/25'
+                          : 'bg-purple-400/30 dark:bg-purple-400/25'}"
+                        style="height: {progress}%;"
+                      ></div>
+                    {/if}
+                    <span class="relative z-10">{item.batchim}</span>
                   </span>
+                  <div class="flex flex-col items-end shrink-0 text-right">
+                    {#if jamoKpm}
+                      <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
+                        {jamoKpm.kpm} 타/분
+                      </span>
+                      <div
+                        class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
+                      >
+                        <span>{jamoKpm.averageIkiMs}ms avg</span>
+                        {#if accuracy !== null}
+                          <span>·</span>
+                          <span>{accuracy}%</span>
+                        {/if}
+                      </div>
+                    {:else if accuracy !== null}
+                      <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
+                        {accuracy}% acc
+                      </span>
+                    {:else}
+                      <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
+                        — 타/분
+                      </span>
+                    {/if}
+                  </div>
                 </div>
               </label>
             {/each}

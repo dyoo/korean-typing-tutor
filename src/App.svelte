@@ -782,6 +782,7 @@
   activeFocusBatchim={masteryState.activeFocusBatchim ?? null}
   jamoStats={masteryState.jamoStats}
   sentenceCheckpointStats={masteryState.sentenceCheckpointStats}
+  speedStore={session.speedStore}
   collapsedStageIds={collapsedMasteryStageIds}
   onclose={closePanel}
   onmasterylevelchange={handleMasteryLevelChange}

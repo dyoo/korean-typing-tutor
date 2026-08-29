@@ -21,6 +21,13 @@ import {
 } from '../utils/jamoMastery';
 import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecompose';
 import { loadCustomDecks, saveCustomDeck, deleteCustomDeck } from '../utils/customDecks';
+import {
+  loadSpeedMetricsStore,
+  ExerciseSpeedTracker,
+  getJamoKpmStats,
+  getCategoryKpmStats,
+} from '../utils/speedTracker';
+import type { SpeedMetricsStore } from '../utils/speedTracker';
 import type { CurriculumData, ErrorReport, LessonItem, ModuleDefinition } from '../types/korean';
 import type {
   TutorMode,
@@ -67,6 +74,8 @@ export class TutorSession {
 
   public mode: TutorMode = $state('mastery');
   public masteryState: MasteryState = $state(loadMasteryState());
+  public speedStore: SpeedMetricsStore = $state(loadSpeedMetricsStore());
+  private speedTracker = new ExerciseSpeedTracker();
   public isMasteryGraduationPending: boolean = $state(false);
   private currentTargetType: MasteryTarget['type'] = 'jamo';
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -592,12 +601,17 @@ export class TutorSession {
 
     let newlyUnlockedJamo: string | undefined = undefined;
 
+    const currentInputJamos = decomposeStringToJamos(this.userInput);
+    const isCorrectKey =
+      currentInputJamos.length > 0 &&
+      expectedJamoBefore !== null &&
+      currentInputJamos[currentInputJamos.length - 1] === expectedJamoBefore;
+
+    this.speedTracker.recordKeystroke(key, expectedJamoBefore ?? undefined, isCorrectKey);
+
     // In Mastery Mode, evaluate Jamo telemetry on printable keys
     if (this.mode === 'mastery' && expectedJamoBefore && key.length === 1) {
-      const currentInputJamos = decomposeStringToJamos(this.userInput);
-      const isCorrect =
-        currentInputJamos.length > 0 &&
-        currentInputJamos[currentInputJamos.length - 1] === expectedJamoBefore;
+      const isCorrect = isCorrectKey;
 
       const attemptResult = recordJamoAttempt(this.masteryState, expectedJamoBefore, isCorrect);
       if (attemptResult.newlyUnlockedJamo) {
@@ -621,6 +635,12 @@ export class TutorSession {
 
     if (currentTarget.length > 0 && this.userInput === currentTarget) {
       this.isItemCompleted = true;
+      this.speedTracker.finalizeExercise(
+        this.speedStore,
+        currentTarget,
+        this.getCurrentItem().moduleId,
+        this.getCurrentExpectedJamo() ?? undefined,
+      );
       // Immediately save progress to LocalStorage upon finishing the exercise, skipping debounce delay.
       this.flushPendingSave();
       return this.makeResult(true, true, false, false, newlyUnlockedJamo);
@@ -687,6 +707,7 @@ export class TutorSession {
     this.accuracy = 100;
     this.isItemCompleted = false;
     this.engine.reset();
+    this.speedTracker.reset();
   }
 
   /** Manually resets entire session back to index 0. */
@@ -696,5 +717,20 @@ export class TutorSession {
       this.activeItems = this.shuffle(this.activeItems);
     }
     this.resetSessionState();
+  }
+
+  /** Returns the current speed metrics store. */
+  public getSpeedStore(): SpeedMetricsStore {
+    return this.speedStore;
+  }
+
+  /** Returns calculated KPM and latency statistics for a specific Jamo. */
+  public getJamoKpm(jamo: string) {
+    return getJamoKpmStats(this.speedStore, jamo);
+  }
+
+  /** Returns calculated KPM, accuracy, and count for a category ('words' or 'sentences'). */
+  public getCategoryKpm(category: 'words' | 'sentences') {
+    return getCategoryKpmStats(this.speedStore, category);
   }
 }
