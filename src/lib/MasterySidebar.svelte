@@ -394,15 +394,11 @@
                       <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
                         {jamoKpm.kpm} KPM
                       </span>
-                      <div
-                        class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
-                      >
-                        <span>{jamoKpm.averageIkiMs}ms avg</span>
-                        {#if accuracy !== null}
-                          <span>·</span>
-                          <span>{accuracy}%</span>
-                        {/if}
-                      </div>
+                      {#if accuracy !== null}
+                        <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                          {accuracy}% acc
+                        </span>
+                      {/if}
                     {:else if accuracy !== null}
                       <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
                         {accuracy}% acc
@@ -469,15 +465,11 @@
                       <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
                         {jamoKpm.kpm} KPM
                       </span>
-                      <div
-                        class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
-                      >
-                        <span>{jamoKpm.averageIkiMs}ms avg</span>
-                        {#if accuracy !== null}
-                          <span>·</span>
-                          <span>{accuracy}%</span>
-                        {/if}
-                      </div>
+                      {#if accuracy !== null}
+                        <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                          {accuracy}% acc
+                        </span>
+                      {/if}
                     {:else if accuracy !== null}
                       <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
                         {accuracy}% acc
@@ -544,15 +536,11 @@
                       <span class="text-xs font-mono font-bold text-gray-800 dark:text-gray-200">
                         {jamoKpm.kpm} KPM
                       </span>
-                      <div
-                        class="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 dark:text-gray-400"
-                      >
-                        <span>{jamoKpm.averageIkiMs}ms avg</span>
-                        {#if accuracy !== null}
-                          <span>·</span>
-                          <span>{accuracy}%</span>
-                        {/if}
-                      </div>
+                      {#if accuracy !== null}
+                        <span class="text-[10px] font-mono text-gray-500 dark:text-gray-400">
+                          {accuracy}% acc
+                        </span>
+                      {/if}
                     {:else if accuracy !== null}
                       <span class="text-xs font-mono font-medium text-gray-600 dark:text-gray-300">
                         {accuracy}% acc
