@@ -150,7 +150,7 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 ### Phase 7: Speed & Accuracy Analytics (KPM & IKI Diagnostics) — CURRENT PRIORITY
 
 Implement comprehensive Keys-Per-Minute (KPM / 타수) and Inter-Keystroke Interval (IKI) latency
-tracking adhering to [KPM.md](file:///Users/dyoo/work/korean-typing-tutor/KPM.md).
+tracking adhering to [KPM.md](file:///Users/dyoo/work/korean-typing-tutor/design-docs/KPM.md).
 
 - [ ] **Stage 1: Core Metrics & Background Engine (Silent Tracking)**
   - [ ] **Type Definitions (`src/types/kpm.ts`):** Define `KeystrokeEvent`, `JamoLatencyStats`,
