@@ -1,4 +1,4 @@
-import type { SyllableDecomposition } from '../types/korean';
+import type { FinalConsonantIndex, InitialConsonantIndex, SyllableDecomposition, VowelIndex, HangulSyllable } from '../types/korean';
 import {
   HANGUL_BASE,
   COMPOUND_VOWEL_DECOMP,
@@ -23,15 +23,15 @@ import {
  */
 function getSyllableIndices(
   char: string,
-): { initialConsonantIndex: number; vowelIndex: number; finalConsonantIndex: number } | null {
+): { initialConsonantIndex: InitialConsonantIndex; vowelIndex: VowelIndex; finalConsonantIndex: FinalConsonantIndex } | null {
   const offset = char.charCodeAt(0) - HANGUL_BASE;
   if (offset < 0 || offset > 11171) {
     return null;
   }
   return {
-    initialConsonantIndex: Math.floor(offset / 588),
-    vowelIndex: Math.floor((offset % 588) / 28),
-    finalConsonantIndex: offset % 28,
+    initialConsonantIndex: Math.floor(offset / 588) as InitialConsonantIndex,
+    vowelIndex: Math.floor((offset % 588) / 28) as VowelIndex,
+    finalConsonantIndex: offset % 28 as FinalConsonantIndex,
   };
 }
 
@@ -41,12 +41,12 @@ function getSyllableIndices(
  *   code = (initialIndex * 21 + vowelIndex) * 28 + finalIndex + 0xAC00
  */
 export function assembleSyllable(
-  initialConsonantIndex: number,
-  vowelIndex: number,
-  finalConsonantIndex: number,
-): string {
+  initialConsonantIndex: InitialConsonantIndex,
+  vowelIndex: VowelIndex,
+  finalConsonantIndex: FinalConsonantIndex,
+): HangulSyllable {
   const code = (initialConsonantIndex * 21 + vowelIndex) * 28 + finalConsonantIndex + HANGUL_BASE;
-  return String.fromCharCode(code);
+  return String.fromCharCode(code) as HangulSyllable;
 }
 
 /**

@@ -1,3 +1,5 @@
+import type { InitialConsonantIndex, VowelIndex, FinalConsonantIndex } from '../types/korean';
+
 /**
  * Unicode Base Offset for Hangul Syllables.
  * Hangul Syllables in Unicode span from U+AC00 ('가') to U+D7A3 ('힣').
@@ -89,22 +91,25 @@ export const FINAL_CONSONANT_STANDALONE = [
 /**
  * Direct Hangul Initial Consonant (Choseong) Jamo Mapping (derived from INITIAL_CONSONANT_STANDALONE).
  */
-export const DIRECT_INITIAL_CONSONANT_MAP: Record<string, number> = Object.fromEntries(
-  INITIAL_CONSONANT_STANDALONE.map((jamo, index) => [jamo, index]),
-);
+export const DIRECT_INITIAL_CONSONANT_MAP: Record<string, InitialConsonantIndex> =
+  Object.fromEntries(
+    INITIAL_CONSONANT_STANDALONE.map((jamo, index) => [jamo, index as InitialConsonantIndex]),
+  );
 
 /** Direct Hangul Vowel (Jungseong) Jamo Mapping (derived from VOWEL_STANDALONE). */
-export const DIRECT_VOWEL_MAP: Record<string, number> = Object.fromEntries(
-  VOWEL_STANDALONE.map((jamo, index) => [jamo, index]),
+export const DIRECT_VOWEL_MAP: Record<string, VowelIndex> = Object.fromEntries(
+  VOWEL_STANDALONE.map((jamo, index) => [jamo, index as VowelIndex]),
 );
 
 /** Direct Hangul Final Consonant (Jongseong) Jamo Mapping (derived from FINAL_CONSONANT_STANDALONE). */
-export const DIRECT_FINAL_CONSONANT_MAP: Record<string, number> = Object.fromEntries(
-  FINAL_CONSONANT_STANDALONE.map((jamo, index) => [jamo, index]).filter(([jamo]) => jamo !== ''),
+export const DIRECT_FINAL_CONSONANT_MAP: Record<string, FinalConsonantIndex> = Object.fromEntries(
+  FINAL_CONSONANT_STANDALONE.map((jamo, index) => [jamo, index as FinalConsonantIndex]).filter(
+    ([jamo]) => jamo !== '',
+  ),
 );
 
-function buildQwertyInitialMap(): Record<string, number> {
-  const map: Record<string, number> = {};
+function buildQwertyInitialMap(): Record<string, InitialConsonantIndex> {
+  const map: Record<string, InitialConsonantIndex> = {};
   for (const entry of DUBEOLSIK_KEY_DEFINITIONS) {
     if (entry.type === 'consonant') {
       const idx = DIRECT_INITIAL_CONSONANT_MAP[entry.jamo];
@@ -122,8 +127,8 @@ function buildQwertyInitialMap(): Record<string, number> {
   return map;
 }
 
-function buildQwertyVowelMap(): Record<string, number> {
-  const map: Record<string, number> = {};
+function buildQwertyVowelMap(): Record<string, VowelIndex> {
+  const map: Record<string, VowelIndex> = {};
   for (const entry of DUBEOLSIK_KEY_DEFINITIONS) {
     if (entry.type === 'vowel') {
       const idx = DIRECT_VOWEL_MAP[entry.jamo];
@@ -141,8 +146,8 @@ function buildQwertyVowelMap(): Record<string, number> {
   return map;
 }
 
-function buildQwertyFinalMap(): Record<string, number> {
-  const map: Record<string, number> = {};
+function buildQwertyFinalMap(): Record<string, FinalConsonantIndex> {
+  const map: Record<string, FinalConsonantIndex> = {};
   for (const entry of DUBEOLSIK_KEY_DEFINITIONS) {
     if (entry.type === 'consonant') {
       const idx = DIRECT_FINAL_CONSONANT_MAP[entry.jamo];
@@ -164,27 +169,27 @@ function buildQwertyFinalMap(): Record<string, number> {
  * QWERTY to Initial Consonant (Choseong) Index Mapping (0..18).
  * Derived from DUBEOLSIK_KEY_DEFINITIONS and DIRECT_INITIAL_CONSONANT_MAP.
  */
-export const INITIAL_CONSONANT_MAP: Record<string, number> = buildQwertyInitialMap();
+export const INITIAL_CONSONANT_MAP: Record<string, InitialConsonantIndex> = buildQwertyInitialMap();
 
 /**
  * QWERTY to Vowel (Jungseong) Index Mapping (0..20).
  * Derived from DUBEOLSIK_KEY_DEFINITIONS and DIRECT_VOWEL_MAP.
  */
-export const VOWEL_MAP: Record<string, number> = buildQwertyVowelMap();
+export const VOWEL_MAP: Record<string, VowelIndex> = buildQwertyVowelMap();
 
 /**
  * QWERTY to Final Consonant (Jongseong) Index Mapping (1..27).
  * Note: Index 0 represents NO final consonant.
  * Derived from DUBEOLSIK_KEY_DEFINITIONS and DIRECT_FINAL_CONSONANT_MAP.
  */
-export const FINAL_CONSONANT_MAP: Record<string, number> = buildQwertyFinalMap();
+export const FINAL_CONSONANT_MAP: Record<string, FinalConsonantIndex> = buildQwertyFinalMap();
 
 /**
  * Compound Vowel (Jungseong) Combinations.
  * Maps pair of (first_vowel, second_vowel) to compound Vowel (Jungseong) index.
  * Example: ㅗ (8) + ㅏ (0) = ㅘ (9).
  */
-export const COMPOUND_VOWEL: Record<string, number> = {
+export const COMPOUND_VOWEL: Record<string, VowelIndex> = {
   '8,0': 9, // ㅗ + ㅏ = ㅘ
   '8,1': 10, // ㅗ + ㅐ = ㅙ
   '8,20': 11, // ㅗ + ㅣ = ㅚ
@@ -192,12 +197,12 @@ export const COMPOUND_VOWEL: Record<string, number> = {
   '13,5': 15, // ㅜ + ㅔ = ㅞ
   '13,20': 16, // ㅜ + ㅣ = ㅟ
   '18,20': 19, // ㅡ + ㅣ = ㅢ
-};
+} as unknown as Record<string, VowelIndex>;
 
 /**
  * Decomposition map for compound vowels (Jungseong) (used when Backspace is pressed).
  */
-export const COMPOUND_VOWEL_DECOMP: Record<number, [number, number]> = {
+export const COMPOUND_VOWEL_DECOMP: Record<VowelIndex, [VowelIndex, VowelIndex]> = {
   9: [8, 0], // ㅘ -> ㅗ, ㅏ
   10: [8, 1], // ㅙ -> ㅗ, ㅐ
   11: [8, 20], // ㅚ -> ㅗ, ㅣ
@@ -205,14 +210,14 @@ export const COMPOUND_VOWEL_DECOMP: Record<number, [number, number]> = {
   15: [13, 5], // ㅞ -> ㅜ, ㅔ
   16: [13, 20], // ㅟ -> ㅜ, ㅣ
   19: [18, 20], // ㅢ -> ㅡ, ㅣ
-};
+} as unknown as Record<VowelIndex, [VowelIndex, VowelIndex]>;
 
 /**
  * Compound Final Consonant (Jongseong) Combinations.
  * Maps pair of (first_final_consonant, second_final_consonant) to compound Final Consonant (Jongseong) index.
  * Example: ㄹ (8) + ㄱ (1) = ㄺ (9).
  */
-export const COMPOUND_FINAL_CONSONANT: Record<string, number> = {
+export const COMPOUND_FINAL_CONSONANT: Record<string, FinalConsonantIndex> = {
   '1,19': 3, // ㄱ + ㅅ = ㄳ
   '4,22': 5, // ㄴ + ㅈ = ㄵ
   '4,27': 6, // ㄴ + ㅎ = ㄶ
@@ -224,12 +229,15 @@ export const COMPOUND_FINAL_CONSONANT: Record<string, number> = {
   '8,26': 14, // ㄹ + ㅍ = ㄿ
   '8,27': 15, // ㄹ + ㅎ = ㅀ
   '17,19': 18, // ㅂ + ㅅ = ㅄ
-};
+} as unknown as Record<string, FinalConsonantIndex>;
 
 /**
  * Decomposition map for compound final consonants (Jongseong) (used for Backspace and Liaison splitting).
  */
-export const COMPOUND_FINAL_CONSONANT_DECOMP: Record<number, [number, number]> = {
+export const COMPOUND_FINAL_CONSONANT_DECOMP: Record<
+  FinalConsonantIndex,
+  [FinalConsonantIndex, FinalConsonantIndex]
+> = {
   3: [1, 19], // ㄳ -> ㄱ, ㅅ
   5: [4, 22], // ㄵ -> ㄴ, ㅈ
   6: [4, 27], // ㄶ -> ㄴ, ㅎ
@@ -241,13 +249,16 @@ export const COMPOUND_FINAL_CONSONANT_DECOMP: Record<number, [number, number]> =
   14: [8, 26], // ㄿ -> ㄹ, ㅍ
   15: [8, 27], // ㅀ -> ㄹ, ㅎ
   18: [17, 19], // ㅄ -> ㅂ, ㅅ
-};
+} as unknown as Record<FinalConsonantIndex, [FinalConsonantIndex, FinalConsonantIndex]>;
 
 /**
  * Map Final Consonant (Jongseong) index to Initial Consonant (Choseong) index.
  * Used when a final consonant carries over to become the initial consonant of the next syllable.
  */
-export const FINAL_CONSONANT_TO_INITIAL_CONSONANT: Record<number, number> = {
+export const FINAL_CONSONANT_TO_INITIAL_CONSONANT: Record<
+  FinalConsonantIndex,
+  InitialConsonantIndex
+> = {
   1: 0, // ㄱ -> ㄱ
   2: 1, // ㄲ -> ㄲ
   4: 2, // ㄴ -> ㄴ
@@ -264,7 +275,7 @@ export const FINAL_CONSONANT_TO_INITIAL_CONSONANT: Record<number, number> = {
   25: 16, // ㅌ -> ㅌ
   26: 17, // ㅍ -> ㅍ
   27: 18, // ㅎ -> ㅎ
-};
+} as unknown as Record<FinalConsonantIndex, InitialConsonantIndex>;
 
 /**
  * Explicit helper to construct compound map keys from two numeric Jamo indices.
@@ -279,7 +290,7 @@ export function makeCompoundKey(firstIndex: number, secondIndex: number): string
  * Map of single Final Consonant (Jongseong) index to standalone Initial Consonant (Choseong) / Jamo consonant.
  * Index 1..27 corresponding to Unicode Hangul Final Consonant (Jongseong) definitions.
  */
-export const FINAL_CONSONANT_SINGLE_JAMO: Record<number, string> = {
+export const FINAL_CONSONANT_SINGLE_JAMO: Record<FinalConsonantIndex, string> = {
   1: 'ㄱ',
   2: 'ㄲ',
   4: 'ㄴ',
@@ -296,7 +307,7 @@ export const FINAL_CONSONANT_SINGLE_JAMO: Record<number, string> = {
   25: 'ㅌ',
   26: 'ㅍ',
   27: 'ㅎ',
-};
+} as unknown as Record<FinalConsonantIndex, string>;
 
 /**
  * Checks whether a given character or character code is within the Unicode Hangul Syllables block (U+AC00..U+D7A3).

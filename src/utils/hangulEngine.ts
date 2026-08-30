@@ -1,3 +1,4 @@
+import type { InitialConsonantIndex, VowelIndex, FinalConsonantIndex } from '../types/korean';
 import {
   isHangulSyllable,
   INITIAL_CONSONANT_MAP,
@@ -22,9 +23,9 @@ import { assembleSyllable } from './hangulDecompose';
  * Implements a state machine that converts raw QWERTY keystrokes OR native Korean 2-set Jamos into composed Hangul syllables.
  */
 export class HangulEngine {
-  private currentInitialConsonant: number | null = null;
-  private currentVowel: number | null = null;
-  private currentFinalConsonant: number | null = null;
+  private currentInitialConsonant: InitialConsonantIndex | null = null;
+  private currentVowel: VowelIndex | null = null;
+  private currentFinalConsonant: FinalConsonantIndex | null = null;
   private composedString = '';
 
   /**
@@ -35,7 +36,7 @@ export class HangulEngine {
       return assembleSyllable(
         this.currentInitialConsonant,
         this.currentVowel,
-        this.currentFinalConsonant ?? 0,
+        this.currentFinalConsonant ?? (0 as FinalConsonantIndex),
       );
     }
     if (this.currentInitialConsonant !== null) {
@@ -282,13 +283,13 @@ export class HangulEngine {
     }
 
     const lastChar = prefix[prefix.length - 1];
-    const initIdx = INITIAL_CONSONANT_STANDALONE.indexOf(lastChar);
-    const vowelIdx = VOWEL_STANDALONE.indexOf(lastChar);
+    const initIdx = DIRECT_INITIAL_CONSONANT_MAP[lastChar];
+    const vowelIdx = DIRECT_VOWEL_MAP[lastChar];
 
-    if (initIdx !== -1) {
+    if (initIdx !== undefined) {
       this.composedString = prefix.slice(0, -1);
       this.currentInitialConsonant = initIdx;
-    } else if (vowelIdx !== -1) {
+    } else if (vowelIdx !== undefined) {
       this.composedString = prefix.slice(0, -1);
       this.currentVowel = vowelIdx;
     } else {

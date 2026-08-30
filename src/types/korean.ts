@@ -54,6 +54,3 @@ export type FinalConsonantIndex = Brand<number, 'FinalConsonantIndex'>;
 
 /** A complete Hangul syllable block in the Unicode range  U+AC00..U+D7A3 (e.g., '한', '글'). */
 export type HangulSyllable = Brand<string, 'HangulSyllable'>;
-
-/** An individual Jamo character (e.g., 'ㄱ', 'ㅏ', 'ㄺ'). */
-export type JamoChar = Brand<string, 'JamoChar'>;
