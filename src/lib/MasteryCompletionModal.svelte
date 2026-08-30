@@ -7,7 +7,8 @@
     onOpenFocusMode?: () => void;
   }
 
-  let { show, onClose, onSwitchToFreeForm, onOpenMasterySidebar, onOpenFocusMode }: Props = $props();
+  let { show, onClose, onSwitchToFreeForm, onOpenMasterySidebar, onOpenFocusMode }: Props =
+    $props();
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && show) {
@@ -90,7 +91,8 @@
             </span>
           </div>
           <p class="mt-1 text-xs md:text-sm text-gray-600 dark:text-gray-400 leading-normal">
-            Solidify your skills with word practice, full sentence flow, or targeted drills on any of the 27 Korean final consonants (받침).
+            Solidify your skills with word practice, full sentence flow, or targeted drills on any
+            of the 27 Korean final consonants (받침).
           </p>
         </button>
 

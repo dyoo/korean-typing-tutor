@@ -59,7 +59,10 @@ function getEffectiveLength(targetLength: number, displayTextLength: number = 0)
 }
 
 function getTier(length: number): FontTierConfig {
-  return FONT_TIERS.find((tier) => length <= tier.maxEffectiveLength) ?? FONT_TIERS[FONT_TIERS.length - 1];
+  return (
+    FONT_TIERS.find((tier) => length <= tier.maxEffectiveLength) ??
+    FONT_TIERS[FONT_TIERS.length - 1]
+  );
 }
 
 /**

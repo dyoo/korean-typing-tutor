@@ -10,7 +10,7 @@ function createMockMasteryState(): MasteryState {
     activeCheckpointId: null,
     activeFocusBatchim: null,
     jamoStats: {
-      'ㅓ': {
+      ㅓ: {
         totalAttempts: 20,
         correctAttempts: 20,
         recentHistory: Array(20).fill(true),
@@ -18,7 +18,7 @@ function createMockMasteryState(): MasteryState {
       },
     },
     sentenceCheckpointStats: {
-      'cp_home_row': {
+      cp_home_row: {
         completedCount: 3,
         isMastered: false,
       },

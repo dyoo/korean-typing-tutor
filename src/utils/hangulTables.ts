@@ -275,10 +275,6 @@ export function makeCompoundKey(firstIndex: number, secondIndex: number): string
   return `${firstIndex},${secondIndex}`;
 }
 
-
-
-
-
 /**
  * Map of single Final Consonant (Jongseong) index to standalone Initial Consonant (Choseong) / Jamo consonant.
  * Index 1..27 corresponding to Unicode Hangul Final Consonant (Jongseong) definitions.

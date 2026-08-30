@@ -199,4 +199,3 @@ describe('Settings module persistence and SettingsStore', () => {
     expect(loadSettings()).toEqual(DEFAULT_SETTINGS);
   });
 });
-

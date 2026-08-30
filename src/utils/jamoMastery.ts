@@ -279,22 +279,99 @@ export const CONSONANT_FOCUS_MAP: Record<string, JamoFocusItem> = Object.fromEnt
 export const BATCHIM_FOCUS_LIST: BatchimFocusItem[] = [
   { batchim: 'ㄱ', jamo: 'ㄱ', key: 'r', hand: 'left', name: '기역' },
   { batchim: 'ㄲ', jamo: 'ㄲ', key: 'r', shift: true, hand: 'left', name: '쌍기역' },
-  { batchim: 'ㄳ', jamo: 'ㄳ', key: 'rt', hand: 'left', name: '기역시옷', combination: ['ㄱ', 'ㅅ'] },
+  {
+    batchim: 'ㄳ',
+    jamo: 'ㄳ',
+    key: 'rt',
+    hand: 'left',
+    name: '기역시옷',
+    combination: ['ㄱ', 'ㅅ'],
+  },
   { batchim: 'ㄴ', jamo: 'ㄴ', key: 's', hand: 'left', name: '니은' },
-  { batchim: 'ㄵ', jamo: 'ㄵ', key: 'sw', hand: 'left', name: '니은지읒', combination: ['ㄴ', 'ㅈ'] },
-  { batchim: 'ㄶ', jamo: 'ㄶ', key: 'sg', hand: 'left', name: '니은히읗', combination: ['ㄴ', 'ㅎ'] },
+  {
+    batchim: 'ㄵ',
+    jamo: 'ㄵ',
+    key: 'sw',
+    hand: 'left',
+    name: '니은지읒',
+    combination: ['ㄴ', 'ㅈ'],
+  },
+  {
+    batchim: 'ㄶ',
+    jamo: 'ㄶ',
+    key: 'sg',
+    hand: 'left',
+    name: '니은히읗',
+    combination: ['ㄴ', 'ㅎ'],
+  },
   { batchim: 'ㄷ', jamo: 'ㄷ', key: 'e', hand: 'left', name: '디귿' },
   { batchim: 'ㄹ', jamo: 'ㄹ', key: 'f', hand: 'left', name: '리을' },
-  { batchim: 'ㄺ', jamo: 'ㄺ', key: 'fr', hand: 'left', name: '리을기역', combination: ['ㄹ', 'ㄱ'] },
-  { batchim: 'ㄻ', jamo: 'ㄻ', key: 'fa', hand: 'left', name: '리을미음', combination: ['ㄹ', 'ㅁ'] },
-  { batchim: 'ㄼ', jamo: 'ㄼ', key: 'fq', hand: 'left', name: '리을비읍', combination: ['ㄹ', 'ㅂ'] },
-  { batchim: 'ㄽ', jamo: 'ㄽ', key: 'ft', hand: 'left', name: '리을시옷', combination: ['ㄹ', 'ㅅ'] },
-  { batchim: 'ㄾ', jamo: 'ㄾ', key: 'fx', hand: 'left', name: '리을티읕', combination: ['ㄹ', 'ㅌ'] },
-  { batchim: 'ㄿ', jamo: 'ㄿ', key: 'fv', hand: 'left', name: '리을피읖', combination: ['ㄹ', 'ㅍ'] },
-  { batchim: 'ㅀ', jamo: 'ㅀ', key: 'fg', hand: 'left', name: '리을히읗', combination: ['ㄹ', 'ㅎ'] },
+  {
+    batchim: 'ㄺ',
+    jamo: 'ㄺ',
+    key: 'fr',
+    hand: 'left',
+    name: '리을기역',
+    combination: ['ㄹ', 'ㄱ'],
+  },
+  {
+    batchim: 'ㄻ',
+    jamo: 'ㄻ',
+    key: 'fa',
+    hand: 'left',
+    name: '리을미음',
+    combination: ['ㄹ', 'ㅁ'],
+  },
+  {
+    batchim: 'ㄼ',
+    jamo: 'ㄼ',
+    key: 'fq',
+    hand: 'left',
+    name: '리을비읍',
+    combination: ['ㄹ', 'ㅂ'],
+  },
+  {
+    batchim: 'ㄽ',
+    jamo: 'ㄽ',
+    key: 'ft',
+    hand: 'left',
+    name: '리을시옷',
+    combination: ['ㄹ', 'ㅅ'],
+  },
+  {
+    batchim: 'ㄾ',
+    jamo: 'ㄾ',
+    key: 'fx',
+    hand: 'left',
+    name: '리을티읕',
+    combination: ['ㄹ', 'ㅌ'],
+  },
+  {
+    batchim: 'ㄿ',
+    jamo: 'ㄿ',
+    key: 'fv',
+    hand: 'left',
+    name: '리을피읖',
+    combination: ['ㄹ', 'ㅍ'],
+  },
+  {
+    batchim: 'ㅀ',
+    jamo: 'ㅀ',
+    key: 'fg',
+    hand: 'left',
+    name: '리을히읗',
+    combination: ['ㄹ', 'ㅎ'],
+  },
   { batchim: 'ㅁ', jamo: 'ㅁ', key: 'a', hand: 'left', name: '미음' },
   { batchim: 'ㅂ', jamo: 'ㅂ', key: 'q', hand: 'left', name: '비읍' },
-  { batchim: 'ㅄ', jamo: 'ㅄ', key: 'qt', hand: 'left', name: '비읍시옷', combination: ['ㅂ', 'ㅅ'] },
+  {
+    batchim: 'ㅄ',
+    jamo: 'ㅄ',
+    key: 'qt',
+    hand: 'left',
+    name: '비읍시옷',
+    combination: ['ㅂ', 'ㅅ'],
+  },
   { batchim: 'ㅅ', jamo: 'ㅅ', key: 't', hand: 'left', name: '시옷' },
   { batchim: 'ㅆ', jamo: 'ㅆ', key: 't', shift: true, hand: 'left', name: '쌍시옷' },
   { batchim: 'ㅇ', jamo: 'ㅇ', key: 'd', hand: 'left', name: '이응' },
@@ -494,8 +571,7 @@ export function loadMasteryState(): MasteryState {
     const activeCheckpointId =
       typeof parsed.activeCheckpointId === 'string' ? parsed.activeCheckpointId : null;
     const activeFocusBatchim =
-      typeof parsed.activeFocusBatchim === 'string' &&
-      isValidFocusTarget(parsed.activeFocusBatchim)
+      typeof parsed.activeFocusBatchim === 'string' && isValidFocusTarget(parsed.activeFocusBatchim)
         ? parsed.activeFocusBatchim
         : null;
 
@@ -1402,4 +1478,3 @@ export function selectNextMasteryItem(
 
   return pool[Math.floor(Math.random() * pool.length)];
 }
-

@@ -94,7 +94,11 @@
     { "id": "b5-89", "target": "메뉴", "translation": "Menu" },
     { "id": "b5-90", "target": "휴일", "translation": "Holiday / Day off" },
     { "id": "b5-91", "target": "유람선", "translation": "Sightseeing boat / Cruise ship" },
-    { "id": "b5-92", "target": "유학생", "translation": "International student / Study abroad student" },
+    {
+      "id": "b5-92",
+      "target": "유학생",
+      "translation": "International student / Study abroad student"
+    },
     { "id": "b5-93", "target": "인류", "translation": "Humanity / Humankind" },
     { "id": "b5-94", "target": "합류", "translation": "Joining / Merging / Confluence" },
     { "id": "b5-95", "target": "유물", "translation": "Relic / Historical artifact" },

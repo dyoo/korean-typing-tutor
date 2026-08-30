@@ -100,4 +100,3 @@ const contentData: CurriculumData = {
 
 export * from './curriculumCategories';
 export default contentData;
-

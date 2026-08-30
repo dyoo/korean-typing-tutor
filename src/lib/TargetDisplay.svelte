@@ -106,11 +106,7 @@
       return;
     }
 
-    if (
-      activeTargetCursorIndex !== undefined &&
-      activeCursorElement &&
-      targetContainerElement
-    ) {
+    if (activeTargetCursorIndex !== undefined && activeCursorElement && targetContainerElement) {
       if (rafId !== null) {
         cancelAnimationFrame(rafId);
       }

@@ -117,4 +117,3 @@ export function getInputCaretStatus(
 
   return { hasCaret, isLeading };
 }
-

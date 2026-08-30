@@ -111,5 +111,3 @@ describe('Content data validation', () => {
     expect(contentData.items.length).toBe(7887);
   });
 });
-
-

@@ -49,12 +49,24 @@
     { "id": "b6-44", "target": "얘기하다", "translation": "To talk / To chat" },
     { "id": "b6-45", "target": "옛날얘기", "translation": "Old folklore / Fairy tale / Old story" },
     { "id": "b6-46", "target": "재미있는 얘기", "translation": "Fun story / Entertaining chat" },
-    { "id": "b6-47", "target": "속닥속닥 얘기", "translation": "Whispering conversation / Murmuring chat" },
+    {
+      "id": "b6-47",
+      "target": "속닥속닥 얘기",
+      "translation": "Whispering conversation / Murmuring chat"
+    },
     { "id": "b6-48", "target": "뺨", "translation": "Cheek" },
-    { "id": "b6-49", "target": "뱁새", "translation": "Parrotbill / Korean crow-tit bird (Baepsae)" },
+    {
+      "id": "b6-49",
+      "target": "뱁새",
+      "translation": "Parrotbill / Korean crow-tit bird (Baepsae)"
+    },
     { "id": "b6-50", "target": "얍", "translation": "Yah! / Energetic shout" },
     { "id": "b6-51", "target": "얘기책", "translation": "Storybook" },
-    { "id": "b6-52", "target": "얘기꽃", "translation": "Blossoming lively chat / Blooming conversation" },
+    {
+      "id": "b6-52",
+      "target": "얘기꽃",
+      "translation": "Blossoming lively chat / Blooming conversation"
+    },
     { "id": "b6-53", "target": "코끼리", "translation": "Elephant" },
     { "id": "b6-54", "target": "아저씨", "translation": "Middle-aged man / Mister" },
     { "id": "b6-55", "target": "아가씨", "translation": "Young lady / Miss" },
@@ -66,8 +78,16 @@
     { "id": "b6-61", "target": "나쁘다", "translation": "To be bad / Harmful" },
     { "id": "b6-62", "target": "비싸다", "translation": "To be expensive" },
     { "id": "b6-63", "target": "싸다", "translation": "To be cheap / To pack, wrap" },
-    { "id": "b6-64", "target": "쓰다", "translation": "To write / To use / To wear / To be bitter" },
-    { "id": "b6-65", "target": "끄다", "translation": "To turn off / To switch off / To extinguish" },
+    {
+      "id": "b6-64",
+      "target": "쓰다",
+      "translation": "To write / To use / To wear / To be bitter"
+    },
+    {
+      "id": "b6-65",
+      "target": "끄다",
+      "translation": "To turn off / To switch off / To extinguish"
+    },
     { "id": "b6-66", "target": "짜다", "translation": "To be salty / To squeeze / To weave" },
     { "id": "b6-67", "target": "맵다", "translation": "To be spicy / Hot" },
     { "id": "b6-68", "target": "똑똑하다", "translation": "To be smart / Clever" },
@@ -106,8 +126,16 @@
     { "id": "b6-101", "target": "끌다", "translation": "To drag / To pull / To attract" },
     { "id": "b6-102", "target": "꿈속", "translation": "In a dream / Dreamland" },
     { "id": "b6-103", "target": "쑥스럽다", "translation": "To feel shy / Bashful / Awkward" },
-    { "id": "b6-104", "target": "씁쓸하다", "translation": "To feel bittersweet / Slightly bitter" },
-    { "id": "b6-105", "target": "뿌듯하다", "translation": "To feel proud / Heartwarming satisfaction" },
+    {
+      "id": "b6-104",
+      "target": "씁쓸하다",
+      "translation": "To feel bittersweet / Slightly bitter"
+    },
+    {
+      "id": "b6-105",
+      "target": "뿌듯하다",
+      "translation": "To feel proud / Heartwarming satisfaction"
+    },
     { "id": "b6-106", "target": "계약", "translation": "Contract / Agreement" },
     { "id": "b6-107", "target": "달콤하다", "translation": "To be sweet / Luscious" },
     { "id": "b6-108", "target": "새롭다", "translation": "To be new / Fresh / Novel" },

@@ -49,7 +49,9 @@ export function sanitizeFlashcardText(raw: string): string {
   text = text.replace(/[\r\n\t]+/g, ' ').replace(/\s{2,}/g, ' ');
 
   // Strip non-printable ASCII / SQLite binary noise characters from edges
-  text = text.replace(/^[^\x20-\x7E\uAC00-\uD7A3\u1100-\u11FF\u3130-\u318F\u4E00-\u9FFF]+/, '').trim();
+  text = text
+    .replace(/^[^\x20-\x7E\uAC00-\uD7A3\u1100-\u11FF\u3130-\u318F\u4E00-\u9FFF]+/, '')
+    .trim();
 
   // Strip wrapping quotation marks if present
   if (
@@ -121,9 +123,7 @@ export function isTypeableKoreanTarget(target: string): boolean {
 
   // Reject untypeable Hanja (CJK Ideographs) and Japanese Kana
   if (
-    /[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF\u3040-\u309F\u30A0-\u30FF]/.test(
-      target,
-    )
+    /[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF\u3040-\u309F\u30A0-\u30FF]/.test(target)
   ) {
     return false;
   }
@@ -212,8 +212,13 @@ export function parseTextFlashcards(
   filename: string = 'Custom Deck',
   deckId?: string,
 ): CustomDeck {
-  const generatedId = deckId ?? `custom_deck_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-  const title = filename.replace(/\.[^/.]+$/, '').replace(/[_-]+/g, ' ').trim() || 'Custom Flashcards';
+  const generatedId =
+    deckId ?? `custom_deck_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+  const title =
+    filename
+      .replace(/\.[^/.]+$/, '')
+      .replace(/[_-]+/g, ' ')
+      .trim() || 'Custom Flashcards';
 
   const lines = content.split(/\r?\n/);
   const items: LessonItem[] = [];
@@ -246,7 +251,8 @@ export function parseTextFlashcards(
     }
 
     // Auto-detect delimiter if not specified
-    const lineDelimiter = delimiter ?? (rawLine.includes('\t') ? '\t' : rawLine.includes(';') ? ';' : ',');
+    const lineDelimiter =
+      delimiter ?? (rawLine.includes('\t') ? '\t' : rawLine.includes(';') ? ';' : ',');
     const rawFields = rawLine.split(lineDelimiter);
     if (rawFields.length < 1) {
       continue;
@@ -491,8 +497,13 @@ export async function parseAnkiPackage(
   filename: string = 'Anki Deck.apkg',
   deckId?: string,
 ): Promise<CustomDeck> {
-  const generatedId = deckId ?? `custom_deck_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
-  const title = filename.replace(/\.[^/.]+$/, '').replace(/[_-]+/g, ' ').trim() || 'Anki Deck';
+  const generatedId =
+    deckId ?? `custom_deck_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+  const title =
+    filename
+      .replace(/\.[^/.]+$/, '')
+      .replace(/[_-]+/g, ' ')
+      .trim() || 'Anki Deck';
 
   // 1. Extract collection.anki2 or collection.anki21 database file from ZIP
   const dbBytes = await extractFileFromZip(buffer, /collection\.anki2(1b?)?$/i);

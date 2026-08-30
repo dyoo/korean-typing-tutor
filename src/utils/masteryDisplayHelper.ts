@@ -29,8 +29,7 @@ export function computeMasteryDisplayInfo(
   getJamoKpm?: (jamo: string) => { kpm: number } | null,
   showKpm = true,
 ): MasteryDisplayInfo {
-  const activeLearningJamo =
-    activeMasteryTarget.type === 'jamo' ? activeMasteryTarget.item : null;
+  const activeLearningJamo = activeMasteryTarget.type === 'jamo' ? activeMasteryTarget.item : null;
   const activeFocusBatchimItem =
     activeMasteryTarget.type === 'focus' ? activeMasteryTarget.item : null;
   const activeFocusVowelItem =

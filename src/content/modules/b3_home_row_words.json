@@ -73,7 +73,11 @@
     { "id": "b3-68", "target": "나나", "translation": "Nana (name / you and me)" },
     { "id": "b3-69", "target": "너너", "translation": "You and you / Calling each other 'you'" },
     { "id": "b3-70", "target": "오라", "translation": "Come here! / Command to come" },
-    { "id": "b3-71", "target": "이라", "translation": "Called ... / To be (citation / imperative)" },
+    {
+      "id": "b3-71",
+      "target": "이라",
+      "translation": "Called ... / To be (citation / imperative)"
+    },
     { "id": "b3-72", "target": "알알이", "translation": "Grain by grain" },
     { "id": "b3-73", "target": "얼얼", "translation": "Stinging / Numbing (sensation)" },
     { "id": "b3-74", "target": "알알", "translation": "Individual grains" },

@@ -153,8 +153,7 @@ export class TutorSession {
 
     while (this.masteryQueue.length < 5) {
       const lastItem =
-        this.masteryQueue[this.masteryQueue.length - 1] ??
-        this.activeItems[this.currentIndex];
+        this.masteryQueue[this.masteryQueue.length - 1] ?? this.activeItems[this.currentIndex];
       const next = selectNextMasteryItem(
         this.activeItems,
         activeTarget,

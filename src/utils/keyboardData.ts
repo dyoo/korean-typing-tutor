@@ -142,10 +142,7 @@ const SYMBOL_KEY_METADATA: Record<string, { hand: KeyboardHand; shift?: boolean 
  * Builds the derived lookup map from single Hangul Jamos, numbers, and symbols
  * to their keystroke representation, Shift requirement, and typing hand.
  */
-function buildJamoToKeyMap(): Record<
-  string,
-  { key: string; shift?: boolean; hand: KeyboardHand }
-> {
+function buildJamoToKeyMap(): Record<string, { key: string; shift?: boolean; hand: KeyboardHand }> {
   const map: Record<string, { key: string; shift?: boolean; hand: KeyboardHand }> = {};
 
   for (const entry of DUBEOLSIK_KEY_DEFINITIONS) {

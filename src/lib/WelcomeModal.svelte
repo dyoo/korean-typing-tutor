@@ -41,7 +41,10 @@
     >
       <!-- Header -->
       <div class="flex flex-col items-center text-center gap-1.5">
-        <h2 id="welcome-modal-title" class="text-2xl md:text-3xl font-black tracking-tight text-gray-900 dark:text-gray-50">
+        <h2
+          id="welcome-modal-title"
+          class="text-2xl md:text-3xl font-black tracking-tight text-gray-900 dark:text-gray-50"
+        >
           Korean Typing Tutor
         </h2>
 
@@ -53,13 +56,16 @@
       <!-- Mode Cards Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5 text-left">
         <!-- Mastery Mode Card -->
-        <div class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 flex flex-col justify-between gap-2">
+        <div
+          class="p-4 rounded-2xl bg-amber-50/70 dark:bg-amber-950/30 border border-amber-200/80 dark:border-amber-800/60 flex flex-col justify-between gap-2"
+        >
           <div class="flex flex-col gap-1">
-            <span class="text-amber-800 dark:text-amber-400 font-bold text-sm">
-              Mastery Mode
-            </span>
+            <span class="text-amber-800 dark:text-amber-400 font-bold text-sm"> Mastery Mode </span>
             <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              Guided spaced repetition starting from home-row vowels (<span class="font-bold text-gray-900 dark:text-gray-100">ㅗ, ㅓ, ㅏ, ㅣ</span>) and moving outward. Unlocks new Jamo letters and real words as rolling accuracy criteria are met.
+              Guided spaced repetition starting from home-row vowels (<span
+                class="font-bold text-gray-900 dark:text-gray-100">ㅗ, ㅓ, ㅏ, ㅣ</span
+              >) and moving outward. Unlocks new Jamo letters and real words as rolling accuracy
+              criteria are met.
             </p>
           </div>
           <span class="text-[11px] font-semibold text-amber-700 dark:text-amber-400">
@@ -68,13 +74,23 @@
         </div>
 
         <!-- Free-form Mode Card -->
-        <div class="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-800/60 flex flex-col justify-between gap-2">
+        <div
+          class="p-4 rounded-2xl bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200/80 dark:border-blue-800/60 flex flex-col justify-between gap-2"
+        >
           <div class="flex flex-col gap-1">
-            <span class="text-blue-800 dark:text-blue-400 font-bold text-sm">
-              Free-form Mode
-            </span>
+            <span class="text-blue-800 dark:text-blue-400 font-bold text-sm"> Free-form Mode </span>
             <p class="text-xs text-gray-600 dark:text-gray-300 leading-relaxed">
-              Curriculum explorer across 32 modules of vocabulary, expressions, and sentences, plus support for importing your own Anki flashcard decks (<span class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200">.apkg</span>, <span class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200">.tsv</span>, <span class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200">.txt</span>).
+              Curriculum explorer across 32 modules of vocabulary, expressions, and sentences, plus
+              support for importing your own Anki flashcard decks (<span
+                class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200"
+                >.apkg</span
+              >,
+              <span class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200"
+                >.tsv</span
+              >,
+              <span class="font-mono text-[11px] font-semibold text-gray-800 dark:text-gray-200"
+                >.txt</span
+              >).
             </p>
           </div>
           <span class="text-[11px] font-semibold text-blue-700 dark:text-blue-400">
@@ -85,7 +101,8 @@
 
       <!-- Guidance -->
       <p class="text-xs text-center text-gray-500 dark:text-gray-400 -my-1 leading-relaxed">
-        Use the left sidebar to select modules, import custom Anki decks, or review progress, and top-right settings to toggle voice synthesis, translations, and theme.
+        Use the left sidebar to select modules, import custom Anki decks, or review progress, and
+        top-right settings to toggle voice synthesis, translations, and theme.
       </p>
 
       <!-- Action Button -->
@@ -96,12 +113,15 @@
           class="w-full py-3.5 px-6 rounded-2xl bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white font-bold text-base shadow-lg shadow-blue-500/25 hover:shadow-blue-500/35 transition-all flex items-center justify-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
         >
           <span>Begin Typing</span>
-          <span class="text-xs opacity-75 font-mono px-2 py-0.5 rounded bg-blue-700/60 border border-blue-400/40">
+          <span
+            class="text-xs opacity-75 font-mono px-2 py-0.5 rounded bg-blue-700/60 border border-blue-400/40"
+          >
             Enter ↵
           </span>
         </button>
         <span class="text-[11px] text-gray-400 dark:text-gray-500">
-          Press <kbd class="font-mono font-semibold text-gray-500 dark:text-gray-400">Enter</kbd> or <kbd class="font-mono font-semibold text-gray-500 dark:text-gray-400">Space</kbd> to start
+          Press <kbd class="font-mono font-semibold text-gray-500 dark:text-gray-400">Enter</kbd> or
+          <kbd class="font-mono font-semibold text-gray-500 dark:text-gray-400">Space</kbd> to start
         </span>
       </div>
     </div>

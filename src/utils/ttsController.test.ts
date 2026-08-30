@@ -3,17 +3,47 @@ import { TTSController, DEFAULT_TTS_SPEED } from './ttsController.svelte';
 
 describe('TTSController Unit Tests (Native Speech)', () => {
   let controller: TTSController;
-  let mockVoices: Array<{ voiceURI: string; name: string; lang: string; default: boolean; localService: boolean }> = [];
+  let mockVoices: Array<{
+    voiceURI: string;
+    name: string;
+    lang: string;
+    default: boolean;
+    localService: boolean;
+  }> = [];
   let spokenUtterances: SpeechSynthesisUtterance[] = [];
   let mockCancel: ReturnType<typeof vi.fn>;
   let mockSpeak: ReturnType<typeof vi.fn>;
 
   beforeEach(() => {
     mockVoices = [
-      { voiceURI: 'com.apple.speech.synthesis.voice.yuna', name: 'Yuna', lang: 'ko-KR', default: true, localService: true },
-      { voiceURI: 'com.apple.speech.synthesis.voice.alex', name: 'Alex', lang: 'en-US', default: false, localService: true },
-      { voiceURI: 'Google 한국어', name: 'Google 한국어', lang: 'ko-KR', default: false, localService: false },
-      { voiceURI: 'Microsoft SunHi Online (Natural) - Korean', name: 'Microsoft SunHi', lang: 'ko-KR', default: false, localService: true },
+      {
+        voiceURI: 'com.apple.speech.synthesis.voice.yuna',
+        name: 'Yuna',
+        lang: 'ko-KR',
+        default: true,
+        localService: true,
+      },
+      {
+        voiceURI: 'com.apple.speech.synthesis.voice.alex',
+        name: 'Alex',
+        lang: 'en-US',
+        default: false,
+        localService: true,
+      },
+      {
+        voiceURI: 'Google 한국어',
+        name: 'Google 한국어',
+        lang: 'ko-KR',
+        default: false,
+        localService: false,
+      },
+      {
+        voiceURI: 'Microsoft SunHi Online (Natural) - Korean',
+        name: 'Microsoft SunHi',
+        lang: 'ko-KR',
+        default: false,
+        localService: true,
+      },
     ];
     spokenUtterances = [];
     mockCancel = vi.fn();

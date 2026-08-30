@@ -8,14 +8,8 @@
     onselect: () => void;
   }
 
-  let {
-    title,
-    completedCount,
-    requiredCompletions,
-    isMastered,
-    isSelected,
-    onselect,
-  }: Props = $props();
+  let { title, completedCount, requiredCompletions, isMastered, isSelected, onselect }: Props =
+    $props();
 
   let percent = $derived(
     requiredCompletions > 0
@@ -51,13 +45,9 @@
       </span>
     </div>
     {#if percent > 0}
-      <div
-        class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full mt-1 overflow-hidden"
-      >
+      <div class="w-full bg-gray-200 dark:bg-gray-700 h-1.5 rounded-full mt-1 overflow-hidden">
         <div
-          class="h-full {isMastered
-            ? 'bg-emerald-500'
-            : 'bg-amber-500'} transition-all"
+          class="h-full {isMastered ? 'bg-emerald-500' : 'bg-amber-500'} transition-all"
           style="width: {percent}%;"
         ></div>
       </div>

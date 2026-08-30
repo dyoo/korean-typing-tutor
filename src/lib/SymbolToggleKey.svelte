@@ -6,11 +6,7 @@
     onselect?: (e: MouseEvent) => void;
   }
 
-  let {
-    isSymbolMode,
-    customClass = 'h-14 flex-[1.5] max-w-[18%]',
-    onselect,
-  }: Props = $props();
+  let { isSymbolMode, customClass = 'h-14 flex-[1.5] max-w-[18%]', onselect }: Props = $props();
 </script>
 
 <button

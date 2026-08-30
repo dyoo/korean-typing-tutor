@@ -101,13 +101,13 @@ const SHIFTED_JAMOS = new Set(['ㄲ', 'ㄸ', 'ㅃ', 'ㅆ', 'ㅉ', 'ㅒ', 'ㅖ'])
  * Compound vowels and their stroke counts.
  */
 const COMPOUND_VOWEL_STROKES: Record<string, number> = {
-  'ㅘ': 2,
-  'ㅙ': 3,
-  'ㅚ': 2,
-  'ㅝ': 2,
-  'ㅞ': 2,
-  'ㅟ': 2,
-  'ㅢ': 2,
+  ㅘ: 2,
+  ㅙ: 3,
+  ㅚ: 2,
+  ㅝ: 2,
+  ㅞ: 2,
+  ㅟ: 2,
+  ㅢ: 2,
 };
 
 /**
@@ -416,7 +416,10 @@ export class ExerciseSpeedTracker {
           if (ev.isCorrect) {
             const clampedIki = Math.max(1, ev.clampedIkiMs);
             bgStats.totalIkiMs += clampedIki;
-            bgStats.averageIkiMs = Math.max(1, Math.round(bgStats.totalIkiMs / bgStats.totalAttempts));
+            bgStats.averageIkiMs = Math.max(
+              1,
+              Math.round(bgStats.totalIkiMs / bgStats.totalAttempts),
+            );
           } else {
             bgStats.errorCount += 1;
           }
@@ -434,7 +437,9 @@ export class ExerciseSpeedTracker {
     }
 
     const accuracy =
-      rawKeystrokes > 0 ? Math.round(((rawKeystrokes - errorCount) / rawKeystrokes) * 1000) / 10 : 100;
+      rawKeystrokes > 0
+        ? Math.round(((rawKeystrokes - errorCount) / rawKeystrokes) * 1000) / 10
+        : 100;
 
     let category: 'words' | 'sentences' | 'jamo' = 'words';
     if (targetText.length >= 8 || targetText.includes(' ')) {

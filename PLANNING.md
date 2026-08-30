@@ -166,9 +166,10 @@ tracking adhering to [KPM.md](file:///Users/dyoo/work/korean-typing-tutor/KPM.md
     - Outlier filtering ($\ge 3$ strokes for standalone exercise records).
     - Per-Jamo latency attribution for correct key hits.
     - Bigram transition friction tracking (`fromJamo -> toJamo` latency & error counts).
-    - `localStorage` versioned store with O(1) lifetime accumulators, bounded bigram map, and bounded
-      FIFO history buffer (max 200 records; total footprint $< 55\text{ KB}$).
-    - `console.debug` logging on completed prompts (e.g. `[KPM] Completed "..." | X strokes | Y Net KPM | Z% Acc | Wms Median IKI`).
+    - `localStorage` versioned store with O(1) lifetime accumulators, bounded bigram map, and
+      bounded FIFO history buffer (max 200 records; total footprint $< 55\text{ KB}$).
+    - `console.debug` logging on completed prompts (e.g.
+      `[KPM] Completed "..." | X strokes | Y Net KPM | Z% Acc | Wms Median IKI`).
   - [ ] **Tutor Session Integration (`src/lib/tutorSession.svelte.ts`):**
     - Record keystroke events in real-time on keydowns.
     - Finalize metrics and trigger background logging on exercise completion.

@@ -52,7 +52,9 @@
         class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer text-left min-w-0"
       >
         <svg
-          class="w-3.5 h-3.5 text-gray-400 transition-transform shrink-0 {isCollapsed ? '-rotate-90' : ''}"
+          class="w-3.5 h-3.5 text-gray-400 transition-transform shrink-0 {isCollapsed
+            ? '-rotate-90'
+            : ''}"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"

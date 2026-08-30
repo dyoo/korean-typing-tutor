@@ -110,7 +110,13 @@
           class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1.5 rounded-lg hover:bg-gray-200/60 dark:hover:bg-gray-700 cursor-pointer"
           aria-label="Close dialog"
         >
-          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <svg
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+          >
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
@@ -148,7 +154,8 @@
               Click to browse or drop file here
             </span>
             <span class="text-xs text-gray-500 dark:text-gray-400">
-              Supports Anki packages (<code>.apkg</code>) and plain text (<code>.tsv</code>, <code>.txt</code>, <code>.csv</code>)
+              Supports Anki packages (<code>.apkg</code>) and plain text (<code>.tsv</code>,
+              <code>.txt</code>, <code>.csv</code>)
             </span>
           </div>
         </div>
@@ -158,8 +165,19 @@
           <div
             class="p-4 bg-gray-50 dark:bg-gray-900/60 rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-center gap-3"
           >
-            <svg class="animate-spin h-5 w-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none">
-              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" />
+            <svg
+              class="animate-spin h-5 w-5 text-blue-600 dark:text-blue-400"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <circle
+                class="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              />
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
             </svg>
             <span class="text-xs font-medium text-gray-700 dark:text-gray-300">
@@ -217,7 +235,9 @@
                   >
                     <span class="font-bold">{item.target}</span>
                     {#if item.translation}
-                      <span class="text-gray-500 dark:text-gray-400 text-[11px]"> ({item.translation})</span>
+                      <span class="text-gray-500 dark:text-gray-400 text-[11px]">
+                        ({item.translation})</span
+                      >
                     {/if}
                   </span>
                 {/each}

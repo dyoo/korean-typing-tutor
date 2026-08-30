@@ -107,10 +107,7 @@ export function toggleCategoryGroupIds(
 }
 
 /** Toggles all curriculum modules on or off using tri-state tree logic. */
-export function toggleAllModuleIds(
-  allModuleIds: string[],
-  enabledModuleIds: string[],
-): string[] {
+export function toggleAllModuleIds(allModuleIds: string[], enabledModuleIds: string[]): string[] {
   const allChecked =
     allModuleIds.length > 0 && allModuleIds.every((id) => enabledModuleIds.includes(id));
   if (allChecked) {

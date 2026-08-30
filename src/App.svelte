@@ -577,11 +577,7 @@
   onimport={handleImportDeck}
 />
 
-<SettingsModal
-  isOpen={showSettingsModal}
-  onclose={closePanel}
-  onresetkpm={handleResetKpm}
-/>
+<SettingsModal isOpen={showSettingsModal} onclose={closePanel} onresetkpm={handleResetKpm} />
 
 <MasterySidebar
   isOpen={showMasterySidebar}

@@ -89,9 +89,7 @@
             {accuracy}% acc
           </span>
         {:else}
-          <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500">
-            — KPM
-          </span>
+          <span class="text-[11px] font-mono text-gray-400 dark:text-gray-500"> — KPM </span>
         {/if}
       </div>
     {/if}

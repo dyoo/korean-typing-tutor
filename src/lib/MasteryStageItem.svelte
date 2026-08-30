@@ -8,14 +8,7 @@
     onselect: () => void;
   }
 
-  let {
-    jamo,
-    keyName,
-    shift = false,
-    isSelected,
-    progress,
-    onselect,
-  }: Props = $props();
+  let { jamo, keyName, shift = false, isSelected, progress, onselect }: Props = $props();
 </script>
 
 <label

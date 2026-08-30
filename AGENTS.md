@@ -26,22 +26,24 @@ distraction-free, high-performance typing experience for English speakers learni
 - **TypeScript**: Always use proper types/interfaces (see `src/types/korean.ts`).
 - **Component Structure**: Keep Svelte components focused. Logic for complex operations (like Hangul
   composition) should reside in `src/utils/`.
-- **Explain Before Making Changes**: Prioritize educational clarity and collaborative
-  understanding. Always explain the problem analysis, root cause, architectural mechanics, and
-  proposed technical design to the user before editing code files or applying changes, giving the
-  user the opportunity to learn, discuss, and confirm the approach.
+- **Explain Before Making Changes**: Prioritize educational clarity and collaborative understanding.
+  Always explain the problem analysis, root cause, architectural mechanics, and proposed technical
+  design to the user before editing code files or applying changes, giving the user the opportunity
+  to learn, discuss, and confirm the approach.
 - **VCS Workflow**: Use `jj` (Jujutsu) for version control operations. Never combine creating
   commits/revisions with pushing. Always create commits without pushing unless explicitly requested.
-  **Always ask for explicit user confirmation before creating any commits or running `jj describe` / `jj new`**.
-  Present the proposed commit description and diff summary to the user first, and only execute commit
-  commands after the user explicitly confirms. Do not prefix commit/CL descriptions with conventional commit
-  categories (e.g. avoid `feat:`, `fix:`, `chore:`, `style:` prefixes); write direct, plain descriptive summary
-  messages instead. Format the description with a succinct first-line summary, followed by a body paragraph (or
-  short bullet list) summarizing the changes made. To commit changes after approval, always use the two-step
-  sequence: first `jj describe -m "..."` to set the description on the current working copy (which contains the
-  actual changes), then `jj new` to start a fresh empty revision. **Do not use `jj new -m "..."`** — that creates
-  a new empty revision with the message while leaving the working copy's changes in the parent revision with no
-  description. When a commit fixes a GitHub issue, include `Fixes #N.` on its own line in the description body.
+  **Always ask for explicit user confirmation before creating any commits or running `jj describe` /
+  `jj new`**. Present the proposed commit description and diff summary to the user first, and only
+  execute commit commands after the user explicitly confirms. Do not prefix commit/CL descriptions
+  with conventional commit categories (e.g. avoid `feat:`, `fix:`, `chore:`, `style:` prefixes);
+  write direct, plain descriptive summary messages instead. Format the description with a succinct
+  first-line summary, followed by a body paragraph (or short bullet list) summarizing the changes
+  made. To commit changes after approval, always use the two-step sequence: first
+  `jj describe -m "..."` to set the description on the current working copy (which contains the
+  actual changes), then `jj new` to start a fresh empty revision. **Do not use `jj new -m "..."`** —
+  that creates a new empty revision with the message while leaving the working copy's changes in the
+  parent revision with no description. When a commit fixes a GitHub issue, include `Fixes #N.` on
+  its own line in the description body.
 - **Testing**: Always use one-time non-interactive test execution (e.g., `npx vitest run` or
   `npm test` configured with `vitest run`) rather than interactive watch mode.
 - **Linting**: Use `npx eslint .` (or `npm run lint`) to perform static analysis and ensure zero
@@ -57,7 +59,7 @@ distraction-free, high-performance typing experience for English speakers learni
 - **Lifecycle Interleaving & Out-of-Order Testing**: When testing asynchronous subsystems (Web
   Workers, WASM initialization, audio pipelines, IndexedDB/CacheStorage), never test solely the
   "happy synchronous sequence" where initialization finishes before operational requests begin.
-  Always write tests simulating operations triggered *before* or *during* in-flight initialization
+  Always write tests simulating operations triggered _before_ or _during_ in-flight initialization
   to prevent race conditions and guarantee promise memoization/queue synchronization.
 - **CSS**: Use Tailwind utility classes directly in the markup.
 
@@ -83,16 +85,21 @@ distraction-free, high-performance typing experience for English speakers learni
   multi-select filters.
 - `src/lib/MasterySidebar.svelte`: Mastery progress drawer with collapsible stage groups and
   per-Jamo radio selection for manual progression override.
-- `src/lib/MasteryStageItem.svelte`: Jamo progression item renderer with liquid progress fill gauges.
+- `src/lib/MasteryStageItem.svelte`: Jamo progression item renderer with liquid progress fill
+  gauges.
 - `src/lib/MasteryMilestoneItem.svelte`: Checkpoint milestone progress row renderer.
-- `src/lib/MasteryFocusItem.svelte`: Modular focus target renderer for vowels, consonants, batchim, and consolidation practice.
-- `src/lib/MasteryTopBadge.svelte`: Header status badge renderer for active stage, milestone, consolidation, or focus target.
+- `src/lib/MasteryFocusItem.svelte`: Modular focus target renderer for vowels, consonants, batchim,
+  and consolidation practice.
+- `src/lib/MasteryTopBadge.svelte`: Header status badge renderer for active stage, milestone,
+  consolidation, or focus target.
 - `src/lib/SidebarDrawer.svelte`: Reusable slide-out drawer wrapper component with overlay backdrop
   and accessible close bindings.
 - `src/lib/SettingsModal.svelte`: Modal managing theme, Romanization, translation, virtual keyboard,
   font size, cursor color, and Jamo mastery progression adjustments & reset.
-- `src/lib/TypographySettingsControl.svelte`: Font size range slider and size-locking settings control.
-- `src/lib/SpeedSettingsControl.svelte`: Typing speed analytics (KPM) enable toggle and reset confirmation controls.
+- `src/lib/TypographySettingsControl.svelte`: Font size range slider and size-locking settings
+  control.
+- `src/lib/SpeedSettingsControl.svelte`: Typing speed analytics (KPM) enable toggle and reset
+  confirmation controls.
 - `src/lib/MasteryCompletionModal.svelte`: Celebration and checkpoint completion modal for mastery
   stages and full curriculum mastery.
 - `src/lib/WelcomeModal.svelte`: Initial onboarding modal welcoming first-time learners.
@@ -113,9 +120,10 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/lib/settings.ts`: Settings state management, persistence, and default values.
 - `src/utils/ttsController.svelte.ts`: Lightweight reactive singleton managing browser Web Speech
   API (SpeechSynthesis) playback and OS Korean voice selection.
-- `src/utils/masteryDisplayHelper.ts`: Unified presentation metadata helper for mastery mode badges, stages, and milestones.
-- `src/utils/jamoMastery.ts`: Home-row-outward Jamo mastery progression sequence, rolling
-  20-attempt accuracy evaluation, error-weighted rolling review, and vocabulary filtering.
+- `src/utils/masteryDisplayHelper.ts`: Unified presentation metadata helper for mastery mode badges,
+  stages, and milestones.
+- `src/utils/jamoMastery.ts`: Home-row-outward Jamo mastery progression sequence, rolling 20-attempt
+  accuracy evaluation, error-weighted rolling review, and vocabulary filtering.
 - `src/utils/hangulEngine.ts`: The Hangul IME composition state machine and keystroke handler.
 - `src/utils/hangulDecompose.ts`: Unicode Jamo decomposition and extraction utilities.
 - `src/utils/hangulMatch.ts`: Real-time Hangul syllable matching, completion checks, and error
@@ -140,7 +148,8 @@ distraction-free, high-performance typing experience for English speakers learni
   authentic items).
 - `src/content/index.ts`: Curriculum dataset aggregator and canonical module order.
 - `src/content/curriculumCategories.ts`: Curriculum module category grouping and label definitions.
-- `src/content/masteryVocabulary.ts`: Spaced-repetition vocabulary extraction and Jamo syllable filter indexer.
+- `src/content/masteryVocabulary.ts`: Spaced-repetition vocabulary extraction and Jamo syllable
+  filter indexer.
 - `vite.config.js`: Configuration for Vite, PWA, COOP/COEP headers, and Workbox precaching support.
 
 ## Performance & Bundle Architecture
@@ -149,19 +158,22 @@ distraction-free, high-performance typing experience for English speakers learni
   Roughly 80% of the initial JavaScript bundle consists of the 32 offline curriculum JSON datasets
   (7,687+ authentic Korean items, English translations, and Romanizations), ensuring instant,
   zero-latency lesson switches with full offline capability.
-- **Native Web Speech Architecture**: Speech synthesis leverages the standard browser Web
-  Speech API (`window.speechSynthesis`), utilizing the host OS Korean voice models with 0ms synthesis
-  latency, zero binary model weight downloads, and zero runtime worker overhead.
+- **Native Web Speech Architecture**: Speech synthesis leverages the standard browser Web Speech API
+  (`window.speechSynthesis`), utilizing the host OS Korean voice models with 0ms synthesis latency,
+  zero binary model weight downloads, and zero runtime worker overhead.
 - **Single-Beam Caret Ownership**: The input caret is rendered as a single 2.5px vertical beam at
   the boundary between adjacent characters. To prevent double-width (5px) overlapping carets,
-  [`getInputCaretStatus`](file:///Users/dyoo/work/korean-typing-tutor/src/utils/cursorHelper.ts) ensures exactly one character owns the beam: the leading character
-  when available, or the trailing character at the very end of the text.
+  [`getInputCaretStatus`](file:///Users/dyoo/work/korean-typing-tutor/src/utils/cursorHelper.ts)
+  ensures exactly one character owns the beam: the leading character when available, or the trailing
+  character at the very end of the text.
 
 ## Maintenance & Verification Tooling
 
 - **Testing**: `npx vitest run` (one-time non-interactive test run across all 22 test suites).
-- **Linting & Type Checking**: `npm run lint` (runs ESLint and `svelte-check --tsconfig ./tsconfig.json`).
-- **Dead Code Audit**: `npx knip` (verifies zero unused exports, unlisted dependencies, or orphaned files).
+- **Linting & Type Checking**: `npm run lint` (runs ESLint and
+  `svelte-check --tsconfig ./tsconfig.json`).
+- **Dead Code Audit**: `npx knip` (verifies zero unused exports, unlisted dependencies, or orphaned
+  files).
 - **Production Build**: `npm run build` (generates PWA bundle and service worker precache manifest).
 
 ## Current Priority

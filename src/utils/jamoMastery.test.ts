@@ -322,7 +322,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     }
     const focusHitRate = focusCount / trials;
     // With 70% guaranteed focus pool filter, hit rate should be around 0.70 (well above 0.60)
-    expect(focusHitRate).toBeGreaterThan(0.60);
+    expect(focusHitRate).toBeGreaterThan(0.6);
     expect(focusHitRate).toBeLessThan(0.85);
   });
 
@@ -622,9 +622,27 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(VOWEL_FOCUS_LIST.length).toBe(21);
 
       const expectedVowels = [
-        'ㅏ', 'ㅓ', 'ㅗ', 'ㅜ', 'ㅡ', 'ㅣ', 'ㅐ', 'ㅔ',
-        'ㅑ', 'ㅕ', 'ㅛ', 'ㅠ', 'ㅒ', 'ㅖ',
-        'ㅘ', 'ㅙ', 'ㅚ', 'ㅝ', 'ㅞ', 'ㅟ', 'ㅢ'
+        'ㅏ',
+        'ㅓ',
+        'ㅗ',
+        'ㅜ',
+        'ㅡ',
+        'ㅣ',
+        'ㅐ',
+        'ㅔ',
+        'ㅑ',
+        'ㅕ',
+        'ㅛ',
+        'ㅠ',
+        'ㅒ',
+        'ㅖ',
+        'ㅘ',
+        'ㅙ',
+        'ㅚ',
+        'ㅝ',
+        'ㅞ',
+        'ㅟ',
+        'ㅢ',
       ];
       expect(VOWEL_FOCUS_LIST.map((v) => v.jamo)).toEqual(expectedVowels);
 
@@ -641,8 +659,25 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(CONSONANT_FOCUS_LIST.length).toBe(19);
 
       const expectedConsonants = [
-        'ㄱ', 'ㄴ', 'ㄷ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅅ', 'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ',
-        'ㄲ', 'ㄸ', 'ㅃ', 'ㅆ', 'ㅉ'
+        'ㄱ',
+        'ㄴ',
+        'ㄷ',
+        'ㄹ',
+        'ㅁ',
+        'ㅂ',
+        'ㅅ',
+        'ㅇ',
+        'ㅈ',
+        'ㅊ',
+        'ㅋ',
+        'ㅌ',
+        'ㅍ',
+        'ㅎ',
+        'ㄲ',
+        'ㄸ',
+        'ㅃ',
+        'ㅆ',
+        'ㅉ',
       ];
       expect(CONSONANT_FOCUS_LIST.map((c) => c.jamo)).toEqual(expectedConsonants);
 
@@ -679,8 +714,12 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     });
 
     it('sets and clears activeFocusBatchim correctly for batchim, words, sentences, vowels, and consonants', async () => {
-      const { setMasteryFocusBatchim, getActiveMasteryTarget, setMasteryProgressionLevel, setMasteryCheckpointLevel } =
-        await import('./jamoMastery');
+      const {
+        setMasteryFocusBatchim,
+        getActiveMasteryTarget,
+        setMasteryProgressionLevel,
+        setMasteryCheckpointLevel,
+      } = await import('./jamoMastery');
 
       const state = createDefaultMasteryState();
       expect(state.activeFocusBatchim).toBeNull();
@@ -773,8 +812,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     });
 
     it('unlocks all 44 keys without modifying mastery history when jumping directly to post-game Consolidation', async () => {
-      const { setMasteryFocusBatchim, JAMO_PROGRESSION_ORDER } =
-        await import('./jamoMastery');
+      const { setMasteryFocusBatchim, JAMO_PROGRESSION_ORDER } = await import('./jamoMastery');
 
       const state = createDefaultMasteryState();
       expect(state.unlockedCount).toBe(4); // initial Stage 1
@@ -837,19 +875,33 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       const dummyItems: LessonItem[] = [
         { id: 'short1', moduleId: 'm1', target: '사과', translation: 'Apple' },
         { id: 'short2', moduleId: 'm1', target: '안녕하세요', translation: 'Hello' },
-        { id: 'long1', moduleId: 'm1', target: '한국어 공부를 시작해 봅시다', translation: 'Let us begin studying Korean' },
-        { id: 'long2', moduleId: 'm1', target: '오늘 날씨가 정말 좋습니다', translation: 'The weather is really nice today' },
+        {
+          id: 'long1',
+          moduleId: 'm1',
+          target: '한국어 공부를 시작해 봅시다',
+          translation: 'Let us begin studying Korean',
+        },
+        {
+          id: 'long2',
+          moduleId: 'm1',
+          target: '오늘 날씨가 정말 좋습니다',
+          translation: 'The weather is really nice today',
+        },
       ];
 
       const allUnlocked = new Set(JAMO_PROGRESSION_ORDER.map((i) => i.jamo));
 
-      const wordItems = getEligibleMasteryItems(dummyItems, allUnlocked, { type: 'consolidation_words' });
+      const wordItems = getEligibleMasteryItems(dummyItems, allUnlocked, {
+        type: 'consolidation_words',
+      });
       expect(wordItems.some((i) => i.id === 'short1')).toBe(true);
       expect(wordItems.some((i) => i.id === 'short2')).toBe(true);
       expect(wordItems.some((i) => i.id === 'long1')).toBe(false);
       expect(wordItems.some((i) => i.id === 'long2')).toBe(false);
 
-      const sentenceItems = getEligibleMasteryItems(dummyItems, allUnlocked, { type: 'consolidation_sentences' });
+      const sentenceItems = getEligibleMasteryItems(dummyItems, allUnlocked, {
+        type: 'consolidation_sentences',
+      });
       expect(sentenceItems.some((i) => i.id === 'long1')).toBe(true);
       expect(sentenceItems.some((i) => i.id === 'long2')).toBe(true);
       expect(sentenceItems.some((i) => i.id === 'short1')).toBe(false);
@@ -947,7 +999,9 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       // 'ㅏ' has poor accuracy (50%), so words containing 'ㅏ' ('아이') get boosted
       state.jamoStats['ㅏ'].totalAttempts = 20;
       state.jamoStats['ㅏ'].correctAttempts = 10;
-      state.jamoStats['ㅏ'].recentHistory = new Array(10).fill(false).concat(new Array(10).fill(true));
+      state.jamoStats['ㅏ'].recentHistory = new Array(10)
+        .fill(false)
+        .concat(new Array(10).fill(true));
 
       let countItem1 = 0;
       let countItem2 = 0;

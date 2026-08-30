@@ -121,7 +121,8 @@ When picking the next exercise in Mastery mode:
      learned keys.
 2. **Pass 2 — Error-Weighted Random Sampling:**
    - **Base Weight:** `1.0`
-   - **Struggling Jamo Bonus:** Continuous error-weighted boost for each constituent Jamo with rolling accuracy $< 95\%$:
+   - **Struggling Jamo Bonus:** Continuous error-weighted boost for each constituent Jamo with
+     rolling accuracy $< 95\%$:
      $$\text{Weight} = \text{BaseWeight} + \sum_{j \in \text{jamos}} \max(0, (0.95 - \text{Accuracy}_j) \times 8.0)$$
    - **Adaptive Length Multiplier:** Biases word lengths according to the active Jamo's progress
      (0–30%, 30–70%, 70–100%).
@@ -132,11 +133,18 @@ When picking the next exercise in Mastery mode:
 
 ## 5. Error-Weighted Rolling Review Architecture
 
-To ensure learners maintain long-term muscle memory across all previously unlocked keys without the friction of calendar-based flashcard queues (Anki/SM-2 intervals), the tutor incorporates an **autonomous rolling error-weighted review engine**:
+To ensure learners maintain long-term muscle memory across all previously unlocked keys without the
+friction of calendar-based flashcard queues (Anki/SM-2 intervals), the tutor incorporates an
+**autonomous rolling error-weighted review engine**:
 
-1. **Continuous Weak Key Detection:** The prompt generator analyzes the 20-keystroke rolling history of every unlocked Jamo.
-2. **Seamless In-Flow Reinforcement:** Rather than forcing the user into a separate "Review Mode" or presenting an intimidating backlog of "overdue" keys, vocabulary containing weaker or error-prone keys automatically receives higher sampling probability during standard mastery sessions.
-3. **End-of-Stage Cumulative Checkpoints:** Each stage concludes with a 10-sentence Milestone checkpoint testing cumulative recall of all keys introduced so far in full authentic Korean sentences.
+1. **Continuous Weak Key Detection:** The prompt generator analyzes the 20-keystroke rolling history
+   of every unlocked Jamo.
+2. **Seamless In-Flow Reinforcement:** Rather than forcing the user into a separate "Review Mode" or
+   presenting an intimidating backlog of "overdue" keys, vocabulary containing weaker or error-prone
+   keys automatically receives higher sampling probability during standard mastery sessions.
+3. **End-of-Stage Cumulative Checkpoints:** Each stage concludes with a 10-sentence Milestone
+   checkpoint testing cumulative recall of all keys introduced so far in full authentic Korean
+   sentences.
 
 ---
 
@@ -161,6 +169,7 @@ Upon graduating the final Milestone (**Sentence Milestone 5 / Compound Batchim**
      authentic vocabulary, TOPIK levels, idioms, and literature without progression locks.
    - **Targeted Practice:** Open the Mastery Progress Drawer to jump to any specific stage or
      milestone to hone speed and accuracy on specific keyboard rows.
-   - **Batchim Workshop:** Master all 11 complex compound double final consonants (ㄳ, ㄵ, ㄼ, etc.) with dedicated focus datasets.
+   - **Batchim Workshop:** Master all 11 complex compound double final consonants (ㄳ, ㄵ, ㄼ, etc.)
+     with dedicated focus datasets.
    - **Continue in Master Level:** Keep practicing the rich mix of authentic master-level passages
      and public domain Korean poetry.

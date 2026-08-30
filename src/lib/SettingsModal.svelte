@@ -11,11 +11,7 @@
     onresetkpm?: () => void;
   }
 
-  let {
-    isOpen,
-    onclose,
-    onresetkpm,
-  }: Props = $props();
+  let { isOpen, onclose, onresetkpm }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && isOpen) {
@@ -66,13 +62,7 @@
         class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1 rounded-md cursor-pointer"
         aria-label="Close Settings Panel"
       >
-        <svg
-          class="w-4 h-4"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        >
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
@@ -80,7 +70,9 @@
 
     <!-- Theme Selector -->
     <div class="flex items-center justify-between">
-      <label for="theme-select" class="cursor-pointer font-bold text-gray-900 dark:text-gray-100">Theme</label>
+      <label for="theme-select" class="cursor-pointer font-bold text-gray-900 dark:text-gray-100"
+        >Theme</label
+      >
       <select
         id="theme-select"
         value={settingsStore.current.theme}

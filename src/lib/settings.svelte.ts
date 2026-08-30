@@ -108,10 +108,24 @@ export function loadSettings(): TutorSettings {
       collapsedMasteryStageIds: Array.isArray(parsed.collapsedMasteryStageIds)
         ? parsed.collapsedMasteryStageIds
         : undefined,
-      minFontSizeRem: pickNumberRange(parsed.minFontSizeRem, 1.0, 7.0, DEFAULT_SETTINGS.minFontSizeRem),
-      maxFontSizeRem: pickNumberRange(parsed.maxFontSizeRem, 1.0, 7.0, DEFAULT_SETTINGS.maxFontSizeRem),
+      minFontSizeRem: pickNumberRange(
+        parsed.minFontSizeRem,
+        1.0,
+        7.0,
+        DEFAULT_SETTINGS.minFontSizeRem,
+      ),
+      maxFontSizeRem: pickNumberRange(
+        parsed.maxFontSizeRem,
+        1.0,
+        7.0,
+        DEFAULT_SETTINGS.maxFontSizeRem,
+      ),
       lockFontSize: pickBool(parsed.lockFontSize, DEFAULT_SETTINGS.lockFontSize ?? false),
-      cursorColor: pickEnum(parsed.cursorColor, validCursorColors, DEFAULT_SETTINGS.cursorColor ?? 'amber'),
+      cursorColor: pickEnum(
+        parsed.cursorColor,
+        validCursorColors,
+        DEFAULT_SETTINGS.cursorColor ?? 'amber',
+      ),
       enableTTS: pickBool(parsed.enableTTS, DEFAULT_SETTINGS.enableTTS ?? false),
       speakOnCompletion: pickBool(
         parsed.speakOnCompletion,
@@ -214,7 +228,7 @@ export class SettingsStore {
   toggle(key: keyof TutorSettings): void {
     const currentVal = this.current[key];
     if (typeof currentVal === 'boolean') {
-      this.update(key, (!currentVal) as TutorSettings[keyof TutorSettings]);
+      this.update(key, !currentVal as TutorSettings[keyof TutorSettings]);
     }
   }
 

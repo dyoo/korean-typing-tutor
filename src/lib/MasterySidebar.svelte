@@ -9,10 +9,7 @@
   } from '../utils/jamoMastery';
   import { getJamoKpmStats, getCategoryKpmStats } from '../utils/speedTracker';
   import type { SpeedMetricsStore } from '../utils/speedTracker';
-  import type {
-    JamoStats,
-    SentenceCheckpointStats,
-  } from '../types/mastery';
+  import type { JamoStats, SentenceCheckpointStats } from '../types/mastery';
   import SidebarDrawer from './SidebarDrawer.svelte';
   import MasteryStageItem from './MasteryStageItem.svelte';
   import MasteryMilestoneItem from './MasteryMilestoneItem.svelte';
@@ -56,13 +53,10 @@
 
   let isWorkshopActive = $derived(Boolean(activeFocusBatchim));
   let isConsolidationCollapsed = $derived(
-    collapsedStageIds.includes('Consolidation') ||
-      collapsedStageIds.includes('Batchim Workshop'),
+    collapsedStageIds.includes('Consolidation') || collapsedStageIds.includes('Batchim Workshop'),
   );
   let wordsStats = $derived(speedStore ? getCategoryKpmStats(speedStore, 'words') : null);
-  let sentenceStats = $derived(
-    speedStore ? getCategoryKpmStats(speedStore, 'sentences') : null,
-  );
+  let sentenceStats = $derived(speedStore ? getCategoryKpmStats(speedStore, 'sentences') : null);
 
   function getAccuracy(stats?: JamoStats): number | null {
     if (stats && stats.totalAttempts > 0) {
@@ -241,7 +235,9 @@
 
           <!-- Vowels (모음) Section -->
           <div class="border-t border-purple-200/70 dark:border-purple-800/60 my-1 pt-1">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1">
+            <span
+              class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1"
+            >
               Vowels (모음)
             </span>
           </div>
@@ -266,15 +262,16 @@
 
           <!-- Consonants (자음) Section -->
           <div class="border-t border-purple-200/70 dark:border-purple-800/60 my-1 pt-1">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1">
+            <span
+              class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1"
+            >
               Consonants (자음)
             </span>
           </div>
 
           {#each CONSONANT_FOCUS_LIST as item}
             {@const isSelected =
-              activeFocusBatchim === `consonant:${item.jamo}` ||
-              activeFocusBatchim === item.jamo}
+              activeFocusBatchim === `consonant:${item.jamo}` || activeFocusBatchim === item.jamo}
             {@const stats = jamoStats[item.jamo]}
             {@const progress = calculateJamoProgress(stats)}
             {@const jamoKpm = speedStore ? getJamoKpmStats(speedStore, item.jamo) : null}
@@ -292,7 +289,9 @@
 
           <!-- Final Consonants (받침) Section -->
           <div class="border-t border-purple-200/70 dark:border-purple-800/60 my-1 pt-1">
-            <span class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1">
+            <span
+              class="text-[10px] font-bold uppercase tracking-wider text-purple-600 dark:text-purple-400 px-1"
+            >
               Final Consonants (받침)
             </span>
           </div>

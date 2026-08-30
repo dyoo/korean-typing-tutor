@@ -41,9 +41,7 @@
   let isAllChecked = $derived(
     modules.length > 0 && modules.every((m) => enabledModuleIds.includes(m.id)),
   );
-  let isSomeChecked = $derived(
-    enabledModuleIds.length > 0 && !isAllChecked,
-  );
+  let isSomeChecked = $derived(enabledModuleIds.length > 0 && !isAllChecked);
 
   let isCustomCollapsed = $derived(collapsedCategoryIds.includes('custom'));
   let allCustomChecked = $derived(
@@ -143,7 +141,9 @@
             class="flex items-center gap-1.5 font-bold text-sm uppercase tracking-wide text-blue-900 dark:text-blue-200 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer text-left min-w-0 flex-1"
           >
             <svg
-              class="w-3.5 h-3.5 text-blue-500 transition-transform shrink-0 {isCustomCollapsed ? '-rotate-90' : ''}"
+              class="w-3.5 h-3.5 text-blue-500 transition-transform shrink-0 {isCustomCollapsed
+                ? '-rotate-90'
+                : ''}"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -175,7 +175,9 @@
 
       {#if !isCustomCollapsed}
         {#if customDecks.length > 0}
-          <div class="flex flex-col gap-1.5 pl-3 border-l-2 border-blue-500/40 dark:border-blue-400/30 ml-3 mb-1 mr-1">
+          <div
+            class="flex flex-col gap-1.5 pl-3 border-l-2 border-blue-500/40 dark:border-blue-400/30 ml-3 mb-1 mr-1"
+          >
             {#each customDecks as deck}
               {@const isChecked = enabledModuleIds.includes(deck.id)}
               <div
@@ -190,7 +192,9 @@
                   />
                   <div class="flex flex-col min-w-0">
                     <div class="flex items-baseline gap-1.5 flex-wrap">
-                      <span class="text-sm font-semibold text-gray-800 dark:text-gray-200 leading-tight">
+                      <span
+                        class="text-sm font-semibold text-gray-800 dark:text-gray-200 leading-tight"
+                      >
                         {deck.title}
                       </span>
                       <span class="text-xs text-gray-400 dark:text-gray-500 font-mono">
@@ -209,8 +213,18 @@
                   title="Delete custom deck"
                   aria-label={`Delete custom deck ${deck.title}`}
                 >
-                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  <svg
+                    class="w-3.5 h-3.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                    />
                   </svg>
                 </button>
               </div>

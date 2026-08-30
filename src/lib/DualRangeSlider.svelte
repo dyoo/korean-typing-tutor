@@ -126,7 +126,8 @@
   <!-- Active Range Highlight -->
   <div
     class="absolute h-2 bg-blue-600 dark:bg-blue-500 rounded-lg pointer-events-none"
-    style="left: calc(10px + (100% - 20px) * {minPercent / 100}); width: calc((100% - 20px) * {(maxPercent - minPercent) / 100});"
+    style="left: calc(10px + (100% - 20px) * {minPercent /
+      100}); width: calc((100% - 20px) * {(maxPercent - minPercent) / 100});"
   ></div>
 
   <!-- Min Thumb Knob (contained strictly within 0% to 100% bounds) -->

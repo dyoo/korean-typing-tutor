@@ -354,7 +354,9 @@ Location marking particle "~에" has two primary roles:\tlocation at/in\tgrammar
 
   describe('parseDeckFromFile', () => {
     it('parses File object correctly', async () => {
-      const file = new File(['사과\tapple\n우유\tmilk'], 'food.tsv', { type: 'text/tab-separated-values' });
+      const file = new File(['사과\tapple\n우유\tmilk'], 'food.tsv', {
+        type: 'text/tab-separated-values',
+      });
       const deck = await parseDeckFromFile(file);
       expect(deck.itemCount).toBe(2);
       expect(deck.items[0].target).toBe('사과');

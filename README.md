@@ -19,16 +19,24 @@ Korean through focused typing practice.
   - Displays Romanized English pronunciation alongside Hangul characters.
   - Displays English translations for words, sentences, reading passages, and proverbs.
 - **Native Korean Voice Synthesis (TTS)**:
-  - Instant, zero-latency Korean speech pronunciation powered by your browser and operating system's native speech synthesis engine (Web Speech API).
-  - Uses high-quality on-device OS voices (such as Apple Yuna/Siri, Microsoft SunHi, and Google Korean) with zero download footprint and full offline support.
-  - Instant on-demand playback via the audio play icon and optional automatic pronunciation upon exercise appearance or completion.
+  - Instant, zero-latency Korean speech pronunciation powered by your browser and operating system's
+    native speech synthesis engine (Web Speech API).
+  - Uses high-quality on-device OS voices (such as Apple Yuna/Siri, Microsoft SunHi, and Google
+    Korean) with zero download footprint and full offline support.
+  - Instant on-demand playback via the audio play icon and optional automatic pronunciation upon
+    exercise appearance or completion.
 - **Custom Anki & Flashcard Deck Import**:
-  - Drag and drop or browse to import your own Anki deck packages (`.apkg`), tab-separated text (`.tsv`), or plain text flashcards (`.txt`, `.csv`) directly from your device.
-  - Zero-dependency client-side parser with native SQLite 3 B-Tree record decoding and ZIP decompression that runs 100% offline in your browser.
-  - Automatically sanitizes HTML/audio tags, cleans metadata placeholders, computes Revised Romanization phonetic subtext, and persists imported decks locally in `LocalStorage`.
-  - Toggle, filter, or delete imported decks directly from the collapsible "Custom / Anki Decks" drawer in the curriculum sidebar.
+  - Drag and drop or browse to import your own Anki deck packages (`.apkg`), tab-separated text
+    (`.tsv`), or plain text flashcards (`.txt`, `.csv`) directly from your device.
+  - Zero-dependency client-side parser with native SQLite 3 B-Tree record decoding and ZIP
+    decompression that runs 100% offline in your browser.
+  - Automatically sanitizes HTML/audio tags, cleans metadata placeholders, computes Revised
+    Romanization phonetic subtext, and persists imported decks locally in `LocalStorage`.
+  - Toggle, filter, or delete imported decks directly from the collapsible "Custom / Anki Decks"
+    drawer in the curriculum sidebar.
 - **Dual Typing Modes**:
-  - **Free-form**: Practice specific modules, custom imported decks, or the entire curriculum with randomized order.
+  - **Free-form**: Practice specific modules, custom imported decks, or the entire curriculum with
+    randomized order.
   - **Mastery**: A structured progression system that unlocks new Jamos as you improve,
     automatically selecting relevant practice items.
 - **Progressive Web App**:
@@ -38,17 +46,21 @@ Korean through focused typing practice.
 
 ## Curriculum & Educational Sources
 
-Our curriculum dataset
-([`src/content/modules/*.json`](src/content/modules))
-contains over **7,887+ practice items** across 36 structured modules. Much of the
-curriculum—including beginner row-by-row progression drills, expanded vocabulary, K-Pop slang,
-single-sentence reading passage splits, and Revised Romanization—was generated, structured, and
-curated in collaboration with **Antigravity** (Google DeepMind's agentic AI coding assistant).
+Our curriculum dataset ([`src/content/modules/*.json`](src/content/modules)) contains over **7,887+
+practice items** across 36 structured modules. Much of the curriculum—including beginner row-by-row
+progression drills, expanded vocabulary, K-Pop slang, single-sentence reading passage splits, and
+Revised Romanization—was generated, structured, and curated in collaboration with **Antigravity**
+(Google DeepMind's agentic AI coding assistant).
 
 ### Educational Sources & Standards:
 
-1. **[National Institute of Korean Language (국립국어원 - NIKL)](https://www.korean.go.kr/) — [Korean Learner's Vocabulary & Frequency List (한국어 학습용 어휘 목록)](https://www.topikguide.com/korean-frequency-list-top-6000-words/)**:
-   - 5,666 high-frequency words across 6 tiered modules (Grade A Elementary, Grade B Intermediate, Grade C Advanced) compiled by the National Institute of Korean Language (*국립국어연구원*) and indexed by [TOPIK GUIDE](https://www.topikguide.com/korean-frequency-list-top-6000-words/). Openly distributed under the **Korea Open Government License (공공누리 / KOGL Type 1: Attribution)**.
+1. **[National Institute of Korean Language (국립국어원 - NIKL)](https://www.korean.go.kr/) —
+   [Korean Learner's Vocabulary & Frequency List (한국어 학습용 어휘 목록)](https://www.topikguide.com/korean-frequency-list-top-6000-words/)**:
+   - 5,666 high-frequency words across 6 tiered modules (Grade A Elementary, Grade B Intermediate,
+     Grade C Advanced) compiled by the National Institute of Korean Language (_국립국어연구원_) and
+     indexed by [TOPIK GUIDE](https://www.topikguide.com/korean-frequency-list-top-6000-words/).
+     Openly distributed under the **Korea Open Government License (공공누리 / KOGL Type 1:
+     Attribution)**.
 2. **[NIIED (National Institute for International Education)](https://www.niied.go.kr/) —
    [Official TOPIK Portal](https://www.topik.go.kr/)**:
    - **TOPIK I (Beginner Level 1 & 2):** Official vocabulary covering numbers, time, calendar,
@@ -61,9 +73,9 @@ curated in collaboration with **Antigravity** (Google DeepMind's agentic AI codi
      (Basic Korean Dictionary for Learners, licensed under CC BY-SA 2.0 KR).
 4. **[King Sejong Institute Foundation (세종학당재단)](https://www.ksif.or.kr/) —
    [Sejonghakdang Online Learning Portal (Nuri-Sejong)](https://www.sejonghakdang.org/)**:
-   - Practical situational conversation, spoken Q&A dialogues, travel/transit, workplace/campus communication,
-     and cultural lifestyle modules based on the open spoken Korean curriculum published under the
-     **Korea Open Government License (공공누리 / KOGL Type 1: Attribution)**.
+   - Practical situational conversation, spoken Q&A dialogues, travel/transit, workplace/campus
+     communication, and cultural lifestyle modules based on the open spoken Korean curriculum
+     published under the **Korea Open Government License (공공누리 / KOGL Type 1: Attribution)**.
 5. **[Korean Proverbs & Sayings (속담 / 사자성어)](https://krdict.korean.go.kr/)**:
    - Classic Korean proverbs and idioms with literal and figurative English translations
      (`식은 죽 먹기`, `티끌 모아 태산`), cross-referenced with the
@@ -97,7 +109,8 @@ how to type Korean:
 
 - **Framework**: [Svelte 5](https://svelte.dev/)
 - **Build Tool**: [Vite](https://vitejs.dev/)
-- **Voice Synthesis**: [Web Speech API (SpeechSynthesis)](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis)
+- **Voice Synthesis**:
+  [Web Speech API (SpeechSynthesis)](https://developer.mozilla.org/en-US/docs/Web/API/SpeechSynthesis)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 - **Language**: [TypeScript](https://www.typescriptlang.org/) (Strict Mode)
 - **Testing**: [Vitest](https://vitest.dev/)
@@ -158,30 +171,40 @@ We use **Vitest** for automated unit testing to ensure the Korean composition en
 
 ## Offline Usage & Voice Setup Guide
 
-The Korean Typing Tutor is a 100% offline-capable Progressive Web App (PWA). All typing lessons, Hangul IME composition logic, and Anki parsers run locally in your browser with zero cloud dependencies.
+The Korean Typing Tutor is a 100% offline-capable Progressive Web App (PWA). All typing lessons,
+Hangul IME composition logic, and Anki parsers run locally in your browser with zero cloud
+dependencies.
 
-To ensure **100% offline voice synthesis (speech pronunciation)** without an active internet connection, verify that an on-device Korean voice is installed in your operating system:
+To ensure **100% offline voice synthesis (speech pronunciation)** without an active internet
+connection, verify that an on-device Korean voice is installed in your operating system:
 
 ### macOS / iOS (Safari, Chrome, Edge)
+
 1. Open **System Settings** $\rightarrow$ **Accessibility** $\rightarrow$ **Spoken Content**.
 2. Click **System Voice** $\rightarrow$ **Manage Voices...**.
 3. Search for **Korean** and download **Yuna (Enhanced)** or **Siri**.
 4. In the app's Voice Synthesis settings, select **`Yuna (ko-KR) (Offline)`**.
 
 ### Windows 11 / 10 (Edge, Chrome)
+
 1. Open **Settings** $\rightarrow$ **Time & Language** $\rightarrow$ **Speech**.
 2. Under **Manage voices**, click **Add voices**.
-3. Search for **Korean** and install the voice pack (e.g. **Microsoft SunHi** or **Microsoft InJoon**).
+3. Search for **Korean** and install the voice pack (e.g. **Microsoft SunHi** or **Microsoft
+   InJoon**).
 4. In the app's Voice Synthesis settings, select **`Microsoft SunHi (Offline)`**.
 
 ### Android (Chrome, Samsung Internet)
+
 1. Open **Settings** $\rightarrow$ **Accessibility** $\rightarrow$ **Text-to-speech output**.
-2. Tap the **gear/settings icon** next to **Preferred engine** (*Google Speech Recognition & Synthesis* or *Samsung TTS*).
+2. Tap the **gear/settings icon** next to **Preferred engine** (_Google Speech Recognition &
+   Synthesis_ or _Samsung TTS_).
 3. Select **Install voice data** $\rightarrow$ **Korean** and download the offline voice pack.
 4. Voice playback will now work seamlessly in Chrome even in airplane mode.
 
 ### Linux (Chromium, Firefox)
+
 Install `speech-dispatcher` and `espeak-ng` via your distribution's package manager:
+
 ```bash
 sudo apt install speech-dispatcher speech-dispatcher-espeak-ng espeak-ng
 ```

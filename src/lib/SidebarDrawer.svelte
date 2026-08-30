@@ -11,15 +11,7 @@
     children: Snippet;
   }
 
-  let {
-    isOpen,
-    title,
-    subtitle,
-    ariaLabel,
-    onclose,
-    headerActions,
-    children,
-  }: Props = $props();
+  let { isOpen, title, subtitle, ariaLabel, onclose, headerActions, children }: Props = $props();
 
   function handleKeydown(e: KeyboardEvent) {
     if (e.key === 'Escape' && isOpen) {

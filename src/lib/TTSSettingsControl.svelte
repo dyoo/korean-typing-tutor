@@ -4,7 +4,9 @@
   import { ttsController } from '../utils/ttsController.svelte';
 
   let nativeVoices = $derived(ttsController.nativeVoices);
-  let isSelectedVoiceOffline = $derived(ttsController.isVoiceOffline(settingsStore.current.ttsVoice));
+  let isSelectedVoiceOffline = $derived(
+    ttsController.isVoiceOffline(settingsStore.current.ttsVoice),
+  );
 
   onMount(() => {
     ttsController.refreshNativeVoices();
@@ -57,14 +59,18 @@
       <!-- Native OS Voice Selection -->
       <div class="flex flex-col gap-1">
         <div class="flex items-center justify-between">
-          <label for="tts-voice-select" class="text-xs text-gray-600 dark:text-gray-400 cursor-pointer">
+          <label
+            for="tts-voice-select"
+            class="text-xs text-gray-600 dark:text-gray-400 cursor-pointer"
+          >
             Voice
           </label>
           {#if nativeVoices.length > 0}
             <select
               id="tts-voice-select"
               value={settingsStore.current.ttsVoice || nativeVoices[0]?.id || ''}
-              onchange={(e) => settingsStore.update('ttsVoice', (e.target as HTMLSelectElement).value)}
+              onchange={(e) =>
+                settingsStore.update('ttsVoice', (e.target as HTMLSelectElement).value)}
               class="bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100 rounded-lg px-2 py-1.5 text-xs max-w-[210px] truncate focus:ring-blue-500 focus:border-blue-500 cursor-pointer"
             >
               {#each nativeVoices as v}
@@ -74,9 +80,7 @@
               {/each}
             </select>
           {:else}
-            <span class="text-xs text-gray-500 dark:text-gray-400 italic">
-              Default OS Voice
-            </span>
+            <span class="text-xs text-gray-500 dark:text-gray-400 italic"> Default OS Voice </span>
           {/if}
         </div>
 
@@ -89,17 +93,27 @@
 
       {#if nativeVoices.length === 0}
         <!-- OS Voice Setup Guide Banner -->
-        <div class="p-2.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-lg text-left text-xs">
+        <div
+          class="p-2.5 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/60 rounded-lg text-left text-xs"
+        >
           <p class="font-semibold text-amber-800 dark:text-amber-300 mb-1">
             No Korean voice detected on this device
           </p>
           <p class="text-amber-700 dark:text-amber-400 text-[11px] leading-relaxed mb-1.5">
             To enable free on-device speech, install a Korean voice in your operating system:
           </p>
-          <ul class="space-y-1 text-[11px] text-amber-700 dark:text-amber-400 list-disc list-inside">
-            <li><strong>Mac/iOS</strong>: System Settings → Accessibility → Spoken Content → Korean (Yuna)</li>
+          <ul
+            class="space-y-1 text-[11px] text-amber-700 dark:text-amber-400 list-disc list-inside"
+          >
+            <li>
+              <strong>Mac/iOS</strong>: System Settings → Accessibility → Spoken Content → Korean
+              (Yuna)
+            </li>
             <li><strong>Windows</strong>: Settings → Time & Language → Speech → Add voices</li>
-            <li><strong>Android</strong>: Settings → Accessibility → Text-to-speech → Install voice data</li>
+            <li>
+              <strong>Android</strong>: Settings → Accessibility → Text-to-speech → Install voice
+              data
+            </li>
           </ul>
         </div>
       {/if}
@@ -121,7 +135,8 @@
             max="1.5"
             step="0.1"
             value={settingsStore.current.ttsSpeed ?? 1.0}
-            oninput={(e) => settingsStore.update('ttsSpeed', parseFloat((e.target as HTMLInputElement).value))}
+            oninput={(e) =>
+              settingsStore.update('ttsSpeed', parseFloat((e.target as HTMLInputElement).value))}
             class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-blue-600 dark:accent-blue-500"
           />
         </div>
