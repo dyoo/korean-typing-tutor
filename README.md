@@ -8,13 +8,15 @@ Korean through focused typing practice.
 ## Core Features
 
 - **Distraction-Free Design**:
-  - **Zero Animations**: No bouncing, flashing, pulsing, or motion effects. The interface remains
+  - **Minimal Animations**: No bouncing, flashing, pulsing, or motion effects. The interface remains
     static, clean, and focused on learning without cognitive overload.
-  - **Deliberate Progression**: The user must explicitly press <kbd>Enter</kbd> or <kbd>Space</kbd>
-    to advance to the next word, allowing time to inspect and understand their typed input.
-- **Universal Dual-Input Engine**:
-  - Seamlessly supports both **English QWERTY keystrokes** (converting `r` `k` $\rightarrow$ `가`)
-    and **Native Korean 2-set OS Keyboards** (converting `ㄱ` `ㅏ` $\rightarrow$ `가`).
+- **Dual Typing Modes**:
+  - **Mastery**: A structured progression system that unlocks new Jamos as you improve,
+    automatically selecting relevant practice items.
+  - **Free-form**: Practice specific modules, custom imported decks, or the entire curriculum with
+    randomized order.
+- **Progressive Web App**:
+  - Installable on mobile and desktop devices with full offline support.
 - **Contextual Learning**:
   - Displays Romanized English pronunciation alongside Hangul characters.
   - Displays English translations for words, sentences, reading passages, and proverbs.
@@ -23,36 +25,21 @@ Korean through focused typing practice.
     native speech synthesis engine (Web Speech API).
   - Uses high-quality on-device OS voices (such as Apple Yuna/Siri, Microsoft SunHi, and Google
     Korean) with zero download footprint and full offline support.
-  - Instant on-demand playback via the audio play icon and optional automatic pronunciation upon
-    exercise appearance or completion.
 - **Custom Anki & Flashcard Deck Import**:
   - Drag and drop or browse to import your own Anki deck packages (`.apkg`), tab-separated text
     (`.tsv`), or plain text flashcards (`.txt`, `.csv`) directly from your device.
-  - Zero-dependency client-side parser with native SQLite 3 B-Tree record decoding and ZIP
-    decompression that runs 100% offline in your browser.
-  - Automatically sanitizes HTML/audio tags, cleans metadata placeholders, computes Revised
-    Romanization phonetic subtext, and persists imported decks locally in `LocalStorage`.
-  - Toggle, filter, or delete imported decks directly from the collapsible "Custom / Anki Decks"
-    drawer in the curriculum sidebar.
-- **Dual Typing Modes**:
-  - **Free-form**: Practice specific modules, custom imported decks, or the entire curriculum with
-    randomized order.
-  - **Mastery**: A structured progression system that unlocks new Jamos as you improve,
-    automatically selecting relevant practice items.
-- **Progressive Web App**:
-  - Installable on mobile and desktop devices with full offline support.
 
 ---
 
-## Curriculum & Educational Sources
+## Curriculum and Educational Sources
 
-Our curriculum dataset ([`src/content/modules/*.json`](src/content/modules)) contains over **7,887+
-practice items** across 36 structured modules. Much of the curriculum—including beginner row-by-row
-progression drills, expanded vocabulary, K-Pop slang, single-sentence reading passage splits, and
-Revised Romanization—was generated, structured, and curated in collaboration with **Antigravity**
-(Google DeepMind's agentic AI coding assistant).
+Our curriculum dataset ([`src/content/modules/*.json`](src/content/modules)) contains over 7,000
+practice items across over 30 structured modules. Much of the curriculum—including beginner
+row-by-row progression drills, expanded vocabulary, K-Pop slang, single-sentence reading passage
+splits, and Revised Romanization—was generated, structured, and curated in collaboration with
+**Antigravity** (Google DeepMind's agentic AI coding assistant).
 
-### Educational Sources & Standards:
+### Educational Sources and Standards:
 
 1. **[National Institute of Korean Language (국립국어원 - NIKL)](https://www.korean.go.kr/) —
    [Korean Learner's Vocabulary & Frequency List (한국어 학습용 어휘 목록)](https://www.topikguide.com/korean-frequency-list-top-6000-words/)**:
@@ -121,7 +108,9 @@ how to type Korean:
 
 ---
 
-## Getting Started
+## Getting Started with Local Development
+
+Here are instructions on how to do local development.
 
 ### Prerequisites
 
@@ -167,6 +156,44 @@ We use **Vitest** for automated unit testing to ensure the Korean composition en
   npm run test:watch
   ```
 
+### Linting, Type Checking, and Dead-Code Detection
+
+We use **ESLint** for static analysis and **svelte-check** for cross-component type validation.
+Running `npm run lint` runs both in sequence.
+
+- **Run linter and type checker**:
+
+  ```bash
+  npm run lint
+  ```
+
+- **Dead code detection**: Run `npm run knip` to identify unused exports, dead files, and unused
+  dependencies.
+  ```bash
+  npm run knip
+  ```
+
+### Formatting code
+
+We use **Prettier** for automatic formatting.
+
+- **Run formatter**:
+  ```bash
+  npm run format
+  ```
+
+### Cleaning up the repository
+
+- **Clean build artifacts** (`dist/`):
+  ```bash
+  npm run clean
+  ```
+- **Deep clean build artifacts and dependencies** (`dist/` and `node_modules/`):
+  ```bash
+  npm run clean:all
+  npm ci
+  ```
+
 ---
 
 ## Offline Usage & Voice Setup Guide
@@ -208,39 +235,6 @@ Install `speech-dispatcher` and `espeak-ng` via your distribution's package mana
 ```bash
 sudo apt install speech-dispatcher speech-dispatcher-espeak-ng espeak-ng
 ```
-
-## Linting and Type Checking
-
-We use **ESLint** for static analysis and **svelte-check** for cross-component type validation.
-Running `npm run lint` runs both in sequence.
-
-- **Run linter and type checker**:
-  ```bash
-  npm run lint
-  ```
-
-## Formatting code
-
-We use **Prettier** for automatic formatting.
-
-- **Run formatter**:
-  ```bash
-  npm run format
-  ```
-
-## Cleaning up the repository
-
-- **Clean build artifacts** (`dist/`):
-  ```bash
-  npm run clean
-  ```
-- **Deep clean build artifacts and dependencies** (`dist/` and `node_modules/`):
-  ```bash
-  npm run clean:all
-  npm ci
-  ```
-- **Dead code detection**: Run `npm run knip` to identify unused exports, dead files, and unused
-  dependencies.
 
 ---
 
