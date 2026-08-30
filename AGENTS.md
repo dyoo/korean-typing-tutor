@@ -51,8 +51,8 @@ distraction-free, high-performance typing experience for English speakers learni
 - **Type Checking**: Use `npx svelte-check` (or `npm run lint`) to perform cross-component type
   validation. This catches prop name mismatches, missing imports, and type errors across `.svelte`
   component boundaries that ESLint alone cannot detect.
-- **Dead Code Detection**: Use `npx knip` to analyze and identify unused exports, dead files, and
-  unused dependencies whenever asked to audit or clean up dead code.
+- **Dead Code Detection**: Use `npm run knip` (or `npx knip`) to analyze and identify unused
+  exports, dead files, and unused dependencies whenever asked to audit or clean up dead code.
 - **Opposite-Hand Shift Chording**: When guiding Shift key targets (e.g. `ㄲ`, `ㅖ`), always
   recommend the opposite-hand Shift key (`right-shift` for left-hand keys `Q`/`W`/`E`/`R`/`T`,
   `left-shift` for right-hand keys `O`/`P`) to reinforce proper touch-typing ergonomics.
@@ -172,8 +172,8 @@ distraction-free, high-performance typing experience for English speakers learni
 - **Testing**: `npx vitest run` (one-time non-interactive test run across all 22 test suites).
 - **Linting & Type Checking**: `npm run lint` (runs ESLint and
   `svelte-check --tsconfig ./tsconfig.json`).
-- **Dead Code Audit**: `npx knip` (verifies zero unused exports, unlisted dependencies, or orphaned
-  files).
+- **Dead Code Audit**: `npm run knip` (verifies zero unused exports, unlisted dependencies, or
+  orphaned files).
 - **Production Build**: `npm run build` (generates PWA bundle and service worker precache manifest).
 
 ## Current Priority

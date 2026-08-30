@@ -11,6 +11,7 @@
     "test:watch": "vitest",
     "lint": "eslint . && svelte-check --tsconfig ./tsconfig.json",
     "lint:fix": "eslint . --fix",
+    "knip": "knip",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "clean": "rm -rf dist",
@@ -27,6 +28,7 @@
     "eslint-plugin-svelte": "^3.22.0",
     "globals": "^17.10.0",
     "jsdom": "^30.0.1",
+    "knip": "^5.45.1",
     "postcss": "^8.5.26",
     "prettier": "^3.9.6",
     "prettier-plugin-svelte": "^4.1.1",
@@ -37,5 +39,10 @@
     "vite": "^8.2.0",
     "vite-plugin-pwa": "^1.3.0",
     "vitest": "^4.1.10"
+  },
+  "knip": {
+    "project": [
+      "src/**/*.{ts,svelte}!"
+    ]
   }
 }

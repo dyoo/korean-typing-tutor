@@ -239,7 +239,7 @@ We use **Prettier** for automatic formatting.
   npm run clean:all
   npm ci
   ```
-- **Dead code detection**: Run `npx knip` to identify unused exports, dead files, and unused
+- **Dead code detection**: Run `npm run knip` to identify unused exports, dead files, and unused
   dependencies.
 
 ---
