@@ -60,7 +60,7 @@ export function calculateInputCursorIndex(
   return isLastComplete ? userInput.length : lastIndex;
 }
 
-export interface WordTokenGroup {
+interface WordTokenGroup {
   type: 'word' | 'space';
   indices: number[];
 }
@@ -93,7 +93,7 @@ export function getWordTokens(target: string): WordTokenGroup[] {
   return tokens;
 }
 
-export interface InputCaretStatus {
+interface InputCaretStatus {
   /** Whether this character unit renders the visual cursor beam */
   hasCaret: boolean;
   /** Whether the beam is on the character's leading (left) or trailing (right) edge */

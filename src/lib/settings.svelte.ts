@@ -9,7 +9,7 @@ export type ThemeMode = 'system' | 'light' | 'dark';
 /**
  * User Settings Interface for the Korean Typing Tutor.
  */
-export interface TutorSettings {
+interface TutorSettings {
   showPronunciation: boolean;
   showTranslation: boolean;
   showVirtualKeyboard: boolean;

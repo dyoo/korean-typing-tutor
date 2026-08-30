@@ -5,7 +5,7 @@ export const DEFAULT_TTS_VOICE = '';
 export const DEFAULT_TTS_SPEED = 1.0;
 
 /** Information about a discovered native browser speech synthesis voice. */
-export interface NativeVoiceInfo {
+interface NativeVoiceInfo {
   id: string;
   name: string;
   lang: string;

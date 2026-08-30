@@ -900,7 +900,7 @@ export function calculateJamoProgress(stats?: JamoStats): number {
   return Math.min(100, Math.max(0, Math.round(attemptRatio * accuracy * 100)));
 }
 
-export interface SentenceCompletionResult {
+interface SentenceCompletionResult {
   newlyMastered: boolean;
   newlyUnlockedJamo?: string;
   isAllMasteryComplete?: boolean;
@@ -1055,7 +1055,7 @@ function isHangulJamo(char: string): boolean {
  * Pre-analyzes decomposed basic Jamos, compound batchims, and constituent Jamos
  * so that filtering and eligibility validation require zero repeated Unicode decomposition math.
  */
-export interface ItemJamoMetadata {
+interface ItemJamoMetadata {
   /** All unique basic Jamos and compound batchims strictly required to type this text. */
   requiredJamos: string[];
   /** Set of all constituent Jamos (initial consonants, vowels, final consonants, standalone, and basic components). */

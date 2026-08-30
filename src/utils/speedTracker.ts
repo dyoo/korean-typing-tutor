@@ -25,7 +25,7 @@ const MAX_RECENT_HISTORY = 200;
 const MAX_BIGRAM_ENTRIES = 300;
 
 /** In-memory keystroke event representation during an active exercise prompt. */
-export interface KeystrokeEvent {
+interface KeystrokeEvent {
   key: string;
   jamo?: string;
   fromJamo?: string;

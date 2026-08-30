@@ -1,5 +1,5 @@
 /** Hand assigned to touch-typing key. */
-export type KeyboardHand = 'left' | 'right';
+type KeyboardHand = 'left' | 'right';
 
 /** Definition of keycap metadata for Dubeolsik (2-set) Korean keyboard. */
 export interface KeyCapDefinition {
@@ -10,7 +10,7 @@ export interface KeyCapDefinition {
 }
 
 /** Extended canonical layout entry including row index and typing hand. */
-export interface DubeolsikKeyEntry extends KeyCapDefinition {
+interface DubeolsikKeyEntry extends KeyCapDefinition {
   row: 0 | 1 | 2;
   hand: KeyboardHand;
 }

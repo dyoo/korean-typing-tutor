@@ -42,7 +42,7 @@ import type { CustomDeck } from '../types/customDecks';
 export type { CurriculumData };
 
 /** Result object returned when a keystroke is processed by the TutorSession controller. */
-export interface KeyResult {
+interface KeyResult {
   isMatch: boolean;
   isItemCompleted: boolean;
   isTutorialComplete: boolean;
