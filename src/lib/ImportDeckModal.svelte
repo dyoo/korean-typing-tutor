@@ -100,7 +100,10 @@
       >
         <div class="flex items-center gap-2.5">
           <span class="text-xl">🗂️</span>
-          <h2 id="import-deck-title" class="text-lg font-bold text-gray-900 dark:text-gray-100">
+          <h2
+            id="import-deck-title"
+            class="text-lg font-bold text-gray-900 dark:text-gray-100"
+          >
             Import Custom Deck
           </h2>
         </div>
@@ -117,7 +120,11 @@
             stroke="currentColor"
             stroke-width="2.5"
           >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         </button>
       </div>
@@ -178,7 +185,11 @@
                 stroke="currentColor"
                 stroke-width="4"
               />
-              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+              <path
+                class="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              />
             </svg>
             <span class="text-xs font-medium text-gray-700 dark:text-gray-300">
               Parsing flashcard deck...

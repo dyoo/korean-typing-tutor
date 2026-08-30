@@ -479,7 +479,11 @@
   }
 </script>
 
-<svelte:window onclick={handleWindowClick} onkeyup={handleKeyup} onblur={handleWindowBlur} />
+<svelte:window
+  onclick={handleWindowClick}
+  onkeyup={handleKeyup}
+  onblur={handleWindowBlur}
+/>
 
 <main
   oncopy={handleCopy}
@@ -519,7 +523,10 @@
       onspeak={speakCurrentPrompt}
     />
 
-    <ExercisePrompt {isCompleted} onskip={handleSkip} />
+    <ExercisePrompt
+      {isCompleted}
+      onskip={handleSkip}
+    />
   </div>
 
   <div
@@ -577,7 +584,11 @@
   onimport={handleImportDeck}
 />
 
-<SettingsModal isOpen={showSettingsModal} onclose={closePanel} onresetkpm={handleResetKpm} />
+<SettingsModal
+  isOpen={showSettingsModal}
+  onclose={closePanel}
+  onresetkpm={handleResetKpm}
+/>
 
 <MasterySidebar
   isOpen={showMasterySidebar}
@@ -605,7 +616,10 @@
   onOpenFocusMode={handleCompletionOpenFocusMode}
 />
 
-<WelcomeModal isOpen={showWelcomeModal} onBegin={handleBeginSession} />
+<WelcomeModal
+  isOpen={showWelcomeModal}
+  onBegin={handleBeginSession}
+/>
 
 <style>
   :global(html, body, #app) {

@@ -38,8 +38,18 @@
       stroke="currentColor"
       stroke-width="2.2"
     >
-      <circle cx="12" cy="12" r="9" stroke-dasharray="3 3" />
-      <circle cx="12" cy="12" r="2" fill="currentColor" />
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+        stroke-dasharray="3 3"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="2"
+        fill="currentColor"
+      />
     </svg>
   {:else}
     <svg

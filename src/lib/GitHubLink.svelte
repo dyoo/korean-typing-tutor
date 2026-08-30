@@ -14,7 +14,10 @@
   onclick={(e: MouseEvent) => e.stopPropagation()}
   onmousedown={(e: MouseEvent) => e.stopPropagation()}
 >
-  <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+  <svg
+    class="w-3.5 h-3.5 fill-current"
+    viewBox="0 0 24 24"
+  >
     <path
       fill-rule="evenodd"
       clip-rule="evenodd"

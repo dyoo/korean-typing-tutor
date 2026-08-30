@@ -216,7 +216,11 @@
 
     {#if enableTTS}
       <div class="audio-control-row mt-2 md:mt-3 flex items-center justify-center">
-        <TTSAudioButton isSpeaking={isTTSSpeaking} isLoading={isTTSLoading} onclick={onspeak} />
+        <TTSAudioButton
+          isSpeaking={isTTSSpeaking}
+          isLoading={isTTSLoading}
+          onclick={onspeak}
+        />
       </div>
     {/if}
 

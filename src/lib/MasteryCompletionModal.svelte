@@ -44,7 +44,12 @@
         aria-label="Close modal"
         class="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg
+          class="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -62,7 +67,10 @@
           Mastery Path Complete
         </div>
 
-        <h2 id="completion-modal-title" class="text-2xl md:text-3xl font-extrabold tracking-tight">
+        <h2
+          id="completion-modal-title"
+          class="text-2xl md:text-3xl font-extrabold tracking-tight"
+        >
           축하합니다! (Congratulations!)
         </h2>
 

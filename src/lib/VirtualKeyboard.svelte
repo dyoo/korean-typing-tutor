@@ -397,7 +397,10 @@
 
     <!-- Mobile Bottom Row: ?123 Toggle + Comma + Space + Period + ?123 Toggle (symmetric) -->
     <div class="flex items-center w-full gap-1 mt-0.5">
-      <SymbolToggleKey {isSymbolMode} onselect={toggleSymbolMode} />
+      <SymbolToggleKey
+        {isSymbolMode}
+        onselect={toggleSymbolMode}
+      />
 
       {#snippet commaContent()}
         ,
@@ -438,7 +441,10 @@
         content: periodContent,
       })}
 
-      <SymbolToggleKey {isSymbolMode} onselect={toggleSymbolMode} />
+      <SymbolToggleKey
+        {isSymbolMode}
+        onselect={toggleSymbolMode}
+      />
     </div>
   </div>
 </div>

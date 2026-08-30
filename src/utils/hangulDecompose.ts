@@ -1,4 +1,10 @@
-import type { FinalConsonantIndex, InitialConsonantIndex, SyllableDecomposition, VowelIndex, HangulSyllable } from '../types/korean';
+import type {
+  FinalConsonantIndex,
+  InitialConsonantIndex,
+  SyllableDecomposition,
+  VowelIndex,
+  HangulSyllable,
+} from '../types/korean';
 import {
   HANGUL_BASE,
   COMPOUND_VOWEL_DECOMP,
@@ -21,9 +27,11 @@ import {
  *   vowelIndex    = floor((offset % 588) / 28)
  *   finalIndex    = offset % 28
  */
-function getSyllableIndices(
-  char: string,
-): { initialConsonantIndex: InitialConsonantIndex; vowelIndex: VowelIndex; finalConsonantIndex: FinalConsonantIndex } | null {
+function getSyllableIndices(char: string): {
+  initialConsonantIndex: InitialConsonantIndex;
+  vowelIndex: VowelIndex;
+  finalConsonantIndex: FinalConsonantIndex;
+} | null {
   const offset = char.charCodeAt(0) - HANGUL_BASE;
   if (offset < 0 || offset > 11171) {
     return null;
@@ -31,7 +39,7 @@ function getSyllableIndices(
   return {
     initialConsonantIndex: Math.floor(offset / 588) as InitialConsonantIndex,
     vowelIndex: Math.floor((offset % 588) / 28) as VowelIndex,
-    finalConsonantIndex: offset % 28 as FinalConsonantIndex,
+    finalConsonantIndex: (offset % 28) as FinalConsonantIndex,
   };
 }
 

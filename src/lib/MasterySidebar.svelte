@@ -121,7 +121,11 @@
               stroke="currentColor"
               stroke-width="2.5"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
             <span class="text-left leading-snug">{stage.stageName}</span>
           </button>
@@ -198,7 +202,11 @@
             stroke="currentColor"
             stroke-width="2.5"
           >
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
           </svg>
           <span>Consolidation</span>
         </button>
