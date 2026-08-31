@@ -116,7 +116,8 @@ distraction-free, high-performance typing experience for English speakers learni
   subtext.
 - `src/lib/TTSSettingsControl.svelte`: Voice synthesis settings controls (enable toggle,
   speak-on-completion, speak-on-appearance, voice selection, speed slider).
-- `src/lib/ImportDeckModal.svelte`: Modal managing custom Anki `.apkg` and text flashcard file imports.
+- `src/lib/ImportDeckModal.svelte`: Modal managing custom Anki `.apkg` and text flashcard file
+  imports.
 - `src/lib/GitHubLink.svelte`: Top bar link component rendering the GitHub repository badge.
 - `src/lib/settings.svelte.ts`: Settings state management, persistence, and default values.
 - `src/utils/ttsController.svelte.ts`: Lightweight reactive singleton managing browser Web Speech
@@ -141,27 +142,32 @@ distraction-free, high-performance typing experience for English speakers learni
 - `src/utils/clipboard.ts`: Clipboard read/paste utilities for input handling.
 - `src/utils/cursorColor.ts`: Cursor color validation and CSS variable helpers.
 - `src/utils/virtualKeyboardShift.ts`: Shift-state tracking helpers for the virtual keyboard.
-- `src/utils/ankiParser.ts`: Client-side SQLite 3 B-Tree parser and ZIP decoder for Anki `.apkg` deck packages.
-- `src/utils/customDecks.ts`: LocalStorage persistence and deck management for user-imported custom flashcards.
-- `src/utils/speedTracker.ts`: Real-time Keys-Per-Minute (KPM) and Inter-Keystroke Interval (IKI) latency tracker.
+- `src/utils/ankiParser.ts`: Client-side SQLite 3 B-Tree parser and ZIP decoder for Anki `.apkg`
+  deck packages.
+- `src/utils/customDecks.ts`: LocalStorage persistence and deck management for user-imported custom
+  flashcards.
+- `src/utils/speedTracker.ts`: Real-time Keys-Per-Minute (KPM) and Inter-Keystroke Interval (IKI)
+  latency tracker.
 - `src/types/korean.ts`: Type definitions for the curriculum, lesson items, errors, and IME
   decomposition.
 - `src/types/mastery.ts`: Type definitions for Jamo statistics, progression items, and mastery
   state.
-- `src/content/modules/*.json`: Categorized curriculum and beginner lesson datasets (7,000+ authentic Korean items).
+- `src/content/modules/*.json`: Categorized curriculum and beginner lesson datasets (7,000+
+  authentic Korean items).
 - `src/content/index.ts`: Curriculum dataset aggregator and canonical module order.
 - `src/content/curriculumCategories.ts`: Curriculum module category grouping and label definitions.
 - `src/content/masteryVocabulary.ts`: Spaced-repetition vocabulary extraction and Jamo syllable
   filter indexer.
-- `design-docs/`: Architecture specifications, mastery engine mechanics, and roadmap design documents.
+- `design-docs/`: Architecture specifications, mastery engine mechanics, and roadmap design
+  documents.
 - `vite.config.js`: Configuration for Vite, PWA, COOP/COEP headers, and Workbox precaching support.
 
 ## Performance & Bundle Architecture
 
 - **Initial Load Profile**: The initial page load payload is ~288 KB gzipped (~995 KB uncompressed).
   Roughly 80% of the initial JavaScript bundle consists of the offline curriculum JSON datasets
-  (authentic Korean items, English translations, and Romanizations), ensuring instant,
-  zero-latency lesson switches with full offline capability.
+  (authentic Korean items, English translations, and Romanizations), ensuring instant, zero-latency
+  lesson switches with full offline capability.
 - **Native Web Speech Architecture**: Speech synthesis leverages the standard browser Web Speech API
   (`window.speechSynthesis`), utilizing the host OS Korean voice models with 0ms synthesis latency,
   zero binary model weight downloads, and zero runtime worker overhead.
