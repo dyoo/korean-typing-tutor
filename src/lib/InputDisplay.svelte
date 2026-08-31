@@ -1,7 +1,6 @@
 <script lang="ts">
   import CharDisplay from './CharDisplay.svelte';
   import { getInputCaretStatus } from '../utils/cursorHelper';
-  import type { CursorColorMode } from '../utils/cursorColor';
 
   interface Props {
     userInput: string;
@@ -9,7 +8,6 @@
     activeInputCursorIndex: number;
     isCompleted: boolean;
     hasEnabledModules: boolean;
-    cursorColor?: CursorColorMode;
     inputElement?: HTMLInputElement | null;
     onkeydown: (e: KeyboardEvent) => void;
     onkeyup?: (e: KeyboardEvent) => void;
@@ -24,7 +22,6 @@
     activeInputCursorIndex,
     isCompleted,
     hasEnabledModules,
-    cursorColor = 'amber',
     inputElement = $bindable(null),
     onkeydown,
     onkeyup,
@@ -118,7 +115,6 @@
             isLeadingCursor={caret.isLeading}
             variant="input"
             dataIndex={i}
-            {cursorColor}
             onselect={() => onsetcursorposition(i + 1)}
           />
         {:else}
@@ -128,7 +124,6 @@
             isCurrent={false}
             variant="input"
             dataIndex={i}
-            {cursorColor}
             onselect={() => onsetcursorposition(i + 1)}
           />
         {/if}

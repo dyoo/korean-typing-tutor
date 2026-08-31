@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { getCursorColorClass, type CursorColorMode } from '../utils/cursorColor';
+  import { getCursorColorClass } from '../utils/cursorColor';
+  import { settingsStore } from './settings.svelte';
 
   interface Props {
     char: string;
@@ -9,7 +10,6 @@
     variant?: 'target' | 'input';
     dataIndex?: number;
     elementRef?: HTMLElement | null;
-    cursorColor?: CursorColorMode;
     onselect?: () => void;
   }
 
@@ -21,7 +21,6 @@
     variant = 'target',
     dataIndex = undefined,
     elementRef = $bindable(null),
-    cursorColor = 'amber',
     onselect,
   }: Props = $props();
 
@@ -35,7 +34,7 @@
         : 'text-blue-600 dark:text-blue-400 font-medium',
   );
 
-  let cursorBgClass = $derived(getCursorColorClass(cursorColor));
+  let cursorBgClass = $derived(getCursorColorClass(settingsStore.current.cursorColor));
 
   function handleClick(e: MouseEvent) {
     if (variant === 'input' && onselect) {

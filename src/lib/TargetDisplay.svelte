@@ -2,7 +2,6 @@
   import CharDisplay from './CharDisplay.svelte';
   import TTSAudioButton from './TTSAudioButton.svelte';
   import type { LessonItem } from '../types/korean';
-  import type { CursorColorMode } from '../utils/cursorColor';
   import {
     getTargetFontSizeClass,
     getTargetFontWeightClass,
@@ -20,7 +19,6 @@
     minFontSizeRem?: number;
     maxFontSizeRem?: number;
     lockFontSize?: boolean;
-    cursorColor?: CursorColorMode;
     enableTTS?: boolean;
     isTTSSpeaking?: boolean;
     isTTSLoading?: boolean;
@@ -37,7 +35,6 @@
     minFontSizeRem = 1.25,
     maxFontSizeRem = 5.5,
     lockFontSize = false,
-    cursorColor = 'amber',
     enableTTS = false,
     isTTSSpeaking = false,
     isTTSLoading = false,
@@ -169,7 +166,6 @@
               {isCurrent}
               variant="target"
               dataIndex={i}
-              {cursorColor}
             />
           {:else}
             <CharDisplay
@@ -178,7 +174,6 @@
               {isCurrent}
               variant="target"
               dataIndex={i}
-              {cursorColor}
             />
           {/if}
         {:else}
@@ -196,7 +191,6 @@
                   {isCurrent}
                   variant="target"
                   dataIndex={i}
-                  {cursorColor}
                 />
               {:else}
                 <CharDisplay
@@ -205,7 +199,6 @@
                   {isCurrent}
                   variant="target"
                   dataIndex={i}
-                  {cursorColor}
                 />
               {/if}
             {/each}

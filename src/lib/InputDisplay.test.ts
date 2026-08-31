@@ -1,6 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { mount, unmount } from 'svelte';
 import InputDisplay from './InputDisplay.svelte';
+import { settingsStore } from './settings.svelte';
 
 describe('InputDisplay component', () => {
   let target: HTMLDivElement;
@@ -9,6 +10,7 @@ describe('InputDisplay component', () => {
   beforeEach(() => {
     target = document.createElement('div');
     document.body.appendChild(target);
+    settingsStore.reset();
   });
 
   afterEach(() => {
@@ -139,7 +141,6 @@ describe('InputDisplay component', () => {
         activeInputCursorIndex: 1, // at the end of '가'
         isCompleted: false,
         hasEnabledModules: true,
-        cursorColor: 'amber',
         onkeydown: vi.fn(),
         oninputprevent: vi.fn(),
         onsetcursorposition: vi.fn(),
@@ -147,6 +148,28 @@ describe('InputDisplay component', () => {
     });
 
     const caretBeam = target.querySelector('.bg-amber-500');
+    expect(caretBeam).not.toBeNull();
+    expect(caretBeam?.className).toContain('-right-0.5');
+  });
+
+  it('should render the sky-themed caret beam on the active character', () => {
+    settingsStore.update('cursorColor', 'sky');
+
+    component = mount(InputDisplay, {
+      target,
+      props: {
+        userInput: '가',
+        errorMap: new Map<number, boolean>(),
+        activeInputCursorIndex: 1, // at the end of '가'
+        isCompleted: false,
+        hasEnabledModules: true,
+        onkeydown: vi.fn(),
+        oninputprevent: vi.fn(),
+        onsetcursorposition: vi.fn(),
+      },
+    });
+
+    const caretBeam = target.querySelector('.bg-sky-400');
     expect(caretBeam).not.toBeNull();
     expect(caretBeam?.className).toContain('-right-0.5');
   });

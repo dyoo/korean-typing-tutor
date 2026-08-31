@@ -516,7 +516,6 @@
       minFontSizeRem={settingsStore.current.minFontSizeRem}
       maxFontSizeRem={settingsStore.current.maxFontSizeRem}
       lockFontSize={settingsStore.current.lockFontSize}
-      cursorColor={settingsStore.current.cursorColor}
       enableTTS={settingsStore.current.enableTTS}
       {isTTSSpeaking}
       {isTTSLoading}
@@ -539,7 +538,6 @@
       {activeInputCursorIndex}
       {isCompleted}
       hasEnabledModules={mode === 'mastery' || enabledModuleIds.length > 0}
-      cursorColor={settingsStore.current.cursorColor}
       onkeydown={handleKeydown}
       onkeyup={handleKeyup}
       oninputprevent={handleInputPrevent}
