@@ -18,6 +18,7 @@ import {
   setMasteryFocusBatchim,
   JAMO_PROGRESSION_ORDER,
   COMPOUND_BATCHIM_SET,
+  COMPOUND_VOWEL_SET,
 } from '../utils/jamoMastery';
 import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecompose';
 import { loadCustomDecks, saveCustomDeck, deleteCustomDeck } from '../utils/customDecks';
@@ -618,14 +619,36 @@ export class TutorSession {
         newlyUnlockedJamo = attemptResult.newlyUnlockedJamo;
       }
 
-      // If active learning target is a compound batchim (e.g. ㄺ, ㅄ, ㄶ), check syllables directly
+      // If active learning target is a compound vowel (e.g. ㅘ, ㅚ, ㅝ, ㅟ, ㅢ, ㅙ, ㅞ),
+      // record the attempt strictly upon completing the second vowel key.
       const activeItem = getActiveLearningJamo(this.masteryState);
-      if (activeItem && COMPOUND_BATCHIM_SET.has(activeItem.jamo)) {
-        const lastInputChar = this.userInput[this.userInput.length - 1];
-        if (lastInputChar && decomposeSyllable(lastInputChar)?.finalConsonant === activeItem.jamo) {
-          const compoundResult = recordJamoAttempt(this.masteryState, activeItem.jamo, isCorrect);
-          if (compoundResult.newlyUnlockedJamo) {
-            newlyUnlockedJamo = compoundResult.newlyUnlockedJamo;
+      if (activeItem && COMPOUND_VOWEL_SET.has(activeItem.jamo) && activeItem.combination) {
+        const [, secondKey] = activeItem.combination;
+        if (expectedJamoBefore === secondKey) {
+          const lastInputChar = this.userInput[this.userInput.length - 1];
+          if (lastInputChar && decomposeSyllable(lastInputChar)?.vowel === activeItem.jamo) {
+            const compoundResult = recordJamoAttempt(this.masteryState, activeItem.jamo, isCorrect);
+            if (compoundResult.newlyUnlockedJamo) {
+              newlyUnlockedJamo = compoundResult.newlyUnlockedJamo;
+            }
+          }
+        }
+      }
+
+      // If active learning target is a compound batchim (e.g. ㄺ, ㅄ, ㄶ),
+      // record the attempt strictly upon completing the second final consonant key.
+      if (activeItem && COMPOUND_BATCHIM_SET.has(activeItem.jamo) && activeItem.combination) {
+        const [, secondKey] = activeItem.combination;
+        if (expectedJamoBefore === secondKey) {
+          const lastInputChar = this.userInput[this.userInput.length - 1];
+          if (
+            lastInputChar &&
+            decomposeSyllable(lastInputChar)?.finalConsonant === activeItem.jamo
+          ) {
+            const compoundResult = recordJamoAttempt(this.masteryState, activeItem.jamo, isCorrect);
+            if (compoundResult.newlyUnlockedJamo) {
+              newlyUnlockedJamo = compoundResult.newlyUnlockedJamo;
+            }
           }
         }
       }

@@ -283,7 +283,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_k_4', moduleId: 'mastery', target: '카드', translation: 'Card' },
     { id: 'mv_k_5', moduleId: 'mastery', target: '키', translation: 'Height / Key' },
     { id: 'mv_k_6', moduleId: 'mastery', target: '콩', translation: 'Bean / Pea' },
-    { id: 'mv_k_7', moduleId: 'mastery', target: '퀴즈', translation: 'Quiz' },
+    { id: 'mv_k_7', moduleId: 'mastery', target: '콩나물', translation: 'Bean sprouts' },
     { id: 'mv_k_8', moduleId: 'mastery', target: '코너', translation: 'Corner' },
     { id: 'mv_k_9', moduleId: 'mastery', target: '콜라', translation: 'Cola' },
     { id: 'mv_k_10', moduleId: 'mastery', target: '코코아', translation: 'Cocoa' },
@@ -333,7 +333,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_ch_14', moduleId: 'mastery', target: '기차', translation: 'Train' },
     { id: 'mv_ch_15', moduleId: 'mastery', target: '부채', translation: 'Hand fan / Debt' },
     { id: 'mv_ch_16', moduleId: 'mastery', target: '초보', translation: 'Beginner / Novice' },
-    { id: 'mv_ch_17', moduleId: 'mastery', target: '추위', translation: 'Cold weather / Chill' },
+    { id: 'mv_ch_17', moduleId: 'mastery', target: '축제', translation: 'Festival / Celebration' },
     { id: 'mv_ch_18', moduleId: 'mastery', target: '치약', translation: 'Toothpaste' },
     { id: 'mv_ch_19', moduleId: 'mastery', target: '초코', translation: 'Chocolate' },
     { id: 'mv_ch_20', moduleId: 'mastery', target: '체크', translation: 'Check' },
@@ -369,7 +369,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_yu_5', moduleId: 'mastery', target: '휴일', translation: 'Holiday' },
     { id: 'mv_yu_6', moduleId: 'mastery', target: '우유', translation: 'Milk' },
     { id: 'mv_yu_7', moduleId: 'mastery', target: '유명', translation: 'Fame / Renown' },
-    { id: 'mv_yu_8', moduleId: 'mastery', target: '유월', translation: 'June' },
+    { id: 'mv_yu_8', moduleId: 'mastery', target: '유학', translation: 'Study abroad' },
     { id: 'mv_yu_9', moduleId: 'mastery', target: '유행', translation: 'Trend / Fashion' },
     { id: 'mv_yu_10', moduleId: 'mastery', target: '휴게소', translation: 'Rest area / Rest stop' },
     { id: 'mv_yu_11', moduleId: 'mastery', target: '유도', translation: 'Judo' },
@@ -386,7 +386,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
       translation: 'Historic ruins / Relic site',
     },
     { id: 'mv_yu_14', moduleId: 'mastery', target: '뮤지컬', translation: 'Musical' },
-    { id: 'mv_yu_15', moduleId: 'mastery', target: '유치원', translation: 'Kindergarten' },
+    { id: 'mv_yu_15', moduleId: 'mastery', target: '유리', translation: 'Glass' },
     {
       id: 'mv_yu_16',
       moduleId: 'mastery',
@@ -402,7 +402,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_kk_2', moduleId: 'mastery', target: '꼬마', translation: 'Little child / Kid' },
     { id: 'mv_kk_3', moduleId: 'mastery', target: '꽃', translation: 'Flower' },
     { id: 'mv_kk_4', moduleId: 'mastery', target: '꿈', translation: 'Dream' },
-    { id: 'mv_kk_5', moduleId: 'mastery', target: '까마귀', translation: 'Crow / Raven' },
+    { id: 'mv_kk_5', moduleId: 'mastery', target: '까치집', translation: 'Magpie nest' },
     { id: 'mv_kk_6', moduleId: 'mastery', target: '꽃병', translation: 'Flower vase' },
     {
       id: 'mv_kk_7',
@@ -441,7 +441,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_tt_5', moduleId: 'mastery', target: '또', translation: 'Again / Also' },
     { id: 'mv_tt_6', moduleId: 'mastery', target: '뚜껑', translation: 'Lid / Cap' },
     { id: 'mv_tt_7', moduleId: 'mastery', target: '뜻', translation: 'Meaning / Will / Intention' },
-    { id: 'mv_tt_8', moduleId: 'mastery', target: '뛰다', translation: 'To run / To jump' },
+    { id: 'mv_tt_8', moduleId: 'mastery', target: '떠나다', translation: 'To leave / To depart' },
     { id: 'mv_tt_9', moduleId: 'mastery', target: '딸', translation: 'Daughter' },
     { id: 'mv_tt_10', moduleId: 'mastery', target: '또다시', translation: 'Once again' },
     {
@@ -537,7 +537,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_ye_5', moduleId: 'mastery', target: '예약', translation: 'Reservation' },
     { id: 'mv_ye_6', moduleId: 'mastery', target: '예보', translation: 'Forecast' },
     { id: 'mv_ye_7', moduleId: 'mastery', target: '예쁘다', translation: 'To be pretty' },
-    { id: 'mv_ye_8', moduleId: 'mastery', target: '예의', translation: 'Politeness / Courtesy' },
+    { id: 'mv_ye_8', moduleId: 'mastery', target: '예문', translation: 'Example sentence' },
     {
       id: 'mv_ye_9',
       moduleId: 'mastery',
@@ -553,7 +553,94 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
     { id: 'mv_ye_11', moduleId: 'mastery', target: '예감', translation: 'Premonition / Hunch' },
   ],
 
-  // --- Stage 6: Compound Final Consonants (겹받침) ---
+  // --- Stage 6: Compound Vowels (이중모음: ㅘ, ㅚ, ㅝ, ㅟ, ㅢ, ㅙ, ㅞ) ---
+  ㅘ: [
+    { id: 'mv_wa_1', moduleId: 'mastery', target: '사과', translation: 'Apple' },
+    { id: 'mv_wa_2', moduleId: 'mastery', target: '과자', translation: 'Snack / Cookie' },
+    { id: 'mv_wa_3', moduleId: 'mastery', target: '화가', translation: 'Painter / Artist' },
+    { id: 'mv_wa_4', moduleId: 'mastery', target: '영화', translation: 'Movie / Film' },
+    { id: 'mv_wa_5', moduleId: 'mastery', target: '과일', translation: 'Fruit' },
+    { id: 'mv_wa_6', moduleId: 'mastery', target: '화요일', translation: 'Tuesday' },
+    { id: 'mv_wa_7', moduleId: 'mastery', target: '화장실', translation: 'Restroom / Bathroom' },
+    { id: 'mv_wa_8', moduleId: 'mastery', target: '과거', translation: 'Past' },
+    { id: 'mv_wa_9', moduleId: 'mastery', target: '왕', translation: 'King' },
+    { id: 'mv_wa_10', moduleId: 'mastery', target: '광장', translation: 'Plaza / Square' },
+    { id: 'mv_wa_11', moduleId: 'mastery', target: '관심', translation: 'Interest / Attention' },
+  ],
+  ㅚ: [
+    { id: 'mv_oe_1', moduleId: 'mastery', target: '회사', translation: 'Company / Corporation' },
+    { id: 'mv_oe_2', moduleId: 'mastery', target: '외국', translation: 'Foreign country' },
+    { id: 'mv_oe_3', moduleId: 'mastery', target: '최고', translation: 'The best / Highest' },
+    { id: 'mv_oe_4', moduleId: 'mastery', target: '교회', translation: 'Church' },
+    { id: 'mv_oe_5', moduleId: 'mastery', target: '외출', translation: 'Going out / Outing' },
+    { id: 'mv_oe_6', moduleId: 'mastery', target: '되다', translation: 'To become' },
+    { id: 'mv_oe_7', moduleId: 'mastery', target: '쇠', translation: 'Iron / Metal' },
+    { id: 'mv_oe_8', moduleId: 'mastery', target: '회비', translation: 'Membership fee' },
+    { id: 'mv_oe_9', moduleId: 'mastery', target: '외부', translation: 'Outside / Exterior' },
+    { id: 'mv_oe_10', moduleId: 'mastery', target: '죄송', translation: 'Apology / Sorry' },
+    { id: 'mv_oe_11', moduleId: 'mastery', target: '회복', translation: 'Recovery / Healing' },
+  ],
+  ㅝ: [
+    { id: 'mv_wo_1', moduleId: 'mastery', target: '병원', translation: 'Hospital / Clinic' },
+    { id: 'mv_wo_2', moduleId: 'mastery', target: '공원', translation: 'Park' },
+    { id: 'mv_wo_3', moduleId: 'mastery', target: '월요일', translation: 'Monday' },
+    { id: 'mv_wo_4', moduleId: 'mastery', target: '소원', translation: 'Wish / Desire' },
+    { id: 'mv_wo_5', moduleId: 'mastery', target: '뭐', translation: 'What' },
+    { id: 'mv_wo_6', moduleId: 'mastery', target: '추억', translation: 'Memory / Recollection' },
+    { id: 'mv_wo_7', moduleId: 'mastery', target: '원하다', translation: 'To want / To desire' },
+    { id: 'mv_wo_8', moduleId: 'mastery', target: '시원하다', translation: 'To be cool / To be refreshing' },
+    { id: 'mv_wo_9', moduleId: 'mastery', target: '자원', translation: 'Resource / Volunteering' },
+    { id: 'mv_wo_10', moduleId: 'mastery', target: '정원', translation: 'Garden / Yard' },
+    { id: 'mv_wo_11', moduleId: 'mastery', target: '구원', translation: 'Salvation / Rescue' },
+  ],
+  ㅟ: [
+    { id: 'mv_wi_1', moduleId: 'mastery', target: '뒤', translation: 'Behind / Back' },
+    { id: 'mv_wi_2', moduleId: 'mastery', target: '위', translation: 'Above / Top / Stomach' },
+    { id: 'mv_wi_3', moduleId: 'mastery', target: '귀', translation: 'Ear' },
+    { id: 'mv_wi_4', moduleId: 'mastery', target: '바위', translation: 'Rock / Boulder' },
+    { id: 'mv_wi_5', moduleId: 'mastery', target: '가위', translation: 'Scissors' },
+    { id: 'mv_wi_6', moduleId: 'mastery', target: '쉬다', translation: 'To rest' },
+    { id: 'mv_wi_7', moduleId: 'mastery', target: '취미', translation: 'Hobby' },
+    { id: 'mv_wi_8', moduleId: 'mastery', target: '다람쥐', translation: 'Squirrel' },
+    { id: 'mv_wi_9', moduleId: 'mastery', target: '위치', translation: 'Position / Location' },
+    { id: 'mv_wi_10', moduleId: 'mastery', target: '위험', translation: 'Danger / Risk' },
+    { id: 'mv_wi_11', moduleId: 'mastery', target: '쥐', translation: 'Mouse / Rat' },
+  ],
+  ㅢ: [
+    { id: 'mv_ui_1', moduleId: 'mastery', target: '의사', translation: 'Doctor' },
+    { id: 'mv_ui_2', moduleId: 'mastery', target: '의자', translation: 'Chair' },
+    { id: 'mv_ui_3', moduleId: 'mastery', target: '회의', translation: 'Meeting / Conference' },
+    { id: 'mv_ui_4', moduleId: 'mastery', target: '의미', translation: 'Meaning / Significance' },
+    { id: 'mv_ui_5', moduleId: 'mastery', target: '희망', translation: 'Hope' },
+    { id: 'mv_ui_6', moduleId: 'mastery', target: '주의', translation: 'Caution / Warning' },
+    { id: 'mv_ui_7', moduleId: 'mastery', target: '의견', translation: 'Opinion / View' },
+    { id: 'mv_ui_8', moduleId: 'mastery', target: '무늬', translation: 'Pattern / Design' },
+    { id: 'mv_ui_9', moduleId: 'mastery', target: '정의', translation: 'Justice / Definition' },
+    { id: 'mv_ui_10', moduleId: 'mastery', target: '합의', translation: 'Agreement / Consensus' },
+    { id: 'mv_ui_11', moduleId: 'mastery', target: '의지', translation: 'Will / Determination' },
+  ],
+  ㅙ: [
+    { id: 'mv_wae_1', moduleId: 'mastery', target: '왜', translation: 'Why' },
+    { id: 'mv_wae_2', moduleId: 'mastery', target: '돼지', translation: 'Pig / Pork' },
+    { id: 'mv_wae_3', moduleId: 'mastery', target: '왜냐하면', translation: 'Because / Since' },
+    { id: 'mv_wae_4', moduleId: 'mastery', target: '왜 그래', translation: 'What is wrong? / Why are you doing that?' },
+    { id: 'mv_wae_5', moduleId: 'mastery', target: '돼요', translation: 'It is possible / It works' },
+    { id: 'mv_wae_6', moduleId: 'mastery', target: '쇄신', translation: 'Reform / Renovation' },
+    { id: 'mv_wae_7', moduleId: 'mastery', target: '왜소하다', translation: 'To be petite / To be small' },
+    { id: 'mv_wae_8', moduleId: 'mastery', target: '왜곡', translation: 'Distortion' },
+    { id: 'mv_wae_9', moduleId: 'mastery', target: '돼지고기', translation: 'Pork meat' },
+  ],
+  ㅞ: [
+    { id: 'mv_we_1', moduleId: 'mastery', target: '스웨터', translation: 'Sweater' },
+    { id: 'mv_we_2', moduleId: 'mastery', target: '웨이터', translation: 'Waiter' },
+    { id: 'mv_we_3', moduleId: 'mastery', target: '웨딩', translation: 'Wedding' },
+    { id: 'mv_we_4', moduleId: 'mastery', target: '궤도', translation: 'Orbit / Track' },
+    { id: 'mv_we_5', moduleId: 'mastery', target: '훼손', translation: 'Damage / Defacement' },
+    { id: 'mv_we_6', moduleId: 'mastery', target: '웨일스', translation: 'Wales' },
+    { id: 'mv_we_7', moduleId: 'mastery', target: '웹서핑', translation: 'Web surfing' },
+  ],
+
+  // --- Stage 7: Compound Final Consonants (겹받침) ---
   ㄶ: [
     {
       id: 'mv_nh_1',
@@ -1042,24 +1129,24 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
 export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
   // Checkpoint 1: Home Row Sentences (ㅓ, ㅏ, ㅇ, ㄹ, ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ)
   cp_home_row: [
-    { id: 'cp1_1', moduleId: 'mastery', target: '어머니와 아이', translation: 'Mother and child' },
+    { id: 'cp1_1', moduleId: 'mastery', target: '어머니랑 아이', translation: 'Mother and child' },
     {
       id: 'cp1_2',
       moduleId: 'mastery',
-      target: '우리 어머니와 누나',
+      target: '우리 어머니랑 누나',
       translation: 'Our mother and older sister',
     },
     {
       id: 'cp1_3',
       moduleId: 'mastery',
-      target: '나무 위로 날아오르나',
-      translation: 'Does it fly up above the tree?',
+      target: '나무 하나 이어놓으리',
+      translation: 'I will connect one tree',
     },
     {
       id: 'cp1_4',
       moduleId: 'mastery',
-      target: '하늘 위로 흐르는 물',
-      translation: 'Water flowing skyward',
+      target: '하늘 멀리 흐르는 물',
+      translation: 'Water flowing far into the sky',
     },
     { id: 'cp1_5', moduleId: 'mastery', target: '이름은 하나', translation: 'The name is one' },
     {
@@ -1071,8 +1158,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp1_7',
       moduleId: 'mastery',
-      target: '너와 나의 마음',
-      translation: 'Your heart and mine',
+      target: '너랑 나 우리 마음',
+      translation: 'You and me, our hearts',
     },
     {
       id: 'cp1_8',
@@ -1089,14 +1176,14 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp1_10',
       moduleId: 'mastery',
-      target: '눈물 어린 너의 눈',
-      translation: 'Your tearful eyes',
+      target: '눈물 어린 너랑 나',
+      translation: 'You and me with tearful eyes',
     },
     {
       id: 'cp1_11',
       moduleId: 'mastery',
-      target: '물 위로 흐르는 하루',
-      translation: 'A day flowing upon the water',
+      target: '물 멀리 흐르는 하루',
+      translation: 'A day flowing far along the water',
     },
     {
       id: 'cp1_12',
@@ -1107,8 +1194,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp1_13',
       moduleId: 'mastery',
-      target: '머리 위로 오른 은하',
-      translation: 'The Milky Way rising above our heads',
+      target: '머리 너머 오른 은하',
+      translation: 'The Milky Way rising beyond our heads',
     },
     {
       id: 'cp1_14',
@@ -1119,14 +1206,14 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp1_15',
       moduleId: 'mastery',
-      target: '너와 나 우리 나라',
+      target: '너랑 나 우리 나라',
       translation: 'You and me, our nation',
     },
     {
       id: 'cp1_16',
       moduleId: 'mastery',
-      target: '이마 위로 흐르는 눈물',
-      translation: 'Tears flowing down the forehead',
+      target: '이마 너머 흐르나 눈물',
+      translation: 'Do tears flow over the forehead?',
     },
     {
       id: 'cp1_17',
@@ -1143,8 +1230,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp1_19',
       moduleId: 'mastery',
-      target: '어린 아이의 울음',
-      translation: 'The crying of a little child',
+      target: '어린 아이 우는 눈물',
+      translation: 'Tears of a crying child',
     },
     {
       id: 'cp1_20',
@@ -1173,8 +1260,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp2_3',
       moduleId: 'mastery',
-      target: '나의 별에도 봄이 오면',
-      translation: 'When spring comes to my star too',
+      target: '저기 별에도 봄이 오면',
+      translation: 'When spring comes to that star too',
       attribution: '윤동주, <별 헤는 밤> (1941)',
     },
     {
@@ -1187,8 +1274,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp2_5',
       moduleId: 'mastery',
-      target: '사랑도 사람의 일이라',
-      translation: 'Love too is a human affair',
+      target: '사랑도 세상 사람 일이라',
+      translation: 'Love too is an affair of the people of the world',
       attribution: '한용운, <님의 침묵> (1926)',
     },
     {
@@ -1201,8 +1288,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp2_7',
       moduleId: 'mastery',
-      target: '가을 바람이 시원해요',
-      translation: 'The autumn breeze is refreshing',
+      target: '가을 바람이 솔솔 불어요',
+      translation: 'The autumn breeze blows gently',
     },
     {
       id: 'cp2_8',
@@ -1219,8 +1306,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp2_10',
       moduleId: 'mastery',
-      target: '이웃과 재미난 이야기를 해요',
-      translation: 'Chatting about fun stories with a neighbor',
+      target: '언니랑 재미난 이야기를 해요',
+      translation: 'Chatting about fun stories with older sister',
     },
     {
       id: 'cp2_11',
@@ -1243,26 +1330,26 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp2_14',
       moduleId: 'mastery',
-      target: '도서관에서 조용히 공부해요',
-      translation: 'Study quietly in the library',
+      target: '방에서 조용히 공부해요',
+      translation: 'Study quietly in the room',
     },
     {
       id: 'cp2_15',
       moduleId: 'mastery',
-      target: '사랑하는 가족과 모여 살아요',
-      translation: 'Live together with beloved family',
+      target: '사랑하는 사람이랑 모두 살아요',
+      translation: 'Living with all the people I love',
     },
     {
       id: 'cp2_16',
       moduleId: 'mastery',
-      target: '주말에 시원한 바람을 맞아요',
-      translation: 'Feel the cool breeze on the weekend',
+      target: '주말에 좋은 바람을 맞아요',
+      translation: 'Feel the nice breeze on the weekend',
     },
     {
       id: 'cp2_17',
       moduleId: 'mastery',
-      target: '밤하늘에 아름다운 별을 봐요',
-      translation: 'Look at beautiful stars in the night sky',
+      target: '밤하늘에 아름다운 별을 그려요',
+      translation: 'Draw beautiful stars in the night sky',
     },
     {
       id: 'cp2_18',
@@ -1279,8 +1366,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp2_20',
       moduleId: 'mastery',
-      target: '여름 바닷가에서 수영을 해요',
-      translation: 'Swim at the summer beach',
+      target: '여름 바닷가에서 노래를 해요',
+      translation: 'Sing songs at the summer beach',
     },
   ],
 
@@ -1289,8 +1376,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp3_1',
       moduleId: 'mastery',
-      target: '청포도 익어가는 내 고장 칠월은',
-      translation: 'July in my hometown when green grapes ripen',
+      target: '청포도 익어가는 내 고장 여름날',
+      translation: 'Summer in my hometown when green grapes ripen',
       attribution: '이육사, <청포도> (1939)',
     },
     {
@@ -1303,8 +1390,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp3_3',
       moduleId: 'mastery',
-      target: '향단아 그네 줄을 밀어라, 서으로 가는 달같이',
-      translation: 'Hyangdan, push the swing ropes, like the moon moving west',
+      target: '그네 줄을 밀어라, 서편으로 가는 달처럼',
+      translation: 'Push the swing ropes, like the moon moving west',
       attribution: '서정주, <추천사> (1956)',
     },
     {
@@ -1316,8 +1403,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp3_5',
       moduleId: 'mastery',
-      target: '시원한 커피 한 잔의 여유',
-      translation: 'Relaxing with a cup of cool coffee',
+      target: '달콤한 커피 한 잔이랑 편안한 휴일',
+      translation: 'A cup of sweet coffee and a comfortable holiday',
     },
     {
       id: 'cp3_6',
@@ -1334,14 +1421,14 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp3_8',
       moduleId: 'mastery',
-      target: '달콤한 포도와 토마토를 먹어요',
+      target: '달콤한 포도랑 토마토를 먹어요',
       translation: 'Eat sweet grapes and tomatoes',
     },
     {
       id: 'cp3_9',
       moduleId: 'mastery',
-      target: '창문을 열고 시원한 공기를 마셔요',
-      translation: 'Open the window and breathe cool air',
+      target: '창문을 열고 신선한 공기를 마셔요',
+      translation: 'Open the window and breathe fresh air',
     },
     {
       id: 'cp3_10',
@@ -1352,8 +1439,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp3_11',
       moduleId: 'mastery',
-      target: '휴일에 집에서 푹 쉬어요',
-      translation: 'Rest comfortably at home on the holiday',
+      target: '휴일에 집에서 편히 자요',
+      translation: 'Sleep comfortably at home on holidays',
     },
     {
       id: 'cp3_12',
@@ -1388,20 +1475,20 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp3_17',
       moduleId: 'mastery',
-      target: '치마를 입고 외출을 준비해요',
+      target: '치마를 입고 나갈 준비를 해요',
       translation: 'Put on a skirt and prepare to go out',
     },
     {
       id: 'cp3_18',
       moduleId: 'mastery',
-      target: '탁자 위에 커피잔을 놓아요',
-      translation: 'Place the coffee cup on the table',
+      target: '탁자 곁에 커피잔을 놓아요',
+      translation: 'Place the coffee cup beside the table',
     },
     {
       id: 'cp3_19',
       moduleId: 'mastery',
-      target: '신나는 음악에 맞춰 춤을 춰요',
-      translation: 'Dance in rhythm to exciting music',
+      target: '신나는 춤을 추며 손을 흔들어요',
+      translation: 'Dance excitingly and wave your hands',
     },
     {
       id: 'cp3_20',
@@ -1412,14 +1499,14 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp3_21',
       moduleId: 'mastery',
-      target: '탁자 위에 향기로운 커피를 놓아요',
-      translation: 'Place fragrant coffee upon the table',
+      target: '탁자 곁에 향기로운 커피를 놓아요',
+      translation: 'Place fragrant coffee beside the table',
     },
     {
       id: 'cp3_22',
       moduleId: 'mastery',
-      target: '휴일에는 친구와 영화를 보며 쉬어요',
-      translation: 'Rest on holidays watching movies with a friend',
+      target: '휴일에는 친구랑 사진을 보며 놀아요',
+      translation: 'Play on holidays looking at photos with a friend',
     },
     {
       id: 'cp3_23',
@@ -1430,8 +1517,8 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     {
       id: 'cp3_24',
       moduleId: 'mastery',
-      target: '시원한 파도 소리를 들으며 해변을 걸어요',
-      translation: 'Walk along the beach listening to the sound of cool waves',
+      target: '파도 소리를 들으며 해변을 걸어요',
+      translation: 'Walk along the beach listening to the sound of waves',
     },
     {
       id: 'cp3_25',
@@ -1572,7 +1659,83 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
     },
   ],
 
-  // Checkpoint 5: Master Review & Complex Passages (+ Compound Batchim)
+  // Checkpoint 4: Compound Vowels (이중모음) Practice
+  cp_compound_vowels: [
+    {
+      id: 'cp5_v_1',
+      moduleId: 'mastery',
+      target: '친구들과 공원에서 즐거운 시간을 보내요',
+      translation: 'Spend enjoyable time with friends in the park',
+    },
+    {
+      id: 'cp5_v_2',
+      moduleId: 'mastery',
+      target: '병원에서 진료를 받고 약국에서 약을 사요',
+      translation: 'Receive treatment at the hospital and buy medicine at the pharmacy',
+    },
+    {
+      id: 'cp5_v_3',
+      moduleId: 'mastery',
+      target: '회사에서 중요한 회의 준비를 차분하게 마쳐요',
+      translation: 'Calmly finish preparing for the important company meeting',
+    },
+    {
+      id: 'cp5_v_4',
+      moduleId: 'mastery',
+      target: '의사 분이 친절하게 설명해 줍니다',
+      translation: 'The doctor explains everything kindly',
+    },
+    {
+      id: 'cp5_v_5',
+      moduleId: 'mastery',
+      target: '신선한 사과와 맛난 과일을 골라 담아요',
+      translation: 'Pick and pack fresh apples and delicious fruits',
+    },
+    {
+      id: 'cp5_v_6',
+      moduleId: 'mastery',
+      target: '주말에 극장에 가서 재미난 영화를 봐요',
+      translation: 'Go to the theater on the weekend and watch a fun movie',
+    },
+    {
+      id: 'cp5_v_7',
+      moduleId: 'mastery',
+      target: '포근한 스웨터를 입고 외출 준비를 해요',
+      translation: 'Put on a cozy sweater and get ready to go out',
+    },
+    {
+      id: 'cp5_v_8',
+      moduleId: 'mastery',
+      target: '비 온 뒤에 시원한 바람이 불어와요',
+      translation: 'A refreshing breeze blows after the rain',
+    },
+    {
+      id: 'cp5_v_9',
+      moduleId: 'mastery',
+      target: '위험한 곳에서는 조심하며 주의를 기울여요',
+      translation: 'Be careful and pay attention in dangerous places',
+    },
+    {
+      id: 'cp5_v_10',
+      moduleId: 'mastery',
+      target: '서로의 의견을 나누며 좋은 길을 찾아요',
+      translation: 'Share each other’s opinions and find a good way',
+    },
+    {
+      id: 'cp5_v_11',
+      moduleId: 'mastery',
+      target: '미래를 향한 희망을 가슴에 품어요',
+      translation: 'Hold hope for the future close to your heart',
+    },
+    {
+      id: 'cp5_v_12',
+      moduleId: 'mastery',
+      target: '월요일 아침 활기차게 새로운 하루를 시작해요',
+      translation: 'Start a new day energetically on Monday morning',
+    },
+  ],
+
+  // Checkpoint 6: Master Review & Complex Passages (+ Compound Batchim)
   cp_master: [
     {
       id: 'cp5_1',

@@ -1,6 +1,9 @@
 import { describe, it, expect, beforeEach } from 'vitest';
+import { decomposeStringToJamos } from '../utils/hangulDecompose';
+import { JAMO_TO_KEY } from '../utils/keyboardData';
 import { TutorSession } from './tutorSession.svelte';
 import type { CurriculumData } from './tutorSession.svelte';
+import type { LessonItem } from '../types/korean';
 
 const mockCurriculum: CurriculumData = {
   modules: [
@@ -596,6 +599,65 @@ describe('TutorSession controller', () => {
     // Advancing from the completed checkpoint exercise should now record 1 completion
     session.advanceLevel();
     expect(masteryState.sentenceCheckpointStats?.['cp_top_row']?.completedCount).toBe(1);
+  });
+
+  it('should record exactly 1 attempt per compound vowel occurrence when typing words like 최고', () => {
+    session.setMode('mastery');
+    // Set level to 28 (Stage 5, 'ㅚ' active)
+    session.setMasteryProgressionLevel(28);
+
+    const activeTarget = session.getActiveMasteryTarget();
+    expect(activeTarget.type).toBe('jamo');
+    if (activeTarget.type === 'jamo') {
+      expect(activeTarget.item.jamo).toBe('ㅚ');
+    }
+
+    const masteryState = session.getMasteryState();
+    expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(0);
+
+    // Type the active item from the 'ㅚ' bank (e.g. '회사', '최고', etc.)
+    session.resetSessionState();
+    const item = session.getCurrentItem();
+    const jamos = decomposeStringToJamos(item.target);
+    for (const j of jamos) {
+      const key = JAMO_TO_KEY[j]?.key ?? j;
+      session.processKey(key);
+    }
+
+    // Since the target item contains one occurrence of 'ㅚ', exactly 1 attempt is recorded
+    expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(1);
+    expect(masteryState.jamoStats['ㅚ'].correctAttempts).toBe(1);
+    expect(masteryState.jamoStats['ㅚ'].recentHistory).toEqual([true]);
+  });
+
+  it('should record exactly 2 attempts for words containing two occurrences of the active compound vowel', () => {
+    session.setMode('mastery');
+    session.setMasteryProgressionLevel(28);
+
+    const masteryState = session.getMasteryState();
+    expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(0);
+
+    // Artificially inject / override target with '외국회사' (2 occurrences of 'ㅚ')
+    const customItem: LessonItem = {
+      id: 'test_multi_oe',
+      moduleId: 'm1',
+      target: '외국회사',
+      translation: 'Foreign company',
+    };
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
+
+    session.resetSessionState();
+    const jamos = decomposeStringToJamos(customItem.target);
+    for (const j of jamos) {
+      const key = JAMO_TO_KEY[j]?.key ?? j;
+      session.processKey(key);
+    }
+
+    // Since '외국회사' contains two 'ㅚ' ('외' and '회'), exactly 2 attempts are recorded
+    expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(2);
+    expect(masteryState.jamoStats['ㅚ'].correctAttempts).toBe(2);
+    expect(masteryState.jamoStats['ㅚ'].recentHistory).toEqual([true, true]);
   });
 
   it('should track speed and reset speed metrics on resetSpeedMetrics()', () => {

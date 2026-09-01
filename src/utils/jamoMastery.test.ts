@@ -32,14 +32,22 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     localStorage.clear();
   });
 
-  it('should have a complete progression sequence containing all Jamos and compound batchim', () => {
-    expect(JAMO_PROGRESSION_ORDER.length).toBe(44);
+  it('should have a complete progression sequence containing all Jamos, compound vowels, and compound batchim', () => {
+    expect(JAMO_PROGRESSION_ORDER.length).toBe(51);
     const jamoChars = JAMO_PROGRESSION_ORDER.map((item) => item.jamo);
     // Stage 1 initial keys
     expect(jamoChars.slice(0, 4)).toEqual(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']);
     // Contains double consonants
     expect(jamoChars).toContain('ㄲ');
     expect(jamoChars).toContain('ㅆ');
+    // Contains compound vowels (이중모음)
+    expect(jamoChars).toContain('ㅘ');
+    expect(jamoChars).toContain('ㅚ');
+    expect(jamoChars).toContain('ㅝ');
+    expect(jamoChars).toContain('ㅟ');
+    expect(jamoChars).toContain('ㅢ');
+    expect(jamoChars).toContain('ㅙ');
+    expect(jamoChars).toContain('ㅞ');
     // Contains compound batchim (겹받침)
     expect(jamoChars).toContain('ㄶ');
     expect(jamoChars).toContain('ㄺ');
@@ -55,17 +63,23 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       hand: 'right',
       stage: 1,
     });
+    expect(JAMO_PROGRESSION_ORDER.find((i) => i.jamo === 'ㅘ')).toMatchObject({
+      key: 'hk',
+      combination: ['ㅗ', 'ㅏ'],
+      hand: 'right',
+      stage: 5,
+    });
     expect(JAMO_PROGRESSION_ORDER.find((i) => i.jamo === 'ㄲ')).toMatchObject({
       key: 'r',
       shift: true,
       hand: 'left',
-      stage: 5,
+      stage: 6,
     });
     expect(JAMO_PROGRESSION_ORDER.find((i) => i.jamo === 'ㄶ')).toMatchObject({
       key: 'sg',
       combination: ['ㄴ', 'ㅎ'],
       hand: 'left',
-      stage: 6,
+      stage: 7,
     });
   });
 
@@ -416,7 +430,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     expect(getActiveLearningJamo(state)?.jamo).toBe('ㄹ');
 
     setMasteryProgressionLevel(state, 100);
-    expect(state.unlockedCount).toBe(44);
+    expect(state.unlockedCount).toBe(51);
   });
 
   it('should activate Sentence Checkpoint 1 once all Stage 2 Jamos are mastered', () => {
@@ -570,6 +584,18 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(shiftSection?.has('ㅖ')).toBe(true);
       expect(shiftSection?.size).toBe(7);
 
+      // Compound Vowels section (Stage 6)
+      const vowelSection = getSectionJamosForCheckpoint('cp_compound_vowels');
+      expect(vowelSection).toBeDefined();
+      expect(vowelSection?.has('ㅘ')).toBe(true);
+      expect(vowelSection?.has('ㅚ')).toBe(true);
+      expect(vowelSection?.has('ㅝ')).toBe(true);
+      expect(vowelSection?.has('ㅟ')).toBe(true);
+      expect(vowelSection?.has('ㅢ')).toBe(true);
+      expect(vowelSection?.has('ㅙ')).toBe(true);
+      expect(vowelSection?.has('ㅞ')).toBe(true);
+      expect(vowelSection?.size).toBe(7);
+
       // Final checkpoint (cp_master) is exempt
       const masterSection = getSectionJamosForCheckpoint('cp_master');
       expect(masterSection).toBeNull();
@@ -606,7 +632,8 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
         type: 'checkpoint',
         checkpoint: SENTENCE_CHECKPOINTS[1], // cp_top_row
       };
-      const topUnlocked = new Set(JAMO_PROGRESSION_ORDER.slice(0, 21).map((i) => i.jamo));
+      // Unlock up to top row keys (plus ㅝ so 시원하게 is eligible)
+      const topUnlocked = new Set([...JAMO_PROGRESSION_ORDER.slice(0, 21).map((i) => i.jamo), 'ㅝ']);
 
       const items = getEligibleMasteryItems(dummyCurriculum, topUnlocked, topCheckpointTarget);
       // 'top_sent' contains top row keys ('ㄱ', 'ㅂ', 'ㅅ', etc.)
@@ -798,8 +825,8 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
         item: VOWEL_FOCUS_MAP['ㅘ'],
       };
       const vowelItems = getEligibleMasteryItems(dummyItems, allUnlocked, vowelTarget);
-      expect(vowelItems.some((i) => i.id === 'item1')).toBe(true);
-      expect(vowelItems.some((i) => i.id === 'item3')).toBe(false);
+      expect(vowelItems.some((i) => i.target === '사과')).toBe(true);
+      expect(vowelItems.some((i) => i.target === '토끼')).toBe(false);
 
       // Consonant target: ㄲ
       const consonantTarget: MasteryTarget = {
@@ -807,11 +834,11 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
         item: CONSONANT_FOCUS_MAP['ㄲ'],
       };
       const consonantItems = getEligibleMasteryItems(dummyItems, allUnlocked, consonantTarget);
-      expect(consonantItems.some((i) => i.id === 'item3')).toBe(true);
-      expect(consonantItems.some((i) => i.id === 'item4')).toBe(false);
+      expect(consonantItems.some((i) => i.target === '토끼')).toBe(true);
+      expect(consonantItems.some((i) => i.target === '물')).toBe(false);
     });
 
-    it('unlocks all 44 keys without modifying mastery history when jumping directly to post-game Consolidation', async () => {
+    it('unlocks all 51 keys without modifying mastery history when jumping directly to post-game Consolidation', async () => {
       const { setMasteryFocusBatchim, JAMO_PROGRESSION_ORDER } = await import('./jamoMastery');
 
       const state = createDefaultMasteryState();
@@ -821,7 +848,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       // Jump directly to postgame batchim
       setMasteryFocusBatchim(state, 'ㅋ');
       expect(state.unlockedCount).toBe(JAMO_PROGRESSION_ORDER.length);
-      expect(state.unlockedCount).toBe(44);
+      expect(state.unlockedCount).toBe(51);
 
       // Verify that previously unmastered Jamo remains unmastered (not artificially marked)
       expect(state.jamoStats['ㅋ']?.isMastered).toBe(false);
@@ -829,12 +856,12 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       // Reset and jump directly to words consolidation
       const state2 = createDefaultMasteryState();
       setMasteryFocusBatchim(state2, 'words');
-      expect(state2.unlockedCount).toBe(44);
+      expect(state2.unlockedCount).toBe(51);
 
       // Reset and jump directly to vowel consolidation
       const state3 = createDefaultMasteryState();
       setMasteryFocusBatchim(state3, 'vowel:ㅘ');
-      expect(state3.unlockedCount).toBe(44);
+      expect(state3.unlockedCount).toBe(51);
     });
 
     it('strictly enforces that 100% of eligible items have the focused batchim in Focus mode', async () => {
@@ -894,18 +921,18 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       const wordItems = getEligibleMasteryItems(dummyItems, allUnlocked, {
         type: 'consolidation_words',
       });
-      expect(wordItems.some((i) => i.id === 'short1')).toBe(true);
-      expect(wordItems.some((i) => i.id === 'short2')).toBe(true);
-      expect(wordItems.some((i) => i.id === 'long1')).toBe(false);
-      expect(wordItems.some((i) => i.id === 'long2')).toBe(false);
+      expect(wordItems.some((i) => i.target === '사과')).toBe(true);
+      expect(wordItems.some((i) => i.target === '안녕하세요')).toBe(true);
+      expect(wordItems.some((i) => i.target === '한국어 공부를 시작해 봅시다')).toBe(false);
+      expect(wordItems.some((i) => i.target === '오늘 날씨가 정말 좋습니다')).toBe(false);
 
       const sentenceItems = getEligibleMasteryItems(dummyItems, allUnlocked, {
         type: 'consolidation_sentences',
       });
-      expect(sentenceItems.some((i) => i.id === 'long1')).toBe(true);
-      expect(sentenceItems.some((i) => i.id === 'long2')).toBe(true);
-      expect(sentenceItems.some((i) => i.id === 'short1')).toBe(false);
-      expect(sentenceItems.some((i) => i.id === 'short2')).toBe(false);
+      expect(sentenceItems.some((i) => i.target === '한국어 공부를 시작해 봅시다')).toBe(true);
+      expect(sentenceItems.some((i) => i.target === '오늘 날씨가 정말 좋습니다')).toBe(true);
+      expect(sentenceItems.some((i) => i.target === '사과')).toBe(false);
+      expect(sentenceItems.some((i) => i.target === '안녕하세요')).toBe(false);
     });
 
     it('persists and reloads activeFocusBatchim state from LocalStorage', async () => {

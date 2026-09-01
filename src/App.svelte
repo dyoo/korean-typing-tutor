@@ -30,7 +30,6 @@
   import type { CustomDeck } from './types/customDecks';
 
   import { KeyboardManager } from './utils/keyboardManager.svelte';
-  import type { KeyboardManagerOptions } from './utils/keyboardManager.svelte';
 
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   let modules = $derived(session.getModules());

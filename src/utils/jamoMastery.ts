@@ -80,27 +80,36 @@ const RAW_JAMO_PROGRESSION_ORDER: RawJamoProgressionEntry[] = [
   { jamo: 'ㅍ', stage: 4, stageName: 'Bottom Row' },
   { jamo: 'ㅠ', stage: 4, stageName: 'Bottom Row' },
 
-  // Stage 5: Shift Key Double Consonants & Vowels
-  { jamo: 'ㄲ', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅆ', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㄸ', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅉ', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅃ', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅒ', stage: 5, stageName: 'Shift Keys' },
-  { jamo: 'ㅖ', stage: 5, stageName: 'Shift Keys' },
+  // Stage 5: Compound Vowels (이중모음: ㅘ, ㅚ, ㅝ, ㅟ, ㅢ, ㅙ, ㅞ)
+  { jamo: 'ㅘ', stage: 5, stageName: 'Compound Vowels', combination: ['ㅗ', 'ㅏ'] },
+  { jamo: 'ㅚ', stage: 5, stageName: 'Compound Vowels', combination: ['ㅗ', 'ㅣ'] },
+  { jamo: 'ㅝ', stage: 5, stageName: 'Compound Vowels', combination: ['ㅜ', 'ㅓ'] },
+  { jamo: 'ㅟ', stage: 5, stageName: 'Compound Vowels', combination: ['ㅜ', 'ㅣ'] },
+  { jamo: 'ㅢ', stage: 5, stageName: 'Compound Vowels', combination: ['ㅡ', 'ㅣ'] },
+  { jamo: 'ㅙ', stage: 5, stageName: 'Compound Vowels', combination: ['ㅗ', 'ㅐ'] },
+  { jamo: 'ㅞ', stage: 5, stageName: 'Compound Vowels', combination: ['ㅜ', 'ㅔ'] },
 
-  // Stage 6: Compound Final Consonants (겹받침)
-  { jamo: 'ㄶ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄴ', 'ㅎ'] },
-  { jamo: 'ㄵ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄴ', 'ㅈ'] },
-  { jamo: 'ㄺ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㄱ'] },
-  { jamo: 'ㄻ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅁ'] },
-  { jamo: 'ㄼ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅂ'] },
-  { jamo: 'ㅄ', stage: 6, stageName: 'Compound Batchim', combination: ['ㅂ', 'ㅅ'] },
-  { jamo: 'ㅀ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅎ'] },
-  { jamo: 'ㄳ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄱ', 'ㅅ'] },
-  { jamo: 'ㄾ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅌ'] },
-  { jamo: 'ㄿ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅍ'] },
-  { jamo: 'ㄽ', stage: 6, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅅ'] },
+  // Stage 6: Shift Key Double Consonants & Vowels
+  { jamo: 'ㄲ', stage: 6, stageName: 'Shift Keys' },
+  { jamo: 'ㅆ', stage: 6, stageName: 'Shift Keys' },
+  { jamo: 'ㄸ', stage: 6, stageName: 'Shift Keys' },
+  { jamo: 'ㅉ', stage: 6, stageName: 'Shift Keys' },
+  { jamo: 'ㅃ', stage: 6, stageName: 'Shift Keys' },
+  { jamo: 'ㅒ', stage: 6, stageName: 'Shift Keys' },
+  { jamo: 'ㅖ', stage: 6, stageName: 'Shift Keys' },
+
+  // Stage 7: Compound Final Consonants (겹받침)
+  { jamo: 'ㄶ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄴ', 'ㅎ'] },
+  { jamo: 'ㄵ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄴ', 'ㅈ'] },
+  { jamo: 'ㄺ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㄱ'] },
+  { jamo: 'ㄻ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅁ'] },
+  { jamo: 'ㄼ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅂ'] },
+  { jamo: 'ㅄ', stage: 7, stageName: 'Compound Batchim', combination: ['ㅂ', 'ㅅ'] },
+  { jamo: 'ㅀ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅎ'] },
+  { jamo: 'ㄳ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄱ', 'ㅅ'] },
+  { jamo: 'ㄾ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅌ'] },
+  { jamo: 'ㄿ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅍ'] },
+  { jamo: 'ㄽ', stage: 7, stageName: 'Compound Batchim', combination: ['ㄹ', 'ㅅ'] },
 ];
 
 /**
@@ -113,11 +122,12 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = RAW_JAMO_PROGRESSIO
       const [first, second] = entry.combination;
       const firstKey = JAMO_TO_KEY[first]?.key ?? '';
       const secondKey = JAMO_TO_KEY[second]?.key ?? '';
+      const hand = entry.stage === 5 ? 'right' : 'left'; // Stage 5 compound vowels are right-hand, Stage 7 batchim are left-hand
       return {
         jamo: entry.jamo,
         key: `${firstKey}${secondKey}`,
         combination: entry.combination,
-        hand: 'left', // All Korean compound batchim keys are left-hand consonants
+        hand,
         stage: entry.stage,
         stageName: entry.stageName,
       };
@@ -163,19 +173,27 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
     requiredCompletions: 10,
   },
   {
-    id: 'cp_shift_keys',
+    id: 'cp_compound_vowels',
     stage: 5,
+    stageName: 'Compound Vowels',
+    title: 'Vowels',
+    afterJamoIndex: 33, // 'ㅞ'
+    requiredCompletions: 10,
+  },
+  {
+    id: 'cp_shift_keys',
+    stage: 6,
     stageName: 'Shift Keys',
     title: 'Shift',
-    afterJamoIndex: 33, // 'ㅖ'
+    afterJamoIndex: 40, // 'ㅖ'
     requiredCompletions: 10,
   },
   {
     id: 'cp_master',
-    stage: 6,
+    stage: 7,
     stageName: 'Compound Batchim',
     title: 'Mastery',
-    afterJamoIndex: 44, // 'ㄽ'
+    afterJamoIndex: 51, // 'ㄽ'
     requiredCompletions: 10,
   },
 ];
@@ -1024,6 +1042,11 @@ export function recordJamoAttempt(
   };
 }
 
+/**
+ * Set of compound vowels (이중모음) that require both constituent vowel keys to be unlocked.
+ */
+export const COMPOUND_VOWEL_SET = new Set<string>(['ㅘ', 'ㅚ', 'ㅝ', 'ㅟ', 'ㅢ', 'ㅙ', 'ㅞ']);
+
 /** Set of all 11 Korean compound final consonants (겹받침). */
 export const COMPOUND_BATCHIM_SET = new Set([
   'ㄳ',
@@ -1056,7 +1079,7 @@ function isHangulJamo(char: string): boolean {
  * so that filtering and eligibility validation require zero repeated Unicode decomposition math.
  */
 interface ItemJamoMetadata {
-  /** All unique basic Jamos and compound batchims strictly required to type this text. */
+  /** All unique basic Jamos, compound vowels, and compound batchims strictly required to type this text. */
   requiredJamos: string[];
   /** Set of all constituent Jamos (initial consonants, vowels, final consonants, standalone, and basic components). */
   allJamos: Set<string>;
@@ -1116,7 +1139,7 @@ function computeJamoMetadata(text: string): ItemJamoMetadata {
     }
   }
 
-  // 2. Analyze syllables for initial/vowel/final consonants and compound batchims
+  // 2. Analyze syllables for initial/vowel/final consonants, compound vowels, and compound batchims
   for (let i = 0; i < text.length; i++) {
     const char = text[i];
     const decomp = decomposeSyllable(char);
@@ -1126,6 +1149,9 @@ function computeJamoMetadata(text: string): ItemJamoMetadata {
       }
       if (decomp.vowel) {
         allJamos.add(decomp.vowel);
+        if (COMPOUND_VOWEL_SET.has(decomp.vowel)) {
+          requiredSet.add(decomp.vowel);
+        }
       }
       if (decomp.finalConsonant) {
         allJamos.add(decomp.finalConsonant);
@@ -1196,9 +1222,14 @@ export function getSectionJamosForCheckpoint(checkpointId: string): Set<string> 
       JAMO_PROGRESSION_ORDER.filter((item) => item.stage === 4).map((item) => item.jamo),
     );
   }
-  if (checkpointId === 'cp_shift_keys') {
+  if (checkpointId === 'cp_compound_vowels') {
     return new Set(
       JAMO_PROGRESSION_ORDER.filter((item) => item.stage === 5).map((item) => item.jamo),
+    );
+  }
+  if (checkpointId === 'cp_shift_keys') {
+    return new Set(
+      JAMO_PROGRESSION_ORDER.filter((item) => item.stage === 6).map((item) => item.jamo),
     );
   }
   return null;
@@ -1377,6 +1408,14 @@ function itemContainsJamo(item: LessonItem, jamo: string): boolean {
   const jamos = decomposeStringToJamos(item.target);
   if (jamos.includes(jamo)) {
     return true;
+  }
+
+  if (COMPOUND_VOWEL_SET.has(jamo)) {
+    for (const char of item.target) {
+      if (decomposeSyllable(char)?.vowel === jamo) {
+        return true;
+      }
+    }
   }
 
   if (COMPOUND_BATCHIM_SET.has(jamo)) {

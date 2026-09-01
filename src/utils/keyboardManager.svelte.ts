@@ -4,7 +4,7 @@
  * Encapsulates Shift key modifier tracking and keystroke filtering/dispatching.
  */
 
-export interface KeyboardManagerOptions {
+interface KeyboardManagerOptions {
   /**
    * Optional predicate function. When it returns true, typing keys and shortcuts are ignored.
    */
