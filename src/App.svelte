@@ -29,6 +29,9 @@
   import type { CurriculumCategory } from './content/curriculumCategories';
   import type { CustomDeck } from './types/customDecks';
 
+  import { KeyboardManager } from './utils/keyboardManager.svelte';
+  import type { KeyboardManagerOptions } from './utils/keyboardManager.svelte';
+
   const session = new TutorSession(contentData as CurriculumData, 'all', true);
   let modules = $derived(session.getModules());
   let customDecks = $derived(session.getCustomDecks());
@@ -57,8 +60,19 @@
   let isCompleted = $derived(session.getIsItemCompleted());
   let inputElement = $state<HTMLInputElement | null>(null);
 
-  let isLeftShiftPressed = $state(false);
-  let isRightShiftPressed = $state(false);
+  const keyboardManager = new KeyboardManager({
+    disabled: () =>
+      showWelcomeModal ||
+      activePanel !== 'none' ||
+      showMasteryCompletionModal ||
+      showImportDeckModal,
+    onKey: (key) => processKeystrokeWithAudio(key),
+    onSpeakShortcut: () => {
+      if (settingsStore.current.enableTTS) {
+        speakCurrentPrompt();
+      }
+    },
+  });
 
   let sessionCursorIndex = $derived(session.getInputCursorIndex());
 
@@ -267,59 +281,16 @@
   }
 
   function handleKeydown(e: KeyboardEvent) {
-    if (
-      showWelcomeModal ||
-      activePanel !== 'none' ||
-      showMasteryCompletionModal ||
-      showImportDeckModal
-    ) {
-      if (showWelcomeModal && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
-        e.preventDefault();
-        // Stop the event from bubbling to window so WelcomeModal's own
-        // svelte:window keydown handler doesn't invoke begin a second time.
-        e.stopPropagation();
-        handleBeginSession();
-      }
-      return;
-    }
-
-    if (e.key === 'Shift') {
-      if (e.code === 'ShiftLeft') {
-        isLeftShiftPressed = true;
-      } else if (e.code === 'ShiftRight') {
-        isRightShiftPressed = true;
-      } else {
-        isLeftShiftPressed = true;
-      }
-      return;
-    }
-
-    // Shortcut: Ctrl+S (Windows/Linux) or Cmd+S (macOS) to speak the current prompt
-    if ((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')) {
+    if (showWelcomeModal && (e.key === 'Enter' || e.key === ' ' || e.key === 'Escape')) {
       e.preventDefault();
-      if (settingsStore.current.enableTTS) {
-        speakCurrentPrompt();
-      }
+      // Stop the event from bubbling to window so WelcomeModal's own
+      // svelte:window keydown handler doesn't invoke begin a second time.
+      e.stopPropagation();
+      handleBeginSession();
       return;
     }
 
-    if (e.key === 'Tab' || e.key === 'Escape' || e.altKey || e.ctrlKey || e.metaKey) {
-      return;
-    }
-
-    if (
-      e.key === 'Backspace' ||
-      e.key === 'Delete' ||
-      e.key === 'Enter' ||
-      e.key === 'ArrowLeft' ||
-      e.key === 'ArrowRight' ||
-      e.key === 'Home' ||
-      e.key === 'End' ||
-      e.key.length === 1
-    ) {
-      e.preventDefault();
-      processKeystrokeWithAudio(e.key);
-    }
+    keyboardManager.handleKeydown(e);
   }
 
   function processKeystrokeWithAudio(key: string) {
@@ -345,21 +316,11 @@
   }
 
   function handleKeyup(e: KeyboardEvent) {
-    if (e.key === 'Shift') {
-      if (e.code === 'ShiftLeft') {
-        isLeftShiftPressed = false;
-      } else if (e.code === 'ShiftRight') {
-        isRightShiftPressed = false;
-      } else {
-        isLeftShiftPressed = false;
-        isRightShiftPressed = false;
-      }
-    }
+    keyboardManager.handleKeyup(e);
   }
 
   function handleWindowBlur() {
-    isLeftShiftPressed = false;
-    isRightShiftPressed = false;
+    keyboardManager.handleBlur();
   }
 
   function handleInputPrevent(e: Event) {
@@ -547,8 +508,8 @@
           activeKeys={hintKeys}
           {mode}
           {masteryState}
-          {isLeftShiftPressed}
-          {isRightShiftPressed}
+          isLeftShiftPressed={keyboardManager.isLeftShiftPressed}
+          isRightShiftPressed={keyboardManager.isRightShiftPressed}
           onkeyselect={handleVirtualKeySelect}
         />
       </div>
