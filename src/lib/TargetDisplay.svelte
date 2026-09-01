@@ -8,6 +8,7 @@
     getSubtextFontSizeClass,
     getTargetFontSizeStyle,
   } from '../utils/fontScaler';
+  import { settingsStore } from './settings.svelte';
 
   interface Props {
     wordTokens: Array<{ type: 'word' | 'space'; indices: number[] }>;
@@ -16,10 +17,6 @@
     isCompleted: boolean;
     currentItem: LessonItem;
     displayText: string;
-    minFontSizeRem?: number;
-    maxFontSizeRem?: number;
-    lockFontSize?: boolean;
-    enableTTS?: boolean;
     isTTSSpeaking?: boolean;
     isTTSLoading?: boolean;
     onspeak?: () => void;
@@ -32,10 +29,6 @@
     isCompleted,
     currentItem,
     displayText,
-    minFontSizeRem = 1.25,
-    maxFontSizeRem = 5.5,
-    lockFontSize = false,
-    enableTTS = false,
     isTTSSpeaking = false,
     isTTSLoading = false,
     onspeak,
@@ -49,9 +42,9 @@
     getTargetFontSizeStyle(
       targetLength,
       displayTextLength,
-      minFontSizeRem,
-      maxFontSizeRem,
-      lockFontSize,
+      settingsStore.current.minFontSizeRem,
+      settingsStore.current.maxFontSizeRem,
+      settingsStore.current.lockFontSize,
     ),
   );
   let fontWeightClass = $derived(getTargetFontWeightClass(targetLength));
@@ -207,7 +200,7 @@
       {/each}
     </div>
 
-    {#if enableTTS}
+    {#if settingsStore.current.enableTTS}
       <div class="audio-control-row mt-2 md:mt-3 flex items-center justify-center">
         <TTSAudioButton
           isSpeaking={isTTSSpeaking}

@@ -513,10 +513,6 @@
       {isCompleted}
       {currentItem}
       {displayText}
-      minFontSizeRem={settingsStore.current.minFontSizeRem}
-      maxFontSizeRem={settingsStore.current.maxFontSizeRem}
-      lockFontSize={settingsStore.current.lockFontSize}
-      enableTTS={settingsStore.current.enableTTS}
       {isTTSSpeaking}
       {isTTSLoading}
       onspeak={speakCurrentPrompt}
