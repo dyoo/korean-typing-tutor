@@ -128,6 +128,14 @@ When picking the next exercise in Mastery mode:
      (0–30%, 30–70%, 70–100%).
    - **No Immediate Repetition:** The item just completed is excluded from candidates whenever
      multiple eligible choices exist.
+3. **Dynamic On-Demand Selection (Zero-Lag Responsiveness):**
+   - Exercises are selected dynamically in real-time at the exact moment the learner completes
+     an item and advances.
+   - Eliminates lookahead queue caching, ensuring that:
+     - Unlocking a new frontier Jamo or checkpoint immediately surfaces exercises for that target
+       on the very next prompt.
+     - Mistakes or accuracy dips on specific keys are detected and acted upon instantly by the
+       error-weighted review engine without delay.
 
 ---
 

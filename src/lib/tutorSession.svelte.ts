@@ -68,9 +68,10 @@ export class TutorSession {
   private modules: ModuleDefinition[] = $state([]);
   public customDecks: CustomDeck[] = $state(loadCustomDecks());
   public activeItems: LessonItem[] = $state([]);
-  public selectedFilter: string | string[] = $state('all');
-  private shouldShuffle: boolean;
   public currentIndex = $state(0);
+  public selectedFilter: string | string[] = $state('all');
+  public shouldShuffle = $state(true);
+
   public userInput = $state('');
   public inputCursorIndex = $state(0);
   public suffix = $state('');
@@ -86,7 +87,6 @@ export class TutorSession {
   public isMasteryGraduationPending: boolean = $state(false);
   private currentTargetType: MasteryTarget['type'] = 'jamo';
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
-  private masteryQueue: LessonItem[] = [];
   private promptSlotErrors = new SvelteSet<number>();
 
   constructor(
@@ -146,31 +146,6 @@ export class TutorSession {
     return arr;
   }
 
-  /**
-   * Refills the upcoming Mastery lookahead buffer so upcoming exercises
-   * are known deterministically in advance for 100% audio cache hits.
-   */
-  private refillMasteryQueue(): void {
-    if (this.mode !== 'mastery' || this.activeItems.length === 0) {
-      return;
-    }
-    const activeTarget = getActiveMasteryTarget(this.masteryState);
-    const activeIdSet = new Set(this.activeItems.map((i) => i.id)); // eslint-disable-line svelte/prefer-svelte-reactivity
-    this.masteryQueue = this.masteryQueue.filter((item) => activeIdSet.has(item.id));
-
-    while (this.masteryQueue.length < 5) {
-      const lastItem =
-        this.masteryQueue[this.masteryQueue.length - 1] ?? this.activeItems[this.currentIndex];
-      const next = selectNextMasteryItem(
-        this.activeItems,
-        activeTarget,
-        this.masteryState.jamoStats,
-        lastItem?.id,
-      );
-      this.masteryQueue.push(next);
-    }
-  }
-
   /** Updates eligible mastery items and sets the current cursor to the next prioritized item. */
   private updateMasteryItemsAndCursor(excludeItemId?: string): void {
     const unlocked = getUnlockedJamos(this.masteryState);
@@ -178,31 +153,19 @@ export class TutorSession {
     this.currentTargetType = activeTarget.type;
     this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
 
-    const activeIdSet = new Set(this.activeItems.map((i) => i.id)); // eslint-disable-line svelte/prefer-svelte-reactivity
-    this.masteryQueue = this.masteryQueue.filter((item) => activeIdSet.has(item.id));
-
-    if (this.masteryQueue.length === 0) {
-      const nextItem = selectNextMasteryItem(
-        this.activeItems,
-        activeTarget,
-        this.masteryState.jamoStats,
-        excludeItemId,
-      );
-      const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
-      this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
-    } else {
-      const nextItem = this.masteryQueue.shift()!;
-      const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
-      this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
-    }
-
-    this.refillMasteryQueue();
+    const nextItem = selectNextMasteryItem(
+      this.activeItems,
+      activeTarget,
+      this.masteryState.jamoStats,
+      excludeItemId,
+    );
+    const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
+    this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
   }
 
   /** Filters items by active mode / module ID(s) and applies shuffling. */
   private applyFilterAndShuffle(): void {
     if (this.mode === 'mastery') {
-      this.masteryQueue = [];
       this.updateMasteryItemsAndCursor();
     } else {
       let filtered: LessonItem[];
@@ -422,14 +385,8 @@ export class TutorSession {
 
   /**
    * Returns up to `count` upcoming lesson items after the current exercise.
-   * Useful for lookahead audio prefetching and cache warm-up.
    */
   public getUpcomingItems(count: number = 5): LessonItem[] {
-    if (this.mode === 'mastery') {
-      this.refillMasteryQueue();
-      return this.masteryQueue.slice(0, count);
-    }
-
     if (this.activeItems.length <= 1) {
       return [];
     }

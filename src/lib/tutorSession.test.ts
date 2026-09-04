@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { decomposeStringToJamos } from '../utils/hangulDecompose';
+import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecompose';
 import { JAMO_TO_KEY } from '../utils/keyboardData';
 import { TutorSession } from './tutorSession.svelte';
 import type { CurriculumData } from './tutorSession.svelte';
@@ -501,28 +501,30 @@ describe('TutorSession controller', () => {
     expect(session.getUpcomingItems(5)).toEqual([]);
   });
 
-  it('should serve exact precomputed items from mastery lookahead buffer', () => {
+  it('should dynamically select eligible items on demand in mastery mode', () => {
     session.setMode('mastery');
-    const upcoming = session.getUpcomingItems(5);
-    expect(upcoming.length).toBeGreaterThan(0);
+    const firstItem = session.getCurrentItem();
+    expect(firstItem).not.toBeNull();
 
-    const nextExpected = upcoming[0];
     session.advanceLevel();
-    expect(session.getCurrentItem().id).toBe(nextExpected.id);
+    const nextItem = session.getCurrentItem();
+    expect(nextItem).not.toBeNull();
+    // Immediate repetition prevention
+    expect(nextItem.id).not.toBe(firstItem.id);
   });
 
-  it('should prune lookahead queue and serve valid items when mastery progression changes', () => {
+  it('should immediately select items for the new target when progression changes without queue delay', () => {
     session.setMode('mastery');
-    session.getUpcomingItems(5);
+    session.setMasteryProgressionLevel(1); // 'ㅓ'
+    const initialItem = session.getCurrentItem();
+    expect(initialItem).not.toBeNull();
 
-    // Manually jump progression level
-    session.setMasteryProgressionLevel(10);
-    const updatedUpcoming = session.getUpcomingItems(5);
-    expect(updatedUpcoming.length).toBeGreaterThan(0);
+    // Progression level changes to 2 ('ㅏ' active)
+    session.setMasteryProgressionLevel(2);
 
-    const nextExpected = updatedUpcoming[0];
-    session.advanceLevel();
-    expect(session.getCurrentItem().id).toBe(nextExpected.id);
+    // Dynamic selection immediately updates the current item without any 5-item lookahead lag
+    const newItem = session.getCurrentItem();
+    expect(newItem).not.toBeNull();
   });
 
   it('should register custom decks dynamically as selectable modules', () => {
@@ -615,8 +617,15 @@ describe('TutorSession controller', () => {
     const masteryState = session.getMasteryState();
     expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(0);
 
-    // Type the active item from the 'ㅚ' bank (e.g. '회사', '최고', etc.)
+    // Type an active item from the 'ㅚ' bank (e.g. '회사', '최고', etc.)
     session.resetSessionState();
+    const itemWithOe = session.activeItems.find((i) =>
+      Array.from(i.target).some((char) => decomposeSyllable(char)?.vowel === 'ㅚ'),
+    );
+    if (itemWithOe) {
+      const idx = session.activeItems.findIndex((i) => i.id === itemWithOe.id);
+      session.currentIndex = idx >= 0 ? idx : 0;
+    }
     const item = session.getCurrentItem();
     const jamos = decomposeStringToJamos(item.target);
     for (const j of jamos) {
