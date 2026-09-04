@@ -1,3 +1,4 @@
+import { SvelteSet } from 'svelte/reactivity';
 import { HangulEngine } from '../utils/hangulEngine';
 import { checkErrors } from '../utils/hangulMatch';
 import { getPronunciation } from '../utils/romanizer';
@@ -20,7 +21,11 @@ import {
   COMPOUND_BATCHIM_SET,
   COMPOUND_VOWEL_SET,
 } from '../utils/jamoMastery';
-import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecompose';
+import {
+  decomposeStringToJamos,
+  decomposeSyllable,
+  decomposeCharToJamos,
+} from '../utils/hangulDecompose';
 import { loadCustomDecks, saveCustomDeck, deleteCustomDeck } from '../utils/customDecks';
 import {
   loadSpeedMetricsStore,
@@ -82,6 +87,7 @@ export class TutorSession {
   private currentTargetType: MasteryTarget['type'] = 'jamo';
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
   private masteryQueue: LessonItem[] = [];
+  private promptSlotErrors = new SvelteSet<number>();
 
   constructor(
     data: CurriculumData | LessonItem[],
@@ -581,6 +587,8 @@ export class TutorSession {
       }
     }
 
+    const hasExistingErrorBefore = this.errors.some((err) => err.isError);
+    const userInputBefore = this.userInput;
     const expectedJamoBefore = this.getCurrentExpectedJamo();
 
     // Forward Delete Key
@@ -600,8 +608,6 @@ export class TutorSession {
     this.accuracy =
       this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;
 
-    let newlyUnlockedJamo: string | undefined = undefined;
-
     const currentInputJamos = decomposeStringToJamos(this.userInput);
     const isCorrectKey =
       currentInputJamos.length > 0 &&
@@ -610,50 +616,14 @@ export class TutorSession {
 
     this.speedTracker.recordKeystroke(key, expectedJamoBefore ?? undefined, isCorrectKey);
 
-    // In Mastery Mode, evaluate Jamo telemetry on printable keys
-    if (this.mode === 'mastery' && expectedJamoBefore && key.length === 1) {
-      const isCorrect = isCorrectKey;
-
-      const attemptResult = recordJamoAttempt(this.masteryState, expectedJamoBefore, isCorrect);
-      if (attemptResult.newlyUnlockedJamo) {
-        newlyUnlockedJamo = attemptResult.newlyUnlockedJamo;
+    // In Mastery Mode, track per-slot error telemetry without mutating mastery state mid-exercise.
+    // If the learner makes an error on an expected target slot, record it in promptSlotErrors.
+    // Subsequent mistyped keys while already in an error state are ignored to prevent penalizing future untouched slots.
+    if (this.mode === 'mastery' && key.length === 1) {
+      if (!isCorrectKey && expectedJamoBefore && !hasExistingErrorBefore) {
+        const slotIndex = decomposeStringToJamos(userInputBefore).length;
+        this.promptSlotErrors.add(slotIndex);
       }
-
-      // If active learning target is a compound vowel (e.g. ㅘ, ㅚ, ㅝ, ㅟ, ㅢ, ㅙ, ㅞ),
-      // record the attempt strictly upon completing the second vowel key.
-      const activeItem = getActiveLearningJamo(this.masteryState);
-      if (activeItem && COMPOUND_VOWEL_SET.has(activeItem.jamo) && activeItem.combination) {
-        const [, secondKey] = activeItem.combination;
-        if (expectedJamoBefore === secondKey) {
-          const lastInputChar = this.userInput[this.userInput.length - 1];
-          if (lastInputChar && decomposeSyllable(lastInputChar)?.vowel === activeItem.jamo) {
-            const compoundResult = recordJamoAttempt(this.masteryState, activeItem.jamo, isCorrect);
-            if (compoundResult.newlyUnlockedJamo) {
-              newlyUnlockedJamo = compoundResult.newlyUnlockedJamo;
-            }
-          }
-        }
-      }
-
-      // If active learning target is a compound batchim (e.g. ㄺ, ㅄ, ㄶ),
-      // record the attempt strictly upon completing the second final consonant key.
-      if (activeItem && COMPOUND_BATCHIM_SET.has(activeItem.jamo) && activeItem.combination) {
-        const [, secondKey] = activeItem.combination;
-        if (expectedJamoBefore === secondKey) {
-          const lastInputChar = this.userInput[this.userInput.length - 1];
-          if (
-            lastInputChar &&
-            decomposeSyllable(lastInputChar)?.finalConsonant === activeItem.jamo
-          ) {
-            const compoundResult = recordJamoAttempt(this.masteryState, activeItem.jamo, isCorrect);
-            if (compoundResult.newlyUnlockedJamo) {
-              newlyUnlockedJamo = compoundResult.newlyUnlockedJamo;
-            }
-          }
-        }
-      }
-
-      this.scheduleSave();
     }
 
     if (currentTarget.length > 0 && this.userInput === currentTarget) {
@@ -664,12 +634,63 @@ export class TutorSession {
         this.getCurrentItem().moduleId,
         this.getCurrentExpectedJamo() ?? undefined,
       );
-      // Immediately save progress to LocalStorage upon finishing the exercise, skipping debounce delay.
       this.flushPendingSave();
-      return this.makeResult(true, true, false, false, newlyUnlockedJamo);
+      return this.makeResult(true, true, false, false, undefined);
     }
 
-    return this.makeResult(false, this.isItemCompleted, false, false, newlyUnlockedJamo);
+    return this.makeResult(false, this.isItemCompleted, false, false, undefined);
+  }
+
+  /**
+   * Evaluates and records Jamo telemetry for the completed exercise item upon advancing.
+   * Ensures at most one attempt is recorded per target character slot (preventing backspace gaming)
+   * and attributes at most one error per mistyped slot.
+   */
+  private commitExerciseMasteryAttempts(target: string): void {
+    const targetJamos = decomposeStringToJamos(target);
+    const activeItem = getActiveLearningJamo(this.masteryState);
+
+    // 1. Record individual constituent Jamo attempts (one attempt per target stroke slot)
+    for (let i = 0; i < targetJamos.length; i++) {
+      const jamo = targetJamos[i];
+      if (!jamo || jamo === ' ' || !this.masteryState.jamoStats[jamo]) {
+        continue;
+      }
+      const isCorrect = !this.promptSlotErrors.has(i);
+      recordJamoAttempt(this.masteryState, jamo, isCorrect);
+    }
+
+    // 2. If active learning target is a compound vowel or compound batchim, evaluate it
+    if (
+      activeItem &&
+      (COMPOUND_VOWEL_SET.has(activeItem.jamo) || COMPOUND_BATCHIM_SET.has(activeItem.jamo))
+    ) {
+      let slotOffset = 0;
+      for (const char of target) {
+        if (char === ' ') {
+          slotOffset += 1;
+          continue;
+        }
+        const decomp = decomposeSyllable(char);
+        const jamosInChar = decomposeCharToJamos(char);
+        const isCompoundMatch =
+          char === activeItem.jamo ||
+          (COMPOUND_VOWEL_SET.has(activeItem.jamo) && decomp?.vowel === activeItem.jamo) ||
+          (COMPOUND_BATCHIM_SET.has(activeItem.jamo) && decomp?.finalConsonant === activeItem.jamo);
+
+        if (isCompoundMatch) {
+          let compoundHadError = false;
+          for (let s = 0; s < jamosInChar.length; s++) {
+            if (this.promptSlotErrors.has(slotOffset + s)) {
+              compoundHadError = true;
+              break;
+            }
+          }
+          recordJamoAttempt(this.masteryState, activeItem.jamo, !compoundHadError);
+        }
+        slotOffset += jamosInChar.length;
+      }
+    }
   }
 
   /** Advances to next lesson item, returning true if wrapped around. */
@@ -684,6 +705,11 @@ export class TutorSession {
     if (this.mode === 'mastery') {
       const currentItem = this.getCurrentItem();
       const activeTarget = getActiveMasteryTarget(this.masteryState);
+
+      // Commit Jamo mastery attempts for completed exercises
+      if (this.isItemCompleted) {
+        this.commitExerciseMasteryAttempts(currentItem.target);
+      }
 
       // If the completed item was part of a sentence checkpoint, record sentence completion
       if (this.currentTargetType === 'checkpoint' && activeTarget.type === 'checkpoint') {
@@ -729,6 +755,7 @@ export class TutorSession {
     this.errors = [];
     this.accuracy = 100;
     this.isItemCompleted = false;
+    this.promptSlotErrors.clear();
     this.engine.reset();
     this.speedTracker.reset();
   }

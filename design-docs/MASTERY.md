@@ -148,7 +148,29 @@ friction of calendar-based flashcard queues (Anki/SM-2 intervals), the tutor inc
 
 ---
 
-## 6. State Persistence & Manual Override
+## 6. Deferred Prompt Evaluation & Anti-Gaming Architecture
+
+To maintain a strict distraction-free UI and protect mastery telemetry integrity, Jamo evaluation
+follows a **Buffered Exercise Assessment** model:
+
+1. **Deferred Commit on Advance:** While a learner is actively typing, keystrokes do **not** mutate
+   `masteryState`. Mastery promotions, new candidate unlocks, and layout updates occur strictly when
+   the prompt is completed (`userInput === currentTarget`) and the learner advances to the next
+   exercise (`advanceLevel()`). This prevents mid-word badge shifts, distracting keycap changes, and
+   premature level advancements.
+2. **Per-Slot Attempt Accounting:** Each constituent Jamo position in the target text contributes
+   at most **one attempt** to that Jamo's rolling history upon completion.
+3. **Anti-Gaming Backspace Protection:** Repeatedly typing a key, pressing <kbd>Backspace</kbd>, and
+   re-typing it within an active prompt cannot inflate attempt counts or game mastery progression.
+4. **Generous 1-Error Cap per Slot:** If a learner struggles on a character position (e.g. hits multiple
+   incorrect keys before backspacing and getting it right), that target position incurs **at most one**
+   `isCorrect: false` penalty. Clean slots in the same word remain credited as `isCorrect: true`.
+5. **Abandoned Exercise Discard:** If an exercise is skipped or abandoned before completion, all
+   buffered keystroke slot telemetry is cleanly discarded without corrupting mastery statistics.
+
+---
+
+## 7. State Persistence & Manual Override
 
 - **Persistence:** Progress is stored in `localStorage` under `korean_tutor_mastery` and debounced
   (30s inactivity or on page unload) to prevent mobile I/O overhead.
@@ -158,7 +180,7 @@ friction of calendar-based flashcard queues (Anki/SM-2 intervals), the tutor inc
 
 ---
 
-## 7. Graduation Celebration & Next Steps
+## 8. Graduation Celebration & Next Steps
 
 Upon graduating the final Milestone (**Sentence Milestone 5 / Compound Batchim**):
 

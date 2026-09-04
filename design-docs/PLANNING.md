@@ -144,6 +144,10 @@ architecture, zero lint/dead-code warnings, and full `LocalStorage` persistence.
 - [x] **Mastery Sidebar & TopBar Milestone Updates:** Render sentence checkpoints with `Milestone:`
       prefix in the sidebar, live completion counters (`X/15`), single-line responsive layouts, and
       dedicated TopBar milestone pills.
+- [x] **Deferred Mastery Evaluation & Anti-Gaming Protection (Issue #16):** Buffer per-slot Jamo
+      telemetry and defer mastery promotions/unlocks until prompt completion and advancement
+      (`advanceLevel()`), eliminating mid-word visual distractions, capping errors at 1 per mistyped
+      slot, and preventing backspace-retyping exploits.
 
 ---
 

@@ -624,13 +624,20 @@ describe('TutorSession controller', () => {
       session.processKey(key);
     }
 
+    // While typing or right when item is completed, attempts are NOT yet committed to mastery state (Issue #16)
+    expect(session.getIsItemCompleted()).toBe(true);
+    expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(0);
+
+    // Advancing to the next example commits the evaluated attempts
+    session.advanceLevel();
+
     // Since the target item contains one occurrence of 'ㅚ', exactly 1 attempt is recorded
     expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(1);
     expect(masteryState.jamoStats['ㅚ'].correctAttempts).toBe(1);
     expect(masteryState.jamoStats['ㅚ'].recentHistory).toEqual([true]);
   });
 
-  it('should record exactly 2 attempts for words containing two occurrences of the active compound vowel', () => {
+  it('should record exactly 2 attempts for words containing two occurrences of the active compound vowel upon advancing', () => {
     session.setMode('mastery');
     session.setMasteryProgressionLevel(28);
 
@@ -654,10 +661,127 @@ describe('TutorSession controller', () => {
       session.processKey(key);
     }
 
+    // Not committed mid-exercise
+    expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(0);
+
+    session.advanceLevel();
+
     // Since '외국회사' contains two 'ㅚ' ('외' and '회'), exactly 2 attempts are recorded
     expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(2);
     expect(masteryState.jamoStats['ㅚ'].correctAttempts).toBe(2);
     expect(masteryState.jamoStats['ㅚ'].recentHistory).toEqual([true, true]);
+  });
+
+  it('should prevent backspace gaming by recording at most 1 attempt per target slot (Issue #16)', () => {
+    session.setMode('mastery');
+    session.setMasteryProgressionLevel(1);
+
+    const customItem: LessonItem = {
+      id: 'test_gaming_prevention',
+      moduleId: 'm1',
+      target: '사',
+      translation: 'four',
+    };
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
+
+    session.resetSessionState();
+    const masteryState = session.getMasteryState();
+    const attemptsBefore = masteryState.jamoStats['ㅅ']?.totalAttempts ?? 0;
+
+    // Simulate spamming Backspace on the first slot: type 'ㅅ', Backspace, repeat 5 times
+    for (let i = 0; i < 5; i++) {
+      session.processKey('t'); // 'ㅅ'
+      session.processKey('Backspace');
+    }
+
+    // Mid-typing, zero attempts should be recorded
+    expect(masteryState.jamoStats['ㅅ'].totalAttempts).toBe(attemptsBefore);
+
+    // Now type 'ㅅ' and 'ㅏ' cleanly to finish '사'
+    session.processKey('t'); // 'ㅅ'
+    session.processKey('k'); // 'ㅏ'
+    expect(session.getIsItemCompleted()).toBe(true);
+
+    // Advance to commit
+    session.advanceLevel();
+
+    // Exactly 1 attempt should be recorded for 'ㅅ' despite 5 re-types
+    expect(masteryState.jamoStats['ㅅ'].totalAttempts).toBe(attemptsBefore + 1);
+    expect(masteryState.jamoStats['ㅅ'].correctAttempts).toBe(1);
+    expect(masteryState.jamoStats['ㅏ'].totalAttempts).toBe(1);
+    expect(masteryState.jamoStats['ㅏ'].correctAttempts).toBe(1);
+  });
+
+  it('should apply generous 1-error cap per mistyped slot (Issue #16 Option B)', () => {
+    session.setMode('mastery');
+    session.setMasteryProgressionLevel(1);
+
+    const customItem: LessonItem = {
+      id: 'test_error_cap',
+      moduleId: 'm1',
+      target: '사',
+      translation: 'four',
+    };
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
+
+    session.resetSessionState();
+    const masteryState = session.getMasteryState();
+
+    // Type 3 wrong keys on slot 0 before backspacing
+    session.processKey('r'); // 'ㄱ' (wrong)
+    session.processKey('e'); // 'ㄷ' (wrong)
+    session.processKey('w'); // 'ㅈ' (wrong)
+    session.processKey('Backspace');
+    session.processKey('Backspace');
+    session.processKey('Backspace');
+
+    // Type correctly to finish
+    session.processKey('t'); // 'ㅅ' (slot 0)
+    session.processKey('k'); // 'ㅏ' (slot 1)
+    expect(session.getIsItemCompleted()).toBe(true);
+
+    // Advance to commit
+    session.advanceLevel();
+
+    // Slot 0 ('ㅅ') had errors: recorded as exactly 1 attempt with isCorrect: false (generous 1-error cap)
+    expect(masteryState.jamoStats['ㅅ'].totalAttempts).toBe(1);
+    expect(masteryState.jamoStats['ㅅ'].correctAttempts).toBe(0);
+    expect(masteryState.jamoStats['ㅅ'].recentHistory).toEqual([false]);
+
+    // Slot 1 ('ㅏ') was clean: recorded as 1 attempt with isCorrect: true
+    expect(masteryState.jamoStats['ㅏ'].totalAttempts).toBe(1);
+    expect(masteryState.jamoStats['ㅏ'].correctAttempts).toBe(1);
+    expect(masteryState.jamoStats['ㅏ'].recentHistory).toEqual([true]);
+  });
+
+  it('should not record any attempts if an exercise is abandoned or skipped before completion', () => {
+    session.setMode('mastery');
+    session.setMasteryProgressionLevel(1);
+
+    const customItem: LessonItem = {
+      id: 'test_abandoned',
+      moduleId: 'm1',
+      target: '사',
+      translation: 'four',
+    };
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
+
+    session.resetSessionState();
+    const masteryState = session.getMasteryState();
+
+    // Type partially
+    session.processKey('t'); // 'ㅅ'
+    expect(session.getIsItemCompleted()).toBe(false);
+
+    // Advance/skip without completing
+    session.advanceLevel();
+
+    // Zero attempts recorded
+    expect(masteryState.jamoStats['ㅅ'].totalAttempts).toBe(0);
+    expect(masteryState.jamoStats['ㅏ'].totalAttempts).toBe(0);
   });
 
   it('should track speed and reset speed metrics on resetSpeedMetrics()', () => {
