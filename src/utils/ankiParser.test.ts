@@ -38,6 +38,13 @@ describe('Anki and Flashcard Parser Engine', () => {
       expect(cleanKoreanTarget('학교 [學校]')).toBe('학교');
       expect(cleanKoreanTarget('도서관(圖書館)')).toBe('도서관');
       expect(cleanKoreanTarget('학생 (學生 / Student)')).toBe('학생');
+      expect(cleanKoreanTarget('실수 (失手)')).toBe('실수');
+      expect(cleanKoreanTarget('실수（失手）')).toBe('실수');
+      expect(cleanKoreanTarget('약속【約束】')).toBe('약속');
+      expect(cleanKoreanTarget('도서관［圖書館］')).toBe('도서관');
+      expect(cleanKoreanTarget('실수 / 失手')).toBe('실수');
+      expect(cleanKoreanTarget('실수 - 失手')).toBe('실수');
+      expect(cleanKoreanTarget('실수 失手')).toBe('실수');
     });
 
     it('strips English glosses and leading tildes', () => {
