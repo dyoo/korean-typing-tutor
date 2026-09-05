@@ -12,8 +12,6 @@ import {
   getActiveMasteryTarget,
   recordJamoAttempt,
   recordSentenceCompletion,
-  getEligibleMasteryItems,
-  selectNextMasteryItem,
   setMasteryProgressionLevel,
   setMasteryCheckpointLevel,
   setMasteryFocusBatchim,
@@ -21,6 +19,7 @@ import {
   COMPOUND_BATCHIM_SET,
   COMPOUND_VOWEL_SET,
 } from '../utils/jamoMastery';
+import { MasteryPool } from '../utils/masteryPool';
 import {
   decomposeStringToJamos,
   decomposeSyllable,
@@ -84,6 +83,7 @@ export class TutorSession {
   public masteryState: MasteryState = $state(loadMasteryState());
   public speedStore: SpeedMetricsStore = $state(loadSpeedMetricsStore());
   private speedTracker = new ExerciseSpeedTracker();
+  private masteryPool = new MasteryPool();
   public isMasteryGraduationPending: boolean = $state(false);
   private currentTargetType: MasteryTarget['type'] = 'jamo';
   private saveTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -146,19 +146,35 @@ export class TutorSession {
     return arr;
   }
 
-  /** Updates eligible mastery items and sets the current cursor to the next prioritized item. */
-  private updateMasteryItemsAndCursor(excludeItemId?: string): void {
+  /** Explicitly rebuilds the candidate pool from allItems when stage, milestone, or custom decks change. */
+  private refreshMasteryPool(): void {
     const unlocked = getUnlockedJamos(this.masteryState);
     const activeTarget = getActiveMasteryTarget(this.masteryState);
     this.currentTargetType = activeTarget.type;
-    this.activeItems = getEligibleMasteryItems(this.allItems, unlocked, activeTarget);
-
-    const nextItem = selectNextMasteryItem(
-      this.activeItems,
+    const initialItem = this.masteryPool.rebuild(
+      this.allItems,
+      unlocked,
       activeTarget,
       this.masteryState.jamoStats,
-      excludeItemId,
     );
+    this.activeItems = this.masteryPool.getPool();
+    const idx = this.activeItems.findIndex((i) => i.id === initialItem.id);
+    this.currentIndex = idx >= 0 ? idx : 0;
+  }
+
+  /** Samples next exercise from the already-filtered pool in O(1) time without rescanning allItems. */
+  private selectNextMasteryExercise(excludeItemId?: string): void {
+    const unlocked = getUnlockedJamos(this.masteryState);
+    const activeTarget = getActiveMasteryTarget(this.masteryState);
+    this.currentTargetType = activeTarget.type;
+
+    if (!this.masteryPool.isPoolValid(activeTarget, unlocked)) {
+      this.refreshMasteryPool();
+      return;
+    }
+
+    const nextItem = this.masteryPool.next(this.masteryState.jamoStats, excludeItemId);
+    this.activeItems = this.masteryPool.getPool();
     const nextIndex = this.activeItems.findIndex((i) => i.id === nextItem.id);
     this.currentIndex = nextIndex >= 0 ? nextIndex : 0;
   }
@@ -166,7 +182,7 @@ export class TutorSession {
   /** Filters items by active mode / module ID(s) and applies shuffling. */
   private applyFilterAndShuffle(): void {
     if (this.mode === 'mastery') {
-      this.updateMasteryItemsAndCursor();
+      this.refreshMasteryPool();
     } else {
       let filtered: LessonItem[];
       if (Array.isArray(this.selectedFilter)) {
@@ -709,7 +725,15 @@ export class TutorSession {
       isComplete = this.commitMasteryProgress(currentItem, activeTarget);
 
       this.flushPendingSave();
-      this.updateMasteryItemsAndCursor(currentItem.id);
+
+      const newTarget = getActiveMasteryTarget(this.masteryState);
+      const unlocked = getUnlockedJamos(this.masteryState);
+
+      if (!this.masteryPool.isPoolValid(newTarget, unlocked)) {
+        this.refreshMasteryPool();
+      } else {
+        this.selectNextMasteryExercise(currentItem?.id);
+      }
     } else {
       isComplete = this.advanceCurriculumIndex();
     }
@@ -735,12 +759,50 @@ export class TutorSession {
 
     if (this.mode === 'mastery') {
       const currentItem = this.getCurrentItem();
-      this.updateMasteryItemsAndCursor(currentItem.id);
+      this.selectNextMasteryExercise(currentItem?.id);
     } else {
       this.advanceCurriculumIndex();
     }
 
     this.resetSessionState();
+  }
+
+  /** Navigates to the previous exercise in the history stack if available. */
+  public previousExercise(): boolean {
+    if (this.mode !== 'mastery') {
+      if (this.currentIndex > 0) {
+        this.currentIndex -= 1;
+        this.resetSessionState();
+        return true;
+      }
+      return false;
+    }
+
+    const prev = this.masteryPool.previous();
+    if (prev) {
+      this.activeItems = this.masteryPool.getPool();
+      const idx = this.activeItems.findIndex((i) => i.id === prev.id);
+      this.currentIndex = idx >= 0 ? idx : 0;
+      this.resetSessionState();
+      return true;
+    }
+    return false;
+  }
+
+  /** Returns true if previous exercise is available in history. */
+  public canGoBack(): boolean {
+    if (this.mode !== 'mastery') {
+      return this.currentIndex > 0;
+    }
+    return this.masteryPool.canGoBack();
+  }
+
+  /** Returns true if forward exercise is available in history. */
+  public canGoForward(): boolean {
+    if (this.mode !== 'mastery') {
+      return this.currentIndex < this.activeItems.length - 1;
+    }
+    return this.masteryPool.canGoForward();
   }
 
   /** Checks if full mastery path was newly completed. */

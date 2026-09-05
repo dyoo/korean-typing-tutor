@@ -886,6 +886,31 @@ describe('TutorSession controller', () => {
       expect(session.getErrors()).toEqual([]);
       expect(session.getIsItemCompleted()).toBe(false);
     });
+
+    it('supports backward and forward exercise navigation via previousExercise()', () => {
+      session.setMode('mastery');
+      session.setMasteryProgressionLevel(1);
+
+      expect(session.canGoBack()).toBe(false);
+
+      const firstItem = session.getCurrentItem();
+      session.skipExercise();
+      const secondItem = session.getCurrentItem();
+
+      expect(session.canGoBack()).toBe(true);
+      expect(session.canGoForward()).toBe(false);
+
+      // Navigate back to first exercise
+      const wentBack = session.previousExercise();
+      expect(wentBack).toBe(true);
+      expect(session.getCurrentItem().id).toBe(firstItem.id);
+      expect(session.canGoBack()).toBe(false);
+      expect(session.canGoForward()).toBe(true);
+
+      // Advance back to second exercise
+      session.advanceLevel();
+      expect(session.getCurrentItem().id).toBe(secondItem.id);
+    });
   });
 
   it('should track speed and reset speed metrics on resetSpeedMetrics()', () => {
