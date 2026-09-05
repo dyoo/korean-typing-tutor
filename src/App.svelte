@@ -87,7 +87,7 @@
   );
 
   let activeRequiredKeys = $derived(
-    getNextRequiredKeys(currentItem.target, userInput, isCompleted),
+    getNextRequiredKeys(session.getCurrentTargetJamos(), userInput, isCompleted),
   );
 
   // Conditionally suppress keyboard hints when the setting is disabled.

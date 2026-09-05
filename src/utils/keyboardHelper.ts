@@ -30,15 +30,14 @@ function getKeyInfoResult(keyInfo?: {
  * - target: '하나와', input: '한' -> ['k'] (requires 'ㅏ' for '나' since 'ㄴ' is already typed into '한')
  */
 export function getNextRequiredKeys(
-  target: string | undefined,
+  targetJamos: readonly string[] | undefined,
   input: string | undefined,
   isCompleted: boolean,
 ): string[] {
-  if (isCompleted || !target) {
+  if (isCompleted || !targetJamos || targetJamos.length === 0) {
     return [];
   }
 
-  const targetJamos = decomposeStringToJamos(target);
   const inputJamos = decomposeStringToJamos(input ?? '');
 
   let matchCount = 0;

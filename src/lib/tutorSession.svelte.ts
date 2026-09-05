@@ -77,6 +77,8 @@ export class TutorSession {
   public errors: ErrorReport[] = $state([]);
   public accuracy = $state(100);
   public isItemCompleted = $state(false);
+  private cachedTarget: string | null = null;
+  private currentTargetJamos: string[] = $state([]);
   private engine: HangulEngine;
 
   public mode: TutorMode = $state('mastery');
@@ -490,19 +492,31 @@ export class TutorSession {
   }
 
   /**
+   * Lazily decomposes and caches the current target item's Jamos.
+   * Re-decomposes only when the target string identity changes across exercise prompts.
+   */
+  private ensureTargetJamos(): readonly string[] {
+    const currentTarget = this.getCurrentItem().target;
+    if (this.cachedTarget !== currentTarget) {
+      this.cachedTarget = currentTarget;
+      this.currentTargetJamos = currentTarget ? decomposeStringToJamos(currentTarget) : [];
+    }
+    return this.currentTargetJamos;
+  }
+
+  /**
    * Identifies the current target Jamo expected at the typing cursor.
    */
-  private getCurrentExpectedJamo(): string | null {
-    const currentTarget = this.getCurrentItem().target;
-    if (!currentTarget) {
+  private getCurrentExpectedJamo(inputJamos?: string[]): string | null {
+    const targetJamos = this.ensureTargetJamos();
+    if (targetJamos.length === 0) {
       return null;
     }
 
-    const targetJamos = decomposeStringToJamos(currentTarget);
-    const inputJamos = decomposeStringToJamos(this.userInput);
+    const effectiveInputJamos = inputJamos ?? decomposeStringToJamos(this.userInput);
 
-    if (inputJamos.length < targetJamos.length) {
-      return targetJamos[inputJamos.length];
+    if (effectiveInputJamos.length < targetJamos.length) {
+      return targetJamos[effectiveInputJamos.length];
     }
     return null;
   }
@@ -562,7 +576,8 @@ export class TutorSession {
 
     const hasExistingErrorBefore = this.errors.some((err) => err.isError);
     const userInputBefore = this.userInput;
-    const expectedJamoBefore = this.getCurrentExpectedJamo();
+    const inputJamosBefore = decomposeStringToJamos(userInputBefore);
+    const expectedJamoBefore = this.getCurrentExpectedJamo(inputJamosBefore);
 
     // Forward Delete Key
     if (key === 'Delete') {
@@ -594,7 +609,7 @@ export class TutorSession {
     // Subsequent mistyped keys while already in an error state are ignored to prevent penalizing future untouched slots.
     if (this.mode === 'mastery' && key.length === 1) {
       if (!isCorrectKey && expectedJamoBefore && !hasExistingErrorBefore) {
-        const slotIndex = decomposeStringToJamos(userInputBefore).length;
+        const slotIndex = inputJamosBefore.length;
         this.promptSlotErrors.add(slotIndex);
       }
     }
@@ -620,7 +635,10 @@ export class TutorSession {
    * and attributes at most one error per mistyped slot.
    */
   private commitExerciseMasteryAttempts(target: string): void {
-    const targetJamos = decomposeStringToJamos(target);
+    const targetJamos =
+      this.currentTargetJamos.length > 0
+        ? this.currentTargetJamos
+        : decomposeStringToJamos(target);
     const activeItem = getActiveLearningJamo(this.masteryState);
 
     // 1. Record individual constituent Jamo attempts (one attempt per target stroke slot)
@@ -815,6 +833,11 @@ export class TutorSession {
     this.isMasteryGraduationPending = false;
   }
 
+  /** Returns cached decomposed Jamos for the active target item. */
+  public getCurrentTargetJamos(): readonly string[] {
+    return this.ensureTargetJamos();
+  }
+
   /** Resets dynamic typing state for current lesson item. */
   public resetSessionState(): void {
     this.userInput = '';
@@ -826,6 +849,8 @@ export class TutorSession {
     this.promptSlotErrors.clear();
     this.engine.reset();
     this.speedTracker.reset();
+    this.cachedTarget = null;
+    this.ensureTargetJamos();
   }
 
   /** Manually resets entire session back to index 0. */

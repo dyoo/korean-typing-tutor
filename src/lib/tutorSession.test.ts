@@ -936,4 +936,34 @@ describe('TutorSession controller', () => {
     expect(session.getSpeedStore().bestNetKpm).toBe(0);
     expect(session.getSpeedStore().recentHistory).toEqual([]);
   });
+
+  it('should cache and update currentTargetJamos across exercise lifecycle', () => {
+    const customItem: LessonItem = {
+      id: 'test_cache_jamos',
+      moduleId: 'm1',
+      target: '한글',
+      translation: 'Korean alphabet',
+    };
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [
+      customItem,
+    ];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
+    session.resetSessionState();
+
+    expect(session.getCurrentTargetJamos()).toEqual(['ㅎ', 'ㅏ', 'ㄴ', 'ㄱ', 'ㅡ', 'ㄹ']);
+
+    // Advance to next exercise should update currentTargetJamos
+    const secondItem: LessonItem = {
+      id: 'test_cache_jamos_2',
+      moduleId: 'm1',
+      target: '사과',
+      translation: 'Apple',
+    };
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [
+      customItem,
+      secondItem,
+    ];
+    session.advanceLevel();
+    expect(session.getCurrentTargetJamos()).toEqual(['ㅅ', 'ㅏ', 'ㄱ', 'ㅗ', 'ㅏ']);
+  });
 });
