@@ -71,8 +71,20 @@ distraction-free, high-performance typing experience for English speakers learni
   - **Extract Pure Logic**: When complex algorithmic mechanics, state transitions, or telemetry
     rules need granular edge-case testing (e.g. compound slot-error attribution, Hangul math),
     extract them into pure, stateless utility functions in `src/utils/`. Test the pure utility
-    functions exhaustively on their own, and test orchestrating classes/controllers through their
-    natural public interface and realistic usage flows.
+- **Discourage Optional Function Parameters**:
+  - **No Optional Parameters for Convenience or Compatibility**: Avoid trailing optional parameters
+    (`param?: T`) added merely to preserve backwards compatibility or to spare tests from supplying
+    necessary context. If a function uses data for its core logic or performance, that parameter
+    must be required.
+  - **Explicit Nullable Types Over Optional Parameters**: When a value can be legitimately absent in
+    certain domain states (e.g., no active Jamo during a sentence checkpoint milestone), type the
+    parameter explicitly as nullable (e.g., `activeItem: JamoProgressionItem | null`). This forces
+    all call sites to explicitly acknowledge and pass `null` or the resolved value rather than
+    accidentally omitting it.
+  - **Avoid Defensive Fallback Re-computation**: Functions should not accept an optional parameter
+    with an internal fallback to recompute the same data (e.g.,
+    `targetJamos ? targetJamos : decomposeStringToJamos(target)`). Require callers to provide the
+    canonical data directly.
 - **CSS**: Use Tailwind utility classes directly in the markup.
 
 ## Key Files & Modules
