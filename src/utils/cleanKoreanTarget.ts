@@ -112,10 +112,7 @@ export function cleanKoreanTarget(raw: string): string {
     /\s*[/:\-–—·~|]\s*[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF\s]+$/g,
     '',
   );
-  target = target.replace(
-    /\s+[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF]+$/g,
-    '',
-  );
+  target = target.replace(/\s+[\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF\u2E80-\u2EFF]+$/g, '');
 
   // Strip trailing or embedded parenthesized / bracketed non-Hangul glosses (e.g. "[Sino-Korean #]", "(to eat)", "（polite）")
   target = target.replace(/\[[^[\]\uAC00-\uD7A3\u3131-\u318E]*\]/g, '');

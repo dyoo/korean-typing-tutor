@@ -129,11 +129,11 @@ When picking the next exercise in Mastery mode:
    - **No Immediate Repetition:** The item just completed is excluded from candidates whenever
      multiple eligible choices exist.
 3. **Dynamic On-Demand Selection (Zero-Lag Responsiveness):**
-   - Exercises are selected dynamically in real-time at the exact moment the learner completes
-     an item and advances.
+   - Exercises are selected dynamically in real-time at the exact moment the learner completes an
+     item and advances.
    - Eliminates lookahead queue caching, ensuring that:
-     - Unlocking a new frontier Jamo or checkpoint immediately surfaces exercises for that target
-       on the very next prompt.
+     - Unlocking a new frontier Jamo or checkpoint immediately surfaces exercises for that target on
+       the very next prompt.
      - Mistakes or accuracy dips on specific keys are detected and acted upon instantly by the
        error-weighted review engine without delay.
 
@@ -166,13 +166,14 @@ follows a **Buffered Exercise Assessment** model:
    the prompt is completed (`userInput === currentTarget`) and the learner advances to the next
    exercise (`advanceLevel()`). This prevents mid-word badge shifts, distracting keycap changes, and
    premature level advancements.
-2. **Per-Slot Attempt Accounting:** Each constituent Jamo position in the target text contributes
-   at most **one attempt** to that Jamo's rolling history upon completion.
+2. **Per-Slot Attempt Accounting:** Each constituent Jamo position in the target text contributes at
+   most **one attempt** to that Jamo's rolling history upon completion.
 3. **Anti-Gaming Backspace Protection:** Repeatedly typing a key, pressing <kbd>Backspace</kbd>, and
    re-typing it within an active prompt cannot inflate attempt counts or game mastery progression.
-4. **Generous 1-Error Cap per Slot:** If a learner struggles on a character position (e.g. hits multiple
-   incorrect keys before backspacing and getting it right), that target position incurs **at most one**
-   `isCorrect: false` penalty. Clean slots in the same word remain credited as `isCorrect: true`.
+4. **Generous 1-Error Cap per Slot:** If a learner struggles on a character position (e.g. hits
+   multiple incorrect keys before backspacing and getting it right), that target position incurs
+   **at most one** `isCorrect: false` penalty. Clean slots in the same word remain credited as
+   `isCorrect: true`.
 5. **Abandoned Exercise Discard:** If an exercise is skipped or abandoned before completion, all
    buffered keystroke slot telemetry is cleanly discarded without corrupting mastery statistics.
 

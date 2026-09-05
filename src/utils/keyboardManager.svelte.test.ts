@@ -79,15 +79,7 @@ describe('KeyboardManager', () => {
       const onKey = vi.fn();
       const manager = new KeyboardManager({ onKey });
 
-      const navKeys = [
-        'Backspace',
-        'Delete',
-        'Enter',
-        'ArrowLeft',
-        'ArrowRight',
-        'Home',
-        'End',
-      ];
+      const navKeys = ['Backspace', 'Delete', 'Enter', 'ArrowLeft', 'ArrowRight', 'Home', 'End'];
 
       for (const key of navKeys) {
         const event = new KeyboardEvent('keydown', { key, cancelable: true });
