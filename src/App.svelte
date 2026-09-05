@@ -82,9 +82,7 @@
     calculateTargetCursorIndex(currentItem.target, userInput, isCompleted, sessionCursorIndex),
   );
 
-  let activeInputCursorIndex = $derived(
-    calculateInputCursorIndex(userInput, currentItem.target, isCompleted, sessionCursorIndex),
-  );
+  let activeInputCursorIndex = $derived(calculateInputCursorIndex(userInput, sessionCursorIndex));
 
   let activeRequiredKeys = $derived(
     getNextRequiredKeys(session.getCurrentTargetJamos(), userInput, isCompleted),

@@ -455,14 +455,14 @@ export class TutorSession {
 
   /** Formats combined Romanization and English translation text based on active settings. */
   public getDisplayText(
-    item = this.getCurrentItem(),
-    options?: { showPronunciation?: boolean; showTranslation?: boolean },
+    item: LessonItem,
+    options: { showPronunciation?: boolean; showTranslation?: boolean },
   ): string {
     if (!item) {
       return '';
     }
-    const showPron = options?.showPronunciation ?? true;
-    const showTrans = options?.showTranslation ?? true;
+    const showPron = options.showPronunciation ?? true;
+    const showTrans = options.showTranslation ?? true;
     const parts: string[] = [];
     const pron = getPronunciation(item);
     if (showPron && pron) {

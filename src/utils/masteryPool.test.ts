@@ -50,7 +50,7 @@ describe('MasteryPool Container', () => {
     const pool = new MasteryPool();
     const unlocked = new Set(['ㅓ', 'ㅏ']);
 
-    const initial = pool.rebuild(dummyCurriculum, unlocked, jamoTarget1);
+    const initial = pool.rebuild(dummyCurriculum, unlocked, jamoTarget1, {});
     expect(initial).toBeDefined();
     expect(pool.getPool().length).toBeGreaterThan(0);
     expect(pool.getHistory()).toEqual([initial]);
@@ -64,7 +64,7 @@ describe('MasteryPool Container', () => {
     const pool = new MasteryPool();
     const unlocked = new Set(['ㅓ', 'ㅏ']);
 
-    const first = pool.rebuild(dummyCurriculum, unlocked, jamoTarget1);
+    const first = pool.rebuild(dummyCurriculum, unlocked, jamoTarget1, {});
     const second = pool.next({}, first.id);
 
     expect(pool.getHistory()).toHaveLength(2);
@@ -78,7 +78,7 @@ describe('MasteryPool Container', () => {
     const pool = new MasteryPool();
     const unlocked = new Set(['ㅓ', 'ㅏ']);
 
-    const first = pool.rebuild(dummyCurriculum, unlocked, jamoTarget1);
+    const first = pool.rebuild(dummyCurriculum, unlocked, jamoTarget1, {});
     const second = pool.next({}, first.id);
     const third = pool.next({}, second.id);
 
@@ -105,18 +105,18 @@ describe('MasteryPool Container', () => {
     expect(pool.getHistoryIndex()).toBe(0);
 
     // Navigate forward using next() without generating a new item
-    const fwd1 = pool.next();
+    const fwd1 = pool.next({});
     expect(fwd1).toBe(second);
     expect(pool.getHistoryIndex()).toBe(1);
     expect(pool.getHistory()).toHaveLength(3); // History length preserved!
 
-    const fwd2 = pool.next();
+    const fwd2 = pool.next({});
     expect(fwd2).toBe(third);
     expect(pool.getHistoryIndex()).toBe(2);
     expect(pool.canGoForward()).toBe(false);
 
     // Now at forward edge: calling next() generates a 4th item
-    const fourth = pool.next();
+    const fourth = pool.next({});
     expect(pool.getHistory()).toHaveLength(4);
     expect(pool.getHistoryIndex()).toBe(3);
     expect(fourth).toBeDefined();
@@ -127,7 +127,7 @@ describe('MasteryPool Container', () => {
     const unlockedStage1 = new Set(['ㅓ', 'ㅏ']);
     const unlockedStage2 = new Set(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']);
 
-    pool.rebuild(dummyCurriculum, unlockedStage1, jamoTarget1);
+    pool.rebuild(dummyCurriculum, unlockedStage1, jamoTarget1, {});
 
     // Same target and unlocked set is valid
     expect(pool.isPoolValid(jamoTarget1, unlockedStage1)).toBe(true);

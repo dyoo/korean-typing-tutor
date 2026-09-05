@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { handleTargetCopyEvent, handleCopyEvent } from './clipboard';
+import { handleCopyEvent } from './clipboard';
 
 describe('Clipboard Space Preservation DOM Tests', () => {
   const sampleSentence = '안녕하세요 저는 한국어를 배우고 있습니다';
@@ -43,7 +43,7 @@ describe('Clipboard Space Preservation DOM Tests', () => {
         },
       } as unknown as ClipboardEvent;
 
-      const handled = handleTargetCopyEvent(fakeCopyEvent, selection);
+      const handled = handleCopyEvent(fakeCopyEvent, selection);
 
       expect(handled).toBe(true);
       expect(defaultPrevented).toBe(true);

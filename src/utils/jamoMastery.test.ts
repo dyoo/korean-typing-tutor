@@ -250,7 +250,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     ];
     const unlocked = new Set(['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ']);
 
-    const eligible = getEligibleMasteryItems(allItems, unlocked);
+    const eligible = getEligibleMasteryItems(allItems, unlocked, null);
     expect(eligible.some((i) => i.target === '아')).toBe(true);
     expect(eligible.some((i) => i.target === '얼')).toBe(true);
     expect(eligible.some((i) => i.target === '사과')).toBe(false);

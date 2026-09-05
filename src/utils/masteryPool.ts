@@ -74,7 +74,7 @@ export class MasteryPool {
     allItems: LessonItem[],
     unlockedJamos: Set<string>,
     activeTarget: MasteryTarget,
-    jamoStats?: Record<string, JamoStats>,
+    jamoStats: Record<string, JamoStats>,
   ): LessonItem {
     this.currentTarget = activeTarget;
     this.unlockedKey = this.getUnlockedKey(unlockedJamos);
@@ -83,11 +83,7 @@ export class MasteryPool {
     this.historyIndex = -1;
 
     // Sample initial item for this pool
-    const initialItem = selectNextMasteryItem(
-      this.eligiblePool,
-      this.currentTarget,
-      jamoStats ?? {},
-    );
+    const initialItem = selectNextMasteryItem(this.eligiblePool, this.currentTarget, jamoStats);
 
     this.history.push(initialItem);
     this.historyIndex = 0;
@@ -99,7 +95,7 @@ export class MasteryPool {
    * If the user previously navigated backwards, advances forward along the existing history path.
    * Otherwise, samples a new candidate from the eligible pool and appends it to history.
    */
-  public next(jamoStats?: Record<string, JamoStats>, excludeId?: string): LessonItem {
+  public next(jamoStats: Record<string, JamoStats>, excludeId?: string): LessonItem {
     // If we are currently navigating behind the forward edge of history, move forward
     if (this.historyIndex < this.history.length - 1) {
       this.historyIndex++;
@@ -110,7 +106,7 @@ export class MasteryPool {
     const nextItem = selectNextMasteryItem(
       this.eligiblePool,
       this.currentTarget,
-      jamoStats ?? {},
+      jamoStats,
       excludeId,
     );
 

@@ -7,27 +7,27 @@ import {
 } from './cursorHelper';
 
 describe('Cursor index calculation helpers (cursorHelper)', () => {
-  it('should calculate active target cursor index correctly', () => {
+  it('should calculate active target cursor index correctly with explicit inputCursorIndex', () => {
     // Initial state: target cursor on 1st character (0)
-    expect(calculateTargetCursorIndex('가나다', '', false)).toBe(0);
+    expect(calculateTargetCursorIndex('가나다', '', false, 0)).toBe(0);
 
     // In-progress jamo for 1st char: target cursor stays on 1st character (0)
-    expect(calculateTargetCursorIndex('가나다', 'ㄱ', false)).toBe(0);
+    expect(calculateTargetCursorIndex('가나다', 'ㄱ', false, 1)).toBe(0);
 
     // 1st char complete: target cursor moves to 2nd character (1)
-    expect(calculateTargetCursorIndex('가나다', '가', false)).toBe(1);
+    expect(calculateTargetCursorIndex('가나다', '가', false, 1)).toBe(1);
 
     // In-progress 2nd char: target cursor stays on 2nd character (1)
-    expect(calculateTargetCursorIndex('가나다', '가ㄴ', false)).toBe(1);
+    expect(calculateTargetCursorIndex('가나다', '가ㄴ', false, 2)).toBe(1);
 
     // Clamps to last target character index when typing at end of target text
-    expect(calculateTargetCursorIndex('가', '나', false)).toBe(0);
+    expect(calculateTargetCursorIndex('가', '나', false, 1)).toBe(0);
 
     // Returns -1 when item is completed
-    expect(calculateTargetCursorIndex('가나다', '가나다', true)).toBe(-1);
+    expect(calculateTargetCursorIndex('가나다', '가나다', true, 3)).toBe(-1);
   });
 
-  it('should calculate active target cursor index correctly when inputCursorIndex is provided', () => {
+  it('should calculate active target cursor index correctly when navigating via cursor index', () => {
     const target = '글로벌';
 
     // Before typing: cursor is at index 0 ('글')
@@ -63,21 +63,16 @@ describe('Cursor index calculation helpers (cursorHelper)', () => {
     expect(calculateTargetCursorIndex(target, '글로벌', false, 2)).toBe(2);
   });
 
-  it('should calculate active input cursor index correctly', () => {
-    // Initial state: input cursor at position 0
-    expect(calculateInputCursorIndex('', '가나다', false)).toBe(0);
-
-    // In-progress jamo: input cursor stays under 1st typed char (0)
-    expect(calculateInputCursorIndex('ㄱ', '가나다', false)).toBe(0);
-
-    // 1st char complete: input cursor moves to new position after 1st char (1)
-    expect(calculateInputCursorIndex('가', '가나다', false)).toBe(1);
-
-    // In-progress 2nd char: input cursor is under 2nd char (1)
-    expect(calculateInputCursorIndex('가ㄴ', '가나다', false)).toBe(1);
-
-    // Positions cursor at the end of input when item is completed
-    expect(calculateInputCursorIndex('가나다', '가나다', true)).toBe(3);
+  it('should calculate active input cursor index by clamping to input bounds', () => {
+    expect(calculateInputCursorIndex('', 0)).toBe(0);
+    expect(calculateInputCursorIndex('가나다', 0)).toBe(0);
+    expect(calculateInputCursorIndex('가나다', 1)).toBe(1);
+    expect(calculateInputCursorIndex('가나다', 2)).toBe(2);
+    expect(calculateInputCursorIndex('가나다', 3)).toBe(3);
+    // Clamping past end of input
+    expect(calculateInputCursorIndex('가나다', 10)).toBe(3);
+    // Clamping negative cursor
+    expect(calculateInputCursorIndex('가나다', -5)).toBe(0);
   });
 });
 

@@ -9,15 +9,12 @@ export function calculateTargetCursorIndex(
   target: string,
   userInput: string,
   isCompleted: boolean,
-  inputCursorIndex?: number,
+  inputCursorIndex: number,
 ): number {
   if (isCompleted || !target) {
     return -1;
   }
-  const effectiveInput =
-    typeof inputCursorIndex === 'number' && inputCursorIndex >= 0
-      ? userInput.slice(0, inputCursorIndex)
-      : userInput;
+  const effectiveInput = userInput.slice(0, Math.max(0, inputCursorIndex));
 
   if (effectiveInput.length === 0) {
     return 0;
@@ -34,30 +31,10 @@ export function calculateTargetCursorIndex(
 
 /**
  * Calculates the active input position index for cursor display on the user input display.
- * Returns an index from 0 to userInput.length (placed at the end of input when completed).
+ * Clamps the input cursor index to the valid range [0, userInput.length].
  */
-export function calculateInputCursorIndex(
-  userInput: string,
-  target: string,
-  isCompleted: boolean,
-  inputCursorIndex?: number,
-): number {
-  if (typeof inputCursorIndex === 'number' && inputCursorIndex >= 0) {
-    return Math.min(inputCursorIndex, userInput.length);
-  }
-  if (userInput.length === 0) {
-    return 0;
-  }
-  if (isCompleted) {
-    return userInput.length;
-  }
-  const lastIndex = userInput.length - 1;
-  const isLastComplete = isSyllableComplete(
-    target[lastIndex],
-    userInput[lastIndex],
-    target[lastIndex + 1],
-  );
-  return isLastComplete ? userInput.length : lastIndex;
+export function calculateInputCursorIndex(userInput: string, inputCursorIndex: number): number {
+  return Math.max(0, Math.min(inputCursorIndex, userInput.length));
 }
 
 interface WordTokenGroup {

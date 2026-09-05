@@ -56,8 +56,9 @@ describe('TutorSession controller', () => {
   });
 
   it('should format combined Romanization and translation display text', () => {
-    expect(session.getDisplayText(mockCurriculum.items[0])).toBe('ga');
-    expect(session.getDisplayText(mockCurriculum.items[1])).toBe('sagwa · apple');
+    const opts = { showPronunciation: true, showTranslation: true };
+    expect(session.getDisplayText(mockCurriculum.items[0], opts)).toBe('ga');
+    expect(session.getDisplayText(mockCurriculum.items[1], opts)).toBe('sagwa · apple');
   });
 
   it('should filter items by selected level module', () => {

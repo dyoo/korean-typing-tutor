@@ -1266,7 +1266,7 @@ export function getSectionJamosForCheckpoint(checkpointId: string): Set<string> 
 export function getEligibleMasteryItems(
   allItems: LessonItem[],
   unlockedJamos: Set<string>,
-  activeTarget?: MasteryTarget | null,
+  activeTarget: MasteryTarget | null,
 ): LessonItem[] {
   // If active target is Word Consolidation, return all short/medium vocabulary (<= 12 chars) across all datasets
   if (activeTarget && activeTarget.type === 'consolidation_words') {
