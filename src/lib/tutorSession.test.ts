@@ -414,7 +414,7 @@ describe('TutorSession controller', () => {
   });
 
   it('should switch to post-game Consolidation mode and serve 100% batchim-matching examples', async () => {
-    const { hasBatchim } = await import('../utils/jamoMastery');
+    const { hasBatchim } = await import('../test/jamoTestUtils');
     session.setMode('mastery');
     session.setMasteryFocusBatchim('ㅋ');
 
@@ -457,7 +457,7 @@ describe('TutorSession controller', () => {
   });
 
   it('should switch to Consolidation vowel practice and serve vowel-matching examples', async () => {
-    const { hasVowel } = await import('../utils/jamoMastery');
+    const { hasVowel } = await import('../test/jamoTestUtils');
     session.setMode('mastery');
     session.setMasteryConsolidationTarget('vowel:ㅘ');
 
@@ -473,7 +473,7 @@ describe('TutorSession controller', () => {
   });
 
   it('should switch to Consolidation consonant practice and serve consonant-matching examples', async () => {
-    const { hasConsonant } = await import('../utils/jamoMastery');
+    const { hasConsonant } = await import('../test/jamoTestUtils');
     session.setMode('mastery');
     session.setMasteryConsolidationTarget('consonant:ㄲ');
 
@@ -660,7 +660,9 @@ describe('TutorSession controller', () => {
       target: '외국회사',
       translation: 'Foreign company',
     };
-    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [
+      customItem,
+    ];
     (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
 
     session.resetSessionState();
@@ -691,7 +693,9 @@ describe('TutorSession controller', () => {
       target: '사',
       translation: 'four',
     };
-    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [
+      customItem,
+    ];
     (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
 
     session.resetSessionState();
@@ -732,7 +736,9 @@ describe('TutorSession controller', () => {
       target: '사',
       translation: 'four',
     };
-    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [
+      customItem,
+    ];
     (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
 
     session.resetSessionState();
@@ -775,7 +781,9 @@ describe('TutorSession controller', () => {
       target: '사',
       translation: 'four',
     };
-    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+    (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [
+      customItem,
+    ];
     (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
 
     session.resetSessionState();
@@ -804,7 +812,9 @@ describe('TutorSession controller', () => {
         target: '사',
         translation: 'four',
       };
-      (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+      (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [
+        customItem,
+      ];
       (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
       session.resetSessionState();
 
@@ -842,14 +852,16 @@ describe('TutorSession controller', () => {
       session.skipExercise();
 
       // Completed count must remain unchanged (0)
-      const afterSkipCount = masteryState.sentenceCheckpointStats['cp_home_row']?.completedCount ?? 0;
+      const afterSkipCount =
+        masteryState.sentenceCheckpointStats['cp_home_row']?.completedCount ?? 0;
       expect(afterSkipCount).toBe(0);
       expect(masteryState.sentenceCheckpointStats['cp_home_row']?.isMastered).toBeFalsy();
       expect(session.getIsMasteryGraduationPending()).toBe(false);
 
       // Even if advanceLevel() is somehow called when isItemCompleted is false, it must NOT increment checkpoint count
       session.advanceLevel();
-      const afterAdvanceCount = masteryState.sentenceCheckpointStats['cp_home_row']?.completedCount ?? 0;
+      const afterAdvanceCount =
+        masteryState.sentenceCheckpointStats['cp_home_row']?.completedCount ?? 0;
       expect(afterAdvanceCount).toBe(0);
     });
 

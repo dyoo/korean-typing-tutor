@@ -5,8 +5,8 @@ import {
   SENTENCE_CHECKPOINTS,
   isItemEligible,
   getSectionJamosForCheckpoint,
-  itemUsesAnyJamo,
 } from '../utils/jamoMastery';
+import { itemUsesAnyJamo } from '../test/jamoTestUtils';
 import { decomposeStringToJamos } from '../utils/hangulDecompose';
 
 describe('Mastery Vocabulary Bank Verification', () => {

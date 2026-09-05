@@ -406,36 +406,6 @@ export const BATCHIM_FOCUS_MAP: Record<string, BatchimFocusItem> = Object.fromEn
   BATCHIM_FOCUS_LIST.map((item) => [item.batchim, item]),
 );
 
-/**
- * Checks whether a text string contains the specified final consonant (받침) in any syllable.
- */
-export function hasBatchim(text: string, batchim: string): boolean {
-  if (!text || !batchim) {
-    return false;
-  }
-  return getItemJamoMetadata(text).batchims.has(batchim);
-}
-
-/**
- * Checks whether a text string contains the specified vowel in any syllable.
- */
-export function hasVowel(text: string, vowel: string): boolean {
-  if (!text || !vowel) {
-    return false;
-  }
-  return getItemJamoMetadata(text).allJamos.has(vowel);
-}
-
-/**
- * Checks whether a text string contains the specified consonant in any syllable.
- */
-export function hasConsonant(text: string, consonant: string): boolean {
-  if (!text || !consonant) {
-    return false;
-  }
-  return getItemJamoMetadata(text).allJamos.has(consonant);
-}
-
 /** Creates a fresh zeroed JamoStats entry. */
 function createEmptyJamoStats(): JamoStats {
   return {
@@ -1081,6 +1051,8 @@ function isHangulJamo(char: string): boolean {
 interface ItemJamoMetadata {
   /** All unique basic Jamos, compound vowels, and compound batchims strictly required to type this text. */
   requiredJamos: string[];
+  /** Sequence of decomposed basic Jamos and spaces required to type this text. */
+  decomposedJamos: string[];
   /** Set of all constituent Jamos (initial consonants, vowels, final consonants, standalone, and basic components). */
   allJamos: Set<string>;
   /** Set of all final consonants (받침) in the syllables. */
@@ -1088,35 +1060,25 @@ interface ItemJamoMetadata {
 }
 
 const itemMetadataCache = new WeakMap<LessonItem, ItemJamoMetadata>();
-const stringMetadataCache = new Map<string, ItemJamoMetadata>();
 
 /**
- * Computes and returns the cached Jamo decomposition metadata for a lesson item or string.
+ * Computes and returns the cached Jamo decomposition metadata for a lesson item.
+ * Backed by a module-level WeakMap for O(1) retrieval with automatic garbage collection.
  */
-export function getItemJamoMetadata(target: LessonItem | string): ItemJamoMetadata {
-  if (typeof target !== 'string') {
-    const cached = itemMetadataCache.get(target);
-    if (cached) {
-      return cached;
-    }
-    const computed = computeJamoMetadata(target.target);
-    itemMetadataCache.set(target, computed);
-    return computed;
-  }
-
-  const cached = stringMetadataCache.get(target);
+export function getItemJamoMetadata(item: LessonItem): ItemJamoMetadata {
+  const cached = itemMetadataCache.get(item);
   if (cached) {
     return cached;
   }
-  const computed = computeJamoMetadata(target);
-  stringMetadataCache.set(target, computed);
+  const computed = computeJamoMetadata(item.target);
+  itemMetadataCache.set(item, computed);
   return computed;
 }
 
 /**
  * Performs one-time decomposition analysis on a Hangul text string.
  */
-function computeJamoMetadata(text: string): ItemJamoMetadata {
+export function computeJamoMetadata(text: string): ItemJamoMetadata {
   const batchims = new Set<string>();
   const allJamos = new Set<string>();
   const requiredSet = new Set<string>();
@@ -1124,6 +1086,7 @@ function computeJamoMetadata(text: string): ItemJamoMetadata {
   if (!text || text.trim() === '') {
     return {
       requiredJamos: [],
+      decomposedJamos: [],
       allJamos,
       batchims,
     };
@@ -1167,6 +1130,7 @@ function computeJamoMetadata(text: string): ItemJamoMetadata {
 
   return {
     requiredJamos: Array.from(requiredSet),
+    decomposedJamos: basicJamos,
     allJamos,
     batchims,
   };
@@ -1236,23 +1200,6 @@ export function getSectionJamosForCheckpoint(checkpointId: string): Set<string> 
 }
 
 /**
- * Checks if a Hangul target string contains at least one Jamo from the specified set of Jamos.
- * Accounts for initial consonants, vowels, and final consonants.
- */
-export function itemUsesAnyJamo(text: string, targetJamos: Set<string>): boolean {
-  if (!text || targetJamos.size === 0) {
-    return false;
-  }
-  const meta = getItemJamoMetadata(text);
-  for (const j of targetJamos) {
-    if (meta.allJamos.has(j)) {
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
  * Filters and aggregates eligible items for mastery mode.
  * During Jamo stages, strictly restricts the pool to short words/phrases (<= 12 chars).
  * During Sentence checkpoints, serves medium-to-long sentences (>= 8 chars) that use
@@ -1291,7 +1238,9 @@ export function getEligibleMasteryItems(
   if (activeTarget && activeTarget.type === 'focus') {
     const focusBatchim = activeTarget.item.batchim;
     const curatedBatchimWords = FOCUS_BATCHIM_VOCABULARY[focusBatchim] ?? [];
-    const matchingCurriculum = allItems.filter((item) => hasBatchim(item.target, focusBatchim));
+    const matchingCurriculum = allItems.filter((item) =>
+      getItemJamoMetadata(item).batchims.has(focusBatchim),
+    );
     const eligible = dedupeByTarget([...curatedBatchimWords, ...matchingCurriculum]);
     return eligible.length > 0 ? eligible : curatedBatchimWords;
   }
@@ -1300,7 +1249,9 @@ export function getEligibleMasteryItems(
   if (activeTarget && activeTarget.type === 'consolidation_vowel') {
     const vowel = activeTarget.item.jamo;
     const curatedVowelWords = MASTERY_JAMO_VOCABULARY[vowel] ?? [];
-    const matchingCurriculum = allItems.filter((item) => hasVowel(item.target, vowel));
+    const matchingCurriculum = allItems.filter((item) =>
+      getItemJamoMetadata(item).allJamos.has(vowel),
+    );
     const eligible = dedupeByTarget([...curatedVowelWords, ...matchingCurriculum]);
     return eligible.length > 0
       ? eligible
@@ -1313,7 +1264,9 @@ export function getEligibleMasteryItems(
   if (activeTarget && activeTarget.type === 'consolidation_consonant') {
     const consonant = activeTarget.item.jamo;
     const curatedConsonantWords = MASTERY_JAMO_VOCABULARY[consonant] ?? [];
-    const matchingCurriculum = allItems.filter((item) => hasConsonant(item.target, consonant));
+    const matchingCurriculum = allItems.filter((item) =>
+      getItemJamoMetadata(item).allJamos.has(consonant),
+    );
     const eligible = dedupeByTarget([...curatedConsonantWords, ...matchingCurriculum]);
     return eligible.length > 0
       ? eligible
@@ -1334,7 +1287,13 @@ export function getEligibleMasteryItems(
       }
       // For milestone challenges (except the last milestone), the sentences must use jamo used in that section.
       if (sectionJamos && sectionJamos.size > 0) {
-        return itemUsesAnyJamo(item.target, sectionJamos);
+        const meta = getItemJamoMetadata(item);
+        for (const j of sectionJamos) {
+          if (meta.allJamos.has(j)) {
+            return true;
+          }
+        }
+        return false;
       }
       return true;
     });
@@ -1403,30 +1362,10 @@ const FOCUS_JAMO_PROBABILITY = 0.7;
 
 /**
  * Checks whether a lesson item contains the specified Jamo character.
+ * Leverages cached ItemJamoMetadata for O(1) Set membership validation.
  */
 function itemContainsJamo(item: LessonItem, jamo: string): boolean {
-  const jamos = decomposeStringToJamos(item.target);
-  if (jamos.includes(jamo)) {
-    return true;
-  }
-
-  if (COMPOUND_VOWEL_SET.has(jamo)) {
-    for (const char of item.target) {
-      if (decomposeSyllable(char)?.vowel === jamo) {
-        return true;
-      }
-    }
-  }
-
-  if (COMPOUND_BATCHIM_SET.has(jamo)) {
-    for (const char of item.target) {
-      if (decomposeSyllable(char)?.finalConsonant === jamo) {
-        return true;
-      }
-    }
-  }
-
-  return false;
+  return getItemJamoMetadata(item).allJamos.has(jamo);
 }
 
 /**
@@ -1468,7 +1407,7 @@ export function selectNextMasteryItem(
         ? activeTarget.item.jamo
         : null;
 
-  // Pass 1: Focus Pool Decision
+  // Pass 1: Focus Pool Decision (O(1) Set lookups on cached metadata)
   let selectionPool = pool;
   if (activeJamoChar) {
     const focusPool = pool.filter((item) => itemContainsJamo(item, activeJamoChar));
@@ -1479,16 +1418,17 @@ export function selectNextMasteryItem(
 
   // Pass 2: Error-Weighted Random Selection
   // Items containing Jamos with lower rolling accuracy receive higher sampling weights.
+  // Keystroke Jamos are read directly from pre-cached decomposedJamos without re-decomposition math.
   const activeStats = activeJamoChar ? jamoStats[activeJamoChar] : undefined;
   const activeProgress = activeStats ? calculateJamoProgress(activeStats) : 100;
 
   const weightedList: { item: LessonItem; weight: number }[] = [];
 
   for (const item of selectionPool) {
-    const jamos = decomposeStringToJamos(item.target);
+    const meta = getItemJamoMetadata(item);
     let jamoWeight = 1.0;
 
-    for (const j of jamos) {
+    for (const j of meta.decomposedJamos) {
       const stats = jamoStats[j];
       if (stats && stats.totalAttempts > 0) {
         const acc = calculateJamoAccuracy(stats);

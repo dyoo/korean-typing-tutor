@@ -21,9 +21,10 @@ import {
   recordSentenceCompletion,
   isAllMasteryComplete,
   getSectionJamosForCheckpoint,
-  itemUsesAnyJamo,
   getItemJamoMetadata,
+  computeJamoMetadata,
 } from './jamoMastery';
+import { hasBatchim, hasVowel, hasConsonant, itemUsesAnyJamo } from '../test/jamoTestUtils';
 import type { LessonItem } from '../types/korean';
 import type { JamoStats, MasteryTarget } from '../types/mastery';
 
@@ -633,7 +634,10 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
         checkpoint: SENTENCE_CHECKPOINTS[1], // cp_top_row
       };
       // Unlock up to top row keys (plus ㅝ so 시원하게 is eligible)
-      const topUnlocked = new Set([...JAMO_PROGRESSION_ORDER.slice(0, 21).map((i) => i.jamo), 'ㅝ']);
+      const topUnlocked = new Set([
+        ...JAMO_PROGRESSION_ORDER.slice(0, 21).map((i) => i.jamo),
+        'ㅝ',
+      ]);
 
       const items = getEligibleMasteryItems(dummyCurriculum, topUnlocked, topCheckpointTarget);
       // 'top_sent' contains top row keys ('ㄱ', 'ㅂ', 'ㅅ', etc.)
@@ -717,7 +721,7 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     });
 
     it('accurately identifies vowels and consonants with hasVowel and hasConsonant', async () => {
-      const { hasVowel, hasConsonant } = await import('./jamoMastery');
+      const { hasVowel, hasConsonant } = await import('../test/jamoTestUtils');
 
       // Vowel tests (simple, shift, and compound)
       expect(hasVowel('사과', 'ㅘ')).toBe(true);
@@ -865,8 +869,8 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     });
 
     it('strictly enforces that 100% of eligible items have the focused batchim in Focus mode', async () => {
-      const { getEligibleMasteryItems, hasBatchim, BATCHIM_FOCUS_MAP } =
-        await import('./jamoMastery');
+      const { getEligibleMasteryItems, BATCHIM_FOCUS_MAP } = await import('./jamoMastery');
+      const { hasBatchim } = await import('../test/jamoTestUtils');
 
       const dummyItems: LessonItem[] = [
         { id: 'item1', moduleId: 'm1', target: '부엌', translation: 'Kitchen' },
@@ -987,24 +991,41 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(meta1.requiredJamos).toContain('ㅗ');
       expect(meta1.requiredJamos).toContain('ㅣ');
       expect(meta1.batchims.has('ㄺ')).toBe(true);
+      expect(meta1.decomposedJamos).toEqual(['ㄷ', 'ㅏ', 'ㄹ', 'ㄱ', 'ㄱ', 'ㅗ', 'ㄱ', 'ㅣ']);
 
       // Verify reference equality for WeakMap memoization
       const meta2 = getItemJamoMetadata(item);
       expect(meta2).toBe(meta1);
 
-      // Verify string-based memoization
-      const stringMeta1 = getItemJamoMetadata('넓다');
-      expect(stringMeta1.batchims.has('ㄼ')).toBe(true);
-      expect(stringMeta1.requiredJamos).toContain('ㄼ');
-      const stringMeta2 = getItemJamoMetadata('넓다');
-      expect(stringMeta2).toBe(stringMeta1);
+      // Verify string decomposition via computeJamoMetadata
+      const stringMeta = computeJamoMetadata('넓다');
+      expect(stringMeta.batchims.has('ㄼ')).toBe(true);
+      expect(stringMeta.requiredJamos).toContain('ㄼ');
+      expect(stringMeta.decomposedJamos).toEqual(['ㄴ', 'ㅓ', 'ㄹ', 'ㅂ', 'ㄷ', 'ㅏ']);
     });
 
-    it('returns empty structures gracefully for empty target strings', () => {
-      const emptyMeta = getItemJamoMetadata('');
+    it('returns empty structures gracefully for empty target strings in computeJamoMetadata', () => {
+      const emptyMeta = computeJamoMetadata('');
       expect(emptyMeta.requiredJamos).toEqual([]);
+      expect(emptyMeta.decomposedJamos).toEqual([]);
       expect(emptyMeta.allJamos.size).toBe(0);
       expect(emptyMeta.batchims.size).toBe(0);
+    });
+
+    it('accurately identifies batchims, vowels, and consonants via pure string helpers', () => {
+      expect(hasBatchim('밝은 달', 'ㄺ')).toBe(true);
+      expect(hasBatchim('밝은 달', 'ㅄ')).toBe(false);
+
+      expect(hasVowel('밝은 달', 'ㅏ')).toBe(true);
+      expect(hasVowel('밝은 달', 'ㅗ')).toBe(false);
+
+      expect(hasConsonant('밝은 달', 'ㅂ')).toBe(true);
+      expect(hasConsonant('밝은 달', 'ㅋ')).toBe(false);
+
+      const searchSet1 = new Set(['ㅂ', 'ㅋ']);
+      const searchSet2 = new Set(['ㅋ', 'ㅍ']);
+      expect(itemUsesAnyJamo('밝은 달', searchSet1)).toBe(true);
+      expect(itemUsesAnyJamo('밝은 달', searchSet2)).toBe(false);
     });
   });
 
