@@ -10,21 +10,15 @@ import {
   getActiveLearningJamo,
   getActiveCheckpointForState,
   getActiveMasteryTarget,
-  recordJamoAttempt,
   recordSentenceCompletion,
   setMasteryProgressionLevel,
   setMasteryCheckpointLevel,
   setMasteryFocusBatchim,
   JAMO_PROGRESSION_ORDER,
-  COMPOUND_BATCHIM_SET,
-  COMPOUND_VOWEL_SET,
+  commitExerciseMasteryAttempts,
 } from '../utils/jamoMastery';
 import { MasteryPool } from '../utils/masteryPool';
-import {
-  decomposeStringToJamos,
-  decomposeSyllable,
-  decomposeCharToJamos,
-} from '../utils/hangulDecompose';
+import { decomposeStringToJamos } from '../utils/hangulDecompose';
 import { loadCustomDecks, saveCustomDeck, deleteCustomDeck } from '../utils/customDecks';
 import {
   loadSpeedMetricsStore,
@@ -66,8 +60,8 @@ export class TutorSession {
   private allItems: LessonItem[] = $state([]);
   private modules: ModuleDefinition[] = $state([]);
   public customDecks: CustomDeck[] = $state(loadCustomDecks());
-  public activeItems: LessonItem[] = $state([]);
-  public currentIndex = $state(0);
+  private activeItems: LessonItem[] = $state([]);
+  private currentIndex = $state(0);
   public selectedFilter: string | string[] = $state('all');
   public shouldShuffle = $state(true);
 
@@ -630,61 +624,6 @@ export class TutorSession {
   }
 
   /**
-   * Evaluates and records Jamo telemetry for the completed exercise item upon advancing.
-   * Ensures at most one attempt is recorded per target character slot (preventing backspace gaming)
-   * and attributes at most one error per mistyped slot.
-   */
-  private commitExerciseMasteryAttempts(target: string): void {
-    const targetJamos =
-      this.currentTargetJamos.length > 0
-        ? this.currentTargetJamos
-        : decomposeStringToJamos(target);
-    const activeItem = getActiveLearningJamo(this.masteryState);
-
-    // 1. Record individual constituent Jamo attempts (one attempt per target stroke slot)
-    for (let i = 0; i < targetJamos.length; i++) {
-      const jamo = targetJamos[i];
-      if (!jamo || jamo === ' ' || !this.masteryState.jamoStats[jamo]) {
-        continue;
-      }
-      const isCorrect = !this.promptSlotErrors.has(i);
-      recordJamoAttempt(this.masteryState, jamo, isCorrect);
-    }
-
-    // 2. If active learning target is a compound vowel or compound batchim, evaluate it
-    if (
-      activeItem &&
-      (COMPOUND_VOWEL_SET.has(activeItem.jamo) || COMPOUND_BATCHIM_SET.has(activeItem.jamo))
-    ) {
-      let slotOffset = 0;
-      for (const char of target) {
-        if (char === ' ') {
-          slotOffset += 1;
-          continue;
-        }
-        const decomp = decomposeSyllable(char);
-        const jamosInChar = decomposeCharToJamos(char);
-        const isCompoundMatch =
-          char === activeItem.jamo ||
-          (COMPOUND_VOWEL_SET.has(activeItem.jamo) && decomp?.vowel === activeItem.jamo) ||
-          (COMPOUND_BATCHIM_SET.has(activeItem.jamo) && decomp?.finalConsonant === activeItem.jamo);
-
-        if (isCompoundMatch) {
-          let compoundHadError = false;
-          for (let s = 0; s < jamosInChar.length; s++) {
-            if (this.promptSlotErrors.has(slotOffset + s)) {
-              compoundHadError = true;
-              break;
-            }
-          }
-          recordJamoAttempt(this.masteryState, activeItem.jamo, !compoundHadError);
-        }
-        slotOffset += jamosInChar.length;
-      }
-    }
-  }
-
-  /**
    * Commits all mastery learning progress (Jamo attempts, checkpoint sentence completions,
    * graduation checks) for completed exercises.
    *
@@ -699,7 +638,13 @@ export class TutorSession {
     let isComplete = false;
 
     // 1. Commit Jamo mastery attempts across all target characters
-    this.commitExerciseMasteryAttempts(currentItem.target);
+    commitExerciseMasteryAttempts(
+      this.masteryState,
+      currentItem.target,
+      this.currentTargetJamos,
+      this.promptSlotErrors,
+      getActiveLearningJamo(this.masteryState),
+    );
 
     // 2. If the completed item was part of a sentence checkpoint, record sentence completion
     if (this.currentTargetType === 'checkpoint' && activeTarget.type === 'checkpoint') {

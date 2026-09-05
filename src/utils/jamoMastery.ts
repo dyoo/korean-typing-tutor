@@ -11,7 +11,7 @@ import type {
   JamoFocusItem,
   BatchimFocusItem,
 } from '../types/mastery';
-import { decomposeStringToJamos, decomposeSyllable } from './hangulDecompose';
+import { decomposeStringToJamos, decomposeSyllable, decomposeCharToJamos } from './hangulDecompose';
 import {
   MASTERY_JAMO_VOCABULARY,
   MASTERY_CHECKPOINT_SENTENCES,
@@ -1015,10 +1015,10 @@ export function recordJamoAttempt(
 /**
  * Set of compound vowels (이중모음) that require both constituent vowel keys to be unlocked.
  */
-export const COMPOUND_VOWEL_SET = new Set<string>(['ㅘ', 'ㅚ', 'ㅝ', 'ㅟ', 'ㅢ', 'ㅙ', 'ㅞ']);
+const COMPOUND_VOWEL_SET = new Set<string>(['ㅘ', 'ㅚ', 'ㅝ', 'ㅟ', 'ㅢ', 'ㅙ', 'ㅞ']);
 
 /** Set of all 11 Korean compound final consonants (겹받침). */
-export const COMPOUND_BATCHIM_SET = new Set([
+const COMPOUND_BATCHIM_SET = new Set([
   'ㄳ',
   'ㄵ',
   'ㄶ',
@@ -1031,6 +1031,63 @@ export const COMPOUND_BATCHIM_SET = new Set([
   'ㅀ',
   'ㅄ',
 ]);
+
+/**
+ * Evaluates and records Jamo telemetry for a completed exercise item upon advancing.
+ * Ensures at most one attempt is recorded per target character slot (preventing backspace gaming)
+ * and attributes at most one error per mistyped slot.
+ * If the active learning target is a compound vowel or compound batchim, evaluates its success
+ * across all constituent strokes.
+ */
+export function commitExerciseMasteryAttempts(
+  masteryState: MasteryState,
+  target: string,
+  targetJamos: readonly string[],
+  slotErrors: ReadonlySet<number>,
+  activeItem?: JamoProgressionItem | null,
+): void {
+  // 1. Record individual constituent Jamo attempts (one attempt per target stroke slot)
+  for (let i = 0; i < targetJamos.length; i++) {
+    const jamo = targetJamos[i];
+    if (!jamo || jamo === ' ' || !masteryState.jamoStats[jamo]) {
+      continue;
+    }
+    const isCorrect = !slotErrors.has(i);
+    recordJamoAttempt(masteryState, jamo, isCorrect);
+  }
+
+  // 2. If active learning target is a compound vowel or compound batchim, evaluate it
+  if (
+    activeItem &&
+    (COMPOUND_VOWEL_SET.has(activeItem.jamo) || COMPOUND_BATCHIM_SET.has(activeItem.jamo))
+  ) {
+    let slotOffset = 0;
+    for (const char of target) {
+      if (char === ' ') {
+        slotOffset += 1;
+        continue;
+      }
+      const decomp = decomposeSyllable(char);
+      const jamosInChar = decomposeCharToJamos(char);
+      const isCompoundMatch =
+        char === activeItem.jamo ||
+        (COMPOUND_VOWEL_SET.has(activeItem.jamo) && decomp?.vowel === activeItem.jamo) ||
+        (COMPOUND_BATCHIM_SET.has(activeItem.jamo) && decomp?.finalConsonant === activeItem.jamo);
+
+      if (isCompoundMatch) {
+        let compoundHadError = false;
+        for (let s = 0; s < jamosInChar.length; s++) {
+          if (slotErrors.has(slotOffset + s)) {
+            compoundHadError = true;
+            break;
+          }
+        }
+        recordJamoAttempt(masteryState, activeItem.jamo, !compoundHadError);
+      }
+      slotOffset += jamosInChar.length;
+    }
+  }
+}
 
 /**
  * Helper to determine if a character is a Hangul Jamo (compatibility or standard Unicode Jamo).

@@ -61,6 +61,18 @@ distraction-free, high-performance typing experience for English speakers learni
   "happy synchronous sequence" where initialization finishes before operational requests begin.
   Always write tests simulating operations triggered _before_ or _during_ in-flight initialization
   to prevent race conditions and guarantee promise memoization/queue synchronization.
+- **Encapsulation & Test Hygiene (No Abstraction-Breaking Tests)**:
+  - **No Type-Casting Hacks**: Never bypass TypeScript visibility or break encapsulation in tests
+    using casts like `(session as unknown as { privateField: ... })` or indexing into private
+    members. Tests must interact with classes and components strictly through their public
+    contracts.
+  - **No Test-Only Production Methods**: Do not pollute production classes, components, or stores
+    with test-only backdoors or mutators (e.g., `setTestItem`, `overrideStateForTesting`).
+  - **Extract Pure Logic**: When complex algorithmic mechanics, state transitions, or telemetry
+    rules need granular edge-case testing (e.g. compound slot-error attribution, Hangul math),
+    extract them into pure, stateless utility functions in `src/utils/`. Test the pure utility
+    functions exhaustively on their own, and test orchestrating classes/controllers through their
+    natural public interface and realistic usage flows.
 - **CSS**: Use Tailwind utility classes directly in the markup.
 
 ## Key Files & Modules

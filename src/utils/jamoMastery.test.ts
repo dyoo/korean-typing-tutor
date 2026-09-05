@@ -23,6 +23,7 @@ import {
   getSectionJamosForCheckpoint,
   getItemJamoMetadata,
   computeJamoMetadata,
+  commitExerciseMasteryAttempts,
 } from './jamoMastery';
 import { hasBatchim, hasVowel, hasConsonant, itemUsesAnyJamo } from '../test/jamoTestUtils';
 import type { LessonItem } from '../types/korean';
@@ -1070,6 +1071,86 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
     it('returns starter item if eligible items list is empty', () => {
       const chosen = selectNextMasteryItem([], null, {});
       expect(chosen.id).toBe('empty-mastery');
+    });
+  });
+
+  describe('commitExerciseMasteryAttempts evaluation engine', () => {
+    it('records constituent Jamo attempts and applies 1-attempt cap per slot', () => {
+      const state = createDefaultMasteryState();
+      // Level 1: 'ㅓ', 'ㅏ', 'ㅇ', 'ㄹ'
+      setMasteryProgressionLevel(state, 4, true);
+
+      // Target '알' ('ㅇ', 'ㅏ', 'ㄹ') with no errors
+      commitExerciseMasteryAttempts(state, '알', ['ㅇ', 'ㅏ', 'ㄹ'], new Set());
+
+      expect(state.jamoStats['ㅇ'].totalAttempts).toBe(1);
+      expect(state.jamoStats['ㅇ'].correctAttempts).toBe(1);
+      expect(state.jamoStats['ㅏ'].totalAttempts).toBe(1);
+      expect(state.jamoStats['ㅏ'].correctAttempts).toBe(1);
+      expect(state.jamoStats['ㄹ'].totalAttempts).toBe(1);
+      expect(state.jamoStats['ㄹ'].correctAttempts).toBe(1);
+    });
+
+    it('attributes error to the specific slot that had errors', () => {
+      const state = createDefaultMasteryState();
+      setMasteryProgressionLevel(state, 4, true);
+
+      // Target '알': slot 0 ('ㅇ') had an error, slots 1 & 2 correct
+      commitExerciseMasteryAttempts(state, '알', ['ㅇ', 'ㅏ', 'ㄹ'], new Set([0]));
+
+      expect(state.jamoStats['ㅇ'].totalAttempts).toBe(1);
+      expect(state.jamoStats['ㅇ'].correctAttempts).toBe(0);
+      expect(state.jamoStats['ㅏ'].correctAttempts).toBe(1);
+      expect(state.jamoStats['ㄹ'].correctAttempts).toBe(1);
+    });
+
+    it('records exactly 2 attempts for words containing two occurrences of the active compound vowel', () => {
+      const state = createDefaultMasteryState();
+      setMasteryProgressionLevel(state, 28, true); // Stage 5: 'ㅚ'
+      const activeItem = getActiveLearningJamo(state);
+      expect(activeItem?.jamo).toBe('ㅚ');
+
+      // '외국회사' contains two 'ㅚ' ('외' and '회')
+      const targetJamos = ['ㅇ', 'ㅗ', 'ㅣ', 'ㄱ', 'ㅜ', 'ㄱ', 'ㅎ', 'ㅗ', 'ㅣ', 'ㅅ', 'ㅏ'];
+      commitExerciseMasteryAttempts(state, '외국회사', targetJamos, new Set(), activeItem);
+
+      expect(state.jamoStats['ㅚ'].totalAttempts).toBe(2);
+      expect(state.jamoStats['ㅚ'].correctAttempts).toBe(2);
+      expect(state.jamoStats['ㅚ'].recentHistory).toEqual([true, true]);
+    });
+
+    it('attributes at most 1 attempt and at most 1 error per compound batchim (Issue #16)', () => {
+      const state = createDefaultMasteryState();
+      const rkLevel = JAMO_PROGRESSION_ORDER.findIndex((item) => item.jamo === 'ㄺ') + 1;
+      setMasteryProgressionLevel(state, rkLevel, true); // Stage 7: 'ㄺ'
+      const activeItem = getActiveLearningJamo(state);
+      expect(activeItem?.jamo).toBe('ㄺ');
+
+      // Target '닭고기' (ㄷ ㅏ ㄹ ㄱ ㄱ ㅗ ㄱ ㅣ)
+      // Compound batchim 'ㄺ' spans stroke slots 2 ('ㄹ') and 3 ('ㄱ')
+      const targetJamos = ['ㄷ', 'ㅏ', 'ㄹ', 'ㄱ', 'ㄱ', 'ㅗ', 'ㄱ', 'ㅣ'];
+      commitExerciseMasteryAttempts(state, '닭고기', targetJamos, new Set(), activeItem);
+
+      expect(state.jamoStats['ㄺ'].totalAttempts).toBe(1);
+      expect(state.jamoStats['ㄺ'].correctAttempts).toBe(1);
+      expect(state.jamoStats['ㄺ'].recentHistory).toEqual([true]);
+    });
+
+    it('evaluates compound batchim slot error if any constituent stroke was mistyped', () => {
+      const state = createDefaultMasteryState();
+      const rkLevel = JAMO_PROGRESSION_ORDER.findIndex((item) => item.jamo === 'ㄺ') + 1;
+      setMasteryProgressionLevel(state, rkLevel, true); // Stage 7: 'ㄺ'
+      const activeItem = getActiveLearningJamo(state);
+      expect(activeItem?.jamo).toBe('ㄺ');
+
+      // Target '닭' (ㄷ ㅏ ㄹ ㄱ)
+      // Stroke 2 ('ㄹ') had error
+      const targetJamos = ['ㄷ', 'ㅏ', 'ㄹ', 'ㄱ'];
+      commitExerciseMasteryAttempts(state, '닭', targetJamos, new Set([2]), activeItem);
+
+      expect(state.jamoStats['ㄺ'].totalAttempts).toBe(1);
+      expect(state.jamoStats['ㄺ'].correctAttempts).toBe(0);
+      expect(state.jamoStats['ㄺ'].recentHistory).toEqual([false]);
     });
   });
 });
