@@ -650,6 +650,49 @@ export class TutorSession {
     }
   }
 
+  /**
+   * Commits all mastery learning progress (Jamo attempts, checkpoint sentence completions,
+   * graduation checks) for completed exercises.
+   *
+   * Hard Invariant: This method returns false immediately if `this.isItemCompleted` is false,
+   * ensuring that abandoned or skipped exercises NEVER mutate learner mastery or progression.
+   */
+  private commitMasteryProgress(currentItem: LessonItem, activeTarget: MasteryTarget): boolean {
+    if (!this.isItemCompleted) {
+      return false;
+    }
+
+    let isComplete = false;
+
+    // 1. Commit Jamo mastery attempts across all target characters
+    this.commitExerciseMasteryAttempts(currentItem.target);
+
+    // 2. If the completed item was part of a sentence checkpoint, record sentence completion
+    if (this.currentTargetType === 'checkpoint' && activeTarget.type === 'checkpoint') {
+      const compRes = recordSentenceCompletion(this.masteryState, activeTarget.checkpoint.id);
+      if (compRes.isAllMasteryComplete) {
+        this.isMasteryGraduationPending = true;
+        isComplete = true;
+      }
+    }
+
+    return isComplete;
+  }
+
+  /** Advances curriculum index in Free-form mode. Returns true if wrapped around. */
+  private advanceCurriculumIndex(): boolean {
+    let isComplete = false;
+    this.currentIndex += 1;
+    if (this.currentIndex >= this.activeItems.length) {
+      this.currentIndex = 0;
+      isComplete = true;
+      if (this.shouldShuffle) {
+        this.activeItems = this.shuffle(this.activeItems);
+      }
+    }
+    return isComplete;
+  }
+
   /** Advances to next lesson item, returning true if wrapped around. */
   public advanceLevel(): boolean {
     if (this.activeItems.length === 0) {
@@ -657,41 +700,47 @@ export class TutorSession {
       return false;
     }
 
-    let isComplete = false;
+    let isComplete: boolean;
 
     if (this.mode === 'mastery') {
       const currentItem = this.getCurrentItem();
       const activeTarget = getActiveMasteryTarget(this.masteryState);
 
-      // Commit Jamo mastery attempts for completed exercises
-      if (this.isItemCompleted) {
-        this.commitExerciseMasteryAttempts(currentItem.target);
-      }
-
-      // If the completed item was part of a sentence checkpoint, record sentence completion
-      if (this.currentTargetType === 'checkpoint' && activeTarget.type === 'checkpoint') {
-        const compRes = recordSentenceCompletion(this.masteryState, activeTarget.checkpoint.id);
-        if (compRes.isAllMasteryComplete) {
-          this.isMasteryGraduationPending = true;
-          isComplete = true;
-        }
-      }
+      isComplete = this.commitMasteryProgress(currentItem, activeTarget);
 
       this.flushPendingSave();
       this.updateMasteryItemsAndCursor(currentItem.id);
     } else {
-      this.currentIndex += 1;
-      if (this.currentIndex >= this.activeItems.length) {
-        this.currentIndex = 0;
-        isComplete = true;
-        if (this.shouldShuffle) {
-          this.activeItems = this.shuffle(this.activeItems);
-        }
-      }
+      isComplete = this.advanceCurriculumIndex();
     }
 
     this.resetSessionState();
     return isComplete;
+  }
+
+  /**
+   * Skips the current exercise without committing any accuracy, attempt, or milestone progress.
+   * Completely bypasses the mastery progress commit pipeline to guarantee zero side-effects.
+   */
+  public skipExercise(): void {
+    if (this.activeItems.length === 0) {
+      this.resetSessionState();
+      return;
+    }
+
+    // Explicitly reset completion flag and pending errors before advancing
+    this.isItemCompleted = false;
+    this.promptSlotErrors.clear();
+    this.speedTracker.reset();
+
+    if (this.mode === 'mastery') {
+      const currentItem = this.getCurrentItem();
+      this.updateMasteryItemsAndCursor(currentItem.id);
+    } else {
+      this.advanceCurriculumIndex();
+    }
+
+    this.resetSessionState();
   }
 
   /** Checks if full mastery path was newly completed. */

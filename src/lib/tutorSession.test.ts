@@ -793,6 +793,101 @@ describe('TutorSession controller', () => {
     expect(masteryState.jamoStats['ㅏ'].totalAttempts).toBe(0);
   });
 
+  describe('Skip Invariant: skipExercise() guarantees zero progress mutations', () => {
+    it('does not record Jamo attempts or errors when skipExercise() is called during a Jamo stage', () => {
+      session.setMode('mastery');
+      session.setMasteryProgressionLevel(1);
+
+      const customItem: LessonItem = {
+        id: 'test_jamo_skip',
+        moduleId: 'm1',
+        target: '사',
+        translation: 'four',
+      };
+      (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).activeItems = [customItem];
+      (session as unknown as { activeItems: LessonItem[]; currentIndex: number }).currentIndex = 0;
+      session.resetSessionState();
+
+      // Make a mistake on 'ㅅ'
+      session.processKey('g'); // error
+      expect(session.getErrors().length).toBeGreaterThan(0);
+      expect(session.getIsItemCompleted()).toBe(false);
+
+      // Skip the exercise
+      session.skipExercise();
+
+      // Typing state is reset
+      expect(session.getUserInput()).toBe('');
+      expect(session.getErrors()).toEqual([]);
+      expect(session.getIsItemCompleted()).toBe(false);
+
+      // Invariant: Zero attempts or errors committed
+      const masteryState = session.getMasteryState();
+      expect(masteryState.jamoStats['ㅅ'].totalAttempts).toBe(0);
+      expect(masteryState.jamoStats['ㅏ'].totalAttempts).toBe(0);
+    });
+
+    it('does not increment sentence completion count or unlock stages when skipExercise() is called on a sentence checkpoint', () => {
+      session.setMode('mastery');
+      session.setMasteryCheckpointLevel('cp_home_row');
+
+      const activeTarget = session.getActiveMasteryTarget();
+      expect(activeTarget.type).toBe('checkpoint');
+
+      const masteryState = session.getMasteryState();
+      const initialCount = masteryState.sentenceCheckpointStats['cp_home_row']?.completedCount ?? 0;
+      expect(initialCount).toBe(0);
+
+      // Skip without typing
+      session.skipExercise();
+
+      // Completed count must remain unchanged (0)
+      const afterSkipCount = masteryState.sentenceCheckpointStats['cp_home_row']?.completedCount ?? 0;
+      expect(afterSkipCount).toBe(0);
+      expect(masteryState.sentenceCheckpointStats['cp_home_row']?.isMastered).toBeFalsy();
+      expect(session.getIsMasteryGraduationPending()).toBe(false);
+
+      // Even if advanceLevel() is somehow called when isItemCompleted is false, it must NOT increment checkpoint count
+      session.advanceLevel();
+      const afterAdvanceCount = masteryState.sentenceCheckpointStats['cp_home_row']?.completedCount ?? 0;
+      expect(afterAdvanceCount).toBe(0);
+    });
+
+    it('does not trigger final mastery graduation when skipping on cp_master', () => {
+      session.setMode('mastery');
+      session.setMasteryCheckpointLevel('cp_master');
+
+      const activeTarget = session.getActiveMasteryTarget();
+      expect(activeTarget.type).toBe('checkpoint');
+
+      // Skip multiple times
+      for (let i = 0; i < 15; i++) {
+        session.skipExercise();
+      }
+
+      const masteryState = session.getMasteryState();
+      expect(masteryState.sentenceCheckpointStats['cp_master']?.completedCount ?? 0).toBe(0);
+      expect(masteryState.sentenceCheckpointStats['cp_master']?.isMastered).toBeFalsy();
+      expect(session.getIsMasteryGraduationPending()).toBe(false);
+    });
+
+    it('advances currentIndex and resets typing state when skipping in Free-form mode', () => {
+      session.setMode('curriculum');
+      session.setFilter('all', false);
+
+      const initialIndex = session.getCurrentIndex();
+      session.processKey('r'); // 'ㄱ'
+      expect(session.getUserInput()).not.toBe('');
+
+      session.skipExercise();
+
+      expect(session.getCurrentIndex()).toBe(initialIndex + 1);
+      expect(session.getUserInput()).toBe('');
+      expect(session.getErrors()).toEqual([]);
+      expect(session.getIsItemCompleted()).toBe(false);
+    });
+  });
+
   it('should track speed and reset speed metrics on resetSpeedMetrics()', () => {
     const store = session.getSpeedStore();
     store.totalTargetStrokes = 500;

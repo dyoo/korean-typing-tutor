@@ -329,11 +329,7 @@
   function handleSkip(e: MouseEvent) {
     e.stopPropagation();
     ttsController.stopAudio();
-    session.advanceLevel();
-    if (session.getIsMasteryGraduationPending()) {
-      showMasteryCompletionModal = true;
-      session.clearMasteryGraduationPending();
-    }
+    session.skipExercise();
     focusInputElement();
   }
 
