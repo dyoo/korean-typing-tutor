@@ -15,7 +15,7 @@ interface NativeVoiceInfo {
 
 export class TTSController {
   private _isSpeaking = $state(false);
-  private _nativeVoices = $state.raw<readonly NativeVoiceInfo[]>([]);
+  private _nativeVoices: readonly NativeVoiceInfo[] = $state.raw([]);
   private currentPlaybackToken = 0;
 
   constructor() {

@@ -842,9 +842,7 @@ export class TutorSession {
   }
 
   /** Returns calculated KPM, accuracy, and count for a category ('words' or 'sentences'). */
-  public getCategoryKpm(
-    category: 'words' | 'sentences',
-  ): {
+  public getCategoryKpm(category: 'words' | 'sentences'): {
     readonly kpm: number;
     readonly accuracy: number;
     readonly count: number;
