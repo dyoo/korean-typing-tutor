@@ -62,10 +62,10 @@ interface KeyResult {
 export class TutorSession {
   private baseItems: LessonItem[];
   private baseModules: ModuleDefinition[];
-  private allItems: LessonItem[] = $state([]);
-  private modules: ModuleDefinition[] = $state([]);
-  public customDecks: CustomDeck[] = $state(getLoadedCustomDecks());
-  private activeItems: LessonItem[] = $state([]);
+  private allItems: LessonItem[] = $state.raw([]);
+  private modules: ModuleDefinition[] = $state.raw([]);
+  public customDecks: CustomDeck[] = $state.raw(getLoadedCustomDecks());
+  private activeItems: LessonItem[] = $state.raw([]);
   private currentIndex = $state(0);
   public selectedFilter: string | string[] = $state('all');
   public shouldShuffle = $state(true);
@@ -73,11 +73,11 @@ export class TutorSession {
   public userInput = $state('');
   public inputCursorIndex = $state(0);
   public suffix = $state('');
-  public errors: ErrorReport[] = $state([]);
+  public errors: ErrorReport[] = $state.raw([]);
   public accuracy = $state(100);
   public isItemCompleted = $state(false);
   private cachedTarget: string | null = null;
-  private currentTargetJamos: string[] = $state([]);
+  private currentTargetJamos: string[] = $state.raw([]);
   private engine: HangulEngine;
 
   public mode: TutorMode = $state('mastery');
@@ -346,9 +346,9 @@ export class TutorSession {
   public async addCustomDeck(deck: CustomDeck): Promise<void> {
     const existingIndex = this.customDecks.findIndex((d) => d.id === deck.id);
     if (existingIndex >= 0) {
-      this.customDecks[existingIndex] = deck;
+      this.customDecks = this.customDecks.map((d, i) => (i === existingIndex ? deck : d));
     } else {
-      this.customDecks.push(deck);
+      this.customDecks = [...this.customDecks, deck];
     }
     this.rebuildModulesAndItems();
     if (Array.isArray(this.selectedFilter)) {
