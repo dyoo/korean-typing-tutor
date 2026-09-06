@@ -19,7 +19,12 @@ import {
 } from '../utils/jamoMastery';
 import { MasteryPool } from '../utils/masteryPool';
 import { decomposeStringToJamos } from '../utils/hangulDecompose';
-import { loadCustomDecks, saveCustomDeck, deleteCustomDeck } from '../utils/customDecks';
+import {
+  loadCustomDecks,
+  saveCustomDeck,
+  deleteCustomDeck,
+  getLoadedCustomDecks,
+} from '../utils/customDecks';
 import {
   loadSpeedMetricsStore,
   resetSpeedMetricsStore,
@@ -59,7 +64,7 @@ export class TutorSession {
   private baseModules: ModuleDefinition[];
   private allItems: LessonItem[] = $state([]);
   private modules: ModuleDefinition[] = $state([]);
-  public customDecks: CustomDeck[] = $state(loadCustomDecks());
+  public customDecks: CustomDeck[] = $state(getLoadedCustomDecks());
   private activeItems: LessonItem[] = $state([]);
   private currentIndex = $state(0);
   public selectedFilter: string | string[] = $state('all');
@@ -327,10 +332,24 @@ export class TutorSession {
     return this.customDecks;
   }
 
+  /**
+   * Asynchronously hydrates custom decks from IndexedDB (or fallback).
+   * Rebuilds modules and allItems upon completion.
+   */
+  public async initCustomDecks(): Promise<CustomDeck[]> {
+    this.customDecks = await loadCustomDecks();
+    this.rebuildModulesAndItems();
+    return this.customDecks;
+  }
+
   /** Registers and persists a newly imported custom deck. */
-  public addCustomDeck(deck: CustomDeck): void {
-    saveCustomDeck(deck);
-    this.customDecks = loadCustomDecks();
+  public async addCustomDeck(deck: CustomDeck): Promise<void> {
+    const existingIndex = this.customDecks.findIndex((d) => d.id === deck.id);
+    if (existingIndex >= 0) {
+      this.customDecks[existingIndex] = deck;
+    } else {
+      this.customDecks.push(deck);
+    }
     this.rebuildModulesAndItems();
     if (Array.isArray(this.selectedFilter)) {
       if (!this.selectedFilter.includes(deck.id)) {
@@ -341,12 +360,12 @@ export class TutorSession {
     }
     this.applyFilterAndShuffle();
     this.resetSessionState();
+    await saveCustomDeck(deck);
   }
 
   /** Deletes a custom deck by ID from storage and session. */
-  public removeCustomDeck(deckId: string): void {
-    deleteCustomDeck(deckId);
-    this.customDecks = loadCustomDecks();
+  public async removeCustomDeck(deckId: string): Promise<void> {
+    this.customDecks = this.customDecks.filter((d) => d.id !== deckId);
     this.rebuildModulesAndItems();
     if (Array.isArray(this.selectedFilter)) {
       this.selectedFilter = this.selectedFilter.filter((id) => id !== deckId);
@@ -358,6 +377,7 @@ export class TutorSession {
     }
     this.applyFilterAndShuffle();
     this.resetSessionState();
+    await deleteCustomDeck(deckId);
   }
 
   /** Returns total items count in active module. */

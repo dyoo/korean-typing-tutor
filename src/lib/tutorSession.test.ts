@@ -562,6 +562,43 @@ describe('TutorSession controller', () => {
     expect(session.getCustomDecks()).toHaveLength(0);
   });
 
+  it('should hydrate custom decks asynchronously via initCustomDecks', async () => {
+    const freshSession = new TutorSession(mockCurriculum, 'all', false);
+    freshSession.setMode('curriculum');
+    const baseCount = freshSession.getModules().length;
+
+    await freshSession.addCustomDeck({
+      id: 'persisted_deck',
+      title: 'Persisted Deck',
+      filename: 'persist.tsv',
+      itemCount: 1,
+      importedAt: Date.now(),
+      items: [
+        {
+          id: 'p_1',
+          moduleId: 'persisted_deck',
+          target: '바다',
+          translation: 'sea',
+          pronunciation: 'bada',
+        },
+      ],
+    });
+
+    expect(freshSession.getModules().length).toBe(baseCount + 1);
+
+    // Create another session instance simulating app reload
+    const reloadedSession = new TutorSession(mockCurriculum, 'all', false);
+    reloadedSession.setMode('curriculum');
+    await reloadedSession.initCustomDecks();
+
+    expect(reloadedSession.getModules().length).toBe(baseCount + 1);
+    expect(reloadedSession.getCustomDecks()).toHaveLength(1);
+    expect(reloadedSession.getCustomDecks()[0].id).toBe('persisted_deck');
+
+    // Clean up
+    await reloadedSession.removeCustomDeck('persisted_deck');
+  });
+
   it('should not award sentence completion credit to the graduating Jamo practice item when unlocking a milestone', () => {
     session.setMode('mastery');
     // Set level to 21 (Stage 3, 'ㅔ' active)

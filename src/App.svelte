@@ -123,6 +123,11 @@
     session.setFilter(enabledModuleIds, true);
     focusInputElement();
 
+    // Hydrate any custom decks stored in IndexedDB (or migrated from legacy localStorage)
+    session.initCustomDecks().then(() => {
+      session.setFilter(enabledModuleIds, false);
+    });
+
     // Ensure pending debounced saves are flushed if the user navigates away or closes the tab.
     const handleBeforeUnload = () => {
       session.flushPendingSave();
@@ -217,8 +222,8 @@
     focusInputElement();
   }
 
-  function handleImportDeck(deck: CustomDeck) {
-    session.addCustomDeck(deck);
+  async function handleImportDeck(deck: CustomDeck) {
+    await session.addCustomDeck(deck);
     if (!enabledModuleIds.includes(deck.id)) {
       enabledModuleIds = [...enabledModuleIds, deck.id];
       settingsStore.update('enabledModuleIds', enabledModuleIds);
@@ -226,8 +231,8 @@
     focusInputElement();
   }
 
-  function handleDeleteCustomDeck(deckId: string) {
-    session.removeCustomDeck(deckId);
+  async function handleDeleteCustomDeck(deckId: string) {
+    await session.removeCustomDeck(deckId);
     enabledModuleIds = enabledModuleIds.filter((id) => id !== deckId);
     settingsStore.update('enabledModuleIds', enabledModuleIds);
     focusInputElement();
