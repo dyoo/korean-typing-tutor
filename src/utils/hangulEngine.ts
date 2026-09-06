@@ -336,6 +336,13 @@ export class HangulEngine {
   }
 
   /**
+   * Returns true if there is an active incomplete block currently in composition state.
+   */
+  public isComposing(): boolean {
+    return this.compositionState.stage !== 'empty';
+  }
+
+  /**
    * Resets engine state for a new typing lesson.
    */
   public reset(): void {

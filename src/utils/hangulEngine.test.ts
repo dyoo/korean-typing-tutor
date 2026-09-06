@@ -293,4 +293,29 @@ describe('HangulEngine class', () => {
     // Next consonant keystroke starts new Choseong
     expect(engine.handleKey('r')).toBe('안녕ㅏㄱ');
   });
+
+  it('should accurately report active composition state via isComposing', () => {
+    expect(engine.isComposing()).toBe(false);
+
+    engine.handleKey('r'); // ㄱ
+    expect(engine.isComposing()).toBe(true);
+
+    engine.handleKey('k'); // ㅏ -> 가
+    expect(engine.isComposing()).toBe(true);
+
+    engine.handleKey('s'); // ㄴ -> 간
+    expect(engine.isComposing()).toBe(true);
+
+    engine.handleKey(' '); // space flushes block
+    expect(engine.isComposing()).toBe(false);
+
+    engine.handleKey('학교'); // native composed syllables
+    expect(engine.isComposing()).toBe(false);
+
+    engine.resetTo('안녕ㅎ');
+    expect(engine.isComposing()).toBe(true);
+
+    engine.resetTo('안녕');
+    expect(engine.isComposing()).toBe(false);
+  });
 });

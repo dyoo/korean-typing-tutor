@@ -608,7 +608,10 @@ export class TutorSession {
       this.userInput = newPrefix + this.suffix;
     }
 
-    this.errors = checkErrors(currentTarget, this.userInput);
+    const activeComposingIndex =
+      this.engine.isComposing() && this.inputCursorIndex > 0 ? this.inputCursorIndex - 1 : null;
+
+    this.errors = checkErrors(currentTarget, this.userInput, activeComposingIndex);
     const correctChars = this.errors.filter((err) => !err.isError).length;
     this.accuracy =
       this.userInput.length > 0 ? Math.round((correctChars / this.userInput.length) * 100) : 100;

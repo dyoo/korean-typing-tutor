@@ -128,6 +128,29 @@ describe('TutorSession controller', () => {
     expect(session.getErrors().filter((e) => e.isError).length).toBe(0);
   });
 
+  it('should flag completed block mismatch as error immediately when block is not composing (Issue #25)', () => {
+    // Advance to item '사과'
+    session.processKey('r');
+    session.processKey('k');
+    session.processKey('Enter');
+    expect(session.getCurrentItem().target).toBe('사과');
+
+    // Entering direct completed syllable '삭' (e.g. from native OS IME) where engine is not actively composing
+    session.processKey('삭');
+    expect(session.getUserInput()).toBe('삭');
+    expect(session.getErrors()[0].isError).toBe(true);
+
+    // Conversely, when '삭' is composed step-by-step via QWERTY keystrokes (active composition):
+    session.processKey('Backspace');
+    session.processKey('t'); // ㅅ
+    session.processKey('k'); // ㅏ -> '사'
+    expect(session.getErrors()[0].isError).toBe(false);
+
+    session.processKey('r'); // ㄱ -> '삭' (active intermediate liaison composition for '사과')
+    expect(session.getUserInput()).toBe('삭');
+    expect(session.getErrors()[0].isError).toBe(false);
+  });
+
   it('should mark item completed when full match is typed', () => {
     session.processKey('r');
     session.processKey('k');

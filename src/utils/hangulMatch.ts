@@ -74,9 +74,15 @@ export function isSyllableComplete(
 /**
  * Utility function to compute error reports for target text vs user input.
  * Compares target string vs user composed input and returns error flags per character position.
- * Utilizes isPartialOrExactMatch to ensure valid in-progress Hangul syllables are not marked as errors.
+ * Only the character at activeComposingIndex (if non-null) is eligible for partial composition
+ * prefix matching via isPartialOrExactMatch. All other completed character blocks must match
+ * target characters exactly.
  */
-export function checkErrors(target: string, input: string): readonly ErrorReport[] {
+export function checkErrors(
+  target: string,
+  input: string,
+  activeComposingIndex: number | null,
+): readonly ErrorReport[] {
   const errors: ErrorReport[] = [];
   const maxLength = Math.max(target.length, input.length);
 
@@ -89,10 +95,10 @@ export function checkErrors(target: string, input: string): readonly ErrorReport
     if (inp !== undefined) {
       if (t === undefined) {
         isError = true;
-      } else if (i < input.length - 1) {
-        isError = inp !== t;
-      } else {
+      } else if (i === activeComposingIndex) {
         isError = !isPartialOrExactMatch(t, inp, nextT);
+      } else {
+        isError = inp !== t;
       }
     }
 
