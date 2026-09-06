@@ -19,33 +19,47 @@ import {
 import { assembleSyllable } from './hangulDecompose';
 
 /**
+ * Internal composition state representing valid phonotactic Hangul composition stages.
+ * Prevents impossible states (such as final consonants without vowels or initial consonants)
+ * at the type level.
+ */
+type CompositionState =
+  | { readonly stage: 'empty' }
+  | { readonly stage: 'initial'; readonly initialConsonant: InitialConsonantIndex }
+  | { readonly stage: 'vowel'; readonly vowel: VowelIndex }
+  | {
+      readonly stage: 'syllable';
+      readonly initialConsonant: InitialConsonantIndex;
+      readonly vowel: VowelIndex;
+      readonly finalConsonant: FinalConsonantIndex | null;
+    };
+
+/**
  * Korean Hangul Composition Engine.
  * Implements a state machine that converts raw QWERTY keystrokes OR native Korean 2-set Jamos into composed Hangul syllables.
  */
 export class HangulEngine {
-  private currentInitialConsonant: InitialConsonantIndex | null = null;
-  private currentVowel: VowelIndex | null = null;
-  private currentFinalConsonant: FinalConsonantIndex | null = null;
+  private compositionState: CompositionState = { stage: 'empty' };
   private composedString = '';
 
   /**
    * Returns the string representation of the syllable block currently being composed.
    */
   private getCurrentChar(): string {
-    if (this.currentInitialConsonant !== null && this.currentVowel !== null) {
-      return assembleSyllable(
-        this.currentInitialConsonant,
-        this.currentVowel,
-        this.currentFinalConsonant ?? (0 as FinalConsonantIndex),
-      );
+    switch (this.compositionState.stage) {
+      case 'empty':
+        return '';
+      case 'initial':
+        return INITIAL_CONSONANT_STANDALONE[this.compositionState.initialConsonant] ?? '';
+      case 'vowel':
+        return VOWEL_STANDALONE[this.compositionState.vowel] ?? '';
+      case 'syllable':
+        return assembleSyllable(
+          this.compositionState.initialConsonant,
+          this.compositionState.vowel,
+          this.compositionState.finalConsonant ?? (0 as FinalConsonantIndex),
+        );
     }
-    if (this.currentInitialConsonant !== null) {
-      return INITIAL_CONSONANT_STANDALONE[this.currentInitialConsonant] ?? '';
-    }
-    if (this.currentVowel !== null) {
-      return VOWEL_STANDALONE[this.currentVowel] ?? '';
-    }
-    return '';
   }
 
   /**
@@ -56,9 +70,7 @@ export class HangulEngine {
     if (char) {
       this.composedString += char;
     }
-    this.currentInitialConsonant = null;
-    this.currentVowel = null;
-    this.currentFinalConsonant = null;
+    this.compositionState = { stage: 'empty' };
   }
 
   /**
@@ -68,27 +80,66 @@ export class HangulEngine {
   public handleKey(key: string): string {
     // --- 1. Handle Backspace key ---
     if (key === 'Backspace') {
-      if (this.currentFinalConsonant !== null && this.currentFinalConsonant > 0) {
-        // Decompose compound Final Consonant (Jongseong) back to single Final Consonant, or remove Final Consonant
-        if (COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant]) {
-          this.currentFinalConsonant =
-            COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant][0];
-        } else {
-          this.currentFinalConsonant = null;
+      switch (this.compositionState.stage) {
+        case 'syllable': {
+          const { initialConsonant, vowel, finalConsonant } = this.compositionState;
+          if (finalConsonant !== null && finalConsonant > 0) {
+            // Decompose compound Final Consonant (Jongseong) back to single Final Consonant, or remove Final Consonant
+            if (COMPOUND_FINAL_CONSONANT_DECOMP[finalConsonant]) {
+              this.compositionState = {
+                stage: 'syllable',
+                initialConsonant,
+                vowel,
+                finalConsonant: COMPOUND_FINAL_CONSONANT_DECOMP[finalConsonant][0],
+              };
+            } else {
+              this.compositionState = {
+                stage: 'syllable',
+                initialConsonant,
+                vowel,
+                finalConsonant: null,
+              };
+            }
+          } else {
+            // Decompose compound Vowel (Jungseong) back to single Vowel, or remove Vowel leaving only Initial Consonant
+            if (COMPOUND_VOWEL_DECOMP[vowel]) {
+              this.compositionState = {
+                stage: 'syllable',
+                initialConsonant,
+                vowel: COMPOUND_VOWEL_DECOMP[vowel][0],
+                finalConsonant: null,
+              };
+            } else {
+              this.compositionState = {
+                stage: 'initial',
+                initialConsonant,
+              };
+            }
+          }
+          break;
         }
-      } else if (this.currentVowel !== null) {
-        // Decompose compound Vowel (Jungseong) back to single Vowel, or remove Vowel
-        if (COMPOUND_VOWEL_DECOMP[this.currentVowel]) {
-          this.currentVowel = COMPOUND_VOWEL_DECOMP[this.currentVowel][0];
-        } else {
-          this.currentVowel = null;
+        case 'vowel': {
+          const { vowel } = this.compositionState;
+          if (COMPOUND_VOWEL_DECOMP[vowel]) {
+            this.compositionState = {
+              stage: 'vowel',
+              vowel: COMPOUND_VOWEL_DECOMP[vowel][0],
+            };
+          } else {
+            this.compositionState = { stage: 'empty' };
+          }
+          break;
         }
-      } else if (this.currentInitialConsonant !== null) {
-        // Remove Initial Consonant (Choseong)
-        this.currentInitialConsonant = null;
-      } else if (this.composedString.length > 0) {
-        // Delete last finished character from composed string
-        this.composedString = this.composedString.slice(0, -1);
+        case 'initial': {
+          this.compositionState = { stage: 'empty' };
+          break;
+        }
+        case 'empty': {
+          if (this.composedString.length > 0) {
+            this.composedString = this.composedString.slice(0, -1);
+          }
+          break;
+        }
       }
       return this.getComposedText();
     }
@@ -133,122 +184,145 @@ export class HangulEngine {
       return this.getComposedText();
     }
 
-    // --- 3. State 1: Empty block (start new syllable) ---
-    if (this.currentInitialConsonant === null && this.currentVowel === null) {
-      if (initialConsonant !== undefined) {
-        this.currentInitialConsonant = initialConsonant;
-      } else if (vowel !== undefined) {
-        this.currentVowel = vowel;
+    // --- 3. Process key according to current composition stage ---
+    switch (this.compositionState.stage) {
+      case 'empty': {
+        if (initialConsonant !== undefined) {
+          this.compositionState = { stage: 'initial', initialConsonant };
+        } else if (vowel !== undefined) {
+          this.compositionState = { stage: 'vowel', vowel };
+        }
+        return this.getComposedText();
       }
-      return this.getComposedText();
-    }
 
-    // --- 4. State 2: Block has Initial Consonant (Choseong) only (e.g. 'ㄱ') ---
-    if (this.currentInitialConsonant !== null && this.currentVowel === null) {
-      if (vowel !== undefined) {
-        // Add vowel -> forms syllable (e.g. 'ㄱ' + 'ㅏ' -> '가')
-        this.currentVowel = vowel;
-      } else if (initialConsonant !== undefined) {
-        // Double initial consonant typed without vowel -> flush prev, start new block
-        this.flushCurrent();
-        this.currentInitialConsonant = initialConsonant;
-      }
-      return this.getComposedText();
-    }
-
-    // --- 5. State 3: Block has standalone Vowel (Jungseong) only (e.g. 'ㅏ') ---
-    if (this.currentInitialConsonant === null && this.currentVowel !== null) {
-      if (vowel !== undefined) {
-        const compoundKey = makeCompoundKey(this.currentVowel, vowel);
-        if (COMPOUND_VOWEL[compoundKey] !== undefined) {
-          this.currentVowel = COMPOUND_VOWEL[compoundKey];
-        } else {
+      case 'initial': {
+        if (vowel !== undefined) {
+          // Add vowel -> forms syllable (e.g. 'ㄱ' + 'ㅏ' -> '가')
+          this.compositionState = {
+            stage: 'syllable',
+            initialConsonant: this.compositionState.initialConsonant,
+            vowel,
+            finalConsonant: null,
+          };
+        } else if (initialConsonant !== undefined) {
+          // Double initial consonant typed without vowel -> flush prev, start new block
           this.flushCurrent();
-          this.currentVowel = vowel;
+          this.compositionState = { stage: 'initial', initialConsonant };
         }
-      } else if (initialConsonant !== undefined) {
-        this.flushCurrent();
-        this.currentInitialConsonant = initialConsonant;
+        return this.getComposedText();
       }
-      return this.getComposedText();
-    }
 
-    // --- 6. State 4: Block has Initial Consonant (Choseong) + Vowel (Jungseong) (e.g. '가') ---
-    if (
-      this.currentInitialConsonant !== null &&
-      this.currentVowel !== null &&
-      (this.currentFinalConsonant === null || this.currentFinalConsonant === 0)
-    ) {
-      if (vowel !== undefined) {
-        // Try combining into compound vowel (e.g. '고' + 'ㅏ' -> '과')
-        const compoundKey = makeCompoundKey(this.currentVowel, vowel);
-        if (COMPOUND_VOWEL[compoundKey] !== undefined) {
-          this.currentVowel = COMPOUND_VOWEL[compoundKey];
-        } else {
-          this.flushCurrent();
-          this.currentVowel = vowel;
-        }
-      } else if (finalConsonant !== undefined) {
-        // Add final consonant (e.g. '하' + 'ㄴ' -> '한')
-        this.currentFinalConsonant = finalConsonant;
-      } else if (initialConsonant !== undefined) {
-        this.flushCurrent();
-        this.currentInitialConsonant = initialConsonant;
-      }
-      return this.getComposedText();
-    }
-
-    // --- 7. State 5: Block has Initial Consonant (Choseong) + Vowel (Jungseong) + Final Consonant (Jongseong) (e.g. '한' or '닭') ---
-    if (
-      this.currentInitialConsonant !== null &&
-      this.currentVowel !== null &&
-      this.currentFinalConsonant !== null &&
-      this.currentFinalConsonant > 0
-    ) {
-      if (vowel !== undefined) {
-        /**
-         * Liaison Rule / Syllable Splitting:
-         * A vowel is typed after a syllable that already has a final consonant (Jongseong).
-         * 1) If Final Consonant (Jongseong) is compound (e.g. '닭' = '달' + 'ㄱ'):
-         *    First part ('ㄹ') stays as final consonant of 1st syllable.
-         *    Second part ('ㄱ') becomes initial consonant of 2nd syllable ('기') -> '달기'.
-         * 2) If Final Consonant (Jongseong) is single (e.g. '한' + 'ㅏ'):
-         *    The final consonant ('ㄴ') moves to become initial consonant of 2nd syllable ('나') -> '하나'.
-         */
-        if (COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant]) {
-          const [firstFinalConsonant, secondFinalConsonant] =
-            COMPOUND_FINAL_CONSONANT_DECOMP[this.currentFinalConsonant];
-          this.currentFinalConsonant = firstFinalConsonant;
-          const firstChar = this.getCurrentChar();
-          this.composedString += firstChar;
-
-          this.currentInitialConsonant = FINAL_CONSONANT_TO_INITIAL_CONSONANT[secondFinalConsonant];
-          this.currentVowel = vowel;
-          this.currentFinalConsonant = null;
-        } else {
-          const prevFinalConsonant = this.currentFinalConsonant;
-          this.currentFinalConsonant = null;
-          const firstChar = this.getCurrentChar();
-          this.composedString += firstChar;
-
-          this.currentInitialConsonant = FINAL_CONSONANT_TO_INITIAL_CONSONANT[prevFinalConsonant];
-          this.currentVowel = vowel;
-          this.currentFinalConsonant = null;
-        }
-      } else if (finalConsonant !== undefined) {
-        // Try combining into compound Final Consonant (Jongseong) (e.g. '달' + 'ㄱ' -> '닭')
-        const compoundKey = makeCompoundKey(this.currentFinalConsonant, finalConsonant);
-        if (COMPOUND_FINAL_CONSONANT[compoundKey] !== undefined) {
-          this.currentFinalConsonant = COMPOUND_FINAL_CONSONANT[compoundKey];
+      case 'vowel': {
+        if (vowel !== undefined) {
+          const compoundKey = makeCompoundKey(this.compositionState.vowel, vowel);
+          if (COMPOUND_VOWEL[compoundKey] !== undefined) {
+            this.compositionState = {
+              stage: 'vowel',
+              vowel: COMPOUND_VOWEL[compoundKey],
+            };
+          } else {
+            this.flushCurrent();
+            this.compositionState = { stage: 'vowel', vowel };
+          }
         } else if (initialConsonant !== undefined) {
           this.flushCurrent();
-          this.currentInitialConsonant = initialConsonant;
+          this.compositionState = { stage: 'initial', initialConsonant };
         }
-      } else if (initialConsonant !== undefined) {
-        this.flushCurrent();
-        this.currentInitialConsonant = initialConsonant;
+        return this.getComposedText();
       }
-      return this.getComposedText();
+
+      case 'syllable': {
+        const {
+          initialConsonant: currInitial,
+          vowel: currVowel,
+          finalConsonant: currFinal,
+        } = this.compositionState;
+
+        // Subcase A: Syllable has NO final consonant (e.g. '가')
+        if (currFinal === null || currFinal === 0) {
+          if (vowel !== undefined) {
+            // Try combining into compound vowel (e.g. '고' + 'ㅏ' -> '과')
+            const compoundKey = makeCompoundKey(currVowel, vowel);
+            if (COMPOUND_VOWEL[compoundKey] !== undefined) {
+              this.compositionState = {
+                stage: 'syllable',
+                initialConsonant: currInitial,
+                vowel: COMPOUND_VOWEL[compoundKey],
+                finalConsonant: null,
+              };
+            } else {
+              this.flushCurrent();
+              this.compositionState = { stage: 'vowel', vowel };
+            }
+          } else if (finalConsonant !== undefined) {
+            // Add final consonant (e.g. '하' + 'ㄴ' -> '한')
+            this.compositionState = {
+              stage: 'syllable',
+              initialConsonant: currInitial,
+              vowel: currVowel,
+              finalConsonant,
+            };
+          } else if (initialConsonant !== undefined) {
+            this.flushCurrent();
+            this.compositionState = { stage: 'initial', initialConsonant };
+          }
+          return this.getComposedText();
+        }
+
+        // Subcase B: Syllable already has final consonant (e.g. '한' or '닭')
+        if (vowel !== undefined) {
+          /**
+           * Liaison Rule / Syllable Splitting:
+           * A vowel is typed after a syllable that already has a final consonant (Jongseong).
+           * 1) If Final Consonant (Jongseong) is compound (e.g. '닭' = '달' + 'ㄱ'):
+           *    First part ('ㄹ') stays as final consonant of 1st syllable.
+           *    Second part ('ㄱ') becomes initial consonant of 2nd syllable ('기') -> '달기'.
+           * 2) If Final Consonant (Jongseong) is single (e.g. '한' + 'ㅏ'):
+           *    The final consonant ('ㄴ') moves to become initial consonant of 2nd syllable ('나') -> '하나'.
+           */
+          if (COMPOUND_FINAL_CONSONANT_DECOMP[currFinal]) {
+            const [firstFinalConsonant, secondFinalConsonant] =
+              COMPOUND_FINAL_CONSONANT_DECOMP[currFinal];
+            const firstChar = assembleSyllable(currInitial, currVowel, firstFinalConsonant);
+            this.composedString += firstChar;
+
+            this.compositionState = {
+              stage: 'syllable',
+              initialConsonant: FINAL_CONSONANT_TO_INITIAL_CONSONANT[secondFinalConsonant],
+              vowel,
+              finalConsonant: null,
+            };
+          } else {
+            const firstChar = assembleSyllable(currInitial, currVowel, 0 as FinalConsonantIndex);
+            this.composedString += firstChar;
+
+            this.compositionState = {
+              stage: 'syllable',
+              initialConsonant: FINAL_CONSONANT_TO_INITIAL_CONSONANT[currFinal],
+              vowel,
+              finalConsonant: null,
+            };
+          }
+        } else if (finalConsonant !== undefined) {
+          // Try combining into compound Final Consonant (Jongseong) (e.g. '달' + 'ㄱ' -> '닭')
+          const compoundKey = makeCompoundKey(currFinal, finalConsonant);
+          if (COMPOUND_FINAL_CONSONANT[compoundKey] !== undefined) {
+            this.compositionState = {
+              stage: 'syllable',
+              initialConsonant: currInitial,
+              vowel: currVowel,
+              finalConsonant: COMPOUND_FINAL_CONSONANT[compoundKey],
+            };
+          } else if (initialConsonant !== undefined) {
+            this.flushCurrent();
+            this.compositionState = { stage: 'initial', initialConsonant };
+          }
+        } else if (initialConsonant !== undefined) {
+          this.flushCurrent();
+          this.compositionState = { stage: 'initial', initialConsonant };
+        }
+        return this.getComposedText();
+      }
     }
 
     return this.getComposedText();
@@ -265,9 +339,7 @@ export class HangulEngine {
    * Resets engine state for a new typing lesson.
    */
   public reset(): void {
-    this.currentInitialConsonant = null;
-    this.currentVowel = null;
-    this.currentFinalConsonant = null;
+    this.compositionState = { stage: 'empty' };
     this.composedString = '';
   }
 
@@ -288,10 +360,10 @@ export class HangulEngine {
 
     if (initIdx !== undefined) {
       this.composedString = prefix.slice(0, -1);
-      this.currentInitialConsonant = initIdx;
+      this.compositionState = { stage: 'initial', initialConsonant: initIdx };
     } else if (vowelIdx !== undefined) {
       this.composedString = prefix.slice(0, -1);
-      this.currentVowel = vowelIdx;
+      this.compositionState = { stage: 'vowel', vowel: vowelIdx };
     } else {
       this.composedString = prefix;
     }
