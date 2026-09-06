@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { decomposeStringToJamos } from '../utils/hangulDecompose';
+import { decomposeStringToJamos, decomposeSyllable } from '../utils/hangulDecompose';
 import { JAMO_TO_KEY } from '../utils/keyboardData';
 import { TutorSession } from './tutorSession.svelte';
 import { resetDeckStorageForTesting } from '../utils/customDecks';
@@ -656,6 +656,13 @@ describe('TutorSession controller', () => {
 
     const masteryState = session.getMasteryState();
     expect(masteryState.jamoStats['ㅚ'].totalAttempts).toBe(0);
+
+    // Advance if necessary until an exercise featuring the active compound vowel 'ㅚ' is served
+    while (
+      !Array.from(session.getCurrentItem().target).some((c) => decomposeSyllable(c)?.vowel === 'ㅚ')
+    ) {
+      session.skipExercise();
+    }
 
     // Type the active learning item from the 'ㅚ' bank (e.g. '회사', '최고', etc.)
     const item = session.getCurrentItem();

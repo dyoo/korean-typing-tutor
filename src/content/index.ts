@@ -50,10 +50,18 @@ const MODULE_ORDER = [
   'freq_6k',
 ];
 
+import { getMasteryModules } from './masteryVocabulary';
+
 /** Eagerly import all per-module JSON content files. */
 const moduleFiles = import.meta.glob<ModuleFile>('./modules/*.json', { eager: true });
 
 const moduleMap = new Map<string, ModuleFile>();
+
+// Register dynamically constructed mastery progression modules from canonical vocabulary bank
+for (const mod of getMasteryModules()) {
+  moduleMap.set(mod.id, mod);
+}
+
 for (const path in moduleFiles) {
   const modData = moduleFiles[path];
   const fileContent = (modData as { default?: ModuleFile }).default ?? modData;

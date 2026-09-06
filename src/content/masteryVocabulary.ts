@@ -2611,3 +2611,89 @@ export const FOCUS_BATCHIM_VOCABULARY: Record<string, LessonItem[]> = {
     },
   ],
 };
+
+interface MasteryModuleDefinition {
+  id: string;
+  title: string;
+  description: string;
+  items: LessonItem[];
+}
+
+/**
+ * Constructs the canonical Free-form curriculum modules for the 5 mastery stages
+ * directly from the structured vocabulary and checkpoint sentence banks,
+ * avoiding duplicate dataset files.
+ */
+export function getMasteryModules(): MasteryModuleDefinition[] {
+  const homeRowJamos = ['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ', 'ㅗ', 'ㅣ', 'ㅁ', 'ㄴ', 'ㅎ', 'ㅜ', 'ㅡ'];
+  const topRowJamos = ['ㄱ', 'ㅅ', 'ㄷ', 'ㅈ', 'ㅂ', 'ㅛ', 'ㅕ', 'ㅑ', 'ㅐ', 'ㅔ'];
+  const bottomRowJamos = ['ㅋ', 'ㅌ', 'ㅊ', 'ㅍ', 'ㅠ'];
+  const shiftKeysJamos = [
+    'ㅘ',
+    'ㅚ',
+    'ㅝ',
+    'ㅟ',
+    'ㅢ',
+    'ㅙ',
+    'ㅞ',
+    'ㄲ',
+    'ㅆ',
+    'ㄸ',
+    'ㅉ',
+    'ㅃ',
+    'ㅒ',
+    'ㅖ',
+  ];
+  const compoundBatchimJamos = ['ㄶ', 'ㄵ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㅄ', 'ㅀ', 'ㄳ', 'ㄾ', 'ㄿ', 'ㄽ'];
+
+  const collectItems = (jamos: string[], checkpointIds: string[]): LessonItem[] => {
+    const items: LessonItem[] = [];
+    for (const j of jamos) {
+      const vocab = MASTERY_JAMO_VOCABULARY[j];
+      if (vocab) {
+        items.push(...vocab);
+      }
+    }
+    for (const cpId of checkpointIds) {
+      const sents = MASTERY_CHECKPOINT_SENTENCES[cpId];
+      if (sents) {
+        items.push(...sents);
+      }
+    }
+    return items;
+  };
+
+  return [
+    {
+      id: 'mastery_home_row',
+      title: 'Home Row Mastery',
+      description:
+        'Home row vocabulary (Stage 1 & 2) and full home-row milestone review sentences.',
+      items: collectItems(homeRowJamos, ['cp_home_row']),
+    },
+    {
+      id: 'mastery_top_row',
+      title: 'Top Row Mastery',
+      description: 'Top row vocabulary (Stage 3) and top + home row milestone review sentences.',
+      items: collectItems(topRowJamos, ['cp_top_row']),
+    },
+    {
+      id: 'mastery_bottom_row',
+      title: 'Bottom Row Mastery',
+      description: 'Bottom row vocabulary (Stage 4) and full alphabet milestone review sentences.',
+      items: collectItems(bottomRowJamos, ['cp_bottom_row']),
+    },
+    {
+      id: 'mastery_shift_keys',
+      title: 'Shift Keys & Compound Vowels',
+      description: 'Double consonants, shifted vowels, and compound diphthongs.',
+      items: collectItems(shiftKeysJamos, ['cp_compound_vowels', 'cp_shift_keys']),
+    },
+    {
+      id: 'mastery_compound_batchim',
+      title: 'Compound Batchim (겹받침)',
+      description: 'Complex final double consonants and literature mastery passages.',
+      items: collectItems(compoundBatchimJamos, ['cp_master']),
+    },
+  ];
+}

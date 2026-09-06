@@ -106,8 +106,8 @@ describe('Content data validation', () => {
     ).toEqual([]);
   });
 
-  it('should load all 36 curriculum modules and 7,887 authentic items', () => {
+  it('should load all 36 curriculum modules and 7,970 authentic items', () => {
     expect(contentData.modules.length).toBe(36);
-    expect(contentData.items.length).toBe(7887);
+    expect(contentData.items.length).toBe(7970);
   });
 });
