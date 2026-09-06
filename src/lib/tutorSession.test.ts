@@ -2,6 +2,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 import { decomposeStringToJamos } from '../utils/hangulDecompose';
 import { JAMO_TO_KEY } from '../utils/keyboardData';
 import { TutorSession } from './tutorSession.svelte';
+import { resetDeckStorageForTesting } from '../utils/customDecks';
 import type { CurriculumData } from './tutorSession.svelte';
 import type { LessonItem } from '../types/korean';
 
@@ -34,6 +35,7 @@ describe('TutorSession controller', () => {
 
   beforeEach(() => {
     localStorage.clear();
+    resetDeckStorageForTesting();
     session = new TutorSession(mockCurriculum, 'all', false);
     session.setMode('curriculum');
   });

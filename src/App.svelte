@@ -50,6 +50,11 @@
       : session.getModules().map((m) => m.id),
   );
 
+  // Initiate asynchronous custom deck hydration from IndexedDB immediately on component evaluation
+  const customDecksInitPromise = session.initCustomDecks().then(() => {
+    session.setFilter(enabledModuleIds, false);
+  });
+
   let mode = $derived(session.getMode());
   let masteryState = $derived(session.getMasteryState());
 
@@ -123,11 +128,6 @@
     session.setFilter(enabledModuleIds, true);
     focusInputElement();
 
-    // Hydrate any custom decks stored in IndexedDB (or migrated from legacy localStorage)
-    session.initCustomDecks().then(() => {
-      session.setFilter(enabledModuleIds, false);
-    });
-
     // Ensure pending debounced saves are flushed if the user navigates away or closes the tab.
     const handleBeforeUnload = () => {
       session.flushPendingSave();
@@ -136,7 +136,10 @@
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   });
 
-  function handleBeginSession() {
+  async function handleBeginSession() {
+    // Guarantee that IndexedDB hydration has finished before dismissing modal and unlocking keyboard
+    await customDecksInitPromise;
+
     session.resetSessionState();
     showWelcomeModal = false;
     focusInputElement();
