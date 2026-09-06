@@ -8,11 +8,11 @@
     cap: KeyCapDefinition;
     isShiftActive: boolean;
     isShiftPressed: boolean;
-    activeKeys: string[];
+    activeKeys: readonly string[];
     mode: TutorMode;
-    unlockedJamos: Set<string>;
+    unlockedJamos: ReadonlySet<string>;
     activeJamo: JamoProgressionItem | null;
-    jamoStats: Record<string, JamoStats>;
+    jamoStats: Readonly<Record<string, JamoStats>>;
     onselect?: (key: string, e: MouseEvent) => void;
   }
 

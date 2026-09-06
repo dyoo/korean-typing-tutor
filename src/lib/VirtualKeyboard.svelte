@@ -9,7 +9,7 @@
   import type { TutorMode, MasteryState } from '../types/mastery';
 
   interface Props {
-    activeKeys?: string[];
+    activeKeys?: readonly string[];
     onkeyselect?: (key: string) => void;
     mode?: TutorMode;
     masteryState?: MasteryState;
@@ -28,7 +28,9 @@
 
   // Derive values internally so they only trigger re-renders when the underlying masteryState actually changes,
   // preventing the entire keyboard from re-rendering on every keystroke.
-  let unlockedJamos = $derived(masteryState ? getUnlockedJamos(masteryState) : new Set<string>());
+  let unlockedJamos: ReadonlySet<string> = $derived(
+    masteryState ? getUnlockedJamos(masteryState) : new Set<string>(),
+  );
   let activeJamo = $derived(masteryState ? getActiveLearningJamo(masteryState) : null);
   let jamoStats = $derived(masteryState ? masteryState.jamoStats : {});
 

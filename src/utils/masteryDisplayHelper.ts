@@ -2,19 +2,19 @@ import { JAMO_STAGES, calculateJamoProgress } from './jamoMastery';
 import type { MasteryTarget, MasteryState } from '../types/mastery';
 
 export interface MasteryDisplayInfo {
-  activeJamoChar: string | null;
-  activeJamoLabel: string;
-  activeLearningCombination?: [string, string];
-  activeJamoProgress: number;
-  activeTargetRemaining: string | null;
-  isPostGame: boolean;
-  postGameSubtype: string | null;
-  activeCheckpointTitle: string | null;
-  activeCheckpointProgress: { completed: number; total: number } | null;
-  currentStageNumber: number;
-  currentStageName: string;
-  totalStageCount: number;
-  activeKpm: number | null;
+  readonly activeJamoChar: string | null;
+  readonly activeJamoLabel: string;
+  readonly activeLearningCombination?: readonly [string, string];
+  readonly activeJamoProgress: number;
+  readonly activeTargetRemaining: string | null;
+  readonly isPostGame: boolean;
+  readonly postGameSubtype: string | null;
+  readonly activeCheckpointTitle: string | null;
+  readonly activeCheckpointProgress: { readonly completed: number; readonly total: number } | null;
+  readonly currentStageNumber: number;
+  readonly currentStageName: string;
+  readonly totalStageCount: number;
+  readonly activeKpm: number | null;
 }
 
 /**
@@ -25,8 +25,8 @@ export interface MasteryDisplayInfo {
 export function computeMasteryDisplayInfo(
   activeMasteryTarget: MasteryTarget,
   masteryState: MasteryState,
-  getCategoryKpm?: (category: 'words' | 'sentences') => { kpm: number } | null,
-  getJamoKpm?: (jamo: string) => { kpm: number } | null,
+  getCategoryKpm?: (category: 'words' | 'sentences') => { readonly kpm: number } | null,
+  getJamoKpm?: (jamo: string) => { readonly kpm: number } | null,
   showKpm = true,
 ): MasteryDisplayInfo {
   const activeLearningJamo = activeMasteryTarget.type === 'jamo' ? activeMasteryTarget.item : null;

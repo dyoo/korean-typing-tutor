@@ -28,9 +28,9 @@ import {
  *   finalIndex    = offset % 28
  */
 function getSyllableIndices(char: string): {
-  initialConsonantIndex: InitialConsonantIndex;
-  vowelIndex: VowelIndex;
-  finalConsonantIndex: FinalConsonantIndex;
+  readonly initialConsonantIndex: InitialConsonantIndex;
+  readonly vowelIndex: VowelIndex;
+  readonly finalConsonantIndex: FinalConsonantIndex;
 } | null {
   const offset = char.charCodeAt(0) - HANGUL_BASE;
   if (offset < 0 || offset > 11171) {
@@ -106,7 +106,7 @@ export function decomposeCharToJamos(char: string | undefined): string {
  * Example: '하나와' -> ['ㅎ', 'ㅏ', 'ㄴ', 'ㅏ', 'ㅇ', 'ㅗ', 'ㅏ']
  * Example: '사 과' -> ['ㅅ', 'ㅏ', ' ', 'ㄱ', 'ㅗ', 'ㅏ']
  */
-export function decomposeStringToJamos(str: string | undefined): string[] {
+export function decomposeStringToJamos(str: string | undefined): readonly string[] {
   if (!str) {
     return [];
   }

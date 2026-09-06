@@ -2,41 +2,41 @@ import type { Brand } from './brand';
 
 /** Structured decomposition result for a single Hangul syllable. */
 export interface SyllableDecomposition {
-  initialConsonant: string;
-  vowel: string;
-  finalConsonant: string | null;
-  raw?: string;
+  readonly initialConsonant: string;
+  readonly vowel: string;
+  readonly finalConsonant: string | null;
+  readonly raw?: string;
 }
 
 /** Error report entry for character mismatch tracking. */
 export interface ErrorReport {
-  index: number;
-  isError: boolean;
+  readonly index: number;
+  readonly isError: boolean;
 }
 
 /** Module definition metadata for practice levels. */
 export interface ModuleDefinition {
-  id: string;
-  title: string;
-  description: string;
-  itemCount?: number;
-  category?: string;
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly itemCount?: number;
+  readonly category?: string;
 }
 
 /** Lesson item domain model for practice exercises. */
 export interface LessonItem {
-  id: string;
-  moduleId: string;
-  target: string;
-  pronunciation?: string | null;
-  translation?: string | null;
-  attribution?: string | null;
+  readonly id: string;
+  readonly moduleId: string;
+  readonly target: string;
+  readonly pronunciation?: string | null;
+  readonly translation?: string | null;
+  readonly attribution?: string | null;
 }
 
 /** Structure of the imported content dataset containing modules and lesson items. */
 export interface CurriculumData {
-  modules: ModuleDefinition[];
-  items: LessonItem[];
+  readonly modules: readonly ModuleDefinition[];
+  readonly items: readonly LessonItem[];
 }
 
 /**  --- Hangul Unicode Arithmetic Indices ---  */

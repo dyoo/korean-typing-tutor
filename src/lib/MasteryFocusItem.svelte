@@ -1,8 +1,8 @@
 <script lang="ts">
   interface KpmStats {
-    kpm: number;
-    accuracy?: number;
-    bestKpm?: number;
+    readonly kpm: number;
+    readonly accuracy?: number;
+    readonly bestKpm?: number;
   }
 
   interface Props {

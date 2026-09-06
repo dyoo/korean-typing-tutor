@@ -44,7 +44,7 @@
   let showWelcomeModal = $state(true);
   let showImportDeckModal = $state(false);
 
-  let enabledModuleIds = $state<string[]>(
+  let enabledModuleIds = $state<readonly string[]>(
     Array.isArray(settingsStore.current.enabledModuleIds)
       ? settingsStore.current.enabledModuleIds
       : session.getModules().map((m) => m.id),
@@ -94,10 +94,14 @@
   );
 
   // Conditionally suppress keyboard hints when the setting is disabled.
-  let hintKeys = $derived(settingsStore.current.showKeyboardHint ? activeRequiredKeys : []);
+  let hintKeys: readonly string[] = $derived(
+    settingsStore.current.showKeyboardHint ? activeRequiredKeys : [],
+  );
 
   // Map errors to O(1) lookups by index to avoid O(N^2) .find() calls in child {#each} loops.
-  let errorMap = $derived(new Map(errors.map((e) => [e.index, e.isError])));
+  let errorMap: ReadonlyMap<number, boolean> = $derived(
+    new Map(errors.map((e) => [e.index, e.isError])),
+  );
 
   let activeMasteryTarget = $derived(session.getActiveMasteryTarget());
   let activeCheckpoint = $derived(session.getActiveCheckpoint());
@@ -241,11 +245,11 @@
     focusInputElement();
   }
 
-  let collapsedCategoryIds = $state<string[]>(
+  let collapsedCategoryIds = $state<readonly string[]>(
     settingsStore.current.collapsedCategoryIds ?? ALL_CATEGORY_IDS,
   );
 
-  let collapsedMasteryStageIds = $state<string[]>(
+  let collapsedMasteryStageIds = $state<readonly string[]>(
     settingsStore.current.collapsedMasteryStageIds ?? [],
   );
 

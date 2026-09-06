@@ -3,16 +3,16 @@ type KeyboardHand = 'left' | 'right';
 
 /** Definition of keycap metadata for Dubeolsik (2-set) Korean keyboard. */
 export interface KeyCapDefinition {
-  key: string;
-  jamo: string;
-  shiftJamo?: string;
-  type: 'consonant' | 'vowel' | 'punctuation' | 'symbol';
+  readonly key: string;
+  readonly jamo: string;
+  readonly shiftJamo?: string;
+  readonly type: 'consonant' | 'vowel' | 'punctuation' | 'symbol';
 }
 
 /** Extended canonical layout entry including row index and typing hand. */
 interface DubeolsikKeyEntry extends KeyCapDefinition {
-  row: 0 | 1 | 2;
-  hand: KeyboardHand;
+  readonly row: 0 | 1 | 2;
+  readonly hand: KeyboardHand;
 }
 
 /**
@@ -20,7 +20,7 @@ interface DubeolsikKeyEntry extends KeyCapDefinition {
  * Left-hand keys (Q-T, A-G, Z-V) correspond to consonants.
  * Right-hand keys (Y-P, H-L, B-M) correspond to vowels.
  */
-export const DUBEOLSIK_KEY_DEFINITIONS: DubeolsikKeyEntry[] = [
+export const DUBEOLSIK_KEY_DEFINITIONS: readonly DubeolsikKeyEntry[] = [
   // Row 0: Q W E R T Y U I O P
   { row: 0, key: 'q', jamo: 'ㅂ', shiftJamo: 'ㅃ', type: 'consonant', hand: 'left' },
   { row: 0, key: 'w', jamo: 'ㅈ', shiftJamo: 'ㅉ', type: 'consonant', hand: 'left' },
@@ -59,7 +59,7 @@ export const DUBEOLSIK_KEY_DEFINITIONS: DubeolsikKeyEntry[] = [
 /**
  * Standard Dubeolsik (2-set) Korean keyboard layout mapping partitioned across 3 QWERTY rows.
  */
-export const DUBEOLSIK_ROWS: KeyCapDefinition[][] = [
+export const DUBEOLSIK_ROWS: readonly (readonly KeyCapDefinition[])[] = [
   DUBEOLSIK_KEY_DEFINITIONS.filter((item) => item.row === 0),
   DUBEOLSIK_KEY_DEFINITIONS.filter((item) => item.row === 1),
   DUBEOLSIK_KEY_DEFINITIONS.filter((item) => item.row === 2),
@@ -68,7 +68,7 @@ export const DUBEOLSIK_ROWS: KeyCapDefinition[][] = [
 /**
  * Mobile symbol mode keyboard layout across 3 rows.
  */
-export const SYMBOL_ROWS: KeyCapDefinition[][] = [
+export const SYMBOL_ROWS: readonly (readonly KeyCapDefinition[])[] = [
   // Row 1: 1 2 3 4 5 6 7 8 9 0 (10 keys)
   [
     { key: '1', jamo: '1', type: 'symbol' },
@@ -108,7 +108,9 @@ export const SYMBOL_ROWS: KeyCapDefinition[][] = [
 ];
 
 /** Specific hand/shift overrides for symbols and numbers. */
-const SYMBOL_KEY_METADATA: Record<string, { hand: KeyboardHand; shift?: boolean }> = {
+const SYMBOL_KEY_METADATA: Readonly<
+  Record<string, { readonly hand: KeyboardHand; readonly shift?: boolean }>
+> = {
   '1': { hand: 'left' },
   '2': { hand: 'left' },
   '3': { hand: 'left' },
@@ -138,12 +140,18 @@ const SYMBOL_KEY_METADATA: Record<string, { hand: KeyboardHand; shift?: boolean 
   '?': { hand: 'right', shift: true },
 };
 
+interface JamoKeyInfo {
+  readonly key: string;
+  readonly shift?: boolean;
+  readonly hand: KeyboardHand;
+}
+
 /**
  * Builds the derived lookup map from single Hangul Jamos, numbers, and symbols
  * to their keystroke representation, Shift requirement, and typing hand.
  */
-function buildJamoToKeyMap(): Record<string, { key: string; shift?: boolean; hand: KeyboardHand }> {
-  const map: Record<string, { key: string; shift?: boolean; hand: KeyboardHand }> = {};
+function buildJamoToKeyMap(): Readonly<Record<string, JamoKeyInfo>> {
+  const map: Record<string, JamoKeyInfo> = {};
 
   for (const entry of DUBEOLSIK_KEY_DEFINITIONS) {
     map[entry.jamo] = { key: entry.key, hand: entry.hand };
@@ -169,4 +177,4 @@ function buildJamoToKeyMap(): Record<string, { key: string; shift?: boolean; han
 }
 
 /** Map of individual Hangul Jamos, numbers, and symbols to their standard keystroke representation. */
-export const JAMO_TO_KEY = buildJamoToKeyMap();
+export const JAMO_TO_KEY: Readonly<Record<string, JamoKeyInfo>> = buildJamoToKeyMap();

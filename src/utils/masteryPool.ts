@@ -13,7 +13,7 @@ import { getEligibleMasteryItems, selectNextMasteryItem } from './jamoMastery';
 const MAX_HISTORY_LENGTH = 100;
 
 export class MasteryPool {
-  private eligiblePool: LessonItem[] = [];
+  private eligiblePool: readonly LessonItem[] = [];
   private history: LessonItem[] = [];
   private historyIndex = -1;
   private currentTarget: MasteryTarget | null = null;
@@ -22,14 +22,14 @@ export class MasteryPool {
   /**
    * Generates a stable string key representing the unlocked Jamo set.
    */
-  private getUnlockedKey(unlockedJamos: Set<string>): string {
+  private getUnlockedKey(unlockedJamos: ReadonlySet<string>): string {
     return Array.from(unlockedJamos).sort().join('');
   }
 
   /**
    * Checks whether the current pool already matches the active target and unlocked Jamo set.
    */
-  public isPoolValid(activeTarget: MasteryTarget, unlockedJamos: Set<string>): boolean {
+  public isPoolValid(activeTarget: MasteryTarget, unlockedJamos: ReadonlySet<string>): boolean {
     if (this.eligiblePool.length === 0 || !this.currentTarget) {
       return false;
     }
@@ -71,10 +71,10 @@ export class MasteryPool {
    * Generates and returns the initial exercise item for the newly built pool.
    */
   public rebuild(
-    allItems: LessonItem[],
-    unlockedJamos: Set<string>,
+    allItems: readonly LessonItem[],
+    unlockedJamos: ReadonlySet<string>,
     activeTarget: MasteryTarget,
-    jamoStats: Record<string, JamoStats>,
+    jamoStats: Readonly<Record<string, JamoStats>>,
   ): LessonItem {
     this.currentTarget = activeTarget;
     this.unlockedKey = this.getUnlockedKey(unlockedJamos);
@@ -95,7 +95,7 @@ export class MasteryPool {
    * If the user previously navigated backwards, advances forward along the existing history path.
    * Otherwise, samples a new candidate from the eligible pool and appends it to history.
    */
-  public next(jamoStats: Record<string, JamoStats>, excludeId?: string): LessonItem {
+  public next(jamoStats: Readonly<Record<string, JamoStats>>, excludeId?: string): LessonItem {
     // If we are currently navigating behind the forward edge of history, move forward
     if (this.historyIndex < this.history.length - 1) {
       this.historyIndex++;
@@ -147,12 +147,12 @@ export class MasteryPool {
   }
 
   /** Returns the entire filtered candidate pool for the active target. */
-  public getPool(): LessonItem[] {
+  public getPool(): readonly LessonItem[] {
     return this.eligiblePool;
   }
 
   /** Returns the current history stack. */
-  public getHistory(): LessonItem[] {
+  public getHistory(): readonly LessonItem[] {
     return [...this.history];
   }
 

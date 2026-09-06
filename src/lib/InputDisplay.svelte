@@ -4,7 +4,7 @@
 
   interface Props {
     userInput: string;
-    errorMap: Map<number, boolean>;
+    errorMap: ReadonlyMap<number, boolean>;
     activeInputCursorIndex: number;
     isCompleted: boolean;
     hasEnabledModules: boolean;

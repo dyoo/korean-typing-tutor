@@ -2,7 +2,7 @@ import type { LessonItem, SyllableDecomposition } from '../types/korean';
 import { decomposeSyllable } from './hangulDecompose';
 
 /** Revised Romanization map for initial consonants (Choseong). */
-const INITIAL_CONSONANT_MAP: Record<string, string> = {
+const INITIAL_CONSONANT_MAP: Readonly<Record<string, string>> = {
   ㄱ: 'g',
   ㄲ: 'kk',
   ㄴ: 'n',
@@ -25,7 +25,7 @@ const INITIAL_CONSONANT_MAP: Record<string, string> = {
 };
 
 /** Revised Romanization map for vowels (Jungseong). */
-const VOWEL_MAP: Record<string, string> = {
+const VOWEL_MAP: Readonly<Record<string, string>> = {
   ㅏ: 'a',
   ㅐ: 'ae',
   ㅑ: 'ya',
@@ -50,16 +50,16 @@ const VOWEL_MAP: Record<string, string> = {
 };
 
 /** Romanization map for isolated Jamo characters. */
-const SINGLE_JAMO_PRONUNCIATION: Record<string, string> = {
+const SINGLE_JAMO_PRONUNCIATION: Readonly<Record<string, string>> = {
   ...INITIAL_CONSONANT_MAP,
   ...VOWEL_MAP,
   ㄹ: 'r/l',
   ㅇ: 'ng',
 };
 
-const K_NEUTRALIZATION_FINALS = ['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'];
-const T_NEUTRALIZATION_FINALS = ['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'];
-const P_NEUTRALIZATION_FINALS = ['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'];
+const K_NEUTRALIZATION_FINALS: readonly string[] = ['ㄱ', 'ㄲ', 'ㅋ', 'ㄺ'];
+const T_NEUTRALIZATION_FINALS: readonly string[] = ['ㄷ', 'ㅅ', 'ㅆ', 'ㅈ', 'ㅊ', 'ㅌ', 'ㅎ'];
+const P_NEUTRALIZATION_FINALS: readonly string[] = ['ㅂ', 'ㅍ', 'ㄼ', 'ㄿ', 'ㅄ'];
 
 /**
  * Converts a final consonant (Jongseong) to its default non-liaison Revised Romanization letter.

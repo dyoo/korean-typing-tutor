@@ -4,14 +4,14 @@ import type { CurriculumData, LessonItem, ModuleDefinition } from '../types/kore
 type RawLessonItem = Omit<LessonItem, 'moduleId'>;
 
 interface ModuleFile {
-  id: string;
-  title: string;
-  description: string;
-  items: RawLessonItem[];
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly items: readonly RawLessonItem[];
 }
 
 /** Canonical ordered list of module IDs for curriculum progression. */
-const MODULE_ORDER = [
+const MODULE_ORDER: readonly string[] = [
   'mastery_home_row',
   'mastery_top_row',
   'mastery_bottom_row',

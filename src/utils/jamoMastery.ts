@@ -39,13 +39,13 @@ const MIN_UNLOCKED_COUNT = 4;
 import { JAMO_TO_KEY } from './keyboardData';
 
 interface RawJamoProgressionEntry {
-  jamo: string;
-  stage: number;
-  stageName: string;
-  combination?: [string, string];
+  readonly jamo: string;
+  readonly stage: number;
+  readonly stageName: string;
+  readonly combination?: readonly [string, string];
 }
 
-const RAW_JAMO_PROGRESSION_ORDER: RawJamoProgressionEntry[] = [
+const RAW_JAMO_PROGRESSION_ORDER: readonly RawJamoProgressionEntry[] = [
   // Stage 1: Home Row Index Keys (Immediate feedback with basic vowels/consonants)
   { jamo: 'ㅓ', stage: 1, stageName: 'Home Row Index Keys' },
   { jamo: 'ㅏ', stage: 1, stageName: 'Home Row Index Keys' },
@@ -116,8 +116,8 @@ const RAW_JAMO_PROGRESSION_ORDER: RawJamoProgressionEntry[] = [
  * Ordered Dubeolsik (2-set) Jamo progression sequence based on ergonomic
  * home-row outward touch-typing principles. Key metadata derived from JAMO_TO_KEY.
  */
-export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = RAW_JAMO_PROGRESSION_ORDER.map(
-  (entry) => {
+export const JAMO_PROGRESSION_ORDER: readonly JamoProgressionItem[] =
+  RAW_JAMO_PROGRESSION_ORDER.map((entry) => {
     if (entry.combination) {
       const [first, second] = entry.combination;
       const firstKey = JAMO_TO_KEY[first]?.key ?? '';
@@ -141,13 +141,12 @@ export const JAMO_PROGRESSION_ORDER: JamoProgressionItem[] = RAW_JAMO_PROGRESSIO
       stage: entry.stage,
       stageName: entry.stageName,
     };
-  },
-);
+  });
 
 /**
  * Interleaved sentence milestone checkpoints between key learning sections.
  */
-export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
+export const SENTENCE_CHECKPOINTS: readonly SentenceCheckpoint[] = [
   {
     id: 'cp_home_row',
     stage: 2,
@@ -201,7 +200,7 @@ export const SENTENCE_CHECKPOINTS: SentenceCheckpoint[] = [
 /**
  * Groups `JAMO_PROGRESSION_ORDER` into stages and attaches sentence checkpoints.
  */
-export const JAMO_STAGES: JamoStageGroup[] = (() => {
+export const JAMO_STAGES: readonly JamoStageGroup[] = (() => {
   const stageMap = new Map<number, JamoProgressionItem[]>();
   for (const item of JAMO_PROGRESSION_ORDER) {
     const group = stageMap.get(item.stage) ?? [];
@@ -222,7 +221,7 @@ export const JAMO_STAGES: JamoStageGroup[] = (() => {
  * Complete list of all 21 standard Korean vowels (모음) in dictionary/progression order.
  * Used for post-game Consolidation mode practice.
  */
-export const VOWEL_FOCUS_LIST: JamoFocusItem[] = [
+export const VOWEL_FOCUS_LIST: readonly JamoFocusItem[] = [
   // Basic Vowels (8)
   { jamo: 'ㅏ', name: '아', key: 'k', hand: 'right' },
   { jamo: 'ㅓ', name: '어', key: 'j', hand: 'right' },
@@ -252,7 +251,7 @@ export const VOWEL_FOCUS_LIST: JamoFocusItem[] = [
 ];
 
 /** Lookup map for Vowel JamoFocusItem by vowel character. */
-export const VOWEL_FOCUS_MAP: Record<string, JamoFocusItem> = Object.fromEntries(
+export const VOWEL_FOCUS_MAP: Readonly<Record<string, JamoFocusItem>> = Object.fromEntries(
   VOWEL_FOCUS_LIST.map((item) => [item.jamo, item]),
 );
 
@@ -260,7 +259,7 @@ export const VOWEL_FOCUS_MAP: Record<string, JamoFocusItem> = Object.fromEntries
  * Complete list of all 19 standard Korean consonants (자음) in dictionary order.
  * Used for post-game Consolidation mode practice.
  */
-export const CONSONANT_FOCUS_LIST: JamoFocusItem[] = [
+export const CONSONANT_FOCUS_LIST: readonly JamoFocusItem[] = [
   // Basic & Aspirated Consonants (14)
   { jamo: 'ㄱ', name: '기역', key: 'r', hand: 'left' },
   { jamo: 'ㄴ', name: '니은', key: 's', hand: 'left' },
@@ -286,7 +285,7 @@ export const CONSONANT_FOCUS_LIST: JamoFocusItem[] = [
 ];
 
 /** Lookup map for Consonant JamoFocusItem by consonant character. */
-export const CONSONANT_FOCUS_MAP: Record<string, JamoFocusItem> = Object.fromEntries(
+export const CONSONANT_FOCUS_MAP: Readonly<Record<string, JamoFocusItem>> = Object.fromEntries(
   CONSONANT_FOCUS_LIST.map((item) => [item.jamo, item]),
 );
 
@@ -294,7 +293,7 @@ export const CONSONANT_FOCUS_MAP: Record<string, JamoFocusItem> = Object.fromEnt
  * Complete list of all 27 standard Korean final consonants (받침) in dictionary order.
  * Used for post-game Consolidation mode practice.
  */
-export const BATCHIM_FOCUS_LIST: BatchimFocusItem[] = [
+export const BATCHIM_FOCUS_LIST: readonly BatchimFocusItem[] = [
   { batchim: 'ㄱ', jamo: 'ㄱ', key: 'r', hand: 'left', name: '기역' },
   { batchim: 'ㄲ', jamo: 'ㄲ', key: 'r', shift: true, hand: 'left', name: '쌍기역' },
   {
@@ -402,7 +401,7 @@ export const BATCHIM_FOCUS_LIST: BatchimFocusItem[] = [
 ];
 
 /** Lookup map for BatchimFocusItem by batchim character. */
-export const BATCHIM_FOCUS_MAP: Record<string, BatchimFocusItem> = Object.fromEntries(
+export const BATCHIM_FOCUS_MAP: Readonly<Record<string, BatchimFocusItem>> = Object.fromEntries(
   BATCHIM_FOCUS_LIST.map((item) => [item.batchim, item]),
 );
 
@@ -442,7 +441,7 @@ function clampUnlockedCount(count: number): number {
 }
 
 /** Removes duplicate items sharing the same target, preserving first-seen order. */
-function dedupeByTarget(items: LessonItem[]): LessonItem[] {
+function dedupeByTarget(items: readonly LessonItem[]): LessonItem[] {
   const seenTargets = new Set<string>();
   const eligible: LessonItem[] = [];
   for (const item of items) {
@@ -624,7 +623,7 @@ export function saveMasteryState(state: MasteryState): void {
 /**
  * Returns a Set of Jamo characters currently unlocked for practice.
  */
-export function getUnlockedJamos(state: MasteryState): Set<string> {
+export function getUnlockedJamos(state: MasteryState): ReadonlySet<string> {
   const count = clampUnlockedCount(state.unlockedCount);
   const set = new Set<string>();
   for (let i = 0; i < count; i++) {
@@ -1107,13 +1106,13 @@ function isHangulJamo(char: string): boolean {
  */
 interface ItemJamoMetadata {
   /** All unique basic Jamos, compound vowels, and compound batchims strictly required to type this text. */
-  requiredJamos: string[];
+  readonly requiredJamos: readonly string[];
   /** Sequence of decomposed basic Jamos and spaces required to type this text. */
-  decomposedJamos: string[];
+  readonly decomposedJamos: readonly string[];
   /** Set of all constituent Jamos (initial consonants, vowels, final consonants, standalone, and basic components). */
-  allJamos: Set<string>;
+  readonly allJamos: ReadonlySet<string>;
   /** Set of all final consonants (받침) in the syllables. */
-  batchims: Set<string>;
+  readonly batchims: ReadonlySet<string>;
 }
 
 const itemMetadataCache = new WeakMap<LessonItem, ItemJamoMetadata>();
@@ -1198,7 +1197,7 @@ export function computeJamoMetadata(text: string): ItemJamoMetadata {
  * Syllables with compound final consonants (겹받침) also require their specific compound
  * batchim to be unlocked in the progression sequence.
  */
-export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): boolean {
+export function isItemEligible(item: LessonItem, unlockedJamos: ReadonlySet<string>): boolean {
   if (!item.target || item.target.trim() === '') {
     return false;
   }
@@ -1225,7 +1224,7 @@ export function isItemEligible(item: LessonItem, unlockedJamos: Set<string>): bo
  * - `cp_shift_keys`: Shift keys section (Stage 5).
  * - `cp_master`: Returns null as the final milestone is exempt from section-specific restrictions.
  */
-export function getSectionJamosForCheckpoint(checkpointId: string): Set<string> | null {
+export function getSectionJamosForCheckpoint(checkpointId: string): ReadonlySet<string> | null {
   if (checkpointId === 'cp_home_row') {
     return new Set(
       JAMO_PROGRESSION_ORDER.filter((item) => item.stage === 1 || item.stage === 2).map(
@@ -1264,10 +1263,10 @@ export function getSectionJamosForCheckpoint(checkpointId: string): Set<string> 
  * index keys and home row, and cp_master exempt).
  */
 export function getEligibleMasteryItems(
-  allItems: LessonItem[],
-  unlockedJamos: Set<string>,
+  allItems: readonly LessonItem[],
+  unlockedJamos: ReadonlySet<string>,
   activeTarget: MasteryTarget | null,
-): LessonItem[] {
+): readonly LessonItem[] {
   // If active target is Word Consolidation, return all short/medium vocabulary (<= 12 chars) across all datasets
   if (activeTarget && activeTarget.type === 'consolidation_words') {
     const curatedJamoWords: LessonItem[] = [];
@@ -1429,7 +1428,7 @@ function itemContainsJamo(item: LessonItem, jamo: string): boolean {
  * Selects the next exercise item.
  */
 export function selectNextMasteryItem(
-  eligibleItems: LessonItem[],
+  eligibleItems: readonly LessonItem[],
   activeTarget: MasteryTarget | string | null,
   jamoStats: Record<string, JamoStats>,
   currentItemId?: string,

@@ -5,7 +5,7 @@
  * Handles both explicit side targets ('left-shift', 'right-shift') and generic 'shift'.
  * Generic 'shift' maps to a side only when the opposite side is NOT explicitly present.
  */
-export function isShiftTarget(activeKeys: string[], side: 'left' | 'right'): boolean {
+export function isShiftTarget(activeKeys: readonly string[], side: 'left' | 'right'): boolean {
   const explicit = side === 'left' ? 'left-shift' : 'right-shift';
   if (activeKeys.includes(explicit)) {
     return true;

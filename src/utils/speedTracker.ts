@@ -26,13 +26,13 @@ const MAX_BIGRAM_ENTRIES = 300;
 
 /** In-memory keystroke event representation during an active exercise prompt. */
 interface KeystrokeEvent {
-  key: string;
-  jamo?: string;
-  fromJamo?: string;
-  timestamp: number;
-  rawIkiMs: number;
-  clampedIkiMs: number;
-  isCorrect: boolean;
+  readonly key: string;
+  readonly jamo?: string;
+  readonly fromJamo?: string;
+  readonly timestamp: number;
+  readonly rawIkiMs: number;
+  readonly clampedIkiMs: number;
+  readonly isCorrect: boolean;
 }
 
 /** Aggregated latency metrics for a specific Jamo character. */
@@ -60,21 +60,21 @@ type BigramTransitionMap = Record<string, BigramTransitionStats>;
 
 /** Snapshot of a completed exercise prompt's speed metrics. */
 export interface ExerciseSpeedRecord {
-  id: string;
-  timestamp: number;
-  targetText: string;
-  targetStrokes: number;
-  rawKeystrokes: number;
-  activeDurationMs: number;
-  errorCount: number;
-  backspaceCount: number;
-  netKpm: number;
-  grossKpm: number;
-  accuracy: number;
-  medianIkiMs: number;
-  moduleId?: string;
-  jamoId?: string;
-  category?: 'words' | 'sentences' | 'jamo';
+  readonly id: string;
+  readonly timestamp: number;
+  readonly targetText: string;
+  readonly targetStrokes: number;
+  readonly rawKeystrokes: number;
+  readonly activeDurationMs: number;
+  readonly errorCount: number;
+  readonly backspaceCount: number;
+  readonly netKpm: number;
+  readonly grossKpm: number;
+  readonly accuracy: number;
+  readonly medianIkiMs: number;
+  readonly moduleId?: string;
+  readonly jamoId?: string;
+  readonly category?: 'words' | 'sentences' | 'jamo';
 }
 
 /** Master persistent storage schema for all typing speed analytics. */
@@ -500,7 +500,7 @@ export class ExerciseSpeedTracker {
 export function getJamoKpmStats(
   store: SpeedMetricsStore,
   jamo: string,
-): { kpm: number; averageIkiMs: number; attempts: number } | null {
+): { readonly kpm: number; readonly averageIkiMs: number; readonly attempts: number } | null {
   if (!store || !jamo) {
     return null;
   }
@@ -525,7 +525,12 @@ export function getJamoKpmStats(
 export function getCategoryKpmStats(
   store: SpeedMetricsStore,
   category: 'words' | 'sentences',
-): { kpm: number; accuracy: number; count: number; bestKpm: number } | null {
+): {
+  readonly kpm: number;
+  readonly accuracy: number;
+  readonly count: number;
+  readonly bestKpm: number;
+} | null {
   if (!store || !store.recentHistory || store.recentHistory.length === 0) {
     return null;
   }

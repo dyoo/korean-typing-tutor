@@ -16,9 +16,9 @@ interface TutorSettings {
   showKeyboardHint: boolean;
   showKpm?: boolean;
   theme: ThemeMode;
-  enabledModuleIds?: string[];
-  collapsedCategoryIds?: string[];
-  collapsedMasteryStageIds?: string[];
+  enabledModuleIds?: readonly string[];
+  collapsedCategoryIds?: readonly string[];
+  collapsedMasteryStageIds?: readonly string[];
   minFontSizeRem?: number;
   maxFontSizeRem?: number;
   lockFontSize?: boolean;
@@ -34,7 +34,7 @@ interface TutorSettings {
 const SETTINGS_STORAGE_KEY = 'korean_tutor_settings';
 
 /** Default application settings. */
-export const DEFAULT_SETTINGS: TutorSettings = {
+export const DEFAULT_SETTINGS: Readonly<TutorSettings> = {
   showPronunciation: true,
   showTranslation: true,
   showVirtualKeyboard: true,

@@ -2,6 +2,7 @@
   import CharDisplay from './CharDisplay.svelte';
   import TTSAudioButton from './TTSAudioButton.svelte';
   import type { LessonItem } from '../types/korean';
+  import type { WordTokenGroup } from '../utils/cursorHelper';
   import {
     getTargetFontSizeClass,
     getTargetFontWeightClass,
@@ -11,8 +12,8 @@
   import { settingsStore } from './settings.svelte';
 
   interface Props {
-    wordTokens: Array<{ type: 'word' | 'space'; indices: number[] }>;
-    errorMap: Map<number, boolean>;
+    wordTokens: readonly WordTokenGroup[];
+    errorMap: ReadonlyMap<number, boolean>;
     activeTargetCursorIndex: number;
     isCompleted: boolean;
     currentItem: LessonItem;

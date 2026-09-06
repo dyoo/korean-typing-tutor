@@ -76,7 +76,7 @@ export function isSyllableComplete(
  * Compares target string vs user composed input and returns error flags per character position.
  * Utilizes isPartialOrExactMatch to ensure valid in-progress Hangul syllables are not marked as errors.
  */
-export function checkErrors(target: string, input: string): ErrorReport[] {
+export function checkErrors(target: string, input: string): readonly ErrorReport[] {
   const errors: ErrorReport[] = [];
   const maxLength = Math.max(target.length, input.length);
 

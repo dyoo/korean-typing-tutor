@@ -19,7 +19,7 @@ export const LEGACY_STORAGE_KEY = 'korean_tutor_custom_decks';
 let dbPromise: Promise<IDBDatabase | null> | null = null;
 
 /** In-memory cache of currently loaded custom decks for synchronous reads. */
-let cachedDecks: CustomDeck[] = [];
+let cachedDecks: readonly CustomDeck[] = [];
 
 /** In-flight initialization and migration promise to prevent race conditions. */
 let initPromise: Promise<void> | null = null;
@@ -248,7 +248,7 @@ function ensureInitialized(): Promise<void> {
  * Runs automatic one-time legacy migration from LocalStorage if needed.
  * Returns a defensive copy of the cached custom decks.
  */
-export async function loadCustomDecks(): Promise<CustomDeck[]> {
+export async function loadCustomDecks(): Promise<readonly CustomDeck[]> {
   await ensureInitialized();
   return [...cachedDecks];
 }
@@ -256,14 +256,14 @@ export async function loadCustomDecks(): Promise<CustomDeck[]> {
 /**
  * Returns the currently cached custom decks synchronously.
  */
-export function getLoadedCustomDecks(): CustomDeck[] {
+export function getLoadedCustomDecks(): readonly CustomDeck[] {
   return [...cachedDecks];
 }
 
 /**
  * Adds or updates a custom deck in IndexedDB (or fallback LocalStorage).
  */
-export async function saveCustomDeck(deck: CustomDeck): Promise<CustomDeck[]> {
+export async function saveCustomDeck(deck: CustomDeck): Promise<readonly CustomDeck[]> {
   // Ensure initialization / legacy migration has completed first
   await ensureInitialized();
 
@@ -274,9 +274,11 @@ export async function saveCustomDeck(deck: CustomDeck): Promise<CustomDeck[]> {
 
   const existingIndex = cachedDecks.findIndex((d) => d.id === sanitized.id);
   if (existingIndex >= 0) {
-    cachedDecks[existingIndex] = sanitized;
+    const updated = [...cachedDecks];
+    updated[existingIndex] = sanitized;
+    cachedDecks = updated;
   } else {
-    cachedDecks.push(sanitized);
+    cachedDecks = [...cachedDecks, sanitized];
   }
 
   const db = await getDb();
@@ -311,7 +313,7 @@ export async function saveCustomDeck(deck: CustomDeck): Promise<CustomDeck[]> {
 /**
  * Deletes a custom deck by ID from IndexedDB (or fallback LocalStorage).
  */
-export async function deleteCustomDeck(deckId: string): Promise<CustomDeck[]> {
+export async function deleteCustomDeck(deckId: string): Promise<readonly CustomDeck[]> {
   await ensureInitialized();
 
   cachedDecks = cachedDecks.filter((d) => d.id !== deckId);

@@ -35,7 +35,7 @@ function isUsefulTranslation(text: string): boolean {
 /**
  * Selects the best English translation from note fields, scanning fields after the target first.
  */
-function findBestTranslation(fields: string[], targetIndex: number): string | null {
+function findBestTranslation(fields: readonly string[], targetIndex: number): string | null {
   // First, check fields after target (where translation usually resides)
   for (let i = targetIndex + 1; i < fields.length; i++) {
     if (isUsefulTranslation(fields[i])) {

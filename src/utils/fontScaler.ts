@@ -6,16 +6,16 @@
  */
 
 interface FontTierConfig {
-  maxEffectiveLength: number;
-  fontSizeClass: string;
-  fontWeightClass: string;
-  subtextFontSizeClass: string;
-  baseMin: number;
-  baseMax: number;
-  vwScale: string;
+  readonly maxEffectiveLength: number;
+  readonly fontSizeClass: string;
+  readonly fontWeightClass: string;
+  readonly subtextFontSizeClass: string;
+  readonly baseMin: number;
+  readonly baseMax: number;
+  readonly vwScale: string;
 }
 
-const FONT_TIERS: FontTierConfig[] = [
+const FONT_TIERS: readonly FontTierConfig[] = [
   {
     maxEffectiveLength: 15,
     fontSizeClass: 'text-giant',

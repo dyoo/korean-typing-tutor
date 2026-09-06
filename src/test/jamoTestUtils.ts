@@ -41,7 +41,7 @@ export function hasConsonant(text: string, consonant: string): boolean {
  * Checks if a Hangul target string contains at least one Jamo from the specified set of Jamos.
  * Accounts for initial consonants, vowels, and final consonants.
  */
-export function itemUsesAnyJamo(text: string, targetJamos: Set<string>): boolean {
+export function itemUsesAnyJamo(text: string, targetJamos: ReadonlySet<string>): boolean {
   if (!text || targetJamos.size === 0) {
     return false;
   }

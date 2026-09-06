@@ -6,16 +6,16 @@ export const DEFAULT_TTS_SPEED = 1.0;
 
 /** Information about a discovered native browser speech synthesis voice. */
 interface NativeVoiceInfo {
-  id: string;
-  name: string;
-  lang: string;
-  isDefault: boolean;
-  localService: boolean;
+  readonly id: string;
+  readonly name: string;
+  readonly lang: string;
+  readonly isDefault: boolean;
+  readonly localService: boolean;
 }
 
 export class TTSController {
   private _isSpeaking = $state(false);
-  private _nativeVoices = $state<NativeVoiceInfo[]>([]);
+  private _nativeVoices = $state.raw<readonly NativeVoiceInfo[]>([]);
   private currentPlaybackToken = 0;
 
   constructor() {
@@ -59,7 +59,7 @@ export class TTSController {
   }
 
   /** Returns all discovered Korean system voices. */
-  public get nativeVoices(): NativeVoiceInfo[] {
+  public get nativeVoices(): readonly NativeVoiceInfo[] {
     if (this._nativeVoices.length === 0) {
       this.refreshNativeVoices();
     }

@@ -3,15 +3,15 @@ import type { LessonItem } from './korean';
 /** A user-imported custom flashcard deck (e.g. from Anki .apkg, TSV, or URL). */
 export interface CustomDeck {
   /** Unique identifier for the custom deck module (e.g. "custom_deck_1700000000000"). */
-  id: string;
+  readonly id: string;
   /** Human-readable title of the deck. */
-  title: string;
+  readonly title: string;
   /** Original filename or source URL. */
-  filename: string;
+  readonly filename: string;
   /** Number of valid Korean items in this deck. */
-  itemCount: number;
+  readonly itemCount: number;
   /** Timestamp (ms) when this deck was imported. */
-  importedAt: number;
+  readonly importedAt: number;
   /** Array of lesson items parsed from the deck. */
-  items: LessonItem[];
+  readonly items: readonly LessonItem[];
 }

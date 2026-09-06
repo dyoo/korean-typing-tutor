@@ -2,10 +2,10 @@ import { decomposeStringToJamos } from './hangulDecompose';
 import { JAMO_TO_KEY } from './keyboardData';
 
 function getKeyInfoResult(keyInfo?: {
-  key: string;
-  shift?: boolean;
-  hand?: 'left' | 'right';
-}): string[] {
+  readonly key: string;
+  readonly shift?: boolean;
+  readonly hand?: 'left' | 'right';
+}): readonly string[] {
   if (!keyInfo) {
     return [];
   }
@@ -33,7 +33,7 @@ export function getNextRequiredKeys(
   targetJamos: readonly string[] | undefined,
   input: string | undefined,
   isCompleted: boolean,
-): string[] {
+): readonly string[] {
   if (isCompleted || !targetJamos || targetJamos.length === 0) {
     return [];
   }

@@ -10,7 +10,13 @@
 
   let isOpen = $state(false);
 
-  const OPTIONS: Array<{ id: CursorColorMode; label: string; swatchClass: string }> = [
+  interface CursorColorOption {
+    readonly id: CursorColorMode;
+    readonly label: string;
+    readonly swatchClass: string;
+  }
+
+  const OPTIONS: readonly CursorColorOption[] = [
     { id: 'amber', label: 'Warm Amber', swatchClass: 'bg-amber-500' },
     { id: 'sky', label: 'Vibrant Sky', swatchClass: 'bg-sky-400' },
     { id: 'emerald', label: 'Emerald Green', swatchClass: 'bg-emerald-500' },

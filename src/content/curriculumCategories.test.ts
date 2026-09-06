@@ -60,7 +60,7 @@ describe('curriculumCategories helper module', () => {
   it('toggles category group on and off', () => {
     const initial: string[] = [];
     const enabledAll = toggleCategoryGroupIds(beginnerCategory, initial);
-    expect(enabledAll).toEqual(expect.arrayContaining(beginnerCategory.moduleIds));
+    expect(enabledAll).toEqual(expect.arrayContaining([...beginnerCategory.moduleIds]));
 
     const disabledAll = toggleCategoryGroupIds(beginnerCategory, enabledAll);
     expect(disabledAll).toEqual([]);

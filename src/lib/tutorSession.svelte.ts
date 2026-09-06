@@ -47,11 +47,11 @@ export type { CurriculumData };
 
 /** Result object returned when a keystroke is processed by the TutorSession controller. */
 interface KeyResult {
-  isMatch: boolean;
-  isItemCompleted: boolean;
-  isTutorialComplete: boolean;
-  advanced: boolean;
-  newlyUnlockedJamo?: string;
+  readonly isMatch: boolean;
+  readonly isItemCompleted: boolean;
+  readonly isTutorialComplete: boolean;
+  readonly advanced: boolean;
+  readonly newlyUnlockedJamo?: string;
 }
 
 /**
@@ -60,24 +60,24 @@ interface KeyResult {
  * randomized item shuffling, and keystroke composition routing from the UI.
  */
 export class TutorSession {
-  private baseItems: LessonItem[];
-  private baseModules: ModuleDefinition[];
-  private allItems: LessonItem[] = $state.raw([]);
-  private modules: ModuleDefinition[] = $state.raw([]);
-  public customDecks: CustomDeck[] = $state.raw(getLoadedCustomDecks());
-  private activeItems: LessonItem[] = $state.raw([]);
+  private baseItems: readonly LessonItem[];
+  private baseModules: readonly ModuleDefinition[];
+  private allItems: readonly LessonItem[] = $state.raw([]);
+  private modules: readonly ModuleDefinition[] = $state.raw([]);
+  public customDecks: readonly CustomDeck[] = $state.raw(getLoadedCustomDecks());
+  private activeItems: readonly LessonItem[] = $state.raw([]);
   private currentIndex = $state(0);
-  public selectedFilter: string | string[] = $state('all');
+  public selectedFilter: string | readonly string[] = $state('all');
   public shouldShuffle = $state(true);
 
   public userInput = $state('');
   public inputCursorIndex = $state(0);
   public suffix = $state('');
-  public errors: ErrorReport[] = $state.raw([]);
+  public errors: readonly ErrorReport[] = $state.raw([]);
   public accuracy = $state(100);
   public isItemCompleted = $state(false);
   private cachedTarget: string | null = null;
-  private currentTargetJamos: string[] = $state.raw([]);
+  private currentTargetJamos: readonly string[] = $state.raw([]);
   private engine: HangulEngine;
 
   public mode: TutorMode = $state('mastery');
@@ -91,11 +91,14 @@ export class TutorSession {
   private promptSlotErrors = new SvelteSet<number>();
 
   constructor(
-    data: CurriculumData | LessonItem[],
-    defaultFilter: string | string[] = 'all',
+    data: CurriculumData | readonly LessonItem[],
+    defaultFilter: string | readonly string[] = 'all',
     shuffle = true,
   ) {
-    if (Array.isArray(data)) {
+    if ('items' in data) {
+      this.baseItems = data.items ?? [];
+      this.baseModules = data.modules ?? [];
+    } else {
       this.baseItems = data;
       this.baseModules = [
         {
@@ -104,9 +107,6 @@ export class TutorSession {
           description: 'Comprehensive practice across all modules',
         },
       ];
-    } else {
-      this.baseItems = data.items ?? [];
-      this.baseModules = data.modules ?? [];
     }
 
     this.rebuildModulesAndItems();
@@ -133,7 +133,7 @@ export class TutorSession {
   }
 
   /** Fisher-Yates shuffle algorithm for randomized practice order. */
-  private shuffle<T>(array: T[]): T[] {
+  private shuffle<T>(array: readonly T[]): T[] {
     const arr = [...array];
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -186,7 +186,16 @@ export class TutorSession {
       this.refreshMasteryPool();
     } else {
       let filtered: LessonItem[];
-      if (Array.isArray(this.selectedFilter)) {
+      if (typeof this.selectedFilter === 'string') {
+        if (this.selectedFilter === 'all') {
+          filtered = [...this.allItems];
+        } else {
+          const filter = this.selectedFilter;
+          filtered = this.allItems.filter(
+            (item) => item.moduleId === filter || item.id.startsWith(filter),
+          );
+        }
+      } else {
         if (this.selectedFilter.includes('all')) {
           filtered = [...this.allItems];
         } else if (this.selectedFilter.length === 0) {
@@ -195,13 +204,6 @@ export class TutorSession {
           const allowedSet = new Set(this.selectedFilter); // eslint-disable-line svelte/prefer-svelte-reactivity
           filtered = this.allItems.filter((item) => allowedSet.has(item.moduleId));
         }
-      } else if (this.selectedFilter === 'all') {
-        filtered = [...this.allItems];
-      } else {
-        const filter = this.selectedFilter;
-        filtered = this.allItems.filter(
-          (item) => item.moduleId === filter || item.id.startsWith(filter),
-        );
       }
 
       this.activeItems = this.shouldShuffle ? this.shuffle(filtered) : filtered;
@@ -239,7 +241,7 @@ export class TutorSession {
   }
 
   /** Returns set of unlocked Jamos in mastery mode. */
-  public getUnlockedJamos(): Set<string> {
+  public getUnlockedJamos(): ReadonlySet<string> {
     return getUnlockedJamos(this.masteryState);
   }
 
@@ -311,24 +313,24 @@ export class TutorSession {
   }
 
   /** Updates active module filter and reshuffles items. */
-  public setFilter(filterId: string | string[], shuffle = true): void {
+  public setFilter(filterId: string | readonly string[], shuffle = true): void {
     this.selectedFilter = filterId;
     this.shouldShuffle = shuffle;
     this.applyFilterAndShuffle();
   }
 
   /** Returns active filter module ID or array of IDs. */
-  public getSelectedFilter(): string | string[] {
+  public getSelectedFilter(): string | readonly string[] {
     return this.selectedFilter;
   }
 
   /** Returns all available module definitions. */
-  public getModules(): ModuleDefinition[] {
+  public getModules(): readonly ModuleDefinition[] {
     return this.modules;
   }
 
   /** Returns all user-imported custom flashcard decks. */
-  public getCustomDecks(): CustomDeck[] {
+  public getCustomDecks(): readonly CustomDeck[] {
     return this.customDecks;
   }
 
@@ -336,7 +338,7 @@ export class TutorSession {
    * Asynchronously hydrates custom decks from IndexedDB (or fallback).
    * Rebuilds modules and allItems upon completion.
    */
-  public async initCustomDecks(): Promise<CustomDeck[]> {
+  public async initCustomDecks(): Promise<readonly CustomDeck[]> {
     this.customDecks = await loadCustomDecks();
     this.rebuildModulesAndItems();
     return this.customDecks;
@@ -351,7 +353,7 @@ export class TutorSession {
       this.customDecks = [...this.customDecks, deck];
     }
     this.rebuildModulesAndItems();
-    if (Array.isArray(this.selectedFilter)) {
+    if (typeof this.selectedFilter !== 'string') {
       if (!this.selectedFilter.includes(deck.id)) {
         this.selectedFilter = [...this.selectedFilter, deck.id];
       }
@@ -367,7 +369,7 @@ export class TutorSession {
   public async removeCustomDeck(deckId: string): Promise<void> {
     this.customDecks = this.customDecks.filter((d) => d.id !== deckId);
     this.rebuildModulesAndItems();
-    if (Array.isArray(this.selectedFilter)) {
+    if (typeof this.selectedFilter !== 'string') {
       this.selectedFilter = this.selectedFilter.filter((id) => id !== deckId);
       if (this.selectedFilter.length === 0) {
         this.selectedFilter = 'all';
@@ -418,7 +420,7 @@ export class TutorSession {
   /**
    * Returns up to `count` upcoming lesson items after the current exercise.
    */
-  public getUpcomingItems(count: number = 5): LessonItem[] {
+  public getUpcomingItems(count: number = 5): readonly LessonItem[] {
     if (this.activeItems.length <= 1) {
       return [];
     }
@@ -451,7 +453,7 @@ export class TutorSession {
   }
 
   /** Returns error flags for each character index. */
-  public getErrors(): ErrorReport[] {
+  public getErrors(): readonly ErrorReport[] {
     return this.errors;
   }
 
@@ -521,7 +523,7 @@ export class TutorSession {
   /**
    * Identifies the current target Jamo expected at the typing cursor.
    */
-  private getCurrentExpectedJamo(inputJamos?: string[]): string | null {
+  private getCurrentExpectedJamo(inputJamos?: readonly string[]): string | null {
     const targetJamos = this.ensureTargetJamos();
     if (targetJamos.length === 0) {
       return null;
@@ -833,12 +835,21 @@ export class TutorSession {
   }
 
   /** Returns calculated KPM and latency statistics for a specific Jamo. */
-  public getJamoKpm(jamo: string) {
+  public getJamoKpm(
+    jamo: string,
+  ): { readonly kpm: number; readonly averageIkiMs: number; readonly attempts: number } | null {
     return getJamoKpmStats(this.speedStore, jamo);
   }
 
   /** Returns calculated KPM, accuracy, and count for a category ('words' or 'sentences'). */
-  public getCategoryKpm(category: 'words' | 'sentences') {
+  public getCategoryKpm(
+    category: 'words' | 'sentences',
+  ): {
+    readonly kpm: number;
+    readonly accuracy: number;
+    readonly count: number;
+    readonly bestKpm: number;
+  } | null {
     return getCategoryKpmStats(this.speedStore, category);
   }
 

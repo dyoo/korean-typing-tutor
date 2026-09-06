@@ -41,69 +41,69 @@ export interface MasteryState {
 
 /** Metadata for each Jamo in the progression sequence. */
 export interface JamoProgressionItem {
-  jamo: string;
-  key: string;
-  shift?: boolean;
-  hand: 'left' | 'right';
-  stage: number;
-  stageName: string;
-  combination?: [string, string];
+  readonly jamo: string;
+  readonly key: string;
+  readonly shift?: boolean;
+  readonly hand: 'left' | 'right';
+  readonly stage: number;
+  readonly stageName: string;
+  readonly combination?: readonly [string, string];
 }
 
 /** Definition for an interleaved sentence milestone checkpoint. */
 export interface SentenceCheckpoint {
-  id: string;
-  stage: number;
-  stageName: string;
-  title: string;
-  afterJamoIndex: number;
-  requiredCompletions: number;
+  readonly id: string;
+  readonly stage: number;
+  readonly stageName: string;
+  readonly title: string;
+  readonly afterJamoIndex: number;
+  readonly requiredCompletions: number;
 }
 
 /** Metadata for a specific Jamo (vowel, consonant, or batchim) focus target in post-game Consolidation. */
 export interface JamoFocusItem {
-  jamo: string;
-  name?: string;
-  key: string;
-  shift?: boolean;
-  hand: 'left' | 'right';
-  combination?: [string, string];
+  readonly jamo: string;
+  readonly name?: string;
+  readonly key: string;
+  readonly shift?: boolean;
+  readonly hand: 'left' | 'right';
+  readonly combination?: readonly [string, string];
 }
 
 /** Metadata for a final consonant (받침) focus target in the post-game section. */
 export interface BatchimFocusItem extends JamoFocusItem {
-  batchim: string;
+  readonly batchim: string;
 }
 
 /** Active target in mastery mode (either a Jamo key, a Sentence Checkpoint, Word/Sentence Consolidation, Vowel/Consonant Focus, or a Batchim Focus). */
 export type MasteryTarget =
-  | { type: 'jamo'; item: JamoProgressionItem }
-  | { type: 'checkpoint'; checkpoint: SentenceCheckpoint }
-  | { type: 'consolidation_words' }
-  | { type: 'consolidation_sentences' }
-  | { type: 'consolidation_vowel'; item: JamoFocusItem }
-  | { type: 'consolidation_consonant'; item: JamoFocusItem }
-  | { type: 'focus'; item: BatchimFocusItem };
+  | { readonly type: 'jamo'; readonly item: JamoProgressionItem }
+  | { readonly type: 'checkpoint'; readonly checkpoint: SentenceCheckpoint }
+  | { readonly type: 'consolidation_words' }
+  | { readonly type: 'consolidation_sentences' }
+  | { readonly type: 'consolidation_vowel'; readonly item: JamoFocusItem }
+  | { readonly type: 'consolidation_consonant'; readonly item: JamoFocusItem }
+  | { readonly type: 'focus'; readonly item: BatchimFocusItem };
 
 /** A grouped stage of the Jamo progression sequence (for sidebar display). */
 export interface JamoStageGroup {
   /** Numeric stage identifier (1-based). */
-  stageNum: number;
+  readonly stageNum: number;
   /** Human-readable stage label shared by all items in the group. */
-  stageName: string;
+  readonly stageName: string;
   /** Jamos belonging to this stage, in progression order. */
-  items: JamoProgressionItem[];
+  readonly items: readonly JamoProgressionItem[];
   /** Optional sentence checkpoint at the end of this stage. */
-  checkpoint?: SentenceCheckpoint;
+  readonly checkpoint?: SentenceCheckpoint;
 }
 
 /** Result of checking or recording a Jamo attempt. */
 export interface MasteryAttemptResult {
-  jamo: string;
-  isCorrect: boolean;
-  accuracy: number;
-  attemptsCount: number;
-  newlyMastered: boolean;
-  newlyUnlockedJamo?: string;
-  newlyUnlockedCheckpoint?: string;
+  readonly jamo: string;
+  readonly isCorrect: boolean;
+  readonly accuracy: number;
+  readonly attemptsCount: number;
+  readonly newlyMastered: boolean;
+  readonly newlyUnlockedJamo?: string;
+  readonly newlyUnlockedCheckpoint?: string;
 }

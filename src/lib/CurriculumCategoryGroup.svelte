@@ -9,8 +9,8 @@
 
   interface Props {
     category: CurriculumCategory;
-    modules: ModuleDefinition[];
-    enabledModuleIds: string[];
+    modules: readonly ModuleDefinition[];
+    enabledModuleIds: readonly string[];
     isCollapsed: boolean;
     ontogglecategorygroup: (category: CurriculumCategory) => void;
     ontogglecategorycollapse: (categoryId: string) => void;

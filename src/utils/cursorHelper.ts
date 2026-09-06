@@ -37,9 +37,9 @@ export function calculateInputCursorIndex(userInput: string, inputCursorIndex: n
   return Math.max(0, Math.min(inputCursorIndex, userInput.length));
 }
 
-interface WordTokenGroup {
-  type: 'word' | 'space';
-  indices: number[];
+export interface WordTokenGroup {
+  readonly type: 'word' | 'space';
+  readonly indices: readonly number[];
 }
 
 /**
@@ -47,7 +47,7 @@ interface WordTokenGroup {
  * Ensures words and their trailing punctuation (e.g. "입니다.") remain bound together
  * inside single inline-flex containers to prevent lone punctuation line wrapping.
  */
-export function getWordTokens(target: string): WordTokenGroup[] {
+export function getWordTokens(target: string): readonly WordTokenGroup[] {
   const tokens: WordTokenGroup[] = [];
   let currentWordIndices: number[] = [];
 
@@ -72,9 +72,9 @@ export function getWordTokens(target: string): WordTokenGroup[] {
 
 interface InputCaretStatus {
   /** Whether this character unit renders the visual cursor beam */
-  hasCaret: boolean;
+  readonly hasCaret: boolean;
   /** Whether the beam is on the character's leading (left) or trailing (right) edge */
-  isLeading: boolean;
+  readonly isLeading: boolean;
 }
 
 /**

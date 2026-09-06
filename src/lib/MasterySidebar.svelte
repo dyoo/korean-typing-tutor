@@ -21,11 +21,11 @@
     currentStageNumber?: number;
     activeCheckpointId?: string | null;
     activeFocusBatchim?: string | null;
-    jamoStats: Record<string, JamoStats>;
-    sentenceCheckpointStats?: Record<string, SentenceCheckpointStats>;
+    jamoStats: Readonly<Record<string, JamoStats>>;
+    sentenceCheckpointStats?: Readonly<Record<string, SentenceCheckpointStats>>;
     speedStore?: SpeedMetricsStore;
     showKpm?: boolean;
-    collapsedStageIds?: string[];
+    collapsedStageIds?: readonly string[];
     onclose: () => void;
     onmasterylevelchange: (level: number) => void;
     oncheckpointselect?: (checkpointId: string) => void;

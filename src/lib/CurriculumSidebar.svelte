@@ -8,10 +8,10 @@
 
   interface Props {
     isOpen: boolean;
-    enabledModuleIds: string[];
-    collapsedCategoryIds: string[];
-    modules: ModuleDefinition[];
-    customDecks?: CustomDeck[];
+    enabledModuleIds: readonly string[];
+    collapsedCategoryIds: readonly string[];
+    modules: readonly ModuleDefinition[];
+    customDecks?: readonly CustomDeck[];
     onclose: () => void;
     ontogglemodule: (moduleId: string) => void;
     ontogglecategorycollapse: (categoryId: string) => void;

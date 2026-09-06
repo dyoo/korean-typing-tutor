@@ -4,7 +4,7 @@ import type { LessonItem } from '../types/korean';
  * Curated per-Jamo short word banks (1–3 words / length <= 12 characters).
  * Every entry for a given Jamo is strictly composed only of that Jamo and preceding unlocked Jamos.
  */
-export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
+export const MASTERY_JAMO_VOCABULARY: Readonly<Record<string, readonly LessonItem[]>> = {
   // --- Stage 1: Home Row Index Keys (ㅓ, ㅏ, ㅇ, ㄹ) ---
   ㅓ: [
     { id: 'mv_eo_1', moduleId: 'mastery', target: '어', translation: 'Oh / Well' },
@@ -1146,7 +1146,7 @@ export const MASTERY_JAMO_VOCABULARY: Record<string, LessonItem[]> = {
  * Curated sentence banks for each Sentence Milestone Checkpoint.
  * Every sentence is verified to contain only letters unlocked up to that milestone.
  */
-export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
+export const MASTERY_CHECKPOINT_SENTENCES: Readonly<Record<string, readonly LessonItem[]>> = {
   // Checkpoint 1: Home Row Sentences (ㅓ, ㅏ, ㅇ, ㄹ, ㅗ, ㅣ, ㅁ, ㄴ, ㅎ, ㅜ, ㅡ)
   cp_home_row: [
     { id: 'cp1_1', moduleId: 'mastery', target: '어머니랑 아이', translation: 'Mother and child' },
@@ -1931,7 +1931,7 @@ export const MASTERY_CHECKPOINT_SENTENCES: Record<string, LessonItem[]> = {
  * Curated per-Batchim (final consonant) word and sentence banks for post-game Consolidation practice.
  * Every entry under a key strictly contains that batchim in at least one syllable.
  */
-export const FOCUS_BATCHIM_VOCABULARY: Record<string, LessonItem[]> = {
+export const FOCUS_BATCHIM_VOCABULARY: Readonly<Record<string, readonly LessonItem[]>> = {
   ㄱ: [
     { id: 'fb_g_1', moduleId: 'mastery', target: '책', translation: 'Book' },
     { id: 'fb_g_2', moduleId: 'mastery', target: '학교', translation: 'School' },
@@ -2613,10 +2613,10 @@ export const FOCUS_BATCHIM_VOCABULARY: Record<string, LessonItem[]> = {
 };
 
 interface MasteryModuleDefinition {
-  id: string;
-  title: string;
-  description: string;
-  items: LessonItem[];
+  readonly id: string;
+  readonly title: string;
+  readonly description: string;
+  readonly items: readonly LessonItem[];
 }
 
 /**
@@ -2624,7 +2624,7 @@ interface MasteryModuleDefinition {
  * directly from the structured vocabulary and checkpoint sentence banks,
  * avoiding duplicate dataset files.
  */
-export function getMasteryModules(): MasteryModuleDefinition[] {
+export function getMasteryModules(): readonly MasteryModuleDefinition[] {
   const homeRowJamos = ['ㅓ', 'ㅏ', 'ㅇ', 'ㄹ', 'ㅗ', 'ㅣ', 'ㅁ', 'ㄴ', 'ㅎ', 'ㅜ', 'ㅡ'];
   const topRowJamos = ['ㄱ', 'ㅅ', 'ㄷ', 'ㅈ', 'ㅂ', 'ㅛ', 'ㅕ', 'ㅑ', 'ㅐ', 'ㅔ'];
   const bottomRowJamos = ['ㅋ', 'ㅌ', 'ㅊ', 'ㅍ', 'ㅠ'];
@@ -2646,7 +2646,10 @@ export function getMasteryModules(): MasteryModuleDefinition[] {
   ];
   const compoundBatchimJamos = ['ㄶ', 'ㄵ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㅄ', 'ㅀ', 'ㄳ', 'ㄾ', 'ㄿ', 'ㄽ'];
 
-  const collectItems = (jamos: string[], checkpointIds: string[]): LessonItem[] => {
+  const collectItems = (
+    jamos: readonly string[],
+    checkpointIds: readonly string[],
+  ): readonly LessonItem[] => {
     const items: LessonItem[] = [];
     for (const j of jamos) {
       const vocab = MASTERY_JAMO_VOCABULARY[j];

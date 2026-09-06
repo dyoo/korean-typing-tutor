@@ -1,11 +1,11 @@
 export interface CurriculumCategory {
-  id: string;
-  name: string;
-  moduleIds: string[];
+  readonly id: string;
+  readonly name: string;
+  readonly moduleIds: readonly string[];
 }
 
 /** Curriculum categories grouping practice modules into logical difficulty levels. */
-export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
+export const CURRICULUM_CATEGORIES: readonly CurriculumCategory[] = [
   {
     id: 'mastery_banks',
     name: 'Mastery Progression Banks',
@@ -65,12 +65,12 @@ export const CURRICULUM_CATEGORIES: CurriculumCategory[] = [
   },
 ];
 
-export const ALL_CATEGORY_IDS: string[] = CURRICULUM_CATEGORIES.map((c) => c.id);
+export const ALL_CATEGORY_IDS: readonly string[] = CURRICULUM_CATEGORIES.map((c) => c.id);
 
 /** Returns true if all modules in a category are currently enabled. */
 export function isGroupAllChecked(
   category: CurriculumCategory,
-  enabledModuleIds: string[],
+  enabledModuleIds: readonly string[],
 ): boolean {
   return category.moduleIds.every((id) => enabledModuleIds.includes(id));
 }
@@ -78,7 +78,7 @@ export function isGroupAllChecked(
 /** Returns true if some (but not all) modules in a category are currently enabled. */
 export function isGroupSomeChecked(
   category: CurriculumCategory,
-  enabledModuleIds: string[],
+  enabledModuleIds: readonly string[],
 ): boolean {
   const count = category.moduleIds.filter((id) => enabledModuleIds.includes(id)).length;
   return count > 0 && count < category.moduleIds.length;
@@ -87,7 +87,7 @@ export function isGroupSomeChecked(
 /** Returns the count of enabled modules in a given category. */
 export function getGroupCheckedCount(
   category: CurriculumCategory,
-  enabledModuleIds: string[],
+  enabledModuleIds: readonly string[],
 ): number {
   return category.moduleIds.filter((id) => enabledModuleIds.includes(id)).length;
 }
@@ -95,8 +95,8 @@ export function getGroupCheckedCount(
 /** Toggles all modules in a category on or off based on current state. */
 export function toggleCategoryGroupIds(
   category: CurriculumCategory,
-  enabledModuleIds: string[],
-): string[] {
+  enabledModuleIds: readonly string[],
+): readonly string[] {
   const allChecked = isGroupAllChecked(category, enabledModuleIds);
   if (allChecked) {
     return enabledModuleIds.filter((id) => !category.moduleIds.includes(id));
@@ -107,7 +107,10 @@ export function toggleCategoryGroupIds(
 }
 
 /** Toggles all curriculum modules on or off using tri-state tree logic. */
-export function toggleAllModuleIds(allModuleIds: string[], enabledModuleIds: string[]): string[] {
+export function toggleAllModuleIds(
+  allModuleIds: readonly string[],
+  enabledModuleIds: readonly string[],
+): readonly string[] {
   const allChecked =
     allModuleIds.length > 0 && allModuleIds.every((id) => enabledModuleIds.includes(id));
   if (allChecked) {

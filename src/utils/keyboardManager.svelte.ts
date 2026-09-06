@@ -8,25 +8,25 @@ interface KeyboardManagerOptions {
   /**
    * Optional predicate function. When it returns true, typing keys and shortcuts are ignored.
    */
-  disabled?: () => boolean;
+  readonly disabled?: () => boolean;
 
   /**
    * Callback invoked when a valid typing or navigation keystroke occurs.
    *
    * @param key The event key string (e.g. 'a', 'Backspace', 'Enter', 'ArrowLeft').
    */
-  onKey?: (key: string) => void;
+  readonly onKey?: (key: string) => void;
 
   /**
    * Callback invoked when the audio prompt replay shortcut (Ctrl+S / Cmd+S) is pressed.
    */
-  onSpeakShortcut?: () => void;
+  readonly onSpeakShortcut?: () => void;
 }
 
 /**
  * Valid navigation and editing key identifiers that should be processed by the tutor.
  */
-const NAVIGATION_KEYS = new Set([
+const NAVIGATION_KEYS: ReadonlySet<string> = new Set([
   'Backspace',
   'Delete',
   'Enter',
