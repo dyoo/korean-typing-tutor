@@ -17,6 +17,7 @@ import {
   MASTERY_CHECKPOINT_SENTENCES,
   FOCUS_BATCHIM_VOCABULARY,
 } from '../content/masteryVocabulary';
+import { LruCache } from './lruCache';
 
 /** Storage key used for persisting Jamo mastery progress in LocalStorage. */
 const MASTERY_STORAGE_KEY = 'korean_tutor_mastery';
@@ -1115,20 +1116,29 @@ interface ItemJamoMetadata {
   readonly batchims: ReadonlySet<string>;
 }
 
-const itemMetadataCache = new WeakMap<LessonItem, ItemJamoMetadata>();
+/** Maximum unique target text strings cached in the LRU decomposition map. */
+const MAX_METADATA_CACHE_SIZE = 10_000;
+
+const targetMetadataCache = new LruCache<string, ItemJamoMetadata>(MAX_METADATA_CACHE_SIZE);
 
 /**
  * Computes and returns the cached Jamo decomposition metadata for a lesson item.
- * Backed by a module-level WeakMap for O(1) retrieval with automatic garbage collection.
+ * Backed by a bounded LRU cache keyed on `item.target` for O(1) retrieval across
+ * cloned objects and duplicate words.
  */
 export function getItemJamoMetadata(item: LessonItem): ItemJamoMetadata {
-  const cached = itemMetadataCache.get(item);
+  const cached = targetMetadataCache.get(item.target);
   if (cached) {
     return cached;
   }
   const computed = computeJamoMetadata(item.target);
-  itemMetadataCache.set(item, computed);
+  targetMetadataCache.set(item.target, computed);
   return computed;
+}
+
+/** Clears the LRU metadata cache (primarily for unit testing and deterministic state resets). */
+export function clearTargetMetadataCache(): void {
+  targetMetadataCache.clear();
 }
 
 /**

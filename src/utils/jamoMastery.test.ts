@@ -23,6 +23,7 @@ import {
   getSectionJamosForCheckpoint,
   getItemJamoMetadata,
   computeJamoMetadata,
+  clearTargetMetadataCache,
   commitExerciseMasteryAttempts,
 } from './jamoMastery';
 import { hasBatchim, hasVowel, hasConsonant, itemUsesAnyJamo } from '../test/jamoTestUtils';
@@ -994,9 +995,20 @@ describe('Jamo Mastery Engine & Spaced-Repetition Model', () => {
       expect(meta1.batchims.has('ㄺ')).toBe(true);
       expect(meta1.decomposedJamos).toEqual(['ㄷ', 'ㅏ', 'ㄹ', 'ㄱ', 'ㄱ', 'ㅗ', 'ㄱ', 'ㅣ']);
 
-      // Verify reference equality for WeakMap memoization
+      // Verify reference equality for LRU memoization
       const meta2 = getItemJamoMetadata(item);
       expect(meta2).toBe(meta1);
+
+      // Verify clone resilience: a cloned object with the same target returns the exact same cached reference
+      const clonedItem: LessonItem = { ...item, id: 'm2', moduleId: 'm2' };
+      const metaCloned = getItemJamoMetadata(clonedItem);
+      expect(metaCloned).toBe(meta1);
+
+      // Verify clearTargetMetadataCache resets the cache
+      clearTargetMetadataCache();
+      const metaAfterClear = getItemJamoMetadata(item);
+      expect(metaAfterClear).not.toBe(meta1);
+      expect(metaAfterClear).toEqual(meta1);
 
       // Verify string decomposition via computeJamoMetadata
       const stringMeta = computeJamoMetadata('넓다');
