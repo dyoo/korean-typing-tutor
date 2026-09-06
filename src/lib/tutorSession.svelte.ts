@@ -42,6 +42,7 @@ import type {
   MasteryTarget,
 } from '../types/mastery';
 import type { CustomDeck } from '../types/customDecks';
+import type { DeepReadonly } from '../types/readonly';
 
 export type { CurriculumData };
 
@@ -60,12 +61,12 @@ interface KeyResult {
  * randomized item shuffling, and keystroke composition routing from the UI.
  */
 export class TutorSession {
-  private baseItems: readonly LessonItem[];
-  private baseModules: readonly ModuleDefinition[];
-  private allItems: readonly LessonItem[] = $state.raw([]);
-  private modules: readonly ModuleDefinition[] = $state.raw([]);
-  private customDecks: readonly CustomDeck[] = $state.raw(getLoadedCustomDecks());
-  private activeItems: readonly LessonItem[] = $state.raw([]);
+  private baseItems: DeepReadonly<LessonItem[]>;
+  private baseModules: DeepReadonly<ModuleDefinition[]>;
+  private allItems: DeepReadonly<LessonItem[]> = $state.raw([]);
+  private modules: DeepReadonly<ModuleDefinition[]> = $state.raw([]);
+  private customDecks: DeepReadonly<CustomDeck[]> = $state.raw(getLoadedCustomDecks());
+  private activeItems: DeepReadonly<LessonItem[]> = $state.raw([]);
   private currentIndex = $state(0);
   private selectedFilter: string | readonly string[] = $state('all');
   private shouldShuffle = $state(true);
@@ -73,11 +74,11 @@ export class TutorSession {
   private userInput = $state('');
   private inputCursorIndex = $state(0);
   private suffix = $state('');
-  private errors: readonly ErrorReport[] = $state.raw([]);
+  private errors: DeepReadonly<ErrorReport[]> = $state.raw([]);
   private accuracy = $state(100);
   private isItemCompleted = $state(false);
   private cachedTarget: string | null = null;
-  private currentTargetJamos: readonly string[] = $state.raw([]);
+  private currentTargetJamos: DeepReadonly<string[]> = $state.raw([]);
   private engine: HangulEngine;
 
   private mode: TutorMode = $state('mastery');
@@ -325,12 +326,12 @@ export class TutorSession {
   }
 
   /** Returns all available module definitions. */
-  public getModules(): readonly ModuleDefinition[] {
+  public getModules(): DeepReadonly<ModuleDefinition[]> {
     return this.modules;
   }
 
   /** Returns all user-imported custom flashcard decks. */
-  public getCustomDecks(): readonly CustomDeck[] {
+  public getCustomDecks(): DeepReadonly<CustomDeck[]> {
     return this.customDecks;
   }
 
@@ -338,7 +339,7 @@ export class TutorSession {
    * Asynchronously hydrates custom decks from IndexedDB (or fallback).
    * Rebuilds modules and allItems upon completion.
    */
-  public async initCustomDecks(): Promise<readonly CustomDeck[]> {
+  public async initCustomDecks(): Promise<DeepReadonly<CustomDeck[]>> {
     this.customDecks = await loadCustomDecks();
     this.rebuildModulesAndItems();
     return this.customDecks;
@@ -420,7 +421,7 @@ export class TutorSession {
   /**
    * Returns up to `count` upcoming lesson items after the current exercise.
    */
-  public getUpcomingItems(count: number = 5): readonly LessonItem[] {
+  public getUpcomingItems(count: number = 5): DeepReadonly<LessonItem[]> {
     if (this.activeItems.length <= 1) {
       return [];
     }
@@ -453,7 +454,7 @@ export class TutorSession {
   }
 
   /** Returns error flags for each character index. */
-  public getErrors(): readonly ErrorReport[] {
+  public getErrors(): DeepReadonly<ErrorReport[]> {
     return this.errors;
   }
 
@@ -511,7 +512,7 @@ export class TutorSession {
    * Lazily decomposes and caches the current target item's Jamos.
    * Re-decomposes only when the target string identity changes across exercise prompts.
    */
-  private ensureTargetJamos(): readonly string[] {
+  private ensureTargetJamos(): DeepReadonly<string[]> {
     const currentTarget = this.getCurrentItem().target;
     if (this.cachedTarget !== currentTarget) {
       this.cachedTarget = currentTarget;
@@ -801,7 +802,7 @@ export class TutorSession {
   }
 
   /** Returns cached decomposed Jamos for the active target item. */
-  public getCurrentTargetJamos(): readonly string[] {
+  public getCurrentTargetJamos(): DeepReadonly<string[]> {
     return this.ensureTargetJamos();
   }
 

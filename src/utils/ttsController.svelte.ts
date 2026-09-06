@@ -1,3 +1,5 @@
+import type { DeepReadonly } from '../types/readonly';
+
 /** Default voice profile identifier (empty string defaults to system Korean voice). */
 export const DEFAULT_TTS_VOICE = '';
 
@@ -15,7 +17,7 @@ interface NativeVoiceInfo {
 
 export class TTSController {
   private _isSpeaking = $state(false);
-  private _nativeVoices: readonly NativeVoiceInfo[] = $state.raw([]);
+  private _nativeVoices: DeepReadonly<NativeVoiceInfo[]> = $state.raw([]);
   private currentPlaybackToken = 0;
 
   constructor() {
@@ -59,7 +61,7 @@ export class TTSController {
   }
 
   /** Returns all discovered Korean system voices. */
-  public get nativeVoices(): readonly NativeVoiceInfo[] {
+  public get nativeVoices(): DeepReadonly<NativeVoiceInfo[]> {
     if (this._nativeVoices.length === 0) {
       this.refreshNativeVoices();
     }
