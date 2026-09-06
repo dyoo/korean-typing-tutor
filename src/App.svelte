@@ -57,6 +57,7 @@
 
   let mode = $derived(session.getMode());
   let masteryState = $derived(session.getMasteryState());
+  let speedStore = $derived(session.getSpeedStore());
 
   let userInput = $derived(session.getUserInput());
   let errors = $derived(session.getErrors());
@@ -558,7 +559,7 @@
   activeFocusBatchim={masteryState.activeFocusBatchim ?? null}
   jamoStats={masteryState.jamoStats}
   sentenceCheckpointStats={masteryState.sentenceCheckpointStats}
-  speedStore={session.speedStore}
+  {speedStore}
   showKpm={settingsStore.current.showKpm ?? true}
   collapsedStageIds={collapsedMasteryStageIds}
   onclose={closePanel}
