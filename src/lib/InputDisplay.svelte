@@ -135,7 +135,7 @@
     bind:this={inputElement}
     type="text"
     inputmode="none"
-    class="absolute inset-0 w-full h-full opacity-0 z-0"
+    class="absolute inset-0 w-full h-full opacity-0 z-0 text-base"
     value={userInput}
     {onkeydown}
     {onkeyup}
