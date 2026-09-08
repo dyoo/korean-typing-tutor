@@ -7,7 +7,9 @@ const commitId = process.env.COMMIT_ID || 'dev';
 export default defineConfig({
   base: './',
   server: {
-    port: 8080,
+    host: '127.0.0.1',
+    port: 5432,
+    allowedHosts: ['.ts.net'],
   },
   plugins: [
     svelte(),
