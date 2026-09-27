@@ -16,7 +16,7 @@
 
 | Phase | Milestone Description | Status | Tests Passing |
 | :--- | :--- | :--- | :--- |
-| **Phase 1** | Hangul Tables, Arithmetic, & Decomposition | **In Progress** (Step 1 / 4) | 1 / 1 (smoke test) |
+| **Phase 1** | Hangul Tables, Arithmetic, & Decomposition | **In Progress** (Step 2 / 4) | 1 / 1 (smoke test) |
 | **Phase 2** | Hangul IME State Machine (`HangulEngine`) | Planned | — |
 | **Phase 3** | Spaced-Repetition Mastery Engine (Rolling 20) | Planned | — |
 | **Phase 4** | Curriculum Deserialization & SQLite Storage | Planned | — |
@@ -28,7 +28,7 @@
 ## Phase 1: Unicode Math & Decomposition Breakdown
 
 - [x] **Step 0**: Repository setup, Jujutsu bookmark `native-rust-port`, root workspace `Cargo.toml`, and crate initialization (`crates/korean-typing-core`).
-- [ ] **Step 1**: Hangul Unicode constants (`S_BASE`, `L_COUNT`, `V_COUNT`, `T_COUNT`) and standalone Jamo arrays in `crates/korean-typing-core/src/tables.rs`.
+- [x] **Step 1**: Hangul Unicode constants (`S_BASE`, `L_COUNT`, `V_COUNT`, `T_COUNT`) and standalone Jamo arrays in `crates/korean-typing-core/src/tables.rs`.
 - [ ] **Step 2**: Syllable assembly function (`assemble_syllable(initial, vowel, final) -> Option<char>`) with unit tests in `crates/korean-typing-core/src/decompose.rs`.
 - [ ] **Step 3**: Syllable decomposition function (`decompose_syllable(ch) -> Option<(u8, u8, u8)>`) with unit tests.
 - [ ] **Step 4**: Full Unicode round-trip property test across all 11,172 modern Hangul syllables (`U+AC00` to `U+D7A3`).
