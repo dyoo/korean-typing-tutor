@@ -1,9 +1,21 @@
+use crate::tables;
+
 pub fn assemble_syllable(
-    _initial_consonant_idx: u32,
-    _vowel_idx: u32,
-    _final_consonant_idx: u32,
+    initial_consonant_idx: u32,
+    vowel_idx: u32,
+    final_consonant_idx: u32,
 ) -> Option<char> {
-    None
+    if initial_consonant_idx < tables::INITIAL_CONSONANT_COUNT
+        && vowel_idx < tables::VOWEL_COUNT
+        && final_consonant_idx < tables::FINAL_CONSONANT_COUNT
+    {
+        let offset = (vowel_idx + initial_consonant_idx * tables::VOWEL_COUNT)
+            * tables::FINAL_CONSONANT_COUNT
+            + final_consonant_idx;
+        char::from_u32(tables::HANGUL_BASE + offset)
+    } else {
+        None
+    }
 }
 
 #[cfg(test)]
@@ -13,28 +25,16 @@ mod tests {
     #[test]
     fn test_assemble_syllable_boundary_syllables() {
         // First syllable without batchim: '가' (U+AC00)
-        assert_eq!(
-            assemble_syllable(0, 0, 0),
-            None // Should be: Some('가')
-        );
+        assert_eq!(assemble_syllable(0, 0, 0), Some('가'));
 
         // First syllable with batchim: '각' (U+AC01)
-        assert_eq!(
-            assemble_syllable(0, 0, 1),
-            None // Should be: Some('각')
-        );
+        assert_eq!(assemble_syllable(0, 0, 1), Some('각'));
 
         // Common syllable: '한' (ㅎ=18, ㅏ=0, ㄴ=4 -> U+D55C)
-        assert_eq!(
-            assemble_syllable(18, 0, 4),
-            None // Should be: Some('한')
-        );
+        assert_eq!(assemble_syllable(18, 0, 4), Some('한'));
 
         // Last modern Hangul syllable: '힣' (ㅎ=18, ㅣ=20, ㅎ=27 -> U+D7A3)
-        assert_eq!(
-            assemble_syllable(18, 20, 27),
-            None // Should be: Some('힣')
-        );
+        assert_eq!(assemble_syllable(18, 20, 27), Some('힣'));
     }
 
     #[test]
