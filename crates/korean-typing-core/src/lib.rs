@@ -1,3 +1,4 @@
+pub mod decompose;
 pub mod tables;
 
 pub fn add(left: u64, right: u64) -> u64 {
