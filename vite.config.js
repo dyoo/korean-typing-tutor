@@ -11,6 +11,10 @@ export default defineConfig({
     port: 5432,
     allowedHosts: ['.ts.net'],
   },
+  test: {
+    include: ['src/**/*.{test,spec}.{js,ts}'],
+    exclude: ['crates/**', 'node_modules/**', 'dist/**'],
+  },
   plugins: [
     svelte(),
     VitePWA({
