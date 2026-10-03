@@ -63,6 +63,11 @@ mod tests {
     }
 
     #[test]
+    fn test_yoo_assemble() {
+        assert_eq!(assemble_syllable(11, 17, 0), Some('유'));
+    }
+
+    #[test]
     fn test_assemble_syllable_out_of_bounds() {
         // Initial consonant index out of bounds (>= 19)
         assert_eq!(assemble_syllable(19, 0, 0), None);
@@ -94,5 +99,10 @@ mod tests {
         assert_eq!(decompose_syllable('ㅏ'), None);
         // Just past the end of the modern Hangul Syllables block (U+D7A4)
         assert_eq!(decompose_syllable('\u{D7A4}'), None);
+    }
+
+    #[test]
+    fn test_yoo_disassemble() {
+        assert_eq!(decompose_syllable('유'), Some((11, 17, 0)));
     }
 }
