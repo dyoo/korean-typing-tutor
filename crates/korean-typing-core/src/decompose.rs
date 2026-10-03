@@ -18,12 +18,29 @@ pub fn assemble_syllable(
     }
 }
 
+const SYLLABLES_PER_INITIAL: u32 = tables::VOWEL_COUNT * tables::FINAL_CONSONANT_COUNT;
+const TOTAL_SYLLABLES: u32 = tables::INITIAL_CONSONANT_COUNT * SYLLABLES_PER_INITIAL;
+
 /// Decomposes a precomposed modern Hangul syllable character into its constituent
 /// initial consonant (0..=18), vowel (0..=20), and final consonant (0..=27) indices.
 ///
 /// Returns `None` if the character is not a precomposed Hangul syllable (U+AC00..=U+D7A3).
-pub fn decompose_syllable(_ch: char) -> Option<(u32, u32, u32)> {
-    None
+pub fn decompose_syllable(ch: char) -> Option<(u32, u32, u32)> {
+    let code = u32::from(ch);
+    if code < tables::HANGUL_BASE {
+        return None;
+    }
+
+    let offset = code - tables::HANGUL_BASE;
+    if offset >= TOTAL_SYLLABLES {
+        return None;
+    }
+
+    let initial_index = offset / SYLLABLES_PER_INITIAL;
+    let vowel_index = (offset % SYLLABLES_PER_INITIAL) / tables::FINAL_CONSONANT_COUNT;
+    let final_index = offset % tables::FINAL_CONSONANT_COUNT;
+
+    Some((initial_index, vowel_index, final_index))
 }
 
 #[cfg(test)]
@@ -58,25 +75,13 @@ mod tests {
     #[test]
     fn test_decompose_syllable_boundary_syllables() {
         // First syllable without batchim: '가' -> (0, 0, 0)
-        assert_eq!(
-            decompose_syllable('가'),
-            None //Some((0, 0, 0))
-        );
+        assert_eq!(decompose_syllable('가'), Some((0, 0, 0)));
         // First syllable with batchim: '각' -> (0, 0, 1)
-        assert_eq!(
-            decompose_syllable('각'),
-            None, //Some((0, 0, 1))
-        );
+        assert_eq!(decompose_syllable('각'), Some((0, 0, 1)));
         // Common syllable: '한' -> (18, 0, 4)
-        assert_eq!(
-            decompose_syllable('한'),
-            None, //Some((18, 0, 4))
-        );
+        assert_eq!(decompose_syllable('한'), Some((18, 0, 4)));
         // Last modern Hangul syllable: '힣' -> (18, 20, 27)
-        assert_eq!(
-            decompose_syllable('힣'),
-            None, //Some((18, 20, 27))
-        );
+        assert_eq!(decompose_syllable('힣'), Some((18, 20, 27)));
     }
     #[test]
     fn test_decompose_syllable_non_hangul() {
