@@ -105,4 +105,22 @@ mod tests {
     fn test_yoo_disassemble() {
         assert_eq!(decompose_syllable('유'), Some((11, 17, 0)));
     }
+
+    #[test]
+    fn test_roundtrip() {
+        for offset in 0..TOTAL_SYLLABLES {
+            let code = tables::HANGUL_BASE + offset;
+            let ch = char::from_u32(code).expect("Hangul character");
+
+            let (i, v, f) = decompose_syllable(ch).expect("decomposed indices");
+
+            // Verify individual index bounds
+            assert!(i < tables::INITIAL_CONSONANT_COUNT);
+            assert!(v < tables::VOWEL_COUNT);
+            assert!(f < tables::FINAL_CONSONANT_COUNT);
+
+            // Verify round-tripping:
+            assert_eq!(assemble_syllable(i, v, f), Some(ch));
+        }
+    }
 }
