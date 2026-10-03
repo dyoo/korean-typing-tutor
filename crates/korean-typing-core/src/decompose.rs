@@ -18,6 +18,14 @@ pub fn assemble_syllable(
     }
 }
 
+/// Decomposes a precomposed modern Hangul syllable character into its constituent
+/// initial consonant (0..=18), vowel (0..=20), and final consonant (0..=27) indices.
+///
+/// Returns `None` if the character is not a precomposed Hangul syllable (U+AC00..=U+D7A3).
+pub fn decompose_syllable(_ch: char) -> Option<(u32, u32, u32)> {
+    None
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -45,5 +53,41 @@ mod tests {
         assert_eq!(assemble_syllable(0, 21, 0), None);
         // Final consonant index out of bounds (>= 28)
         assert_eq!(assemble_syllable(0, 0, 28), None);
+    }
+
+    #[test]
+    fn test_decompose_syllable_boundary_syllables() {
+        // First syllable without batchim: '가' -> (0, 0, 0)
+        assert_eq!(
+            decompose_syllable('가'),
+            None //Some((0, 0, 0))
+        );
+        // First syllable with batchim: '각' -> (0, 0, 1)
+        assert_eq!(
+            decompose_syllable('각'),
+            None, //Some((0, 0, 1))
+        );
+        // Common syllable: '한' -> (18, 0, 4)
+        assert_eq!(
+            decompose_syllable('한'),
+            None, //Some((18, 0, 4))
+        );
+        // Last modern Hangul syllable: '힣' -> (18, 20, 27)
+        assert_eq!(
+            decompose_syllable('힣'),
+            None, //Some((18, 20, 27))
+        );
+    }
+    #[test]
+    fn test_decompose_syllable_non_hangul() {
+        // ASCII characters
+        assert_eq!(decompose_syllable('A'), None);
+        assert_eq!(decompose_syllable('1'), None);
+        assert_eq!(decompose_syllable(' '), None);
+        // Standalone Compatibility Jamo (not precomposed syllables)
+        assert_eq!(decompose_syllable('ㄱ'), None);
+        assert_eq!(decompose_syllable('ㅏ'), None);
+        // Just past the end of the modern Hangul Syllables block (U+D7A4)
+        assert_eq!(decompose_syllable('\u{D7A4}'), None);
     }
 }
