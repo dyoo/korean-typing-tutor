@@ -1,44 +1,42 @@
-use crate::tables;
+use crate::tables::{
+    FINAL_CONSONANT_COUNT, FinalIndex, HANGUL_BASE, INITIAL_CONSONANT_COUNT, InitialIndex,
+    VOWEL_COUNT, VowelIndex,
+};
 
 pub fn assemble_syllable(
-    initial_consonant_idx: u32,
-    vowel_idx: u32,
-    final_consonant_idx: u32,
-) -> Option<char> {
-    if initial_consonant_idx < tables::INITIAL_CONSONANT_COUNT
-        && vowel_idx < tables::VOWEL_COUNT
-        && final_consonant_idx < tables::FINAL_CONSONANT_COUNT
-    {
-        let offset = (vowel_idx + initial_consonant_idx * tables::VOWEL_COUNT)
-            * tables::FINAL_CONSONANT_COUNT
-            + final_consonant_idx;
-        char::from_u32(tables::HANGUL_BASE + offset)
-    } else {
-        None
-    }
+    initial_index: InitialIndex,
+    vowel_index: VowelIndex,
+    final_index: FinalIndex,
+) -> char {
+    let offset = (vowel_index.as_u32() + initial_index.as_u32() * VOWEL_COUNT)
+        * FINAL_CONSONANT_COUNT
+        + final_index.as_u32();
+
+    // The unwrap is safe because we bound the indices by construction.
+    char::from_u32(HANGUL_BASE + offset).unwrap()
 }
 
-const SYLLABLES_PER_INITIAL: u32 = tables::VOWEL_COUNT * tables::FINAL_CONSONANT_COUNT;
-const TOTAL_SYLLABLES: u32 = tables::INITIAL_CONSONANT_COUNT * SYLLABLES_PER_INITIAL;
+const SYLLABLES_PER_INITIAL: u32 = VOWEL_COUNT * FINAL_CONSONANT_COUNT;
+const TOTAL_SYLLABLES: u32 = INITIAL_CONSONANT_COUNT * SYLLABLES_PER_INITIAL;
 
 /// Decomposes a precomposed modern Hangul syllable character into its constituent
 /// initial consonant (0..=18), vowel (0..=20), and final consonant (0..=27) indices.
 ///
 /// Returns `None` if the character is not a precomposed Hangul syllable (U+AC00..=U+D7A3).
-pub fn decompose_syllable(ch: char) -> Option<(u32, u32, u32)> {
+pub fn decompose_syllable(ch: char) -> Option<(InitialIndex, VowelIndex, FinalIndex)> {
     let code = u32::from(ch);
-    if code < tables::HANGUL_BASE {
+    if code < HANGUL_BASE {
         return None;
     }
 
-    let offset = code - tables::HANGUL_BASE;
+    let offset = code - HANGUL_BASE;
     if offset >= TOTAL_SYLLABLES {
         return None;
     }
 
-    let initial_index = offset / SYLLABLES_PER_INITIAL;
-    let vowel_index = (offset % SYLLABLES_PER_INITIAL) / tables::FINAL_CONSONANT_COUNT;
-    let final_index = offset % tables::FINAL_CONSONANT_COUNT;
+    let initial_index = InitialIndex::new(offset / SYLLABLES_PER_INITIAL)?;
+    let vowel_index = VowelIndex::new((offset % SYLLABLES_PER_INITIAL) / FINAL_CONSONANT_COUNT)?;
+    let final_index = FinalIndex::new(offset % FINAL_CONSONANT_COUNT)?;
 
     Some((initial_index, vowel_index, final_index))
 }
@@ -46,47 +44,101 @@ pub fn decompose_syllable(ch: char) -> Option<(u32, u32, u32)> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::collections::HashSet;
 
     #[test]
     fn test_assemble_syllable_boundary_syllables() {
         // First syllable without batchim: '가' (U+AC00)
-        assert_eq!(assemble_syllable(0, 0, 0), Some('가'));
+        assert_eq!(
+            assemble_syllable(
+                0.try_into().unwrap(),
+                0.try_into().unwrap(),
+                FinalIndex::NONE,
+            ),
+            '가'
+        );
 
         // First syllable with batchim: '각' (U+AC01)
-        assert_eq!(assemble_syllable(0, 0, 1), Some('각'));
+        assert_eq!(
+            assemble_syllable(
+                0.try_into().unwrap(),
+                0.try_into().unwrap(),
+                1.try_into().unwrap()
+            ),
+            '각'
+        );
 
         // Common syllable: '한' (ㅎ=18, ㅏ=0, ㄴ=4 -> U+D55C)
-        assert_eq!(assemble_syllable(18, 0, 4), Some('한'));
+        assert_eq!(
+            assemble_syllable(
+                18.try_into().unwrap(),
+                0.try_into().unwrap(),
+                4.try_into().unwrap()
+            ),
+            '한'
+        );
 
         // Last modern Hangul syllable: '힣' (ㅎ=18, ㅣ=20, ㅎ=27 -> U+D7A3)
-        assert_eq!(assemble_syllable(18, 20, 27), Some('힣'));
+        assert_eq!(
+            assemble_syllable(
+                18.try_into().unwrap(),
+                20.try_into().unwrap(),
+                27.try_into().unwrap()
+            ),
+            '힣'
+        );
     }
 
     #[test]
     fn test_yoo_assemble() {
-        assert_eq!(assemble_syllable(11, 17, 0), Some('유'));
-    }
-
-    #[test]
-    fn test_assemble_syllable_out_of_bounds() {
-        // Initial consonant index out of bounds (>= 19)
-        assert_eq!(assemble_syllable(19, 0, 0), None);
-        // Vowel index out of bounds (>= 21)
-        assert_eq!(assemble_syllable(0, 21, 0), None);
-        // Final consonant index out of bounds (>= 28)
-        assert_eq!(assemble_syllable(0, 0, 28), None);
+        assert_eq!(
+            assemble_syllable(
+                11.try_into().unwrap(),
+                17.try_into().unwrap(),
+                FinalIndex::NONE
+            ),
+            '유'
+        );
     }
 
     #[test]
     fn test_decompose_syllable_boundary_syllables() {
         // First syllable without batchim: '가' -> (0, 0, 0)
-        assert_eq!(decompose_syllable('가'), Some((0, 0, 0)));
+        assert_eq!(
+            decompose_syllable('가'),
+            Some((
+                0.try_into().unwrap(),
+                0.try_into().unwrap(),
+                FinalIndex::NONE
+            ))
+        );
         // First syllable with batchim: '각' -> (0, 0, 1)
-        assert_eq!(decompose_syllable('각'), Some((0, 0, 1)));
+        assert_eq!(
+            decompose_syllable('각'),
+            Some((
+                0.try_into().unwrap(),
+                0.try_into().unwrap(),
+                1.try_into().unwrap()
+            ))
+        );
         // Common syllable: '한' -> (18, 0, 4)
-        assert_eq!(decompose_syllable('한'), Some((18, 0, 4)));
+        assert_eq!(
+            decompose_syllable('한'),
+            Some((
+                18.try_into().unwrap(),
+                0.try_into().unwrap(),
+                4.try_into().unwrap()
+            ))
+        );
         // Last modern Hangul syllable: '힣' -> (18, 20, 27)
-        assert_eq!(decompose_syllable('힣'), Some((18, 20, 27)));
+        assert_eq!(
+            decompose_syllable('힣'),
+            Some((
+                18.try_into().unwrap(),
+                20.try_into().unwrap(),
+                27.try_into().unwrap()
+            ))
+        );
     }
     #[test]
     fn test_decompose_syllable_non_hangul() {
@@ -103,24 +155,41 @@ mod tests {
 
     #[test]
     fn test_yoo_disassemble() {
-        assert_eq!(decompose_syllable('유'), Some((11, 17, 0)));
+        assert_eq!(
+            decompose_syllable('유'),
+            Some((
+                11.try_into().unwrap(),
+                17.try_into().unwrap(),
+                FinalIndex::NONE
+            ))
+        );
     }
 
     #[test]
     fn test_roundtrip() {
+        let mut seen_chars = HashSet::with_capacity(TOTAL_SYLLABLES as usize);
+        let mut seen_tuples = HashSet::with_capacity(TOTAL_SYLLABLES as usize);
+
         for offset in 0..TOTAL_SYLLABLES {
-            let code = tables::HANGUL_BASE + offset;
+            let code = HANGUL_BASE + offset;
             let ch = char::from_u32(code).expect("Hangul character");
 
             let (i, v, f) = decompose_syllable(ch).expect("decomposed indices");
+            seen_tuples.insert((i, v, f));
 
             // Verify individual index bounds
-            assert!(i < tables::INITIAL_CONSONANT_COUNT);
-            assert!(v < tables::VOWEL_COUNT);
-            assert!(f < tables::FINAL_CONSONANT_COUNT);
+            assert!(i.as_u32() < INITIAL_CONSONANT_COUNT);
+            assert!(v.as_u32() < VOWEL_COUNT);
+            assert!(f.as_u32() < FINAL_CONSONANT_COUNT);
 
             // Verify round-tripping:
-            assert_eq!(assemble_syllable(i, v, f), Some(ch));
+            let assembled_ch = assemble_syllable(i, v, f);
+            seen_chars.insert(assembled_ch);
+            assert_eq!(assembled_ch, ch);
         }
+
+        // Make sure the observed unique elements are what we expect.
+        assert_eq!(seen_tuples.len(), TOTAL_SYLLABLES as usize);
+        assert_eq!(seen_chars.len(), TOTAL_SYLLABLES as usize);
     }
 }

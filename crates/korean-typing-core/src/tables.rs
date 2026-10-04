@@ -56,3 +56,118 @@ pub const FINAL_CONSONANTS: [Option<char>; FINAL_CONSONANT_COUNT as usize] = [
     Some('ㅍ'),
     Some('ㅎ'),
 ];
+
+/// An index into `INITIAL_CONSONANTS`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct InitialIndex(u8);
+
+impl InitialIndex {
+    pub fn new(val: u32) -> Option<Self> {
+        if val < INITIAL_CONSONANT_COUNT {
+            Some(Self(val as u8))
+        } else {
+            None
+        }
+    }
+    pub const fn as_u8(self) -> u8 {
+        self.0
+    }
+    pub const fn as_usize(self) -> usize {
+        self.0 as usize
+    }
+    pub const fn as_u32(self) -> u32 {
+        self.0 as u32
+    }
+}
+
+impl TryFrom<u8> for InitialIndex {
+    type Error = ();
+    fn try_from(val: u8) -> Result<Self, Self::Error> {
+        Self::new(val as u32).ok_or(())
+    }
+}
+
+/// An index into `VOWELS`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct VowelIndex(u8);
+
+impl VowelIndex {
+    pub fn new(val: u32) -> Option<Self> {
+        if val < VOWEL_COUNT {
+            Some(Self(val as u8))
+        } else {
+            None
+        }
+    }
+    pub const fn as_u8(self) -> u8 {
+        self.0
+    }
+    pub const fn as_usize(self) -> usize {
+        self.0 as usize
+    }
+    pub const fn as_u32(self) -> u32 {
+        self.0 as u32
+    }
+}
+
+impl TryFrom<u8> for VowelIndex {
+    type Error = ();
+    fn try_from(val: u8) -> Result<Self, Self::Error> {
+        Self::new(val as u32).ok_or(())
+    }
+}
+
+/// An index into `FINAL_CONSONANTS`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash)]
+pub struct FinalIndex(u8);
+
+impl FinalIndex {
+    pub fn new(val: u32) -> Option<Self> {
+        if val < FINAL_CONSONANT_COUNT {
+            Some(Self(val as u8))
+        } else {
+            None
+        }
+    }
+
+    /// Represents the absence of a final consonant.
+    pub const NONE: Self = Self(0);
+
+    pub const fn as_u8(self) -> u8 {
+        self.0
+    }
+    pub const fn as_usize(self) -> usize {
+        self.0 as usize
+    }
+    pub const fn as_u32(self) -> u32 {
+        self.0 as u32
+    }
+}
+
+impl TryFrom<u8> for FinalIndex {
+    type Error = ();
+    fn try_from(val: u8) -> Result<Self, Self::Error> {
+        Self::new(val as u32).ok_or(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    pub fn test_construction() {
+        // Valid initial index (0..=18)
+        assert!(InitialIndex::new(0).is_some());
+        assert!(InitialIndex::new(18).is_some());
+        assert_eq!(InitialIndex::new(19), None);
+        // Valid vowel index (0..=20)
+        assert!(VowelIndex::new(0).is_some());
+        assert!(VowelIndex::new(20).is_some());
+        assert_eq!(VowelIndex::new(21), None);
+        // Valid final index (0..=27)
+        assert!(FinalIndex::new(0).is_some());
+        assert!(FinalIndex::new(27).is_some());
+        assert_eq!(FinalIndex::new(28), None);
+        assert_eq!(FinalIndex::NONE.as_u8(), 0);
+    }
+}
